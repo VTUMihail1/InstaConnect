@@ -22,4 +22,8 @@
     <Folder Include="Repositories\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InstaConnect.Data.Abstraction\InstaConnect.Data.Abstraction.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -11,4 +11,8 @@
     <Folder Include="Repositories\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InstaConnect.Data.Models\InstaConnect.Data.Models.csproj" />
+  </ItemGroup>
+
 </Project>
