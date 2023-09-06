@@ -6,4 +6,19 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InstaConnect.Business.Abstraction\InstaConnect.Business.Abstraction.csproj" />
+    <ProjectReference Include="..\InstaConnect.Data.Abstraction\InstaConnect.Data.Abstraction.csproj" />
+  </ItemGroup>
+
 </Project>

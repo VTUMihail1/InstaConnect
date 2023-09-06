@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+    <Folder Include="Options\" />
+    <Folder Include="Utilities\" />
+  </ItemGroup>
+
 </Project>
