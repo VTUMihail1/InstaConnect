@@ -1,4 +1,8 @@
+using InstaConnect.Business.Abstraction.Factories;
+using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.AutoMapper;
+using InstaConnect.Business.Factories;
+using InstaConnect.Business.Services;
 using InstaConnect.Data;
 using InstaConnect.Data.Models.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -48,6 +52,8 @@ builder.Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IResultFactory, ResultFactory>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddAutoMapper(typeof(InstaConnectProfile));
 
 var app = builder.Build();
