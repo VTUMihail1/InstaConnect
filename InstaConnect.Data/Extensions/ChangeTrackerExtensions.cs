@@ -1,4 +1,4 @@
-﻿using DocConnect.Data.Models.Entities.Base;
+﻿using InstaConnect.Data.Models.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 

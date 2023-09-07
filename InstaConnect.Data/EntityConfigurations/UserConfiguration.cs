@@ -1,8 +1,8 @@
-﻿using DocConnect.Data.Models.Entities;
+﻿using InstaConnect.Data.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DocConnect.Data.EntityConfigurations
+namespace InstaConnect.Data.EntityConfigurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {
