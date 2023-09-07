@@ -1,9 +1,9 @@
-﻿namespace DocConnect.Data.Models.Entities.Base
+﻿namespace InstaConnect.Data.Models.Entities.Base
 {
     /// <summary>
     /// Represents a base entity class that includes audit information for creation and update timestamps.
     /// </summary>
-    public abstract class BaseEntity : IAuditableInfo
+    public abstract class BaseEntity : IBaseEntity
     {
         /// <summary>
         /// Gets or sets the date and time when the entity was created.

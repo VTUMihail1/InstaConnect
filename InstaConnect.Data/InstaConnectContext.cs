@@ -1,6 +1,4 @@
-﻿using DocConnect.Data.EntityConfigurations;
-using DocConnect.Data.Models.Entities;
-using InstaConnect.Data.EntityConfigurations;
+﻿using InstaConnect.Data.EntityConfigurations;
 using InstaConnect.Data.Extensions;
 using InstaConnect.Data.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -19,7 +17,7 @@ namespace InstaConnect.Data
     UserToken>
     {
         public InstaConnectContext(DbContextOptions<InstaConnectContext> options) : base(options)
-        {  }
+        { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

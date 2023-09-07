@@ -1,9 +1,9 @@
-﻿using DocConnect.Data.Models.Entities.Base;
+﻿using InstaConnect.Data.Models.Entities.Base;
 using Microsoft.AspNetCore.Identity;
 
-namespace DocConnect.Data.Models.Entities
+namespace InstaConnect.Data.Models.Entities
 {
-    public class RoleClaim : IdentityRoleClaim<string> ,IAuditableInfo
+    public class RoleClaim : IdentityRoleClaim<string>, IBaseEntity
     {
         public DateTime CreatedAt { get; set; }
 

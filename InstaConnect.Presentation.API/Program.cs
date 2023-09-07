@@ -1,6 +1,6 @@
-using DocConnect.Data.Models.Entities;
 using InstaConnect.Business.AutoMapper;
 using InstaConnect.Data;
+using InstaConnect.Data.Models.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

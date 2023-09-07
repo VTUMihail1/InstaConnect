@@ -1,9 +1,9 @@
-﻿using DocConnect.Data.Models.Entities.Base;
+﻿using InstaConnect.Data.Models.Entities.Base;
 using Microsoft.AspNetCore.Identity;
 
 namespace InstaConnect.Data.Models.Entities
 {
-    public class UserLogin : IdentityUserLogin<string>, IAuditableInfo
+    public class UserLogin : IdentityUserLogin<string>, IBaseEntity
     {
         public DateTime CreatedAt { get; set; }
 
