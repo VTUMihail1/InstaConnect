@@ -7,9 +7,9 @@ namespace InstaConnect.Business.Abstraction.Services
     {
         Task<IResult<AccountResultDTO>> ConfirmEmailAsync(string userId, string token);
 
-        Task<IResult<AccountEmailRequestDTO>> GenerateConfirmEmailTokenAsync(string email);
+        Task<IResult<AccountResultDTO>> GenerateConfirmEmailTokenAsync(string email);
 
-        Task<IResult<AccountEmailRequestDTO>> GenerateResetPasswordTokenAsync(string email);
+        Task<IResult<AccountResultDTO>> GenerateResetPasswordTokenAsync(string email);
 
         Task<IResult<AccountResultDTO>> LoginAsync(AccountLoginDTO accountLoginDTO);
 

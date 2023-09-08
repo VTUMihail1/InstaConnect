@@ -10,6 +10,8 @@
 
         public const string AccountEmailNotConfirmed = "Confirm your email before trying to login";
 
+        public const string AccountEmailAlreadyConfirmed = "Email is already confirmed";
+
         public const string AccountEmailDoesNotExist = "Account with that email does not exist";
     }
 }

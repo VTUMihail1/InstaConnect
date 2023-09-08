@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstaConnect.Data.Migrations
 {
     [DbContext(typeof(InstaConnectContext))]
-    [Migration("20230906214055_add-identity-tables")]
-    partial class addidentitytables
+    [Migration("20230908170747_add-identity-and-token-tables")]
+    partial class addidentityandtokentables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,7 +22,7 @@ namespace InstaConnect.Data.Migrations
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("DocConnect.Data.Models.Entities.Role", b =>
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Role", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)")
@@ -60,7 +60,7 @@ namespace InstaConnect.Data.Migrations
                     b.ToTable("role", (string)null);
                 });
 
-            modelBuilder.Entity("DocConnect.Data.Models.Entities.RoleClaim", b =>
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.RoleClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,7 +95,34 @@ namespace InstaConnect.Data.Migrations
                     b.ToTable("role_claim", (string)null);
                 });
 
-            modelBuilder.Entity("DocConnect.Data.Models.Entities.User", b =>
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Token", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("ValidUntil")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tokens");
+                });
+
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)")
@@ -192,7 +219,7 @@ namespace InstaConnect.Data.Migrations
                     b.ToTable("user", (string)null);
                 });
 
-            modelBuilder.Entity("DocConnect.Data.Models.Entities.UserClaim", b =>
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.UserClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -225,31 +252,6 @@ namespace InstaConnect.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("user_claim", (string)null);
-                });
-
-            modelBuilder.Entity("DocConnect.Data.Models.Entities.UserRole", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("user_id");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("role_id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("user_role", (string)null);
                 });
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.UserLogin", b =>
@@ -286,6 +288,31 @@ namespace InstaConnect.Data.Migrations
                     b.ToTable("user_login", (string)null);
                 });
 
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.UserRole", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("user_id");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("role_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("user_role", (string)null);
+                });
+
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.UserToken", b =>
                 {
                     b.Property<string>("UserId")
@@ -317,33 +344,18 @@ namespace InstaConnect.Data.Migrations
                     b.ToTable("user_token", (string)null);
                 });
 
-            modelBuilder.Entity("DocConnect.Data.Models.Entities.RoleClaim", b =>
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.RoleClaim", b =>
                 {
-                    b.HasOne("DocConnect.Data.Models.Entities.Role", null)
+                    b.HasOne("InstaConnect.Data.Models.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DocConnect.Data.Models.Entities.UserClaim", b =>
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.UserClaim", b =>
                 {
-                    b.HasOne("DocConnect.Data.Models.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DocConnect.Data.Models.Entities.UserRole", b =>
-                {
-                    b.HasOne("DocConnect.Data.Models.Entities.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DocConnect.Data.Models.Entities.User", null)
+                    b.HasOne("InstaConnect.Data.Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -352,7 +364,22 @@ namespace InstaConnect.Data.Migrations
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.UserLogin", b =>
                 {
-                    b.HasOne("DocConnect.Data.Models.Entities.User", null)
+                    b.HasOne("InstaConnect.Data.Models.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.UserRole", b =>
+                {
+                    b.HasOne("InstaConnect.Data.Models.Entities.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InstaConnect.Data.Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -361,7 +388,7 @@ namespace InstaConnect.Data.Migrations
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.UserToken", b =>
                 {
-                    b.HasOne("DocConnect.Data.Models.Entities.User", null)
+                    b.HasOne("InstaConnect.Data.Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

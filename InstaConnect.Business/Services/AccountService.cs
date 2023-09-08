@@ -76,7 +76,7 @@ namespace InstaConnect.Business.Services
             }
 
             var user = _mapper.Map<User>(accountRegistrationDTO);
-            var result = await _userManager.CreateAsync(user);
+            var result = await _userManager.CreateAsync(user, accountRegistrationDTO.Password);
 
             if (!result.Succeeded)
             {
@@ -95,27 +95,32 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<AccountEmailRequestDTO>> GenerateConfirmEmailTokenAsync(string email)
+        public async Task<IResult<AccountResultDTO>> GenerateConfirmEmailTokenAsync(string userId)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
-                var badRequest = _resultFactory.GetBadRequestResult<AccountEmailRequestDTO>(InstaConnectErrorMessages.AccountEmailDoesNotExist);
+                var badRequest = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountEmailDoesNotExist);
 
                 return badRequest;
             }
 
-            var userId = await _userManager.GetUserIdAsync(user);
+            var emailIsConfirmed = await _userManager.IsEmailConfirmedAsync(user);
+
+            if (emailIsConfirmed)
+            {
+                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountEmailAlreadyConfirmed);
+
+                return badRequestResult;
+            }
+
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            var accountEmailRequestDTO = new AccountEmailRequestDTO()
-            {
-                UserId = userId,
-                Token = token
-            };
+            var accountResultDTO = _mapper.Map<AccountResultDTO>(user);
+            accountResultDTO.Token = token;
 
-            var okResult = _resultFactory.GetOkResult(accountEmailRequestDTO);
+            var okResult = _resultFactory.GetOkResult(accountResultDTO);
 
             return okResult;
         }
@@ -130,6 +135,15 @@ namespace InstaConnect.Business.Services
             if (user == null)
             {
                 var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountInvalidToken);
+
+                return badRequestResult;
+            }
+
+            var emailIsConfirmed = await _userManager.IsEmailConfirmedAsync(user);
+
+            if (emailIsConfirmed)
+            {
+                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountEmailAlreadyConfirmed);
 
                 return badRequestResult;
             }
@@ -152,27 +166,23 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<AccountEmailRequestDTO>> GenerateResetPasswordTokenAsync(string email)
+        public async Task<IResult<AccountResultDTO>> GenerateResetPasswordTokenAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<AccountEmailRequestDTO>(InstaConnectErrorMessages.AccountEmailDoesNotExist);
+                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountEmailDoesNotExist);
 
                 return badRequestResult;
             }
 
-            var userId = await _userManager.GetUserIdAsync(user);
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            var accountEmailRequestDTO = new AccountEmailRequestDTO()
-            {
-                UserId = userId,
-                Token = token
-            };
+            var accountResultDTO = _mapper.Map<AccountResultDTO>(user);
+            accountResultDTO.Token = token;
 
-            var okResult = _resultFactory.GetOkResult(accountEmailRequestDTO);
+            var okResult = _resultFactory.GetOkResult(accountResultDTO);
 
             return okResult;
         }
