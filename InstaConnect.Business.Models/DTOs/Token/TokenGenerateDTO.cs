@@ -1,9 +1,7 @@
-﻿namespace DocConnect.Business.Models.DTOs.Token
+﻿namespace InstaConnect.Business.Models.DTOs.Token
 {
     public class TokenGenerateDTO
     {
-        public uint UserId { get; set; }
-
-        public string Token { get; set; }
+        public string UserId { get; set; }
     }
 }

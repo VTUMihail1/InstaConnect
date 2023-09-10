@@ -1,13 +1,13 @@
-﻿using DocConnect.Business.Models.DTOs.Token;
+﻿using InstaConnect.Business.Models.DTOs.Token;
 
-namespace DocConnect.Business.Helpers
+namespace InstaConnect.Business.Abstraction.Helpers
 {
     public interface ITokenHandler
     {
         TokenAddDTO GenerateAccessToken(TokenGenerateDTO tokenGenerateDTO);
 
-        TokenAddDTO GenerateEmailConfirmationToken(TokenGenerateDTO tokenGenerateDTO);
+        TokenAddDTO GenerateEmailConfirmationToken(string token);
 
-        TokenAddDTO GenerateForgotPasswordToken(TokenGenerateDTO tokenGenerateDTO);
+        TokenAddDTO GenerateForgotPasswordToken(string token);
     }
 }

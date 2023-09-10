@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Account;
 using InstaConnect.Business.Models.Enums;
-using Microsoft.AspNetCore.Authorization;
+using InstaConnect.Presentation.API.Filters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Presentation.API.Controllers
@@ -32,26 +32,25 @@ namespace InstaConnect.Presentation.API.Controllers
                 return BadRequest(loginResponse.ErrorMessages);
             }
 
-            var accessToken = _tokenService.GenerateAccessToken(loginResponse.Data);
-            var tokenResponse = _tokenService.AddAsync(accessToken.Data);
+            var tokenResponse = await _tokenService.AddAccessTokenAsync(loginResponse.Data);
 
-            return Ok(tokenResponse);
+            return Ok(tokenResponse.Data);
         }
 
         // DELETE: api/Account/log-out
         [HttpDelete("log-out")]
-        [Authorize]
+        [Token]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> LogOutAsync([FromHeader] HttpContext httpContext)
+        public async Task<IActionResult> LogOutAsync()
         {
-            var accessToken = httpContext.Response.Headers.Authorization;
+            var accessToken = HttpContext.Request.Headers.Authorization;
 
-            var response = await _tokenService.RemoveAsync(accessToken);
+            var tokenResponse = await _tokenService.RemoveAsync(accessToken);
 
-            if(response.StatusCode == InstaConnectStatusCode.Unauthorized)
+            if (tokenResponse.StatusCode == InstaConnectStatusCode.Unauthorized)
             {
-                return Unauthorized(response.ErrorMessages);
+                return Unauthorized(tokenResponse.ErrorMessages);
             }
 
             return NoContent();
@@ -59,7 +58,7 @@ namespace InstaConnect.Presentation.API.Controllers
 
         // POST: api/Account/sign-up
         [HttpPost("sign-up")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignUpAsync([FromBody] AccountRegistrationDTO request)
         {
@@ -70,17 +69,16 @@ namespace InstaConnect.Presentation.API.Controllers
                 return BadRequest(signUpResponse.ErrorMessages);
             }
 
-            var confirmEmailTokenResponse = await _accountService.GenerateConfirmEmailTokenAsync(signUpResponse.Data.Id);
+            var confirmEmailTokenResponse = await _accountService.SendAccountConfirmEmailTokenAsync(request.Email);
 
             if (confirmEmailTokenResponse.StatusCode == InstaConnectStatusCode.BadRequest)
             {
-                return BadRequest(signUpResponse.ErrorMessages);
+                return BadRequest(confirmEmailTokenResponse.ErrorMessages);
             }
 
-            var tokenValue = _tokenService.GenerateEmailConfirmationToken(confirmEmailTokenResponse.Data);
-            var tokenResponse = await _tokenService.AddAsync(tokenValue.Data);
+            await _tokenService.AddEmailConfirmationTokenAsync(confirmEmailTokenResponse.Data);
 
-            return Ok(tokenResponse);
+            return NoContent();
         }
 
         // GET: api/Account/confirm-email/afsfasff44afa/dtshstd434tfgre-dsf4w
@@ -96,45 +94,50 @@ namespace InstaConnect.Presentation.API.Controllers
                 return BadRequest(response.ErrorMessages);
             }
 
+            var tokenResponse = await _tokenService.RemoveAsync(response.Data);
+
+            if (tokenResponse.StatusCode == InstaConnectStatusCode.BadRequest)
+            {
+                return BadRequest(tokenResponse.ErrorMessages);
+            }
+
             return NoContent();
         }
 
-        // GET: api/Account/generate-confirm-email-token/user@example.com
-        [HttpGet("generate-confirm-email-token/{email}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        // GET: api/Account/send-confirm-email-token/user@example.com
+        [HttpGet("send-confirm-email-token/{email}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GenerateConfirmEmailTokenAsync([FromRoute] string email)
+        public async Task<IActionResult> SendConfirmEmailTokenAsync([FromRoute] string email)
         {
-            var response = await _accountService.GenerateConfirmEmailTokenAsync(email);
+            var response = await _accountService.SendAccountConfirmEmailTokenAsync(email);
 
             if (response.StatusCode == InstaConnectStatusCode.BadRequest)
             {
                 return BadRequest(response.ErrorMessages);
             }
 
-            var tokenValue = _tokenService.GenerateEmailConfirmationToken(response.Data);
-            var tokenResponse = await _tokenService.AddAsync(tokenValue.Data);
+            await _tokenService.AddEmailConfirmationTokenAsync(response.Data);
 
-            return Ok(tokenResponse.Data);
+            return NoContent();
         }
 
         // GET: api/Account/generate-reset-password-token/user@example.com
-        [HttpGet("generate-reset-password-token/{email}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet("send-reset-password-token/{email}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GenerateResetPasswordTokenAsync([FromRoute] string email)
+        public async Task<IActionResult> SendResetPasswordTokenAsync([FromRoute] string email)
         {
-            var response = await _accountService.GenerateResetPasswordTokenAsync(email);
+            var response = await _accountService.SendAccountResetPasswordTokenAsync(email);
 
             if (response.StatusCode == InstaConnectStatusCode.BadRequest)
             {
                 return BadRequest(response.ErrorMessages);
             }
 
-            var tokenValue = _tokenService.GeneratePasswordResetToken(response.Data);
-            var tokenResponse = await _tokenService.AddAsync(tokenValue.Data);
+            await _tokenService.AddPasswordResetTokenAsync(response.Data);
 
-            return Ok(tokenResponse);
+            return NoContent();
         }
 
         // POST: api/Account/reset-password/usadfsdafase/asdasfasgsagfasfasd
@@ -148,6 +151,13 @@ namespace InstaConnect.Presentation.API.Controllers
             if (response.StatusCode == InstaConnectStatusCode.BadRequest)
             {
                 return BadRequest(response.ErrorMessages);
+            }
+
+            var tokenResponse = await _tokenService.RemoveAsync(response.Data);
+
+            if (tokenResponse.StatusCode == InstaConnectStatusCode.BadRequest)
+            {
+                return BadRequest(tokenResponse.ErrorMessages);
             }
 
             return NoContent();

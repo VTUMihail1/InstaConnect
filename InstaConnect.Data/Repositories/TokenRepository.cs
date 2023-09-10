@@ -7,6 +7,6 @@ namespace InstaConnect.Data.Repositories
     public class TokenRepository : Repository<Token>, ITokenRepository
     {
         public TokenRepository(InstaConnectContext instaConnectContext) : base(instaConnectContext)
-        {  }
+        { }
     }
 }

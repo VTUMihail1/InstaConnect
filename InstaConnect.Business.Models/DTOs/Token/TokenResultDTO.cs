@@ -1,4 +1,4 @@
-﻿namespace DocConnect.Business.Models.DTOs.Token
+﻿namespace InstaConnect.Business.Models.DTOs.Token
 {
     public class TokenResultDTO
     {

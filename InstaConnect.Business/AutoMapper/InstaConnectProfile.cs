@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DocConnect.Business.Models.DTOs.Token;
 using InstaConnect.Business.Models.DTOs.Account;
+using InstaConnect.Business.Models.DTOs.Token;
 using InstaConnect.Data.Models.Entities;
 
 namespace InstaConnect.Business.AutoMapper
@@ -16,6 +16,7 @@ namespace InstaConnect.Business.AutoMapper
                 .ReverseMap();
 
             CreateMap<AccountResultDTO, TokenGenerateDTO>()
+                .ForMember(o => o.UserId, d => d.MapFrom(s => s.Id))
                 .ReverseMap();
 
             CreateMap<TokenAddDTO, Token>()

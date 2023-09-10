@@ -9,5 +9,9 @@
         public const string AccountConfirmEmailTokenType = "ConfirmEmailToken";
 
         public const string AccountForgotPasswordTokenType = "ForgotPasswordToken";
+
+        public const string AccountEmailConfirmationTitle = "InstaConnect Email Verification";
+
+        public const string AccountForgotPasswordTitle = "InstaConnect Reset Password";
     }
 }

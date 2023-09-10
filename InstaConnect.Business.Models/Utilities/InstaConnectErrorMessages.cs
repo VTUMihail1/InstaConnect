@@ -13,5 +13,9 @@
         public const string AccountEmailAlreadyConfirmed = "Email is already confirmed";
 
         public const string AccountEmailDoesNotExist = "Account with that email does not exist";
+
+        public const string AccountAccessTokenNotFound = "Token with that value does not exist";
+
+        public const string AccountAccessTokenNotInHeader = "You need to be logged in before you logout";
     }
 }

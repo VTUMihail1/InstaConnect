@@ -1,14 +1,13 @@
-﻿using DocConnect.Business.Models.DTOs.Token;
-using TokenOptions = DocConnect.Business.Models.Options.TokenOptions;
+﻿using InstaConnect.Business.Abstraction.Helpers;
+using InstaConnect.Business.Models.DTOs.Token;
 using InstaConnect.Business.Models.Utilities;
-using InstaConnect.Data.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using TokenOptions = InstaConnect.Business.Models.Options.TokenOptions;
 
-namespace DocConnect.Business.Helpers
+namespace InstaConnect.Business.Helpers
 {
     public class TokenHandler : ITokenHandler
     {
@@ -19,27 +18,25 @@ namespace DocConnect.Business.Helpers
             _tokenOptions = tokenOptions;
         }
 
-        public TokenAddDTO GenerateForgotPasswordToken(TokenGenerateDTO tokenGenerateDTO)
+        public TokenAddDTO GenerateForgotPasswordToken(string token)
         {
             var emailConfirmationToken = new TokenAddDTO()
             {
-                UserId = tokenGenerateDTO.UserId,
-                Value = tokenGenerateDTO.Token,
+                Value = token,
                 Type = InstaConnectConstants.AccountForgotPasswordTokenType,
-                ValidUntil = DateTime.UtcNow.AddSeconds(_tokenOptions.AccessTokenLifetimeSeconds),
+                ValidUntil = DateTime.UtcNow.AddSeconds(_tokenOptions.UserTokenLifetimeSeconds),
             };
 
             return emailConfirmationToken;
         }
 
-        public TokenAddDTO GenerateEmailConfirmationToken(TokenGenerateDTO tokenGenerateDTO)
+        public TokenAddDTO GenerateEmailConfirmationToken(string token)
         {
             var emailConfirmationToken = new TokenAddDTO()
             {
-                UserId = tokenGenerateDTO.UserId,
-                Value = tokenGenerateDTO.Token,
+                Value = token,
                 Type = InstaConnectConstants.AccountConfirmEmailTokenType,
-                ValidUntil = DateTime.UtcNow.AddSeconds(_tokenOptions.AccessTokenLifetimeSeconds),
+                ValidUntil = DateTime.UtcNow.AddSeconds(_tokenOptions.UserTokenLifetimeSeconds),
             };
 
             return emailConfirmationToken;
@@ -54,7 +51,6 @@ namespace DocConnect.Business.Helpers
 
             var accessToken = new TokenAddDTO()
             {
-                UserId = tokenGenerateDTO.UserId,
                 Value = value,
                 Type = InstaConnectConstants.AccessTokenType,
                 ValidUntil = DateTime.UtcNow.AddSeconds(_tokenOptions.AccessTokenLifetimeSeconds),

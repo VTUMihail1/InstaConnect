@@ -1,4 +1,4 @@
-﻿namespace DocConnect.Business.Models.Options
+﻿namespace InstaConnect.Business.Models.Options
 {
     public class TokenOptions
     {
@@ -10,8 +10,6 @@
 
         public int AccessTokenLifetimeSeconds { get; set; }
 
-        public int EmailConfirmationTokenLifetimeSeconds { get; set; }
-
-        public int PasswordResetTokenLifetimeSeconds { get; set; }
+        public int UserTokenLifetimeSeconds { get; set; }
     }
 }
