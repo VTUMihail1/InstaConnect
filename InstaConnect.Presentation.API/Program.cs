@@ -116,10 +116,11 @@ builder.Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<CookieAuthenticationOptions>(options =>
-{
-    options.ExpireTimeSpan = TimeSpan.FromHours(tokenOptions.UserTokenLifetimeSeconds);
-});
+builder.Services
+    .Configure<CookieAuthenticationOptions>(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromHours(tokenOptions.UserTokenLifetimeSeconds);
+    });
 
 var app = builder.Build();
 
