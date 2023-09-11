@@ -1,4 +1,5 @@
-﻿using InstaConnect.Business.Abstraction.Helpers;
+﻿using InstaConnect.Business.Abstraction.Factories;
+using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Models.DTOs.Token;
 using InstaConnect.Business.Models.Utilities;
 using Microsoft.IdentityModel.Tokens;
@@ -11,33 +12,25 @@ namespace InstaConnect.Business.Helpers
 {
     public class TokenHandler : ITokenHandler
     {
+        private readonly ITokenFactory _tokenFactory;
         private readonly TokenOptions _tokenOptions;
 
-        public TokenHandler(TokenOptions tokenOptions)
+        public TokenHandler(ITokenFactory tokenFactory, TokenOptions tokenOptions)
         {
+            _tokenFactory = tokenFactory;
             _tokenOptions = tokenOptions;
         }
 
         public TokenAddDTO GenerateForgotPasswordToken(string token)
         {
-            var emailConfirmationToken = new TokenAddDTO()
-            {
-                Value = token,
-                Type = InstaConnectConstants.AccountForgotPasswordTokenType,
-                ValidUntil = DateTime.UtcNow.AddSeconds(_tokenOptions.UserTokenLifetimeSeconds),
-            };
+            var forgotPasswordToken = _tokenFactory.GetTokenAddDTO(token, InstaConnectConstants.AccountForgotPasswordTokenType, _tokenOptions.UserTokenLifetimeSeconds);
 
-            return emailConfirmationToken;
+            return forgotPasswordToken;
         }
 
         public TokenAddDTO GenerateEmailConfirmationToken(string token)
         {
-            var emailConfirmationToken = new TokenAddDTO()
-            {
-                Value = token,
-                Type = InstaConnectConstants.AccountConfirmEmailTokenType,
-                ValidUntil = DateTime.UtcNow.AddSeconds(_tokenOptions.UserTokenLifetimeSeconds),
-            };
+            var emailConfirmationToken = _tokenFactory.GetTokenAddDTO(token, InstaConnectConstants.AccountConfirmEmailTokenType, _tokenOptions.UserTokenLifetimeSeconds);
 
             return emailConfirmationToken;
         }
@@ -49,12 +42,7 @@ namespace InstaConnect.Business.Helpers
 
             var value = InstaConnectConstants.AccessTokenPrefix + accessTokenValue;
 
-            var accessToken = new TokenAddDTO()
-            {
-                Value = value,
-                Type = InstaConnectConstants.AccessTokenType,
-                ValidUntil = DateTime.UtcNow.AddSeconds(_tokenOptions.AccessTokenLifetimeSeconds),
-            };
+            var accessToken = _tokenFactory.GetTokenAddDTO(value, InstaConnectConstants.AccessTokenType, _tokenOptions.AccessTokenLifetimeSeconds);
 
             return accessToken;
         }
@@ -72,7 +60,7 @@ namespace InstaConnect.Business.Helpers
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature),
                 Issuer = _tokenOptions.Issuer,
                 Audience = _tokenOptions.Audience,
-                Expires = DateTime.UtcNow.AddSeconds(_tokenOptions.AccessTokenLifetimeSeconds)
+                Expires = DateTime.Now.AddSeconds(_tokenOptions.AccessTokenLifetimeSeconds)
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -86,7 +74,7 @@ namespace InstaConnect.Business.Helpers
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, tokenGenerateDTO.UserId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, tokenGenerateDTO.UserId),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString())
             };

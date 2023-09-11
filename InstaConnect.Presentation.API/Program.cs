@@ -40,7 +40,6 @@ builder.Services.AddSingleton(tokenOptions);
 builder.Services.AddSingleton(emailOptions);
 builder.Services.AddSingleton(emailTemplateOptions);
 builder.Services.AddScoped<IEmailSender, EmailSender>();
-builder.Services.AddScoped<IEmailFactory, EmailFactory>();
 builder.Services.AddScoped<IEmailHandler, EmailHandler>();
 builder.Services.AddScoped<IEmailTemplateGenerator, EmailTemplateGenerator>();
 builder.Services.AddScoped<ISendGridClient>(_ => new SendGridClient(emailOptions.APIKey));
@@ -48,6 +47,8 @@ builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<ITokenHandler, TokenHandler>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IResultFactory, ResultFactory>();
+builder.Services.AddScoped<ITokenFactory, TokenFactory>();
+builder.Services.AddScoped<IEmailFactory, EmailFactory>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddAutoMapper(typeof(InstaConnectProfile));
 
@@ -93,7 +94,7 @@ builder.Services
         {
             In = ParameterLocation.Header,
             Name = "Authorization",
-            Type = SecuritySchemeType.ApiKey
+            Type = SecuritySchemeType.ApiKey,
         });
 
         c.AddSecurityRequirement(new OpenApiSecurityRequirement

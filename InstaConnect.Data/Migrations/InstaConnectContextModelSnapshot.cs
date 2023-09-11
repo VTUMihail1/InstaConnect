@@ -95,28 +95,37 @@ namespace InstaConnect.Data.Migrations
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.Token", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar")
+                        .HasColumnName("type");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_at");
 
                     b.Property<DateTime>("ValidUntil")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("is_valid_until");
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar")
+                        .HasColumnName("value");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tokens");
+                    b.ToTable("token", (string)null);
                 });
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.User", b =>
@@ -149,12 +158,14 @@ namespace InstaConnect.Data.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar")
                         .HasColumnName("first_name");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar")
                         .HasColumnName("last_name");
 
                     b.Property<bool>("LockoutEnabled")

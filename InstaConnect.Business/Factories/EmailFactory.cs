@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Models.DTOs.Account;
-using InstaConnect.Business.Models.Options;
 using InstaConnect.Business.Models.Utilities;
 
 namespace InstaConnect.Business.Factories

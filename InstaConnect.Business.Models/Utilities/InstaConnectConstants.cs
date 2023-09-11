@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace InstaConnect.Business.Models.Utilities
+﻿namespace InstaConnect.Business.Models.Utilities
 {
     public static class InstaConnectConstants
     {

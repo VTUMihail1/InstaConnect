@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Helpers;
-using InstaConnect.Business.Models.Options;
 
 namespace InstaConnect.Business.Helpers
 {

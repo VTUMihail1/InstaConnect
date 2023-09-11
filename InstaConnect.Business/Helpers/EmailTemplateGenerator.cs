@@ -1,4 +1,5 @@
-﻿using InstaConnect.Business.Models.Options;
+﻿using InstaConnect.Business.Abstraction.Helpers;
+using InstaConnect.Business.Models.Options;
 using InstaConnect.Business.Models.Utilities;
 using System.Text;
 

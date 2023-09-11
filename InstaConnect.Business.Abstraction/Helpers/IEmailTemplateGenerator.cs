@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Business.Helpers
+﻿namespace InstaConnect.Business.Abstraction.Helpers
 {
     public interface IEmailTemplateGenerator
     {
