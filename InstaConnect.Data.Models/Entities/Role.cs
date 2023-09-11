@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace InstaConnect.Data.Models.Entities
 {
-    public class Role : IdentityRole<string>, IBaseEntity
+    public class Role : IdentityRole, IBaseEntity
     {
         public Role() : base() { }
 

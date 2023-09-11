@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Business.Models.Utilities
+﻿namespace InstaConnect.Data.Models.Utilities
 {
     public static class InstaConnectConstants
     {
@@ -19,5 +19,6 @@
         public const string ForgotPasswordTemplatePath = @"C:\Users\Misho\Desktop\InstaConnect\InstaConnect\InstaConnect.Business\Helpers\Templates\InstaConnectResetPasswordTemplate.html";
 
         public const string TemplateLinkPlaceholder = "InsertYourRouteValuesHere";
+
     }
 }

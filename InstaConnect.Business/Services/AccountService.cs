@@ -6,6 +6,7 @@ using InstaConnect.Business.Models.DTOs.Account;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Data.Models.Entities;
+using InstaConnect.Data.Models.Utilities;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
 
@@ -39,7 +40,7 @@ namespace InstaConnect.Business.Services
 
             if (user == null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountInvalidLogin);
+                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectBusinessErrorMessages.AccountInvalidLogin);
 
                 return badRequestResult;
             }
@@ -48,7 +49,7 @@ namespace InstaConnect.Business.Services
 
             if (!result.Succeeded)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountInvalidLogin);
+                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectBusinessErrorMessages.AccountInvalidLogin);
 
                 return badRequestResult;
             }
@@ -57,7 +58,7 @@ namespace InstaConnect.Business.Services
 
             if (!emailIsConfirmed)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountEmailNotConfirmed);
+                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectBusinessErrorMessages.AccountEmailNotConfirmed);
 
                 return badRequestResult;
             }
@@ -74,17 +75,30 @@ namespace InstaConnect.Business.Services
 
             if (existingUser != null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountAlreadyExists);
+                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectBusinessErrorMessages.AccountAlreadyExists);
 
                 return badRequestResult;
             }
 
             var user = _mapper.Map<User>(accountRegistrationDTO);
-            var result = await _userManager.CreateAsync(user, accountRegistrationDTO.Password);
+            var userResult = await _userManager.CreateAsync(user, accountRegistrationDTO.Password);
 
-            if (!result.Succeeded)
+            if (!userResult.Succeeded)
             {
-                var errors = result.Errors
+                var errors = userResult.Errors
+                    .Select(x => x.Description)
+                    .ToArray();
+
+                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(errors);
+
+                return badRequestResult;
+            }
+
+            var roleResult = await _userManager.AddToRoleAsync(user, InstaConnectDataConstants.UserRole);
+
+            if (!roleResult.Succeeded)
+            {
+                var errors = roleResult.Errors
                     .Select(x => x.Description)
                     .ToArray();
 
@@ -105,7 +119,7 @@ namespace InstaConnect.Business.Services
 
             if (user == null)
             {
-                var badRequest = _resultFactory.GetBadRequestResult<string>(InstaConnectErrorMessages.AccountEmailDoesNotExist);
+                var badRequest = _resultFactory.GetBadRequestResult<string>(InstaConnectBusinessErrorMessages.AccountEmailDoesNotExist);
 
                 return badRequest;
             }
@@ -114,7 +128,7 @@ namespace InstaConnect.Business.Services
 
             if (emailIsConfirmed)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectErrorMessages.AccountEmailAlreadyConfirmed);
+                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectBusinessErrorMessages.AccountEmailAlreadyConfirmed);
 
                 return badRequestResult;
             }
@@ -134,7 +148,7 @@ namespace InstaConnect.Business.Services
 
             if (user == null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectErrorMessages.AccountInvalidToken);
+                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectBusinessErrorMessages.AccountInvalidToken);
 
                 return badRequestResult;
             }
@@ -143,7 +157,7 @@ namespace InstaConnect.Business.Services
 
             if (emailIsConfirmed)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectErrorMessages.AccountEmailAlreadyConfirmed);
+                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectBusinessErrorMessages.AccountEmailAlreadyConfirmed);
 
                 return badRequestResult;
             }
@@ -173,7 +187,7 @@ namespace InstaConnect.Business.Services
 
             if (user == null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectErrorMessages.AccountEmailDoesNotExist);
+                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectBusinessErrorMessages.AccountEmailDoesNotExist);
 
                 return badRequestResult;
             }
@@ -193,7 +207,7 @@ namespace InstaConnect.Business.Services
 
             if (user == null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectErrorMessages.AccountInvalidToken);
+                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectBusinessErrorMessages.AccountInvalidToken);
 
                 return badRequestResult;
             }

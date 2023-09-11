@@ -1,12 +1,12 @@
 ﻿using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Models.DTOs.Token;
-using InstaConnect.Business.Models.Utilities;
+using InstaConnect.Data.Models.Utilities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using TokenOptions = InstaConnect.Business.Models.Options.TokenOptions;
+using TokenOptions = InstaConnect.Data.Models.Models.Options.TokenOptions;
 
 namespace InstaConnect.Business.Helpers
 {

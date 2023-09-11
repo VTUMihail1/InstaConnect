@@ -20,8 +20,4 @@
     <ProjectReference Include="..\InstaConnect.Data.Abstraction\InstaConnect.Data.Abstraction.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
-
 </Project>

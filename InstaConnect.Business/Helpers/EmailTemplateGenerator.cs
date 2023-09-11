@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Business.Abstraction.Helpers;
-using InstaConnect.Business.Models.Options;
-using InstaConnect.Business.Models.Utilities;
+using InstaConnect.Data.Models.Models.Options;
+using InstaConnect.Data.Models.Utilities;
 using System.Text;
 
 namespace InstaConnect.Business.Helpers

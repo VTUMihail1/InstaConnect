@@ -74,7 +74,7 @@ namespace InstaConnect.Business.Services
         {
             if (value == null)
             {
-                var unauthorizedResult = _resultFactory.GetUnauthorizedResult<TokenResultDTO>(InstaConnectErrorMessages.AccountAccessTokenNotInHeader);
+                var unauthorizedResult = _resultFactory.GetUnauthorizedResult<TokenResultDTO>(InstaConnectBusinessErrorMessages.AccountAccessTokenNotInHeader);
 
                 return unauthorizedResult;
             }
@@ -83,7 +83,7 @@ namespace InstaConnect.Business.Services
 
             if (token == null)
             {
-                var unauthorizedResult = _resultFactory.GetUnauthorizedResult<TokenResultDTO>(InstaConnectErrorMessages.AccountAccessTokenNotFound);
+                var unauthorizedResult = _resultFactory.GetUnauthorizedResult<TokenResultDTO>(InstaConnectBusinessErrorMessages.AccountAccessTokenNotFound);
 
                 return unauthorizedResult;
             }
@@ -98,7 +98,7 @@ namespace InstaConnect.Business.Services
         {
             if (value == null)
             {
-                var unauthorizedResult = _resultFactory.GetUnauthorizedResult<TokenResultDTO>(InstaConnectErrorMessages.AccountAccessTokenNotInHeader);
+                var unauthorizedResult = _resultFactory.GetUnauthorizedResult<TokenResultDTO>(InstaConnectBusinessErrorMessages.AccountAccessTokenNotInHeader);
 
                 return unauthorizedResult;
             }
@@ -107,7 +107,7 @@ namespace InstaConnect.Business.Services
 
             if (token == null)
             {
-                var unauthorizedResult = _resultFactory.GetUnauthorizedResult<TokenResultDTO>(InstaConnectErrorMessages.AccountAccessTokenNotFound);
+                var unauthorizedResult = _resultFactory.GetUnauthorizedResult<TokenResultDTO>(InstaConnectBusinessErrorMessages.AccountAccessTokenNotFound);
 
                 return unauthorizedResult;
             }

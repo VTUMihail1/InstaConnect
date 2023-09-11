@@ -4,12 +4,15 @@ using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.AutoMapper;
 using InstaConnect.Business.Factories;
 using InstaConnect.Business.Helpers;
-using InstaConnect.Business.Models.Options;
 using InstaConnect.Business.Services;
 using InstaConnect.Data;
+using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
+using InstaConnect.Data.Helpers;
 using InstaConnect.Data.Models.Entities;
+using InstaConnect.Data.Models.Models.Options;
 using InstaConnect.Data.Repositories;
+using InstaConnect.Presentation.API.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -20,10 +23,11 @@ using SendGrid;
 using System.Text;
 using System.Text.Json.Serialization;
 using TokenHandler = InstaConnect.Business.Helpers.TokenHandler;
-using TokenOptions = InstaConnect.Business.Models.Options.TokenOptions;
+using TokenOptions = InstaConnect.Data.Models.Models.Options.TokenOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var adminOptions = builder.Configuration.GetSection(nameof(AdminOptions)).Get<AdminOptions>();
 var tokenOptions = builder.Configuration.GetSection(nameof(TokenOptions)).Get<TokenOptions>();
 var emailOptions = builder.Configuration.GetSection(nameof(EmailSenderOptions)).Get<EmailSenderOptions>();
 var emailTemplateOptions = builder.Configuration.GetSection(nameof(EmailTemplateOptions)).Get<EmailTemplateOptions>();
@@ -36,9 +40,11 @@ builder.Services
         options.UseMySql(connectionString, serverVersion);
     });
 
+builder.Services.AddSingleton(adminOptions);
 builder.Services.AddSingleton(tokenOptions);
 builder.Services.AddSingleton(emailOptions);
 builder.Services.AddSingleton(emailTemplateOptions);
+builder.Services.AddScoped<IDbSeeder, DbSeeder>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IEmailHandler, EmailHandler>();
 builder.Services.AddScoped<IEmailTemplateGenerator, EmailTemplateGenerator>();
@@ -124,6 +130,8 @@ builder.Services
     });
 
 var app = builder.Build();
+
+await app.SeedDb();
 
 app.UseSwagger();
 app.UseSwaggerUI();
