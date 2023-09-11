@@ -1,8 +1,6 @@
 ﻿using InstaConnect.Business.Abstraction.Helpers;
-using InstaConnect.Business.Extensions;
 using InstaConnect.Business.Models.DTOs.Account;
 using InstaConnect.Business.Models.Options;
-using Microsoft.Extensions.Hosting;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -11,19 +9,21 @@ namespace InstaConnect.Business.Helpers
     public class EmailSender : IEmailSender
     {
         private readonly ISendGridClient _sendGridClient;
+        private readonly EmailSenderOptions _emailSenderOptions;
 
-        public EmailSender(ISendGridClient sendGridClient, EmailOptions emailOptions)
+        public EmailSender(ISendGridClient sendGridClient, EmailSenderOptions emailSenderOptions)
         {
             _sendGridClient = sendGridClient;
+            _emailSenderOptions = emailSenderOptions;
         }
 
-        public async Task SendEmailAsync(AccountSendEmailDTO accountSendEmailDTO, string sender)
+        public async Task SendEmailAsync(AccountSendEmailDTO accountSendEmailDTO)
         {
-            var emailSender = MailHelper.StringToEmailAddress(sender);
-            var emailReceiver = MailHelper.StringToEmailAddress(accountSendEmailDTO.Email);
-            var email = MailHelper.CreateSingleEmail(emailSender, emailReceiver, accountSendEmailDTO.Subject, accountSendEmailDTO.PlainText, accountSendEmailDTO.Html);
+            var sender = MailHelper.StringToEmailAddress(_emailSenderOptions.Sender);
+            var receiver = MailHelper.StringToEmailAddress(accountSendEmailDTO.Email);
+            var email = MailHelper.CreateSingleEmail(sender, receiver, accountSendEmailDTO.Subject, accountSendEmailDTO.PlainText, accountSendEmailDTO.Html);
 
-            var response = await _sendGridClient.SendEmailAsync(email);
+            await _sendGridClient.SendEmailAsync(email);
         }
     }
 }

@@ -8,30 +8,32 @@ namespace InstaConnect.Business.Helpers
     {
         private readonly IEmailSender _emailSender;
         private readonly IEmailFactory _emailFactory;
-        private readonly EmailOptions _emailOptions;
+        private readonly IEmailTemplateGenerator _emailTemplateGenerator;
 
         public EmailHandler(
             IEmailSender emailSender,
             IEmailFactory emailFactory,
-            EmailOptions emailOptions)
+            IEmailTemplateGenerator emailTemplateGenerator)
         {
             _emailSender = emailSender;
             _emailFactory = emailFactory;
-            _emailOptions = emailOptions;
+            _emailTemplateGenerator = emailTemplateGenerator;
         }
 
-        public async Task SendEmailVerification(string email, string userId, string token)
+        public async Task SendEmailConfirmationAsync(string email, string userId, string token)
         {
-            var accountSendEmailDTO = _emailFactory.GetEmailVerificationDTO(email, _emailOptions.ConfirmEmailEndpoint, userId, token);
+            var emailConfirmationTemplate = _emailTemplateGenerator.GenerateEmailConfirmationTemplate(userId, token);
+            var accountSendEmailDTO = _emailFactory.GetEmailVerificationDTO(email, emailConfirmationTemplate);
 
-            await _emailSender.SendEmailAsync(accountSendEmailDTO, _emailOptions.Sender);
+            await _emailSender.SendEmailAsync(accountSendEmailDTO);
         }
 
         public async Task SendPasswordResetAsync(string email, string userId, string token)
         {
-            var accountSendEmailDTO = _emailFactory.GetPasswordResetDTO(email, _emailOptions.ResetPasswordEndpoint, userId, token);
+            var forgotPasswordTemplate = _emailTemplateGenerator.GenerateForgotPasswordTemplate(userId, token);
+            var accountSendEmailDTO = _emailFactory.GetPasswordResetDTO(email, forgotPasswordTemplate);
 
-            await _emailSender.SendEmailAsync(accountSendEmailDTO, _emailOptions.Sender);
+            await _emailSender.SendEmailAsync(accountSendEmailDTO);
         }
     }
 }

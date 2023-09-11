@@ -25,7 +25,8 @@ using TokenOptions = InstaConnect.Business.Models.Options.TokenOptions;
 var builder = WebApplication.CreateBuilder(args);
 
 var tokenOptions = builder.Configuration.GetSection(nameof(TokenOptions)).Get<TokenOptions>();
-var emailOptions = builder.Configuration.GetSection(nameof(EmailOptions)).Get<EmailOptions>();
+var emailOptions = builder.Configuration.GetSection(nameof(EmailSenderOptions)).Get<EmailSenderOptions>();
+var emailTemplateOptions = builder.Configuration.GetSection(nameof(EmailTemplateOptions)).Get<EmailTemplateOptions>();
 
 builder.Services
     .AddDbContext<InstaConnectContext>(options =>
@@ -37,9 +38,11 @@ builder.Services
 
 builder.Services.AddSingleton(tokenOptions);
 builder.Services.AddSingleton(emailOptions);
+builder.Services.AddSingleton(emailTemplateOptions);
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IEmailFactory, EmailFactory>();
 builder.Services.AddScoped<IEmailHandler, EmailHandler>();
+builder.Services.AddScoped<IEmailTemplateGenerator, EmailTemplateGenerator>();
 builder.Services.AddScoped<ISendGridClient>(_ => new SendGridClient(emailOptions.APIKey));
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<ITokenHandler, TokenHandler>();

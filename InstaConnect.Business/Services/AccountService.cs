@@ -121,7 +121,7 @@ namespace InstaConnect.Business.Services
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            await _emailHandler.SendEmailVerification(user.Email, user.Id, token);
+            await _emailHandler.SendEmailConfirmationAsync(user.Email, user.Id, token);
 
             var okResult = _resultFactory.GetOkResult(token);
 
