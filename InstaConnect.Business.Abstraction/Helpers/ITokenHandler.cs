@@ -4,10 +4,10 @@ namespace InstaConnect.Business.Abstraction.Helpers
 {
     public interface ITokenHandler
     {
-        TokenAddDTO GenerateAccessToken(TokenGenerateDTO tokenGenerateDTO);
+        TokenAddDTO GenerateAccessToken(string userId);
 
-        TokenAddDTO GenerateEmailConfirmationToken(string token);
+        TokenAddDTO GenerateEmailConfirmationToken(string value);
 
-        TokenAddDTO GenerateForgotPasswordToken(string token);
+        TokenAddDTO GenerateForgotPasswordToken(string value);
     }
 }

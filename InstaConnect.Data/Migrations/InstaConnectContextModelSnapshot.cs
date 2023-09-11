@@ -119,7 +119,7 @@ namespace InstaConnect.Data.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasMaxLength(255)
+                        .HasMaxLength(1000)
                         .HasColumnType("varchar")
                         .HasColumnName("value");
 

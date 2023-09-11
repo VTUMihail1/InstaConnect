@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Models.DTOs.Token;
-using InstaConnect.Data.Models.Utilities;
+using InstaConnect.Business.Models.Utilities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -21,28 +21,28 @@ namespace InstaConnect.Business.Helpers
             _tokenOptions = tokenOptions;
         }
 
-        public TokenAddDTO GenerateForgotPasswordToken(string token)
+        public TokenAddDTO GenerateForgotPasswordToken(string value)
         {
-            var forgotPasswordToken = _tokenFactory.GetTokenAddDTO(token, InstaConnectConstants.AccountForgotPasswordTokenType, _tokenOptions.UserTokenLifetimeSeconds);
+            var forgotPasswordToken = _tokenFactory.GetTokenAddDTO(value, InstaConnectBusinessConstants.AccountForgotPasswordTokenType, _tokenOptions.UserTokenLifetimeSeconds);
 
             return forgotPasswordToken;
         }
 
-        public TokenAddDTO GenerateEmailConfirmationToken(string token)
+        public TokenAddDTO GenerateEmailConfirmationToken(string value)
         {
-            var emailConfirmationToken = _tokenFactory.GetTokenAddDTO(token, InstaConnectConstants.AccountConfirmEmailTokenType, _tokenOptions.UserTokenLifetimeSeconds);
+            var emailConfirmationToken = _tokenFactory.GetTokenAddDTO(value, InstaConnectBusinessConstants.AccountConfirmEmailTokenType, _tokenOptions.UserTokenLifetimeSeconds);
 
             return emailConfirmationToken;
         }
 
-        public TokenAddDTO GenerateAccessToken(TokenGenerateDTO tokenGenerateDTO)
+        public TokenAddDTO GenerateAccessToken(string userId)
         {
-            var claims = GetClaims(tokenGenerateDTO);
+            var claims = GetClaims(userId);
             var accessTokenValue = GetAccessToken(claims);
 
-            var value = InstaConnectConstants.AccessTokenPrefix + accessTokenValue;
+            var value = InstaConnectBusinessConstants.AccessTokenPrefix + accessTokenValue;
 
-            var accessToken = _tokenFactory.GetTokenAddDTO(value, InstaConnectConstants.AccessTokenType, _tokenOptions.AccessTokenLifetimeSeconds);
+            var accessToken = _tokenFactory.GetTokenAddDTO(value, InstaConnectBusinessConstants.AccessTokenType, _tokenOptions.AccessTokenLifetimeSeconds);
 
             return accessToken;
         }
@@ -70,13 +70,13 @@ namespace InstaConnect.Business.Helpers
             return token;
         }
 
-        private IEnumerable<Claim> GetClaims(TokenGenerateDTO tokenGenerateDTO)
+        private IEnumerable<Claim> GetClaims(string userId)
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, tokenGenerateDTO.UserId),
+                new Claim(JwtRegisteredClaimNames.Sub, userId),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString())
+                new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString())
             };
 
             return claims;

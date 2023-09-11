@@ -11,10 +11,10 @@ namespace InstaConnect.Business.Abstraction.Services
 
         Task<IResult<string>> SendAccountResetPasswordTokenAsync(string email);
 
-        Task<IResult<AccountResultDTO>> LoginAsync(AccountLoginDTO accountLoginDTO);
+        Task<IResult<string>> LoginAsync(AccountLoginDTO accountLoginDTO);
 
         Task<IResult<string>> ResetPasswordAsync(string userId, string token, AccountResetPasswordDTO accountResetPasswordDTO);
 
-        Task<IResult<AccountResultDTO>> SignUpAsync(AccountRegistrationDTO accountRegistrationDTO);
+        Task<IResult<string>> SignUpAsync(AccountRegistrationDTO accountRegistrationDTO);
     }
 }

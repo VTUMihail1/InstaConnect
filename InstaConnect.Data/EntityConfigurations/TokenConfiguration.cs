@@ -28,7 +28,7 @@ namespace InstaConnect.Data.EntityConfigurations
             builder.Property(p => p.Value)
                 .HasColumnName("value")
                 .HasColumnType("varchar")
-                .HasMaxLength(255)
+                .HasMaxLength(1000)
                 .IsRequired();
 
             builder.Property(p => p.ValidUntil)

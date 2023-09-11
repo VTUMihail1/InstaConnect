@@ -34,13 +34,13 @@ namespace InstaConnect.Business.Services
             _emailHandler = emailHandler;
         }
 
-        public async Task<IResult<AccountResultDTO>> LoginAsync(AccountLoginDTO accountLoginDTO)
+        public async Task<IResult<string>> LoginAsync(AccountLoginDTO accountLoginDTO)
         {
             var user = await _userManager.FindByEmailAsync(accountLoginDTO.Email);
 
             if (user == null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectBusinessErrorMessages.AccountInvalidLogin);
+                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectBusinessErrorMessages.AccountInvalidLogin);
 
                 return badRequestResult;
             }
@@ -49,7 +49,7 @@ namespace InstaConnect.Business.Services
 
             if (!result.Succeeded)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectBusinessErrorMessages.AccountInvalidLogin);
+                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectBusinessErrorMessages.AccountInvalidLogin);
 
                 return badRequestResult;
             }
@@ -58,24 +58,24 @@ namespace InstaConnect.Business.Services
 
             if (!emailIsConfirmed)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectBusinessErrorMessages.AccountEmailNotConfirmed);
+                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectBusinessErrorMessages.AccountEmailNotConfirmed);
 
                 return badRequestResult;
             }
 
-            var accountResultDTO = _mapper.Map<AccountResultDTO>(user);
-            var okResult = _resultFactory.GetOkResult(accountResultDTO);
+            var userId = await _userManager.GetUserIdAsync(user);
+            var okResult = _resultFactory.GetOkResult(userId);
 
             return okResult;
         }
 
-        public async Task<IResult<AccountResultDTO>> SignUpAsync(AccountRegistrationDTO accountRegistrationDTO)
+        public async Task<IResult<string>> SignUpAsync(AccountRegistrationDTO accountRegistrationDTO)
         {
             var existingUser = await _userManager.FindByEmailAsync(accountRegistrationDTO.Email);
 
             if (existingUser != null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectBusinessErrorMessages.AccountAlreadyExists);
+                var badRequestResult = _resultFactory.GetBadRequestResult<string>(InstaConnectBusinessErrorMessages.AccountAlreadyExists);
 
                 return badRequestResult;
             }
@@ -89,7 +89,7 @@ namespace InstaConnect.Business.Services
                     .Select(x => x.Description)
                     .ToArray();
 
-                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(errors);
+                var badRequestResult = _resultFactory.GetBadRequestResult<string>(errors);
 
                 return badRequestResult;
             }
@@ -102,13 +102,13 @@ namespace InstaConnect.Business.Services
                     .Select(x => x.Description)
                     .ToArray();
 
-                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(errors);
+                var badRequestResult = _resultFactory.GetBadRequestResult<string>(errors);
 
                 return badRequestResult;
             }
 
-            var accountResultDTO = _mapper.Map<AccountResultDTO>(user);
-            var okResult = _resultFactory.GetOkResult(accountResultDTO);
+            var userId = await _userManager.GetUserIdAsync(user);
+            var okResult = _resultFactory.GetOkResult(userId);
 
             return okResult;
         }
@@ -193,7 +193,6 @@ namespace InstaConnect.Business.Services
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
             await _emailHandler.SendPasswordResetAsync(user.Email, user.Id, token);
 
             var okResult = _resultFactory.GetOkResult(token);

@@ -2,7 +2,6 @@
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Models.DTOs.Account;
 using InstaConnect.Business.Models.DTOs.Token;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -30,10 +29,9 @@ namespace InstaConnect.Business.Services
             _resultFactory = resultFactory;
         }
 
-        public async Task<IResult<TokenResultDTO>> AddAccessTokenAsync(AccountResultDTO accountResultDTO)
+        public async Task<IResult<TokenResultDTO>> AddAccessTokenAsync(string userId)
         {
-            var tokenGenerateDTO = _mapper.Map<TokenGenerateDTO>(accountResultDTO);
-            var tokenAddDTO = _tokenHandler.GenerateAccessToken(tokenGenerateDTO);
+            var tokenAddDTO = _tokenHandler.GenerateAccessToken(userId);
 
             var token = _mapper.Map<Token>(tokenAddDTO);
             await _tokenRepository.AddAsync(token);

@@ -14,14 +14,10 @@
 
         public const string AccountForgotPasswordTitle = "InstaConnect Reset Password";
 
-        public const string EmailConfirmationTemplatePath = @"C:\Users\Misho\Desktop\InstaConnect\InstaConnect\InstaConnect.Business\Helpers\Templates\InstaConnectConfirmEmailTemplate.html";
+        public const string EmailConfirmationTemplatePath = @"C:\Users\Misho\Desktop\InstaConnect\InstaConnect\InstaConnect.Business\Templates\InstaConnectConfirmEmailTemplate.html";
 
-        public const string ForgotPasswordTemplatePath = @"C:\Users\Misho\Desktop\InstaConnect\InstaConnect\InstaConnect.Business\Helpers\Templates\InstaConnectResetPasswordTemplate.html";
+        public const string ForgotPasswordTemplatePath = @"C:\Users\Misho\Desktop\InstaConnect\InstaConnect\InstaConnect.Business\Templates\InstaConnectResetPasswordTemplate.html";
 
         public const string TemplateLinkPlaceholder = "InsertYourRouteValuesHere";
-
-        public const string AdminRole = "Admin";
-
-        public const string UserRole = "User";
     }
 }

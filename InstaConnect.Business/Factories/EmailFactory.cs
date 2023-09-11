@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Models.DTOs.Account;
-using InstaConnect.Data.Models.Utilities;
+using InstaConnect.Business.Models.Utilities;
 
 namespace InstaConnect.Business.Factories
 {
@@ -11,7 +11,7 @@ namespace InstaConnect.Business.Factories
             return new AccountSendEmailDTO()
             {
                 Email = email,
-                Subject = InstaConnectConstants.AccountEmailConfirmationTitle,
+                Subject = InstaConnectBusinessConstants.AccountEmailConfirmationTitle,
                 PlainText = string.Empty,
                 Html = template
             };
@@ -22,7 +22,7 @@ namespace InstaConnect.Business.Factories
             return new AccountSendEmailDTO()
             {
                 Email = email,
-                Subject = InstaConnectConstants.AccountForgotPasswordTitle,
+                Subject = InstaConnectBusinessConstants.AccountForgotPasswordTitle,
                 PlainText = string.Empty,
                 Html = template
             };

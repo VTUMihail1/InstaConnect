@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstaConnect.Data.Migrations
 {
     [DbContext(typeof(InstaConnectContext))]
-    [Migration("20230911165021_add-user-and-token-tables")]
-    partial class adduserandtokentables
+    [Migration("20230911180807_AddTokenAndUserTables")]
+    partial class AddTokenAndUserTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,7 +122,7 @@ namespace InstaConnect.Data.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasMaxLength(255)
+                        .HasMaxLength(1000)
                         .HasColumnType("varchar")
                         .HasColumnName("value");
 
