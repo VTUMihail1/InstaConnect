@@ -1,9 +1,9 @@
-﻿using InstaConnect.Data.Abstraction.Repositories;
+﻿using InstaConnect.Data.Abstraction.Repositories.Base;
 using InstaConnect.Data.Models.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace InstaConnect.Data.Repositories
+namespace InstaConnect.Data.Repositories.Base
 {
     public abstract class Repository<TEntity> : IRepository<TEntity>
         where TEntity : class, IBaseEntity
@@ -14,7 +14,6 @@ namespace InstaConnect.Data.Repositories
         {
             _instaConnectContext = instaConnectContext;
         }
-
         public async Task<IEnumerable<TEntity>> GetAllFilteredAsync(Expression<Func<TEntity, bool>> expression)
         {
             var filteredEntities = await _instaConnectContext
@@ -58,7 +57,7 @@ namespace InstaConnect.Data.Repositories
             await _instaConnectContext.SaveChangesAsync();
         }
 
-        public async Task Delete(TEntity entity)
+        public async Task DeleteAsync(TEntity entity)
         {
             _instaConnectContext.Set<TEntity>().Remove(entity);
             await _instaConnectContext.SaveChangesAsync();

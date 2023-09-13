@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace InstaConnect.Data.Models.Entities
 {
-    public class User : IdentityUser<string>, IBaseEntity
+    public class User : IdentityUser, IBaseEntity
     {
+        public User() : base() { }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

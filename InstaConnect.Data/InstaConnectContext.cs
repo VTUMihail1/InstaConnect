@@ -19,10 +19,13 @@ namespace InstaConnect.Data
         public InstaConnectContext(DbContextOptions<InstaConnectContext> options) : base(options)
         { }
 
+        public DbSet<Token> Tokens { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new TokenConfiguration());
             modelBuilder.ApplyConfiguration(new UserLoginConfiguration());
             modelBuilder.ApplyConfiguration(new UserTokenConfiguration());
             modelBuilder.ApplyConfiguration(new RoleClaimConfiguration());
