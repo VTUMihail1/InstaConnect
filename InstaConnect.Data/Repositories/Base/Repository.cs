@@ -14,7 +14,6 @@ namespace InstaConnect.Data.Repositories.Base
         {
             _instaConnectContext = instaConnectContext;
         }
-
         public async Task<IEnumerable<TEntity>> GetAllFilteredAsync(Expression<Func<TEntity, bool>> expression)
         {
             var filteredEntities = await _instaConnectContext

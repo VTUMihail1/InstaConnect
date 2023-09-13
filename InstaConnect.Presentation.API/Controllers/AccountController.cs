@@ -2,6 +2,7 @@
 using InstaConnect.Business.Models.DTOs.Account;
 using InstaConnect.Business.Models.Enums;
 using InstaConnect.Presentation.API.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Presentation.API.Controllers
@@ -39,6 +40,7 @@ namespace InstaConnect.Presentation.API.Controllers
 
         // DELETE: api/Account/logout
         [HttpDelete("logout")]
+        [Authorize]
         [Token]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

@@ -70,13 +70,6 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<TokenResultDTO>> GetByValueAsync(string value)
         {
-            if (value == null)
-            {
-                var unauthorizedResult = _resultFactory.GetUnauthorizedResult<TokenResultDTO>(InstaConnectBusinessErrorMessages.AccountAccessTokenNotInHeader);
-
-                return unauthorizedResult;
-            }
-
             var token = await _tokenRepository.FindEntityAsync(t => t.Value == value);
 
             if (token == null)
@@ -94,21 +87,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<TokenResultDTO>> RemoveAsync(string value)
         {
-            if (value == null)
-            {
-                var unauthorizedResult = _resultFactory.GetUnauthorizedResult<TokenResultDTO>(InstaConnectBusinessErrorMessages.AccountAccessTokenNotInHeader);
-
-                return unauthorizedResult;
-            }
-
             var token = await _tokenRepository.FindEntityAsync(t => t.Value == value);
-
-            if (token == null)
-            {
-                var unauthorizedResult = _resultFactory.GetUnauthorizedResult<TokenResultDTO>(InstaConnectBusinessErrorMessages.AccountAccessTokenNotFound);
-
-                return unauthorizedResult;
-            }
 
             await _tokenRepository.DeleteAsync(token);
 

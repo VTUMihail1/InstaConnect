@@ -12,15 +12,15 @@ namespace InstaConnect.Presentation.API.Filters
 
             var token = context.HttpContext.Request.Headers.Authorization;
 
-            var realToken = tokenService
+            var exisitngToken = tokenService
                 .GetByValueAsync(token)
                 .GetAwaiter()
                 .GetResult()
                 .Data;
 
-            if (realToken == null)
+            if (exisitngToken == null)
             {
-                context.Result = new ForbidResult();
+                context.Result = new UnauthorizedResult();
             }
 
             return;
