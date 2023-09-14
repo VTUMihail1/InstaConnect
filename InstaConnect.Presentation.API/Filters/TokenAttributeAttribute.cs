@@ -1,5 +1,4 @@
-﻿using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Models.Enums;
+﻿using InstaConnect.Data.Abstraction.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -9,15 +8,15 @@ namespace InstaConnect.Presentation.API.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var tokenService = context.HttpContext.RequestServices.GetService<ITokenService>();
-            var token = context.HttpContext.Request.Headers.Authorization;
+            var tokenManager = context.HttpContext.RequestServices.GetService<ITokenManager>();
+            var value = context.HttpContext.Request.Headers.Authorization;
 
-            var exisitngToken = tokenService
-                .GetByValueAsync(token)
+            var token = tokenManager
+                .GetByValueAsync(value)
                 .GetAwaiter()
                 .GetResult();
 
-            if (exisitngToken.StatusCode == InstaConnectStatusCode.Unauthorized)
+            if (token == null)
             {
                 context.Result = new UnauthorizedResult();
             }

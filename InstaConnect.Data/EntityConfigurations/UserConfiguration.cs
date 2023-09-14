@@ -39,6 +39,12 @@ namespace InstaConnect.Data.EntityConfigurations
             builder.Property(p => p.UserName).HasColumnName("username");
             builder.Property(p => p.CreatedAt).HasColumnName("created_at");
             builder.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+
+            builder.HasMany(u => u.Tokens)
+                .WithOne(t => t.User)
+                .HasForeignKey(t => t.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

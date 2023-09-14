@@ -27,7 +27,7 @@ namespace InstaConnect.Business.Abstraction.Services
         /// </summary>
         /// <param name="email">The email address of the user.</param>
         /// <returns>An <see cref="IResult{T}"/> containing the result of sending the email confirmation token.</returns>
-        Task<IResult<string>> SendEmailConfirmationTokenAsync(string email);
+        Task<IResult<string>> ResendEmailConfirmationTokenAsync(string email);
 
         /// <summary>
         /// Confirms a user's email using the provided token.
@@ -52,5 +52,12 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <param name="accountResetPasswordDTO">The DTO containing the new password.</param>
         /// <returns>An <see cref="IResult{T}"/> containing the result of resetting the password.</returns>
         Task<IResult<string>> ResetPasswordWithTokenAsync(string userId, string encodedToken, AccountResetPasswordDTO accountResetPasswordDTO);
+
+        /// <summary>
+        /// Logs out a user.
+        /// </summary>
+        /// <param name="value">The value to be logged out.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing the result of the logout operation.</returns>
+        Task<IResult<string>> LogoutAsync(string value);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Business.Models.Utilities
 {
-    public static class InstaConnectBusinessErrorMessages
+    public static class InstaConnectErrorMessages
     {
         public const string AccountInvalidToken = "Token is expired or is invalid";
 
@@ -17,5 +17,7 @@
         public const string AccountAccessTokenNotFound = "Token with that value does not exist";
 
         public const string AccountAccessTokenNotInHeader = "You need to be logged in before you logout";
+
+        public const string AccountSendEmailFailed = "Account was registered but failed to send email";
     }
 }

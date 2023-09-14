@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\InstaConnect.Data.Models\InstaConnect.Data.Models.csproj" />
   </ItemGroup>
 

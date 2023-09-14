@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Models.DTOs.Account;
-using InstaConnect.Data.Models.Models.Options;
+using InstaConnect.Business.Models.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -17,13 +17,15 @@ namespace InstaConnect.Business.Helpers
             _emailSenderOptions = emailSenderOptions;
         }
 
-        public async Task SendEmailAsync(AccountSendEmailDTO accountSendEmailDTO)
+        public async Task<Response> SendEmailAsync(AccountSendEmailDTO accountSendEmailDTO)
         {
             var sender = MailHelper.StringToEmailAddress(_emailSenderOptions.Sender);
             var receiver = MailHelper.StringToEmailAddress(accountSendEmailDTO.Email);
             var email = MailHelper.CreateSingleEmail(sender, receiver, accountSendEmailDTO.Subject, accountSendEmailDTO.PlainText, accountSendEmailDTO.Html);
 
-            await _sendGridClient.SendEmailAsync(email);
+            var result = await _sendGridClient.SendEmailAsync(email);
+
+            return result;
         }
     }
 }

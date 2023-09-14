@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Business.Models.DTOs.Account;
+using SendGrid;
 
 namespace InstaConnect.Business.Abstraction.Helpers
 {
@@ -12,6 +13,6 @@ namespace InstaConnect.Business.Abstraction.Helpers
         /// </summary>
         /// <param name="accountSendEmailDTO">An instance of <see cref="AccountSendEmailDTO"/> containing email message details.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task SendEmailAsync(AccountSendEmailDTO accountSendEmailDTO);
+        Task<Response> SendEmailAsync(AccountSendEmailDTO accountSendEmailDTO);
     }
 }

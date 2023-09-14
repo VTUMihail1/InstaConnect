@@ -3,13 +3,13 @@ using InstaConnect.Business.Abstraction.Helpers;
 
 namespace InstaConnect.Business.Helpers
 {
-    public class EmailHandler : IEmailHandler
+    public class EmailManager : IEmailManager
     {
         private readonly IEmailSender _emailSender;
         private readonly IEmailFactory _emailFactory;
         private readonly IEmailTemplateGenerator _emailTemplateGenerator;
 
-        public EmailHandler(
+        public EmailManager(
             IEmailSender emailSender,
             IEmailFactory emailFactory,
             IEmailTemplateGenerator emailTemplateGenerator)
@@ -19,20 +19,24 @@ namespace InstaConnect.Business.Helpers
             _emailTemplateGenerator = emailTemplateGenerator;
         }
 
-        public async Task SendEmailConfirmationAsync(string email, string userId, string token)
+        public async Task<bool> SendEmailConfirmationAsync(string email, string userId, string token)
         {
             var emailConfirmationTemplate = _emailTemplateGenerator.GenerateEmailConfirmationTemplate(userId, token);
             var accountSendEmailDTO = _emailFactory.GetEmailVerificationDTO(email, emailConfirmationTemplate);
 
-            await _emailSender.SendEmailAsync(accountSendEmailDTO);
+            var result = await _emailSender.SendEmailAsync(accountSendEmailDTO);
+
+            return result.IsSuccessStatusCode;
         }
 
-        public async Task SendPasswordResetAsync(string email, string userId, string token)
+        public async Task<bool> SendPasswordResetAsync(string email, string userId, string token)
         {
             var forgotPasswordTemplate = _emailTemplateGenerator.GenerateForgotPasswordTemplate(userId, token);
             var accountSendEmailDTO = _emailFactory.GetPasswordResetDTO(email, forgotPasswordTemplate);
 
-            await _emailSender.SendEmailAsync(accountSendEmailDTO);
+            var result = await _emailSender.SendEmailAsync(accountSendEmailDTO);
+
+            return result.IsSuccessStatusCode;
         }
     }
 }

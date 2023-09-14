@@ -14,6 +14,8 @@ namespace InstaConnect.Data.Models.Entities
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+
+        public ICollection<Token> Tokens { get; set; }
     }
 }
 

@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Business.Models.Utilities
 {
-    public static class InstaConnectBusinessModelConfiguration
+    public static class InstaConnectModelConfigurations
     {
         public const int AccountFirstNameMinLength = 3;
 

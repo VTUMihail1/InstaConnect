@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents an interface for handling email-related operations such as sending email confirmations and password reset emails.
     /// </summary>
-    public interface IEmailHandler
+    public interface IEmailManager
     {
         /// <summary>
         /// Sends an email confirmation email asynchronously.
@@ -12,7 +12,7 @@
         /// <param name="userId">The user's unique identifier.</param>
         /// <param name="token">The email confirmation token.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task SendEmailConfirmationAsync(string email, string userId, string token);
+        Task<bool> SendEmailConfirmationAsync(string email, string userId, string token);
 
         /// <summary>
         /// Sends a password reset email asynchronously.
@@ -21,6 +21,6 @@
         /// <param name="userId">The user's unique identifier.</param>
         /// <param name="token">The password reset token.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task SendPasswordResetAsync(string email, string userId, string token);
+        Task<bool> SendPasswordResetAsync(string email, string userId, string token);
     }
 }

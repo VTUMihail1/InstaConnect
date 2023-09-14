@@ -1,7 +1,11 @@
-﻿namespace InstaConnect.Business.Models.Utilities
+﻿namespace InstaConnect.Data.Models.Utilities
 {
-    public static class InstaConnectBusinessConstants
+    public static class InstaConnectConstants
     {
+        public const string AdminRole = "Admin";
+
+        public const string UserRole = "User";
+
         public const string AccessTokenPrefix = "Bearer ";
 
         public const string AccessTokenType = "AccessToken";
