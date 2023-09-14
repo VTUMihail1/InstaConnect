@@ -6,22 +6,22 @@ namespace InstaConnect.Business.Models.DTOs.Account
     public class AccountRegistrationDTO
     {
         [Required]
-        [MinLength(InstaConnectBusinessModelConfiguration.AccountUsernameMinLength)]
-        [MaxLength(InstaConnectBusinessModelConfiguration.AccountUsernameMaxLength)]
+        [MinLength(InstaConnectModelConfigurations.AccountUsernameMinLength)]
+        [MaxLength(InstaConnectModelConfigurations.AccountUsernameMaxLength)]
         public string Username { get; set; }
 
         [Required]
         [EmailAddress]
-        [MinLength(InstaConnectBusinessModelConfiguration.AccountEmailMinLength)]
-        [MaxLength(InstaConnectBusinessModelConfiguration.AccountEmailMaxLength)]
-        [RegularExpression(InstaConnectBusinessModelConfiguration.AccountEmailRegex)]
+        [MinLength(InstaConnectModelConfigurations.AccountEmailMinLength)]
+        [MaxLength(InstaConnectModelConfigurations.AccountEmailMaxLength)]
+        [RegularExpression(InstaConnectModelConfigurations.AccountEmailRegex)]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [MinLength(InstaConnectBusinessModelConfiguration.AccountPasswordMinLength)]
-        [MaxLength(InstaConnectBusinessModelConfiguration.AccountPasswordMaxLength)]
-        [RegularExpression(InstaConnectBusinessModelConfiguration.AccountPasswordRegex)]
+        [MinLength(InstaConnectModelConfigurations.AccountPasswordMinLength)]
+        [MaxLength(InstaConnectModelConfigurations.AccountPasswordMaxLength)]
+        [RegularExpression(InstaConnectModelConfigurations.AccountPasswordRegex)]
         public string Password { get; set; }
 
         [Required]
@@ -30,13 +30,13 @@ namespace InstaConnect.Business.Models.DTOs.Account
         public string ConfirmPassword { get; set; }
 
         [Required]
-        [MinLength(InstaConnectBusinessModelConfiguration.AccountFirstNameMinLength)]
-        [MaxLength(InstaConnectBusinessModelConfiguration.AccountFirstNameMaxLength)]
+        [MinLength(InstaConnectModelConfigurations.AccountFirstNameMinLength)]
+        [MaxLength(InstaConnectModelConfigurations.AccountFirstNameMaxLength)]
         public string FirstName { get; set; }
 
         [Required]
-        [MinLength(InstaConnectBusinessModelConfiguration.AccountLastNameMinLength)]
-        [MaxLength(InstaConnectBusinessModelConfiguration.AccountLastNameMaxLength)]
+        [MinLength(InstaConnectModelConfigurations.AccountLastNameMinLength)]
+        [MaxLength(InstaConnectModelConfigurations.AccountLastNameMaxLength)]
         public string LastName { get; set; }
     }
 }

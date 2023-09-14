@@ -36,26 +36,6 @@ namespace InstaConnect.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "token",
-                columns: table => new
-                {
-                    id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    value = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    type = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    is_valid_until = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_token", x => x.id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "user",
                 columns: table => new
                 {
@@ -118,6 +98,34 @@ namespace InstaConnect.Data.Migrations
                         name: "FK_role_claim_role_role_id",
                         column: x => x.role_id,
                         principalTable: "role",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "token",
+                columns: table => new
+                {
+                    id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    value = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    type = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    is_valid_until = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_token", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_token_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -243,6 +251,11 @@ namespace InstaConnect.Data.Migrations
                 name: "IX_role_claim_role_id",
                 table: "role_claim",
                 column: "role_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_token_UserId",
+                table: "token",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",

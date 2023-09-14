@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstaConnect.Data.Migrations
 {
     [DbContext(typeof(InstaConnectContext))]
-    [Migration("20230911180807_AddTokenAndUserTables")]
+    [Migration("20230914145351_AddTokenAndUserTables")]
     partial class AddTokenAndUserTables
     {
         /// <inheritdoc />
@@ -116,6 +116,10 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
                     b.Property<DateTime>("ValidUntil")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("is_valid_until");
@@ -127,6 +131,8 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnName("value");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("token", (string)null);
                 });
@@ -364,6 +370,17 @@ namespace InstaConnect.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Token", b =>
+                {
+                    b.HasOne("InstaConnect.Data.Models.Entities.User", "User")
+                        .WithMany("Tokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.UserClaim", b =>
                 {
                     b.HasOne("InstaConnect.Data.Models.Entities.User", null)
@@ -404,6 +421,11 @@ namespace InstaConnect.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.User", b =>
+                {
+                    b.Navigation("Tokens");
                 });
 #pragma warning restore 612, 618
         }

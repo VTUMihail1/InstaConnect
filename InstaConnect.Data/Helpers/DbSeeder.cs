@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Models.Entities;
-using InstaConnect.Data.Models.Models.Options;
+using InstaConnect.Data.Models.Options;
 using InstaConnect.Data.Models.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -39,8 +39,8 @@ namespace InstaConnect.Data.Helpers
                 return;
             }
 
-            await _roleManager.CreateAsync(new Role(InstaConnectDataConstants.AdminRole));
-            await _roleManager.CreateAsync(new Role(InstaConnectDataConstants.UserRole));
+            await _roleManager.CreateAsync(new Role(InstaConnectConstants.AdminRole));
+            await _roleManager.CreateAsync(new Role(InstaConnectConstants.UserRole));
         }
 
         private async Task SeedAdminAsync()
@@ -59,7 +59,7 @@ namespace InstaConnect.Data.Helpers
             };
 
             await _userManager.CreateAsync(adminUser, _adminOptions.Password);
-            await _userManager.AddToRoleAsync(adminUser, InstaConnectDataConstants.AdminRole);
+            await _userManager.AddToRoleAsync(adminUser, InstaConnectConstants.AdminRole);
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(adminUser);
             await _userManager.ConfirmEmailAsync(adminUser, token);

@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Utilities\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\InstaConnect.Business\InstaConnect.Business.csproj" />
     <ProjectReference Include="..\InstaConnect.Data\InstaConnect.Data.csproj" />
   </ItemGroup>
