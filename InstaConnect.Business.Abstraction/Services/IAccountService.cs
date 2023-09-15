@@ -4,60 +4,60 @@ using InstaConnect.Business.Models.Results;
 namespace InstaConnect.Business.Abstraction.Services
 {
     /// <summary>
-    /// Represents the account service for user authentication and account management.
+    /// Represents a service for managing user accounts.
     /// </summary>
     public interface IAccountService
     {
         /// <summary>
-        /// Logs in a user with the provided credentials.
+        /// Attempts to log in a user asynchronously.
         /// </summary>
-        /// <param name="accountLoginDTO">The DTO containing login information.</param>
-        /// <returns>An <see cref="IResult{T}"/> containing the result of the login operation.</returns>
-        Task<IResult<string>> LoginAsync(AccountLoginDTO accountLoginDTO);
+        /// <param name="accountLoginDTO">The user's login information.</param>
+        /// <returns>An asynchronous task that returns the result of the login operation.</returns>
+        Task<IResult<AccountResultDTO>> LoginAsync(AccountLoginDTO accountLoginDTO);
 
         /// <summary>
-        /// Registers a new user account.
+        /// Registers a new user asynchronously.
         /// </summary>
-        /// <param name="accountRegistrationDTO">The DTO containing registration information.</param>
-        /// <returns>An <see cref="IResult{T}"/> containing the result of the registration operation.</returns>
-        Task<IResult<string>> SignUpAsync(AccountRegistrationDTO accountRegistrationDTO);
+        /// <param name="accountRegistrationDTO">The user's registration information.</param>
+        /// <returns>An asynchronous task that returns the result of the registration operation.</returns>
+        Task<IResult<AccountResultDTO>> SignUpAsync(AccountRegistrationDTO accountRegistrationDTO);
 
         /// <summary>
-        /// Sends an email confirmation token to the user with the specified email.
+        /// Resends an email confirmation token to the specified email address.
         /// </summary>
-        /// <param name="email">The email address of the user.</param>
-        /// <returns>An <see cref="IResult{T}"/> containing the result of sending the email confirmation token.</returns>
-        Task<IResult<string>> ResendEmailConfirmationTokenAsync(string email);
+        /// <param name="email">The email address to resend the token to.</param>
+        /// <returns>An asynchronous task that returns the result of the resend operation.</returns>
+        Task<IResult<AccountResultDTO>> ResendEmailConfirmationTokenAsync(string email);
 
         /// <summary>
-        /// Confirms a user's email using the provided token.
+        /// Confirms a user's email address using a token.
         /// </summary>
-        /// <param name="userId">The user's ID.</param>
+        /// <param name="userId">The ID of the user.</param>
         /// <param name="encodedToken">The encoded email confirmation token.</param>
-        /// <returns>An <see cref="IResult{T}"/> containing the result of confirming the email.</returns>
-        Task<IResult<string>> ConfirmEmailWithTokenAsync(string userId, string encodedToken);
+        /// <returns>An asynchronous task that returns the result of the email confirmation.</returns>
+        Task<IResult<AccountResultDTO>> ConfirmEmailWithTokenAsync(string userId, string encodedToken);
 
         /// <summary>
-        /// Sends a password reset token to the user with the specified email.
+        /// Sends a password reset token to the specified email address.
         /// </summary>
-        /// <param name="email">The email address of the user.</param>
-        /// <returns>An <see cref="IResult{T}"/> containing the result of sending the password reset token.</returns>
-        Task<IResult<string>> SendPasswordResetTokenByEmailAsync(string email);
+        /// <param name="email">The email address to send the reset token to.</param>
+        /// <returns>An asynchronous task that returns the result of the send operation.</returns>
+        Task<IResult<AccountResultDTO>> SendPasswordResetTokenByEmailAsync(string email);
 
         /// <summary>
-        /// Resets a user's password using the provided token and new password.
+        /// Resets a user's password using a token.
         /// </summary>
-        /// <param name="userId">The user's ID.</param>
+        /// <param name="userId">The ID of the user.</param>
         /// <param name="encodedToken">The encoded password reset token.</param>
-        /// <param name="accountResetPasswordDTO">The DTO containing the new password.</param>
-        /// <returns>An <see cref="IResult{T}"/> containing the result of resetting the password.</returns>
-        Task<IResult<string>> ResetPasswordWithTokenAsync(string userId, string encodedToken, AccountResetPasswordDTO accountResetPasswordDTO);
+        /// <param name="accountResetPasswordDTO">The new password and confirmation.</param>
+        /// <returns>An asynchronous task that returns the result of the password reset.</returns>
+        Task<IResult<AccountResultDTO>> ResetPasswordWithTokenAsync(string userId, string encodedToken, AccountResetPasswordDTO accountResetPasswordDTO);
 
         /// <summary>
-        /// Logs out a user.
+        /// Logs out the user with the specified value.
         /// </summary>
-        /// <param name="value">The value to be logged out.</param>
-        /// <returns>An <see cref="IResult{T}"/> containing the result of the logout operation.</returns>
-        Task<IResult<string>> LogoutAsync(string value);
+        /// <param name="value">The value associated with the user's session.</param>
+        /// <returns>An asynchronous task that returns the result of the logout operation.</returns>
+        Task<IResult<AccountResultDTO>> LogoutAsync(string value);
     }
 }

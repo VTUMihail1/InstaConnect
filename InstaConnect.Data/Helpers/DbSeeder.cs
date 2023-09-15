@@ -4,6 +4,7 @@ using InstaConnect.Data.Models.Options;
 using InstaConnect.Data.Models.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Data.Helpers
 {
@@ -18,12 +19,12 @@ namespace InstaConnect.Data.Helpers
             InstaConnectContext instaConnectContext,
             RoleManager<Role> roleManager,
             UserManager<User> userManager,
-            AdminOptions adminOptions)
+            IOptions<AdminOptions> options)
         {
             _instaConnectContext = instaConnectContext;
             _roleManager = roleManager;
             _userManager = userManager;
-            _adminOptions = adminOptions;
+            _adminOptions = options.Value;
         }
 
         public async Task SeedAsync()

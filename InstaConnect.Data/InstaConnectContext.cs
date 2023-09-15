@@ -21,10 +21,13 @@ namespace InstaConnect.Data
 
         public DbSet<Token> Tokens { get; set; }
 
+        public DbSet<Post> Posts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new PostConfigurations());
             modelBuilder.ApplyConfiguration(new TokenConfiguration());
             modelBuilder.ApplyConfiguration(new UserLoginConfiguration());
             modelBuilder.ApplyConfiguration(new UserTokenConfiguration());

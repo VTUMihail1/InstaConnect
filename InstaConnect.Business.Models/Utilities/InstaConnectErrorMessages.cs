@@ -4,7 +4,7 @@
     {
         public const string AccountInvalidToken = "Token is expired or is invalid";
 
-        public const string AccountInvalidLogin = "Email Or password Is invalid";
+        public const string AccountInvalidLogin = "Email or password are invalid";
 
         public const string AccountAlreadyExists = "Account with that email already exists";
 
@@ -19,5 +19,7 @@
         public const string AccountAccessTokenNotInHeader = "You need to be logged in before you logout";
 
         public const string AccountSendEmailFailed = "Account was registered but failed to send email";
+
+        public const string PostNotFound = "Post does not exist";
     }
 }

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstaConnect.Data.Migrations
 {
     [DbContext(typeof(InstaConnectContext))]
-    [Migration("20230914145351_AddTokenAndUserTables")]
-    partial class AddTokenAndUserTables
+    [Migration("20230914231450_AddUserTokenAndPostTables")]
+    partial class AddUserTokenAndPostTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,46 @@ namespace InstaConnect.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Post", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("varchar")
+                        .HasColumnName("content");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar")
+                        .HasColumnName("title");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("post", (string)null);
+                });
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.Role", b =>
                 {
@@ -361,6 +401,17 @@ namespace InstaConnect.Data.Migrations
                     b.ToTable("user_token", (string)null);
                 });
 
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Post", b =>
+                {
+                    b.HasOne("InstaConnect.Data.Models.Entities.User", "User")
+                        .WithMany("Posts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.RoleClaim", b =>
                 {
                     b.HasOne("InstaConnect.Data.Models.Entities.Role", null)
@@ -425,6 +476,8 @@ namespace InstaConnect.Data.Migrations
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.User", b =>
                 {
+                    b.Navigation("Posts");
+
                     b.Navigation("Tokens");
                 });
 #pragma warning restore 612, 618

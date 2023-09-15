@@ -33,14 +33,14 @@ namespace InstaConnect.Data.Abstraction.Repositories.Base
         /// Asynchronously retrieves all entities of type <typeparamref name="T"/> from the repository.
         /// </summary>
         /// <returns>A task representing the asynchronous operation and returning a collection of entities.</returns>
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<ICollection<T>> GetAllAsync();
 
         /// <summary>
         /// Asynchronously retrieves all entities of type <typeparamref name="T"/> from the repository based on a given expression.
         /// </summary>
         /// <param name="expression">The expression used to filter the entities.</param>
         /// <returns>A task representing the asynchronous operation and returning a collection of filtered entities.</returns>
-        Task<IEnumerable<T>> GetAllFilteredAsync(Expression<Func<T, bool>> expression);
+        Task<ICollection<T>> GetAllFilteredAsync(Expression<Func<T, bool>> expression);
 
         /// <summary>
         /// Asynchronously updates an existing entity in the repository.
