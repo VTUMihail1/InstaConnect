@@ -12,13 +12,11 @@ namespace InstaConnect.Data.EntityConfigurations
 
             builder.Property(p => p.FirstName)
                 .HasColumnName("first_name")
-                .HasColumnType("varchar")
                 .HasMaxLength(255)
                 .IsRequired();
 
             builder.Property(p => p.LastName)
                 .HasColumnName("last_name")
-                .HasColumnType("varchar")
                 .HasMaxLength(255)
                 .IsRequired();
 
@@ -47,8 +45,20 @@ namespace InstaConnect.Data.EntityConfigurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(u => u.Posts)
-                .WithOne(t => t.User)
-                .HasForeignKey(t => t.UserId)
+                .WithOne(l => l.User)
+                .HasForeignKey(l => l.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(u => u.Likes)
+                .WithOne(l => l.User)
+                .HasForeignKey(l => l.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(u => u.Comments)
+                .WithOne(c => c.User)
+                .HasForeignKey(c => c.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }

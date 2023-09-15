@@ -17,6 +17,7 @@ namespace InstaConnect.Presentation.API.Controllers
             _postService = postService;
         }
 
+        // GET: api/Post
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
@@ -26,6 +27,7 @@ namespace InstaConnect.Presentation.API.Controllers
             return Ok(posts);
         }
 
+        // GET: api/Post/user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [HttpGet("user/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllByUserId(string userId)
@@ -35,6 +37,7 @@ namespace InstaConnect.Presentation.API.Controllers
             return Ok(posts);
         }
 
+        // GET: api/Post/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [HttpGet("id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -45,6 +48,7 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
+        // POST: api/Post
         [Authorize]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -57,6 +61,7 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
+        // PUT: api/Post/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [HttpPut("id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -68,6 +73,7 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
+        // DELETE: api/Post/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [HttpDelete("id")]
         [ProducesResponseType(StatusCodes.Status200OK)]

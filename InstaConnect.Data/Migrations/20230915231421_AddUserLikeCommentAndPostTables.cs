@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace InstaConnect.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddUserTokenAndPostTables : Migration
+    public partial class AddUserLikeCommentAndPostTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -268,6 +269,83 @@ namespace InstaConnect.Data.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "comment",
+                columns: table => new
+                {
+                    id = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    user_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    post_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    content = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_comment", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_comment_post_post_id",
+                        column: x => x.post_id,
+                        principalTable: "post",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_comment_user_user_id",
+                        column: x => x.user_id,
+                        principalTable: "user",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "like",
+                columns: table => new
+                {
+                    post_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    user_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_like", x => new { x.user_id, x.post_id });
+                    table.ForeignKey(
+                        name: "FK_like_post_post_id",
+                        column: x => x.post_id,
+                        principalTable: "post",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_like_user_user_id",
+                        column: x => x.user_id,
+                        principalTable: "user",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_comment_post_id",
+                table: "comment",
+                column: "post_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_comment_user_id",
+                table: "comment",
+                column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_like_post_id",
+                table: "like",
+                column: "post_id");
+
             migrationBuilder.CreateIndex(
                 name: "IX_post_user_id",
                 table: "post",
@@ -320,7 +398,10 @@ namespace InstaConnect.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "post");
+                name: "comment");
+
+            migrationBuilder.DropTable(
+                name: "like");
 
             migrationBuilder.DropTable(
                 name: "role_claim");
@@ -339,6 +420,9 @@ namespace InstaConnect.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "user_token");
+
+            migrationBuilder.DropTable(
+                name: "post");
 
             migrationBuilder.DropTable(
                 name: "role");

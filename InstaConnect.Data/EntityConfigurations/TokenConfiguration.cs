@@ -14,20 +14,17 @@ namespace InstaConnect.Data.EntityConfigurations
 
             builder.Property(p => p.Id)
                 .HasColumnName("id")
-                .HasColumnType("varchar")
                 .HasMaxLength(255)
                 .ValueGeneratedNever()
                 .IsRequired();
 
             builder.Property(p => p.Type)
                 .HasColumnName("type")
-                .HasColumnType("varchar")
                 .HasMaxLength(255)
                 .IsRequired();
 
             builder.Property(p => p.Value)
                 .HasColumnName("value")
-                .HasColumnType("varchar")
                 .HasMaxLength(1000)
                 .IsRequired();
 
