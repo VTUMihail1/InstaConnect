@@ -30,10 +30,13 @@ using TokenOptions = InstaConnect.Data.Models.Options.TokenOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var adminOptions = builder.Configuration.GetSection(nameof(AdminOptions)).Get<AdminOptions>();
-var tokenOptions = builder.Configuration.GetSection(nameof(TokenOptions)).Get<TokenOptions>();
-var emailOptions = builder.Configuration.GetSection(nameof(EmailSenderOptions)).Get<EmailSenderOptions>();
-var emailTemplateOptions = builder.Configuration.GetSection(nameof(EmailTemplateOptions)).Get<EmailTemplateOptions>();
+var adminOptions = builder.Configuration.GetSection(nameof(AdminOptions));
+var tokenOptions = builder.Configuration.GetSection(nameof(TokenOptions));
+var emailOptions = builder.Configuration.GetSection(nameof(EmailOptions));
+
+builder.Services.Configure<AdminOptions>(adminOptions);
+builder.Services.Configure<TokenOptions>(tokenOptions);
+builder.Services.Configure<EmailOptions>(emailOptions);
 
 builder.Services
     .AddDbContext<InstaConnectContext>(options =>
@@ -43,21 +46,19 @@ builder.Services
         options.UseMySql(connectionString, serverVersion);
     });
 
-builder.Services.AddSingleton(adminOptions);
-builder.Services.AddSingleton(tokenOptions);
-builder.Services.AddSingleton(emailOptions);
-builder.Services.AddSingleton(emailTemplateOptions);
 builder.Services.AddScoped<IDbSeeder, DbSeeder>();
+builder.Services.AddScoped<IResultFactory, ResultFactory>();
+builder.Services.AddScoped<ISendGridClient>(_ => new SendGridClient(emailOptions["APIKey"]));
+builder.Services.AddScoped<IEmailFactory, EmailFactory>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IEmailManager, EmailManager>();
 builder.Services.AddScoped<IEmailTemplateGenerator, EmailTemplateGenerator>();
-builder.Services.AddScoped<ISendGridClient>(_ => new SendGridClient(emailOptions.APIKey));
-builder.Services.AddScoped<ITokenRepository, TokenRepository>();
-builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
-builder.Services.AddScoped<ITokenManager, TokenManager>();
-builder.Services.AddScoped<IResultFactory, ResultFactory>();
 builder.Services.AddScoped<ITokenFactory, TokenFactory>();
-builder.Services.AddScoped<IEmailFactory, EmailFactory>();
+builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+builder.Services.AddScoped<ITokenManager, TokenManager>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddAutoMapper(typeof(InstaConnectProfile));
 
@@ -93,11 +94,11 @@ builder.Services
     {
         configuration.TokenValidationParameters = new TokenValidationParameters
         {
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey)),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions["SecurityKey"])),
             ValidateAudience = true,
-            ValidAudience = tokenOptions.Audience,
+            ValidAudience = tokenOptions["Audience"],
             ValidateIssuer = true,
-            ValidIssuer = tokenOptions.Issuer,
+            ValidIssuer = tokenOptions["Issuer"],
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ClockSkew = TimeSpan.Zero
@@ -138,7 +139,7 @@ builder.Services.AddSwaggerGen();
 builder.Services
     .Configure<CookieAuthenticationOptions>(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromHours(tokenOptions.UserTokenLifetimeSeconds);
+        options.ExpireTimeSpan = TimeSpan.FromHours(int.Parse(tokenOptions["UserTokenLifetimeSeconds"]));
     });
 
 var app = builder.Build();

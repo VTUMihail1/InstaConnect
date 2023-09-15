@@ -1,23 +1,24 @@
 ﻿using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Models.Options;
 using InstaConnect.Data.Models.Utilities;
+using Microsoft.Extensions.Options;
 using System.Text;
 
 namespace InstaConnect.Business.Helpers
 {
     public class EmailTemplateGenerator : IEmailTemplateGenerator
     {
-        private readonly EmailTemplateOptions _emailTemplateOptions;
+        private readonly EmailOptions _emailOptions;
 
-        public EmailTemplateGenerator(EmailTemplateOptions emailTemplateOptions)
+        public EmailTemplateGenerator(IOptions<EmailOptions> options)
         {
-            _emailTemplateOptions = emailTemplateOptions;
+            _emailOptions = options.Value;
         }
 
         public string GenerateEmailConfirmationTemplate(string userId, string token)
         {
             var encodedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(token));
-            var endpoint = $"{_emailTemplateOptions.ConfirmEmailEndpoint}/{userId}/{encodedToken}";
+            var endpoint = $"{_emailOptions.ConfirmEmailEndpoint}/{userId}/{encodedToken}";
 
             var html = File.ReadAllText(InstaConnectConstants.EmailConfirmationTemplatePath);
             var emailConfirmationTemplateHtml = html.Replace(InstaConnectConstants.TemplateLinkPlaceholder, endpoint);
@@ -28,7 +29,7 @@ namespace InstaConnect.Business.Helpers
         public string GenerateForgotPasswordTemplate(string userId, string token)
         {
             var encodedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(token));
-            var endpoint = $"{_emailTemplateOptions.ResetPasswordEndpoint}/{userId}/{encodedToken}";
+            var endpoint = $"{_emailOptions.ResetPasswordEndpoint}/{userId}/{encodedToken}";
 
             var html = File.ReadAllText(InstaConnectConstants.ForgotPasswordTemplatePath);
             var passwordResetTemplateHtml = html.Replace(InstaConnectConstants.TemplateLinkPlaceholder, endpoint);

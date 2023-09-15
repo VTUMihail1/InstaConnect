@@ -2,6 +2,7 @@
 using InstaConnect.Data.Models.Entities;
 using InstaConnect.Data.Models.Options;
 using InstaConnect.Data.Models.Utilities;
+using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Data.Factories
 {
@@ -9,9 +10,9 @@ namespace InstaConnect.Data.Factories
     {
         private readonly TokenOptions _tokenOptions;
 
-        public TokenFactory(TokenOptions tokenOptions)
+        public TokenFactory(IOptions<TokenOptions> options)
         {
-            _tokenOptions = tokenOptions;
+            _tokenOptions = options.Value;
         }
 
         public Token GetAccessToken(string userId, string value)

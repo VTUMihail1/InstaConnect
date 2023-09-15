@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Models.Options;
 using InstaConnect.Data.Models.Utilities;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,9 +13,9 @@ namespace InstaConnect.Data.Helpers
     {
         private readonly TokenOptions _tokenOptions;
 
-        public TokenGenerator(TokenOptions tokenOptions)
+        public TokenGenerator(IOptions<TokenOptions> options)
         {
-            _tokenOptions = tokenOptions;
+            _tokenOptions = options.Value;
         }
 
         public string GenerateAccessToken(string userId)

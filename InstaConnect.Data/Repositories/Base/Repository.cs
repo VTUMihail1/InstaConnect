@@ -14,7 +14,7 @@ namespace InstaConnect.Data.Repositories.Base
         {
             _instaConnectContext = instaConnectContext;
         }
-        public async Task<IEnumerable<TEntity>> GetAllFilteredAsync(Expression<Func<TEntity, bool>> expression)
+        public async Task<ICollection<TEntity>> GetAllFilteredAsync(Expression<Func<TEntity, bool>> expression)
         {
             var filteredEntities = await _instaConnectContext
                 .Set<TEntity>()
@@ -25,7 +25,7 @@ namespace InstaConnect.Data.Repositories.Base
             return filteredEntities;
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        public async Task<ICollection<TEntity>> GetAllAsync()
         {
             var entities = await _instaConnectContext
                 .Set<TEntity>()
