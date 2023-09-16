@@ -118,7 +118,7 @@ namespace InstaConnect.Business.Services
 
             if (existingLike != null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<PostResultDTO>();
+                var badRequestResult = _resultFactory.GetBadRequestResult<PostResultDTO>(InstaConnectErrorMessages.PostLikeAlreadyExists);
 
                 return badRequestResult;
             }
@@ -133,16 +133,16 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostResultDTO>> DeletePostLikeAsync(string userId, string postId)
         {
-            var existingLike = await _likeRepository.FindEntityAsync(l => l.UserId == userId && l.PostId == postId);
+            var like = await _likeRepository.FindEntityAsync(l => l.UserId == userId && l.PostId == postId);
 
-            if (existingLike == null)
+            if (like == null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<PostResultDTO>();
+                var notFoundResult = _resultFactory.GetNotFoundResult<PostResultDTO>(InstaConnectErrorMessages.PostLikeNotFound);
 
-                return badRequestResult;
+                return notFoundResult;
             }
 
-            await _likeRepository.DeleteAsync(existingLike);
+            await _likeRepository.DeleteAsync(like);
 
             var noContentResult = _resultFactory.GetNoContentResult<PostResultDTO>();
 
@@ -165,9 +165,9 @@ namespace InstaConnect.Business.Services
 
             if (comment == null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<PostResultDTO>();
+                var notFoundResult = _resultFactory.GetNotFoundResult<PostResultDTO>(InstaConnectErrorMessages.PostCommentNotFound);
 
-                return badRequestResult;
+                return notFoundResult;
             }
 
             _mapper.Map(postUpdateCommentDTO, comment);
@@ -184,9 +184,9 @@ namespace InstaConnect.Business.Services
 
             if (comment == null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<PostResultDTO>();
+                var notFoundResult = _resultFactory.GetNotFoundResult<PostResultDTO>(InstaConnectErrorMessages.PostCommentNotFound);
 
-                return badRequestResult;
+                return notFoundResult;
             }
 
             await _commentRepository.DeleteAsync(comment);

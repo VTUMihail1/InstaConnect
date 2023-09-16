@@ -21,5 +21,11 @@
         public const string AccountSendEmailFailed = "Account was registered but failed to send email";
 
         public const string PostNotFound = "Post does not exist";
+
+        public const string PostLikeNotFound = "You need to like the post before unliking it";
+
+        public const string PostLikeAlreadyExists = "You need to unlike the post before liking it";
+
+        public const string PostCommentNotFound = "Comment does not exist";
     }
 }
