@@ -14,12 +14,21 @@ namespace InstaConnect.Business.Services
         private readonly IMapper _mapper;
         private readonly IResultFactory _resultFactory;
         private readonly IPostRepository _postRepository;
+        private readonly ILikeRepository _likeRepository;
+        private readonly ICommentRepository _commentRepository;
 
-        public PostService(IMapper mapper, IResultFactory resultFactory, IPostRepository postRepository)
+        public PostService(
+            IMapper mapper, 
+            IResultFactory resultFactory, 
+            IPostRepository postRepository, 
+            ILikeRepository likeRepository, 
+            ICommentRepository commentRepository)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _postRepository = postRepository;
+            _likeRepository = likeRepository;
+            _commentRepository = commentRepository;
         }
 
         public async Task<ICollection<PostResultDTO>> GetAllAsync()
@@ -60,10 +69,9 @@ namespace InstaConnect.Business.Services
             var post = _mapper.Map<Post>(postAddDTO);
             await _postRepository.AddAsync(post);
 
-            var postResultDTO = _mapper.Map<PostResultDTO>(post);
-            var okResult = _resultFactory.GetOkResult(postResultDTO);
+            var noContentResult = _resultFactory.GetNoContentResult<PostResultDTO>();
 
-            return okResult;
+            return noContentResult;
         }
 
         public async Task<IResult<PostResultDTO>> UpdateAsync(string id, PostUpdateDTO postUpdateDTO)
@@ -80,10 +88,9 @@ namespace InstaConnect.Business.Services
             _mapper.Map(postUpdateDTO, post);
             await _postRepository.UpdateAsync(post);
 
-            var postResultDTO = _mapper.Map<PostResultDTO>(post);
-            var okResult = _resultFactory.GetOkResult(postResultDTO);
+            var noContentResult = _resultFactory.GetNoContentResult<PostResultDTO>();
 
-            return okResult;
+            return noContentResult;
         }
 
         public async Task<IResult<PostResultDTO>> DeleteAsync(string id)
@@ -98,6 +105,91 @@ namespace InstaConnect.Business.Services
             }
 
             await _postRepository.DeleteAsync(post);
+
+            var noContentResult = _resultFactory.GetNoContentResult<PostResultDTO>();
+
+            return noContentResult;
+        }
+
+
+        public async Task<IResult<PostResultDTO>> AddPostLikeAsync(PostAddLikeDTO postAddLikeDTO)
+        {
+            var existingLike = await _likeRepository.FindEntityAsync(l => l.UserId == postAddLikeDTO.UserId && l.PostId == postAddLikeDTO.PostId);
+
+            if (existingLike != null)
+            {
+                var badRequestResult = _resultFactory.GetBadRequestResult<PostResultDTO>();
+
+                return badRequestResult;
+            }
+
+            var like = _mapper.Map<Like>(postAddLikeDTO);
+            await _likeRepository.AddAsync(like);
+
+            var noContentResult = _resultFactory.GetNoContentResult<PostResultDTO>();
+
+            return noContentResult;
+        }
+
+        public async Task<IResult<PostResultDTO>> DeletePostLikeAsync(string userId, string postId)
+        {
+            var existingLike = await _likeRepository.FindEntityAsync(l => l.UserId == userId && l.PostId == postId);
+
+            if (existingLike == null)
+            {
+                var badRequestResult = _resultFactory.GetBadRequestResult<PostResultDTO>();
+
+                return badRequestResult;
+            }
+
+            await _likeRepository.DeleteAsync(existingLike);
+
+            var noContentResult = _resultFactory.GetNoContentResult<PostResultDTO>();
+
+            return noContentResult;
+        }
+
+        public async Task<IResult<PostResultDTO>> AddPostCommentAsync(PostAddCommentDTO postAddCommentDTO)
+        {
+            var comment = _mapper.Map<Comment>(postAddCommentDTO);
+            await _commentRepository.DeleteAsync(comment);
+
+            var noContentResult = _resultFactory.GetNoContentResult<PostResultDTO>();
+
+            return noContentResult;
+        }
+
+        public async Task<IResult<PostResultDTO>> UpdatePostCommentAsync(string commentId, PostUpdateCommentDTO postUpdateCommentDTO)
+        {
+            var comment = await _commentRepository.FindEntityAsync(c => c.Id == commentId);
+
+            if (comment == null)
+            {
+                var badRequestResult = _resultFactory.GetBadRequestResult<PostResultDTO>();
+
+                return badRequestResult;
+            }
+
+            _mapper.Map(postUpdateCommentDTO, comment);
+            await _commentRepository.UpdateAsync(comment);
+
+            var noContentResult = _resultFactory.GetNoContentResult<PostResultDTO>();
+
+            return noContentResult;
+        }
+
+        public async Task<IResult<PostResultDTO>> DeletePostCommentAsync(string commentId)
+        {
+            var comment = await _commentRepository.FindEntityAsync(c => c.Id == commentId);
+
+            if (comment == null)
+            {
+                var badRequestResult = _resultFactory.GetBadRequestResult<PostResultDTO>();
+
+                return badRequestResult;
+            }
+
+            await _commentRepository.DeleteAsync(comment);
 
             var noContentResult = _resultFactory.GetNoContentResult<PostResultDTO>();
 

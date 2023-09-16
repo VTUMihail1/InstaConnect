@@ -34,5 +34,9 @@
 
         public const int PostContentMaxLength = 5000;
 
+        public const int PostCommentContentMinLength = 1;
+
+        public const int PostCommentContentMaxLength = 500;
+
     }
 }
