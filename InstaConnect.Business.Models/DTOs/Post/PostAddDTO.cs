@@ -6,6 +6,9 @@ namespace InstaConnect.Business.Models.DTOs.Post
     public class PostAddDTO
     {
         [Required]
+        public string UserId { get; set; }
+
+        [Required]
         [MinLength(InstaConnectModelConfigurations.PostTitleMinLength)]
         [MaxLength(InstaConnectModelConfigurations.PostTitleMaxLength)]
         public string Title { get; set; }

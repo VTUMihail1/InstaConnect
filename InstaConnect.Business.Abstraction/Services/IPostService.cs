@@ -87,5 +87,19 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <param name="commentId">The ID of the comment to be deleted.</param>
         /// <returns>An asynchronous task that returns the result of the operation.</returns>
         Task<IResult<PostResultDTO>> DeletePostCommentAsync(string commentId);
+
+        /// <summary>
+        /// Retrieves all post likes associated with a specific post asynchronously.
+        /// </summary>
+        /// <param name="id">The ID of the post.</param>
+        /// <returns>An asynchronous task that returns a collection of post like results.</returns>
+        Task<ICollection<PostLikeResultDTO>> GetAllPostLikesAsync(string id);
+
+        /// <summary>
+        /// Retrieves all post comments associated with a specific post asynchronously.
+        /// </summary>
+        /// <param name="id">The ID of the post.</param>
+        /// <returns>An asynchronous task that returns a collection of post comment results.</returns>
+        Task<ICollection<PostCommentResultDTO>> GetAllPostCommentsAsync(string id);
     }
 }

@@ -111,6 +111,13 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
+        public async Task<ICollection<PostLikeResultDTO>> GetAllPostLikesAsync(string id)
+        {
+            var likes = await _likeRepository.GetAllFilteredAsync(p => p.PostId == id);
+            var postLikeResultDTOs = _mapper.Map<ICollection<PostLikeResultDTO>>(likes);
+
+            return postLikeResultDTOs;
+        }
 
         public async Task<IResult<PostResultDTO>> AddPostLikeAsync(PostAddLikeDTO postAddLikeDTO)
         {
@@ -149,10 +156,18 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
+        public async Task<ICollection<PostCommentResultDTO>> GetAllPostCommentsAsync(string id)
+        {
+            var comments = await _commentRepository.GetAllFilteredAsync(p => p.PostId == id);
+            var postCommentResultDTOs = _mapper.Map<ICollection<PostCommentResultDTO>>(comments);
+
+            return postCommentResultDTOs;
+        }
+
         public async Task<IResult<PostResultDTO>> AddPostCommentAsync(PostAddCommentDTO postAddCommentDTO)
         {
             var comment = _mapper.Map<Comment>(postAddCommentDTO);
-            await _commentRepository.DeleteAsync(comment);
+            await _commentRepository.AddAsync(comment);
 
             var noContentResult = _resultFactory.GetNoContentResult<PostResultDTO>();
 

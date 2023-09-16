@@ -71,7 +71,7 @@ namespace InstaConnect.Business.Services
             var value = _tokenManager.GenerateAccessToken(existingUser.Id);
             await _tokenManager.AddAccessTokenAsync(existingUser.Id, value);
 
-            var accessToken = _tokenManager.GetByValueAsync(value);
+            var accessToken = await _tokenManager.GetByValueAsync(value);
             var accountResultDTO = _mapper.Map<AccountResultDTO>(accessToken);
             var okResult = _resultFactory.GetOkResult(accountResultDTO);
 
