@@ -23,10 +23,16 @@ namespace InstaConnect.Data
 
         public DbSet<Post> Posts { get; set; }
 
+        public DbSet<Like> Likes { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new LikeConfigurations());
+            modelBuilder.ApplyConfiguration(new CommentConfigurations());
             modelBuilder.ApplyConfiguration(new PostConfigurations());
             modelBuilder.ApplyConfiguration(new TokenConfiguration());
             modelBuilder.ApplyConfiguration(new UserLoginConfiguration());

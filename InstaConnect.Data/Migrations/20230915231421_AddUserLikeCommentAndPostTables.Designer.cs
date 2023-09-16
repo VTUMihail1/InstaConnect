@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstaConnect.Data.Migrations
 {
     [DbContext(typeof(InstaConnectContext))]
-    [Migration("20230914231450_AddUserTokenAndPostTables")]
-    partial class AddUserTokenAndPostTables
+    [Migration("20230915231421_AddUserLikeCommentAndPostTables")]
+    partial class AddUserLikeCommentAndPostTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,17 +22,85 @@ namespace InstaConnect.Data.Migrations
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Comment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("content");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("PostId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("post_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("comment", (string)null);
+                });
+
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Like", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("user_id");
+
+                    b.Property<string>("PostId")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("post_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("UserId", "PostId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("like", (string)null);
+                });
+
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.Post", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(255)
-                        .HasColumnType("varchar")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("id");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(5000)
-                        .HasColumnType("varchar")
+                        .HasColumnType("varchar(5000)")
                         .HasColumnName("content");
 
                     b.Property<DateTime>("CreatedAt")
@@ -42,7 +110,7 @@ namespace InstaConnect.Data.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("title");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -52,7 +120,7 @@ namespace InstaConnect.Data.Migrations
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id");
@@ -139,7 +207,7 @@ namespace InstaConnect.Data.Migrations
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(255)
-                        .HasColumnType("varchar")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
@@ -149,7 +217,7 @@ namespace InstaConnect.Data.Migrations
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("type");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -167,7 +235,7 @@ namespace InstaConnect.Data.Migrations
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasMaxLength(1000)
-                        .HasColumnType("varchar")
+                        .HasColumnType("varchar(1000)")
                         .HasColumnName("value");
 
                     b.HasKey("Id");
@@ -208,13 +276,13 @@ namespace InstaConnect.Data.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("first_name");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("last_name");
 
                     b.Property<bool>("LockoutEnabled")
@@ -401,6 +469,44 @@ namespace InstaConnect.Data.Migrations
                     b.ToTable("user_token", (string)null);
                 });
 
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Comment", b =>
+                {
+                    b.HasOne("InstaConnect.Data.Models.Entities.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InstaConnect.Data.Models.Entities.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Like", b =>
+                {
+                    b.HasOne("InstaConnect.Data.Models.Entities.Post", "Post")
+                        .WithMany("Likes")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InstaConnect.Data.Models.Entities.User", "User")
+                        .WithMany("Likes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.Post", b =>
                 {
                     b.HasOne("InstaConnect.Data.Models.Entities.User", "User")
@@ -474,8 +580,19 @@ namespace InstaConnect.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Post", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Likes");
+                });
+
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.User", b =>
                 {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Likes");
+
                     b.Navigation("Posts");
 
                     b.Navigation("Tokens");

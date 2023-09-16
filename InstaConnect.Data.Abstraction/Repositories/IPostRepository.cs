@@ -3,7 +3,12 @@ using InstaConnect.Data.Models.Entities;
 
 namespace InstaConnect.Data.Abstraction.Repositories
 {
+    /// <summary>
+    /// Represents a repository interface specifically for managing posts, inheriting from the generic repository for entities of type <see cref="Post"/>.
+    /// </summary>
     public interface IPostRepository : IRepository<Post>
     {
+        // This interface inherits CRUD (Create, Read, Update, Delete) operations
+        // from IRepository<Post>. You can add additional methods specific to post management here if needed.
     }
 }
