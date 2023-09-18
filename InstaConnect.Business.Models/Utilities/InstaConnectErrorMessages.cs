@@ -22,10 +22,20 @@
 
         public const string PostNotFound = "Post does not exist";
 
-        public const string PostLikeNotFound = "You need to like the post before unliking it";
+        public const string LikeNotFound = "You need to like before unliking it";
 
-        public const string PostLikeAlreadyExists = "You need to unlike the post before liking it";
+        public const string LikeAlreadyExists = "You need to unlike before liking it";
 
-        public const string PostCommentNotFound = "Comment does not exist";
+        public const string CommentNotFound = "Comment does not exist";
+
+        public const string UserNotFound = "User does not exist";
+
+        public const string FollowNotFound = "You need to follow before unfollowing";
+
+        public const string FollowAlreadyExists = "You need to unfollow before following";
+
+        public const string FollowerNotFound = "Follower does not exist";
+
+        public const string FollowingNotFound = "Following does not exist";
     }
 }
