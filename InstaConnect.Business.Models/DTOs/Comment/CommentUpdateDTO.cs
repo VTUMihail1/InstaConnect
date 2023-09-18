@@ -1,16 +1,10 @@
 ﻿using InstaConnect.Business.Models.Utilities;
 using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Business.Models.DTOs.Post
+namespace InstaConnect.Business.Models.DTOs.Comment
 {
-    public class PostAddCommentDTO
+    public class CommentUpdateDTO
     {
-        [Required]
-        public string UserId { get; set; }
-
-        [Required]
-        public string PostId { get; set; }
-
         [Required]
         [MinLength(InstaConnectModelConfigurations.PostCommentContentMinLength)]
         [MaxLength(InstaConnectModelConfigurations.PostCommentContentMaxLength)]

@@ -34,9 +34,9 @@ var adminOptions = builder.Configuration.GetSection(nameof(AdminOptions));
 var tokenOptions = builder.Configuration.GetSection(nameof(TokenOptions));
 var emailOptions = builder.Configuration.GetSection(nameof(EmailOptions));
 
-builder.Services.Configure<AdminOptions>(adminOptions);
-builder.Services.Configure<TokenOptions>(tokenOptions);
-builder.Services.Configure<EmailOptions>(emailOptions);
+builder.Services.Configure<AdminOptions>(adminOptions)
+                .Configure<TokenOptions>(tokenOptions)
+                .Configure<EmailOptions>(emailOptions);
 
 builder.Services
     .AddDbContext<InstaConnectContext>(options =>
@@ -46,24 +46,28 @@ builder.Services
         options.UseMySql(connectionString, serverVersion);
     });
 
-builder.Services.AddScoped<IDbSeeder, DbSeeder>();
-builder.Services.AddScoped<IResultFactory, ResultFactory>();
-builder.Services.AddScoped<ISendGridClient>(_ => new SendGridClient(emailOptions["APIKey"]));
-builder.Services.AddScoped<IEmailFactory, EmailFactory>();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
-builder.Services.AddScoped<IEmailManager, EmailManager>();
-builder.Services.AddScoped<IEmailTemplateGenerator, EmailTemplateGenerator>();
-builder.Services.AddScoped<ITokenFactory, TokenFactory>();
-builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
-builder.Services.AddScoped<ITokenRepository, TokenRepository>();
-builder.Services.AddScoped<ITokenManager, TokenManager>();
-builder.Services.AddScoped<IPostRepository, PostRepository>();
-builder.Services.AddScoped<IPostService, PostService>();
-builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-builder.Services.AddScoped<ILikeRepository, LikeRepository>();
-builder.Services.AddScoped<IFollowRepository, FollowRepository>();
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddAutoMapper(typeof(InstaConnectProfile));
+builder.Services
+    .AddScoped<IDbSeeder, DbSeeder>()
+    .AddScoped<IResultFactory, ResultFactory>()
+    .AddScoped<ISendGridClient>(_ => new SendGridClient(emailOptions["APIKey"]))
+    .AddScoped<IEmailFactory, EmailFactory>()
+    .AddScoped<IEmailSender, EmailSender>()
+    .AddScoped<IEmailManager, EmailManager>()
+    .AddScoped<IEmailTemplateGenerator, EmailTemplateGenerator>()
+    .AddScoped<ITokenFactory, TokenFactory>()
+    .AddScoped<ITokenGenerator, TokenGenerator>()
+    .AddScoped<ITokenRepository, TokenRepository>()
+    .AddScoped<ITokenManager, TokenManager>()
+    .AddScoped<IPostRepository, PostRepository>()
+    .AddScoped<IPostService, PostService>()
+    .AddScoped<ICommentRepository, CommentRepository>()
+    .AddScoped<ICommentService, CommentService>()
+    .AddScoped<ILikeRepository, LikeRepository>()
+    .AddScoped<ILikeService, LikeService>()
+    .AddScoped<IFollowRepository, FollowRepository>()
+    .AddScoped<IFollowService, FollowService>()
+    .AddScoped<IAccountService, AccountService>()
+    .AddAutoMapper(typeof(InstaConnectProfile));
 
 builder.Services
     .AddIdentity<User, Role>()
