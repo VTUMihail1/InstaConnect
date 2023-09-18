@@ -27,10 +27,13 @@ namespace InstaConnect.Data
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Follow> Followers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new FollowConfiguration());
             modelBuilder.ApplyConfiguration(new LikeConfigurations());
             modelBuilder.ApplyConfiguration(new CommentConfigurations());
             modelBuilder.ApplyConfiguration(new PostConfigurations());
