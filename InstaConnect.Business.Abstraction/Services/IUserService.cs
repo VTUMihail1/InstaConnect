@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InstaConnect.Business.Abstraction.Services
+﻿namespace InstaConnect.Business.Abstraction.Services
 {
-    internal class IUserService
+    public interface IUserService
     {
     }
 }
