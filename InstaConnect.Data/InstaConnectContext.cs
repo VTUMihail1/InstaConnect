@@ -23,7 +23,9 @@ namespace InstaConnect.Data
 
         public DbSet<Post> Posts { get; set; }
 
-        public DbSet<Like> Likes { get; set; }
+        public DbSet<PostLike> PostLikes { get; set; }
+
+        public DbSet<CommentLike> CommentLikes { get; set; }
 
         public DbSet<Comment> Comments { get; set; }
 
@@ -33,9 +35,10 @@ namespace InstaConnect.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new CommentLikeConfiguration());
             modelBuilder.ApplyConfiguration(new FollowConfiguration());
-            modelBuilder.ApplyConfiguration(new LikeConfigurations());
-            modelBuilder.ApplyConfiguration(new CommentConfigurations());
+            modelBuilder.ApplyConfiguration(new PostLikeConfiguration());
+            modelBuilder.ApplyConfiguration(new CommentConfiguration());
             modelBuilder.ApplyConfiguration(new PostConfigurations());
             modelBuilder.ApplyConfiguration(new TokenConfiguration());
             modelBuilder.ApplyConfiguration(new UserLoginConfiguration());

@@ -42,7 +42,7 @@ namespace InstaConnect.Data.EntityConfigurations
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(p => p.Likes)
+            builder.HasMany(p => p.PostLikes)
                 .WithOne(l => l.Post)
                 .HasForeignKey(l => l.PostId)
                 .IsRequired()

@@ -17,8 +17,14 @@ namespace InstaConnect.Data.Models.Entities
 
         public string Content { get; set; }
 
+        public string? CommentId { get; set; }
+
         public User User { get; set; }
 
         public Post Post { get; set; }
+
+        public ICollection<CommentLike> CommentLikes { get; set; } = new List<CommentLike>();
+
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

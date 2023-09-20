@@ -23,6 +23,13 @@ namespace InstaConnect.Business.Abstraction.Services
         Task<ICollection<CommentResultDTO>> GetAllByPostIdAsync(string postId);
 
         /// <summary>
+        /// Retrieves all comments associated with a comment asynchronously.
+        /// </summary>
+        /// <param name="commentId">The ID of the comment.</param>
+        /// <returns>A collection of comment results.</returns>
+        Task<ICollection<CommentResultDTO>> GetAllByIdAsync(string commentId);
+
+        /// <summary>
         /// Adds a new comment asynchronously.
         /// </summary>
         /// <param name="postAddCommentDTO">The data for adding a new comment.</param>

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Business.Models.DTOs.Like
+namespace InstaConnect.Business.Models.DTOs.PostLike
 {
-    public class LikeAddDTO
+    public class PostLikeAddDTO
     {
         [Required]
         public string UserId { get; set; }

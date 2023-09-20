@@ -4,9 +4,9 @@ using InstaConnect.Data.Repositories.Base;
 
 namespace InstaConnect.Data.Repositories
 {
-    public class LikeRepository : Repository<Like>, ILikeRepository
+    public class CommentLikeRepository : Repository<CommentLike>, ICommentLikeRepository
     {
-        public LikeRepository(InstaConnectContext instaConnectContext) : base(instaConnectContext)
+        public CommentLikeRepository(InstaConnectContext instaConnectContext) : base(instaConnectContext)
         {
         }
     }
