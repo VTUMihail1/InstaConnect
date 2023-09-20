@@ -63,7 +63,7 @@ namespace InstaConnect.Data.Migrations
                     b.ToTable("comment", (string)null);
                 });
 
-            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Like", b =>
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.PostLike", b =>
                 {
                     b.Property<string>("UserId")
                         .HasMaxLength(255)
@@ -488,16 +488,16 @@ namespace InstaConnect.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Like", b =>
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.PostLike", b =>
                 {
                     b.HasOne("InstaConnect.Data.Models.Entities.Post", "Post")
-                        .WithMany("Likes")
+                        .WithMany("PostLikes")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("InstaConnect.Data.Models.Entities.User", "User")
-                        .WithMany("Likes")
+                        .WithMany("PostLikes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -584,14 +584,14 @@ namespace InstaConnect.Data.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("Likes");
+                    b.Navigation("PostLikes");
                 });
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.User", b =>
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("Likes");
+                    b.Navigation("PostLikes");
 
                     b.Navigation("Posts");
 

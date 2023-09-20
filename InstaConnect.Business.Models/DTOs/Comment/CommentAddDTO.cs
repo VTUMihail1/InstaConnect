@@ -11,6 +11,8 @@ namespace InstaConnect.Business.Models.DTOs.Comment
         [Required]
         public string PostId { get; set; }
 
+        public string? CommentId { get; set; }
+
         [Required]
         [MinLength(InstaConnectModelConfigurations.PostCommentContentMinLength)]
         [MaxLength(InstaConnectModelConfigurations.PostCommentContentMaxLength)]

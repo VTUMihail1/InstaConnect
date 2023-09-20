@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Models.DTOs.Account;
 using InstaConnect.Business.Models.DTOs.Comment;
-using InstaConnect.Business.Models.DTOs.Like;
 using InstaConnect.Business.Models.DTOs.Post;
+using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.DTOs.Token;
 using InstaConnect.Data.Models.Entities;
 
@@ -30,7 +30,7 @@ namespace InstaConnect.Business.AutoMapper
             CreateMap<Post, PostResultDTO>()
                 .ReverseMap();
 
-            CreateMap<Like, LikeResultDTO>()
+            CreateMap<PostLike, PostLikeResultDTO>()
                 .ReverseMap();
 
             CreateMap<CommentAddDTO, Comment>()

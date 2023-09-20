@@ -48,6 +48,14 @@ namespace InstaConnect.Business.Services
             return commentResultDTOs;
         }
 
+        public async Task<ICollection<CommentResultDTO>> GetAllByIdAsync(string commentId)
+        {
+            var comments = await _commentRepository.GetAllFilteredAsync(p => p.CommentId == commentId);
+            var commentResultDTOs = _mapper.Map<ICollection<CommentResultDTO>>(comments);
+
+            return commentResultDTOs;
+        }
+
         public async Task<IResult<CommentResultDTO>> AddAsync(CommentAddDTO commentAddDTO)
         {
             var existingUser = await _userManager.FindByIdAsync(commentAddDTO.UserId);
@@ -64,6 +72,15 @@ namespace InstaConnect.Business.Services
             if (existingPost == null)
             {
                 var badRequestResult = _resultFactory.GetBadRequestResult<CommentResultDTO>(InstaConnectErrorMessages.PostNotFound);
+
+                return badRequestResult;
+            }
+
+            var existingComment = await _commentRepository.FindEntityAsync(c => c.Id == commentAddDTO.CommentId);
+
+            if (commentAddDTO.CommentId != null && existingComment == null)
+            {
+                var badRequestResult = _resultFactory.GetBadRequestResult<CommentResultDTO>(InstaConnectErrorMessages.CommentNotFound);
 
                 return badRequestResult;
             }

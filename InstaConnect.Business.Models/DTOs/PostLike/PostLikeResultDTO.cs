@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Business.Models.DTOs.Like
+﻿namespace InstaConnect.Business.Models.DTOs.PostLike
 {
-    public class LikeResultDTO
+    public class PostLikeResultDTO
     {
         public string PostId { get; set; }
 

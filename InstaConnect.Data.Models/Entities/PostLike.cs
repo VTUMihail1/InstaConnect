@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Data.Models.Entities
 {
-    public class Like : BaseEntity
+    public class PostLike : BaseEntity
     {
         public string PostId { get; set; }
 
