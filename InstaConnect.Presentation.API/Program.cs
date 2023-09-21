@@ -144,6 +144,7 @@ builder.Services
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
 
 builder.Services
     .Configure<CookieAuthenticationOptions>(options =>
@@ -157,6 +158,8 @@ await app.SeedDb();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.MapHub<ChatHub>("/chat-hub");
 
 app.UseHttpsRedirection();
 
