@@ -10,7 +10,12 @@ namespace InstaConnect.Data.EntityConfigurations
         {
             builder.ToTable("comment_like");
 
-            builder.HasKey(p => new { p.UserId, p.CommentId });
+            builder.HasKey(p => p.Id);
+
+            builder.Property(p => p.Id)
+                .HasColumnName("id")
+                .IsRequired()
+                .ValueGeneratedNever();
 
             builder.Property(p => p.UserId)
                 .HasColumnName("user_id")

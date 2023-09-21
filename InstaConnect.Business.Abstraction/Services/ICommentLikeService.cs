@@ -32,9 +32,8 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <summary>
         /// Deletes a comment like asynchronously.
         /// </summary>
-        /// <param name="userId">The ID of the user who liked the comment.</param>
-        /// <param name="commentId">The ID of the comment that was liked.</param>
+        /// <param name="id">The ID of the comment like to delete.</param>
         /// <returns>The result of the comment like deletion operation.</returns>
-        Task<IResult<CommentLikeResultDTO>> DeleteAsync(string userId, string commentId);
+        Task<IResult<CommentLikeResultDTO>> DeleteAsync(string id);
     }
 }

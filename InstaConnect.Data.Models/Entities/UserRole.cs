@@ -5,7 +5,12 @@ namespace InstaConnect.Data.Models.Entities
 {
     public class UserRole : IdentityUserRole<string>, IBaseEntity
     {
-        public UserRole() : base() { }
+        public UserRole() : base()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+
+        public string Id { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

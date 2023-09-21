@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Models.DTOs.Like;
+using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Data.Abstraction.Repositories;
@@ -85,9 +85,9 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<PostLikeResultDTO>> DeleteAsync(string userId, string postId)
+        public async Task<IResult<PostLikeResultDTO>> DeleteAsync(string id)
         {
-            var postLike = await _postLikeRepository.FindEntityAsync(l => l.UserId == userId && l.PostId == postId);
+            var postLike = await _postLikeRepository.FindEntityAsync(l => l.Id == id);
 
             if (postLike == null)
             {

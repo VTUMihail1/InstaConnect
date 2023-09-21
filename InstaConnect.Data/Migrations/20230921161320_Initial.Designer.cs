@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstaConnect.Data.Migrations
 {
     [DbContext(typeof(InstaConnectContext))]
-    [Migration("20230920215830_AddCommentFkAndCommentLikeTable")]
-    partial class AddCommentFkAndCommentLikeTable
+    [Migration("20230921161320_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,12 +72,12 @@ namespace InstaConnect.Data.Migrations
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.CommentLike", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasMaxLength(255)
+                    b.Property<string>("Id")
                         .HasColumnType("varchar(255)")
-                        .HasColumnName("user_id");
+                        .HasColumnName("id");
 
                     b.Property<string>("CommentId")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("comment_id");
@@ -90,36 +90,52 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
-                    b.HasKey("UserId", "CommentId");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("CommentId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("comment_like", (string)null);
                 });
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.Follow", b =>
                 {
-                    b.Property<string>("FollowingId")
-                        .HasMaxLength(255)
+                    b.Property<string>("Id")
                         .HasColumnType("varchar(255)")
-                        .HasColumnName("following_id");
-
-                    b.Property<string>("FollowerId")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("follower_id");
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
+                    b.Property<string>("FollowerId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("follower_id");
+
+                    b.Property<string>("FollowingId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("following_id");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
-                    b.HasKey("FollowingId", "FollowerId");
+                    b.HasKey("Id");
 
                     b.HasIndex("FollowerId");
+
+                    b.HasIndex("FollowingId");
 
                     b.ToTable("follow", (string)null);
                 });
@@ -166,27 +182,35 @@ namespace InstaConnect.Data.Migrations
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.PostLike", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasMaxLength(255)
+                    b.Property<string>("Id")
                         .HasColumnType("varchar(255)")
-                        .HasColumnName("user_id");
-
-                    b.Property<string>("PostId")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("post_id");
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
+                    b.Property<string>("PostId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("post_id");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
-                    b.HasKey("UserId", "PostId");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("post_like", (string)null);
                 });
@@ -231,9 +255,8 @@ namespace InstaConnect.Data.Migrations
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.RoleClaim", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("id");
 
                     b.Property<string>("ClaimType")
@@ -407,9 +430,8 @@ namespace InstaConnect.Data.Migrations
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.UserClaim", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("id");
 
                     b.Property<string>("ClaimType")
@@ -454,6 +476,9 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
+                    b.Property<string>("Id")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("longtext")
                         .HasColumnName("provider_display_name");
@@ -488,6 +513,9 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
+                    b.Property<string>("Id")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
@@ -516,6 +544,9 @@ namespace InstaConnect.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)")
