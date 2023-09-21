@@ -27,6 +27,11 @@ namespace InstaConnect.Data.EntityConfigurations
                 .HasMaxLength(255)
                 .IsRequired();
 
+            builder.Property(p => p.Content)
+                .HasColumnName("content")
+                .HasMaxLength(2000)
+                .IsRequired();
+
             builder.Property(p => p.CreatedAt).HasColumnName("created_at");
             builder.Property(p => p.UpdatedAt).HasColumnName("updated_at");
 
