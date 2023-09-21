@@ -85,9 +85,9 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<CommentLikeResultDTO>> DeleteAsync(string userId, string commentId)
+        public async Task<IResult<CommentLikeResultDTO>> DeleteAsync(string id)
         {
-            var commentLike = await _commentLikeRepository.FindEntityAsync(l => l.UserId == userId && l.CommentId == commentId);
+            var commentLike = await _commentLikeRepository.FindEntityAsync(l => l.Id == id);
 
             if (commentLike == null)
             {

@@ -10,7 +10,12 @@ namespace InstaConnect.Data.EntityConfigurations
         {
             builder.ToTable("follow");
 
-            builder.HasKey(p => new { p.FollowingId, p.FollowerId });
+            builder.HasKey(p => p.Id);
+
+            builder.Property(p => p.Id)
+                .HasColumnName("id")
+                .IsRequired()
+                .ValueGeneratedNever();
 
             builder.Property(p => p.FollowerId)
                 .HasColumnName("follower_id")

@@ -82,9 +82,9 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<FollowResultDTO>> DeleteAsync(string userId, string postId)
+        public async Task<IResult<FollowResultDTO>> DeleteAsync(string id)
         {
-            var existingFollow = await _followRepository.FindEntityAsync(l => l.FollowerId == userId && l.FollowingId == postId);
+            var existingFollow = await _followRepository.FindEntityAsync(l => l.Id == id);
 
             if (existingFollow == null)
             {

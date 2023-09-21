@@ -48,14 +48,14 @@ namespace InstaConnect.Presentation.API.Controllers
             return Ok(response);
         }
 
-        // DELETE: api/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // DELETE: api/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
-        [HttpDelete("{followerId}/{followingId}")]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteAsync([FromRoute] string followerId, [FromRoute] string followingId)
+        public async Task<IActionResult> DeleteAsync([FromRoute] string id)
         {
-            var response = await _followService.DeleteAsync(followerId, followingId);
+            var response = await _followService.DeleteAsync(id);
 
             return Ok(response);
         }

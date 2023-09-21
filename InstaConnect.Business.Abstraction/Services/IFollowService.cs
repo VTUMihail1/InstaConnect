@@ -30,11 +30,10 @@ namespace InstaConnect.Business.Abstraction.Services
         Task<IResult<FollowResultDTO>> AddAsync(FollowAddDTO followAddDTO);
 
         /// <summary>
-        /// Deletes a follow relationship asynchronously.
+        /// Deletes a follow asynchronously.
         /// </summary>
-        /// <param name="userId">The ID of the user initiating the unfollow operation.</param>
-        /// <param name="postId">The ID of the user being unfollowed.</param>
+        /// <param name="id">The ID of the follow to delete.</param>
         /// <returns>The result of the follow deletion operation.</returns>
-        Task<IResult<FollowResultDTO>> DeleteAsync(string userId, string postId);
+        Task<IResult<FollowResultDTO>> DeleteAsync(string id);
     }
 }

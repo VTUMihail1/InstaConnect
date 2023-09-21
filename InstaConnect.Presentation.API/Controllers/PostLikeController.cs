@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Models.DTOs.Like;
+using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Presentation.API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -49,14 +49,14 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // DELETE: api/post-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes
+        // DELETE: api/post-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
-        [HttpDelete("{userId}/{postId}")]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteAsync([FromRoute] string userId, [FromRoute] string postId)
+        public async Task<IActionResult> DeleteAsync([FromRoute] string id)
         {
-            var response = await _postLikeService.DeleteAsync(userId, postId);
+            var response = await _postLikeService.DeleteAsync(id);
 
             return this.HandleResponse(response);
         }

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Business.Models.DTOs.Like;
+﻿using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.Results;
 
 namespace InstaConnect.Business.Abstraction.Services
@@ -32,9 +32,8 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <summary>
         /// Deletes a post like asynchronously.
         /// </summary>
-        /// <param name="userId">The ID of the user who liked the post.</param>
-        /// <param name="postId">The ID of the post that was liked.</param>
+        /// <param name="id">The ID of the post like to delete.</param>
         /// <returns>The result of the post like deletion operation.</returns>
-        Task<IResult<PostLikeResultDTO>> DeleteAsync(string userId, string postId);
+        Task<IResult<PostLikeResultDTO>> DeleteAsync(string id);
     }
 }
