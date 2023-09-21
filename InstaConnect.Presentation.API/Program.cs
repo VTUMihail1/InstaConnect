@@ -68,6 +68,8 @@ builder.Services
     .AddScoped<ICommentLikeService, CommentLikeService>()
     .AddScoped<IFollowRepository, FollowRepository>()
     .AddScoped<IFollowService, FollowService>()
+    .AddScoped<IMessageRepository, MessageRepository>()
+    .AddScoped<IMessageService, MessageService>()
     .AddScoped<IAccountService, AccountService>()
     .AddAutoMapper(typeof(InstaConnectProfile));
 
