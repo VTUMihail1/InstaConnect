@@ -28,6 +28,10 @@ namespace InstaConnect.Data.Models.Entities
         public ICollection<Follow> Followers { get; set; } = new List<Follow>();
 
         public ICollection<Follow> Followings { get; set; } = new List<Follow>();
+
+        public ICollection<Message> Senders { get; set; } = new List<Message>();
+
+        public ICollection<Message> Receivers { get; set; } = new List<Message>();
     }
 }
 
