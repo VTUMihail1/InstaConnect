@@ -10,6 +10,7 @@ namespace InstaConnect.Data.EntityConfigurations
         {
             builder.ToTable("user_role");
 
+            builder.Property(x => x.Id).HasColumnName("id");
             builder.Property(p => p.RoleId).HasColumnName("role_id");
             builder.Property(p => p.UserId).HasColumnName("user_id");
             builder.Property(p => p.CreatedAt).HasColumnName("created_at");

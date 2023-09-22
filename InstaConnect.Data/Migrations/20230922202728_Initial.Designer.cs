@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstaConnect.Data.Migrations
 {
     [DbContext(typeof(InstaConnectContext))]
-    [Migration("20230921213446_UpdateCreateAtAndUpdatedAtProperties")]
-    partial class UpdateCreateAtAndUpdatedAtProperties
+    [Migration("20230922202728_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,6 +145,12 @@ namespace InstaConnect.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)")
                         .HasColumnName("id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("content");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)")
@@ -345,7 +351,9 @@ namespace InstaConnect.Data.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("user_id");
 
                     b.Property<DateTime>("ValidUntil")
                         .HasColumnType("datetime(6)")
@@ -512,7 +520,8 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<string>("Id")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("id");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("longtext")
@@ -549,7 +558,8 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<string>("Id")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)")
@@ -581,7 +591,8 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<string>("Id")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)")

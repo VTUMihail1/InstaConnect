@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
+using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.Results;
@@ -15,17 +16,20 @@ namespace InstaConnect.Business.Services
         private readonly IMapper _mapper;
         private readonly IResultFactory _resultFactory;
         private readonly IMessageRepository _messageRepository;
+        private readonly IMessageSender _messageSender;
         private readonly UserManager<User> _userManager;
 
         public MessageService(
             IMapper mapper,
             IResultFactory resultFactory,
             IMessageRepository messageRepository,
+            IMessageSender messageSender,
             UserManager<User> userManager)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _messageRepository = messageRepository;
+            _messageSender = messageSender;
             _userManager = userManager;
         }
 
@@ -67,6 +71,8 @@ namespace InstaConnect.Business.Services
 
             var message = _mapper.Map<Message>(messageAddDTO);
             await _messageRepository.AddAsync(message);
+
+            await _messageSender.SendMessageToUserAsync(messageAddDTO.ReceiverId, message.Content);
 
             var noContentResult = _resultFactory.GetNoContentResult<MessageResultDTO>();
 

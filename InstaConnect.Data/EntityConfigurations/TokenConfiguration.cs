@@ -32,6 +32,11 @@ namespace InstaConnect.Data.EntityConfigurations
                 .HasColumnName("is_valid_until")
                 .IsRequired();
 
+            builder.Property(p => p.UserId)
+                .HasColumnName("user_id")
+                .HasMaxLength(255)
+                .IsRequired();
+
             builder.Property(p => p.CreatedAt).HasColumnName("created_at");
             builder.Property(p => p.UpdatedAt).HasColumnName("updated_at");
 

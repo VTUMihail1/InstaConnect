@@ -348,7 +348,9 @@ namespace InstaConnect.Data.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("user_id");
 
                     b.Property<DateTime>("ValidUntil")
                         .HasColumnType("datetime(6)")
@@ -515,7 +517,8 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<string>("Id")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("id");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("longtext")
@@ -552,7 +555,8 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<string>("Id")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)")
@@ -584,7 +588,8 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<string>("Id")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)")

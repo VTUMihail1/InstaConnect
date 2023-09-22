@@ -4,6 +4,7 @@ using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.AutoMapper;
 using InstaConnect.Business.Factories;
 using InstaConnect.Business.Helpers;
+using InstaConnect.Business.Helpers.Hubs;
 using InstaConnect.Business.Models.Options;
 using InstaConnect.Business.Services;
 using InstaConnect.Data;
@@ -69,6 +70,7 @@ builder.Services
     .AddScoped<IFollowRepository, FollowRepository>()
     .AddScoped<IFollowService, FollowService>()
     .AddScoped<IMessageRepository, MessageRepository>()
+    .AddScoped<IMessageSender, MessageSender>()
     .AddScoped<IMessageService, MessageService>()
     .AddScoped<IAccountService, AccountService>()
     .AddAutoMapper(typeof(InstaConnectProfile));
