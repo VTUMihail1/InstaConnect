@@ -15,14 +15,14 @@ namespace InstaConnect.Business.Services
         private readonly IMapper _mapper;
         private readonly IResultFactory _resultFactory;
         private readonly ICommentLikeRepository _commentLikeRepository;
-        private readonly ICommentRepository _commentRepository;
+        private readonly IPostCommentRepository _commentRepository;
         private readonly UserManager<User> _userManager;
 
         public CommentLikeService(
             IMapper mapper,
             IResultFactory resultFactory,
             ICommentLikeRepository commentLikeRepository,
-            ICommentRepository commentRepository,
+            IPostCommentRepository commentRepository,
             UserManager<User> userManager)
         {
             _mapper = mapper;
@@ -40,9 +40,9 @@ namespace InstaConnect.Business.Services
             return commentLikeResultDTOs;
         }
 
-        public async Task<ICollection<CommentLikeResultDTO>> GetAllByCommentIdAsync(string commentId)
+        public async Task<ICollection<CommentLikeResultDTO>> GetAllByCommentIdAsync(string postCommentId)
         {
-            var commentLikes = await _commentLikeRepository.GetAllFilteredAsync(c => c.CommentId == commentId);
+            var commentLikes = await _commentLikeRepository.GetAllFilteredAsync(c => c.PostCommentId == postCommentId);
             var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
 
             return commentLikeResultDTOs;
@@ -68,7 +68,7 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var existingCommentLike = await _commentLikeRepository.FindEntityAsync(l => l.UserId == commentLikeAddDTO.UserId && l.CommentId == commentLikeAddDTO.CommentId);
+            var existingCommentLike = await _commentLikeRepository.FindEntityAsync(l => l.UserId == commentLikeAddDTO.UserId && l.PostCommentId == commentLikeAddDTO.CommentId);
 
             if (existingCommentLike != null)
             {

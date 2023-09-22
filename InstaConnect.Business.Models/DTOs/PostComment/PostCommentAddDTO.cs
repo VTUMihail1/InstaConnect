@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InstaConnect.Business.Models.DTOs.Comment
 {
-    public class CommentAddDTO
+    public class PostCommentAddDTO
     {
         [Required]
         public string UserId { get; set; }
@@ -11,7 +11,7 @@ namespace InstaConnect.Business.Models.DTOs.Comment
         [Required]
         public string PostId { get; set; }
 
-        public string? CommentId { get; set; }
+        public string? PostCommentId { get; set; }
 
         [Required]
         [MinLength(InstaConnectModelConfigurations.PostCommentContentMinLength)]

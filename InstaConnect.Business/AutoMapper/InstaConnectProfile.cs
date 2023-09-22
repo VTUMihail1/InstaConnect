@@ -34,13 +34,13 @@ namespace InstaConnect.Business.AutoMapper
             CreateMap<PostLike, PostLikeResultDTO>()
                 .ReverseMap();
 
-            CreateMap<CommentAddDTO, Comment>()
+            CreateMap<PostCommentAddDTO, PostComment>()
                 .ReverseMap();
 
-            CreateMap<CommentUpdateDTO, Comment>()
+            CreateMap<PostCommentUpdateDTO, PostComment>()
                 .ReverseMap();
 
-            CreateMap<Comment, CommentResultDTO>()
+            CreateMap<PostComment, PostCommentResultDTO>()
                 .ReverseMap();
 
             CreateMap<MessageAddDTO, Message>()

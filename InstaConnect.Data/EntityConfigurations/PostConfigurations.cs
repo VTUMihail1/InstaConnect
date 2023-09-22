@@ -43,12 +43,12 @@ namespace InstaConnect.Data.EntityConfigurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(p => p.PostLikes)
-                .WithOne(l => l.Post)
-                .HasForeignKey(l => l.PostId)
+                .WithOne(pl => pl.Post)
+                .HasForeignKey(pl => pl.PostId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(p => p.Comments)
+            builder.HasMany(p => p.PostComments)
                 .WithOne(c => c.Post)
                 .HasForeignKey(c => c.PostId)
                 .IsRequired()

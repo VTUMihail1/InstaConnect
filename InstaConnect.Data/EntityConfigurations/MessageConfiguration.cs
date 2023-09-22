@@ -10,30 +10,30 @@ namespace InstaConnect.Data.EntityConfigurations
         {
             builder.ToTable("message");
 
-            builder.HasKey(p => p.Id);
+            builder.HasKey(m => m.Id);
 
-            builder.Property(p => p.Id)
+            builder.Property(m => m.Id)
                 .HasColumnName("id")
                 .ValueGeneratedNever()
                 .IsRequired();
 
-            builder.Property(p => p.SenderId)
+            builder.Property(m => m.SenderId)
                 .HasColumnName("sender_id")
                 .HasMaxLength(255)
                 .IsRequired();
 
-            builder.Property(p => p.ReceiverId)
+            builder.Property(m => m.ReceiverId)
                 .HasColumnName("receiver_id")
                 .HasMaxLength(255)
                 .IsRequired();
 
-            builder.Property(p => p.Content)
+            builder.Property(m => m.Content)
                 .HasColumnName("content")
                 .HasMaxLength(2000)
                 .IsRequired();
 
-            builder.Property(p => p.CreatedAt).HasColumnName("created_at");
-            builder.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+            builder.Property(m => m.CreatedAt).HasColumnName("created_at");
+            builder.Property(m => m.UpdatedAt).HasColumnName("updated_at");
 
             builder.HasOne(m => m.Sender)
                 .WithMany(u => u.Senders)

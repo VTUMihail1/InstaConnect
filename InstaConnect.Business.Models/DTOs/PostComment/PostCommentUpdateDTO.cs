@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InstaConnect.Business.Models.DTOs.Comment
 {
-    public class CommentUpdateDTO
+    public class PostCommentUpdateDTO
     {
         [Required]
         [MinLength(InstaConnectModelConfigurations.PostCommentContentMinLength)]

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -338,7 +339,7 @@ namespace InstaConnect.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "comment",
+                name: "post_comment",
                 columns: table => new
                 {
                     id = table.Column<string>(type: "varchar(255)", nullable: false)
@@ -356,21 +357,21 @@ namespace InstaConnect.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_comment", x => x.id);
+                    table.PrimaryKey("PK_post_comment", x => x.id);
                     table.ForeignKey(
-                        name: "FK_comment_comment_comment_id",
+                        name: "FK_post_comment_post_comment_comment_id",
                         column: x => x.comment_id,
-                        principalTable: "comment",
+                        principalTable: "post_comment",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_comment_post_post_id",
+                        name: "FK_post_comment_post_post_id",
                         column: x => x.post_id,
                         principalTable: "post",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_comment_user_user_id",
+                        name: "FK_post_comment_user_user_id",
                         column: x => x.user_id,
                         principalTable: "user",
                         principalColumn: "id",
@@ -426,9 +427,9 @@ namespace InstaConnect.Data.Migrations
                 {
                     table.PrimaryKey("PK_comment_like", x => x.id);
                     table.ForeignKey(
-                        name: "FK_comment_like_comment_comment_id",
+                        name: "FK_comment_like_post_comment_comment_id",
                         column: x => x.comment_id,
-                        principalTable: "comment",
+                        principalTable: "post_comment",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -439,21 +440,6 @@ namespace InstaConnect.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_comment_comment_id",
-                table: "comment",
-                column: "comment_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_comment_post_id",
-                table: "comment",
-                column: "post_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_comment_user_id",
-                table: "comment",
-                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_comment_like_comment_id",
@@ -488,6 +474,21 @@ namespace InstaConnect.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_post_user_id",
                 table: "post",
+                column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_post_comment_comment_id",
+                table: "post_comment",
+                column: "comment_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_post_comment_post_id",
+                table: "post_comment",
+                column: "post_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_post_comment_user_id",
+                table: "post_comment",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
@@ -577,7 +578,7 @@ namespace InstaConnect.Data.Migrations
                 name: "user_token");
 
             migrationBuilder.DropTable(
-                name: "comment");
+                name: "post_comment");
 
             migrationBuilder.DropTable(
                 name: "role");

@@ -27,12 +27,12 @@ namespace InstaConnect.Presentation.API.Controllers
             return Ok(response);
         }
 
-        // GET: api/comment-likes/by-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-comment/{commentId}")]
+        // GET: api/comment-likes/by-post-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("by-post-comment/{commentId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByCommentIdAsync([FromRoute] string commentId)
+        public async Task<IActionResult> GetAllByCommentIdAsync([FromRoute] string postCommentId)
         {
-            var response = await _commentLikeService.GetAllByCommentIdAsync(commentId);
+            var response = await _commentLikeService.GetAllByCommentIdAsync(postCommentId);
 
             return Ok(response);
         }

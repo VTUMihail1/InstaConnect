@@ -56,7 +56,7 @@ namespace InstaConnect.Data.EntityConfigurations
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(u => u.Comments)
+            builder.HasMany(u => u.PostComments)
                 .WithOne(c => c.User)
                 .HasForeignKey(c => c.UserId)
                 .IsRequired()

@@ -10,13 +10,13 @@ namespace InstaConnect.Data.EntityConfigurations
         {
             builder.ToTable("user_token");
 
-            builder.Property(x => x.Id).HasColumnName("id");
-            builder.Property(p => p.UserId).HasColumnName("user_id");
-            builder.Property(p => p.LoginProvider).HasColumnName("login_provider");
-            builder.Property(p => p.Name).HasColumnName("name");
-            builder.Property(p => p.Value).HasColumnName("value");
-            builder.Property(p => p.CreatedAt).HasColumnName("created_at");
-            builder.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+            builder.Property(ut => ut.Id).HasColumnName("id");
+            builder.Property(ut => ut.UserId).HasColumnName("user_id");
+            builder.Property(ut => ut.LoginProvider).HasColumnName("login_provider");
+            builder.Property(ut => ut.Name).HasColumnName("name");
+            builder.Property(ut => ut.Value).HasColumnName("value");
+            builder.Property(ut => ut.CreatedAt).HasColumnName("created_at");
+            builder.Property(ut => ut.UpdatedAt).HasColumnName("updated_at");
         }
     }
 }

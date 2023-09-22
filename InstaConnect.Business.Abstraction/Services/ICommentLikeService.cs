@@ -18,9 +18,9 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <summary>
         /// Retrieves all comment likes associated with a comment asynchronously.
         /// </summary>
-        /// <param name="commentId">The ID of the comment.</param>
+        /// <param name="postCommentId">The ID of the post comment.</param>
         /// <returns>A collection of comment like results.</returns>
-        Task<ICollection<CommentLikeResultDTO>> GetAllByCommentIdAsync(string commentId);
+        Task<ICollection<CommentLikeResultDTO>> GetAllByCommentIdAsync(string postCommentId);
 
         /// <summary>
         /// Adds a new comment like asynchronously.

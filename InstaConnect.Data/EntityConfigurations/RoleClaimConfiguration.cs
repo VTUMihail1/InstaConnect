@@ -10,12 +10,12 @@ namespace InstaConnect.Data.EntityConfigurations
         {
             builder.ToTable("role_claim");
 
-            builder.Property(p => p.Id).HasColumnName("id");
-            builder.Property(p => p.RoleId).HasColumnName("role_id");
-            builder.Property(p => p.ClaimType).HasColumnName("claim_type");
-            builder.Property(p => p.ClaimValue).HasColumnName("claim_value");
-            builder.Property(p => p.CreatedAt).HasColumnName("created_at");
-            builder.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+            builder.Property(rc => rc.Id).HasColumnName("id");
+            builder.Property(rc => rc.RoleId).HasColumnName("role_id");
+            builder.Property(rc => rc.ClaimType).HasColumnName("claim_type");
+            builder.Property(rc => rc.ClaimValue).HasColumnName("claim_value");
+            builder.Property(rc => rc.CreatedAt).HasColumnName("created_at");
+            builder.Property(rc => rc.UpdatedAt).HasColumnName("updated_at");
         }
     }
 }

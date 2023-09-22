@@ -10,34 +10,34 @@ namespace InstaConnect.Data.EntityConfigurations
         {
             builder.ToTable("comment_like");
 
-            builder.HasKey(p => p.Id);
+            builder.HasKey(cl => cl.Id);
 
-            builder.Property(p => p.Id)
+            builder.Property(cl => cl.Id)
                 .HasColumnName("id")
                 .IsRequired()
                 .ValueGeneratedNever();
 
-            builder.Property(p => p.UserId)
+            builder.Property(cl => cl.UserId)
                 .HasColumnName("user_id")
                 .HasMaxLength(255)
                 .IsRequired();
 
-            builder.Property(p => p.CommentId)
+            builder.Property(cl => cl.PostCommentId)
                 .HasColumnName("comment_id")
                 .HasMaxLength(255)
                 .IsRequired();
 
-            builder.Property(p => p.CreatedAt).HasColumnName("created_at");
-            builder.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+            builder.Property(cl => cl.CreatedAt).HasColumnName("created_at");
+            builder.Property(cl => cl.UpdatedAt).HasColumnName("updated_at");
 
-            builder.HasOne(l => l.User)
+            builder.HasOne(cl => cl.User)
                 .WithMany(u => u.CommentLikes)
-                .HasForeignKey(l => l.UserId)
+                .HasForeignKey(cl => cl.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(l => l.Comment)
-                .WithMany(u => u.CommentLikes)
-                .HasForeignKey(l => l.CommentId)
+            builder.HasOne(cl => cl.PostComment)
+                .WithMany(pc => pc.CommentLikes)
+                .HasForeignKey(cl => cl.PostCommentId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

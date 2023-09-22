@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Data.Models.Entities
 {
-    public class Comment : BaseEntity
+    public class PostComment : BaseEntity
     {
         public string UserId { get; set; }
 
@@ -10,7 +10,7 @@ namespace InstaConnect.Data.Models.Entities
 
         public string Content { get; set; }
 
-        public string? CommentId { get; set; }
+        public string? PostCommentId { get; set; }
 
         public User User { get; set; }
 
@@ -18,6 +18,6 @@ namespace InstaConnect.Data.Models.Entities
 
         public ICollection<CommentLike> CommentLikes { get; set; } = new List<CommentLike>();
 
-        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public ICollection<PostComment> PostComments { get; set; } = new List<PostComment>();
     }
 }
