@@ -37,5 +37,11 @@
         public const string FollowerNotFound = "Follower does not exist";
 
         public const string FollowingNotFound = "Following does not exist";
+
+        public const string ReceiverNotFound = "Receiver does not exist";
+
+        public const string SenderNotFound = "Sender does not exist";
+
+        public const string MessageNotFound = "Message does not exist";
     }
 }

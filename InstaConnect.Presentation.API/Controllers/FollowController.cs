@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Follow;
+using InstaConnect.Presentation.API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,7 +46,7 @@ namespace InstaConnect.Presentation.API.Controllers
         {
             var response = await _followService.AddAsync(followAddDTO);
 
-            return Ok(response);
+            return this.HandleResponse(response);
         }
 
         // DELETE: api/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
@@ -57,7 +58,7 @@ namespace InstaConnect.Presentation.API.Controllers
         {
             var response = await _followService.DeleteAsync(id);
 
-            return Ok(response);
+            return this.HandleResponse(response);
         }
     }
 }

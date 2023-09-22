@@ -71,6 +71,16 @@ namespace InstaConnect.Data.EntityConfigurations
                 .WithOne(f => f.Following)
                 .HasForeignKey(f => f.FollowingId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(u => u.Senders)
+                .WithOne(m => m.Sender)
+                .HasForeignKey(m => m.SenderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(u => u.Receivers)
+                .WithOne(m => m.Receiver)
+                .HasForeignKey(m => m.ReceiverId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

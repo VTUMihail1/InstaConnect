@@ -137,6 +137,47 @@ namespace InstaConnect.Data.Migrations
                     b.ToTable("follow", (string)null);
                 });
 
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Message", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)")
+                        .HasColumnName("content");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("ReceiverId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("receiver_id");
+
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("sender_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("message", (string)null);
+                });
+
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.Post", b =>
                 {
                     b.Property<string>("Id")
@@ -307,7 +348,9 @@ namespace InstaConnect.Data.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("user_id");
 
                     b.Property<DateTime>("ValidUntil")
                         .HasColumnType("datetime(6)")
@@ -474,7 +517,8 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<string>("Id")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("id");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("longtext")
@@ -511,7 +555,8 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<string>("Id")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)")
@@ -543,7 +588,8 @@ namespace InstaConnect.Data.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<string>("Id")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)")
@@ -618,6 +664,25 @@ namespace InstaConnect.Data.Migrations
                     b.Navigation("Follower");
 
                     b.Navigation("Following");
+                });
+
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.Message", b =>
+                {
+                    b.HasOne("InstaConnect.Data.Models.Entities.User", "Receiver")
+                        .WithMany("Receivers")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InstaConnect.Data.Models.Entities.User", "Sender")
+                        .WithMany("Senders")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.Post", b =>
@@ -739,6 +804,10 @@ namespace InstaConnect.Data.Migrations
                     b.Navigation("PostLikes");
 
                     b.Navigation("Posts");
+
+                    b.Navigation("Receivers");
+
+                    b.Navigation("Senders");
 
                     b.Navigation("Tokens");
                 });

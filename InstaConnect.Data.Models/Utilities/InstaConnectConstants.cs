@@ -18,9 +18,9 @@
 
         public const string AccountForgotPasswordTitle = "InstaConnect Reset Password";
 
-        public const string EmailConfirmationTemplatePath = @"C:\Users\Misho\Desktop\InstaConnect\InstaConnect\InstaConnect.Business\Templates\InstaConnectConfirmEmailTemplate.html";
+        public const string EmailConfirmationTemplatePath = @"C:\Users\Misho\Desktop\a\InstaConnect\InstaConnect.Business\Templates\InstaConnectConfirmEmailTemplate.html";
 
-        public const string ForgotPasswordTemplatePath = @"C:\Users\Misho\Desktop\InstaConnect\InstaConnect\InstaConnect.Business\Templates\InstaConnectResetPasswordTemplate.html";
+        public const string ForgotPasswordTemplatePath = @"C:\Users\Misho\Desktop\a\InstaConnect\InstaConnect.Business\Templates\InstaConnectResetPasswordTemplate.html";
 
         public const string TemplateLinkPlaceholder = "InsertYourRouteValuesHere";
     }

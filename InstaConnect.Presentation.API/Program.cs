@@ -4,6 +4,7 @@ using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.AutoMapper;
 using InstaConnect.Business.Factories;
 using InstaConnect.Business.Helpers;
+using InstaConnect.Business.Helpers.Hubs;
 using InstaConnect.Business.Models.Options;
 using InstaConnect.Business.Services;
 using InstaConnect.Data;
@@ -68,6 +69,9 @@ builder.Services
     .AddScoped<ICommentLikeService, CommentLikeService>()
     .AddScoped<IFollowRepository, FollowRepository>()
     .AddScoped<IFollowService, FollowService>()
+    .AddScoped<IMessageRepository, MessageRepository>()
+    .AddScoped<IMessageSender, MessageSender>()
+    .AddScoped<IMessageService, MessageService>()
     .AddScoped<IAccountService, AccountService>()
     .AddAutoMapper(typeof(InstaConnectProfile));
 
@@ -144,6 +148,7 @@ builder.Services
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
 
 builder.Services
     .Configure<CookieAuthenticationOptions>(options =>
@@ -157,6 +162,8 @@ await app.SeedDb();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.MapHub<ChatHub>("/chat-hub");
 
 app.UseHttpsRedirection();
 

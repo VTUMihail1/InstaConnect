@@ -10,6 +10,7 @@ namespace InstaConnect.Data.EntityConfigurations
         {
             builder.ToTable("user_login");
 
+            builder.Property(p => p.Id).HasColumnName("id");
             builder.Property(p => p.UserId).HasColumnName("user_id");
             builder.Property(p => p.ProviderKey).HasColumnName("provider_key");
             builder.Property(p => p.ProviderDisplayName).HasColumnName("provider_display_name");
