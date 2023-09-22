@@ -10,12 +10,12 @@ namespace InstaConnect.Data.EntityConfigurations
         {
             builder.ToTable("role");
 
-            builder.Property(p => p.Id).HasColumnName("id");
-            builder.Property(p => p.Name).HasColumnName("name");
-            builder.Property(p => p.NormalizedName).HasColumnName("normalized_name");
-            builder.Property(p => p.ConcurrencyStamp).HasColumnName("concurrency_stamp");
-            builder.Property(p => p.CreatedAt).HasColumnName("created_at");
-            builder.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+            builder.Property(r => r.Id).HasColumnName("id");
+            builder.Property(r => r.Name).HasColumnName("name");
+            builder.Property(r => r.NormalizedName).HasColumnName("normalized_name");
+            builder.Property(r => r.ConcurrencyStamp).HasColumnName("concurrency_stamp");
+            builder.Property(r => r.CreatedAt).HasColumnName("created_at");
+            builder.Property(r => r.UpdatedAt).HasColumnName("updated_at");
         }
     }
 }

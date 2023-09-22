@@ -10,34 +10,34 @@ namespace InstaConnect.Data.EntityConfigurations
         {
             builder.ToTable("post_like");
 
-            builder.HasKey(p => p.Id);
+            builder.HasKey(pl => pl.Id);
 
-            builder.Property(p => p.Id)
+            builder.Property(pl => pl.Id)
                 .HasColumnName("id")
                 .IsRequired()
                 .ValueGeneratedNever();
 
-            builder.Property(p => p.UserId)
+            builder.Property(pl => pl.UserId)
                 .HasColumnName("user_id")
                 .HasMaxLength(255)
                 .IsRequired();
 
-            builder.Property(p => p.PostId)
+            builder.Property(pl => pl.PostId)
                 .HasColumnName("post_id")
                 .HasMaxLength(255)
                 .IsRequired();
 
-            builder.Property(p => p.CreatedAt).HasColumnName("created_at");
-            builder.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+            builder.Property(pl => pl.CreatedAt).HasColumnName("created_at");
+            builder.Property(pl => pl.UpdatedAt).HasColumnName("updated_at");
 
-            builder.HasOne(l => l.User)
+            builder.HasOne(pl => pl.User)
                 .WithMany(u => u.PostLikes)
-                .HasForeignKey(l => l.UserId)
+                .HasForeignKey(pl => pl.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(l => l.Post)
-                .WithMany(u => u.PostLikes)
-                .HasForeignKey(l => l.PostId)
+            builder.HasOne(pl => pl.Post)
+                .WithMany(p => p.PostLikes)
+                .HasForeignKey(pl => pl.PostId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

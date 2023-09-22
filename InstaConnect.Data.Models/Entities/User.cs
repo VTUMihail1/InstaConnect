@@ -23,7 +23,7 @@ namespace InstaConnect.Data.Models.Entities
 
         public ICollection<CommentLike> CommentLikes { get; set; } = new List<CommentLike>();
 
-        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public ICollection<PostComment> PostComments { get; set; } = new List<PostComment>();
 
         public ICollection<Follow> Followers { get; set; } = new List<Follow>();
 

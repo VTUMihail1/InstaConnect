@@ -6,79 +6,79 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Presentation.API.Controllers
 {
-    [Route("api/comments")]
+    [Route("api/post-comments")]
     [ApiController]
-    public class CommentController : ControllerBase
+    public class PostCommentController : ControllerBase
     {
-        private readonly ICommentService _commentService;
+        private readonly IPostCommentService _postCommentService;
 
-        public CommentController(ICommentService commentService)
+        public PostCommentController(IPostCommentService postCommentService)
         {
-            _commentService = commentService;
+            _postCommentService = postCommentService;
         }
 
-        // GET: api/comments/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // GET: api/post-comments/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [HttpGet("by-user/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllByUserIdAsync([FromRoute] string userId)
         {
-            var response = await _commentService.GetAllByUserIdAsync(userId);
+            var response = await _postCommentService.GetAllByUserIdAsync(userId);
 
             return Ok(response);
         }
 
-        // GET: api/comments/by-post/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // GET: api/post-comments/by-post/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [HttpGet("by-post/{postId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllByPostIdAsync([FromRoute] string postId)
         {
-            var response = await _commentService.GetAllByPostIdAsync(postId);
+            var response = await _postCommentService.GetAllByPostIdAsync(postId);
 
             return Ok(response);
         }
 
-        // GET: api/comments/by-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // GET: api/post-comments/by-post-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [HttpGet("by-comment/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllByIdAsync([FromRoute] string id)
         {
-            var response = await _commentService.GetAllByIdAsync(id);
+            var response = await _postCommentService.GetAllByIdAsync(id);
 
             return Ok(response);
         }
 
-        // POST: api/comments
+        // POST: api/post-comments
         [Authorize]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddAsync([FromBody] CommentAddDTO commentAddDTO)
+        public async Task<IActionResult> AddAsync([FromBody] PostCommentAddDTO postCommentAddDTO)
         {
-            var response = await _commentService.AddAsync(commentAddDTO);
+            var response = await _postCommentService.AddAsync(postCommentAddDTO);
 
             return this.HandleResponse(response);
         }
 
-        // PUT: api/comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // PUT: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] CommentUpdateDTO commentUpdateDTO)
+        public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] PostCommentUpdateDTO postCommentUpdateDTO)
         {
-            var response = await _commentService.UpdateAsync(id, commentUpdateDTO);
+            var response = await _postCommentService.UpdateAsync(id, postCommentUpdateDTO);
 
             return this.HandleResponse(response);
         }
 
-        // DELETE: api/comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // DELETE: api/post-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeletePostComment([FromRoute] string id)
         {
-            var response = await _commentService.DeleteAsync(id);
+            var response = await _postCommentService.DeleteAsync(id);
 
             return this.HandleResponse(response);
         }

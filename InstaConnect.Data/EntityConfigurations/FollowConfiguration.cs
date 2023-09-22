@@ -10,25 +10,25 @@ namespace InstaConnect.Data.EntityConfigurations
         {
             builder.ToTable("follow");
 
-            builder.HasKey(p => p.Id);
+            builder.HasKey(f => f.Id);
 
-            builder.Property(p => p.Id)
+            builder.Property(f => f.Id)
                 .HasColumnName("id")
                 .IsRequired()
                 .ValueGeneratedNever();
 
-            builder.Property(p => p.FollowerId)
+            builder.Property(f => f.FollowerId)
                 .HasColumnName("follower_id")
                 .HasMaxLength(255)
                 .IsRequired();
 
-            builder.Property(p => p.FollowingId)
+            builder.Property(f => f.FollowingId)
                 .HasColumnName("following_id")
                 .HasMaxLength(255)
                 .IsRequired();
 
-            builder.Property(p => p.CreatedAt).HasColumnName("created_at");
-            builder.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+            builder.Property(f => f.CreatedAt).HasColumnName("created_at");
+            builder.Property(f => f.UpdatedAt).HasColumnName("updated_at");
 
             builder.HasOne(f => f.Following)
                 .WithMany(u => u.Followings)
