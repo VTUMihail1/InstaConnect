@@ -9,6 +9,12 @@ namespace InstaConnect.Business.Abstraction.Services
     public interface IPostService
     {
         /// <summary>
+        /// Retrieves all posts in a detailed format asynchronously.
+        /// </summary>
+        /// <returns>A collection of detailed post results.</returns>
+        Task<ICollection<PostDetailedDTO>> GetAllDetailedAsync();
+
+        /// <summary>
         /// Retrieves all posts asynchronously.
         /// </summary>
         /// <returns>A collection of post results.</returns>

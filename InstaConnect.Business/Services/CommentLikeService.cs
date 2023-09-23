@@ -59,7 +59,7 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var existingComment = await _commentRepository.FindEntityAsync(c => c.Id == commentLikeAddDTO.CommentId);
+            var existingComment = await _commentRepository.FindEntityAsync(c => c.Id == commentLikeAddDTO.PostCommentId);
 
             if (existingComment == null)
             {
@@ -68,7 +68,7 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var existingCommentLike = await _commentLikeRepository.FindEntityAsync(l => l.UserId == commentLikeAddDTO.UserId && l.PostCommentId == commentLikeAddDTO.CommentId);
+            var existingCommentLike = await _commentLikeRepository.FindEntityAsync(l => l.UserId == commentLikeAddDTO.UserId && l.PostCommentId == commentLikeAddDTO.PostCommentId);
 
             if (existingCommentLike != null)
             {
@@ -79,6 +79,24 @@ namespace InstaConnect.Business.Services
 
             var commentLike = _mapper.Map<CommentLike>(commentLikeAddDTO);
             await _commentLikeRepository.AddAsync(commentLike);
+
+            var noContentResult = _resultFactory.GetNoContentResult<CommentLikeResultDTO>();
+
+            return noContentResult;
+        }
+
+        public async Task<IResult<CommentLikeResultDTO>> DeleteByPostCommentIdAndUserIdAsync(string postCommentId, string userId)
+        {
+            var commentLike = await _commentLikeRepository.FindEntityAsync(l => l.PostCommentId == postCommentId && l.UserId == userId);
+
+            if (commentLike == null)
+            {
+                var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
+
+                return notFoundResult;
+            }
+
+            await _commentLikeRepository.DeleteAsync(commentLike);
 
             var noContentResult = _resultFactory.GetNoContentResult<CommentLikeResultDTO>();
 
@@ -102,5 +120,6 @@ namespace InstaConnect.Business.Services
 
             return noContentResult;
         }
+
     }
 }

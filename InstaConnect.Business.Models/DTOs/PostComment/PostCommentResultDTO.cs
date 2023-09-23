@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Business.Models.DTOs.Comment
+﻿namespace InstaConnect.Business.Models.DTOs.PostComment
 {
     public class PostCommentResultDTO
     {

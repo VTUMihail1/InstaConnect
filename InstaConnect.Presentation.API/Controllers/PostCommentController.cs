@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Models.DTOs.Comment;
+using InstaConnect.Business.Models.DTOs.PostComment;
 using InstaConnect.Presentation.API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

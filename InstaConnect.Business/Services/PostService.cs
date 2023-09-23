@@ -29,6 +29,14 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
+        public async Task<ICollection<PostDetailedDTO>> GetAllDetailedAsync()
+        {
+            var posts = await _postRepository.GetAllIncludedAsync();
+            var postDetailedDTOs = _mapper.Map<ICollection<PostDetailedDTO>>(posts);
+
+            return postDetailedDTOs;
+        }
+
         public async Task<ICollection<PostResultDTO>> GetAllAsync()
         {
             var posts = await _postRepository.GetAllAsync();

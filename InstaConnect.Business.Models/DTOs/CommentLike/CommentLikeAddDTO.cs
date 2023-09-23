@@ -2,7 +2,7 @@
 {
     public class CommentLikeAddDTO
     {
-        public string CommentId { get; set; }
+        public string PostCommentId { get; set; }
 
         public string UserId { get; set; }
     }

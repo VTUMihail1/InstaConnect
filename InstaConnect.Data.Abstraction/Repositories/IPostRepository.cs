@@ -10,5 +10,11 @@ namespace InstaConnect.Data.Abstraction.Repositories
     {
         // This interface inherits CRUD (Create, Read, Update, Delete) operations
         // from IRepository<Post>. You can add additional methods specific to post management here if needed.
+
+        /// <summary>
+        /// Retrieves all posts including related entities such as users, comments, and likes.
+        /// </summary>
+        /// <returns>A collection of posts with related entities included.</returns>
+        Task<ICollection<Post>> GetAllIncludedAsync();
     }
 }

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Business.Models.DTOs.Comment;
+﻿using InstaConnect.Business.Models.DTOs.PostComment;
 using InstaConnect.Business.Models.Results;
 
 namespace InstaConnect.Business.Abstraction.Services

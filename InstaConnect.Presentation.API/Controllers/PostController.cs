@@ -17,6 +17,16 @@ namespace InstaConnect.Presentation.API.Controllers
             _postService = postService;
         }
 
+        // GET: api/posts/detailed
+        [HttpGet("detailed")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllDetailedAsync()
+        {
+            var posts = await _postService.GetAllDetailedAsync();
+
+            return Ok(posts);
+        }
+
         // GET: api/posts/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [HttpGet("by-user/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
