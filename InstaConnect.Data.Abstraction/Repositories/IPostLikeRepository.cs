@@ -27,7 +27,7 @@ namespace InstaConnect.Data.Abstraction.Repositories
         /// </summary>
         /// <param name="expression">The filter expression used to select the post like.</param>
         /// <returns>A task representing the asynchronous operation, which upon completion returns the post like that satisfies the provided filter, with related entities included.</returns>
-        Task<PostLike> FindIncludedAsync(Expression<Func<PostLike, bool>> expression);
+        Task<PostLike> FindPostLikeIncludedAsync(Expression<Func<PostLike, bool>> expression);
         // Additional methods for managing PostLikes can be added here with appropriate documentation.
     }
 

@@ -27,7 +27,7 @@ namespace InstaConnect.Data.Abstraction.Repositories
         /// </summary>
         /// <param name="expression">The filter expression used to select the follow.</param>
         /// <returns>A task representing the asynchronous operation, which upon completion returns the follow that satisfies the provided filter, with related entities included.</returns>
-        Task<Follow> FindIncludedAsync(Expression<Func<Follow, bool>> expression);
+        Task<Follow> FindFollowIncludedAsync(Expression<Func<Follow, bool>> expression);
         // Additional methods for managing Follows can be added here with appropriate documentation.
     }
 

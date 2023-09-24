@@ -48,7 +48,7 @@ namespace InstaConnect.Data.Repositories
             return posts;
         }
 
-        public async Task<Post> FindIncludedAsync(Expression<Func<Post, bool>> expression)
+        public async Task<Post> FindPostIncludedAsync(Expression<Func<Post, bool>> expression)
         {
             var posts = await _instaConnectContext.Posts
                 .Include(p => p.User)

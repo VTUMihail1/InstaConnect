@@ -66,7 +66,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostCommentDetailedDTO>> GetDetailedByIdAsync(string id)
         {
-            var postComment = await _postCommentRepository.FindIncludedAsync(pc => pc.Id == id);
+            var postComment = await _postCommentRepository.FindPostCommentIncludedAsync(pc => pc.Id == id);
 
             if (postComment == null)
             {

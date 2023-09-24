@@ -63,6 +63,18 @@ namespace InstaConnect.Presentation.API.Controllers
             return Ok(response);
         }
 
+        // GET: api/messages/detailed/by-sender-and-receiver/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [HttpGet("detailed/by-sender-and-receiver/{senderId}/{receiverId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetDetailedBySenderIdAndReceiverIdAsync([FromRoute] string senderId, [FromRoute] string receiverId)
+        {
+            var response = await _messageService.GetDetailedBySenderIdAndReceiverIdAsync(senderId, receiverId);
+
+            return this.HandleResponse(response);
+        }
+
         // GET: api/messages/by-sender/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [HttpGet("by-sender/{senderId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -91,6 +103,18 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
+        // GET: api/messages/by-sender-and-receiver/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [HttpGet("by-sender-and-receiver/{senderId}/{receiverId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetBySenderIdAndReceiverIdAsync([FromRoute] string senderId, [FromRoute] string receiverId)
+        {
+            var response = await _messageService.GetBySenderIdAndReceiverIdAsync(senderId, receiverId);
+
+            return this.HandleResponse(response);
+        }
+
         // POST: api/messages
         [Authorize]
         [HttpPost]
@@ -111,6 +135,18 @@ namespace InstaConnect.Presentation.API.Controllers
         public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] MessageUpdateDTO messageUpdateDTO)
         {
             var response = await _messageService.UpdateAsync(id, messageUpdateDTO);
+
+            return this.HandleResponse(response);
+        }
+
+        // DELETE: api/messages/by-sender-and-receiver/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [HttpDelete("by-sender-and-receiver/{senderId}/{receiverId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteBySenderIdAndReceiverIdAsync([FromRoute] string senderId, [FromRoute] string receiverId)
+        {
+            var response = await _messageService.DeleteBySenderIdAndReceiverIdAsync(senderId, receiverId);
 
             return this.HandleResponse(response);
         }

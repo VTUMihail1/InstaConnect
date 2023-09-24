@@ -27,7 +27,7 @@ namespace InstaConnect.Data.Abstraction.Repositories
         /// </summary>
         /// <param name="expression">The filter expression used to select the comment like.</param>
         /// <returns>A task representing the asynchronous operation, which upon completion returns the comment like that satisfies the provided filter, with related entities included.</returns>
-        Task<CommentLike> FindIncludedAsync(Expression<Func<CommentLike, bool>> expression);
+        Task<CommentLike> FindCommentLikeIncludedAsync(Expression<Func<CommentLike, bool>> expression);
         // Additional methods for managing CommentLikes can be added here with appropriate documentation.
     }
 

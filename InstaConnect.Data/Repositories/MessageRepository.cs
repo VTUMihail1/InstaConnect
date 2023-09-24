@@ -36,7 +36,7 @@ namespace InstaConnect.Data.Repositories
             return messages;
         }
 
-        public async Task<Message> FindIncludedAsync(Expression<Func<Message, bool>> expression)
+        public async Task<Message> FindMessageIncludedAsync(Expression<Func<Message, bool>> expression)
         {
             var message = await _instaConnectContext.Messages
                 .Where(expression)

@@ -18,11 +18,11 @@ namespace InstaConnect.Presentation.API.Controllers
         }
 
         // GET: api/post-likes/detailed
-        [HttpGet]
+        [HttpGet("detailed")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllDetailedAsync()
         {
-            var response = await _postLikeService.GetAllAsync();
+            var response = await _postLikeService.GetAllDetailedAsync();
             return Ok(response);
         }
 
@@ -54,12 +54,24 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // GET: api/post-likes/detailed
-        [HttpGet("detailed")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllDetailedAsync()
+        // GET: api/post-likes/detailed/by-user-and-post/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [HttpGet("detailed/by-user-and-post/{userId}/{postId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetDetailedByPostIdAndUserIdAsync([FromRoute] string userId, [FromRoute] string postId)
         {
-            var response = await _postLikeService.GetAllDetailedAsync();
+            var response = await _postLikeService.GetDetailedByPostIdAndUserIdAsync(userId, postId);
+
+            return this.HandleResponse(response);
+        }
+
+        // GET: api/post-likes/detailed
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var response = await _postLikeService.GetAllAsync();
             return Ok(response);
         }
 
@@ -88,6 +100,18 @@ namespace InstaConnect.Presentation.API.Controllers
         public async Task<IActionResult> GetByIdAsync([FromRoute] string id)
         {
             var response = await _postLikeService.GetByIdAsync(id);
+            return this.HandleResponse(response);
+        }
+
+        // GET: api/post-likes/by-user-and-post/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [HttpGet("by-user-and-post/{userId}/{postId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetByPostIdAndUserIdAsync([FromRoute] string userId, [FromRoute] string postId)
+        {
+            var response = await _postLikeService.GetByPostIdAndUserIdAsync(userId, postId);
+
             return this.HandleResponse(response);
         }
 

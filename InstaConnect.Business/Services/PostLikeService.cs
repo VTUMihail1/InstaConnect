@@ -36,33 +36,55 @@ namespace InstaConnect.Business.Services
         {
             var postLikes = await _postLikeRepository.GetAllIncludedAsync();
             var postLikeDetailedDTOs = _mapper.Map<ICollection<PostLikeDetailedDTO>>(postLikes);
+
             return postLikeDetailedDTOs;
         }
 
         public async Task<ICollection<PostLikeDetailedDTO>> GetAllDetailedByUserIdAsync(string userId)
         {
-            var postLikes = await _postLikeRepository.GetAllFilteredIncludedAsync(p => p.UserId == userId);
+            var postLikes = await _postLikeRepository.GetAllFilteredIncludedAsync(pl => pl.UserId == userId);
             var postLikeDetailedDTOs = _mapper.Map<ICollection<PostLikeDetailedDTO>>(postLikes);
+
             return postLikeDetailedDTOs;
         }
 
         public async Task<ICollection<PostLikeDetailedDTO>> GetAllDetailedByPostIdAsync(string postId)
         {
-            var postLikes = await _postLikeRepository.GetAllFilteredIncludedAsync(p => p.PostId == postId);
+            var postLikes = await _postLikeRepository.GetAllFilteredIncludedAsync(pl => pl.PostId == postId);
             var postLikeDetailedDTOs = _mapper.Map<ICollection<PostLikeDetailedDTO>>(postLikes);
+
             return postLikeDetailedDTOs;
         }
 
         public async Task<IResult<PostLikeDetailedDTO>> GetDetailedByIdAsync(string id)
         {
-            var postLike = await _postLikeRepository.FindIncludedAsync(p => p.Id == id);
+            var postLike = await _postLikeRepository.FindPostLikeIncludedAsync(pl => pl.Id == id);
+
             if (postLike == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostLikeDetailedDTO>(InstaConnectErrorMessages.LikeNotFound);
+
                 return notFoundResult;
             }
             var postLikeDetailedDTO = _mapper.Map<PostLikeDetailedDTO>(postLike);
             var okResult = _resultFactory.GetOkResult(postLikeDetailedDTO);
+
+            return okResult;
+        }
+
+        public async Task<IResult<PostLikeDetailedDTO>> GetDetailedByPostIdAndUserIdAsync(string userId, string postId)
+        {
+            var postLike = await _postLikeRepository.FindPostLikeIncludedAsync(pl => pl.UserId == userId && pl.PostId == postId);
+
+            if (postLike == null)
+            {
+                var notFoundResult = _resultFactory.GetNotFoundResult<PostLikeDetailedDTO>(InstaConnectErrorMessages.LikeNotFound);
+
+                return notFoundResult;
+            }
+            var postLikeResultDTO = _mapper.Map<PostLikeDetailedDTO>(postLike);
+            var okResult = _resultFactory.GetOkResult(postLikeResultDTO);
+
             return okResult;
         }
 
@@ -70,33 +92,54 @@ namespace InstaConnect.Business.Services
         {
             var postLikes = await _postLikeRepository.GetAllAsync();
             var postLikeResultDTOs = _mapper.Map<ICollection<PostLikeResultDTO>>(postLikes);
+
             return postLikeResultDTOs;
         }
 
         public async Task<ICollection<PostLikeResultDTO>> GetAllByUserIdAsync(string userId)
         {
-            var postLikes = await _postLikeRepository.GetAllFilteredAsync(p => p.UserId == userId);
+            var postLikes = await _postLikeRepository.GetAllFilteredAsync(pl => pl.UserId == userId);
             var postLikeResultDTOs = _mapper.Map<ICollection<PostLikeResultDTO>>(postLikes);
+
             return postLikeResultDTOs;
         }
 
         public async Task<ICollection<PostLikeResultDTO>> GetAllByPostIdAsync(string postId)
         {
-            var postLikes = await _postLikeRepository.GetAllFilteredAsync(p => p.PostId == postId);
+            var postLikes = await _postLikeRepository.GetAllFilteredAsync(pl => pl.PostId == postId);
             var postLikeResultDTOs = _mapper.Map<ICollection<PostLikeResultDTO>>(postLikes);
+
             return postLikeResultDTOs;
         }
 
         public async Task<IResult<PostLikeResultDTO>> GetByIdAsync(string id)
         {
-            var postLike = await _postLikeRepository.FindEntityAsync(p => p.Id == id);
+            var postLike = await _postLikeRepository.FindEntityAsync(pl => pl.Id == id);
+
             if (postLike == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
+
                 return notFoundResult;
             }
             var postLikeResultDTO = _mapper.Map<PostLikeResultDTO>(postLike);
             var okResult = _resultFactory.GetOkResult(postLikeResultDTO);
+            return okResult;
+        }
+
+        public async Task<IResult<PostLikeResultDTO>> GetByPostIdAndUserIdAsync(string userId, string postId)
+        {
+            var postLike = await _postLikeRepository.FindEntityAsync(pl => pl.UserId == userId && pl.PostId == postId);
+
+            if (postLike == null)
+            {
+                var notFoundResult = _resultFactory.GetNotFoundResult<PostLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
+
+                return notFoundResult;
+            }
+            var postLikeResultDTO = _mapper.Map<PostLikeResultDTO>(postLike);
+            var okResult = _resultFactory.GetOkResult(postLikeResultDTO);
+
             return okResult;
         }
 
@@ -120,7 +163,7 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var existingPostLike = await _postLikeRepository.FindEntityAsync(l => l.UserId == postLikeAddDTO.UserId && l.PostId == postLikeAddDTO.PostId);
+            var existingPostLike = await _postLikeRepository.FindEntityAsync(pl => pl.UserId == postLikeAddDTO.UserId && pl.PostId == postLikeAddDTO.PostId);
 
             if (existingPostLike != null)
             {
@@ -139,7 +182,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostLikeResultDTO>> DeleteByPostIdAndUserIdAsync(string userId, string postId)
         {
-            var postLike = await _postLikeRepository.FindEntityAsync(l => l.UserId == userId && l.PostId == postId);
+            var postLike = await _postLikeRepository.FindEntityAsync(pl => pl.UserId == userId && pl.PostId == postId);
 
             if (postLike == null)
             {
@@ -157,7 +200,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostLikeResultDTO>> DeleteAsync(string id)
         {
-            var postLike = await _postLikeRepository.FindEntityAsync(l => l.Id == id);
+            var postLike = await _postLikeRepository.FindEntityAsync(pl => pl.Id == id);
 
             if (postLike == null)
             {

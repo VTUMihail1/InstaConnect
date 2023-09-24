@@ -37,6 +37,18 @@ namespace InstaConnect.Business.Abstraction.Services
         Task<IResult<PostLikeDetailedDTO>> GetDetailedByIdAsync(string id);
 
         /// <summary>
+        /// Retrieves detailed post like information by user ID and post ID asynchronously.
+        /// </summary>
+        /// <param name="userId">The ID of the user.</param>
+        /// <param name="postId">The ID of the post.</param>
+        /// <returns>
+        /// An asynchronous task that returns a result containing the detailed post like information
+        /// or an appropriate result based on the outcome of the operation.
+        /// </returns>
+        Task<IResult<PostLikeDetailedDTO>> GetDetailedByPostIdAndUserIdAsync(string userId, string postId);
+
+
+        /// <summary>
         /// Retrieves all post likes.
         /// </summary>
         /// <returns>A collection of post like information.</returns>
@@ -62,6 +74,17 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <param name="id">The ID of the post like to retrieve.</param>
         /// <returns>The post like information or a not-found result.</returns>
         Task<IResult<PostLikeResultDTO>> GetByIdAsync(string id);
+
+        /// <summary>
+        /// Retrieves post like information by user ID and post ID asynchronously.
+        /// </summary>
+        /// <param name="userId">The ID of the user.</param>
+        /// <param name="postId">The ID of the post.</param>
+        /// <returns>
+        /// An asynchronous task that returns a result containing the post like information
+        /// or an appropriate result based on the outcome of the operation.
+        /// </returns>
+        Task<IResult<PostLikeResultDTO>> GetByPostIdAndUserIdAsync(string userId, string postId);
 
         /// <summary>
         /// Adds a new post like asynchronously.

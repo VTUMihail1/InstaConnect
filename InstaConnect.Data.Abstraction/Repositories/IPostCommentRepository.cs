@@ -27,6 +27,6 @@ namespace InstaConnect.Data.Abstraction.Repositories
         /// </summary>
         /// <param name="expression">The filter expression used to select the post comment.</param>
         /// <returns>A task representing the asynchronous operation, which upon completion returns the post comment that satisfies the provided filter, with related entities included.</returns>
-        Task<PostComment> FindIncludedAsync(Expression<Func<PostComment, bool>> expression);
+        Task<PostComment> FindPostCommentIncludedAsync(Expression<Func<PostComment, bool>> expression);
     }
 }

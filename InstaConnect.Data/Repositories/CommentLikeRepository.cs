@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
 using InstaConnect.Data.Repositories.Base;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace InstaConnect.Data.Repositories
@@ -16,20 +17,30 @@ namespace InstaConnect.Data.Repositories
 
         public async Task<ICollection<CommentLike>> GetAllIncludedAsync()
         {
-            // Implement the logic here
-            throw new NotImplementedException();
+            var commentsLikes = await _instaConnectContext.CommentLikes
+                .Include(cl => cl.User)
+                .ToListAsync();
+
+            return commentsLikes;
         }
 
         public async Task<ICollection<CommentLike>> GetAllFilteredIncludedAsync(Expression<Func<CommentLike, bool>> expression)
         {
-            // Implement the logic here
-            throw new NotImplementedException();
+            var commentsLikes = await _instaConnectContext.CommentLikes
+                .Where(expression)
+                .Include(cl => cl.User)
+                .ToListAsync();
+
+            return commentsLikes;
         }
 
-        public async Task<CommentLike> FindIncludedAsync(Expression<Func<CommentLike, bool>> expression)
+        public async Task<CommentLike> FindCommentLikeIncludedAsync(Expression<Func<CommentLike, bool>> expression)
         {
-            // Implement the logic here
-            throw new NotImplementedException();
+            var commentsLike = await _instaConnectContext.CommentLikes
+                .Include(cl => cl.User)
+                .FirstOrDefaultAsync(expression);
+
+            return commentsLike;
         }
     }
 }

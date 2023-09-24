@@ -36,7 +36,7 @@ namespace InstaConnect.Data.Repositories
             return followers;
         }
 
-        public async Task<Follow> FindIncludedAsync(Expression<Func<Follow, bool>> expression)
+        public async Task<Follow> FindFollowIncludedAsync(Expression<Func<Follow, bool>> expression)
         {
             var followers = await _instaConnectContext.Followers
                 .Include(f => f.Follower)

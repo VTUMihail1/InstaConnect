@@ -36,6 +36,18 @@ namespace InstaConnect.Business.Abstraction.Services
         Task<IResult<FollowDetailedDTO>> GetDetailedByIdAsync(string id);
 
         /// <summary>
+        /// Retrieves detailed follow information by follower ID and following ID asynchronously.
+        /// </summary>
+        /// <param name="followerId">The ID of the follower.</param>
+        /// <param name="followingId">The ID of the following user.</param>
+        /// <returns>
+        /// An asynchronous task that returns a result containing the detailed follow information
+        /// or an appropriate result based on the outcome of the operation.
+        /// </returns>
+        Task<IResult<FollowDetailedDTO>> GetDetailedByFollowerIdAndFollowingIdAsync(string followerId, string followingId);
+
+
+        /// <summary>
         /// Retrieves all follows.
         /// </summary>
         /// <returns>A collection of follow information.</returns>
@@ -61,6 +73,18 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <param name="id">The ID of the follow to retrieve.</param>
         /// <returns>The follow information or a not-found result.</returns>
         Task<IResult<FollowResultDTO>> GetByIdAsync(string id);
+
+        /// <summary>
+        /// Retrieves follow information by follower ID and following ID asynchronously.
+        /// </summary>
+        /// <param name="followerId">The ID of the follower.</param>
+        /// <param name="followingId">The ID of the following user.</param>
+        /// <returns>
+        /// An asynchronous task that returns a result containing the follow information
+        /// or an appropriate result based on the outcome of the operation.
+        /// </returns>
+        Task<IResult<FollowResultDTO>> GetByFollowerIdAndFollowingIdAsync(string followerId, string followingId);
+
 
         /// <summary>
         /// Adds a new follow relationship asynchronously.

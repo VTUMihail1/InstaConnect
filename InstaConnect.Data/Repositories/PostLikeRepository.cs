@@ -36,7 +36,7 @@ namespace InstaConnect.Data.Repositories
             return postLikes;
         }
 
-        public async Task<PostLike> FindIncludedAsync(Expression<Func<PostLike, bool>> expression)
+        public async Task<PostLike> FindPostLikeIncludedAsync(Expression<Func<PostLike, bool>> expression)
         {
             var postLike = await _instaConnectContext.PostLikes
                 .Include(f => f.User)

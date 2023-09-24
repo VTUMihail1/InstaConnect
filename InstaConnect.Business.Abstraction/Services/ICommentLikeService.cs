@@ -12,28 +12,39 @@ namespace InstaConnect.Business.Abstraction.Services
         /// Gets a collection of detailed comment likes asynchronously.
         /// </summary>
         /// <returns>A collection of detailed comment likes.</returns>
-        Task<ICollection<CommentLikeResultDTO>> GetAllDetailedAsync();
+        Task<ICollection<CommentLikeDetailedDTO>> GetAllDetailedAsync();
 
         /// <summary>
         /// Gets a collection of detailed comment likes by user ID asynchronously.
         /// </summary>
         /// <param name="userId">The user ID to filter comment likes by.</param>
         /// <returns>A collection of detailed comment likes filtered by user ID.</returns>
-        Task<ICollection<CommentLikeResultDTO>> GetAllDetailedByUserIdAsync(string userId);
+        Task<ICollection<CommentLikeDetailedDTO>> GetAllDetailedByUserIdAsync(string userId);
 
         /// <summary>
         /// Gets a collection of detailed comment likes by comment ID asynchronously.
         /// </summary>
         /// <param name="postCommentId">The comment ID to filter comment likes by.</param>
         /// <returns>A collection of detailed comment likes filtered by comment ID.</returns>
-        Task<ICollection<CommentLikeResultDTO>> GetAllDetailedByCommentIdAsync(string postCommentId);
+        Task<ICollection<CommentLikeDetailedDTO>> GetAllDetailedByCommentIdAsync(string postCommentId);
 
         /// <summary>
         /// Gets a detailed comment like by its ID asynchronously.
         /// </summary>
         /// <param name="id">The ID of the comment like to retrieve.</param>
         /// <returns>A result containing the detailed comment like or a not found result if not found.</returns>
-        Task<IResult<CommentLikeResultDTO>> GetDetailedByIdAsync(string id);
+        Task<IResult<CommentLikeDetailedDTO>> GetDetailedByIdAsync(string id);
+
+        /// <summary>
+        /// Retrieves detailed information about a comment like by post comment ID and user ID asynchronously.
+        /// </summary>
+        /// <param name="postCommentId">The ID of the post comment.</param>
+        /// <param name="userId">The ID of the user.</param>
+        /// <returns>
+        /// An asynchronous task that returns a result containing the detailed comment like information
+        /// or a not-found result if the like is not found.
+        /// </returns>
+        Task<IResult<CommentLikeDetailedDTO>> GetDetailedByPostCommentIdAndUserIdAsync(string postCommentId, string userId);
 
         /// <summary>
         /// Gets a collection of comment likes asynchronously.
@@ -62,6 +73,16 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <returns>A result containing the comment like or a not found result if not found.</returns>
         Task<IResult<CommentLikeResultDTO>> GetByIdAsync(string id);
 
+        /// <summary>
+        /// Retrieves comment like information by post comment ID and user ID asynchronously.
+        /// </summary>
+        /// <param name="postCommentId">The ID of the post comment.</param>
+        /// <param name="userId">The ID of the user.</param>
+        /// <returns>
+        /// An asynchronous task that returns a result containing the comment like information
+        /// or an appropriate result based on the outcome of the operation.
+        /// </returns>
+        Task<IResult<CommentLikeResultDTO>> GetByPostCommentIdAndUserIdAsync(string postCommentId, string userId);
 
         /// <summary>
         /// Adds a new comment like asynchronously.

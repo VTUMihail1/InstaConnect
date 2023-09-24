@@ -55,6 +55,18 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
+        // GET: api/comment-likes/by-post-comment-and-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [HttpGet("by-post-comment-and-user/{postCommentId}/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetByPostCommentIdAndUserIdAsync([FromRoute] string postCommentId, [FromRoute] string userId)
+        {
+            var response = await _commentLikeService.GetByPostCommentIdAndUserIdAsync(postCommentId, userId);
+
+            return this.HandleResponse(response);
+        }
+
         // GET: api/comment-likes/detailed
         [HttpGet("detailed")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -90,6 +102,18 @@ namespace InstaConnect.Presentation.API.Controllers
         public async Task<IActionResult> GetDetailedByIdAsync([FromRoute] string id)
         {
             var response = await _commentLikeService.GetDetailedByIdAsync(id);
+            return this.HandleResponse(response);
+        }
+
+        // GET: api/comment-likes/detailed/by-post-comment-and-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [HttpGet("detailed/by-post-comment-and-user/{postCommentId}/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetDetailedByPostCommentIdAndUserIdAsync([FromRoute] string postCommentId, [FromRoute] string userId)
+        {
+            var response = await _commentLikeService.GetDetailedByPostCommentIdAndUserIdAsync(postCommentId, userId);
+
             return this.HandleResponse(response);
         }
 

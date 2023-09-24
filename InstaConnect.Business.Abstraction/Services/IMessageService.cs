@@ -36,6 +36,17 @@ namespace InstaConnect.Business.Abstraction.Services
         Task<IResult<MessageDetailedDTO>> GetDetailedByIdAsync(string id);
 
         /// <summary>
+        /// Retrieves detailed message information by sender ID and receiver ID asynchronously.
+        /// </summary>
+        /// <param name="senderId">The ID of the sender.</param>
+        /// <param name="receiverId">The ID of the receiver.</param>
+        /// <returns>
+        /// An asynchronous task that returns a result containing the detailed message information
+        /// or an appropriate result based on the outcome of the operation.
+        /// </returns>
+        Task<IResult<MessageDetailedDTO>> GetDetailedBySenderIdAndReceiverIdAsync(string senderId, string receiverId);
+
+        /// <summary>
         /// Retrieves all messages.
         /// </summary>
         /// <returns>A collection of message information.</returns>
@@ -63,6 +74,17 @@ namespace InstaConnect.Business.Abstraction.Services
         Task<IResult<MessageResultDTO>> GetByIdAsync(string id);
 
         /// <summary>
+        /// Retrieves message information by sender ID and receiver ID asynchronously.
+        /// </summary>
+        /// <param name="senderId">The ID of the sender.</param>
+        /// <param name="receiverId">The ID of the receiver.</param>
+        /// <returns>
+        /// An asynchronous task that returns a result containing the message information
+        /// or an appropriate result based on the outcome of the operation.
+        /// </returns>
+        Task<IResult<MessageResultDTO>> GetBySenderIdAndReceiverIdAsync(string senderId, string receiverId);
+
+        /// <summary>
         /// Adds a new message asynchronously.
         /// </summary>
         /// <param name="messageAddDTO">The data for adding a new message.</param>
@@ -76,6 +98,16 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <param name="messageUpdateDTO">The data for updating the message.</param>
         /// <returns>The result of the message update operation.</returns>
         Task<IResult<MessageResultDTO>> UpdateAsync(string id, MessageUpdateDTO messageUpdateDTO);
+
+        /// <summary>
+        /// Deletes messages by sender ID and receiver ID asynchronously.
+        /// </summary>
+        /// <param name="senderId">The ID of the sender.</param>
+        /// <param name="receiverId">The ID of the receiver.</param>
+        /// <returns>
+        /// An asynchronous task that returns a result indicating the success or failure of the delete operation.
+        /// </returns>
+        Task<IResult<MessageResultDTO>> DeleteBySenderIdAndReceiverIdAsync(string senderId, string receiverId);
 
         /// <summary>
         /// Deletes a message asynchronously.

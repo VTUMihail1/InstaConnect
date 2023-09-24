@@ -27,7 +27,7 @@ namespace InstaConnect.Data.Abstraction.Repositories
         /// </summary>
         /// <param name="expression">The filter expression used to select the message.</param>
         /// <returns>A task representing the asynchronous operation, which upon completion returns the message that satisfies the provided filter, with related entities included.</returns>
-        Task<Message> FindIncludedAsync(Expression<Func<Message, bool>> expression);
+        Task<Message> FindMessageIncludedAsync(Expression<Func<Message, bool>> expression);
         // Additional methods for managing Messages can be added here with appropriate documentation.
     }
 

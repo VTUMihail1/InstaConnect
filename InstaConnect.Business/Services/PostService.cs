@@ -47,7 +47,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostDetailedDTO>> GetDetailedByIdAsync(string id)
         {
-            var post = await _postRepository.FindIncludedAsync(p => p.Id == id);
+            var post = await _postRepository.FindPostIncludedAsync(p => p.Id == id);
 
             if (post == null)
             {

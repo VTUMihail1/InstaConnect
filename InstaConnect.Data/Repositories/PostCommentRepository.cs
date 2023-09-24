@@ -40,7 +40,7 @@ namespace InstaConnect.Data.Repositories
             return postComments;
         }
 
-        public async Task<PostComment> FindIncludedAsync(Expression<Func<PostComment, bool>> expression)
+        public async Task<PostComment> FindPostCommentIncludedAsync(Expression<Func<PostComment, bool>> expression)
         {
             var postComment = await _instaConnectContext.PostComments
                 .Include(pc => pc.CommentLikes)
