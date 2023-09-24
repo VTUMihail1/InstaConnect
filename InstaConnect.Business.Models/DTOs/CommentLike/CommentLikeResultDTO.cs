@@ -4,8 +4,6 @@
     {
         public string Id { get; set; }
 
-        public string CommentId { get; set; }
-
-        public string UserId { get; set; }
+        public string Username { get; set; }
     }
 }

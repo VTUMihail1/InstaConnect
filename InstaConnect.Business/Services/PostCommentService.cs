@@ -32,58 +32,9 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<PostCommentDetailedDTO>> GetAllDetailedAsync()
-        {
-            var postComments = await _postCommentRepository.GetAllIncludedAsync();
-            var postCommentsDetailedDTOs = _mapper.Map<ICollection<PostCommentDetailedDTO>>(postComments);
-
-            return postCommentsDetailedDTOs;
-        }
-
-        public async Task<ICollection<PostCommentDetailedDTO>> GetAllDetailedByUserIdAsync(string userId)
-        {
-            var postComments = await _postCommentRepository.GetAllFilteredIncludedAsync(pc => pc.UserId == userId);
-            var postCommentsDetailedDTOs = _mapper.Map<ICollection<PostCommentDetailedDTO>>(postComments);
-
-            return postCommentsDetailedDTOs;
-        }
-
-        public async Task<ICollection<PostCommentDetailedDTO>> GetAllDetailedByPostIdAsync(string postId)
-        {
-            var postComments = await _postCommentRepository.GetAllFilteredIncludedAsync(pc => pc.PostId == postId);
-            var postCommentsDetailedDTOs = _mapper.Map<ICollection<PostCommentDetailedDTO>>(postComments);
-
-            return postCommentsDetailedDTOs;
-        }
-
-        public async Task<ICollection<PostCommentDetailedDTO>> GetAllDetailedByParentIdAsync(string postCommentId)
-        {
-            var postComments = await _postCommentRepository.GetAllFilteredIncludedAsync(pc => pc.PostCommentId == postCommentId);
-            var postCommentsDetailedDTOs = _mapper.Map<ICollection<PostCommentDetailedDTO>>(postComments);
-
-            return postCommentsDetailedDTOs;
-        }
-
-        public async Task<IResult<PostCommentDetailedDTO>> GetDetailedByIdAsync(string id)
-        {
-            var postComment = await _postCommentRepository.FindPostCommentIncludedAsync(pc => pc.Id == id);
-
-            if (postComment == null)
-            {
-                var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentDetailedDTO>(InstaConnectErrorMessages.PostCommentNotFound);
-
-                return notFoundResult;
-            }
-
-            var postCommentDetailedDTO = _mapper.Map<PostCommentDetailedDTO>(postComment);
-            var okResult = _resultFactory.GetOkResult(postCommentDetailedDTO);
-
-            return okResult;
-        }
-
         public async Task<ICollection<PostCommentResultDTO>> GetAllAsync()
         {
-            var postComments = await _postCommentRepository.GetAllAsync();
+            var postComments = await _postCommentRepository.GetAllIncludedAsync();
             var postCommentsResultDTOs = _mapper.Map<ICollection<PostCommentResultDTO>>(postComments);
 
             return postCommentsResultDTOs;
@@ -91,15 +42,15 @@ namespace InstaConnect.Business.Services
 
         public async Task<ICollection<PostCommentResultDTO>> GetAllByUserIdAsync(string userId)
         {
-            var postComments = await _postCommentRepository.GetAllFilteredAsync(pc => pc.UserId == userId);
-            var postCommentResultDTOs = _mapper.Map<ICollection<PostCommentResultDTO>>(postComments);
+            var postComments = await _postCommentRepository.GetAllFilteredIncludedAsync(pc => pc.UserId == userId);
+            var postCommentsResultDTOs = _mapper.Map<ICollection<PostCommentResultDTO>>(postComments);
 
-            return postCommentResultDTOs;
+            return postCommentsResultDTOs;
         }
 
         public async Task<ICollection<PostCommentResultDTO>> GetAllByPostIdAsync(string postId)
         {
-            var postComments = await _postCommentRepository.GetAllFilteredAsync(pc => pc.PostId == postId);
+            var postComments = await _postCommentRepository.GetAllFilteredIncludedAsync(pc => pc.PostId == postId);
             var postCommentsResultDTOs = _mapper.Map<ICollection<PostCommentResultDTO>>(postComments);
 
             return postCommentsResultDTOs;
@@ -107,7 +58,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<ICollection<PostCommentResultDTO>> GetAllByParentIdAsync(string postCommentId)
         {
-            var postComments = await _postCommentRepository.GetAllFilteredAsync(pc => pc.PostCommentId == postCommentId);
+            var postComments = await _postCommentRepository.GetAllFilteredIncludedAsync(pc => pc.PostCommentId == postCommentId);
             var postCommentsResultDTOs = _mapper.Map<ICollection<PostCommentResultDTO>>(postComments);
 
             return postCommentsResultDTOs;
@@ -115,16 +66,16 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostCommentResultDTO>> GetByIdAsync(string id)
         {
-            var postComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id);
+            var existingPostComment = await _postCommentRepository.FindPostCommentIncludedAsync(pc => pc.Id == id);
 
-            if (postComment == null)
+            if (existingPostComment == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>(InstaConnectErrorMessages.PostCommentNotFound);
 
                 return notFoundResult;
             }
 
-            var postCommentResultDTO = _mapper.Map<PostCommentResultDTO>(postComment);
+            var postCommentResultDTO = _mapper.Map<PostCommentResultDTO>(existingPostComment);
             var okResult = _resultFactory.GetOkResult(postCommentResultDTO);
 
             return okResult;
@@ -169,17 +120,17 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostCommentResultDTO>> UpdateAsync(string id, PostCommentUpdateDTO postCommentUpdateDTO)
         {
-            var postComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id);
+            var existingPostComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id);
 
-            if (postComment == null)
+            if (existingPostComment == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>(InstaConnectErrorMessages.PostCommentNotFound);
 
                 return notFoundResult;
             }
 
-            _mapper.Map(postCommentUpdateDTO, postComment);
-            await _postCommentRepository.UpdateAsync(postComment);
+            _mapper.Map(postCommentUpdateDTO, existingPostComment);
+            await _postCommentRepository.UpdateAsync(existingPostComment);
 
             var noContentResult = _resultFactory.GetNoContentResult<PostCommentResultDTO>();
 
@@ -188,16 +139,16 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostCommentResultDTO>> DeleteAsync(string id)
         {
-            var postComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id);
+            var existingPostComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id);
 
-            if (postComment == null)
+            if (existingPostComment == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>(InstaConnectErrorMessages.PostCommentNotFound);
 
                 return notFoundResult;
             }
 
-            await _postCommentRepository.DeleteAsync(postComment);
+            await _postCommentRepository.DeleteAsync(existingPostComment);
 
             var noContentResult = _resultFactory.GetNoContentResult<PostCommentResultDTO>();
 

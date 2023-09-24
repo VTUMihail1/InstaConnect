@@ -29,42 +29,9 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<PostDetailedDTO>> GetAllDetailedAsync()
-        {
-            var posts = await _postRepository.GetAllIncludedAsync();
-            var postDetailedDTOs = _mapper.Map<ICollection<PostDetailedDTO>>(posts);
-
-            return postDetailedDTOs;
-        }
-
-        public async Task<ICollection<PostDetailedDTO>> GetAllDetailedByUserIdAsync(string userId)
-        {
-            var posts = await _postRepository.GetAllFilteredIncludedAsync(p => p.UserId == userId);
-            var postDetailedDTOs = _mapper.Map<ICollection<PostDetailedDTO>>(posts);
-
-            return postDetailedDTOs;
-        }
-
-        public async Task<IResult<PostDetailedDTO>> GetDetailedByIdAsync(string id)
-        {
-            var post = await _postRepository.FindPostIncludedAsync(p => p.Id == id);
-
-            if (post == null)
-            {
-                var notFoundResult = _resultFactory.GetNotFoundResult<PostDetailedDTO>(InstaConnectErrorMessages.PostNotFound);
-
-                return notFoundResult;
-            }
-
-            var postDetailedDTO = _mapper.Map<PostDetailedDTO>(post);
-            var okResult = _resultFactory.GetOkResult(postDetailedDTO);
-
-            return okResult;
-        }
-
         public async Task<ICollection<PostResultDTO>> GetAllAsync()
         {
-            var posts = await _postRepository.GetAllAsync();
+            var posts = await _postRepository.GetAllIncludedAsync();
             var postResultDTOs = _mapper.Map<ICollection<PostResultDTO>>(posts);
 
             return postResultDTOs;
@@ -72,7 +39,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<ICollection<PostResultDTO>> GetAllByUserIdAsync(string userId)
         {
-            var posts = await _postRepository.GetAllFilteredAsync(p => p.UserId == userId);
+            var posts = await _postRepository.GetAllFilteredIncludedAsync(p => p.UserId == userId);
             var postResultDTOs = _mapper.Map<ICollection<PostResultDTO>>(posts);
 
             return postResultDTOs;
@@ -80,16 +47,16 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostResultDTO>> GetByIdAsync(string id)
         {
-            var post = await _postRepository.FindEntityAsync(p => p.Id == id);
+            var existingPost = await _postRepository.FindPostIncludedAsync(p => p.Id == id);
 
-            if (post == null)
+            if (existingPost == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostResultDTO>(InstaConnectErrorMessages.PostNotFound);
 
                 return notFoundResult;
             }
 
-            var postResultDTO = _mapper.Map<PostResultDTO>(post);
+            var postResultDTO = _mapper.Map<PostResultDTO>(existingPost);
             var okResult = _resultFactory.GetOkResult(postResultDTO);
 
             return okResult;
@@ -116,17 +83,17 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostResultDTO>> UpdateAsync(string id, PostUpdateDTO postUpdateDTO)
         {
-            var post = await _postRepository.FindEntityAsync(p => p.Id == id);
+            var existingPost = await _postRepository.FindEntityAsync(p => p.Id == id);
 
-            if (post == null)
+            if (existingPost == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostResultDTO>(InstaConnectErrorMessages.PostNotFound);
 
                 return notFoundResult;
             }
 
-            _mapper.Map(postUpdateDTO, post);
-            await _postRepository.UpdateAsync(post);
+            _mapper.Map(postUpdateDTO, existingPost);
+            await _postRepository.UpdateAsync(existingPost);
 
             var noContentResult = _resultFactory.GetNoContentResult<PostResultDTO>();
 
@@ -135,16 +102,16 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostResultDTO>> DeleteAsync(string id)
         {
-            var post = await _postRepository.FindEntityAsync(p => p.Id == id);
+            var existingPost = await _postRepository.FindEntityAsync(p => p.Id == id);
 
-            if (post == null)
+            if (existingPost == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostResultDTO>(InstaConnectErrorMessages.PostNotFound);
 
                 return notFoundResult;
             }
 
-            await _postRepository.DeleteAsync(post);
+            await _postRepository.DeleteAsync(existingPost);
 
             var noContentResult = _resultFactory.GetNoContentResult<PostResultDTO>();
 

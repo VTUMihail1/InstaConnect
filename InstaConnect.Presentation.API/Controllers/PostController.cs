@@ -17,45 +17,14 @@ namespace InstaConnect.Presentation.API.Controllers
             _postService = postService;
         }
 
-        // GET: api/posts/detailed
-        [HttpGet("detailed")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllDetailedAsync()
-        {
-            var posts = await _postService.GetAllDetailedAsync();
-
-            return Ok(posts);
-        }
-
-        // GET: api/posts/detailed/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("detailed/by-user/{userId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllDetailedByUserIdAsync(string userId)
-        {
-            var posts = await _postService.GetAllDetailedByUserIdAsync(userId);
-
-            return Ok(posts);
-        }
-
-        // GET: api/posts/detailed/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("detailed/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetDetailedByIdAsync([FromRoute] string id)
-        {
-            var response = await _postService.GetDetailedByIdAsync(id);
-
-            return this.HandleResponse(response);
-        }
-
         // GET: api/posts
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllAsync()
         {
-            var posts = await _postService.GetAllAsync();
+            var response = await _postService.GetAllAsync();
 
-            return Ok(posts);
+            return Ok(response);
         }
 
         // GET: api/posts/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
@@ -63,9 +32,9 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllByUserIdAsync(string userId)
         {
-            var posts = await _postService.GetAllByUserIdAsync(userId);
+            var response = await _postService.GetAllByUserIdAsync(userId);
 
-            return Ok(posts);
+            return Ok(response);
         }
 
         // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
