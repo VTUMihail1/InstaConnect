@@ -12,21 +12,21 @@ namespace InstaConnect.Business.Abstraction.Services
         /// Gets a collection of detailed comment likes asynchronously.
         /// </summary>
         /// <returns>A collection of detailed comment likes.</returns>
-        Task<ICollection<CommentLikeResultDTO>> GetDetailedAllAsync();
+        Task<ICollection<CommentLikeResultDTO>> GetAllDetailedAsync();
 
         /// <summary>
         /// Gets a collection of detailed comment likes by user ID asynchronously.
         /// </summary>
         /// <param name="userId">The user ID to filter comment likes by.</param>
         /// <returns>A collection of detailed comment likes filtered by user ID.</returns>
-        Task<ICollection<CommentLikeResultDTO>> GetDetailedAllByUserIdAsync(string userId);
+        Task<ICollection<CommentLikeResultDTO>> GetAllDetailedByUserIdAsync(string userId);
 
         /// <summary>
         /// Gets a collection of detailed comment likes by comment ID asynchronously.
         /// </summary>
         /// <param name="postCommentId">The comment ID to filter comment likes by.</param>
         /// <returns>A collection of detailed comment likes filtered by comment ID.</returns>
-        Task<ICollection<CommentLikeResultDTO>> GetDetailedAllByCommentIdAsync(string postCommentId);
+        Task<ICollection<CommentLikeResultDTO>> GetAllDetailedByCommentIdAsync(string postCommentId);
 
         /// <summary>
         /// Gets a detailed comment like by its ID asynchronously.

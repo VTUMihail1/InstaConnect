@@ -33,7 +33,7 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<CommentLikeResultDTO>> GetDetailedAllAsync()
+        public async Task<ICollection<CommentLikeResultDTO>> GetAllDetailedAsync()
         {
             var commentLikes = await _commentLikeRepository.GetAllAsync();
             var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
@@ -41,7 +41,7 @@ namespace InstaConnect.Business.Services
             return commentLikeResultDTOs;
         }
 
-        public async Task<ICollection<CommentLikeResultDTO>> GetDetailedAllByUserIdAsync(string userId)
+        public async Task<ICollection<CommentLikeResultDTO>> GetAllDetailedByUserIdAsync(string userId)
         {
             var commentLikes = await _commentLikeRepository.GetAllFilteredAsync(c => c.UserId == userId);
             var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
@@ -49,7 +49,7 @@ namespace InstaConnect.Business.Services
             return commentLikeResultDTOs;
         }
 
-        public async Task<ICollection<CommentLikeResultDTO>> GetDetailedAllByCommentIdAsync(string postCommentId)
+        public async Task<ICollection<CommentLikeResultDTO>> GetAllDetailedByCommentIdAsync(string postCommentId)
         {
             var commentLikes = await _commentLikeRepository.GetAllFilteredAsync(c => c.PostCommentId == postCommentId);
             var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);

@@ -17,24 +17,80 @@ namespace InstaConnect.Presentation.API.Controllers
             _commentLikeService = commentLikeService;
         }
 
-        // GET: api/comment-likes/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-user/{userId}")]
+        // GET: api/comment-likes
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var response = await _commentLikeService.GetAllAsync();
+            return Ok(response);
+        }
+
+        // GET: api/comment-likes/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("by-user/{commentLikeId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllByUserIdAsync([FromRoute] string userId)
         {
             var response = await _commentLikeService.GetAllByUserIdAsync(userId);
-
             return Ok(response);
         }
 
-        // GET: api/comment-likes/by-post-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-post-comment/{commentId}")]
+        // GET: api/comment-likes/by-postcomment/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("by-postcomment/{postcommentId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByCommentIdAsync([FromRoute] string postCommentId)
+        public async Task<IActionResult> GetAllByCommentIdAsync([FromRoute] string postcommentId)
         {
-            var response = await _commentLikeService.GetAllByCommentIdAsync(postCommentId);
-
+            var response = await _commentLikeService.GetAllByCommentIdAsync(postcommentId);
             return Ok(response);
+        }
+
+
+        // GET: api/comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetByIdAsync([FromRoute] string id)
+        {
+            var response = await _commentLikeService.GetByIdAsync(id);
+            return this.HandleResponse(response);
+        }
+
+        // GET: api/comment-likes/detailed
+        [HttpGet("detailed")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllDetailedAsync()
+        {
+            var response = await _commentLikeService.GetAllAsync();
+            return Ok(response);
+        }
+
+        // GET: api/comment-likes/detailed/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("detailed/by-user/{commentLikeId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllDetailedByUserIdAsync([FromRoute] string userId)
+        {
+            var response = await _commentLikeService.GetAllDetailedByUserIdAsync(userId);
+            return Ok(response);
+        }
+
+        // GET: api/comment-likes/detailed/by-postcomment/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("detailed/by-postcomment/{postcommentId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllDetailedByCommentIdAsync([FromRoute] string postcommentId)
+        {
+            var response = await _commentLikeService.GetAllDetailedByCommentIdAsync(postcommentId);
+            return Ok(response);
+        }
+
+
+        // GET: api/comment-likes/detailed/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("detailed/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetDetailedByIdAsync([FromRoute] string id)
+        {
+            var response = await _commentLikeService.GetDetailedByIdAsync(id);
+            return this.HandleResponse(response);
         }
 
         // POST: api/comment-likes
