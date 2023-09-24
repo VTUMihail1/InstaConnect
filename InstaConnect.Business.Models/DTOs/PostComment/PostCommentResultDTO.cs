@@ -1,15 +1,17 @@
-﻿namespace InstaConnect.Business.Models.DTOs.PostComment
+﻿using InstaConnect.Business.Models.DTOs.CommentLike;
+
+namespace InstaConnect.Business.Models.DTOs.PostComment
 {
     public class PostCommentResultDTO
     {
         public string Id { get; set; }
 
-        public string UserId { get; set; }
-
-        public string PostId { get; set; }
-
-        public string? PostCommentId { get; set; }
+        public string Username { get; set; }
 
         public string Content { get; set; }
+
+        public ICollection<PostCommentResultDTO> PostComments { get; set; }
+
+        public ICollection<CommentLikeResultDTO> CommentLikes { get; set; }
     }
 }

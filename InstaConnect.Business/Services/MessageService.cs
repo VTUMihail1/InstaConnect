@@ -33,67 +33,9 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<MessageDetailedDTO>> GetAllDetailedAsync()
-        {
-            var messages = await _messageRepository.GetAllIncludedAsync();
-            var messageDetailedDTOs = _mapper.Map<ICollection<MessageDetailedDTO>>(messages);
-
-            return messageDetailedDTOs;
-        }
-
-        public async Task<ICollection<MessageDetailedDTO>> GetAllDetailedBySenderIdAsync(string senderId)
-        {
-            var messages = await _messageRepository.GetAllFilteredIncludedAsync(m => m.SenderId == senderId);
-            var messageDetailedDTOs = _mapper.Map<ICollection<MessageDetailedDTO>>(messages);
-
-            return messageDetailedDTOs;
-        }
-
-        public async Task<ICollection<MessageDetailedDTO>> GetAllDetailedByReceiverIdAsync(string receiverId)
-        {
-            var messages = await _messageRepository.GetAllFilteredIncludedAsync(m => m.ReceiverId == receiverId);
-            var messageDetailedDTOs = _mapper.Map<ICollection<MessageDetailedDTO>>(messages);
-
-            return messageDetailedDTOs;
-        }
-
-        public async Task<IResult<MessageDetailedDTO>> GetDetailedByIdAsync(string id)
-        {
-            var message = await _messageRepository.FindMessageIncludedAsync(m => m.Id == id);
-
-            if (message == null)
-            {
-                var notFoundResult = _resultFactory.GetNotFoundResult<MessageDetailedDTO>(InstaConnectErrorMessages.MessageNotFound);
-
-                return notFoundResult;
-            }
-
-            var messageDetailedDTO = _mapper.Map<MessageDetailedDTO>(message);
-            var okResult = _resultFactory.GetOkResult(messageDetailedDTO);
-
-            return okResult;
-        }
-
-        public async Task<IResult<MessageDetailedDTO>> GetDetailedBySenderIdAndReceiverIdAsync(string senderId, string receiverId)
-        {
-            var existingMessage = await _messageRepository.FindMessageIncludedAsync(m => m.SenderId == senderId && m.ReceiverId == receiverId);
-
-            if (existingMessage == null)
-            {
-                var notFoundResult = _resultFactory.GetNotFoundResult<MessageDetailedDTO>(InstaConnectErrorMessages.MessageNotFound);
-
-                return notFoundResult;
-            }
-
-            var messageDetailedDTO = _mapper.Map<MessageDetailedDTO>(existingMessage);
-            var okResult = _resultFactory.GetOkResult(messageDetailedDTO);
-
-            return okResult;
-        }
-
         public async Task<ICollection<MessageResultDTO>> GetAllAsync()
         {
-            var messages = await _messageRepository.GetAllAsync();
+            var messages = await _messageRepository.GetAllIncludedAsync();
             var messageResultDTOs = _mapper.Map<ICollection<MessageResultDTO>>(messages);
 
             return messageResultDTOs;
@@ -101,7 +43,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<ICollection<MessageResultDTO>> GetAllBySenderIdAsync(string senderId)
         {
-            var messages = await _messageRepository.GetAllFilteredAsync(m => m.SenderId == senderId);
+            var messages = await _messageRepository.GetAllFilteredIncludedAsync(m => m.SenderId == senderId);
             var messageResultDTOs = _mapper.Map<ICollection<MessageResultDTO>>(messages);
 
             return messageResultDTOs;
@@ -109,7 +51,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<ICollection<MessageResultDTO>> GetAllByReceiverIdAsync(string receiverId)
         {
-            var messages = await _messageRepository.GetAllFilteredAsync(m => m.ReceiverId == receiverId);
+            var messages = await _messageRepository.GetAllFilteredIncludedAsync(m => m.ReceiverId == receiverId);
             var messageResultDTOs = _mapper.Map<ICollection<MessageResultDTO>>(messages);
 
             return messageResultDTOs;
@@ -117,16 +59,16 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<MessageResultDTO>> GetByIdAsync(string id)
         {
-            var message = await _messageRepository.FindEntityAsync(m => m.Id == id);
+            var existingMessage = await _messageRepository.FindMessageIncludedAsync(m => m.Id == id);
 
-            if (message == null)
+            if (existingMessage == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<MessageResultDTO>(InstaConnectErrorMessages.MessageNotFound);
 
                 return notFoundResult;
             }
 
-            var messageResultDTO = _mapper.Map<MessageResultDTO>(message);
+            var messageResultDTO = _mapper.Map<MessageResultDTO>(existingMessage);
             var okResult = _resultFactory.GetOkResult(messageResultDTO);
 
             return okResult;
@@ -134,7 +76,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<MessageResultDTO>> GetBySenderIdAndReceiverIdAsync(string senderId, string receiverId)
         {
-            var existingMessage = await _messageRepository.FindEntityAsync(m => m.SenderId == senderId && m.ReceiverId == receiverId);
+            var existingMessage = await _messageRepository.FindMessageIncludedAsync(m => m.SenderId == senderId && m.ReceiverId == receiverId);
 
             if (existingMessage == null)
             {

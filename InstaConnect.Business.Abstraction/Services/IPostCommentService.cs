@@ -4,98 +4,64 @@ using InstaConnect.Business.Models.Results;
 namespace InstaConnect.Business.Abstraction.Services
 {
     /// <summary>
-    /// Represents a service for managing comments.
+    /// Provides methods for managing post comments.
     /// </summary>
     public interface IPostCommentService
     {
         /// <summary>
-        /// Retrieves all post comments, including detailed information.
+        /// Gets all post comments asynchronously.
         /// </summary>
-        /// <returns>A collection of detailed post comments.</returns>
-        Task<ICollection<PostCommentDetailedDTO>> GetAllDetailedAsync();
-
-        /// <summary>
-        /// Retrieves all post comments by user ID, including detailed information.
-        /// </summary>
-        /// <param name="userId">The user ID to filter by.</param>
-        /// <returns>A collection of detailed post comments.</returns>
-        Task<ICollection<PostCommentDetailedDTO>> GetAllDetailedByUserIdAsync(string userId);
-
-        /// <summary>
-        /// Retrieves all post comments by post ID, including detailed information.
-        /// </summary>
-        /// <param name="postId">The post ID to filter by.</param>
-        /// <returns>A collection of detailed post comments.</returns>
-        Task<ICollection<PostCommentDetailedDTO>> GetAllDetailedByPostIdAsync(string postId);
-
-        /// <summary>
-        /// Retrieves all post comments by parent comment ID, including detailed information.
-        /// </summary>
-        /// <param name="postCommentId">The parent comment ID to filter by.</param>
-        /// <returns>A collection of detailed post comments.</returns>
-        Task<ICollection<PostCommentDetailedDTO>> GetAllDetailedByParentIdAsync(string postCommentId);
-
-        /// <summary>
-        /// Retrieves a detailed post comment by its ID.
-        /// </summary>
-        /// <param name="id">The ID of the post comment to retrieve.</param>
-        /// <returns>The detailed post comment or a not-found result.</returns>
-        Task<IResult<PostCommentDetailedDTO>> GetDetailedByIdAsync(string id);
-
-        /// <summary>
-        /// Retrieves all post comments, including basic information.
-        /// </summary>
-        /// <returns>A collection of post comments.</returns>
+        /// <returns>A collection of post comment results.</returns>
         Task<ICollection<PostCommentResultDTO>> GetAllAsync();
 
         /// <summary>
-        /// Retrieves all post comments by user ID.
+        /// Gets all post comments by a specific user asynchronously.
         /// </summary>
-        /// <param name="userId">The user ID to filter by.</param>
-        /// <returns>A collection of post comments.</returns>
+        /// <param name="userId">The unique identifier of the user.</param>
+        /// <returns>A collection of post comment results.</returns>
         Task<ICollection<PostCommentResultDTO>> GetAllByUserIdAsync(string userId);
 
         /// <summary>
-        /// Retrieves all post comments by post ID.
+        /// Gets all post comments for a specific post asynchronously.
         /// </summary>
-        /// <param name="postId">The post ID to filter by.</param>
-        /// <returns>A collection of post comments.</returns>
+        /// <param name="postId">The unique identifier of the post.</param>
+        /// <returns>A collection of post comment results.</returns>
         Task<ICollection<PostCommentResultDTO>> GetAllByPostIdAsync(string postId);
 
         /// <summary>
-        /// Retrieves all post comments by parent comment ID.
+        /// Gets all child post comments for a specific parent comment asynchronously.
         /// </summary>
-        /// <param name="postCommentId">The parent comment ID to filter by.</param>
-        /// <returns>A collection of post comments.</returns>
+        /// <param name="postCommentId">The unique identifier of the parent comment.</param>
+        /// <returns>A collection of post comment results.</returns>
         Task<ICollection<PostCommentResultDTO>> GetAllByParentIdAsync(string postCommentId);
 
         /// <summary>
-        /// Retrieves a post comment by its ID.
+        /// Gets a post comment by its unique identifier asynchronously.
         /// </summary>
-        /// <param name="id">The ID of the post comment to retrieve.</param>
-        /// <returns>The post comment or a not-found result.</returns>
+        /// <param name="id">The unique identifier of the post comment.</param>
+        /// <returns>A result containing the post comment.</returns>
         Task<IResult<PostCommentResultDTO>> GetByIdAsync(string id);
 
         /// <summary>
         /// Adds a new post comment asynchronously.
         /// </summary>
-        /// <param name="postCommentAddDTO">The data for adding a new post comment.</param>
-        /// <returns>The result of the post comment addition operation.</returns>
+        /// <param name="postCommentAddDTO">The data for creating a new post comment.</param>
+        /// <returns>A result containing the newly created post comment.</returns>
         Task<IResult<PostCommentResultDTO>> AddAsync(PostCommentAddDTO postCommentAddDTO);
 
         /// <summary>
-        /// Updates an existing post comment asynchronously.
+        /// Updates a post comment by its unique identifier asynchronously.
         /// </summary>
-        /// <param name="id">The ID of the post comment to update.</param>
+        /// <param name="id">The unique identifier of the post comment.</param>
         /// <param name="postCommentUpdateDTO">The data for updating the post comment.</param>
-        /// <returns>The result of the post comment update operation.</returns>
+        /// <returns>A result containing the updated post comment.</returns>
         Task<IResult<PostCommentResultDTO>> UpdateAsync(string id, PostCommentUpdateDTO postCommentUpdateDTO);
 
         /// <summary>
-        /// Deletes a post comment asynchronously.
+        /// Deletes a post comment by its unique identifier asynchronously.
         /// </summary>
-        /// <param name="id">The ID of the post comment to delete.</param>
-        /// <returns>The result of the post comment deletion operation.</returns>
+        /// <param name="id">The unique identifier of the post comment.</param>
+        /// <returns>A result indicating the success of the operation.</returns>
         Task<IResult<PostCommentResultDTO>> DeleteAsync(string id);
     }
 }

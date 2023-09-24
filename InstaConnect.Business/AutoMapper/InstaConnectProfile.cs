@@ -30,19 +30,10 @@ namespace InstaConnect.Business.AutoMapper
             CreateMap<PostAddDTO, Post>()
                 .ReverseMap();
 
-            CreateMap<Post, PostResultDTO>()
-                .ReverseMap();
-
             CreateMap<PostLikeAddDTO, PostLike>()
                 .ReverseMap();
 
             CreateMap<CommentLikeAddDTO, CommentLike>()
-                .ReverseMap();
-
-            CreateMap<CommentLike, CommentLikeResultDTO>()
-                .ReverseMap();
-
-            CreateMap<PostLike, PostLikeResultDTO>()
                 .ReverseMap();
 
             CreateMap<PostCommentAddDTO, PostComment>()
@@ -51,27 +42,21 @@ namespace InstaConnect.Business.AutoMapper
             CreateMap<PostCommentUpdateDTO, PostComment>()
                 .ReverseMap();
 
-            CreateMap<PostComment, PostCommentResultDTO>()
-                .ReverseMap();
-
             CreateMap<MessageAddDTO, Message>()
                 .ReverseMap();
 
-            CreateMap<Message, MessageResultDTO>()
-                .ReverseMap();
-
-            CreateMap<PostComment, PostCommentDetailedDTO>()
+            CreateMap<PostComment, PostCommentResultDTO>()
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(c => c.Id))
                 .ForMember(dto => dto.Username, opt => opt.MapFrom(c => c.User.UserName))
                 .ForMember(dto => dto.Content, opt => opt.MapFrom(c => c.Content))
                 .ReverseMap();
 
-            CreateMap<PostLike, PostLikeDetailedDTO>()
+            CreateMap<PostLike, PostLikeResultDTO>()
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(l => l.Id))
                 .ForMember(dto => dto.Username, opt => opt.MapFrom(l => l.User.UserName))
                 .ReverseMap();
 
-            CreateMap<Follow, FollowDetailedDTO>()
+            CreateMap<Follow, FollowResultDTO>()
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(l => l.Id))
                 .ForMember(dto => dto.FollowerId, opt => opt.MapFrom(l => l.Follower.Id))
                 .ForMember(dto => dto.FollowerUsername, opt => opt.MapFrom(l => l.Follower.UserName))
@@ -79,7 +64,7 @@ namespace InstaConnect.Business.AutoMapper
                 .ForMember(dto => dto.FollowingUsername, opt => opt.MapFrom(l => l.Following.UserName))
                 .ReverseMap();
 
-            CreateMap<Message, MessageDetailedDTO>()
+            CreateMap<Message, MessageResultDTO>()
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(l => l.Id))
                 .ForMember(dto => dto.SenderId, opt => opt.MapFrom(l => l.Sender.Id))
                 .ForMember(dto => dto.SenderUsername, opt => opt.MapFrom(l => l.Sender.UserName))
@@ -87,12 +72,12 @@ namespace InstaConnect.Business.AutoMapper
                 .ForMember(dto => dto.ReceiverUsername, opt => opt.MapFrom(l => l.Receiver.UserName))
                 .ReverseMap();
 
-            CreateMap<CommentLike, CommentLikeDetailedDTO>()
+            CreateMap<CommentLike, CommentLikeResultDTO>()
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(cl => cl.Id))
                 .ForMember(dto => dto.Username, opt => opt.MapFrom(cl => cl.User.UserName))
                 .ReverseMap();
 
-            CreateMap<Post, PostDetailedDTO>()
+            CreateMap<Post, PostResultDTO>()
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(p => p.Id))
                 .ForMember(dto => dto.Username, opt => opt.MapFrom(p => p.User.UserName))
                 .ForMember(dto => dto.Title, opt => opt.MapFrom(p => p.Title))

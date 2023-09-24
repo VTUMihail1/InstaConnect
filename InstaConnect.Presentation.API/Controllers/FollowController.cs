@@ -17,60 +17,7 @@ namespace InstaConnect.Presentation.API.Controllers
             _followService = followService;
         }
 
-        // GET: api/follows/detailed
-        [HttpGet("detailed")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllDetailedAsync()
-        {
-            var response = await _followService.GetAllDetailedAsync();
-
-            return Ok(response);
-        }
-
-        // GET: api/follows/detailed/by-follower/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("detailed/by-follower/{followerId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllDetailedByFollowerIdAsync([FromRoute] string followerId)
-        {
-            var response = await _followService.GetAllDetailedByFollowerIdAsync(followerId);
-
-            return Ok(response);
-        }
-
-        // GET: api/follows/detailed/by-following/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("detailed/by-following/{followingId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllDetailedByFollowingIdAsync([FromRoute] string followingId)
-        {
-            var response = await _followService.GetAllDetailedByFollowingIdAsync(followingId);
-
-            return Ok(response);
-        }
-
-        // GET: api/follows/detailed/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("detailed/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetDetailedByIdAsync([FromRoute] string id)
-        {
-            var response = await _followService.GetDetailedByIdAsync(id);
-
-            return this.HandleResponse(response);
-        }
-
-        // GET: api/follows/detailed/by-following-and-follower/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [Authorize]
-        [HttpGet("detailed/by-following-and-follower/{followingId}/{followerId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetDetailedByFollowerIdAndFollowingIdAsync([FromRoute] string followingId, [FromRoute] string followerId)
-        {
-            var response = await _followService.GetDetailedByFollowerIdAndFollowingIdAsync(followingId, followerId);
-
-            return this.HandleResponse(response);
-        }
-
-        // GET: api/follows/detailed
+        // GET: api/follows
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllAsync()
