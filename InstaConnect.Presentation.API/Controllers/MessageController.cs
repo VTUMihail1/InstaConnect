@@ -17,24 +17,102 @@ namespace InstaConnect.Presentation.API.Controllers
             _messageService = messageService;
         }
 
-        // GET: api/messages/by-sender/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // GET: api/messages/detailed
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var response = await _messageService.GetAllAsync();
+            return Ok(response);
+        }
+
+        // GET: api/messages/detailed/by-sender/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("detailed/by-sender/{senderId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllDetailedBySenderIdAsync([FromRoute] string senderId)
+        {
+            var response = await _messageService.GetAllDetailedBySenderIdAsync(senderId);
+            return Ok(response);
+        }
+
+        // GET: api/messages/detailed/by-receiver/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("detailed/by-receiver/{receiverId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllDetailedByReceiverIdAsync([FromRoute] string receiverId)
+        {
+            var response = await _messageService.GetAllDetailedByReceiverIdAsync(receiverId);
+            return Ok(response);
+        }
+
+        // GET: api/messages/detailed/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("detailed/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetDetailedByIdAsync([FromRoute] string id)
+        {
+            var response = await _messageService.GetDetailedByIdAsync(id);
+            return this.HandleResponse(response);
+        }
+
+        // GET: api/messages/detailed
+        [HttpGet("detailed")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllDetailedAsync()
+        {
+            var response = await _messageService.GetAllDetailedAsync();
+            return Ok(response);
+        }
+
+        // GET: api/messages/detailed/by-sender-and-receiver/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [HttpGet("detailed/by-sender-and-receiver/{senderId}/{receiverId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetDetailedBySenderIdAndReceiverIdAsync([FromRoute] string senderId, [FromRoute] string receiverId)
+        {
+            var response = await _messageService.GetDetailedBySenderIdAndReceiverIdAsync(senderId, receiverId);
+
+            return this.HandleResponse(response);
+        }
+
+        // GET: api/messages/by-sender/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [HttpGet("by-sender/{senderId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllBySenderIdAsync([FromRoute] string senderId)
         {
             var response = await _messageService.GetAllBySenderIdAsync(senderId);
-
             return Ok(response);
         }
 
-        // GET: api/messages/by-receiver/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // GET: api/messages/by-receiver/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [HttpGet("by-receiver/{receiverId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllByReceiverIdAsync([FromRoute] string receiverId)
         {
             var response = await _messageService.GetAllByReceiverIdAsync(receiverId);
-
             return Ok(response);
+        }
+
+        // GET: api/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetByIdAsync([FromRoute] string id)
+        {
+            var response = await _messageService.GetByIdAsync(id);
+            return this.HandleResponse(response);
+        }
+
+        // GET: api/messages/by-sender-and-receiver/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [HttpGet("by-sender-and-receiver/{senderId}/{receiverId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetBySenderIdAndReceiverIdAsync([FromRoute] string senderId, [FromRoute] string receiverId)
+        {
+            var response = await _messageService.GetBySenderIdAndReceiverIdAsync(senderId, receiverId);
+
+            return this.HandleResponse(response);
         }
 
         // POST: api/messages
@@ -57,6 +135,18 @@ namespace InstaConnect.Presentation.API.Controllers
         public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] MessageUpdateDTO messageUpdateDTO)
         {
             var response = await _messageService.UpdateAsync(id, messageUpdateDTO);
+
+            return this.HandleResponse(response);
+        }
+
+        // DELETE: api/messages/by-sender-and-receiver/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [HttpDelete("by-sender-and-receiver/{senderId}/{receiverId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteBySenderIdAndReceiverIdAsync([FromRoute] string senderId, [FromRoute] string receiverId)
+        {
+            var response = await _messageService.DeleteBySenderIdAndReceiverIdAsync(senderId, receiverId);
 
             return this.HandleResponse(response);
         }

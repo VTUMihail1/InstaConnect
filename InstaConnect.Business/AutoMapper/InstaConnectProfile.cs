@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Models.DTOs.Account;
 using InstaConnect.Business.Models.DTOs.CommentLike;
+using InstaConnect.Business.Models.DTOs.Follow;
 using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.DTOs.Post;
 using InstaConnect.Business.Models.DTOs.PostComment;
@@ -68,6 +69,22 @@ namespace InstaConnect.Business.AutoMapper
             CreateMap<PostLike, PostLikeDetailedDTO>()
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(l => l.Id))
                 .ForMember(dto => dto.Username, opt => opt.MapFrom(l => l.User.UserName))
+                .ReverseMap();
+
+            CreateMap<Follow, FollowDetailedDTO>()
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(l => l.Id))
+                .ForMember(dto => dto.FollowerId, opt => opt.MapFrom(l => l.Follower.Id))
+                .ForMember(dto => dto.FollowerUsername, opt => opt.MapFrom(l => l.Follower.UserName))
+                .ForMember(dto => dto.FollowingId, opt => opt.MapFrom(l => l.Following.Id))
+                .ForMember(dto => dto.FollowingUsername, opt => opt.MapFrom(l => l.Following.UserName))
+                .ReverseMap();
+
+            CreateMap<Message, MessageDetailedDTO>()
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(l => l.Id))
+                .ForMember(dto => dto.SenderId, opt => opt.MapFrom(l => l.Sender.Id))
+                .ForMember(dto => dto.SenderUsername, opt => opt.MapFrom(l => l.Sender.UserName))
+                .ForMember(dto => dto.ReceiverId, opt => opt.MapFrom(l => l.Receiver.Id))
+                .ForMember(dto => dto.ReceiverUsername, opt => opt.MapFrom(l => l.Receiver.UserName))
                 .ReverseMap();
 
             CreateMap<CommentLike, CommentLikeDetailedDTO>()

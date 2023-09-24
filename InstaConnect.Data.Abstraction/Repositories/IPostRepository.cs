@@ -9,9 +9,6 @@ namespace InstaConnect.Data.Abstraction.Repositories
     /// </summary>
     public interface IPostRepository : IRepository<Post>
     {
-        // This interface inherits CRUD (Create, Read, Update, Delete) operations
-        // from IRepository<Post>. You can add additional methods specific to post management here if needed.
-
         /// <summary>
         /// Retrieves all posts including related entities such as users, comments, and likes.
         /// </summary>
@@ -30,7 +27,7 @@ namespace InstaConnect.Data.Abstraction.Repositories
         /// </summary>
         /// <param name="expression">The filter expression used to select the post.</param>
         /// <returns>A task representing the asynchronous operation, which upon completion returns the post that satisfies the provided filter, with related entities included.</returns>
-        Task<Post> FindIncludedAsync(Expression<Func<Post, bool>> expression);
+        Task<Post> FindPostIncludedAsync(Expression<Func<Post, bool>> expression);
 
     }
 }

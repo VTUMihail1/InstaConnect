@@ -9,18 +9,82 @@ namespace InstaConnect.Business.Abstraction.Services
     public interface IFollowService
     {
         /// <summary>
-        /// Retrieves all user follows based on the follower's ID asynchronously.
+        /// Retrieves all follows with detailed information.
         /// </summary>
-        /// <param name="followerId">The ID of the follower user.</param>
-        /// <returns>A collection of follow results.</returns>
+        /// <returns>A collection of detailed follow information.</returns>
+        Task<ICollection<FollowDetailedDTO>> GetAllDetailedAsync();
+
+        /// <summary>
+        /// Retrieves all follows by follower ID with detailed information.
+        /// </summary>
+        /// <param name="followerId">The follower's ID to filter by.</param>
+        /// <returns>A collection of detailed follow information.</returns>
+        Task<ICollection<FollowDetailedDTO>> GetAllDetailedByFollowerIdAsync(string followerId);
+
+        /// <summary>
+        /// Retrieves all follows by following ID with detailed information.
+        /// </summary>
+        /// <param name="followingId">The following's ID to filter by.</param>
+        /// <returns>A collection of detailed follow information.</returns>
+        Task<ICollection<FollowDetailedDTO>> GetAllDetailedByFollowingIdAsync(string followingId);
+
+        /// <summary>
+        /// Retrieves a follow by its ID with detailed information.
+        /// </summary>
+        /// <param name="id">The ID of the follow to retrieve.</param>
+        /// <returns>The detailed follow information or a not-found result.</returns>
+        Task<IResult<FollowDetailedDTO>> GetDetailedByIdAsync(string id);
+
+        /// <summary>
+        /// Retrieves detailed follow information by follower ID and following ID asynchronously.
+        /// </summary>
+        /// <param name="followerId">The ID of the follower.</param>
+        /// <param name="followingId">The ID of the following user.</param>
+        /// <returns>
+        /// An asynchronous task that returns a result containing the detailed follow information
+        /// or an appropriate result based on the outcome of the operation.
+        /// </returns>
+        Task<IResult<FollowDetailedDTO>> GetDetailedByFollowerIdAndFollowingIdAsync(string followerId, string followingId);
+
+
+        /// <summary>
+        /// Retrieves all follows.
+        /// </summary>
+        /// <returns>A collection of follow information.</returns>
+        Task<ICollection<FollowResultDTO>> GetAllAsync();
+
+        /// <summary>
+        /// Retrieves all follows by follower ID.
+        /// </summary>
+        /// <param name="followerId">The follower's ID to filter by.</param>
+        /// <returns>A collection of follow information.</returns>
         Task<ICollection<FollowResultDTO>> GetAllByFollowerIdAsync(string followerId);
 
         /// <summary>
-        /// Retrieves all user follows based on the following user's ID asynchronously.
+        /// Retrieves all follows by following ID.
         /// </summary>
-        /// <param name="followingId">The ID of the following user.</param>
-        /// <returns>A collection of follow results.</returns>
+        /// <param name="followingId">The following's ID to filter by.</param>
+        /// <returns>A collection of follow information.</returns>
         Task<ICollection<FollowResultDTO>> GetAllByFollowingIdAsync(string followingId);
+
+        /// <summary>
+        /// Retrieves a follow by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the follow to retrieve.</param>
+        /// <returns>The follow information or a not-found result.</returns>
+        Task<IResult<FollowResultDTO>> GetByIdAsync(string id);
+
+        /// <summary>
+        /// Retrieves follow information by follower ID and following ID asynchronously.
+        /// </summary>
+        /// <param name="followerId">The ID of the follower.</param>
+        /// <param name="followingId">The ID of the following user.</param>
+        /// <returns>
+        /// An asynchronous task that returns a result containing the follow information
+        /// or an appropriate result based on the outcome of the operation.
+        /// </returns>
+        Task<IResult<FollowResultDTO>> GetByFollowerIdAndFollowingIdAsync(string followerId, string followingId);
+
 
         /// <summary>
         /// Adds a new follow relationship asynchronously.

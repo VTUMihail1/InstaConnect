@@ -1,4 +1,5 @@
-﻿using InstaConnect.Business.Models.DTOs.PostLike;
+﻿using InstaConnect.Business.Models.DTOs.CommentLike;
+using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.Results;
 
 namespace InstaConnect.Business.Abstraction.Services
@@ -9,18 +10,81 @@ namespace InstaConnect.Business.Abstraction.Services
     public interface IPostLikeService
     {
         /// <summary>
-        /// Retrieves all post like associated with a user asynchronously.
+        /// Retrieves all post likes with detailed information.
+        /// </summary>
+        /// <returns>A collection of detailed post like information.</returns>
+        Task<ICollection<PostLikeDetailedDTO>> GetAllDetailedAsync();
+
+        /// <summary>
+        /// Retrieves all post likes by user ID with detailed information.
+        /// </summary>
+        /// <param name="userId">The user's ID to filter by.</param>
+        /// <returns>A collection of detailed post like information.</returns>
+        Task<ICollection<PostLikeDetailedDTO>> GetAllDetailedByUserIdAsync(string userId);
+
+        /// <summary>
+        /// Retrieves all post likes by post ID with detailed information.
+        /// </summary>
+        /// <param name="postId">The post's ID to filter by.</param>
+        /// <returns>A collection of detailed post like information.</returns>
+        Task<ICollection<PostLikeDetailedDTO>> GetAllDetailedByPostIdAsync(string postId);
+
+        /// <summary>
+        /// Retrieves a post like by its ID with detailed information.
+        /// </summary>
+        /// <param name="id">The ID of the post like to retrieve.</param>
+        /// <returns>The detailed post like information or a not-found result.</returns>
+        Task<IResult<PostLikeDetailedDTO>> GetDetailedByIdAsync(string id);
+
+        /// <summary>
+        /// Retrieves detailed post like information by user ID and post ID asynchronously.
         /// </summary>
         /// <param name="userId">The ID of the user.</param>
-        /// <returns>A collection of post like results.</returns>
+        /// <param name="postId">The ID of the post.</param>
+        /// <returns>
+        /// An asynchronous task that returns a result containing the detailed post like information
+        /// or an appropriate result based on the outcome of the operation.
+        /// </returns>
+        Task<IResult<PostLikeDetailedDTO>> GetDetailedByPostIdAndUserIdAsync(string userId, string postId);
+
+
+        /// <summary>
+        /// Retrieves all post likes.
+        /// </summary>
+        /// <returns>A collection of post like information.</returns>
+        Task<ICollection<PostLikeResultDTO>> GetAllAsync();
+
+        /// <summary>
+        /// Retrieves all post likes by user ID.
+        /// </summary>
+        /// <param name="userId">The user's ID to filter by.</param>
+        /// <returns>A collection of post like information.</returns>
         Task<ICollection<PostLikeResultDTO>> GetAllByUserIdAsync(string userId);
 
         /// <summary>
-        /// Retrieves all post like associated with a post asynchronously.
+        /// Retrieves all post likes by post ID.
         /// </summary>
-        /// <param name="postId">The ID of the post.</param>
-        /// <returns>A collection of post like results.</returns>
+        /// <param name="postId">The post's ID to filter by.</param>
+        /// <returns>A collection of post like information.</returns>
         Task<ICollection<PostLikeResultDTO>> GetAllByPostIdAsync(string postId);
+
+        /// <summary>
+        /// Retrieves a post like by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the post like to retrieve.</param>
+        /// <returns>The post like information or a not-found result.</returns>
+        Task<IResult<PostLikeResultDTO>> GetByIdAsync(string id);
+
+        /// <summary>
+        /// Retrieves post like information by user ID and post ID asynchronously.
+        /// </summary>
+        /// <param name="userId">The ID of the user.</param>
+        /// <param name="postId">The ID of the post.</param>
+        /// <returns>
+        /// An asynchronous task that returns a result containing the post like information
+        /// or an appropriate result based on the outcome of the operation.
+        /// </returns>
+        Task<IResult<PostLikeResultDTO>> GetByPostIdAndUserIdAsync(string userId, string postId);
 
         /// <summary>
         /// Adds a new post like asynchronously.
