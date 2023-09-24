@@ -29,6 +29,39 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
+        public async Task<ICollection<PostDetailedDTO>> GetAllDetailedAsync()
+        {
+            var posts = await _postRepository.GetAllIncludedAsync();
+            var postDetailedDTOs = _mapper.Map<ICollection<PostDetailedDTO>>(posts);
+
+            return postDetailedDTOs;
+        }
+
+        public async Task<ICollection<PostDetailedDTO>> GetAllDetailedByUserIdAsync(string userId)
+        {
+            var posts = await _postRepository.GetAllFilteredIncludedAsync(p => p.UserId == userId);
+            var postDetailedDTOs = _mapper.Map<ICollection<PostDetailedDTO>>(posts);
+
+            return postDetailedDTOs;
+        }
+
+        public async Task<IResult<PostDetailedDTO>> GetDetailedByIdAsync(string id)
+        {
+            var post = await _postRepository.FindIncludedAsync(p => p.Id == id);
+
+            if (post == null)
+            {
+                var notFoundResult = _resultFactory.GetNotFoundResult<PostDetailedDTO>(InstaConnectErrorMessages.PostNotFound);
+
+                return notFoundResult;
+            }
+
+            var postDetailedDTO = _mapper.Map<PostDetailedDTO>(post);
+            var okResult = _resultFactory.GetOkResult(postDetailedDTO);
+
+            return okResult;
+        }
+
         public async Task<ICollection<PostResultDTO>> GetAllAsync()
         {
             var posts = await _postRepository.GetAllAsync();

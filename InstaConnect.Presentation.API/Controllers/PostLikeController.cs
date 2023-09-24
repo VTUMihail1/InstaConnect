@@ -42,9 +42,21 @@ namespace InstaConnect.Presentation.API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddAsync([FromRoute] PostLikeAddDTO postLikeAddDTO)
+        public async Task<IActionResult> AddAsync([FromBody] PostLikeAddDTO postLikeAddDTO)
         {
             var response = await _postLikeService.AddAsync(postLikeAddDTO);
+
+            return this.HandleResponse(response);
+        }
+
+        // DELETE: api/post-likes/by-user-and-post/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [HttpDelete("by-user-and-post/{userId}/{postId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteByPostIdAndUserIdAsync([FromRoute] string userId, [FromRoute] string postId)
+        {
+            var response = await _postLikeService.DeleteByPostIdAndUserIdAsync(userId, postId);
 
             return this.HandleResponse(response);
         }

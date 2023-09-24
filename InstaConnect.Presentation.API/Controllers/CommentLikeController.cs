@@ -49,6 +49,18 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
+        // DELETE: api/comment-likes/by-post-comment-and-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [HttpDelete("by-post-comment-and-user/{postCommentId}/{userId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteByPostCommentIdAndUserIdAsync([FromRoute] string postCommentId, [FromRoute] string userId)
+        {
+            var response = await _commentLikeService.DeleteByPostCommentIdAndUserIdAsync(postCommentId, userId);
+
+            return this.HandleResponse(response);
+        }
+
         // DELETE: api/comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [HttpDelete("{id}")]

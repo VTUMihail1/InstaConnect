@@ -49,6 +49,18 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
+        // DELETE: api/follows/by-following-and-follower/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [HttpDelete("by-following-and-follower/{followingId}/{followerId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteByFollowerIdAndFollowingIdAsync([FromRoute] string followingId, [FromRoute] string followerId)
+        {
+            var response = await _followService.DeleteByFollowerIdAndFollowingIdAsync(followingId, followerId);
+
+            return this.HandleResponse(response);
+        }
+
         // DELETE: api/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [HttpDelete("{id}")]

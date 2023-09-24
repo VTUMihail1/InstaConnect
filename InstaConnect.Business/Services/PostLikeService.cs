@@ -85,6 +85,24 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
+        public async Task<IResult<PostLikeResultDTO>> DeleteByPostIdAndUserIdAsync(string userId, string postId)
+        {
+            var postLike = await _postLikeRepository.FindEntityAsync(l => l.UserId == userId && l.PostId == postId);
+
+            if (postLike == null)
+            {
+                var notFoundResult = _resultFactory.GetNotFoundResult<PostLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
+
+                return notFoundResult;
+            }
+
+            await _postLikeRepository.DeleteAsync(postLike);
+
+            var noContentResult = _resultFactory.GetNoContentResult<PostLikeResultDTO>();
+
+            return noContentResult;
+        }
+
         public async Task<IResult<PostLikeResultDTO>> DeleteAsync(string id)
         {
             var postLike = await _postLikeRepository.FindEntityAsync(l => l.Id == id);

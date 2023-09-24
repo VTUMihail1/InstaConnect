@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Models.DTOs.Account;
-using InstaConnect.Business.Models.DTOs.Comment;
+using InstaConnect.Business.Models.DTOs.CommentLike;
 using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.DTOs.Post;
+using InstaConnect.Business.Models.DTOs.PostComment;
 using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.DTOs.Token;
 using InstaConnect.Data.Models.Entities;
@@ -31,6 +32,15 @@ namespace InstaConnect.Business.AutoMapper
             CreateMap<Post, PostResultDTO>()
                 .ReverseMap();
 
+            CreateMap<PostLikeAddDTO, PostLike>()
+                .ReverseMap();
+
+            CreateMap<CommentLikeAddDTO, CommentLike>()
+                .ReverseMap();
+
+            CreateMap<CommentLike, CommentLikeResultDTO>()
+                .ReverseMap();
+
             CreateMap<PostLike, PostLikeResultDTO>()
                 .ReverseMap();
 
@@ -47,6 +57,29 @@ namespace InstaConnect.Business.AutoMapper
                 .ReverseMap();
 
             CreateMap<Message, MessageResultDTO>()
+                .ReverseMap();
+
+            CreateMap<PostComment, PostCommentDetailedDTO>()
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(c => c.Id))
+                .ForMember(dto => dto.Username, opt => opt.MapFrom(c => c.User.UserName))
+                .ForMember(dto => dto.Content, opt => opt.MapFrom(c => c.Content))
+                .ReverseMap();
+
+            CreateMap<PostLike, PostLikeDetailedDTO>()
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(l => l.Id))
+                .ForMember(dto => dto.Username, opt => opt.MapFrom(l => l.User.UserName))
+                .ReverseMap();
+
+            CreateMap<CommentLike, CommentLikeDetailedDTO>()
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(cl => cl.Id))
+                .ForMember(dto => dto.Username, opt => opt.MapFrom(cl => cl.User.UserName))
+                .ReverseMap();
+
+            CreateMap<Post, PostDetailedDTO>()
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(p => p.Id))
+                .ForMember(dto => dto.Username, opt => opt.MapFrom(p => p.User.UserName))
+                .ForMember(dto => dto.Title, opt => opt.MapFrom(p => p.Title))
+                .ForMember(dto => dto.Content, opt => opt.MapFrom(p => p.Content))
                 .ReverseMap();
         }
     }

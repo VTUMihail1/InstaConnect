@@ -9,6 +9,29 @@ namespace InstaConnect.Business.Abstraction.Services
     public interface IPostService
     {
         /// <summary>
+        /// Retrieves all posts in a detailed format asynchronously.
+        /// </summary>
+        /// <returns>A collection of detailed post results.</returns>
+        Task<ICollection<PostDetailedDTO>> GetAllDetailedAsync();
+
+        /// <summary>
+        /// Retrieves a collection of detailed post result data transfer objects (DTOs) by a specified user ID asynchronously.
+        /// </summary>
+        /// <param name="userId">The ID of the user for whom to retrieve detailed post information.</param>
+        /// <returns>A task representing the asynchronous operation, which upon completion returns a collection of detailed post result DTOs.</returns>
+        Task<ICollection<PostDetailedDTO>> GetAllDetailedByUserIdAsync(string userId);
+
+        /// <summary>
+        /// Retrieves detailed information about a post by its unique identifier asynchronously.
+        /// </summary>
+        /// <param name="id">The unique identifier of the post to retrieve.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation, which upon completion returns a result
+        /// containing detailed information about the specified post in the form of a PostDetailedDTO.
+        /// </returns>
+        Task<IResult<PostDetailedDTO>> GetDetailedByIdAsync(string id);
+
+        /// <summary>
         /// Retrieves all posts asynchronously.
         /// </summary>
         /// <returns>A collection of post results.</returns>
