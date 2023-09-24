@@ -59,7 +59,6 @@ namespace InstaConnect.Presentation.API.Controllers
         }
 
         // GET: api/messages/by-sender-and-receiver/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [Authorize]
         [HttpGet("by-sender-and-receiver/{senderId}/{receiverId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

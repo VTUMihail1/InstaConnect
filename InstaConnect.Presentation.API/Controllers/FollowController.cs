@@ -59,7 +59,6 @@ namespace InstaConnect.Presentation.API.Controllers
         }
 
         // GET: api/follows/by-following-and-follower/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [Authorize]
         [HttpGet("by-following-and-follower/{followingId}/{followerId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
