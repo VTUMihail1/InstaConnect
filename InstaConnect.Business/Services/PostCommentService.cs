@@ -70,7 +70,7 @@ namespace InstaConnect.Business.Services
 
             if (postComment == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentDetailedDTO>(InstaConnectErrorMessages.PostNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentDetailedDTO>(InstaConnectErrorMessages.PostCommentNotFound);
 
                 return notFoundResult;
             }
@@ -119,7 +119,7 @@ namespace InstaConnect.Business.Services
 
             if (postComment == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>(InstaConnectErrorMessages.PostNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>(InstaConnectErrorMessages.PostCommentNotFound);
 
                 return notFoundResult;
             }

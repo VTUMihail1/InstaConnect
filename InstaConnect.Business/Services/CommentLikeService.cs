@@ -2,6 +2,7 @@
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.CommentLike;
+using InstaConnect.Business.Models.DTOs.PostComment;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Data.Abstraction.Repositories;
@@ -32,6 +33,55 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
+        public async Task<ICollection<CommentLikeResultDTO>> GetDetailedAllAsync()
+        {
+            var commentLikes = await _commentLikeRepository.GetAllAsync();
+            var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
+
+            return commentLikeResultDTOs;
+        }
+
+        public async Task<ICollection<CommentLikeResultDTO>> GetDetailedAllByUserIdAsync(string userId)
+        {
+            var commentLikes = await _commentLikeRepository.GetAllFilteredAsync(c => c.UserId == userId);
+            var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
+
+            return commentLikeResultDTOs;
+        }
+
+        public async Task<ICollection<CommentLikeResultDTO>> GetDetailedAllByCommentIdAsync(string postCommentId)
+        {
+            var commentLikes = await _commentLikeRepository.GetAllFilteredAsync(c => c.PostCommentId == postCommentId);
+            var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
+
+            return commentLikeResultDTOs;
+        }
+
+        public async Task<IResult<CommentLikeResultDTO>> GetDetailedByIdAsync(string id)
+        {
+            var commentLike = await _commentLikeRepository.FindEntityAsync(pc => pc.Id == id);
+
+            if (commentLike == null)
+            {
+                var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
+
+                return notFoundResult;
+            }
+
+            var commentLikeResultDTO = _mapper.Map<CommentLikeResultDTO>(commentLike);
+            var okResult = _resultFactory.GetOkResult(commentLikeResultDTO);
+
+            return okResult;
+        }
+
+        public async Task<ICollection<CommentLikeResultDTO>> GetAllAsync()
+        {
+            var commentLikes = await _commentLikeRepository.GetAllAsync();
+            var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
+
+            return commentLikeResultDTOs;
+        }
+
         public async Task<ICollection<CommentLikeResultDTO>> GetAllByUserIdAsync(string userId)
         {
             var commentLikes = await _commentLikeRepository.GetAllFilteredAsync(c => c.UserId == userId);
@@ -46,6 +96,23 @@ namespace InstaConnect.Business.Services
             var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
 
             return commentLikeResultDTOs;
+        }
+
+        public async Task<IResult<CommentLikeResultDTO>> GetByIdAsync(string id)
+        {
+            var commentLike = await _commentLikeRepository.FindEntityAsync(pc => pc.Id == id);
+
+            if (commentLike == null)
+            {
+                var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
+
+                return notFoundResult;
+            }
+
+            var commentLikeResultDTO = _mapper.Map<CommentLikeResultDTO>(commentLike);
+            var okResult = _resultFactory.GetOkResult(commentLikeResultDTO);
+
+            return okResult;
         }
 
         public async Task<IResult<CommentLikeResultDTO>> AddAsync(CommentLikeAddDTO commentLikeAddDTO)

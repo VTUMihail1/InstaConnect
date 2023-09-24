@@ -79,6 +79,14 @@ namespace InstaConnect.Business.AutoMapper
                 .ForMember(dto => dto.FollowingUsername, opt => opt.MapFrom(l => l.Following.UserName))
                 .ReverseMap();
 
+            CreateMap<Message, MessageDetailedDTO>()
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(l => l.Id))
+                .ForMember(dto => dto.SenderId, opt => opt.MapFrom(l => l.Sender.Id))
+                .ForMember(dto => dto.SenderUsername, opt => opt.MapFrom(l => l.Sender.UserName))
+                .ForMember(dto => dto.ReceiverId, opt => opt.MapFrom(l => l.Receiver.Id))
+                .ForMember(dto => dto.ReceiverUsername, opt => opt.MapFrom(l => l.Receiver.UserName))
+                .ReverseMap();
+
             CreateMap<CommentLike, CommentLikeDetailedDTO>()
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(cl => cl.Id))
                 .ForMember(dto => dto.Username, opt => opt.MapFrom(cl => cl.User.UserName))

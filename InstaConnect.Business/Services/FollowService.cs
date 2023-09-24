@@ -33,25 +33,25 @@ namespace InstaConnect.Business.Services
         public async Task<ICollection<FollowDetailedDTO>> GetAllDetailedAsync()
         {
             var followers = await _followRepository.GetAllIncludedAsync();
-            var followersResultDTOs = _mapper.Map<ICollection<FollowDetailedDTO>>(followers);
+            var followersDetailedDTOs = _mapper.Map<ICollection<FollowDetailedDTO>>(followers);
 
-            return followersResultDTOs;
+            return followersDetailedDTOs;
         }
 
         public async Task<ICollection<FollowDetailedDTO>> GetAllDetailedByFollowerIdAsync(string followerId)
         {
             var followers = await _followRepository.GetAllFilteredIncludedAsync(p => p.FollowerId == followerId);
-            var followersResultDTOs = _mapper.Map<ICollection<FollowDetailedDTO>>(followers);
+            var followersDetailedDTOs = _mapper.Map<ICollection<FollowDetailedDTO>>(followers);
 
-            return followersResultDTOs;
+            return followersDetailedDTOs;
         }
 
         public async Task<ICollection<FollowDetailedDTO>> GetAllDetailedByFollowingIdAsync(string followingId)
         {
             var followers = await _followRepository.GetAllFilteredIncludedAsync(p => p.FollowingId == followingId);
-            var followersResultDTOs = _mapper.Map<ICollection<FollowDetailedDTO>>(followers);
+            var followersDetailedDTOs = _mapper.Map<ICollection<FollowDetailedDTO>>(followers);
 
-            return followersResultDTOs;
+            return followersDetailedDTOs;
         }
 
         public async Task<IResult<FollowDetailedDTO>> GetDetailedByIdAsync(string id)
@@ -60,13 +60,13 @@ namespace InstaConnect.Business.Services
 
             if (follow == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<FollowDetailedDTO>(InstaConnectErrorMessages.PostNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<FollowDetailedDTO>(InstaConnectErrorMessages.FollowNotFound);
 
                 return notFoundResult;
             }
 
-            var followResultDTO = _mapper.Map<FollowDetailedDTO>(follow);
-            var okResult = _resultFactory.GetOkResult(followResultDTO);
+            var followDetailedDTO = _mapper.Map<FollowDetailedDTO>(follow);
+            var okResult = _resultFactory.GetOkResult(followDetailedDTO);
 
             return okResult;
         }
@@ -101,7 +101,7 @@ namespace InstaConnect.Business.Services
 
             if (follow == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<FollowResultDTO>(InstaConnectErrorMessages.PostNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<FollowResultDTO>(InstaConnectErrorMessages.FollowNotFound);
 
                 return notFoundResult;
             }

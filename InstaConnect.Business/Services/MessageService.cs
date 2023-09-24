@@ -33,21 +33,87 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<MessageResultDTO>> GetAllBySenderIdAsync(string senderId)
-        {
-            var messages = await _messageRepository.GetAllFilteredAsync(p => p.SenderId == senderId);
-            var messageResultDTOs = _mapper.Map<ICollection<MessageResultDTO>>(messages);
+            public async Task<ICollection<MessageDetailedDTO>> GetAllDetailedAsync()
+            {
+                var messages = await _messageRepository.GetAllIncludedAsync();
+                var messageDetailedDTOs = _mapper.Map<ICollection<MessageDetailedDTO>>(messages);
 
-            return messageResultDTOs;
-        }
+                return messageDetailedDTOs;
+            }
 
-        public async Task<ICollection<MessageResultDTO>> GetAllByReceiverIdAsync(string receiverId)
-        {
-            var messages = await _messageRepository.GetAllFilteredAsync(p => p.ReceiverId == receiverId);
-            var messageResultDTOs = _mapper.Map<ICollection<MessageResultDTO>>(messages);
+            public async Task<ICollection<MessageDetailedDTO>> GetAllDetailedBySenderIdAsync(string senderId)
+            {
+                var messages = await _messageRepository.GetAllFilteredIncludedAsync(m => m.SenderId == senderId);
+                var messageDetailedDTOs = _mapper.Map<ICollection<MessageDetailedDTO>>(messages);
 
-            return messageResultDTOs;
-        }
+                return messageDetailedDTOs;
+            }
+
+            public async Task<ICollection<MessageDetailedDTO>> GetAllDetailedByReceiverIdAsync(string receiverId)
+            {
+                var messages = await _messageRepository.GetAllFilteredIncludedAsync(m => m.ReceiverId == receiverId);
+                var messageDetailedDTOs = _mapper.Map<ICollection<MessageDetailedDTO>>(messages);
+
+                return messageDetailedDTOs;
+            }
+
+            public async Task<IResult<MessageDetailedDTO>> GetDetailedByIdAsync(string id)
+            {
+                var message = await _messageRepository.FindIncludedAsync(m => m.Id == id);
+
+                if (message == null)
+                {
+                    var notFoundResult = _resultFactory.GetNotFoundResult<MessageDetailedDTO>(InstaConnectErrorMessages.MessageNotFound);
+
+                    return notFoundResult;
+                }
+
+                var messageDetailedDTO = _mapper.Map<MessageDetailedDTO>(message);
+                var okResult = _resultFactory.GetOkResult(messageDetailedDTO);
+
+                return okResult;
+            }
+
+            public async Task<ICollection<MessageResultDTO>> GetAllAsync()
+            {
+                var messages = await _messageRepository.GetAllAsync();
+                var messageResultDTOs = _mapper.Map<ICollection<MessageResultDTO>>(messages);
+
+                return messageResultDTOs;
+            }
+
+            public async Task<ICollection<MessageResultDTO>> GetAllBySenderIdAsync(string senderId)
+            {
+                var messages = await _messageRepository.GetAllFilteredAsync(m => m.SenderId == senderId);
+                var messageResultDTOs = _mapper.Map<ICollection<MessageResultDTO>>(messages);
+
+                return messageResultDTOs;
+            }
+
+            public async Task<ICollection<MessageResultDTO>> GetAllByReceiverIdAsync(string receiverId)
+            {
+                var messages = await _messageRepository.GetAllFilteredAsync(m => m.ReceiverId == receiverId);
+                var messageResultDTOs = _mapper.Map<ICollection<MessageResultDTO>>(messages);
+
+                return messageResultDTOs;
+            }
+
+            public async Task<IResult<MessageResultDTO>> GetByIdAsync(string id)
+            {
+                var message = await _messageRepository.FindEntityAsync(m => m.Id == id);
+
+                if (message == null)
+                {
+                    var notFoundResult = _resultFactory.GetNotFoundResult<MessageResultDTO>(InstaConnectErrorMessages.MessageNotFound);
+
+                    return notFoundResult;
+                }
+
+                var messageResultDTO = _mapper.Map<MessageResultDTO>(message);
+                var okResult = _resultFactory.GetOkResult(messageResultDTO);
+
+                return okResult;
+            }
 
         public async Task<IResult<MessageResultDTO>> AddAsync(MessageAddDTO messageAddDTO)
         {
