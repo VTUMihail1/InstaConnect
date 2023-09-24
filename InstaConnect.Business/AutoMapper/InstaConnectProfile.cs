@@ -60,22 +60,26 @@ namespace InstaConnect.Business.AutoMapper
                 .ReverseMap();
 
             CreateMap<PostComment, PostCommentDetailedDTO>()
-                .ForMember(dto => dto.Username, opt => opt.MapFrom(comment => comment.User.UserName))
-                .ForMember(dto => dto.Content, opt => opt.MapFrom(comment => comment.Content))
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(c => c.Id))
+                .ForMember(dto => dto.Username, opt => opt.MapFrom(c => c.User.UserName))
+                .ForMember(dto => dto.Content, opt => opt.MapFrom(c => c.Content))
                 .ReverseMap();
 
             CreateMap<PostLike, PostLikeDetailedDTO>()
-                .ForMember(dto => dto.Username, opt => opt.MapFrom(like => like.User.UserName))
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(l => l.Id))
+                .ForMember(dto => dto.Username, opt => opt.MapFrom(l => l.User.UserName))
                 .ReverseMap();
 
             CreateMap<CommentLike, CommentLikeDetailedDTO>()
-                .ForMember(dto => dto.Username, opt => opt.MapFrom(like => like.User.UserName))
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(cl => cl.Id))
+                .ForMember(dto => dto.Username, opt => opt.MapFrom(cl => cl.User.UserName))
                 .ReverseMap();
 
             CreateMap<Post, PostDetailedDTO>()
-                .ForMember(dto => dto.Username, opt => opt.MapFrom(post => post.User.UserName))
-                .ForMember(dto => dto.Title, opt => opt.MapFrom(post => post.Title))
-                .ForMember(dto => dto.Content, opt => opt.MapFrom(post => post.Content))
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(p => p.Id))
+                .ForMember(dto => dto.Username, opt => opt.MapFrom(p => p.User.UserName))
+                .ForMember(dto => dto.Title, opt => opt.MapFrom(p => p.Title))
+                .ForMember(dto => dto.Content, opt => opt.MapFrom(p => p.Content))
                 .ReverseMap();
         }
     }

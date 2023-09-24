@@ -2,6 +2,8 @@
 {
     public class PostLikeDetailedDTO
     {
+        public string Id { get; set; }
+
         public string Username { get; set; }
     }
 }

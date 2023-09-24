@@ -4,6 +4,8 @@ namespace InstaConnect.Business.Models.DTOs.PostComment
 {
     public class PostCommentDetailedDTO
     {
+        public string Id { get; set; }
+
         public string Username { get; set; }
 
         public string Content { get; set; }
