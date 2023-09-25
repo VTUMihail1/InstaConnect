@@ -18,16 +18,13 @@ namespace InstaConnect.Business.AutoMapper
             CreateMap<AccountRegistrationDTO, User>()
                 .ReverseMap();
 
-            CreateMap<Token, AccountResultDTO>()
-                .ReverseMap();
-
             CreateMap<TokenAddDTO, Token>()
                 .ReverseMap();
 
-            CreateMap<Token, TokenResultDTO>()
+            CreateMap<PostAddDTO, Post>()
                 .ReverseMap();
 
-            CreateMap<PostAddDTO, Post>()
+            CreateMap<FollowAddDTO, Follow>()
                 .ReverseMap();
 
             CreateMap<PostLikeAddDTO, PostLike>()
@@ -39,10 +36,16 @@ namespace InstaConnect.Business.AutoMapper
             CreateMap<PostCommentAddDTO, PostComment>()
                 .ReverseMap();
 
-            CreateMap<PostCommentUpdateDTO, PostComment>()
+            CreateMap<MessageAddDTO, Message>()
                 .ReverseMap();
 
-            CreateMap<MessageAddDTO, Message>()
+            CreateMap<MessageUpdateDTO, Message>()
+                .ReverseMap();
+
+            CreateMap<PostUpdateDTO, Post>()
+                .ReverseMap();
+
+            CreateMap<PostCommentUpdateDTO, PostComment>()
                 .ReverseMap();
 
             CreateMap<PostComment, PostCommentResultDTO>()
@@ -82,6 +85,12 @@ namespace InstaConnect.Business.AutoMapper
                 .ForMember(dto => dto.Username, opt => opt.MapFrom(p => p.User.UserName))
                 .ForMember(dto => dto.Title, opt => opt.MapFrom(p => p.Title))
                 .ForMember(dto => dto.Content, opt => opt.MapFrom(p => p.Content))
+                .ReverseMap();
+
+            CreateMap<Token, TokenResultDTO>()
+                .ReverseMap();
+
+            CreateMap<Token, AccountResultDTO>()
                 .ReverseMap();
         }
     }
