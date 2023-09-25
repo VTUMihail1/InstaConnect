@@ -32,33 +32,13 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<PostCommentResultDTO>> GetAllAsync()
+        public async Task<ICollection<PostCommentResultDTO>> GetAllAsync(string userId, string postId, string postCommentId)
         {
-            var postComments = await _postCommentRepository.GetAllIncludedAsync();
-            var postCommentsResultDTOs = _mapper.Map<ICollection<PostCommentResultDTO>>(postComments);
+            var postComments = await _postCommentRepository.GetAllAsync(pc =>
+            (userId == default || pc.UserId == userId) &&
+            (postId == default || pc.PostId == postId) &&
+            (postCommentId == default || pc.PostCommentId == postCommentId));
 
-            return postCommentsResultDTOs;
-        }
-
-        public async Task<ICollection<PostCommentResultDTO>> GetAllByUserIdAsync(string userId)
-        {
-            var postComments = await _postCommentRepository.GetAllFilteredIncludedAsync(pc => pc.UserId == userId);
-            var postCommentsResultDTOs = _mapper.Map<ICollection<PostCommentResultDTO>>(postComments);
-
-            return postCommentsResultDTOs;
-        }
-
-        public async Task<ICollection<PostCommentResultDTO>> GetAllByPostIdAsync(string postId)
-        {
-            var postComments = await _postCommentRepository.GetAllFilteredIncludedAsync(pc => pc.PostId == postId);
-            var postCommentsResultDTOs = _mapper.Map<ICollection<PostCommentResultDTO>>(postComments);
-
-            return postCommentsResultDTOs;
-        }
-
-        public async Task<ICollection<PostCommentResultDTO>> GetAllByParentIdAsync(string postCommentId)
-        {
-            var postComments = await _postCommentRepository.GetAllFilteredIncludedAsync(pc => pc.PostCommentId == postCommentId);
             var postCommentsResultDTOs = _mapper.Map<ICollection<PostCommentResultDTO>>(postComments);
 
             return postCommentsResultDTOs;
@@ -66,11 +46,11 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostCommentResultDTO>> GetByIdAsync(string id)
         {
-            var existingPostComment = await _postCommentRepository.FindPostCommentIncludedAsync(pc => pc.Id == id);
+            var existingPostComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id);
 
             if (existingPostComment == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>(InstaConnectErrorMessages.PostCommentNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>(InstaConnectErrorMessages.CommentNotFound);
 
                 return notFoundResult;
             }
@@ -105,7 +85,7 @@ namespace InstaConnect.Business.Services
 
             if (postCommentAddDTO.PostCommentId != null && existingPostComment == null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<PostCommentResultDTO>(InstaConnectErrorMessages.PostCommentNotFound);
+                var badRequestResult = _resultFactory.GetBadRequestResult<PostCommentResultDTO>(InstaConnectErrorMessages.CommentNotFound);
 
                 return badRequestResult;
             }
@@ -124,7 +104,7 @@ namespace InstaConnect.Business.Services
 
             if (existingPostComment == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>(InstaConnectErrorMessages.PostCommentNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>(InstaConnectErrorMessages.CommentNotFound);
 
                 return notFoundResult;
             }
@@ -143,7 +123,7 @@ namespace InstaConnect.Business.Services
 
             if (existingPostComment == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>(InstaConnectErrorMessages.PostCommentNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>(InstaConnectErrorMessages.CommentNotFound);
 
                 return notFoundResult;
             }

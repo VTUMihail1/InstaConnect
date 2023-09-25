@@ -26,7 +26,7 @@
 
         public const string LikeAlreadyExists = "You need to unlike before liking it";
 
-        public const string PostCommentNotFound = "Post comment does not exist";
+        public const string CommentNotFound = "Comment does not exist";
 
         public const string UserNotFound = "User does not exist";
 

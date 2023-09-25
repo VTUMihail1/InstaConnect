@@ -20,33 +20,12 @@ namespace InstaConnect.Presentation.API.Controllers
         // GET: api/comment-likes
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync([FromQuery] string userId = default, [FromQuery] string postId = default)
         {
-            var response = await _commentLikeService.GetAllAsync();
+            var response = await _commentLikeService.GetAllAsync(userId, postId);
 
             return Ok(response);
         }
-
-        // GET: api/comment-likes/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-user/{userId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByUserIdAsync([FromRoute] string userId)
-        {
-            var response = await _commentLikeService.GetAllByUserIdAsync(userId);
-
-            return Ok(response);
-        }
-
-        // GET: api/comment-likes/by-post-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-post-comment/{postcommentId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByCommentIdAsync([FromRoute] string postcommentId)
-        {
-            var response = await _commentLikeService.GetAllByCommentIdAsync(postcommentId);
-
-            return Ok(response);
-        }
-
 
         // GET: api/comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [HttpGet("{id}")]

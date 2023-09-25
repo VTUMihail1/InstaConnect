@@ -15,17 +15,8 @@ namespace InstaConnect.Data.Repositories
             _instaConnectContext = instaConnectContext;
         }
 
-        public async Task<ICollection<PostLike>> GetAllIncludedAsync()
-        {
-            var postLikes = await _instaConnectContext.PostLikes
-                .Include(f => f.User)
-                .Include(f => f.Post)
-                .ToListAsync();
 
-            return postLikes;
-        }
-
-        public async Task<ICollection<PostLike>> GetAllFilteredIncludedAsync(Expression<Func<PostLike, bool>> expression)
+        public override async Task<ICollection<PostLike>> GetAllAsync(Expression<Func<PostLike, bool>> expression)
         {
             var postLikes = await _instaConnectContext.PostLikes
                 .Where(expression)
@@ -36,7 +27,7 @@ namespace InstaConnect.Data.Repositories
             return postLikes;
         }
 
-        public async Task<PostLike> FindPostLikeIncludedAsync(Expression<Func<PostLike, bool>> expression)
+        public override async Task<PostLike> FindEntityAsync(Expression<Func<PostLike, bool>> expression)
         {
             var postLike = await _instaConnectContext.PostLikes
                 .Include(f => f.User)

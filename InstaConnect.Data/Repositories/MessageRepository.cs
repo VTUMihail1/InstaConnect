@@ -15,17 +15,7 @@ namespace InstaConnect.Data.Repositories
             _instaConnectContext = instaConnectContext;
         }
 
-        public async Task<ICollection<Message>> GetAllIncludedAsync()
-        {
-            var messages = await _instaConnectContext.Messages
-                .Include(m => m.Sender)
-                .Include(m => m.Receiver)
-                .ToListAsync();
-
-            return messages;
-        }
-
-        public async Task<ICollection<Message>> GetAllFilteredIncludedAsync(Expression<Func<Message, bool>> expression)
+        public override async Task<ICollection<Message>> GetAllAsync(Expression<Func<Message, bool>> expression)
         {
             var messages = await _instaConnectContext.Messages
                 .Where(expression)
@@ -36,7 +26,7 @@ namespace InstaConnect.Data.Repositories
             return messages;
         }
 
-        public async Task<Message> FindMessageIncludedAsync(Expression<Func<Message, bool>> expression)
+        public override async Task<Message> FindEntityAsync(Expression<Func<Message, bool>> expression)
         {
             var message = await _instaConnectContext.Messages
                 .Where(expression)

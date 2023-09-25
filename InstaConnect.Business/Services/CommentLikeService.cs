@@ -32,25 +32,12 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<CommentLikeResultDTO>> GetAllAsync()
+        public async Task<ICollection<CommentLikeResultDTO>> GetAllAsync(string userId, string postCommentId)
         {
-            var commentLikes = await _commentLikeRepository.GetAllIncludedAsync();
-            var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
+            var commentLikes = await _commentLikeRepository.GetAllAsync(cl =>
+            (userId == default || cl.UserId == userId) &&
+            (postCommentId == default || cl.PostCommentId == postCommentId));
 
-            return commentLikeResultDTOs;
-        }
-
-        public async Task<ICollection<CommentLikeResultDTO>> GetAllByUserIdAsync(string userId)
-        {
-            var commentLikes = await _commentLikeRepository.GetAllFilteredAsync(cl => cl.UserId == userId);
-            var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
-
-            return commentLikeResultDTOs;
-        }
-
-        public async Task<ICollection<CommentLikeResultDTO>> GetAllByCommentIdAsync(string postCommentId)
-        {
-            var commentLikes = await _commentLikeRepository.GetAllFilteredAsync(cl => cl.PostCommentId == postCommentId);
             var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
 
             return commentLikeResultDTOs;
@@ -75,7 +62,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<CommentLikeResultDTO>> GetByPostCommentIdAndUserIdAsync(string postCommentId, string userId)
         {
-            var existingCommentLike = await _commentLikeRepository.FindCommentLikeIncludedAsync(cl => cl.PostCommentId == postCommentId && cl.UserId == userId);
+            var existingCommentLike = await _commentLikeRepository.FindEntityAsync(cl => cl.PostCommentId == postCommentId && cl.UserId == userId);
 
             if (existingCommentLike == null)
             {

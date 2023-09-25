@@ -29,25 +29,12 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<FollowResultDTO>> GetAllAsync()
+        public async Task<ICollection<FollowResultDTO>> GetAllAsync(string followingId, string followerId)
         {
-            var followers = await _followRepository.GetAllIncludedAsync();
-            var followResultDTOs = _mapper.Map<ICollection<FollowResultDTO>>(followers);
+            var followers = await _followRepository.GetAllAsync(f =>
+            (followingId == default || f.FollowingId == followingId) &&
+            (followerId == default || f.FollowerId == followerId));
 
-            return followResultDTOs;
-        }
-
-        public async Task<ICollection<FollowResultDTO>> GetAllByFollowerIdAsync(string followerId)
-        {
-            var followers = await _followRepository.GetAllFilteredIncludedAsync(f => f.FollowerId == followerId);
-            var followResultDTOs = _mapper.Map<ICollection<FollowResultDTO>>(followers);
-
-            return followResultDTOs;
-        }
-
-        public async Task<ICollection<FollowResultDTO>> GetAllByFollowingIdAsync(string followingId)
-        {
-            var followers = await _followRepository.GetAllFilteredIncludedAsync(f => f.FollowingId == followingId);
             var followResultDTOs = _mapper.Map<ICollection<FollowResultDTO>>(followers);
 
             return followResultDTOs;
@@ -55,7 +42,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<FollowResultDTO>> GetByIdAsync(string id)
         {
-            var existingFollow = await _followRepository.FindFollowIncludedAsync(f => f.Id == id);
+            var existingFollow = await _followRepository.FindEntityAsync(f => f.Id == id);
 
             if (existingFollow == null)
             {
@@ -72,7 +59,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<FollowResultDTO>> GetByFollowerIdAndFollowingIdAsync(string followerId, string followingId)
         {
-            var existingFollow = await _followRepository.FindFollowIncludedAsync(f => f.FollowerId == followerId && f.FollowingId == followingId);
+            var existingFollow = await _followRepository.FindEntityAsync(f => f.FollowerId == followerId && f.FollowingId == followingId);
 
             if (existingFollow == null)
             {

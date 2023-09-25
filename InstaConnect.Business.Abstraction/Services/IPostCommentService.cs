@@ -9,31 +9,13 @@ namespace InstaConnect.Business.Abstraction.Services
     public interface IPostCommentService
     {
         /// <summary>
-        /// Gets all post comments asynchronously.
+        /// Retrieves a collection of PostCommentResultDTO for a specific user, post, and post comment.
         /// </summary>
-        /// <returns>A collection of post comment results.</returns>
-        Task<ICollection<PostCommentResultDTO>> GetAllAsync();
-
-        /// <summary>
-        /// Gets all post comments by a specific user asynchronously.
-        /// </summary>
-        /// <param name="userId">The unique identifier of the user.</param>
-        /// <returns>A collection of post comment results.</returns>
-        Task<ICollection<PostCommentResultDTO>> GetAllByUserIdAsync(string userId);
-
-        /// <summary>
-        /// Gets all post comments for a specific post asynchronously.
-        /// </summary>
-        /// <param name="postId">The unique identifier of the post.</param>
-        /// <returns>A collection of post comment results.</returns>
-        Task<ICollection<PostCommentResultDTO>> GetAllByPostIdAsync(string postId);
-
-        /// <summary>
-        /// Gets all child post comments for a specific parent comment asynchronously.
-        /// </summary>
-        /// <param name="postCommentId">The unique identifier of the parent comment.</param>
-        /// <returns>A collection of post comment results.</returns>
-        Task<ICollection<PostCommentResultDTO>> GetAllByParentIdAsync(string postCommentId);
+        /// <param name="userId">The ID of the user.</param>
+        /// <param name="postId">The ID of the post.</param>
+        /// <param name="postCommentId">The ID of the post comment.</param>
+        /// <returns>A Task representing the asynchronous operation that returns an ICollection of PostCommentResultDTO.</returns>
+        Task<ICollection<PostCommentResultDTO>> GetAllAsync(string userId, string postId, string postCommentId);
 
         /// <summary>
         /// Gets a post comment by its unique identifier asynchronously.

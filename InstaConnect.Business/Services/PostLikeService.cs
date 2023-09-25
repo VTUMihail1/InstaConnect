@@ -32,25 +32,12 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<PostLikeResultDTO>> GetAllAsync()
+        public async Task<ICollection<PostLikeResultDTO>> GetAllAsync(string userId, string postId)
         {
-            var postLikes = await _postLikeRepository.GetAllIncludedAsync();
-            var postLikeResultDTOs = _mapper.Map<ICollection<PostLikeResultDTO>>(postLikes);
+            var postLikes = await _postLikeRepository.GetAllAsync(pl =>
+            (userId == default || pl.UserId == userId) &&
+            (postId == default || pl.PostId == postId));
 
-            return postLikeResultDTOs;
-        }
-
-        public async Task<ICollection<PostLikeResultDTO>> GetAllByUserIdAsync(string userId)
-        {
-            var postLikes = await _postLikeRepository.GetAllFilteredIncludedAsync(pl => pl.UserId == userId);
-            var postLikeResultDTOs = _mapper.Map<ICollection<PostLikeResultDTO>>(postLikes);
-
-            return postLikeResultDTOs;
-        }
-
-        public async Task<ICollection<PostLikeResultDTO>> GetAllByPostIdAsync(string postId)
-        {
-            var postLikes = await _postLikeRepository.GetAllFilteredIncludedAsync(pl => pl.PostId == postId);
             var postLikeResultDTOs = _mapper.Map<ICollection<PostLikeResultDTO>>(postLikes);
 
             return postLikeResultDTOs;
@@ -58,7 +45,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostLikeResultDTO>> GetByIdAsync(string id)
         {
-            var existingPostLike = await _postLikeRepository.FindPostLikeIncludedAsync(pl => pl.Id == id);
+            var existingPostLike = await _postLikeRepository.FindEntityAsync(pl => pl.Id == id);
 
             if (existingPostLike == null)
             {
@@ -74,7 +61,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostLikeResultDTO>> GetByPostIdAndUserIdAsync(string userId, string postId)
         {
-            var existingPostLike = await _postLikeRepository.FindPostLikeIncludedAsync(pl => pl.UserId == userId && pl.PostId == postId);
+            var existingPostLike = await _postLikeRepository.FindEntityAsync(pl => pl.UserId == userId && pl.PostId == postId);
 
             if (existingPostLike == null)
             {

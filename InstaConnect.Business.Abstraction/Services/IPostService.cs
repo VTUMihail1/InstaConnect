@@ -9,17 +9,11 @@ namespace InstaConnect.Business.Abstraction.Services
     public interface IPostService
     {
         /// <summary>
-        /// Gets all posts asynchronously.
+        /// Retrieves a collection of PostResultDTO representing the posts associated with a user.
         /// </summary>
-        /// <returns>A collection of post results.</returns>
-        Task<ICollection<PostResultDTO>> GetAllAsync();
-
-        /// <summary>
-        /// Gets all posts by a specific user asynchronously.
-        /// </summary>
-        /// <param name="userId">The unique identifier of the user.</param>
-        /// <returns>A collection of post results.</returns>
-        Task<ICollection<PostResultDTO>> GetAllByUserIdAsync(string userId);
+        /// <param name="userId">The ID of the user for whom posts are being retrieved.</param>
+        /// <returns>A Task representing the asynchronous operation that returns an ICollection of PostResultDTO.</returns>
+        Task<ICollection<PostResultDTO>> GetAllAsync(string userId);
 
         /// <summary>
         /// Gets a post by its unique identifier asynchronously.

@@ -20,29 +20,9 @@ namespace InstaConnect.Presentation.API.Controllers
         // GET: api/follows
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync([FromQuery] string followingId = default, [FromQuery] string followerId = default)
         {
-            var response = await _followService.GetAllAsync();
-
-            return Ok(response);
-        }
-
-        // GET: api/follows/by-follower/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-follower/{followerId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByFollowerIdAsync([FromRoute] string followerId)
-        {
-            var response = await _followService.GetAllByFollowerIdAsync(followerId);
-
-            return Ok(response);
-        }
-
-        // GET: api/follows/by-following/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-following/{followingId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByFollowingIdAsync([FromRoute] string followingId)
-        {
-            var response = await _followService.GetAllByFollowingIdAsync(followingId);
+            var response = await _followService.GetAllAsync(followingId, followerId);
 
             return Ok(response);
         }

@@ -15,17 +15,7 @@ namespace InstaConnect.Data.Repositories
             _instaConnectContext = instaConnectContext;
         }
 
-        public async Task<ICollection<Follow>> GetAllIncludedAsync()
-        {
-            var followers = await _instaConnectContext.Followers
-                .Include(f => f.Follower)
-                .Include(f => f.Following)
-                .ToListAsync();
-
-            return followers;
-        }
-
-        public async Task<ICollection<Follow>> GetAllFilteredIncludedAsync(Expression<Func<Follow, bool>> expression)
+        public override async Task<ICollection<Follow>> GetAllAsync(Expression<Func<Follow, bool>> expression)
         {
             var followers = await _instaConnectContext.Followers
                 .Where(expression)
@@ -36,7 +26,7 @@ namespace InstaConnect.Data.Repositories
             return followers;
         }
 
-        public async Task<Follow> FindFollowIncludedAsync(Expression<Func<Follow, bool>> expression)
+        public override async Task<Follow> FindEntityAsync(Expression<Func<Follow, bool>> expression)
         {
             var followers = await _instaConnectContext.Followers
                 .Include(f => f.Follower)
