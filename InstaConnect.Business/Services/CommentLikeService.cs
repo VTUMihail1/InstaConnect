@@ -34,7 +34,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<ICollection<CommentLikeResultDTO>> GetAllAsync()
         {
-            var commentLikes = await _commentLikeRepository.GetAllAsync();
+            var commentLikes = await _commentLikeRepository.GetAllIncludedAsync();
             var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
 
             return commentLikeResultDTOs;
