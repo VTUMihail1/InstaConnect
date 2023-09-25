@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using InstaConnect.Business.Models.Filters;
+using System.ComponentModel.DataAnnotations;
 
 namespace InstaConnect.Business.Models.DTOs.Follow
 {
@@ -8,6 +9,7 @@ namespace InstaConnect.Business.Models.DTOs.Follow
         public string FollowingId { get; set; }
 
         [Required]
+        [NotEqual(nameof(FollowingId))]
         public string FollowerId { get; set; }
     }
 }
