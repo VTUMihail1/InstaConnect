@@ -29,17 +29,9 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<PostResultDTO>> GetAllAsync()
+        public async Task<ICollection<PostResultDTO>> GetAllAsync(string userId)
         {
-            var posts = await _postRepository.GetAllIncludedAsync();
-            var postResultDTOs = _mapper.Map<ICollection<PostResultDTO>>(posts);
-
-            return postResultDTOs;
-        }
-
-        public async Task<ICollection<PostResultDTO>> GetAllByUserIdAsync(string userId)
-        {
-            var posts = await _postRepository.GetAllFilteredIncludedAsync(p => p.UserId == userId);
+            var posts = await _postRepository.GetAllAsync(p => userId == default || p.UserId == userId);
             var postResultDTOs = _mapper.Map<ICollection<PostResultDTO>>(posts);
 
             return postResultDTOs;
@@ -47,7 +39,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostResultDTO>> GetByIdAsync(string id)
         {
-            var existingPost = await _postRepository.FindPostIncludedAsync(p => p.Id == id);
+            var existingPost = await _postRepository.FindEntityAsync(p => p.Id == id);
 
             if (existingPost == null)
             {

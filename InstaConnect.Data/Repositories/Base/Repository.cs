@@ -14,7 +14,8 @@ namespace InstaConnect.Data.Repositories.Base
         {
             _instaConnectContext = instaConnectContext;
         }
-        public async Task<ICollection<TEntity>> GetAllFilteredAsync(Expression<Func<TEntity, bool>> expression)
+
+        public virtual async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> expression)
         {
             var filteredEntities = await _instaConnectContext
                 .Set<TEntity>()
@@ -25,17 +26,7 @@ namespace InstaConnect.Data.Repositories.Base
             return filteredEntities;
         }
 
-        public async Task<ICollection<TEntity>> GetAllAsync()
-        {
-            var entities = await _instaConnectContext
-                .Set<TEntity>()
-                .AsNoTracking()
-                .ToListAsync();
-
-            return entities;
-        }
-
-        public async Task<TEntity> FindEntityAsync(Expression<Func<TEntity, bool>> expression)
+        public virtual async Task<TEntity> FindEntityAsync(Expression<Func<TEntity, bool>> expression)
         {
             var entity = await _instaConnectContext
                 .Set<TEntity>()
@@ -45,19 +36,19 @@ namespace InstaConnect.Data.Repositories.Base
             return entity;
         }
 
-        public async Task AddAsync(TEntity entity)
+        public virtual async Task AddAsync(TEntity entity)
         {
             _instaConnectContext.Set<TEntity>().Add(entity);
             await _instaConnectContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(TEntity entity)
+        public virtual async Task UpdateAsync(TEntity entity)
         {
             _instaConnectContext.Set<TEntity>().Update(entity);
             await _instaConnectContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(TEntity entity)
+        public virtual async Task DeleteAsync(TEntity entity)
         {
             _instaConnectContext.Set<TEntity>().Remove(entity);
             await _instaConnectContext.SaveChangesAsync();

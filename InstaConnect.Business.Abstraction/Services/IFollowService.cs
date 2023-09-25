@@ -9,24 +9,12 @@ namespace InstaConnect.Business.Abstraction.Services
     public interface IFollowService
     {
         /// <summary>
-        /// Gets all user follows asynchronously.
+        /// Retrieves a collection of FollowResultDTO representing the followers of a user.
         /// </summary>
-        /// <returns>A collection of follow results.</returns>
-        Task<ICollection<FollowResultDTO>> GetAllAsync();
-
-        /// <summary>
-        /// Gets all user follows for a specific follower asynchronously.
-        /// </summary>
-        /// <param name="followerId">The unique identifier of the follower user.</param>
-        /// <returns>A collection of follow results.</returns>
-        Task<ICollection<FollowResultDTO>> GetAllByFollowerIdAsync(string followerId);
-
-        /// <summary>
-        /// Gets all user follows for a specific following user asynchronously.
-        /// </summary>
-        /// <param name="followingId">The unique identifier of the following user.</param>
-        /// <returns>A collection of follow results.</returns>
-        Task<ICollection<FollowResultDTO>> GetAllByFollowingIdAsync(string followingId);
+        /// <param name="followingId">The ID of the user whose followers are being retrieved.</param>
+        /// <param name="followerId">The ID of the user who is following other users.</param>
+        /// <returns>A Task representing the asynchronous operation that returns an ICollection of FollowResultDTO.</returns>
+        Task<ICollection<FollowResultDTO>> GetAllAsync(string followingId, string followerId);
 
         /// <summary>
         /// Gets a follow relationship by its unique identifier asynchronously.

@@ -20,29 +20,9 @@ namespace InstaConnect.Presentation.API.Controllers
         // GET: api/post-likes
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync([FromQuery] string userId = default, [FromQuery] string postId = default)
         {
-            var response = await _postLikeService.GetAllAsync();
-
-            return Ok(response);
-        }
-
-        // GET: api/post-likes/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-user/{userId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByUserIdAsync([FromRoute] string userId)
-        {
-            var response = await _postLikeService.GetAllByUserIdAsync(userId);
-
-            return Ok(response);
-        }
-
-        // GET: api/post-likes/by-post/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-post/{postId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByPostIdAsync([FromRoute] string postId)
-        {
-            var response = await _postLikeService.GetAllByPostIdAsync(postId);
+            var response = await _postLikeService.GetAllAsync(userId, postId);
 
             return Ok(response);
         }

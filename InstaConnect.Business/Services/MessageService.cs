@@ -33,33 +33,19 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<MessageResultDTO>> GetAllAsync()
+        public async Task<ICollection<MessageResultDTO>> GetAllAsync(string senderId, string receiverId)
         {
-            var messages = await _messageRepository.GetAllIncludedAsync();
+            var messages = await _messageRepository.GetAllAsync(m =>
+            (senderId == default || m.SenderId == senderId) &&
+            (receiverId == default || m.ReceiverId == receiverId));
+
             var messageResultDTOs = _mapper.Map<ICollection<MessageResultDTO>>(messages);
 
             return messageResultDTOs;
         }
-
-        public async Task<ICollection<MessageResultDTO>> GetAllBySenderIdAsync(string senderId)
-        {
-            var messages = await _messageRepository.GetAllFilteredIncludedAsync(m => m.SenderId == senderId);
-            var messageResultDTOs = _mapper.Map<ICollection<MessageResultDTO>>(messages);
-
-            return messageResultDTOs;
-        }
-
-        public async Task<ICollection<MessageResultDTO>> GetAllByReceiverIdAsync(string receiverId)
-        {
-            var messages = await _messageRepository.GetAllFilteredIncludedAsync(m => m.ReceiverId == receiverId);
-            var messageResultDTOs = _mapper.Map<ICollection<MessageResultDTO>>(messages);
-
-            return messageResultDTOs;
-        }
-
         public async Task<IResult<MessageResultDTO>> GetByIdAsync(string id)
         {
-            var existingMessage = await _messageRepository.FindMessageIncludedAsync(m => m.Id == id);
+            var existingMessage = await _messageRepository.FindEntityAsync(m => m.Id == id);
 
             if (existingMessage == null)
             {
@@ -76,7 +62,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<MessageResultDTO>> GetBySenderIdAndReceiverIdAsync(string senderId, string receiverId)
         {
-            var existingMessage = await _messageRepository.FindMessageIncludedAsync(m => m.SenderId == senderId && m.ReceiverId == receiverId);
+            var existingMessage = await _messageRepository.FindEntityAsync(m => m.SenderId == senderId && m.ReceiverId == receiverId);
 
             if (existingMessage == null)
             {

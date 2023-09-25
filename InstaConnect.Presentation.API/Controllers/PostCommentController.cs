@@ -20,39 +20,9 @@ namespace InstaConnect.Presentation.API.Controllers
         // GET: api/post-comments
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync([FromQuery] string userId = default, [FromQuery] string postId = default, [FromQuery] string postCommentId = default)
         {
-            var response = await _postCommentService.GetAllAsync();
-
-            return Ok(response);
-        }
-
-        // GET: api/post-comments/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-user/{userId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByUserIdAsync([FromRoute] string userId)
-        {
-            var response = await _postCommentService.GetAllByUserIdAsync(userId);
-
-            return Ok(response);
-        }
-
-        // GET: api/post-comments/by-post/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-post/{postId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByPostIdAsync([FromRoute] string postId)
-        {
-            var response = await _postCommentService.GetAllByPostIdAsync(postId);
-
-            return Ok(response);
-        }
-
-        // GET: api/post-comments/by-parent-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-parent-comment/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByParentIdAsync([FromRoute] string id)
-        {
-            var response = await _postCommentService.GetAllByParentIdAsync(id);
+            var response = await _postCommentService.GetAllAsync(userId, postId, postCommentId);
 
             return Ok(response);
         }

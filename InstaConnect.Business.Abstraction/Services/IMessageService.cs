@@ -9,24 +9,12 @@ namespace InstaConnect.Business.Abstraction.Services
     public interface IMessageService
     {
         /// <summary>
-        /// Gets all messages asynchronously.
+        /// Retrieves a collection of messages between a sender and a receiver.
         /// </summary>
-        /// <returns>A collection of message results.</returns>
-        Task<ICollection<MessageResultDTO>> GetAllAsync();
-
-        /// <summary>
-        /// Gets all messages sent by a specific sender asynchronously.
-        /// </summary>
-        /// <param name="senderId">The unique identifier of the sender.</param>
-        /// <returns>A collection of message results.</returns>
-        Task<ICollection<MessageResultDTO>> GetAllBySenderIdAsync(string senderId);
-
-        /// <summary>
-        /// Gets all messages received by a specific receiver asynchronously.
-        /// </summary>
-        /// <param name="receiverId">The unique identifier of the receiver.</param>
-        /// <returns>A collection of message results.</returns>
-        Task<ICollection<MessageResultDTO>> GetAllByReceiverIdAsync(string receiverId);
+        /// <param name="senderId">The ID of the message sender.</param>
+        /// <param name="receiverId">The ID of the message receiver.</param>
+        /// <returns>A Task representing the asynchronous operation that returns an ICollection of MessageResultDTO.</returns>
+        Task<ICollection<MessageResultDTO>> GetAllAsync(string senderId, string receiverId);
 
         /// <summary>
         /// Gets a message by its unique identifier asynchronously.

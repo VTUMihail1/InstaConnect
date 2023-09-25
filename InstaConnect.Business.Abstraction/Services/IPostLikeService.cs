@@ -9,24 +9,13 @@ namespace InstaConnect.Business.Abstraction.Services
     public interface IPostLikeService
     {
         /// <summary>
-        /// Gets all post likes asynchronously.
+        /// Retrieves a collection of PostLikeResultDTO representing the likes on a specific post by a user.
         /// </summary>
-        /// <returns>A collection of post like results.</returns>
-        Task<ICollection<PostLikeResultDTO>> GetAllAsync();
+        /// <param name="userId">The ID of the user whose likes are being retrieved.</param>
+        /// <param name="postId">The ID of the post for which likes are being retrieved.</param>
+        /// <returns>A Task representing the asynchronous operation that returns an ICollection of PostLikeResultDTO.</returns>
+        Task<ICollection<PostLikeResultDTO>> GetAllAsync(string userId, string postId);
 
-        /// <summary>
-        /// Gets all post likes by a specific user asynchronously.
-        /// </summary>
-        /// <param name="userId">The unique identifier of the user.</param>
-        /// <returns>A collection of post like results.</returns>
-        Task<ICollection<PostLikeResultDTO>> GetAllByUserIdAsync(string userId);
-
-        /// <summary>
-        /// Gets all post likes for a specific post asynchronously.
-        /// </summary>
-        /// <param name="postId">The unique identifier of the post.</param>
-        /// <returns>A collection of post like results.</returns>
-        Task<ICollection<PostLikeResultDTO>> GetAllByPostIdAsync(string postId);
 
         /// <summary>
         /// Gets a post like by its unique identifier asynchronously.

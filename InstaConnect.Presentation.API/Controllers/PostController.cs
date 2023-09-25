@@ -20,19 +20,9 @@ namespace InstaConnect.Presentation.API.Controllers
         // GET: api/posts
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync([FromQuery] string userId = default)
         {
-            var response = await _postService.GetAllAsync();
-
-            return Ok(response);
-        }
-
-        // GET: api/posts/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-user/{userId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByUserIdAsync(string userId)
-        {
-            var response = await _postService.GetAllByUserIdAsync(userId);
+            var response = await _postService.GetAllAsync(userId);
 
             return Ok(response);
         }

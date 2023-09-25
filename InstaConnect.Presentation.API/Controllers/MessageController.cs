@@ -20,29 +20,9 @@ namespace InstaConnect.Presentation.API.Controllers
         // GET: api/messages
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync([FromQuery] string senderId = default, [FromQuery] string receiverId = default)
         {
-            var response = await _messageService.GetAllAsync();
-
-            return Ok(response);
-        }
-
-        // GET: api/messages/by-sender/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-sender/{senderId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllBySenderIdAsync([FromRoute] string senderId)
-        {
-            var response = await _messageService.GetAllBySenderIdAsync(senderId);
-
-            return Ok(response);
-        }
-
-        // GET: api/messages/by-receiver/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-receiver/{receiverId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByReceiverIdAsync([FromRoute] string receiverId)
-        {
-            var response = await _messageService.GetAllByReceiverIdAsync(receiverId);
+            var response = await _messageService.GetAllAsync(senderId, receiverId);
 
             return Ok(response);
         }

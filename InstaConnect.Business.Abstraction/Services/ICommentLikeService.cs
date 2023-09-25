@@ -8,25 +8,13 @@ namespace InstaConnect.Business.Abstraction.Services
     /// </summary>
     public interface ICommentLikeService
     {
-        /// <summary>
-        /// Gets all comment likes asynchronously.
+        // <summary>
+        /// Retrieves a collection of CommentLikeResultDTO for a specific user and post comment.
         /// </summary>
-        /// <returns>A collection of comment like results.</returns>
-        Task<ICollection<CommentLikeResultDTO>> GetAllAsync();
-
-        /// <summary>
-        /// Gets all comment likes for a specific user asynchronously.
-        /// </summary>
-        /// <param name="userId">The user's unique identifier.</param>
-        /// <returns>A collection of comment like results.</returns>
-        Task<ICollection<CommentLikeResultDTO>> GetAllByUserIdAsync(string userId);
-
-        /// <summary>
-        /// Gets all comment likes for a specific comment asynchronously.
-        /// </summary>
-        /// <param name="postCommentId">The unique identifier of the comment.</param>
-        /// <returns>A collection of comment like results.</returns>
-        Task<ICollection<CommentLikeResultDTO>> GetAllByCommentIdAsync(string postCommentId);
+        /// <param name="userId">The ID of the user.</param>
+        /// <param name="postCommentId">The ID of the post comment.</param>
+        /// <returns>A Task representing the asynchronous operation that returns an ICollection of CommentLikeResultDTO.</returns>
+        Task<ICollection<CommentLikeResultDTO>> GetAllAsync(string userId, string postCommentId);
 
         /// <summary>
         /// Gets a comment like by its unique identifier asynchronously.
