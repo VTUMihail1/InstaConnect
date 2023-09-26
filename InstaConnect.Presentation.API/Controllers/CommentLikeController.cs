@@ -44,7 +44,7 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByPostCommentIdAndUserIdAsync([FromRoute] string postCommentId, [FromRoute] string userId)
         {
-            var response = await _commentLikeService.GetByPostCommentIdAndUserIdAsync(postCommentId, userId);
+            var response = await _commentLikeService.GetByUserIdAndPostCommentIdAsync(postCommentId, userId);
 
             return this.HandleResponse(response);
         }
@@ -56,7 +56,8 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddAsync([FromBody] CommentLikeAddDTO commentLikeAddDTO)
         {
-            var response = await _commentLikeService.AddAsync(commentLikeAddDTO);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _commentLikeService.AddAsync(currentUserId,commentLikeAddDTO);
 
             return this.HandleResponse(response);
         }
@@ -68,7 +69,8 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByPostCommentIdAndUserIdAsync([FromRoute] string postCommentId, [FromRoute] string userId)
         {
-            var response = await _commentLikeService.DeleteByPostCommentIdAndUserIdAsync(postCommentId, userId);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _commentLikeService.DeleteByUserIdAndCommentIdAsync(currentUserId, postCommentId, userId);
 
             return this.HandleResponse(response);
         }
@@ -80,7 +82,8 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync([FromRoute] string id)
         {
-            var response = await _commentLikeService.DeleteAsync(id);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _commentLikeService.DeleteAsync(currentUserId, id);
 
             return this.HandleResponse(response);
         }

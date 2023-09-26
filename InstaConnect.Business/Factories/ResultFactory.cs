@@ -34,5 +34,10 @@ namespace InstaConnect.Business.Factories
         {
             return new UnauthorizedResult<T>(errorMessages);
         }
+
+        public IResult<T> GetForbiddenResult<T>(params string[] errorMessages)
+        {
+            return new ForbiddenResult<T>(errorMessages);
+        }
     }
 }

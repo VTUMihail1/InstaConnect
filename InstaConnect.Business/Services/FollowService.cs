@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
+using InstaConnect.Business.Extensions;
+using InstaConnect.Business.Models.DTOs.CommentLike;
 using InstaConnect.Business.Models.DTOs.Follow;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -29,11 +31,11 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<FollowResultDTO>> GetAllAsync(string followingId, string followerId)
+        public async Task<ICollection<FollowResultDTO>> GetAllAsync(string followerId, string followingId)
         {
             var followers = await _followRepository.GetAllAsync(f =>
-            (followingId == default || f.FollowingId == followingId) &&
-            (followerId == default || f.FollowerId == followerId));
+            (followerId == default || f.FollowerId == followerId) &&
+            (followingId == default || f.FollowingId == followingId));
 
             var followResultDTOs = _mapper.Map<ICollection<FollowResultDTO>>(followers);
 
@@ -74,15 +76,15 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<FollowResultDTO>> AddAsync(FollowAddDTO followAddDTO)
+        public async Task<IResult<FollowResultDTO>> AddAsync(string currentUserId, FollowAddDTO followAddDTO)
         {
-            var existingFollower = await _userManager.FindByIdAsync(followAddDTO.FollowerId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, followAddDTO.FollowerId);
 
-            if (existingFollower == null)
+            if (doesNotHavePermission)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<FollowResultDTO>(InstaConnectErrorMessages.FollowerNotFound);
+                var forbiddenResult = _resultFactory.GetForbiddenResult<FollowResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
 
-                return badRequestResult;
+                return forbiddenResult;
             }
 
             var existingFollowing = await _userManager.FindByIdAsync(followAddDTO.FollowingId);
@@ -111,8 +113,17 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<FollowResultDTO>> DeleteByFollowerIdAndFollowingIdAsync(string followingId, string followerId)
+        public async Task<IResult<FollowResultDTO>> DeleteByFollowerIdAndFollowingIdAsync(string currentUserId, string followerId, string followingId)
         {
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, followerId);
+
+            if (doesNotHavePermission)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<FollowResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
+
+                return forbiddenResult;
+            }
+
             var existingFollow = await _followRepository.FindEntityAsync(f => f.FollowingId == followingId && f.FollowerId == followerId);
 
             if (existingFollow == null)
@@ -129,7 +140,7 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<FollowResultDTO>> DeleteAsync(string id)
+        public async Task<IResult<FollowResultDTO>> DeleteAsync(string currentUserId, string id)
         {
             var existingFollow = await _followRepository.FindEntityAsync(f => f.Id == id);
 
@@ -138,6 +149,15 @@ namespace InstaConnect.Business.Services
                 var notFoundResult = _resultFactory.GetNotFoundResult<FollowResultDTO>(InstaConnectErrorMessages.FollowNotFound);
 
                 return notFoundResult;
+            }
+
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, existingFollow.FollowerId);
+
+            if (doesNotHavePermission)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<FollowResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
+
+                return forbiddenResult;
             }
 
             await _followRepository.DeleteAsync(existingFollow);

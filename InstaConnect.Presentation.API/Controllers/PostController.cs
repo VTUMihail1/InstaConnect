@@ -46,7 +46,8 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AddAsync([FromBody] PostAddDTO postAddDTO)
         {
-            var response = await _postService.AddAsync(postAddDTO);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _postService.AddAsync(currentUserId, postAddDTO);
 
             return this.HandleResponse(response);
         }
@@ -58,7 +59,8 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] PostUpdateDTO postUpdateDTO)
         {
-            var response = await _postService.UpdateAsync(id, postUpdateDTO);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _postService.UpdateAsync(currentUserId, id, postUpdateDTO);
 
             return this.HandleResponse(response);
         }
@@ -70,7 +72,8 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync([FromRoute] string id)
         {
-            var response = await _postService.DeleteAsync(id);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _postService.DeleteAsync(currentUserId, id);
 
             return this.HandleResponse(response);
         }

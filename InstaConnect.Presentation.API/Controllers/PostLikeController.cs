@@ -42,9 +42,9 @@ namespace InstaConnect.Presentation.API.Controllers
         [HttpGet("by-user-and-post/{userId}/{postId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetByPostIdAndUserIdAsync([FromRoute] string userId, [FromRoute] string postId)
+        public async Task<IActionResult> GetByUserIdAndPostIdAsync([FromRoute] string userId, [FromRoute] string postId)
         {
-            var response = await _postLikeService.GetByPostIdAndUserIdAsync(userId, postId);
+            var response = await _postLikeService.GetByUserIdAndPostIdAsync(userId, postId);
 
             return this.HandleResponse(response);
         }
@@ -56,7 +56,8 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddAsync([FromBody] PostLikeAddDTO postLikeAddDTO)
         {
-            var response = await _postLikeService.AddAsync(postLikeAddDTO);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _postLikeService.AddAsync(currentUserId, postLikeAddDTO);
 
             return this.HandleResponse(response);
         }
@@ -66,9 +67,10 @@ namespace InstaConnect.Presentation.API.Controllers
         [HttpDelete("by-user-and-post/{userId}/{postId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteByPostIdAndUserIdAsync([FromRoute] string userId, [FromRoute] string postId)
+        public async Task<IActionResult> DeleteByUserIdAndPostIdAsync([FromRoute] string userId, [FromRoute] string postId)
         {
-            var response = await _postLikeService.DeleteByPostIdAndUserIdAsync(userId, postId);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _postLikeService.DeleteByUserIdAndPostIdAsync(currentUserId, userId, postId);
 
             return this.HandleResponse(response);
         }
@@ -80,7 +82,8 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync([FromRoute] string id)
         {
-            var response = await _postLikeService.DeleteAsync(id);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _postLikeService.DeleteAsync(currentUserId, id);
 
             return this.HandleResponse(response);
         }

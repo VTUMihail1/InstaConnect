@@ -4,44 +4,47 @@ using InstaConnect.Business.Models.Results;
 namespace InstaConnect.Business.Abstraction.Services
 {
     /// <summary>
-    /// Provides methods for managing posts.
+    /// Represents a service for managing posts.
     /// </summary>
     public interface IPostService
     {
         /// <summary>
-        /// Retrieves a collection of PostResultDTO representing the posts associated with a user.
+        /// Retrieves all posts associated with a user.
         /// </summary>
-        /// <param name="userId">The ID of the user for whom posts are being retrieved.</param>
-        /// <returns>A Task representing the asynchronous operation that returns an ICollection of PostResultDTO.</returns>
+        /// <param name="userId">The ID of the user.</param>
+        /// <returns>A collection of <see cref="PostResultDTO"/> representing posts.</returns>
         Task<ICollection<PostResultDTO>> GetAllAsync(string userId);
 
         /// <summary>
-        /// Gets a post by its unique identifier asynchronously.
+        /// Retrieves a post by its unique identifier.
         /// </summary>
         /// <param name="id">The unique identifier of the post.</param>
-        /// <returns>A result containing the post.</returns>
+        /// <returns>An <see cref="IResult{T}"/> containing a <see cref="PostResultDTO"/>.</returns>
         Task<IResult<PostResultDTO>> GetByIdAsync(string id);
 
         /// <summary>
-        /// Adds a new post asynchronously.
+        /// Adds a new post.
         /// </summary>
-        /// <param name="postAddDTO">The data for creating a new post.</param>
-        /// <returns>A result containing the newly created post.</returns>
-        Task<IResult<PostResultDTO>> AddAsync(PostAddDTO postAddDTO);
+        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="postAddDTO">The data for the new post.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing the added <see cref="PostResultDTO"/>.</returns>
+        Task<IResult<PostResultDTO>> AddAsync(string currentUserId, PostAddDTO postAddDTO);
 
         /// <summary>
-        /// Updates a post by its unique identifier asynchronously.
+        /// Updates an existing post by its unique identifier.
         /// </summary>
-        /// <param name="id">The unique identifier of the post.</param>
-        /// <param name="postUpdateDTO">The data for updating the post.</param>
-        /// <returns>A result containing the updated post.</returns>
-        Task<IResult<PostResultDTO>> UpdateAsync(string id, PostUpdateDTO postUpdateDTO);
+        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="id">The unique identifier of the post to update.</param>
+        /// <param name="postUpdateDTO">The data to update the post with.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing the updated <see cref="PostResultDTO"/>.</returns>
+        Task<IResult<PostResultDTO>> UpdateAsync(string currentUserId, string id, PostUpdateDTO postUpdateDTO);
 
         /// <summary>
-        /// Deletes a post by its unique identifier asynchronously.
+        /// Deletes a post by its unique identifier.
         /// </summary>
-        /// <param name="id">The unique identifier of the post.</param>
-        /// <returns>A result indicating the success of the operation.</returns>
-        Task<IResult<PostResultDTO>> DeleteAsync(string id);
+        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="id">The unique identifier of the post to delete.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing the deleted <see cref="PostResultDTO"/>.</returns>
+        Task<IResult<PostResultDTO>> DeleteAsync(string currentUserId, string id);
     }
 }

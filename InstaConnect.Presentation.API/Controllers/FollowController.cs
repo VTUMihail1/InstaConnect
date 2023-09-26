@@ -20,9 +20,9 @@ namespace InstaConnect.Presentation.API.Controllers
         // GET: api/follows
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync([FromQuery] string followingId = default, [FromQuery] string followerId = default)
+        public async Task<IActionResult> GetAllAsync([FromQuery] string followerId = default, [FromQuery] string followingId = default)
         {
-            var response = await _followService.GetAllAsync(followingId, followerId);
+            var response = await _followService.GetAllAsync(followerId, followingId);
 
             return Ok(response);
         }
@@ -38,11 +38,11 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // GET: api/follows/by-following-and-follower/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-following-and-follower/{followingId}/{followerId}")]
+        // GET: api/follows/by-follower-and-following/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("by-follower-and-following/{followerId}/{followingId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetByFollowerIdAndFollowingIdAsync([FromRoute] string followingId, [FromRoute] string followerId)
+        public async Task<IActionResult> GetByFollowerIdAndFollowingIdAsync([FromRoute] string followerId, [FromRoute] string followingId)
         {
             var response = await _followService.GetByFollowerIdAndFollowingIdAsync(followingId, followerId);
 
@@ -56,19 +56,21 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddAsync([FromBody] FollowAddDTO followAddDTO)
         {
-            var response = await _followService.AddAsync(followAddDTO);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _followService.AddAsync(currentUserId, followAddDTO);
 
             return this.HandleResponse(response);
         }
 
-        // DELETE: api/follows/by-following-and-follower/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // DELETE: api/follows/by-follower-and-following/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
-        [HttpDelete("by-following-and-follower/{followingId}/{followerId}")]
+        [HttpDelete("by-follower-and-following/{followerId}/{followingId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteByFollowerIdAndFollowingIdAsync([FromRoute] string followingId, [FromRoute] string followerId)
+        public async Task<IActionResult> DeleteByFollowerIdAndFollowingIdAsync([FromRoute] string followerId, [FromRoute] string followingId)
         {
-            var response = await _followService.DeleteByFollowerIdAndFollowingIdAsync(followingId, followerId);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _followService.DeleteByFollowerIdAndFollowingIdAsync(currentUserId, followerId, followingId);
 
             return this.HandleResponse(response);
         }
@@ -80,7 +82,8 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync([FromRoute] string id)
         {
-            var response = await _followService.DeleteAsync(id);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _followService.DeleteAsync(currentUserId, id);
 
             return this.HandleResponse(response);
         }

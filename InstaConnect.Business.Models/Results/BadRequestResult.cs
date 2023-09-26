@@ -12,6 +12,7 @@ namespace InstaConnect.Business.Models.Results
         public InstaConnectStatusCode StatusCode => InstaConnectStatusCode.BadRequest;
 
         public IEnumerable<string> ErrorMessages { get; set; }
+
         public T Data { get; }
     }
 }

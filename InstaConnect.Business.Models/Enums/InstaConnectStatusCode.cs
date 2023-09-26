@@ -7,6 +7,7 @@
         NoContent,
         NotFound,
         BadRequest,
-        Unauthorized
+        Unauthorized,
+        Forbidden
     }
 }

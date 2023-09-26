@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
+using InstaConnect.Business.Extensions;
 using InstaConnect.Business.Models.DTOs.CommentLike;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
+using InstaConnect.Data.Models.Utilities;
 using Microsoft.AspNetCore.Identity;
 
 namespace InstaConnect.Business.Services
@@ -60,9 +62,9 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<CommentLikeResultDTO>> GetByPostCommentIdAndUserIdAsync(string postCommentId, string userId)
+        public async Task<IResult<CommentLikeResultDTO>> GetByUserIdAndPostCommentIdAsync(string userId, string postCommentId)
         {
-            var existingCommentLike = await _commentLikeRepository.FindEntityAsync(cl => cl.PostCommentId == postCommentId && cl.UserId == userId);
+            var existingCommentLike = await _commentLikeRepository.FindEntityAsync(cl => cl.UserId == userId && cl.PostCommentId == postCommentId);
 
             if (existingCommentLike == null)
             {
@@ -77,22 +79,22 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<CommentLikeResultDTO>> AddAsync(CommentLikeAddDTO commentLikeAddDTO)
+        public async Task<IResult<CommentLikeResultDTO>> AddAsync(string currentUserId, CommentLikeAddDTO commentLikeAddDTO)
         {
-            var existingUser = await _userManager.FindByIdAsync(commentLikeAddDTO.UserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, commentLikeAddDTO.UserId);
 
-            if (existingUser == null)
+            if (doesNotHavePermission)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<CommentLikeResultDTO>();
+                var forbiddenResult = _resultFactory.GetForbiddenResult<CommentLikeResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
 
-                return badRequestResult;
+                return forbiddenResult;
             }
 
             var existingComment = await _commentRepository.FindEntityAsync(c => c.Id == commentLikeAddDTO.PostCommentId);
 
             if (existingComment == null)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<CommentLikeResultDTO>();
+                var badRequestResult = _resultFactory.GetBadRequestResult<CommentLikeResultDTO>(InstaConnectErrorMessages.LikeAlreadyExists);
 
                 return badRequestResult;
             }
@@ -114,15 +116,24 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<CommentLikeResultDTO>> DeleteByPostCommentIdAndUserIdAsync(string postCommentId, string userId)
+        public async Task<IResult<CommentLikeResultDTO>> DeleteByPostCommentIdAndUserIdAsync(string currentUserId, string userId, string postCommentId)
         {
-            var existingCommentLike = await _commentLikeRepository.FindEntityAsync(cl => cl.PostCommentId == postCommentId && cl.UserId == userId);
+            var existingCommentLike = await _commentLikeRepository.FindEntityAsync(cl => cl.UserId == userId && cl.PostCommentId == postCommentId);
 
             if (existingCommentLike == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
 
                 return notFoundResult;
+            }
+
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, userId);
+
+            if (doesNotHavePermission)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<CommentLikeResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
+
+                return forbiddenResult;
             }
 
             await _commentLikeRepository.DeleteAsync(existingCommentLike);
@@ -132,7 +143,7 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<CommentLikeResultDTO>> DeleteAsync(string id)
+        public async Task<IResult<CommentLikeResultDTO>> DeleteAsync(string currentUserId, string id)
         {
             var existingCommentLike = await _commentLikeRepository.FindEntityAsync(cl => cl.Id == id);
 
@@ -141,6 +152,15 @@ namespace InstaConnect.Business.Services
                 var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
 
                 return notFoundResult;
+            }
+
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, existingCommentLike.UserId);
+
+            if (doesNotHavePermission)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<CommentLikeResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
+
+                return forbiddenResult;
             }
 
             await _commentLikeRepository.DeleteAsync(existingCommentLike);
