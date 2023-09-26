@@ -43,5 +43,7 @@
         public const string SenderNotFound = "Sender does not exist";
 
         public const string MessageNotFound = "Message does not exist";
+
+        public const string UserHasNoPermission = "You dont have permission";
     }
 }

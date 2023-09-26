@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
+using InstaConnect.Business.Extensions;
+using InstaConnect.Business.Models.DTOs.PostComment;
 using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -53,13 +55,14 @@ namespace InstaConnect.Business.Services
 
                 return notFoundResult;
             }
+
             var postLikeResultDTO = _mapper.Map<PostLikeResultDTO>(existingPostLike);
             var okResult = _resultFactory.GetOkResult(postLikeResultDTO);
 
             return okResult;
         }
 
-        public async Task<IResult<PostLikeResultDTO>> GetByPostIdAndUserIdAsync(string userId, string postId)
+        public async Task<IResult<PostLikeResultDTO>> GetByUserIdAndPostIdAsync(string userId, string postId)
         {
             var existingPostLike = await _postLikeRepository.FindEntityAsync(pl => pl.UserId == userId && pl.PostId == postId);
 
@@ -69,21 +72,22 @@ namespace InstaConnect.Business.Services
 
                 return notFoundResult;
             }
+
             var postLikeResultDTO = _mapper.Map<PostLikeResultDTO>(existingPostLike);
             var okResult = _resultFactory.GetOkResult(postLikeResultDTO);
 
             return okResult;
         }
 
-        public async Task<IResult<PostLikeResultDTO>> AddAsync(PostLikeAddDTO postLikeAddDTO)
+        public async Task<IResult<PostLikeResultDTO>> AddAsync(string currentUserId, PostLikeAddDTO postLikeAddDTO)
         {
-            var existingUser = await _userManager.FindByIdAsync(postLikeAddDTO.UserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, postLikeAddDTO.UserId);
 
-            if (existingUser == null)
+            if (doesNotHavePermission)
             {
-                var badRequestResult = _resultFactory.GetBadRequestResult<PostLikeResultDTO>();
+                var forbiddenResult = _resultFactory.GetForbiddenResult<PostLikeResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
 
-                return badRequestResult;
+                return forbiddenResult;
             }
 
             var existingPost = await _postRepository.FindEntityAsync(p => p.Id == postLikeAddDTO.PostId);
@@ -112,8 +116,17 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<PostLikeResultDTO>> DeleteByPostIdAndUserIdAsync(string userId, string postId)
+        public async Task<IResult<PostLikeResultDTO>> DeleteByUserIdAndPostIdAsync(string currentUserId, string userId, string postId)
         {
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, userId);
+
+            if (doesNotHavePermission)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<PostLikeResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
+
+                return forbiddenResult;
+            }
+
             var existingPostLike = await _postLikeRepository.FindEntityAsync(pl => pl.UserId == userId && pl.PostId == postId);
 
             if (existingPostLike == null)
@@ -130,7 +143,7 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<PostLikeResultDTO>> DeleteAsync(string id)
+        public async Task<IResult<PostLikeResultDTO>> DeleteAsync(string currentUserId, string id)
         {
             var existingPostLike = await _postLikeRepository.FindEntityAsync(pl => pl.Id == id);
 
@@ -139,6 +152,15 @@ namespace InstaConnect.Business.Services
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
 
                 return notFoundResult;
+            }
+
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, existingPostLike.UserId);
+
+            if (doesNotHavePermission)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<PostLikeResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
+
+                return forbiddenResult;
             }
 
             await _postLikeRepository.DeleteAsync(existingPostLike);

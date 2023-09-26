@@ -10,7 +10,9 @@ namespace InstaConnect.Business.Models.Results
         }
 
         public InstaConnectStatusCode StatusCode => InstaConnectStatusCode.OK;
+
         public IEnumerable<string> ErrorMessages => Enumerable.Empty<string>();
+
         public T Data { get; }
     }
 }

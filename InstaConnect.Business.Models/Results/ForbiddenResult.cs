@@ -2,14 +2,14 @@
 
 namespace InstaConnect.Business.Models.Results
 {
-    public class NotFoundResult<T> : IResult<T>
+    public class ForbiddenResult<T> : IResult<T>
     {
-        public NotFoundResult(params string[] errorMessages)
+        public ForbiddenResult(params string[] errorMessages)
         {
             ErrorMessages = errorMessages ?? Enumerable.Empty<string>();
         }
 
-        public InstaConnectStatusCode StatusCode => InstaConnectStatusCode.NotFound;
+        public InstaConnectStatusCode StatusCode => InstaConnectStatusCode.Forbidden;
 
         public IEnumerable<string> ErrorMessages { get; set; }
 

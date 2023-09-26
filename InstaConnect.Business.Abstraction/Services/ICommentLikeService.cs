@@ -4,53 +4,56 @@ using InstaConnect.Business.Models.Results;
 namespace InstaConnect.Business.Abstraction.Services
 {
     /// <summary>
-    /// Provides methods for managing comment likes.
+    /// Represents a service for managing comment likes.
     /// </summary>
     public interface ICommentLikeService
     {
-        // <summary>
-        /// Retrieves a collection of CommentLikeResultDTO for a specific user and post comment.
+        /// <summary>
+        /// Retrieves all comment likes associated with a user and a post comment.
         /// </summary>
         /// <param name="userId">The ID of the user.</param>
         /// <param name="postCommentId">The ID of the post comment.</param>
-        /// <returns>A Task representing the asynchronous operation that returns an ICollection of CommentLikeResultDTO.</returns>
+        /// <returns>A collection of <see cref="CommentLikeResultDTO"/> representing comment likes.</returns>
         Task<ICollection<CommentLikeResultDTO>> GetAllAsync(string userId, string postCommentId);
 
         /// <summary>
-        /// Gets a comment like by its unique identifier asynchronously.
+        /// Retrieves a comment like by its unique identifier.
         /// </summary>
         /// <param name="id">The unique identifier of the comment like.</param>
-        /// <returns>A result containing the comment like.</returns>
+        /// <returns>An <see cref="IResult{T}"/> containing a <see cref="CommentLikeResultDTO"/>.</returns>
         Task<IResult<CommentLikeResultDTO>> GetByIdAsync(string id);
 
         /// <summary>
-        /// Gets a comment like by comment and user identifiers asynchronously.
+        /// Retrieves a comment like by user ID and post comment ID.
         /// </summary>
-        /// <param name="postCommentId">The unique identifier of the comment.</param>
-        /// <param name="userId">The unique identifier of the user.</param>
-        /// <returns>A result containing the comment like.</returns>
-        Task<IResult<CommentLikeResultDTO>> GetByPostCommentIdAndUserIdAsync(string postCommentId, string userId);
+        /// <param name="userId">The ID of the user.</param>
+        /// <param name="postCommentId">The ID of the post comment.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing a <see cref="CommentLikeResultDTO"/>.</returns>
+        Task<IResult<CommentLikeResultDTO>> GetByUserIdAndPostCommentIdAsync(string userId, string postCommentId);
 
         /// <summary>
-        /// Adds a new comment like asynchronously.
+        /// Adds a new comment like.
         /// </summary>
-        /// <param name="likeAddDTO">The data for creating a new comment like.</param>
-        /// <returns>A result containing the newly created comment like.</returns>
-        Task<IResult<CommentLikeResultDTO>> AddAsync(CommentLikeAddDTO likeAddDTO);
+        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="likeAddDTO">The data for the new comment like.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing the added <see cref="CommentLikeResultDTO"/>.</returns>
+        Task<IResult<CommentLikeResultDTO>> AddAsync(string currentUserId, CommentLikeAddDTO likeAddDTO);
 
         /// <summary>
-        /// Deletes a comment like by comment and user identifiers asynchronously.
+        /// Deletes a comment like by user ID and post comment ID.
         /// </summary>
-        /// <param name="postCommentId">The unique identifier of the comment.</param>
-        /// <param name="userId">The unique identifier of the user.</param>
-        /// <returns>A result indicating the success of the operation.</returns>
-        Task<IResult<CommentLikeResultDTO>> DeleteByPostCommentIdAndUserIdAsync(string postCommentId, string userId);
+        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="userId">The ID of the user who liked the comment.</param>
+        /// <param name="postCommentId">The ID of the post comment.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing the deleted <see cref="CommentLikeResultDTO"/>.</returns>
+        Task<IResult<CommentLikeResultDTO>> DeleteByUserIdAndCommentIdAsync(string currentUserId, string userId, string postCommentId);
 
         /// <summary>
-        /// Deletes a comment like by its unique identifier asynchronously.
+        /// Deletes a comment like by its unique identifier.
         /// </summary>
-        /// <param name="id">The unique identifier of the comment like.</param>
-        /// <returns>A result indicating the success of the operation.</returns>
-        Task<IResult<CommentLikeResultDTO>> DeleteAsync(string id);
+        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="id">The unique identifier of the comment like to delete.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing the deleted <see cref="CommentLikeResultDTO"/>.</returns>
+        Task<IResult<CommentLikeResultDTO>> DeleteAsync(string currentUserId, string id);
     }
 }

@@ -56,19 +56,21 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddAsync([FromBody] MessageAddDTO messageAddDTO)
         {
-            var response = await _messageService.AddAsync(messageAddDTO);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _messageService.AddAsync(currentUserId, messageAddDTO);
 
             return this.HandleResponse(response);
         }
 
-        // PUT: api/messages
+        // PUT: api/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
-        [HttpPut]
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] MessageUpdateDTO messageUpdateDTO)
         {
-            var response = await _messageService.UpdateAsync(id, messageUpdateDTO);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _messageService.UpdateAsync(currentUserId, id, messageUpdateDTO);
 
             return this.HandleResponse(response);
         }
@@ -80,7 +82,8 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteBySenderIdAndReceiverIdAsync([FromRoute] string senderId, [FromRoute] string receiverId)
         {
-            var response = await _messageService.DeleteBySenderIdAndReceiverIdAsync(senderId, receiverId);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _messageService.DeleteBySenderIdAndReceiverIdAsync(currentUserId, senderId, receiverId);
 
             return this.HandleResponse(response);
         }
@@ -92,7 +95,8 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync([FromRoute] string id)
         {
-            var response = await _messageService.DeleteAsync(id);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _messageService.DeleteAsync(currentUserId, id);
 
             return this.HandleResponse(response);
         }

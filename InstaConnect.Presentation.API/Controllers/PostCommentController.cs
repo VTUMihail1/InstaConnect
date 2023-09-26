@@ -46,31 +46,34 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddAsync([FromBody] PostCommentAddDTO postCommentAddDTO)
         {
-            var response = await _postCommentService.AddAsync(postCommentAddDTO);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _postCommentService.AddAsync(currentUserId, postCommentAddDTO);
 
             return this.HandleResponse(response);
         }
 
-        // PUT: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // PUT: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] PostCommentUpdateDTO postCommentUpdateDTO)
         {
-            var response = await _postCommentService.UpdateAsync(id, postCommentUpdateDTO);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _postCommentService.UpdateAsync(currentUserId, id, postCommentUpdateDTO);
 
             return this.HandleResponse(response);
         }
 
-        // DELETE: api/post-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // DELETE: api/post-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync([FromRoute] string id)
         {
-            var response = await _postCommentService.DeleteAsync(id);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _postCommentService.DeleteAsync(currentUserId, id);
 
             return this.HandleResponse(response);
         }

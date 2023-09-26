@@ -4,61 +4,65 @@ using InstaConnect.Business.Models.Results;
 namespace InstaConnect.Business.Abstraction.Services
 {
     /// <summary>
-    /// Provides methods for managing messages.
+    /// Represents a service for managing messages.
     /// </summary>
     public interface IMessageService
     {
         /// <summary>
-        /// Retrieves a collection of messages between a sender and a receiver.
+        /// Retrieves all messages between a sender and a receiver.
         /// </summary>
-        /// <param name="senderId">The ID of the message sender.</param>
-        /// <param name="receiverId">The ID of the message receiver.</param>
-        /// <returns>A Task representing the asynchronous operation that returns an ICollection of MessageResultDTO.</returns>
+        /// <param name="senderId">The ID of the sender.</param>
+        /// <param name="receiverId">The ID of the receiver.</param>
+        /// <returns>A collection of <see cref="MessageResultDTO"/> representing messages.</returns>
         Task<ICollection<MessageResultDTO>> GetAllAsync(string senderId, string receiverId);
 
         /// <summary>
-        /// Gets a message by its unique identifier asynchronously.
+        /// Retrieves a message by its unique identifier.
         /// </summary>
         /// <param name="id">The unique identifier of the message.</param>
-        /// <returns>A result containing the message.</returns>
+        /// <returns>An <see cref="IResult{T}"/> containing a <see cref="MessageResultDTO"/>.</returns>
         Task<IResult<MessageResultDTO>> GetByIdAsync(string id);
 
         /// <summary>
-        /// Gets a message by sender and receiver identifiers asynchronously.
+        /// Retrieves a message by sender ID and receiver ID.
         /// </summary>
-        /// <param name="senderId">The unique identifier of the sender.</param>
-        /// <param name="receiverId">The unique identifier of the receiver.</param>
-        /// <returns>A result containing the message.</returns>
+        /// <param name="senderId">The ID of the sender.</param>
+        /// <param name="receiverId">The ID of the receiver.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing a <see cref="MessageResultDTO"/>.</returns>
         Task<IResult<MessageResultDTO>> GetBySenderIdAndReceiverIdAsync(string senderId, string receiverId);
 
         /// <summary>
-        /// Adds a new message asynchronously.
+        /// Adds a new message.
         /// </summary>
-        /// <param name="messageAddDTO">The data for creating a new message.</param>
-        /// <returns>A result containing the newly created message.</returns>
-        Task<IResult<MessageResultDTO>> AddAsync(MessageAddDTO messageAddDTO);
+        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="messageAddDTO">The data for the new message.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing the added <see cref="MessageResultDTO"/>.</returns>
+        Task<IResult<MessageResultDTO>> AddAsync(string currentUserId, MessageAddDTO messageAddDTO);
 
         /// <summary>
-        /// Updates a message by its unique identifier asynchronously.
+        /// Updates an existing message by its unique identifier.
         /// </summary>
-        /// <param name="id">The unique identifier of the message.</param>
-        /// <param name="messageUpdateDTO">The data for updating the message.</param>
-        /// <returns>A result containing the updated message.</returns>
-        Task<IResult<MessageResultDTO>> UpdateAsync(string id, MessageUpdateDTO messageUpdateDTO);
+        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="id">The unique identifier of the message to update.</param>
+        /// <param name="messageUpdateDTO">The data to update the message with.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing the updated <see cref="MessageResultDTO"/>.</returns>
+        Task<IResult<MessageResultDTO>> UpdateAsync(string currentUserId, string id, MessageUpdateDTO messageUpdateDTO);
 
         /// <summary>
-        /// Deletes messages by sender and receiver identifiers asynchronously.
+        /// Deletes all messages between a sender and a receiver.
         /// </summary>
-        /// <param name="senderId">The unique identifier of the sender.</param>
-        /// <param name="receiverId">The unique identifier of the receiver.</param>
-        /// <returns>A result indicating the success of the operation.</returns>
-        Task<IResult<MessageResultDTO>> DeleteBySenderIdAndReceiverIdAsync(string senderId, string receiverId);
+        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="senderId">The ID of the sender.</param>
+        /// <param name="receiverId">The ID of the receiver.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing the deleted <see cref="MessageResultDTO"/>.</returns>
+        Task<IResult<MessageResultDTO>> DeleteBySenderIdAndReceiverIdAsync(string currentUserId, string senderId, string receiverId);
 
         /// <summary>
-        /// Deletes a message by its unique identifier asynchronously.
+        /// Deletes a message by its unique identifier.
         /// </summary>
-        /// <param name="id">The unique identifier of the message.</param>
-        /// <returns>A result indicating the success of the operation.</returns>
-        Task<IResult<MessageResultDTO>> DeleteAsync(string id);
+        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="id">The unique identifier of the message to delete.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing the deleted <see cref="MessageResultDTO"/>.</returns>
+        Task<IResult<MessageResultDTO>> DeleteAsync(string currentUserId, string id);
     }
 }

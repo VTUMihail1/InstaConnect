@@ -3,55 +3,63 @@
 namespace InstaConnect.Business.Abstraction.Factories
 {
     /// <summary>
-    /// Represents a factory for creating different types of results.
+    /// Represents a factory for creating various types of results.
     /// </summary>
     public interface IResultFactory
     {
         /// <summary>
-        /// Gets a NotFound result with error messages.
+        /// Gets a "Not Found" result with optional error messages.
         /// </summary>
-        /// <typeparam name="T">The type of data to be returned in the result.</typeparam>
-        /// <param name="errorMessages">An optional array of error messages associated with the NotFound result.</param>
-        /// <returns>A result representing a NotFound status with the specified error messages.</returns>
+        /// <typeparam name="T">The type of data associated with the result.</typeparam>
+        /// <param name="errorMessages">Optional error messages.</param>
+        /// <returns>An <see cref="IResult{T}"/> representing a "Not Found" result.</returns>
         IResult<T> GetNotFoundResult<T>(params string[] errorMessages);
 
         /// <summary>
-        /// Gets a NoContent result with no data.
+        /// Gets a "No Content" result.
         /// </summary>
-        /// <typeparam name="T">The type of data to be returned in the result.</typeparam>
-        /// <returns>A result representing a NoContent status with no data.</returns>
+        /// <typeparam name="T">The type of data associated with the result.</typeparam>
+        /// <returns>An <see cref="IResult{T}"/> representing a "No Content" result.</returns>
         IResult<T> GetNoContentResult<T>();
 
         /// <summary>
-        /// Gets an Ok result with the specified data.
+        /// Gets an "OK" result with optional data.
         /// </summary>
-        /// <typeparam name="T">The type of data to be returned in the result.</typeparam>
-        /// <param name="data">The data to be included in the Ok result.</param>
-        /// <returns>A result representing an Ok status with the specified data.</returns>
+        /// <typeparam name="T">The type of data associated with the result.</typeparam>
+        /// <param name="data">Optional data to include in the result.</param>
+        /// <returns>An <see cref="IResult{T}"/> representing an "OK" result.</returns>
         IResult<T> GetOkResult<T>(T data = default);
 
         /// <summary>
-        /// Gets a Created result with the specified data.
+        /// Gets a "Created" result with optional data.
         /// </summary>
-        /// <typeparam name="T">The type of data to be returned in the result.</typeparam>
-        /// <param name="data">The data to be included in the Created result.</param>
-        /// <returns>A result representing a Created status with the specified data.</returns>
+        /// <typeparam name="T">The type of data associated with the result.</typeparam>
+        /// <param name="data">Optional data to include in the result.</param>
+        /// <returns>An <see cref="IResult{T}"/> representing a "Created" result.</returns>
         IResult<T> GetCreatedResult<T>(T data = default);
 
         /// <summary>
-        /// Gets a BadRequest result with the specified data.
+        /// Gets a "Bad Request" result with optional error messages.
         /// </summary>
-        /// <typeparam name="T">The type of data to be returned in the result.</typeparam>
-        /// <param name="errorMessages">An optional array of error messages associated with the BadRequest result.</param>
-        /// <returns>A result representing a BadRequest status with the specified error messages.</returns>
+        /// <typeparam name="T">The type of data associated with the result.</typeparam>
+        /// <param name="errorMessages">Optional error messages.</param>
+        /// <returns>An <see cref="IResult{T}"/> representing a "Bad Request" result.</returns>
         IResult<T> GetBadRequestResult<T>(params string[] errorMessages);
 
         /// <summary>
-        /// Gets a Unauthorized result with the specified data.
+        /// Gets an "Unauthorized" result with optional error messages.
         /// </summary>
-        /// <typeparam name="T">The type of data to be returned in the result.</typeparam>
-        /// <param name="errorMessages">An optional array of error messages associated with the Unauthorized result.</param>
-        /// <returns>A result representing a Unauthorized status with the specified error messages.</returns>
+        /// <typeparam name="T">The type of data associated with the result.</typeparam>
+        /// <param name="errorMessages">Optional error messages.</param>
+        /// <returns>An <see cref="IResult{T}"/> representing an "Unauthorized" result.</returns>
         IResult<T> GetUnauthorizedResult<T>(params string[] errorMessages);
+
+        /// <summary>
+        /// Gets a "Forbidden" result with optional error messages.
+        /// </summary>
+        /// <typeparam name="T">The type of data associated with the result.</typeparam>
+        /// <param name="errorMessages">Optional error messages.</param>
+        /// <returns>An <see cref="IResult{T}"/> representing a "Forbidden" result.</returns>
+        IResult<T> GetForbiddenResult<T>(params string[] errorMessages);
     }
 }
