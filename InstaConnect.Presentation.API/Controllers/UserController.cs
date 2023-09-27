@@ -36,7 +36,7 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // GET: api/users/by-post-username/example
+        // GET: api/users/by-username/example
         [HttpGet("by-username/{username}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

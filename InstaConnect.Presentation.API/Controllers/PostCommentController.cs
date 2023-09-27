@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.PostComment;
 using InstaConnect.Presentation.API.Extensions;
+using InstaConnect.Presentation.API.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,6 +42,7 @@ namespace InstaConnect.Presentation.API.Controllers
 
         // POST: api/post-comments
         [Authorize]
+        [AccessToken]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -54,6 +56,7 @@ namespace InstaConnect.Presentation.API.Controllers
 
         // PUT: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
+        [AccessToken]
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -67,6 +70,7 @@ namespace InstaConnect.Presentation.API.Controllers
 
         // DELETE: api/post-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
+        [AccessToken]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
