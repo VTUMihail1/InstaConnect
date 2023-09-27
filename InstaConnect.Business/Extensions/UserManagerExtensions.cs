@@ -6,10 +6,9 @@ namespace InstaConnect.Business.Extensions
 {
     public static class UserManagerExtensions
     {
-        public async static Task<bool> HasPermissionAsync(this UserManager<User> userManager, string currentUserId, string userId)
+        public async static Task<bool> HasPermissionAsync(this UserManager<User> userManager, User currentUser, string userId)
         {
-            var existingUser = await userManager.FindByIdAsync(currentUserId);
-            var hasPermission = await userManager.IsInRoleAsync(existingUser, InstaConnectConstants.AdminRole) || currentUserId == userId;
+            var hasPermission = await userManager.IsInRoleAsync(currentUser, InstaConnectConstants.AdminRole) || currentUser.Id == userId;
 
             return hasPermission;
         }

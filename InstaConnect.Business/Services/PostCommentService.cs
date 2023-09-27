@@ -2,7 +2,6 @@
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Extensions;
-using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.DTOs.PostComment;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -65,13 +64,23 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostCommentResultDTO>> AddAsync(string currentUserId, PostCommentAddDTO postCommentAddDTO)
         {
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, postCommentAddDTO.UserId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, postCommentAddDTO.UserId);
 
             if (doesNotHavePermission)
             {
                 var forbiddenResult = _resultFactory.GetForbiddenResult<PostCommentResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
 
                 return forbiddenResult;
+            }
+
+            var existingUser = await _userManager.FindByIdAsync(postCommentAddDTO.UserId);
+
+            if (existingUser == null)
+            {
+                var badRequestResult = _resultFactory.GetBadRequestResult<PostCommentResultDTO>(InstaConnectErrorMessages.UserNotFound);
+
+                return badRequestResult;
             }
 
             var existingPost = await _postRepository.FindEntityAsync(pc => pc.Id == postCommentAddDTO.PostId);
@@ -111,7 +120,8 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, existingPostComment.UserId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPostComment.UserId);
 
             if (doesNotHavePermission)
             {
@@ -139,7 +149,8 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, existingPostComment.UserId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPostComment.UserId);
 
             if (doesNotHavePermission)
             {

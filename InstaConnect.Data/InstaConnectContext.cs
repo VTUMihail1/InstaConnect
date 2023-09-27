@@ -29,7 +29,7 @@ namespace InstaConnect.Data
 
         public DbSet<PostComment> PostComments { get; set; }
 
-        public DbSet<Follow> Followers { get; set; }
+        public DbSet<Follow> Follows { get; set; }
 
         public DbSet<Message> Messages { get; set; }
 

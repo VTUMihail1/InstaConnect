@@ -7,6 +7,7 @@ using InstaConnect.Business.Models.DTOs.Post;
 using InstaConnect.Business.Models.DTOs.PostComment;
 using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.DTOs.Token;
+using InstaConnect.Business.Models.DTOs.User;
 using InstaConnect.Data.Models.Entities;
 
 namespace InstaConnect.Business.AutoMapper
@@ -49,18 +50,14 @@ namespace InstaConnect.Business.AutoMapper
                 .ReverseMap();
 
             CreateMap<PostComment, PostCommentResultDTO>()
-                .ForMember(dto => dto.Id, opt => opt.MapFrom(c => c.Id))
                 .ForMember(dto => dto.Username, opt => opt.MapFrom(c => c.User.UserName))
-                .ForMember(dto => dto.Content, opt => opt.MapFrom(c => c.Content))
                 .ReverseMap();
 
             CreateMap<PostLike, PostLikeResultDTO>()
-                .ForMember(dto => dto.Id, opt => opt.MapFrom(l => l.Id))
                 .ForMember(dto => dto.Username, opt => opt.MapFrom(l => l.User.UserName))
                 .ReverseMap();
 
             CreateMap<Follow, FollowResultDTO>()
-                .ForMember(dto => dto.Id, opt => opt.MapFrom(l => l.Id))
                 .ForMember(dto => dto.FollowerId, opt => opt.MapFrom(l => l.Follower.Id))
                 .ForMember(dto => dto.FollowerUsername, opt => opt.MapFrom(l => l.Follower.UserName))
                 .ForMember(dto => dto.FollowingId, opt => opt.MapFrom(l => l.Following.Id))
@@ -68,7 +65,6 @@ namespace InstaConnect.Business.AutoMapper
                 .ReverseMap();
 
             CreateMap<Message, MessageResultDTO>()
-                .ForMember(dto => dto.Id, opt => opt.MapFrom(l => l.Id))
                 .ForMember(dto => dto.SenderId, opt => opt.MapFrom(l => l.Sender.Id))
                 .ForMember(dto => dto.SenderUsername, opt => opt.MapFrom(l => l.Sender.UserName))
                 .ForMember(dto => dto.ReceiverId, opt => opt.MapFrom(l => l.Receiver.Id))
@@ -76,15 +72,14 @@ namespace InstaConnect.Business.AutoMapper
                 .ReverseMap();
 
             CreateMap<CommentLike, CommentLikeResultDTO>()
-                .ForMember(dto => dto.Id, opt => opt.MapFrom(cl => cl.Id))
                 .ForMember(dto => dto.Username, opt => opt.MapFrom(cl => cl.User.UserName))
                 .ReverseMap();
 
             CreateMap<Post, PostResultDTO>()
-                .ForMember(dto => dto.Id, opt => opt.MapFrom(p => p.Id))
                 .ForMember(dto => dto.Username, opt => opt.MapFrom(p => p.User.UserName))
-                .ForMember(dto => dto.Title, opt => opt.MapFrom(p => p.Title))
-                .ForMember(dto => dto.Content, opt => opt.MapFrom(p => p.Content))
+                .ReverseMap();
+
+            CreateMap<User, UserResultDTO>()
                 .ReverseMap();
 
             CreateMap<Token, TokenResultDTO>()

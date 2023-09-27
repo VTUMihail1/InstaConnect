@@ -33,6 +33,7 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync([FromRoute] string id)
         {
+            var currentUser = User;
             var response = await _postLikeService.GetByIdAsync(id);
 
             return this.HandleResponse(response);

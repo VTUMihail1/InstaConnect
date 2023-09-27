@@ -2,7 +2,6 @@
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Extensions;
-using InstaConnect.Business.Models.DTOs.CommentLike;
 using InstaConnect.Business.Models.DTOs.Follow;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -78,13 +77,23 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<FollowResultDTO>> AddAsync(string currentUserId, FollowAddDTO followAddDTO)
         {
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, followAddDTO.FollowerId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, followAddDTO.FollowerId);
 
             if (doesNotHavePermission)
             {
                 var forbiddenResult = _resultFactory.GetForbiddenResult<FollowResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
 
                 return forbiddenResult;
+            }
+
+            var existingFollower = await _userManager.FindByIdAsync(followAddDTO.FollowerId);
+
+            if (existingFollower == null)
+            {
+                var badRequestResult = _resultFactory.GetBadRequestResult<FollowResultDTO>(InstaConnectErrorMessages.FollowerNotFound);
+
+                return badRequestResult;
             }
 
             var existingFollowing = await _userManager.FindByIdAsync(followAddDTO.FollowingId);
@@ -115,7 +124,8 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<FollowResultDTO>> DeleteByFollowerIdAndFollowingIdAsync(string currentUserId, string followerId, string followingId)
         {
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, followerId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, followerId);
 
             if (doesNotHavePermission)
             {
@@ -151,7 +161,8 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, existingFollow.FollowerId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingFollow.FollowerId);
 
             if (doesNotHavePermission)
             {

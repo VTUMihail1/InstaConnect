@@ -46,7 +46,7 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <param name="userId">The ID of the user who liked the comment.</param>
         /// <param name="postCommentId">The ID of the post comment.</param>
         /// <returns>An <see cref="IResult{T}"/> containing the deleted <see cref="CommentLikeResultDTO"/>.</returns>
-        Task<IResult<CommentLikeResultDTO>> DeleteByUserIdAndCommentIdAsync(string currentUserId, string userId, string postCommentId);
+        Task<IResult<CommentLikeResultDTO>> DeleteByUserIdAndPostCommentIdAsync(string currentUserId, string userId, string postCommentId);
 
         /// <summary>
         /// Deletes a comment like by its unique identifier.
