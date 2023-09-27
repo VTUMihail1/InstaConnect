@@ -3,7 +3,6 @@ using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Extensions;
 using InstaConnect.Business.Models.DTOs.Post;
-using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Data.Abstraction.Repositories;
@@ -58,13 +57,23 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostResultDTO>> AddAsync(string currentUserId, PostAddDTO postAddDTO)
         {
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, postAddDTO.UserId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, postAddDTO.UserId);
 
             if (doesNotHavePermission)
             {
                 var forbiddenResult = _resultFactory.GetForbiddenResult<PostResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
 
                 return forbiddenResult;
+            }
+
+            var existingUser = _userManager.FindByIdAsync(postAddDTO.UserId);
+
+            if (existingUser == null)
+            {
+                var notFoundResult = _resultFactory.GetNotFoundResult<PostResultDTO>(InstaConnectErrorMessages.UserNotFound);
+
+                return notFoundResult;
             }
 
             var post = _mapper.Map<Post>(postAddDTO);
@@ -86,7 +95,8 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, existingPost.UserId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPost.UserId);
 
             if (doesNotHavePermission)
             {
@@ -114,7 +124,8 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, existingPost.UserId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPost.UserId);
 
             if (doesNotHavePermission)
             {

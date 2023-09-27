@@ -2,7 +2,6 @@
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Extensions;
-using InstaConnect.Business.Models.DTOs.PostComment;
 using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -81,13 +80,23 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostLikeResultDTO>> AddAsync(string currentUserId, PostLikeAddDTO postLikeAddDTO)
         {
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, postLikeAddDTO.UserId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, postLikeAddDTO.UserId);
 
             if (doesNotHavePermission)
             {
                 var forbiddenResult = _resultFactory.GetForbiddenResult<PostLikeResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
 
                 return forbiddenResult;
+            }
+
+            var existingUser = await _userManager.FindByIdAsync(postLikeAddDTO.UserId);
+
+            if (existingUser == null)
+            {
+                var badRequestResult = _resultFactory.GetBadRequestResult<PostLikeResultDTO>(InstaConnectErrorMessages.UserNotFound);
+
+                return badRequestResult;
             }
 
             var existingPost = await _postRepository.FindEntityAsync(p => p.Id == postLikeAddDTO.PostId);
@@ -118,7 +127,8 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostLikeResultDTO>> DeleteByUserIdAndPostIdAsync(string currentUserId, string userId, string postId)
         {
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, userId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, userId);
 
             if (doesNotHavePermission)
             {
@@ -154,7 +164,8 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, existingPostLike.UserId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPostLike.UserId);
 
             if (doesNotHavePermission)
             {

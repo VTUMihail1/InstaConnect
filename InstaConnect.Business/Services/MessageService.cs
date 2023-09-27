@@ -3,7 +3,6 @@ using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Extensions;
-using InstaConnect.Business.Models.DTOs.CommentLike;
 using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -81,13 +80,22 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<MessageResultDTO>> AddAsync(string currentUserId, MessageAddDTO messageAddDTO)
         {
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, messageAddDTO.SenderId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, messageAddDTO.SenderId);
 
             if (doesNotHavePermission)
             {
                 var forbiddenResult = _resultFactory.GetForbiddenResult<MessageResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-
                 return forbiddenResult;
+            }
+
+            var existingSender = await _userManager.FindByIdAsync(messageAddDTO.SenderId);
+
+            if (existingSender == null)
+            {
+                var badRequestResult = _resultFactory.GetBadRequestResult<MessageResultDTO>(InstaConnectErrorMessages.SenderNotFound);
+
+                return badRequestResult;
             }
 
             var existingRecipient = await _userManager.FindByIdAsync(messageAddDTO.ReceiverId);
@@ -120,7 +128,8 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, existingMessage.SenderId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingMessage.SenderId);
 
             if (doesNotHavePermission)
             {
@@ -139,7 +148,8 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<MessageResultDTO>> DeleteBySenderIdAndReceiverIdAsync(string currentUserId, string senderId, string receiverId)
         {
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, senderId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, senderId);
 
             if (doesNotHavePermission)
             {
@@ -175,7 +185,8 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUserId, existingMessage.SenderId);
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingMessage.SenderId);
 
             if (doesNotHavePermission)
             {

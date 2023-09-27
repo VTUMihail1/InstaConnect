@@ -72,6 +72,8 @@ builder.Services
     .AddScoped<IMessageRepository, MessageRepository>()
     .AddScoped<IMessageSender, MessageSender>()
     .AddScoped<IMessageService, MessageService>()
+    .AddScoped<IUserRepository, UserRepository>()
+    .AddScoped<IUserService, UserService>()
     .AddScoped<IAccountService, AccountService>()
     .AddAutoMapper(typeof(InstaConnectProfile));
 

@@ -21,12 +21,7 @@ namespace InstaConnect.Data.Repositories
                 .Where(expression)
                 .Include(p => p.User)
                 .Include(p => p.PostComments)
-                    .ThenInclude(pc => pc.CommentLikes)
-                        .ThenInclude(cl => cl.User)
-                        .ThenInclude(cl => cl.PostComments)
-                            .ThenInclude(pc => pc.CommentLikes)
                 .Include(p => p.PostLikes)
-                    .ThenInclude(pl => pl.User)
                 .ToListAsync();
 
             return posts;
@@ -37,12 +32,7 @@ namespace InstaConnect.Data.Repositories
             var posts = await _instaConnectContext.Posts
                 .Include(p => p.User)
                 .Include(p => p.PostComments)
-                    .ThenInclude(pc => pc.CommentLikes)
-                        .ThenInclude(cl => cl.User)
-                        .ThenInclude(cl => cl.PostComments)
-                            .ThenInclude(pc => pc.CommentLikes)
                 .Include(p => p.PostLikes)
-                    .ThenInclude(pl => pl.User)
                 .FirstOrDefaultAsync(expression);
 
             return posts;

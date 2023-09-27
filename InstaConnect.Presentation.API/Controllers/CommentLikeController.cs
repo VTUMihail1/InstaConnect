@@ -57,7 +57,7 @@ namespace InstaConnect.Presentation.API.Controllers
         public async Task<IActionResult> AddAsync([FromBody] CommentLikeAddDTO commentLikeAddDTO)
         {
             var currentUserId = User.GetCurrentUserId();
-            var response = await _commentLikeService.AddAsync(currentUserId,commentLikeAddDTO);
+            var response = await _commentLikeService.AddAsync(currentUserId, commentLikeAddDTO);
 
             return this.HandleResponse(response);
         }
@@ -70,7 +70,7 @@ namespace InstaConnect.Presentation.API.Controllers
         public async Task<IActionResult> DeleteByPostCommentIdAndUserIdAsync([FromRoute] string postCommentId, [FromRoute] string userId)
         {
             var currentUserId = User.GetCurrentUserId();
-            var response = await _commentLikeService.DeleteByUserIdAndCommentIdAsync(currentUserId, postCommentId, userId);
+            var response = await _commentLikeService.DeleteByUserIdAndPostCommentIdAsync(currentUserId, postCommentId, userId);
 
             return this.HandleResponse(response);
         }

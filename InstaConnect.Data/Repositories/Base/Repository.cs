@@ -17,13 +17,13 @@ namespace InstaConnect.Data.Repositories.Base
 
         public virtual async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> expression)
         {
-            var filteredEntities = await _instaConnectContext
+            var entities = await _instaConnectContext
                 .Set<TEntity>()
                 .Where(expression)
                 .AsNoTracking()
                 .ToListAsync();
 
-            return filteredEntities;
+            return entities;
         }
 
         public virtual async Task<TEntity> FindEntityAsync(Expression<Func<TEntity, bool>> expression)
