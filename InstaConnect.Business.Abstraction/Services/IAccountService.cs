@@ -59,5 +59,22 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <param name="value">The value associated with the user's session.</param>
         /// <returns>An asynchronous task that returns the result of the logout operation.</returns>
         Task<IResult<AccountResultDTO>> LogoutAsync(string value);
+
+        /// <summary>
+        /// Edits a user's account information asynchronously.
+        /// </summary>
+        /// <param name="currentUserId">The ID of the current user.</param>
+        /// <param name="id">The ID of the user to edit.</param>
+        /// <param name="accountEditDTO">The updated account information.</param>
+        /// <returns>An asynchronous task that returns the result of the edit operation.</returns>
+        Task<IResult<AccountResultDTO>> EditAsync(string currentUserId, string id, AccountEditDTO accountEditDTO);
+
+        /// <summary>
+        /// Deletes a user's account asynchronously.
+        /// </summary>
+        /// <param name="currentUserId">The ID of the current user.</param>
+        /// <param name="id">The ID of the user to delete.</param>
+        /// <returns>An asynchronous task that returns the result of the delete operation.</returns>
+        Task<IResult<AccountResultDTO>> DeleteAsync(string currentUserId, string id);
     }
 }

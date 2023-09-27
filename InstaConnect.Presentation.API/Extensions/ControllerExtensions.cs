@@ -20,6 +20,10 @@ namespace InstaConnect.Presentation.API.Extensions
             {
                 return controller.Unauthorized(response.ErrorMessages);
             }
+            else if (response.StatusCode == InstaConnectStatusCode.Forbidden)
+            {
+                return controller.Forbid();
+            }
             else if (response.StatusCode == InstaConnectStatusCode.OK)
             {
                 return controller.Ok(response.Data);

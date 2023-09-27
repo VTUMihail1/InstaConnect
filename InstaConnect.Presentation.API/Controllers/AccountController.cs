@@ -73,6 +73,20 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
+        // DELETE: api/accounts/logout
+        [HttpDelete("logout")]
+        [Authorize]
+        [AccessToken]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> LogoutAsync()
+        {
+            var accessToken = HttpContext.Request.Headers.Authorization;
+            var response = await _accountService.LogoutAsync(accessToken);
+
+            return this.HandleResponse(response);
+        }
+
         // POST: api/accounts/reset-password/5f0f2dd0-e957-4d72-8141-767a36fc6e95/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
         [HttpPost("reset-password/{userId}/{encodedToken}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -84,16 +98,31 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // DELETE: api/accounts/logout
-        [HttpDelete("logout")]
+        // PUT: api/accounts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpPut("{id}")]
         [Authorize]
         [AccessToken]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> LogoutAsync()
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> EditAsync([FromRoute] string id, [FromBody] AccountEditDTO accountEditDTO)
         {
-            var accessToken = HttpContext.Request.Headers.Authorization;
-            var response = await _accountService.LogoutAsync(accessToken);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _accountService.EditAsync(currentUserId, id, accountEditDTO);
+
+            return this.HandleResponse(response);
+        }
+
+        // DELETE: api/accounts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpDelete("{id}")]
+        [Authorize]
+        [AccessToken]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteAsync([FromRoute] string id)
+        {
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _accountService.DeleteAsync(currentUserId, id);
 
             return this.HandleResponse(response);
         }
