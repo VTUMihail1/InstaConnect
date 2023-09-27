@@ -31,6 +31,7 @@ using TokenOptions = InstaConnect.Data.Models.Options.TokenOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var corsOptions = builder.Configuration.GetSection("CorsOptions");
 var adminOptions = builder.Configuration.GetSection(nameof(AdminOptions));
 var tokenOptions = builder.Configuration.GetSection(nameof(TokenOptions));
 var emailOptions = builder.Configuration.GetSection(nameof(EmailOptions));
@@ -46,6 +47,14 @@ builder.Services
         var serverVersion = ServerVersion.AutoDetect(connectionString);
         options.UseMySql(connectionString, serverVersion);
     });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowedOrigins",
+             p => p.WithOrigins(corsOptions["Hosts"])
+                   .AllowAnyMethod()
+                   .AllowAnyHeader());
+});
 
 builder.Services
     .AddScoped<IDbSeeder, DbSeeder>()
@@ -168,6 +177,8 @@ app.UseSwaggerUI();
 app.MapHub<ChatHub>("/chat-hub");
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowedOrigins");
 
 app.UseAuthentication();
 app.UseAuthorization();
