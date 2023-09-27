@@ -18,7 +18,7 @@
 
         public const string AccountForgotPasswordTitle = "InstaConnect Reset Password";
 
-        public static readonly string EmailTemplatePrefixPath = Environment.CurrentDirectory.Substring(default, Environment.CurrentDirectory.IndexOf("InstaConnect"));
+        public static readonly string EmailTemplatePrefixPath = Environment.CurrentDirectory.Substring(default, Environment.CurrentDirectory.LastIndexOf(@"InstaConnect\InstaConnect.Presentation.API"));
 
         public const string EmailConfirmationTemplatePath = @"InstaConnect\InstaConnect.Business\Templates\InstaConnectConfirmEmailTemplate.html";
 

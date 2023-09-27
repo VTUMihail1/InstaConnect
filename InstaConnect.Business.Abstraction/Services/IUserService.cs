@@ -32,5 +32,14 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <returns>A task that represents the asynchronous operation.
         /// The task result contains a user DTO.</returns>
         Task<IResult<UserResultDTO>> GetByUsernameAsync(string username);
+
+        /// <summary>
+        /// Gets personal information of a user by their ID asynchronously.
+        /// </summary>
+        /// <param name="currentUserId">The ID of the current user.</param>
+        /// <param name="id">The ID of the user whose personal information is to be retrieved.</param>
+        /// <returns>A task that represents the asynchronous operation.
+        /// The task result contains a user's personal information DTO.</returns>
+        Task<IResult<UserPersonalResultDTO>> GetPersonalByIdAsync(string currentUserId, string id);
     }
 }

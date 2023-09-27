@@ -46,6 +46,9 @@ namespace InstaConnect.Business.AutoMapper
             CreateMap<PostUpdateDTO, Post>()
                 .ReverseMap();
 
+            CreateMap<AccountEditDTO, User>()
+                .ReverseMap();
+
             CreateMap<PostCommentUpdateDTO, PostComment>()
                 .ReverseMap();
 
@@ -80,6 +83,9 @@ namespace InstaConnect.Business.AutoMapper
                 .ReverseMap();
 
             CreateMap<User, UserResultDTO>()
+                .ReverseMap();
+
+            CreateMap<User, UserPersonalResultDTO>()
                 .ReverseMap();
 
             CreateMap<Token, TokenResultDTO>()
