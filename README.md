@@ -160,6 +160,6 @@ Distributed under the MIT License. See - [InstaConnect License](https://github.c
 
 ## Contact
 
-[LinkedIn](https://www.linkedin.com/in/mihail-nikolov-a24b29255/) | [LeetCode](https://leetcode.com/VTUMihail/) | [GitHub Repository](https://github.com/VTUMihail1/InstaConnect.git)
+[LinkedIn](https://www.linkedin.com/in/mihail-nikolov-a24b29255/) | [LeetCode](https://leetcode.com/VTUMihail/) | [GitHub](https://github.com/VTUMihail1)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
