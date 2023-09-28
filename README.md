@@ -84,6 +84,13 @@ Restore the project dependencies using the following command:
   dotnet restore
 ```
 
+#### Initialize the user secrets
+
+Initiazlize the user secrets using the following command:
+```bash
+  dotnet user-secrets init
+```
+
 #### Set user secrets
 
 Add all the user secrets to your liking 
@@ -100,8 +107,7 @@ Add all the user secrets to your liking
   dotnet user-secrets set "EmailOptions:ResetPasswordEndpoint" "Your_Reset_Password_Endpoint_Here"   
   dotnet user-secrets set "AdminOptions:Email" "Your_Admin_Email_Here"   
   dotnet user-secrets set "AdminOptions:Password" "Your_Admin_Password_Here"
-  dotnet user-secrets set "CorsOptions:Hosts" "Your_Cors_Hosts_Here"
-  }   
+  dotnet user-secrets set "CorsOptions:Hosts" "Your_Cors_Hosts_Here"  
 ```
 
 #### Start the app
