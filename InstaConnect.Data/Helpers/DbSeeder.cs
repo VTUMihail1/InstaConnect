@@ -5,6 +5,7 @@ using InstaConnect.Data.Models.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Data.Entity;
 
 namespace InstaConnect.Data.Helpers
 {
@@ -31,6 +32,16 @@ namespace InstaConnect.Data.Helpers
         {
             await SeedRolesAsync();
             await SeedAdminAsync();
+        }
+
+        public async Task ApplyPendingMigrationsAsync()
+        {
+            var pendingMigrations = await _instaConnectContext.Database.GetPendingMigrationsAsync();
+
+            if (pendingMigrations.Any())
+            {
+                await _instaConnectContext.Database.MigrateAsync();
+            }
         }
 
         private async Task SeedRolesAsync()
