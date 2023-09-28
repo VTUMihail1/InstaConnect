@@ -92,14 +92,16 @@ Add all the user secrets to your liking
   dotnet user-secrets set "TokenOptions:Issuer" "Your_Issuer_Here"   
   dotnet user-secrets set "TokenOptions:Audience" "Your_Audience_Here"   
   dotnet user-secrets set "TokenOptions:SecurityKey" "Your_Security_Key_Here"   
-  dotnet user-secrets set "TokenOptions:AccessTokenLifetimeSeconds" "Your_Access-Token-Lifetime"   
-  dotnet user-secrets set "TokenOptions:UserTokenLifetimeSeconds" "Your_User-Token-Lifetime"   
+  dotnet user-secrets set "TokenOptions:AccessTokenLifetimeSeconds" "Your_Access-Token-Lifetime_Here"   
+  dotnet user-secrets set "TokenOptions:UserTokenLifetimeSeconds" "Your_User-Token-Lifetime_Here"   
   dotnet user-secrets set "EmailOptions:APIKey" "Your_Email_API_Key_Here"   
   dotnet user-secrets set "EmailOptions:Sender" "Your_Email_Sender_Here"   
   dotnet user-secrets set "EmailOptions:ConfirmEmailEndpoint" "Your_Confirm_Email_Endpoint_Here"   
   dotnet user-secrets set "EmailOptions:ResetPasswordEndpoint" "Your_Reset_Password_Endpoint_Here"   
   dotnet user-secrets set "AdminOptions:Email" "Your_Admin_Email_Here"   
-  dotnet user-secrets set "AdminOptions:Password" "Your_Admin_Password_Here"   
+  dotnet user-secrets set "AdminOptions:Password" "Your_Admin_Password_Here"
+  dotnet user-secrets set "CorsOptions:Hosts" "Your_Cors_Hosts_Here"
+  }   
 ```
 
 #### Start the app
