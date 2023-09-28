@@ -32,6 +32,7 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpGet("personal-details/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPersonalByIdAsync([FromRoute] string id)
         {
