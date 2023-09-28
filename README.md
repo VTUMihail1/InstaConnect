@@ -92,8 +92,8 @@ Add all the user secrets to your liking
   dotnet user-secrets set "TokenOptions:Issuer" "Your_Issuer_Here"   
   dotnet user-secrets set "TokenOptions:Audience" "Your_Audience_Here"   
   dotnet user-secrets set "TokenOptions:SecurityKey" "Your_Security_Key_Here"   
-  dotnet user-secrets set "TokenOptions:AccessTokenLifetimeSeconds" "900"   
-  dotnet user-secrets set "TokenOptions:UserTokenLifetimeSeconds" "3600"   
+  dotnet user-secrets set "TokenOptions:AccessTokenLifetimeSeconds" "Your_Access-Token-Lifetime"   
+  dotnet user-secrets set "TokenOptions:UserTokenLifetimeSeconds" "Your_User-Token-Lifetime"   
   dotnet user-secrets set "EmailOptions:APIKey" "Your_Email_API_Key_Here"   
   dotnet user-secrets set "EmailOptions:Sender" "Your_Email_Sender_Here"   
   dotnet user-secrets set "EmailOptions:ConfirmEmailEndpoint" "Your_Confirm_Email_Endpoint_Here"   
@@ -154,7 +154,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `https://github.com/VTUMihail1/InstaConnect/blob/master/LICENSE.txt` for more information. Feel free to use and modify the code as needed for your own purposes.
+Distributed under the MIT License. See - [InstaConnect License](https://github.com/VTUMihail1/InstaConnect/blob/master/LICENSE.txt) for more information. Feel free to use and modify the code as needed for your own purposes.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
