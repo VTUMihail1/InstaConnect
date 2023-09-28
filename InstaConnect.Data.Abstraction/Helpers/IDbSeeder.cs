@@ -14,5 +14,7 @@
         /// </summary>
         /// <returns>A task representing the asynchronous operation.</returns>
         Task SeedAsync();
+
+        Task ApplyPendingMigrationsAsync();
     }
 }

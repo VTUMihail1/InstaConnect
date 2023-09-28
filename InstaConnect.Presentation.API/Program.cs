@@ -169,7 +169,7 @@ builder.Services
 
 var app = builder.Build();
 
-await app.SeedDb();
+await app.SetUpDatabase();
 
 app.UseSwagger();
 app.UseSwaggerUI();
