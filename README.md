@@ -1,4 +1,4 @@
-# InstaConnect - Setup Guide
+# InstaConnect API
 
 ## About The Project
 
@@ -31,7 +31,6 @@ InstaConnect is a robust REST API that empowers developers to seamlessly integra
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- GETTING STARTED -->
 ## Getting Started
 
 ### Prerequisites
