@@ -5,7 +5,6 @@ using InstaConnect.Data.Models.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System.Data.Entity;
 
 namespace InstaConnect.Data.Helpers
 {
