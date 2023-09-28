@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InstaConnect.Data.Models\InstaConnect.Data.Models.csproj" />
+  </ItemGroup>
+
 </Project>

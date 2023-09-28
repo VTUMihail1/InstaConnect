@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Presentation.API", "InstaConnect.Presentation.API\InstaConnect.Presentation.API.csproj", "{D4C69A24-2D55-4B18-9991-40D5019BC4B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Presentation.API", "InstaConnect.Presentation.API\InstaConnect.Presentation.API.csproj", "{D4C69A24-2D55-4B18-9991-40D5019BC4B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Business", "InstaConnect.Business\InstaConnect.Business.csproj", "{4F5192F0-5727-4592-A3F0-91E164C6AE8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Business", "InstaConnect.Business\InstaConnect.Business.csproj", "{4F5192F0-5727-4592-A3F0-91E164C6AE8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Business.Models", "InstaConnect.Business.Models\InstaConnect.Business.Models.csproj", "{81A7124A-A39C-4FE2-9395-3C1B5F04E435}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Business.Models", "InstaConnect.Business.Models\InstaConnect.Business.Models.csproj", "{81A7124A-A39C-4FE2-9395-3C1B5F04E435}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Business.Abstraction", "InstaConnect.Business.Abstraction\InstaConnect.Business.Abstraction.csproj", "{28B30271-0D5A-465D-901C-9DC78EF61803}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Business.Abstraction", "InstaConnect.Business.Abstraction\InstaConnect.Business.Abstraction.csproj", "{28B30271-0D5A-465D-901C-9DC78EF61803}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Data", "InstaConnect.Data\InstaConnect.Data.csproj", "{5221A8FC-0A67-4ACD-8208-BEDFC388754B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Data", "InstaConnect.Data\InstaConnect.Data.csproj", "{5221A8FC-0A67-4ACD-8208-BEDFC388754B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Data.Abstraction", "InstaConnect.Data.Abstraction\InstaConnect.Data.Abstraction.csproj", "{81DF3DB6-7C4C-4F06-9AAE-E5ADE9F9CAAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Data.Abstraction", "InstaConnect.Data.Abstraction\InstaConnect.Data.Abstraction.csproj", "{81DF3DB6-7C4C-4F06-9AAE-E5ADE9F9CAAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Data.Models", "InstaConnect.Data.Models\InstaConnect.Data.Models.csproj", "{037A13F7-FFF3-4FA8-B5D3-CEF7EC352BAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Data.Models", "InstaConnect.Data.Models\InstaConnect.Data.Models.csproj", "{037A13F7-FFF3-4FA8-B5D3-CEF7EC352BAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Business.UnitTests", "InstaConnect.Business.UnitTests\InstaConnect.Business.UnitTests.csproj", "{A364ECBE-8DBF-4A92-BA15-A4B4C5318418}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Business.UnitTests", "InstaConnect.Business.UnitTests\InstaConnect.Business.UnitTests.csproj", "{A364ECBE-8DBF-4A92-BA15-A4B4C5318418}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{26BD01CD-AE26-4898-B320-CDCEFA815A65}"
 EndProject
