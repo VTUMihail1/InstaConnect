@@ -45,6 +45,7 @@ namespace InstaConnect.Presentation.API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AddAsync([FromBody] PostAddDTO postAddDTO)
         {
@@ -59,6 +60,7 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] PostUpdateDTO postUpdateDTO)
         {
@@ -73,6 +75,7 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync([FromRoute] string id)
         {

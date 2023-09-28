@@ -34,7 +34,6 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync([FromRoute] string id)
         {
-            var currentUser = User;
             var response = await _postLikeService.GetByIdAsync(id);
 
             return this.HandleResponse(response);
@@ -57,6 +56,7 @@ namespace InstaConnect.Presentation.API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> AddAsync([FromBody] PostLikeAddDTO postLikeAddDTO)
         {
             var currentUserId = User.GetCurrentUserId();
@@ -70,6 +70,7 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpDelete("by-user-and-post/{userId}/{postId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByUserIdAndPostIdAsync([FromRoute] string userId, [FromRoute] string postId)
         {
@@ -84,6 +85,7 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync([FromRoute] string id)
         {
