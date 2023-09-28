@@ -4,8 +4,6 @@
 
 InstaConnect is a robust REST API that empowers developers to seamlessly integrate and amplify their applications with the dynamic world of social media. With its intuitive endpoints and comprehensive features, InstaConnect simplifies the process of connecting to popular social platforms, enabling you to create, share, and engage with user-generated content effortlessly. Elevate your app's social capabilities today with InstaConnect!
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ## Built With
 
 * [![ASP.NET Core][AspNetCoreBadge]][AspNetCoreUrl]
@@ -28,8 +26,6 @@ InstaConnect is a robust REST API that empowers developers to seamlessly integra
 
 [AutoMapperBadge]: https://img.shields.io/badge/AutoMapper-green.svg
 [AutoMapperUrl]: https://automapper.org/
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Getting Started
 
@@ -118,9 +114,6 @@ Finally, start the InstaConnect API application:
 ```
 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 ## Usage
 
 To interact with the InstaConnect API and explore available endpoints, we provide detailed documentation using Swagger.
@@ -139,9 +132,6 @@ Here, you will find a user-friendly interface that allows you to:
 
 Swagger makes it easy to understand and interact with the API, making your integration efforts smooth and efficient.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -155,19 +145,12 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-<!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See - [InstaConnect License](https://github.com/VTUMihail1/InstaConnect/blob/master/LICENSE.txt) for more information. Feel free to use and modify the code as needed for your own purposes.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ## Contact
 
 [LinkedIn](https://www.linkedin.com/in/mihail-nikolov-a24b29255/) | [LeetCode](https://leetcode.com/VTUMihail/) | [GitHub](https://github.com/VTUMihail1)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
