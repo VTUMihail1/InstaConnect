@@ -30,9 +30,17 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<PostResultDTO>> GetAllAsync(string userId)
+        public async Task<ICollection<PostResultDTO>> GetAllAsync(
+            string userId,
+            int page,
+            int amount)
         {
-            var posts = await _postRepository.GetAllAsync(p => userId == default || p.UserId == userId);
+			var skipAmount = (page - 1) * amount;
+
+			var posts = await _postRepository.GetAllAsync(
+                p => userId == default || p.UserId == userId,
+                skipAmount,
+                amount);
             var postResultDTOs = _mapper.Map<ICollection<PostResultDTO>>(posts);
 
             return postResultDTOs;

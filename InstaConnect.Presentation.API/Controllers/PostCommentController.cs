@@ -1,9 +1,11 @@
 ﻿using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.PostComment;
+using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Presentation.API.Extensions;
 using InstaConnect.Presentation.API.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace InstaConnect.Presentation.API.Controllers
 {
@@ -21,9 +23,14 @@ namespace InstaConnect.Presentation.API.Controllers
         // GET: api/post-comments
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync([FromQuery] string userId = default, [FromQuery] string postId = default, [FromQuery] string postCommentId = default)
-        {
-            var response = await _postCommentService.GetAllAsync(userId, postId, postCommentId);
+        public async Task<IActionResult> GetAllAsync(
+            [FromQuery] string userId = default, 
+            [FromQuery] string postId = default, 
+            [FromQuery] string postCommentId = default,
+			[FromQuery][Range(InstaConnectModelConfigurations.PageMinLength, int.MaxValue)] int page = 1,
+			[FromQuery][Range(InstaConnectModelConfigurations.AmountMinLength, int.MaxValue)] int amount = 18)
+		{
+            var response = await _postCommentService.GetAllAsync(userId, postId, postCommentId, page, amount);
 
             return Ok(response);
         }

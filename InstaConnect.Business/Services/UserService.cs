@@ -31,11 +31,19 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<UserResultDTO>> GetAllAsync(string firstName, string lastName)
+        public async Task<ICollection<UserResultDTO>> GetAllAsync(
+            string firstName, 
+            string lastName, 
+            int page,
+            int amount)
         {
-            var users = await _userRepository.GetAllAsync(u =>
+			var skipAmount = (page - 1) * amount;
+
+			var users = await _userRepository.GetAllAsync(u =>
             (firstName == default || u.FirstName == firstName) &&
-            (lastName == default || u.LastName == lastName));
+            (lastName == default || u.LastName == lastName),
+            skipAmount,
+            amount);
 
             var userResultDTOs = _mapper.Map<ICollection<UserResultDTO>>(users);
 

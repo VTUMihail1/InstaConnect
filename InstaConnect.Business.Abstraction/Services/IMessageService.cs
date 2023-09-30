@@ -8,20 +8,22 @@ namespace InstaConnect.Business.Abstraction.Services
     /// </summary>
     public interface IMessageService
     {
-        /// <summary>
-        /// Retrieves all messages between a sender and a receiver.
-        /// </summary>
-        /// <param name="senderId">The ID of the sender.</param>
-        /// <param name="receiverId">The ID of the receiver.</param>
-        /// <returns>A collection of <see cref="MessageResultDTO"/> representing messages.</returns>
-        Task<ICollection<MessageResultDTO>> GetAllAsync(string senderId, string receiverId);
+		/// <summary>
+		/// Retrieves all messages between a sender and a receiver with pagination.
+		/// </summary>
+		/// <param name="senderId">The ID of the message sender.</param>
+		/// <param name="receiverId">The ID of the message receiver.</param>
+		/// <param name="page">The page number.</param>
+		/// <param name="amount">The number of messages to retrieve per page.</param>
+		/// <returns>An <see cref="Task"/> representing the asynchronous operation, containing a collection of <see cref="MessageResultDTO"/>.</returns>
+		Task<ICollection<MessageResultDTO>> GetAllAsync(string senderId, string receiverId, int page, int amount);
 
-        /// <summary>
-        /// Retrieves a message by its unique identifier.
-        /// </summary>
-        /// <param name="id">The unique identifier of the message.</param>
-        /// <returns>An <see cref="IResult{T}"/> containing a <see cref="MessageResultDTO"/>.</returns>
-        Task<IResult<MessageResultDTO>> GetByIdAsync(string id);
+		/// <summary>
+		/// Retrieves a message by its unique identifier.
+		/// </summary>
+		/// <param name="id">The unique identifier of the message.</param>
+		/// <returns>An <see cref="IResult{T}"/> containing a <see cref="MessageResultDTO"/>.</returns>
+		Task<IResult<MessageResultDTO>> GetByIdAsync(string id);
 
         /// <summary>
         /// Retrieves a message by sender ID and receiver ID.
