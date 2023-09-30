@@ -34,11 +34,19 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<MessageResultDTO>> GetAllAsync(string senderId, string receiverId)
+        public async Task<ICollection<MessageResultDTO>> GetAllAsync(
+            string senderId, 
+            string receiverId,
+            int page,
+            int amount)
         {
-            var messages = await _messageRepository.GetAllAsync(m =>
+			var skipAmount = (page - 1) * amount;
+
+			var messages = await _messageRepository.GetAllAsync(m =>
             (senderId == default || m.SenderId == senderId) &&
-            (receiverId == default || m.ReceiverId == receiverId));
+            (receiverId == default || m.ReceiverId == receiverId),
+            skipAmount,
+            amount);
 
             var messageResultDTOs = _mapper.Map<ICollection<MessageResultDTO>>(messages);
 

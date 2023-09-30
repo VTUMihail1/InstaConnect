@@ -15,14 +15,19 @@ namespace InstaConnect.Data.Repositories
             _instaConnectContext = instaConnectContext;
         }
 
-        public override async Task<ICollection<Post>> GetAllAsync(Expression<Func<Post, bool>> expression)
-        {
+        public override async Task<ICollection<Post>> GetAllAsync(
+			Expression<Func<Post, bool>> expression,
+			int skipAmount = default,
+			int takeAmount = int.MaxValue)
+		{
             var posts = await _instaConnectContext.Posts
                 .Where(expression)
                 .Include(p => p.User)
                 .Include(p => p.PostComments)
                 .Include(p => p.PostLikes)
-                .ToListAsync();
+				.Skip(skipAmount)
+				.Take(takeAmount)
+				.ToListAsync();
 
             return posts;
         }

@@ -1,9 +1,11 @@
 ﻿using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Message;
+using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Presentation.API.Extensions;
 using InstaConnect.Presentation.API.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace InstaConnect.Presentation.API.Controllers
 {
@@ -21,9 +23,13 @@ namespace InstaConnect.Presentation.API.Controllers
         // GET: api/messages
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllAsync([FromQuery] string senderId = default, [FromQuery] string receiverId = default)
-        {
-            var response = await _messageService.GetAllAsync(senderId, receiverId);
+        public async Task<IActionResult> GetAllAsync(
+            [FromQuery] string senderId = default, 
+            [FromQuery] string receiverId = default,
+			[FromQuery][Range(InstaConnectModelConfigurations.PageMinLength, int.MaxValue)] int page = 1,
+			[FromQuery][Range(InstaConnectModelConfigurations.AmountMinLength, int.MaxValue)] int amount = 18)
+		{
+            var response = await _messageService.GetAllAsync(senderId, receiverId, page, amount);
 
             return Ok(response);
         }

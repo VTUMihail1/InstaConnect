@@ -8,6 +8,7 @@ using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
 using Microsoft.AspNetCore.Identity;
+using System.Runtime.CompilerServices;
 
 namespace InstaConnect.Business.Services
 {
@@ -30,11 +31,15 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<FollowResultDTO>> GetAllAsync(string followerId, string followingId)
+        public async Task<ICollection<FollowResultDTO>> GetAllAsync(string followerId, string followingId, int page, int amount)
         {
-            var followers = await _followRepository.GetAllAsync(f =>
+			var skipAmount = (page - 1) * amount;
+
+			var followers = await _followRepository.GetAllAsync(f =>
             (followerId == default || f.FollowerId == followerId) &&
-            (followingId == default || f.FollowingId == followingId));
+            (followingId == default || f.FollowingId == followingId), 
+            skipAmount, 
+            amount);
 
             var followResultDTOs = _mapper.Map<ICollection<FollowResultDTO>>(followers);
 

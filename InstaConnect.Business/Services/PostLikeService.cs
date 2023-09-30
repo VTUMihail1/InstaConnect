@@ -33,9 +33,15 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<PostLikeResultDTO>> GetAllAsync(string userId, string postId)
+        public async Task<ICollection<PostLikeResultDTO>> GetAllAsync(
+            string userId, 
+            string postId,
+            int page,
+            int amount)
         {
-            var postLikes = await _postLikeRepository.GetAllAsync(pl =>
+			var skipAmount = (page - 1) * amount;
+
+			var postLikes = await _postLikeRepository.GetAllAsync(pl =>
             (userId == default || pl.UserId == userId) &&
             (postId == default || pl.PostId == postId));
 

@@ -15,13 +15,18 @@ namespace InstaConnect.Data.Repositories
             _instaConnectContext = instaConnectContext;
         }
 
-        public override async Task<ICollection<Message>> GetAllAsync(Expression<Func<Message, bool>> expression)
-        {
+        public override async Task<ICollection<Message>> GetAllAsync(
+			Expression<Func<Message, bool>> expression,
+			int skipAmount = default,
+			int takeAmount = int.MaxValue)
+		{
             var messages = await _instaConnectContext.Messages
                 .Where(expression)
                 .Include(m => m.Sender)
                 .Include(m => m.Receiver)
-                .ToListAsync();
+				.Skip(skipAmount)
+				.Take(takeAmount)
+				.ToListAsync();
 
             return messages;
         }

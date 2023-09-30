@@ -33,11 +33,17 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<CommentLikeResultDTO>> GetAllAsync(string userId, string postCommentId)
+        public async Task<ICollection<CommentLikeResultDTO>> GetAllAsync(
+            string userId, 
+            string postCommentId, 
+            int page, 
+            int amount)
         {
+            var skipAmount = (page - 1) * amount;
+
             var commentLikes = await _commentLikeRepository.GetAllAsync(cl =>
             (userId == default || cl.UserId == userId) &&
-            (postCommentId == default || cl.PostCommentId == postCommentId));
+            (postCommentId == default || cl.PostCommentId == postCommentId), skipAmount, amount);
 
             var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
 
