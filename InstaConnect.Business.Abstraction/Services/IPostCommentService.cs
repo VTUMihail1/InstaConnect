@@ -8,23 +8,23 @@ namespace InstaConnect.Business.Abstraction.Services
     /// </summary>
     public interface IPostCommentService
     {
-		/// <summary>
-		/// Retrieves all post comments with pagination based on user, post, and post comment criteria.
-		/// </summary>
-		/// <param name="userId">The ID of the user.</param>
-		/// <param name="postId">The ID of the post associated with the comments.</param>
-		/// <param name="postCommentId">The ID of the specific post comment (optional).</param>
-		/// <param name="page">The page number.</param>
-		/// <param name="amount">The number of post comments to retrieve per page.</param>
-		/// <returns>An <see cref="Task"/> representing the asynchronous operation, containing a collection of <see cref="PostCommentResultDTO"/>.</returns>
-		Task<ICollection<PostCommentResultDTO>> GetAllAsync(string userId, string postId, string postCommentId, int page, int amount);
+        /// <summary>
+        /// Retrieves all post comments with pagination support based on user ID, post ID, and post comment ID.
+        /// </summary>
+        /// <param name="userId">The ID of the user.</param>
+        /// <param name="postId">The ID of the post.</param>
+        /// <param name="postCommentId">The ID of the post comment.</param>
+        /// <param name="page">The page number for pagination.</param>
+        /// <param name="amount">The number of post comments to retrieve per page.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing a collection of <see cref="PostCommentResultDTO"/>.</returns>
+        Task<IResult<ICollection<PostCommentResultDTO>>> GetAllAsync(string userId, string postId, string postCommentId, int page, int amount);
 
-		/// <summary>
-		/// Retrieves a post comment by its unique identifier.
-		/// </summary>
-		/// <param name="id">The unique identifier of the post comment.</param>
-		/// <returns>An <see cref="IResult{T}"/> containing a <see cref="PostCommentResultDTO"/>.</returns>
-		Task<IResult<PostCommentResultDTO>> GetByIdAsync(string id);
+        /// <summary>
+        /// Retrieves a post comment by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the post comment.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing a <see cref="PostCommentResultDTO"/>.</returns>
+        Task<IResult<PostCommentResultDTO>> GetByIdAsync(string id);
 
         /// <summary>
         /// Adds a new post comment.

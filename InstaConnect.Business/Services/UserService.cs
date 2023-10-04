@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Extensions;
-using InstaConnect.Business.Models.DTOs.Account;
 using InstaConnect.Business.Models.DTOs.User;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -17,42 +15,40 @@ namespace InstaConnect.Business.Services
         private readonly IMapper _mapper;
         private readonly IResultFactory _resultFactory;
         private readonly IUserRepository _userRepository;
-        private readonly UserManager<User> _userManager;
 
         public UserService(
             IMapper mapper,
             IResultFactory resultFactory,
-            IUserRepository userRepository,
-            UserManager<User> userManager)
+            IUserRepository userRepository)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _userRepository = userRepository;
-            _userManager = userManager;
         }
 
-        public async Task<ICollection<UserResultDTO>> GetAllAsync(
-            string firstName, 
-            string lastName, 
+        public async Task<IResult<ICollection<UserResultDTO>>> GetAllAsync(
+            string firstName,
+            string lastName,
             int page,
             int amount)
         {
-			var skipAmount = (page - 1) * amount;
+            var skipAmount = (page - 1) * amount;
 
-			var users = await _userRepository.GetAllAsync(u =>
+            var users = await _userRepository.GetAllAsync(u =>
             (firstName == default || u.FirstName == firstName) &&
             (lastName == default || u.LastName == lastName),
             skipAmount,
             amount);
 
             var userResultDTOs = _mapper.Map<ICollection<UserResultDTO>>(users);
+            var okResult = _resultFactory.GetOkResult(userResultDTOs);
 
-            return userResultDTOs;
+            return okResult;
         }
 
-        public async Task<IResult<UserResultDTO>> GetByIdAsync(string username)
+        public async Task<IResult<UserResultDTO>> GetByIdAsync(string id)
         {
-            var existingUser = await _userRepository.FindEntityAsync(u => u.UserName == username);
+            var existingUser = await _userRepository.FindEntityAsync(u => u.Id == id);
 
             if (existingUser == null)
             {
@@ -82,8 +78,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<UserPersonalResultDTO>> GetPersonalByIdAsync(string currentUserId, string id)
         {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, id);
+            var doesNotHavePermission = currentUserId == id;
 
             if (doesNotHavePermission)
             {

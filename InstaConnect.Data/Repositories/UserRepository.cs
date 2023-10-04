@@ -16,10 +16,10 @@ namespace InstaConnect.Data.Repositories
         }
 
         public async override Task<ICollection<User>> GetAllAsync(
-			Expression<Func<User, bool>> expression,
-			int skipAmount = default,
-			int takeAmount = int.MaxValue)
-		{
+            Expression<Func<User, bool>> expression,
+            int skipAmount = default,
+            int takeAmount = int.MaxValue)
+        {
             var users = await _instaConnectContext.Users
                 .Where(expression)
                 .Include(u => u.Followers)
@@ -30,9 +30,9 @@ namespace InstaConnect.Data.Repositories
                 .Include(p => p.PostComments)
                 .Include(u => u.PostLikes)
                 .Include(u => u.CommentLikes)
-				.Skip(skipAmount)
-				.Take(takeAmount)
-				.ToListAsync();
+                .Skip(skipAmount)
+                .Take(takeAmount)
+                .ToListAsync();
 
             return users;
         }

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Extensions;
 using InstaConnect.Business.Models.DTOs.Post;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -30,20 +29,22 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<PostResultDTO>> GetAllAsync(
+        public async Task<IResult<ICollection<PostResultDTO>>> GetAllAsync(
             string userId,
             int page,
             int amount)
         {
-			var skipAmount = (page - 1) * amount;
+            var skipAmount = (page - 1) * amount;
 
-			var posts = await _postRepository.GetAllAsync(
+            var posts = await _postRepository.GetAllAsync(
                 p => userId == default || p.UserId == userId,
                 skipAmount,
                 amount);
-            var postResultDTOs = _mapper.Map<ICollection<PostResultDTO>>(posts);
 
-            return postResultDTOs;
+            var postResultDTOs = _mapper.Map<ICollection<PostResultDTO>>(posts);
+            var okResult = _resultFactory.GetOkResult(postResultDTOs);
+
+            return okResult;
         }
 
         public async Task<IResult<PostResultDTO>> GetByIdAsync(string id)
@@ -65,8 +66,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostResultDTO>> AddAsync(string currentUserId, PostAddDTO postAddDTO)
         {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, postAddDTO.UserId);
+            var doesNotHavePermission = currentUserId != postAddDTO.UserId;
 
             if (doesNotHavePermission)
             {
@@ -103,8 +103,7 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPost.UserId);
+            var doesNotHavePermission = currentUserId != existingPost.UserId;
 
             if (doesNotHavePermission)
             {
@@ -132,8 +131,7 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPost.UserId);
+            var doesNotHavePermission = currentUserId != existingPost.UserId;
 
             if (doesNotHavePermission)
             {

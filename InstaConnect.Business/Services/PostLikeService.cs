@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Extensions;
 using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -33,21 +32,22 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<PostLikeResultDTO>> GetAllAsync(
-            string userId, 
+        public async Task<IResult<ICollection<PostLikeResultDTO>>> GetAllAsync(
+            string userId,
             string postId,
             int page,
             int amount)
         {
-			var skipAmount = (page - 1) * amount;
+            var skipAmount = (page - 1) * amount;
 
-			var postLikes = await _postLikeRepository.GetAllAsync(pl =>
+            var postLikes = await _postLikeRepository.GetAllAsync(pl =>
             (userId == default || pl.UserId == userId) &&
             (postId == default || pl.PostId == postId));
 
             var postLikeResultDTOs = _mapper.Map<ICollection<PostLikeResultDTO>>(postLikes);
+            var okResult = _resultFactory.GetOkResult(postLikeResultDTOs);
 
-            return postLikeResultDTOs;
+            return okResult;
         }
 
         public async Task<IResult<PostLikeResultDTO>> GetByIdAsync(string id)
@@ -86,8 +86,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostLikeResultDTO>> AddAsync(string currentUserId, PostLikeAddDTO postLikeAddDTO)
         {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, postLikeAddDTO.UserId);
+            var doesNotHavePermission = currentUserId != postLikeAddDTO.UserId;
 
             if (doesNotHavePermission)
             {
@@ -133,8 +132,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostLikeResultDTO>> DeleteByUserIdAndPostIdAsync(string currentUserId, string userId, string postId)
         {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, userId);
+            var doesNotHavePermission = currentUserId != userId;
 
             if (doesNotHavePermission)
             {
@@ -170,8 +168,7 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPostLike.UserId);
+            var doesNotHavePermission = currentUserId != existingPostLike.UserId;
 
             if (doesNotHavePermission)
             {

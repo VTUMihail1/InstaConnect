@@ -30,7 +30,7 @@ namespace InstaConnect.Presentation.API.Controllers
         {
             var response = await _userService.GetAllAsync(firstName, lastName, page, amount);
 
-            return Ok(response);
+            return this.HandleResponse(response);
         }
 
         // GET: api/users/personal-details/5f0f2dd0-e957-4d72-8141-767a36fc6e95

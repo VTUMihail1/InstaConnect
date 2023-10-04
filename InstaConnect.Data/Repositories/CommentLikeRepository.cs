@@ -16,8 +16,8 @@ namespace InstaConnect.Data.Repositories
         }
 
         public override async Task<ICollection<CommentLike>> GetAllAsync(
-            Expression<Func<CommentLike, bool>> expression, 
-            int skipAmount = default, 
+            Expression<Func<CommentLike, bool>> expression,
+            int skipAmount = default,
             int takeAmount = int.MaxValue)
         {
             var commentLikes = await _instaConnectContext.CommentLikes

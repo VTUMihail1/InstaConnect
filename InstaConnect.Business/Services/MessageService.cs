@@ -2,7 +2,6 @@
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Extensions;
 using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -34,25 +33,36 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<MessageResultDTO>> GetAllAsync(
-            string senderId, 
+        public async Task<IResult<ICollection<MessageResultDTO>>> GetAllAsync(
+            string currentUserId,
+            string senderId,
             string receiverId,
             int page,
             int amount)
         {
-			var skipAmount = (page - 1) * amount;
+            var skipAmount = (page - 1) * amount;
 
-			var messages = await _messageRepository.GetAllAsync(m =>
+            var doesNotHavePermission = (senderId != default && senderId != currentUserId) || (receiverId != default && receiverId != currentUserId);
+
+            if (doesNotHavePermission)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<ICollection<MessageResultDTO>>(InstaConnectErrorMessages.UserHasNoPermission);
+
+                return forbiddenResult;
+            }
+
+            var messages = await _messageRepository.GetAllAsync(m =>
             (senderId == default || m.SenderId == senderId) &&
             (receiverId == default || m.ReceiverId == receiverId),
             skipAmount,
             amount);
 
             var messageResultDTOs = _mapper.Map<ICollection<MessageResultDTO>>(messages);
+            var okResult = _resultFactory.GetOkResult(messageResultDTOs);
 
-            return messageResultDTOs;
+            return okResult;
         }
-        public async Task<IResult<MessageResultDTO>> GetByIdAsync(string id)
+        public async Task<IResult<MessageResultDTO>> GetByIdAsync(string currentUserId, string id)
         {
             var existingMessage = await _messageRepository.FindEntityAsync(m => m.Id == id);
 
@@ -63,21 +73,13 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var messageResultDTO = _mapper.Map<MessageResultDTO>(existingMessage);
-            var okResult = _resultFactory.GetOkResult(messageResultDTO);
+            var doesNotHavePermission = existingMessage.SenderId != currentUserId || existingMessage.ReceiverId != currentUserId;
 
-            return okResult;
-        }
-
-        public async Task<IResult<MessageResultDTO>> GetBySenderIdAndReceiverIdAsync(string senderId, string receiverId)
-        {
-            var existingMessage = await _messageRepository.FindEntityAsync(m => m.SenderId == senderId && m.ReceiverId == receiverId);
-
-            if (existingMessage == null)
+            if (doesNotHavePermission)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<MessageResultDTO>(InstaConnectErrorMessages.MessageNotFound);
+                var forbiddenResult = _resultFactory.GetForbiddenResult<MessageResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
 
-                return notFoundResult;
+                return forbiddenResult;
             }
 
             var messageResultDTO = _mapper.Map<MessageResultDTO>(existingMessage);
@@ -88,12 +90,12 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<MessageResultDTO>> AddAsync(string currentUserId, MessageAddDTO messageAddDTO)
         {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, messageAddDTO.SenderId);
+            var doesNotHavePermission = currentUserId != messageAddDTO.SenderId;
 
             if (doesNotHavePermission)
             {
                 var forbiddenResult = _resultFactory.GetForbiddenResult<MessageResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
+
                 return forbiddenResult;
             }
 
@@ -136,8 +138,7 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingMessage.SenderId);
+            var doesNotHavePermission = currentUserId != existingMessage.SenderId;
 
             if (doesNotHavePermission)
             {
@@ -148,34 +149,6 @@ namespace InstaConnect.Business.Services
 
             _mapper.Map(messageUpdateDTO, existingMessage);
             await _messageRepository.UpdateAsync(existingMessage);
-
-            var noContentResult = _resultFactory.GetNoContentResult<MessageResultDTO>();
-
-            return noContentResult;
-        }
-
-        public async Task<IResult<MessageResultDTO>> DeleteBySenderIdAndReceiverIdAsync(string currentUserId, string senderId, string receiverId)
-        {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, senderId);
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<MessageResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-
-                return forbiddenResult;
-            }
-
-            var existingMessage = await _messageRepository.FindEntityAsync(m => m.SenderId == senderId && m.ReceiverId == receiverId);
-
-            if (existingMessage == null)
-            {
-                var notFoundResult = _resultFactory.GetNotFoundResult<MessageResultDTO>(InstaConnectErrorMessages.MessageNotFound);
-
-                return notFoundResult;
-            }
-
-            await _messageRepository.DeleteAsync(existingMessage);
 
             var noContentResult = _resultFactory.GetNoContentResult<MessageResultDTO>();
 
@@ -193,8 +166,7 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingMessage.SenderId);
+            var doesNotHavePermission = currentUserId != existingMessage.SenderId;
 
             if (doesNotHavePermission)
             {

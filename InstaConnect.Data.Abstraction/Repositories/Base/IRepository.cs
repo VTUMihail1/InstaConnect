@@ -29,20 +29,20 @@ namespace InstaConnect.Data.Abstraction.Repositories.Base
         /// <returns>A task representing the asynchronous operation and returning the found entity, or null if not found.</returns>
         Task<T> FindEntityAsync(Expression<Func<T, bool>> expression);
 
-		/// <summary>
-		/// Retrieves a collection of items based on the specified expression, with optional pagination.
-		/// </summary>
-		/// <param name="expression">The expression used to filter items.</param>
-		/// <param name="skipAmount">The number of items to skip (optional, defaults to zero).</param>
-		/// <param name="takeAmount">The maximum number of items to retrieve (optional, defaults to maximum value).</param>
-		/// <returns>An <see cref="Task"/> representing the asynchronous operation, containing a collection of items of type <typeparamref name="T"/>.</returns>
-		Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> expression, int skipAmount = default, int takeAmount = int.MaxValue);
+        /// <summary>
+        /// Retrieves a collection of items based on the specified expression, with optional pagination.
+        /// </summary>
+        /// <param name="expression">The expression used to filter items.</param>
+        /// <param name="skipAmount">The number of items to skip (optional, defaults to zero).</param>
+        /// <param name="takeAmount">The maximum number of items to retrieve (optional, defaults to maximum value).</param>
+        /// <returns>An <see cref="Task"/> representing the asynchronous operation, containing a collection of items of type <typeparamref name="T"/>.</returns>
+        Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> expression, int skipAmount = default, int takeAmount = int.MaxValue);
 
-		/// <summary>
-		/// Asynchronously updates an existing entity in the repository.
-		/// </summary>
-		/// <param name="entity">The entity to be updated.</param>
-		/// <returns>A task representing the asynchronous operation.</returns>
-		Task UpdateAsync(T entity);
+        /// <summary>
+        /// Asynchronously updates an existing entity in the repository.
+        /// </summary>
+        /// <param name="entity">The entity to be updated.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        Task UpdateAsync(T entity);
     }
 }

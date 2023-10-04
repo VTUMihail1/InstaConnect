@@ -8,22 +8,22 @@ namespace InstaConnect.Business.Abstraction.Services
     /// </summary>
     public interface ICommentLikeService
     {
-		/// <summary>
-		/// Retrieves all comment likes for a user and post comment with pagination.
-		/// </summary>
-		/// <param name="userId">The ID of the user.</param>
-		/// <param name="postCommentId">The ID of the post comment.</param>
-		/// <param name="page">The page number.</param>
-		/// <param name="amount">The number of likes to retrieve per page.</param>
-		/// <returns>An <see cref="Task"/> representing the asynchronous operation, containing a collection of <see cref="CommentLikeResultDTO"/>.</returns>
-		Task<ICollection<CommentLikeResultDTO>> GetAllAsync(string userId, string postCommentId, int page, int amount);
+        /// <summary>
+        /// Retrieves all comment likes for a specific user and post comment with pagination support.
+        /// </summary>
+        /// <param name="userId">The ID of the user.</param>
+        /// <param name="postCommentId">The ID of the post comment.</param>
+        /// <param name="page">The page number for pagination.</param>
+        /// <param name="amount">The number of likes to retrieve per page.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing a collection of <see cref="CommentLikeResultDTO"/>.</returns>
+        Task<IResult<ICollection<CommentLikeResultDTO>>> GetAllAsync(string userId, string postCommentId, int page, int amount);
 
-		/// <summary>
-		/// Retrieves a comment like by its unique identifier.
-		/// </summary>
-		/// <param name="id">The unique identifier of the comment like.</param>
-		/// <returns>An <see cref="IResult{T}"/> containing a <see cref="CommentLikeResultDTO"/>.</returns>
-		Task<IResult<CommentLikeResultDTO>> GetByIdAsync(string id);
+        /// <summary>
+        /// Retrieves a comment like by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the comment like.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing a <see cref="CommentLikeResultDTO"/>.</returns>
+        Task<IResult<CommentLikeResultDTO>> GetByIdAsync(string id);
 
         /// <summary>
         /// Retrieves a comment like by user ID and post comment ID.

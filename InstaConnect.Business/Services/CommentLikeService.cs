@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Extensions;
 using InstaConnect.Business.Models.DTOs.CommentLike;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -33,10 +32,10 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<CommentLikeResultDTO>> GetAllAsync(
-            string userId, 
-            string postCommentId, 
-            int page, 
+        public async Task<IResult<ICollection<CommentLikeResultDTO>>> GetAllAsync(
+            string userId,
+            string postCommentId,
+            int page,
             int amount)
         {
             var skipAmount = (page - 1) * amount;
@@ -46,8 +45,9 @@ namespace InstaConnect.Business.Services
             (postCommentId == default || cl.PostCommentId == postCommentId), skipAmount, amount);
 
             var commentLikeResultDTOs = _mapper.Map<ICollection<CommentLikeResultDTO>>(commentLikes);
+            var okResult = _resultFactory.GetOkResult(commentLikeResultDTOs);
 
-            return commentLikeResultDTOs;
+            return okResult;
         }
 
         public async Task<IResult<CommentLikeResultDTO>> GetByIdAsync(string id)
@@ -86,8 +86,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<CommentLikeResultDTO>> AddAsync(string currentUserId, CommentLikeAddDTO commentLikeAddDTO)
         {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, commentLikeAddDTO.UserId);
+            var doesNotHavePermission = currentUserId != commentLikeAddDTO.UserId;
 
             if (doesNotHavePermission)
             {
@@ -141,8 +140,7 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, userId);
+            var doesNotHavePermission = currentUserId != userId;
 
             if (doesNotHavePermission)
             {
@@ -169,8 +167,7 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingCommentLike.UserId);
+            var doesNotHavePermission = currentUserId != existingCommentLike.UserId;
 
             if (doesNotHavePermission)
             {

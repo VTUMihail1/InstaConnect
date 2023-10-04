@@ -2,7 +2,6 @@
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Extensions;
 using InstaConnect.Business.Models.DTOs.Account;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -285,8 +284,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<AccountResultDTO>> EditAsync(string currentUserId, string id, AccountEditDTO accountEditDTO)
         {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, id);
+            var doesNotHavePermission = currentUserId != id;
 
             if (doesNotHavePermission)
             {
@@ -305,7 +303,7 @@ namespace InstaConnect.Business.Services
 
             var existingUserByUsername = await _userManager.FindByNameAsync(accountEditDTO.UserName);
 
-            if(existingUserById.UserName != accountEditDTO.UserName && existingUserByUsername != null)
+            if (existingUserById.UserName != accountEditDTO.UserName && existingUserByUsername != null)
             {
                 var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountUsernameAlreadyExists);
 
@@ -313,7 +311,7 @@ namespace InstaConnect.Business.Services
             }
 
             _mapper.Map(accountEditDTO, existingUserById);
-            await _userManager.UpdateAsync(currentUser);
+            await _userManager.UpdateAsync(existingUserById);
 
             var noContentResult = _resultFactory.GetNoContentResult<AccountResultDTO>();
 
@@ -322,8 +320,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<AccountResultDTO>> DeleteAsync(string currentUserId, string id)
         {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, id);
+            var doesNotHavePermission = currentUserId != id;
 
             if (doesNotHavePermission)
             {

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Extensions;
 using InstaConnect.Business.Models.DTOs.PostComment;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -33,16 +32,16 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<PostCommentResultDTO>> GetAllAsync(
-            string userId, 
-            string postId, 
+        public async Task<IResult<ICollection<PostCommentResultDTO>>> GetAllAsync(
+            string userId,
+            string postId,
             string postCommentId,
             int page,
             int amount)
         {
-			var skipAmount = (page - 1) * amount;
+            var skipAmount = (page - 1) * amount;
 
-			var postComments = await _postCommentRepository.GetAllAsync(pc =>
+            var postComments = await _postCommentRepository.GetAllAsync(pc =>
             (userId == default || pc.UserId == userId) &&
             (postId == default || pc.PostId == postId) &&
             (postCommentId == default || pc.PostCommentId == postCommentId),
@@ -50,8 +49,9 @@ namespace InstaConnect.Business.Services
             amount);
 
             var postCommentsResultDTOs = _mapper.Map<ICollection<PostCommentResultDTO>>(postComments);
+            var okResult = _resultFactory.GetOkResult(postCommentsResultDTOs);
 
-            return postCommentsResultDTOs;
+            return okResult;
         }
 
         public async Task<IResult<PostCommentResultDTO>> GetByIdAsync(string id)
@@ -73,8 +73,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostCommentResultDTO>> AddAsync(string currentUserId, PostCommentAddDTO postCommentAddDTO)
         {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, postCommentAddDTO.UserId);
+            var doesNotHavePermission = currentUserId != postCommentAddDTO.UserId;
 
             if (doesNotHavePermission)
             {
@@ -129,8 +128,7 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPostComment.UserId);
+            var doesNotHavePermission = currentUserId != existingPostComment.UserId;
 
             if (doesNotHavePermission)
             {
@@ -158,8 +156,7 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPostComment.UserId);
+            var doesNotHavePermission = currentUserId != existingPostComment.UserId;
 
             if (doesNotHavePermission)
             {
