@@ -16,17 +16,17 @@ namespace InstaConnect.Data.Repositories
         }
 
         public override async Task<ICollection<Follow>> GetAllAsync(
-			Expression<Func<Follow, bool>> expression,
-			int skipAmount = default,
-			int takeAmount = int.MaxValue)
-		{
+            Expression<Func<Follow, bool>> expression,
+            int skipAmount = default,
+            int takeAmount = int.MaxValue)
+        {
             var followers = await _instaConnectContext.Follows
                 .Where(expression)
                 .Include(f => f.Follower)
                 .Include(f => f.Following)
-				.Skip(skipAmount)
-				.Take(takeAmount)
-				.ToListAsync();
+                .Skip(skipAmount)
+                .Take(takeAmount)
+                .ToListAsync();
 
             return followers;
         }

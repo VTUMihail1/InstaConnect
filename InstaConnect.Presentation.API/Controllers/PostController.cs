@@ -25,12 +25,12 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllAsync(
             [FromQuery] string userId = default,
-			[FromQuery][Range(InstaConnectModelConfigurations.PageMinLength, int.MaxValue)] int page = 1,
-			[FromQuery][Range(InstaConnectModelConfigurations.AmountMinLength, int.MaxValue)] int amount = 18)
-		{
+            [FromQuery][Range(InstaConnectModelConfigurations.PageMinLength, int.MaxValue)] int page = 1,
+            [FromQuery][Range(InstaConnectModelConfigurations.AmountMinLength, int.MaxValue)] int amount = 18)
+        {
             var response = await _postService.GetAllAsync(userId, page, amount);
 
-            return Ok(response);
+            return this.HandleResponse(response);
         }
 
         // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
@@ -47,6 +47,7 @@ namespace InstaConnect.Presentation.API.Controllers
         // POST: api/posts
         [Authorize]
         [AccessToken]
+        [ValidateUser("UserId")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -54,8 +55,7 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AddAsync([FromBody] PostAddDTO postAddDTO)
         {
-            var currentUserId = User.GetCurrentUserId();
-            var response = await _postService.AddAsync(currentUserId, postAddDTO);
+            var response = await _postService.AddAsync(postAddDTO);
 
             return this.HandleResponse(response);
         }

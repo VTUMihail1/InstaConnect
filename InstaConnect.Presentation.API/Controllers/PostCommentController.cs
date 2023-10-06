@@ -24,15 +24,15 @@ namespace InstaConnect.Presentation.API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllAsync(
-            [FromQuery] string userId = default, 
-            [FromQuery] string postId = default, 
+            [FromQuery] string userId = default,
+            [FromQuery] string postId = default,
             [FromQuery] string postCommentId = default,
-			[FromQuery][Range(InstaConnectModelConfigurations.PageMinLength, int.MaxValue)] int page = 1,
-			[FromQuery][Range(InstaConnectModelConfigurations.AmountMinLength, int.MaxValue)] int amount = 18)
-		{
+            [FromQuery][Range(InstaConnectModelConfigurations.PageMinLength, int.MaxValue)] int page = 1,
+            [FromQuery][Range(InstaConnectModelConfigurations.AmountMinLength, int.MaxValue)] int amount = 18)
+        {
             var response = await _postCommentService.GetAllAsync(userId, postId, postCommentId, page, amount);
 
-            return Ok(response);
+            return this.HandleResponse(response);
         }
 
         // GET: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
@@ -50,14 +50,14 @@ namespace InstaConnect.Presentation.API.Controllers
         // POST: api/post-comments
         [Authorize]
         [AccessToken]
+        [ValidateUser("UserId")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> AddAsync([FromBody] PostCommentAddDTO postCommentAddDTO)
         {
-            var currentUserId = User.GetCurrentUserId();
-            var response = await _postCommentService.AddAsync(currentUserId, postCommentAddDTO);
+            var response = await _postCommentService.AddAsync(postCommentAddDTO);
 
             return this.HandleResponse(response);
         }

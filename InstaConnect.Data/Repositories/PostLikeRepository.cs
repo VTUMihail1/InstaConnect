@@ -17,17 +17,17 @@ namespace InstaConnect.Data.Repositories
 
 
         public override async Task<ICollection<PostLike>> GetAllAsync(
-			Expression<Func<PostLike, bool>> expression,
-			int skipAmount = default,
-			int takeAmount = int.MaxValue)
-		{
+            Expression<Func<PostLike, bool>> expression,
+            int skipAmount = default,
+            int takeAmount = int.MaxValue)
+        {
             var postLikes = await _instaConnectContext.PostLikes
                 .Where(expression)
                 .Include(f => f.User)
                 .Include(f => f.Post)
-				.Skip(skipAmount)
-				.Take(takeAmount)
-				.ToListAsync();
+                .Skip(skipAmount)
+                .Take(takeAmount)
+                .ToListAsync();
 
             return postLikes;
         }

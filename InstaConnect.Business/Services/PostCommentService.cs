@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Extensions;
 using InstaConnect.Business.Models.DTOs.PostComment;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -33,16 +32,16 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<PostCommentResultDTO>> GetAllAsync(
-            string userId, 
-            string postId, 
+        public async Task<IResult<ICollection<PostCommentResultDTO>>> GetAllAsync(
+            string userId,
+            string postId,
             string postCommentId,
             int page,
             int amount)
         {
-			var skipAmount = (page - 1) * amount;
+            var skipAmount = (page - 1) * amount;
 
-			var postComments = await _postCommentRepository.GetAllAsync(pc =>
+            var postComments = await _postCommentRepository.GetAllAsync(pc =>
             (userId == default || pc.UserId == userId) &&
             (postId == default || pc.PostId == postId) &&
             (postCommentId == default || pc.PostCommentId == postCommentId),
@@ -50,8 +49,9 @@ namespace InstaConnect.Business.Services
             amount);
 
             var postCommentsResultDTOs = _mapper.Map<ICollection<PostCommentResultDTO>>(postComments);
+            var okResult = _resultFactory.GetOkResult(postCommentsResultDTOs);
 
-            return postCommentsResultDTOs;
+            return okResult;
         }
 
         public async Task<IResult<PostCommentResultDTO>> GetByIdAsync(string id)
@@ -71,18 +71,8 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<PostCommentResultDTO>> AddAsync(string currentUserId, PostCommentAddDTO postCommentAddDTO)
+        public async Task<IResult<PostCommentResultDTO>> AddAsync(PostCommentAddDTO postCommentAddDTO)
         {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, postCommentAddDTO.UserId);
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<PostCommentResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-
-                return forbiddenResult;
-            }
-
             var existingUser = await _userManager.FindByIdAsync(postCommentAddDTO.UserId);
 
             if (existingUser == null)
@@ -118,25 +108,15 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<PostCommentResultDTO>> UpdateAsync(string currentUserId, string id, PostCommentUpdateDTO postCommentUpdateDTO)
+        public async Task<IResult<PostCommentResultDTO>> UpdateAsync(string userId, string id, PostCommentUpdateDTO postCommentUpdateDTO)
         {
-            var existingPostComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id);
+            var existingPostComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id && pc.UserId == userId);
 
             if (existingPostComment == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>(InstaConnectErrorMessages.CommentNotFound);
 
                 return notFoundResult;
-            }
-
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPostComment.UserId);
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<PostCommentResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-
-                return forbiddenResult;
             }
 
             _mapper.Map(postCommentUpdateDTO, existingPostComment);
@@ -147,25 +127,15 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<PostCommentResultDTO>> DeleteAsync(string currentUserId, string id)
+        public async Task<IResult<PostCommentResultDTO>> DeleteAsync(string userId, string id)
         {
-            var existingPostComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id);
+            var existingPostComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id && pc.UserId == userId);
 
             if (existingPostComment == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>(InstaConnectErrorMessages.CommentNotFound);
 
                 return notFoundResult;
-            }
-
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPostComment.UserId);
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<PostCommentResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-
-                return forbiddenResult;
             }
 
             await _postCommentRepository.DeleteAsync(existingPostComment);

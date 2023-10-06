@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Extensions;
 using InstaConnect.Business.Models.DTOs.Post;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -30,20 +29,22 @@ namespace InstaConnect.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<ICollection<PostResultDTO>> GetAllAsync(
+        public async Task<IResult<ICollection<PostResultDTO>>> GetAllAsync(
             string userId,
             int page,
             int amount)
         {
-			var skipAmount = (page - 1) * amount;
+            var skipAmount = (page - 1) * amount;
 
-			var posts = await _postRepository.GetAllAsync(
+            var posts = await _postRepository.GetAllAsync(
                 p => userId == default || p.UserId == userId,
                 skipAmount,
                 amount);
-            var postResultDTOs = _mapper.Map<ICollection<PostResultDTO>>(posts);
 
-            return postResultDTOs;
+            var postResultDTOs = _mapper.Map<ICollection<PostResultDTO>>(posts);
+            var okResult = _resultFactory.GetOkResult(postResultDTOs);
+
+            return okResult;
         }
 
         public async Task<IResult<PostResultDTO>> GetByIdAsync(string id)
@@ -63,18 +64,8 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<PostResultDTO>> AddAsync(string currentUserId, PostAddDTO postAddDTO)
+        public async Task<IResult<PostResultDTO>> AddAsync(PostAddDTO postAddDTO)
         {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, postAddDTO.UserId);
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<PostResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-
-                return forbiddenResult;
-            }
-
             var existingUser = _userManager.FindByIdAsync(postAddDTO.UserId);
 
             if (existingUser == null)
@@ -92,25 +83,15 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<PostResultDTO>> UpdateAsync(string currentUserId, string id, PostUpdateDTO postUpdateDTO)
+        public async Task<IResult<PostResultDTO>> UpdateAsync(string userId, string id, PostUpdateDTO postUpdateDTO)
         {
-            var existingPost = await _postRepository.FindEntityAsync(p => p.Id == id);
+            var existingPost = await _postRepository.FindEntityAsync(p => p.Id == id && p.UserId == userId);
 
             if (existingPost == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostResultDTO>(InstaConnectErrorMessages.PostNotFound);
 
                 return notFoundResult;
-            }
-
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPost.UserId);
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<PostResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-
-                return forbiddenResult;
             }
 
             _mapper.Map(postUpdateDTO, existingPost);
@@ -121,25 +102,15 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<PostResultDTO>> DeleteAsync(string currentUserId, string id)
+        public async Task<IResult<PostResultDTO>> DeleteAsync(string userId, string id)
         {
-            var existingPost = await _postRepository.FindEntityAsync(p => p.Id == id);
+            var existingPost = await _postRepository.FindEntityAsync(p => p.Id == id && p.UserId == userId);
 
             if (existingPost == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostResultDTO>(InstaConnectErrorMessages.PostNotFound);
 
                 return notFoundResult;
-            }
-
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, existingPost.UserId);
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<PostResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-
-                return forbiddenResult;
             }
 
             await _postRepository.DeleteAsync(existingPost);

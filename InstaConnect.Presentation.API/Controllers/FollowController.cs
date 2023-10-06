@@ -24,14 +24,14 @@ namespace InstaConnect.Presentation.API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllAsync(
-            [FromQuery] string followerId = default, 
+            [FromQuery] string followerId = default,
             [FromQuery] string followingId = default,
-			[FromQuery][Range(InstaConnectModelConfigurations.PageMinLength, int.MaxValue)] int page = 1,
-			[FromQuery][Range(InstaConnectModelConfigurations.AmountMinLength, int.MaxValue)] int amount = 18)
-		{
+            [FromQuery][Range(InstaConnectModelConfigurations.PageMinLength, int.MaxValue)] int page = 1,
+            [FromQuery][Range(InstaConnectModelConfigurations.AmountMinLength, int.MaxValue)] int amount = 18)
+        {
             var response = await _followService.GetAllAsync(followerId, followingId, page, amount);
 
-            return Ok(response);
+            return this.HandleResponse(response);
         }
 
         // GET: api/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
@@ -59,29 +59,29 @@ namespace InstaConnect.Presentation.API.Controllers
         // POST: api/follows
         [Authorize]
         [AccessToken]
+        [ValidateUser("FollowerId")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> AddAsync([FromBody] FollowAddDTO followAddDTO)
         {
-            var currentUserId = User.GetCurrentUserId();
-            var response = await _followService.AddAsync(currentUserId, followAddDTO);
+            var response = await _followService.AddAsync(followAddDTO);
 
             return this.HandleResponse(response);
         }
 
-        // DELETE: api/follows/by-follower-and-following/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // DELETE: api/follows/by-follower-and-following/current/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [AccessToken]
-        [HttpDelete("by-follower-and-following/{followerId}/{followingId}")]
+        [HttpDelete("by-follower-and-following/current/{followingId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteByFollowerIdAndFollowingIdAsync([FromRoute] string followerId, [FromRoute] string followingId)
+        public async Task<IActionResult> DeleteByFollowerIdAndFollowingIdAsync([FromRoute] string followingId)
         {
             var currentUserId = User.GetCurrentUserId();
-            var response = await _followService.DeleteByFollowerIdAndFollowingIdAsync(currentUserId, followerId, followingId);
+            var response = await _followService.DeleteByFollowerIdAndFollowingIdAsync(currentUserId, followingId);
 
             return this.HandleResponse(response);
         }

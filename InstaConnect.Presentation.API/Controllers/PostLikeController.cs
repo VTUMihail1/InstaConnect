@@ -24,14 +24,14 @@ namespace InstaConnect.Presentation.API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllAsync(
-            [FromQuery] string userId = default, 
+            [FromQuery] string userId = default,
             [FromQuery] string postId = default,
-			[FromQuery][Range(InstaConnectModelConfigurations.PageMinLength, int.MaxValue)] int page = 1,
-			[FromQuery][Range(InstaConnectModelConfigurations.AmountMinLength, int.MaxValue)] int amount = 18)
-		{
+            [FromQuery][Range(InstaConnectModelConfigurations.PageMinLength, int.MaxValue)] int page = 1,
+            [FromQuery][Range(InstaConnectModelConfigurations.AmountMinLength, int.MaxValue)] int amount = 18)
+        {
             var response = await _postLikeService.GetAllAsync(userId, postId, page, amount);
 
-            return Ok(response);
+            return this.HandleResponse(response);
         }
 
         // GET: api/post-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
@@ -45,7 +45,7 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // GET: api/post-likes/by-user-and-post/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // GET: api/post-likes/by-user-and-post/current/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [HttpGet("by-user-and-post/{userId}/{postId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -59,29 +59,29 @@ namespace InstaConnect.Presentation.API.Controllers
         // POST: api/post-likes
         [Authorize]
         [AccessToken]
+        [ValidateUser("UserId")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> AddAsync([FromBody] PostLikeAddDTO postLikeAddDTO)
         {
-            var currentUserId = User.GetCurrentUserId();
-            var response = await _postLikeService.AddAsync(currentUserId, postLikeAddDTO);
+            var response = await _postLikeService.AddAsync(postLikeAddDTO);
 
             return this.HandleResponse(response);
         }
 
-        // DELETE: api/post-likes/by-user-and-post/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // DELETE: api/post-likes/by-user-and-post/current/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [AccessToken]
-        [HttpDelete("by-user-and-post/{userId}/{postId}")]
+        [HttpDelete("by-user-and-post/current/{postId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteByUserIdAndPostIdAsync([FromRoute] string userId, [FromRoute] string postId)
+        public async Task<IActionResult> DeleteByUserIdAndPostIdAsync([FromRoute] string postId)
         {
             var currentUserId = User.GetCurrentUserId();
-            var response = await _postLikeService.DeleteByUserIdAndPostIdAsync(currentUserId, userId, postId);
+            var response = await _postLikeService.DeleteByUserIdAndPostIdAsync(currentUserId, postId);
 
             return this.HandleResponse(response);
         }

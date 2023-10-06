@@ -2,7 +2,6 @@
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Extensions;
 using InstaConnect.Business.Models.DTOs.Account;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -283,17 +282,8 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<AccountResultDTO>> EditAsync(string currentUserId, string id, AccountEditDTO accountEditDTO)
+        public async Task<IResult<AccountResultDTO>> EditAsync(string id, AccountEditDTO accountEditDTO)
         {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, id);
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<AccountResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-                return forbiddenResult;
-            }
-
             var existingUserById = await _userManager.FindByIdAsync(id);
 
             if (existingUserById == null)
@@ -305,7 +295,7 @@ namespace InstaConnect.Business.Services
 
             var existingUserByUsername = await _userManager.FindByNameAsync(accountEditDTO.UserName);
 
-            if(existingUserById.UserName != accountEditDTO.UserName && existingUserByUsername != null)
+            if (existingUserById.UserName != accountEditDTO.UserName && existingUserByUsername != null)
             {
                 var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountUsernameAlreadyExists);
 
@@ -313,24 +303,15 @@ namespace InstaConnect.Business.Services
             }
 
             _mapper.Map(accountEditDTO, existingUserById);
-            await _userManager.UpdateAsync(currentUser);
+            await _userManager.UpdateAsync(existingUserById);
 
             var noContentResult = _resultFactory.GetNoContentResult<AccountResultDTO>();
 
             return noContentResult;
         }
 
-        public async Task<IResult<AccountResultDTO>> DeleteAsync(string currentUserId, string id)
+        public async Task<IResult<AccountResultDTO>> DeleteAsync(string id)
         {
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-            var doesNotHavePermission = !await _userManager.HasPermissionAsync(currentUser, id);
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<AccountResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-                return forbiddenResult;
-            }
-
             var existingUser = await _userManager.FindByIdAsync(id);
 
             if (existingUser == null)
