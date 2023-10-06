@@ -36,26 +36,24 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <summary>
         /// Adds a new comment like.
         /// </summary>
-        /// <param name="currentUserId">The ID of the current user performing the action.</param>
         /// <param name="likeAddDTO">The data for the new comment like.</param>
         /// <returns>An <see cref="IResult{T}"/> containing the added <see cref="CommentLikeResultDTO"/>.</returns>
-        Task<IResult<CommentLikeResultDTO>> AddAsync(string currentUserId, CommentLikeAddDTO likeAddDTO);
+        Task<IResult<CommentLikeResultDTO>> AddAsync(CommentLikeAddDTO likeAddDTO);
 
         /// <summary>
         /// Deletes a comment like by user ID and post comment ID.
         /// </summary>
-        /// <param name="currentUserId">The ID of the current user performing the action.</param>
         /// <param name="userId">The ID of the user who liked the comment.</param>
         /// <param name="postCommentId">The ID of the post comment.</param>
         /// <returns>An <see cref="IResult{T}"/> containing the deleted <see cref="CommentLikeResultDTO"/>.</returns>
-        Task<IResult<CommentLikeResultDTO>> DeleteByUserIdAndPostCommentIdAsync(string currentUserId, string userId, string postCommentId);
+        Task<IResult<CommentLikeResultDTO>> DeleteByUserIdAndPostCommentIdAsync(string userId, string postCommentId);
 
         /// <summary>
         /// Deletes a comment like by its unique identifier.
         /// </summary>
-        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="userId">The ID of the user performing the action.</param>
         /// <param name="id">The unique identifier of the comment like to delete.</param>
         /// <returns>An <see cref="IResult{T}"/> containing the deleted <see cref="CommentLikeResultDTO"/>.</returns>
-        Task<IResult<CommentLikeResultDTO>> DeleteAsync(string currentUserId, string id);
+        Task<IResult<CommentLikeResultDTO>> DeleteAsync(string userId, string id);
     }
 }

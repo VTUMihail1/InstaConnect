@@ -45,13 +45,13 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // GET: api/comment-likes/by-post-comment-and-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-post-comment-and-user/{postCommentId}/{userId}")]
+        // GET: api/comment-likes/by-user-and-post-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("by-user-and-post-comment/{userId}/{postCommentId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetByPostCommentIdAndUserIdAsync([FromRoute] string postCommentId, [FromRoute] string userId)
+        public async Task<IActionResult> GetByUserIdAndPostCommentIdAsync([FromRoute] string userId, [FromRoute] string postCommentId)
         {
-            var response = await _commentLikeService.GetByUserIdAndPostCommentIdAsync(postCommentId, userId);
+            var response = await _commentLikeService.GetByUserIdAndPostCommentIdAsync(userId, postCommentId);
 
             return this.HandleResponse(response);
         }
@@ -59,29 +59,29 @@ namespace InstaConnect.Presentation.API.Controllers
         // POST: api/comment-likes
         [Authorize]
         [AccessToken]
+        [ValidateUser("UserId")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> AddAsync([FromBody] CommentLikeAddDTO commentLikeAddDTO)
         {
-            var currentUserId = User.GetCurrentUserId();
-            var response = await _commentLikeService.AddAsync(currentUserId, commentLikeAddDTO);
+            var response = await _commentLikeService.AddAsync(commentLikeAddDTO);
 
             return this.HandleResponse(response);
         }
 
-        // DELETE: api/comment-likes/by-post-comment-and-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // DELETE: api/comment-likes/by-user-and-post-comment/current/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [AccessToken]
-        [HttpDelete("by-post-comment-and-user/{postCommentId}/{userId}")]
+        [HttpDelete("by-user-and-post-comment/current/{postCommentId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteByPostCommentIdAndUserIdAsync([FromRoute] string postCommentId, [FromRoute] string userId)
+        public async Task<IActionResult> DeleteByPostCommentIdAndUserIdAsync([FromRoute] string postCommentId)
         {
             var currentUserId = User.GetCurrentUserId();
-            var response = await _commentLikeService.DeleteByUserIdAndPostCommentIdAsync(currentUserId, postCommentId, userId);
+            var response = await _commentLikeService.DeleteByUserIdAndPostCommentIdAsync(currentUserId, postCommentId);
 
             return this.HandleResponse(response);
         }

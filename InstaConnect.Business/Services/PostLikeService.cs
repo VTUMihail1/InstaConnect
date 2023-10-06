@@ -84,17 +84,8 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<PostLikeResultDTO>> AddAsync(string currentUserId, PostLikeAddDTO postLikeAddDTO)
+        public async Task<IResult<PostLikeResultDTO>> AddAsync(PostLikeAddDTO postLikeAddDTO)
         {
-            var doesNotHavePermission = currentUserId != postLikeAddDTO.UserId;
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<PostLikeResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-
-                return forbiddenResult;
-            }
-
             var existingUser = await _userManager.FindByIdAsync(postLikeAddDTO.UserId);
 
             if (existingUser == null)
@@ -130,17 +121,8 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<PostLikeResultDTO>> DeleteByUserIdAndPostIdAsync(string currentUserId, string userId, string postId)
+        public async Task<IResult<PostLikeResultDTO>> DeleteByUserIdAndPostIdAsync(string userId, string postId)
         {
-            var doesNotHavePermission = currentUserId != userId;
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<PostLikeResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-
-                return forbiddenResult;
-            }
-
             var existingPostLike = await _postLikeRepository.FindEntityAsync(pl => pl.UserId == userId && pl.PostId == postId);
 
             if (existingPostLike == null)
@@ -157,24 +139,15 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<PostLikeResultDTO>> DeleteAsync(string currentUserId, string id)
+        public async Task<IResult<PostLikeResultDTO>> DeleteAsync(string userId, string id)
         {
-            var existingPostLike = await _postLikeRepository.FindEntityAsync(pl => pl.Id == id);
+            var existingPostLike = await _postLikeRepository.FindEntityAsync(pl => pl.Id == id && pl.UserId == userId);
 
             if (existingPostLike == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
 
                 return notFoundResult;
-            }
-
-            var doesNotHavePermission = currentUserId != existingPostLike.UserId;
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<PostLikeResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-
-                return forbiddenResult;
             }
 
             await _postLikeRepository.DeleteAsync(existingPostLike);

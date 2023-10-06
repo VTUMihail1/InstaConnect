@@ -50,14 +50,14 @@ namespace InstaConnect.Presentation.API.Controllers
         // POST: api/post-comments
         [Authorize]
         [AccessToken]
+        [ValidateUser("UserId")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> AddAsync([FromBody] PostCommentAddDTO postCommentAddDTO)
         {
-            var currentUserId = User.GetCurrentUserId();
-            var response = await _postCommentService.AddAsync(currentUserId, postCommentAddDTO);
+            var response = await _postCommentService.AddAsync(postCommentAddDTO);
 
             return this.HandleResponse(response);
         }

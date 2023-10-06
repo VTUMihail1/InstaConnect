@@ -98,33 +98,33 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // PUT: api/accounts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpPut("{id}")]
+        // PUT: api/accounts/current
+        [HttpPut("current")]
         [Authorize]
         [AccessToken]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> EditAsync([FromRoute] string id, [FromBody] AccountEditDTO accountEditDTO)
+        public async Task<IActionResult> EditAsync([FromBody] AccountEditDTO accountEditDTO)
         {
             var currentUserId = User.GetCurrentUserId();
-            var response = await _accountService.EditAsync(currentUserId, id, accountEditDTO);
+            var response = await _accountService.EditAsync(currentUserId, accountEditDTO);
 
             return this.HandleResponse(response);
         }
 
-        // DELETE: api/accounts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpDelete("{id}")]
+        // DELETE: api/accounts/current
+        [HttpDelete("current")]
         [Authorize]
         [AccessToken]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteAsync([FromRoute] string id)
+        public async Task<IActionResult> DeleteAsync()
         {
             var currentUserId = User.GetCurrentUserId();
-            var response = await _accountService.DeleteAsync(currentUserId, id);
+            var response = await _accountService.DeleteAsync(currentUserId);
 
             return this.HandleResponse(response);
         }

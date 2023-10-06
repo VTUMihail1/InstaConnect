@@ -282,16 +282,8 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<AccountResultDTO>> EditAsync(string currentUserId, string id, AccountEditDTO accountEditDTO)
+        public async Task<IResult<AccountResultDTO>> EditAsync(string id, AccountEditDTO accountEditDTO)
         {
-            var doesNotHavePermission = currentUserId != id;
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<AccountResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-                return forbiddenResult;
-            }
-
             var existingUserById = await _userManager.FindByIdAsync(id);
 
             if (existingUserById == null)
@@ -318,16 +310,8 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<AccountResultDTO>> DeleteAsync(string currentUserId, string id)
+        public async Task<IResult<AccountResultDTO>> DeleteAsync(string id)
         {
-            var doesNotHavePermission = currentUserId != id;
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<AccountResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-                return forbiddenResult;
-            }
-
             var existingUser = await _userManager.FindByIdAsync(id);
 
             if (existingUser == null)

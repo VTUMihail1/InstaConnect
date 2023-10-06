@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.Utilities;
+using InstaConnect.Data.Models.Utilities;
 using InstaConnect.Presentation.API.Extensions;
 using InstaConnect.Presentation.API.Filters;
 using Microsoft.AspNetCore.Authorization;
@@ -20,22 +21,6 @@ namespace InstaConnect.Presentation.API.Controllers
             _messageService = messageService;
         }
 
-        // GET: api/messages
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> GetAllAsync(
-            [FromQuery] string senderId = default,
-            [FromQuery] string receiverId = default,
-            [FromQuery][Range(InstaConnectModelConfigurations.PageMinLength, int.MaxValue)] int page = 1,
-            [FromQuery][Range(InstaConnectModelConfigurations.AmountMinLength, int.MaxValue)] int amount = 18)
-        {
-            var currentUserId = User.GetCurrentUserId();
-            var response = await _messageService.GetAllAsync(currentUserId, senderId, receiverId, page, amount);
-
-            return this.HandleResponse(response);
-        }
-
         // GET: api/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -51,6 +36,7 @@ namespace InstaConnect.Presentation.API.Controllers
         // POST: api/messages
         [Authorize]
         [AccessToken]
+        [ValidateUser("SenderId")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -58,7 +44,7 @@ namespace InstaConnect.Presentation.API.Controllers
         public async Task<IActionResult> AddAsync([FromBody] MessageAddDTO messageAddDTO)
         {
             var currentUserId = User.GetCurrentUserId();
-            var response = await _messageService.AddAsync(currentUserId, messageAddDTO);
+            var response = await _messageService.AddAsync(messageAddDTO);
 
             return this.HandleResponse(response);
         }

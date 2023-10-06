@@ -33,17 +33,17 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // GET: api/users/personal-details/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // GET: api/users/personal-details/current
         [Authorize]
         [AccessToken]
-        [HttpGet("personal-details/{id}")]
+        [HttpGet("personal-details/current")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetPersonalByIdAsync([FromRoute] string id)
+        public async Task<IActionResult> GetPersonalByIdAsync()
         {
             var currentUserId = User.GetCurrentUserId();
-            var response = await _userService.GetPersonalByIdAsync(currentUserId, id);
+            var response = await _userService.GetPersonalByIdAsync(currentUserId);
 
             return this.HandleResponse(response);
         }

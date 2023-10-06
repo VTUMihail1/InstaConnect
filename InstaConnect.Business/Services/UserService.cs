@@ -76,16 +76,8 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<UserPersonalResultDTO>> GetPersonalByIdAsync(string currentUserId, string id)
+        public async Task<IResult<UserPersonalResultDTO>> GetPersonalByIdAsync(string id)
         {
-            var doesNotHavePermission = currentUserId == id;
-
-            if (doesNotHavePermission)
-            {
-                var forbiddenResult = _resultFactory.GetForbiddenResult<UserPersonalResultDTO>(InstaConnectErrorMessages.UserHasNoPermission);
-                return forbiddenResult;
-            }
-
             var existingUser = await _userRepository.FindEntityAsync(u => u.Id == id);
 
             if (existingUser == null)

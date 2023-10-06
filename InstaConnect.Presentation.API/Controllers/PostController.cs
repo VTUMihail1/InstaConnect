@@ -47,6 +47,7 @@ namespace InstaConnect.Presentation.API.Controllers
         // POST: api/posts
         [Authorize]
         [AccessToken]
+        [ValidateUser("UserId")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -54,8 +55,7 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AddAsync([FromBody] PostAddDTO postAddDTO)
         {
-            var currentUserId = User.GetCurrentUserId();
-            var response = await _postService.AddAsync(currentUserId, postAddDTO);
+            var response = await _postService.AddAsync(postAddDTO);
 
             return this.HandleResponse(response);
         }
