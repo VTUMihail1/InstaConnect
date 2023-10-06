@@ -16,15 +16,15 @@ namespace InstaConnect.Presentation.API.Filters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var currentUserId = context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var currentUserIdentifier = context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var DTO = context.ActionArguments.Values.FirstOrDefault(arg => arg.GetType().GetProperty(_userIdentifierName) != null);
+            var requestDTO = context.ActionArguments.Values.FirstOrDefault(arg => arg.GetType().GetProperty(_userIdentifierName) != null);
 
-            if (DTO != null)
+            if (requestDTO != null)
             {
-                var DTOUserId = DTO.GetType().GetProperty(_userIdentifierName).GetValue(DTO)?.ToString();
+                var userIdentifier = requestDTO.GetType().GetProperty(_userIdentifierName).GetValue(requestDTO)?.ToString();
 
-                if (currentUserId != DTOUserId)
+                if (currentUserIdentifier != userIdentifier)
                 {
                     context.Result = new UnauthorizedResult();
 
