@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.Utilities;
+using InstaConnect.Data.Models.Utilities;
 using InstaConnect.Presentation.API.Extensions;
 using InstaConnect.Presentation.API.Filters;
 using Microsoft.AspNetCore.Authorization;
@@ -40,10 +41,24 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetPersonalByIdAsync()
+        public async Task<IActionResult> GetPersonalByCurrentIdAsync()
         {
             var currentUserId = User.GetCurrentUserId();
             var response = await _userService.GetPersonalByIdAsync(currentUserId);
+
+            return this.HandleResponse(response);
+        }
+
+        // GET: api/users/personal-details/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize(InstaConnectConstants.AdminRole)]
+        [AccessToken]
+        [HttpGet("personal-details/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetPersonalByIdAsync([FromRoute] string userId)
+        {
+            var response = await _userService.GetPersonalByIdAsync(userId);
 
             return this.HandleResponse(response);
         }
