@@ -99,14 +99,14 @@ namespace InstaConnect.Presentation.API.Controllers
         }
 
         // PUT: api/accounts/current
-        [HttpPut("current")]
         [Authorize]
         [AccessToken]
+        [HttpPut("current")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> EditAsync([FromBody] AccountEditDTO accountEditDTO)
+        public async Task<IActionResult> EditByCurrentIdAsync([FromBody] AccountEditDTO accountEditDTO)
         {
             var currentUserId = User.GetCurrentUserId();
             var response = await _accountService.EditAsync(currentUserId, accountEditDTO);
@@ -114,17 +114,46 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // DELETE: api/accounts/current
-        [HttpDelete("current")]
+        // PUT: api/accounts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [AccessToken]
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> EditByIdAsync([FromRoute] string userId, [FromBody] AccountEditDTO accountEditDTO)
+        {
+            var response = await _accountService.EditAsync(userId, accountEditDTO);
+
+            return this.HandleResponse(response);
+        }
+
+        // DELETE: api/accounts/current
+        [Authorize]
+        [AccessToken]
+        [HttpDelete("current")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteAsync()
+        public async Task<IActionResult> DeleteByCurrentIdAsync()
         {
             var currentUserId = User.GetCurrentUserId();
             var response = await _accountService.DeleteAsync(currentUserId);
+
+            return this.HandleResponse(response);
+        }
+
+        // DELETE: api/accounts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [AccessToken]
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteByIdAsync([FromRoute] string userId)
+        {
+            var response = await _accountService.DeleteAsync(userId);
 
             return this.HandleResponse(response);
         }

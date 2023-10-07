@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.PostComment;
 using InstaConnect.Business.Models.Utilities;
+using InstaConnect.Data.Models.Utilities;
 using InstaConnect.Presentation.API.Extensions;
 using InstaConnect.Presentation.API.Filters;
 using Microsoft.AspNetCore.Authorization;
@@ -77,17 +78,30 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // DELETE: api/post-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        //DELETE: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/current
         [Authorize]
         [AccessToken]
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}/by-user/current")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteAsync([FromRoute] string id)
+        public async Task<IActionResult> DeleteByCurrentUserIdAsync([FromRoute] string id)
         {
             var currentUserId = User.GetCurrentUserId();
             var response = await _postCommentService.DeleteAsync(currentUserId, id);
+
+            return this.HandleResponse(response);
+        }
+
+        //DELETE: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize(InstaConnectConstants.AdminRole)]
+        [AccessToken]
+        [HttpDelete("{id}/by-user/{userId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteAsync([FromRoute] string userId, [FromRoute] string id)
+        {
+            var response = await _postCommentService.DeleteAsync(userId, id);
 
             return this.HandleResponse(response);
         }
