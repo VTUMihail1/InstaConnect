@@ -88,7 +88,7 @@ namespace InstaConnect.Presentation.API.Controllers
         }
 
         //DELETE: api/post-likes/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-post/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [Authorize]
+        [Authorize(InstaConnectConstants.AdminRole)]
         [AccessToken]
         [HttpDelete("by-user/{userId}/by-post/{postId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
