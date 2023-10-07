@@ -18,7 +18,7 @@ namespace InstaConnect.Business.Helpers
         public string GenerateEmailConfirmationTemplate(string userId, string token)
         {
             var encodedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(token));
-            var endpoint = $"{_emailOptions.ConfirmEmailEndpoint}/{userId}/{encodedToken}";
+            var endpoint = $"{_emailOptions.ConfirmEmailEndpoint}/by-user/{userId}/by-token/{encodedToken}";
 
             var html = File.ReadAllText(InstaConnectConstants.EmailTemplatePrefixPath + InstaConnectConstants.EmailConfirmationTemplatePath);
             var emailConfirmationTemplateHtml = html.Replace(InstaConnectConstants.TemplateLinkPlaceholder, endpoint);
@@ -29,7 +29,7 @@ namespace InstaConnect.Business.Helpers
         public string GenerateForgotPasswordTemplate(string userId, string token)
         {
             var encodedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(token));
-            var endpoint = $"{_emailOptions.ResetPasswordEndpoint}/{userId}/{encodedToken}";
+            var endpoint = $"{_emailOptions.ResetPasswordEndpoint}/by-user/{userId}/by-token/{encodedToken}";
 
             var html = File.ReadAllText(InstaConnectConstants.EmailTemplatePrefixPath + InstaConnectConstants.ForgotPasswordTemplatePath);
             var passwordResetTemplateHtml = html.Replace(InstaConnectConstants.TemplateLinkPlaceholder, endpoint);
