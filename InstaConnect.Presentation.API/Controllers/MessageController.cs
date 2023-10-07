@@ -1,12 +1,10 @@
 ﻿using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Message;
-using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Data.Models.Utilities;
 using InstaConnect.Presentation.API.Extensions;
 using InstaConnect.Presentation.API.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace InstaConnect.Presentation.API.Controllers
 {
@@ -21,7 +19,22 @@ namespace InstaConnect.Presentation.API.Controllers
             _messageService = messageService;
         }
 
+        // GET: api/messages/by-sender/current/by-receiver/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [AccessToken]
+        [HttpGet("by-sender/current/by-receiver/{receiverId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllBySenderIdAndReceiverIdAsync([FromRoute] string receiverId)
+        {
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _messageService.GetAllBySenderIdAndReceiverIdAsync(currentUserId, receiverId);
+
+            return this.HandleResponse(response);
+        }
+
         // GET: api/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [Authorize]
+        [AccessToken]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -43,7 +56,6 @@ namespace InstaConnect.Presentation.API.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> AddAsync([FromBody] MessageAddDTO messageAddDTO)
         {
-            var currentUserId = User.GetCurrentUserId();
             var response = await _messageService.AddAsync(messageAddDTO);
 
             return this.HandleResponse(response);

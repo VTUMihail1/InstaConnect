@@ -5,8 +5,6 @@ using InstaConnect.Business.Models.DTOs.User;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Data.Abstraction.Repositories;
-using InstaConnect.Data.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 
 namespace InstaConnect.Business.Services
 {
