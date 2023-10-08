@@ -38,7 +38,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         // GET: api/v1/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("{id:alpha}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync([FromRoute] string id)
@@ -66,7 +66,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         // PUT: api/v1/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [AccessToken]
-        [HttpPut("{id:alpha}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] PostCommentUpdateDTO postCommentUpdateDTO)
@@ -80,7 +80,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         //DELETE: api/v1/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/current
         [Authorize]
         [AccessToken]
-        [HttpDelete("{id:alpha}/by-user/current")]
+        [HttpDelete("{id}/by-user/current")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByCurrentUserIdAsync([FromRoute] string id)
@@ -92,9 +92,10 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         //DELETE: api/v1/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [Authorize(InstaConnectConstants.AdminRole)]
+        [Authorize]
         [AccessToken]
-        [HttpDelete("{id:alpha}/by-user/{userId:alpha}")]
+        [RequiredRole(InstaConnectConstants.AdminRole)]
+        [HttpDelete("{id}/by-user/{userId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByUserIdAsync([FromRoute] string userId, [FromRoute] string id)

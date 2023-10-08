@@ -20,8 +20,8 @@ namespace InstaConnect.Presentation.API.Controllers.v1
             _accountService = accountService;
         }
 
-        // PATCH: api/v1/accounts/confirm-email/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
-        [HttpPatch("confirm-email/by-user/{userId:alpha}/by-token/{encodedToken:alpha}")]
+        // GET: api/v1/accounts/confirm-email/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
+        [HttpGet("confirm-email/by-user/{userId}/by-token/{encodedToken}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ConfirmEmailAsync([FromRoute] string userId, [FromRoute] string encodedToken)
@@ -32,7 +32,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         // GET: api/v1/accounts/resend-confirm-email-token/by-email/user@example.com
-        [HttpGet("resend-confirm-email-token/by-email/{email:alpha}")]
+        [HttpGet("resend-confirm-email-token/by-email/{email}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ResendConfirmEmailTokenAsync([FromRoute] string email)
@@ -43,7 +43,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         // GET: api/v1/accounts/send-reset-password-token/by-email/user@example.com
-        [HttpGet("send-reset-password-token/by-email/{email:alpha}")]
+        [HttpGet("send-reset-password-token/by-email/{email}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SendResetPasswordTokenAsync([FromRoute] string email)
@@ -89,8 +89,8 @@ namespace InstaConnect.Presentation.API.Controllers.v1
             return this.HandleResponse(response);
         }
 
-        // PATCH: api/v1/accounts/reset-password/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
-        [HttpPatch("reset-password/by-user/{userId:alpha}/by-token/{encodedToken:alpha}")]
+        // POST: api/v1/accounts/reset-password/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
+        [HttpPost("reset-password/by-user/{userId}/by-token/{encodedToken}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ResetPasswordAsync([FromRoute] string userId, [FromRoute] string encodedToken, [FromBody] AccountResetPasswordDTO request)
@@ -130,9 +130,10 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         // DELETE: api/v1/accounts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [Authorize(InstaConnectConstants.AdminRole)]
+        [Authorize]
         [AccessToken]
-        [HttpDelete("{id:alpha}")]
+        [RequiredRole(InstaConnectConstants.AdminRole)]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByIdAsync([FromRoute] string userId)

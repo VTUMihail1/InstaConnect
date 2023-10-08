@@ -51,9 +51,10 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         // GET: api/v1/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/personal-details
-        [Authorize(InstaConnectConstants.AdminRole)]
+        [Authorize]
         [AccessToken]
-        [HttpGet("{id::alpha}/personal-details")]
+        [RequiredRole(InstaConnectConstants.AdminRole)]
+        [HttpGet("{id}/personal-details")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -65,7 +66,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         // GET: api/v1/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("{id:alpha}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync([FromRoute] string id)
@@ -76,7 +77,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         // GET: api/v1/users/by-username/example
-        [HttpGet("by-username/{username:alpha}")]
+        [HttpGet("by-username/{username}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByUsernameAsync([FromRoute] string username)
