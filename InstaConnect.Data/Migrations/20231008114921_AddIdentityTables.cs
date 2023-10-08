@@ -5,7 +5,7 @@
 namespace InstaConnect.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class AddIdentityTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -103,30 +103,30 @@ namespace InstaConnect.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "follow",
+                name: "Follows",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "varchar(255)", nullable: false)
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    following_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    FollowingId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    follower_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    FollowerId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_follow", x => x.id);
+                    table.PrimaryKey("PK_Follows", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_follow_user_follower_id",
-                        column: x => x.follower_id,
+                        name: "FK_Follows_user_FollowerId",
+                        column: x => x.FollowerId,
                         principalTable: "user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_follow_user_following_id",
-                        column: x => x.following_id,
+                        name: "FK_Follows_user_FollowingId",
+                        column: x => x.FollowingId,
                         principalTable: "user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -134,59 +134,32 @@ namespace InstaConnect.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "message",
+                name: "Messages",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "varchar(255)", nullable: false)
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    sender_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    SenderId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    receiver_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    ReceiverId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    content = table.Column<string>(type: "varchar(2000)", maxLength: 2000, nullable: false)
+                    Content = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_message", x => x.id);
+                    table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_message_user_receiver_id",
-                        column: x => x.receiver_id,
+                        name: "FK_Messages_user_ReceiverId",
+                        column: x => x.ReceiverId,
                         principalTable: "user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_message_user_sender_id",
-                        column: x => x.sender_id,
-                        principalTable: "user",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "post",
-                columns: table => new
-                {
-                    id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    title = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    content = table.Column<string>(type: "varchar(5000)", maxLength: 5000, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    user_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_post", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_post_user_user_id",
-                        column: x => x.user_id,
+                        name: "FK_Messages_user_SenderId",
+                        column: x => x.SenderId,
                         principalTable: "user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -194,27 +167,54 @@ namespace InstaConnect.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "token",
+                name: "Posts",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    value = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
+                    Title = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    type = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    Content = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    is_valid_until = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    user_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_token", x => x.id);
+                    table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_token_user_user_id",
-                        column: x => x.user_id,
+                        name: "FK_Posts_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Tokens",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Value = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Type = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ValidUntil = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tokens_user_UserId",
+                        column: x => x.UserId,
                         principalTable: "user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -338,40 +338,39 @@ namespace InstaConnect.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "post_comment",
+                name: "PostComments",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "varchar(255)", nullable: false)
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    user_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    post_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    PostId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    content = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    Content = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    comment_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                    PostCommentId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_post_comment", x => x.id);
+                    table.PrimaryKey("PK_PostComments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_post_comment_post_comment_comment_id",
-                        column: x => x.comment_id,
-                        principalTable: "post_comment",
-                        principalColumn: "id",
+                        name: "FK_PostComments_PostComments_PostCommentId",
+                        column: x => x.PostCommentId,
+                        principalTable: "PostComments",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PostComments_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_post_comment_post_post_id",
-                        column: x => x.post_id,
-                        principalTable: "post",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_post_comment_user_user_id",
-                        column: x => x.user_id,
+                        name: "FK_PostComments_user_UserId",
+                        column: x => x.UserId,
                         principalTable: "user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -379,30 +378,30 @@ namespace InstaConnect.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "post_like",
+                name: "PostLikes",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "varchar(255)", nullable: false)
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    post_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    PostId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    user_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_post_like", x => x.id);
+                    table.PrimaryKey("PK_PostLikes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_post_like_post_post_id",
-                        column: x => x.post_id,
-                        principalTable: "post",
-                        principalColumn: "id",
+                        name: "FK_PostLikes_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_post_like_user_user_id",
-                        column: x => x.user_id,
+                        name: "FK_PostLikes_user_UserId",
+                        column: x => x.UserId,
                         principalTable: "user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -410,30 +409,30 @@ namespace InstaConnect.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "comment_like",
+                name: "CommentLikes",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "varchar(255)", nullable: false)
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    comment_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    PostCommentId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    user_id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_comment_like", x => x.id);
+                    table.PrimaryKey("PK_CommentLikes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_comment_like_post_comment_comment_id",
-                        column: x => x.comment_id,
-                        principalTable: "post_comment",
-                        principalColumn: "id",
+                        name: "FK_CommentLikes_PostComments_PostCommentId",
+                        column: x => x.PostCommentId,
+                        principalTable: "PostComments",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_comment_like_user_user_id",
-                        column: x => x.user_id,
+                        name: "FK_CommentLikes_user_UserId",
+                        column: x => x.UserId,
                         principalTable: "user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -441,64 +440,64 @@ namespace InstaConnect.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_comment_like_comment_id",
-                table: "comment_like",
-                column: "comment_id");
+                name: "IX_CommentLikes_PostCommentId",
+                table: "CommentLikes",
+                column: "PostCommentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_comment_like_user_id",
-                table: "comment_like",
-                column: "user_id");
+                name: "IX_CommentLikes_UserId",
+                table: "CommentLikes",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_follow_follower_id",
-                table: "follow",
-                column: "follower_id");
+                name: "IX_Follows_FollowerId",
+                table: "Follows",
+                column: "FollowerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_follow_following_id",
-                table: "follow",
-                column: "following_id");
+                name: "IX_Follows_FollowingId",
+                table: "Follows",
+                column: "FollowingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_message_receiver_id",
-                table: "message",
-                column: "receiver_id");
+                name: "IX_Messages_ReceiverId",
+                table: "Messages",
+                column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_message_sender_id",
-                table: "message",
-                column: "sender_id");
+                name: "IX_Messages_SenderId",
+                table: "Messages",
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_post_user_id",
-                table: "post",
-                column: "user_id");
+                name: "IX_PostComments_PostCommentId",
+                table: "PostComments",
+                column: "PostCommentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_post_comment_comment_id",
-                table: "post_comment",
-                column: "comment_id");
+                name: "IX_PostComments_PostId",
+                table: "PostComments",
+                column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_post_comment_post_id",
-                table: "post_comment",
-                column: "post_id");
+                name: "IX_PostComments_UserId",
+                table: "PostComments",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_post_comment_user_id",
-                table: "post_comment",
-                column: "user_id");
+                name: "IX_PostLikes_PostId",
+                table: "PostLikes",
+                column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_post_like_post_id",
-                table: "post_like",
-                column: "post_id");
+                name: "IX_PostLikes_UserId",
+                table: "PostLikes",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_post_like_user_id",
-                table: "post_like",
-                column: "user_id");
+                name: "IX_Posts_UserId",
+                table: "Posts",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
@@ -512,9 +511,9 @@ namespace InstaConnect.Data.Migrations
                 column: "role_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_token_user_id",
-                table: "token",
-                column: "user_id");
+                name: "IX_Tokens_UserId",
+                table: "Tokens",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -547,22 +546,22 @@ namespace InstaConnect.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "comment_like");
+                name: "CommentLikes");
 
             migrationBuilder.DropTable(
-                name: "follow");
+                name: "Follows");
 
             migrationBuilder.DropTable(
-                name: "message");
+                name: "Messages");
 
             migrationBuilder.DropTable(
-                name: "post_like");
+                name: "PostLikes");
 
             migrationBuilder.DropTable(
                 name: "role_claim");
 
             migrationBuilder.DropTable(
-                name: "token");
+                name: "Tokens");
 
             migrationBuilder.DropTable(
                 name: "user_claim");
@@ -577,13 +576,13 @@ namespace InstaConnect.Data.Migrations
                 name: "user_token");
 
             migrationBuilder.DropTable(
-                name: "post_comment");
+                name: "PostComments");
 
             migrationBuilder.DropTable(
                 name: "role");
 
             migrationBuilder.DropTable(
-                name: "post");
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "user");

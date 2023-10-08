@@ -9,11 +9,13 @@ namespace InstaConnect.Business.Abstraction.Services
     public interface IPostService
     {
         /// <summary>
-        /// Retrieves all posts associated with a user.
+        /// Retrieves all posts with pagination support based on user ID.
         /// </summary>
         /// <param name="userId">The ID of the user.</param>
-        /// <returns>A collection of <see cref="PostResultDTO"/> representing posts.</returns>
-        Task<ICollection<PostResultDTO>> GetAllAsync(string userId);
+        /// <param name="page">The page number for pagination.</param>
+        /// <param name="amount">The number of posts to retrieve per page.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing a collection of <see cref="PostResultDTO"/>.</returns>
+        Task<IResult<ICollection<PostResultDTO>>> GetAllAsync(string userId, int page, int amount);
 
         /// <summary>
         /// Retrieves a post by its unique identifier.
@@ -25,26 +27,25 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <summary>
         /// Adds a new post.
         /// </summary>
-        /// <param name="currentUserId">The ID of the current user performing the action.</param>
         /// <param name="postAddDTO">The data for the new post.</param>
         /// <returns>An <see cref="IResult{T}"/> containing the added <see cref="PostResultDTO"/>.</returns>
-        Task<IResult<PostResultDTO>> AddAsync(string currentUserId, PostAddDTO postAddDTO);
+        Task<IResult<PostResultDTO>> AddAsync(PostAddDTO postAddDTO);
 
         /// <summary>
         /// Updates an existing post by its unique identifier.
         /// </summary>
-        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="userId">The ID of the user performing the action.</param>
         /// <param name="id">The unique identifier of the post to update.</param>
         /// <param name="postUpdateDTO">The data to update the post with.</param>
         /// <returns>An <see cref="IResult{T}"/> containing the updated <see cref="PostResultDTO"/>.</returns>
-        Task<IResult<PostResultDTO>> UpdateAsync(string currentUserId, string id, PostUpdateDTO postUpdateDTO);
+        Task<IResult<PostResultDTO>> UpdateAsync(string userId, string id, PostUpdateDTO postUpdateDTO);
 
         /// <summary>
         /// Deletes a post by its unique identifier.
         /// </summary>
-        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="userId">The ID of the user performing the action.</param>
         /// <param name="id">The unique identifier of the post to delete.</param>
         /// <returns>An <see cref="IResult{T}"/> containing the deleted <see cref="PostResultDTO"/>.</returns>
-        Task<IResult<PostResultDTO>> DeleteAsync(string currentUserId, string id);
+        Task<IResult<PostResultDTO>> DeleteAsync(string userId, string id);
     }
 }

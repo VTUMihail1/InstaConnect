@@ -15,11 +15,13 @@ namespace InstaConnect.Data.Repositories.Base
             _instaConnectContext = instaConnectContext;
         }
 
-        public virtual async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> expression)
+        public virtual async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> expression, int skipAmount = default, int takeAmount = int.MaxValue)
         {
             var entities = await _instaConnectContext
                 .Set<TEntity>()
                 .Where(expression)
+                .Skip(skipAmount)
+                .Take(takeAmount)
                 .AsNoTracking()
                 .ToListAsync();
 

@@ -41,5 +41,9 @@
         public const int MessageContentMinLength = 1;
 
         public const int MessageContentMaxLength = 500;
+
+        public const int PageMinLength = 1;
+
+        public const int AmountMinLength = 1;
     }
 }

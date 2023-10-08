@@ -10,7 +10,7 @@ namespace InstaConnect.Presentation.API.Extensions
         {
             if (response.StatusCode == InstaConnectStatusCode.NotFound)
             {
-                return controller.NotFound(response.ErrorMessages);
+                return controller.NotFound();
             }
             else if (response.StatusCode == InstaConnectStatusCode.BadRequest)
             {
@@ -18,7 +18,7 @@ namespace InstaConnect.Presentation.API.Extensions
             }
             else if (response.StatusCode == InstaConnectStatusCode.Unauthorized)
             {
-                return controller.Unauthorized(response.ErrorMessages);
+                return controller.Unauthorized();
             }
             else if (response.StatusCode == InstaConnectStatusCode.Forbidden)
             {

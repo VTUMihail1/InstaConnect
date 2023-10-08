@@ -9,13 +9,15 @@ namespace InstaConnect.Business.Abstraction.Services
     public interface IPostCommentService
     {
         /// <summary>
-        /// Retrieves all post comments associated with a user, post, and a specific post comment.
+        /// Retrieves all post comments with pagination support based on user ID, post ID, and post comment ID.
         /// </summary>
         /// <param name="userId">The ID of the user.</param>
         /// <param name="postId">The ID of the post.</param>
-        /// <param name="postCommentId">The ID of the specific post comment.</param>
-        /// <returns>A collection of <see cref="PostCommentResultDTO"/> representing post comments.</returns>
-        Task<ICollection<PostCommentResultDTO>> GetAllAsync(string userId, string postId, string postCommentId);
+        /// <param name="postCommentId">The ID of the post comment.</param>
+        /// <param name="page">The page number for pagination.</param>
+        /// <param name="amount">The number of post comments to retrieve per page.</param>
+        /// <returns>An <see cref="IResult{T}"/> containing a collection of <see cref="PostCommentResultDTO"/>.</returns>
+        Task<IResult<ICollection<PostCommentResultDTO>>> GetAllAsync(string userId, string postId, string postCommentId, int page, int amount);
 
         /// <summary>
         /// Retrieves a post comment by its unique identifier.
@@ -27,26 +29,25 @@ namespace InstaConnect.Business.Abstraction.Services
         /// <summary>
         /// Adds a new post comment.
         /// </summary>
-        /// <param name="currentUserId">The ID of the current user performing the action.</param>
         /// <param name="postCommentAddDTO">The data for the new post comment.</param>
         /// <returns>An <see cref="IResult{T}"/> containing the added <see cref="PostCommentResultDTO"/>.</returns>
-        Task<IResult<PostCommentResultDTO>> AddAsync(string currentUserId, PostCommentAddDTO postCommentAddDTO);
+        Task<IResult<PostCommentResultDTO>> AddAsync(PostCommentAddDTO postCommentAddDTO);
 
         /// <summary>
         /// Updates an existing post comment by its unique identifier.
         /// </summary>
-        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="userId">The ID of the user performing the action.</param>
         /// <param name="id">The unique identifier of the post comment to update.</param>
         /// <param name="postCommentUpdateDTO">The data to update the post comment with.</param>
         /// <returns>An <see cref="IResult{T}"/> containing the updated <see cref="PostCommentResultDTO"/>.</returns>
-        Task<IResult<PostCommentResultDTO>> UpdateAsync(string currentUserId, string id, PostCommentUpdateDTO postCommentUpdateDTO);
+        Task<IResult<PostCommentResultDTO>> UpdateAsync(string userId, string id, PostCommentUpdateDTO postCommentUpdateDTO);
 
         /// <summary>
         /// Deletes a post comment by its unique identifier.
         /// </summary>
-        /// <param name="currentUserId">The ID of the current user performing the action.</param>
+        /// <param name="userId">The ID of the user performing the action.</param>
         /// <param name="id">The unique identifier of the post comment to delete.</param>
         /// <returns>An <see cref="IResult{T}"/> containing the deleted <see cref="PostCommentResultDTO"/>.</returns>
-        Task<IResult<PostCommentResultDTO>> DeleteAsync(string currentUserId, string id);
+        Task<IResult<PostCommentResultDTO>> DeleteAsync(string userId, string id);
     }
 }
