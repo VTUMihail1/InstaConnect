@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Presentation.API.Controllers
+namespace InstaConnect.Presentation.API.Controllers.v1
 {
-    [Route("api/users")]
     [ApiController]
+    [Route("api/v{version:apiVersion}/users")]
+    [ApiVersion("1.0")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -20,7 +21,7 @@ namespace InstaConnect.Presentation.API.Controllers
             _userService = userService;
         }
 
-        // GET: api/users
+        // GET: api/v1/users
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllAsync(
@@ -34,7 +35,7 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // GET: api/users/personal-details/current
+        // GET: api/v1/users/personal-details/current
         [Authorize]
         [AccessToken]
         [HttpGet("personal-details/current")]
@@ -49,10 +50,10 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // GET: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/personal-details
+        // GET: api/v1/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/personal-details
         [Authorize(InstaConnectConstants.AdminRole)]
         [AccessToken]
-        [HttpGet("{id}/personal-details")]
+        [HttpGet("{id::alpha}/personal-details")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -63,8 +64,8 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // GET: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("{id}")]
+        // GET: api/v1/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("{id:alpha}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync([FromRoute] string id)
@@ -74,8 +75,8 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // GET: api/users/by-username/example
-        [HttpGet("by-username/{username}")]
+        // GET: api/v1/users/by-username/example
+        [HttpGet("by-username/{username:alpha}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByUsernameAsync([FromRoute] string username)
