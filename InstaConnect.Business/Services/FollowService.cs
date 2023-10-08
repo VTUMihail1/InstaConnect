@@ -51,7 +51,7 @@ namespace InstaConnect.Business.Services
 
             if (existingFollow == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<FollowResultDTO>(InstaConnectErrorMessages.FollowNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<FollowResultDTO>();
 
                 return notFoundResult;
             }
@@ -68,7 +68,7 @@ namespace InstaConnect.Business.Services
 
             if (existingFollow == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<FollowResultDTO>(InstaConnectErrorMessages.FollowNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<FollowResultDTO>();
 
                 return notFoundResult;
             }
@@ -122,7 +122,7 @@ namespace InstaConnect.Business.Services
 
             if (existingFollow == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<FollowResultDTO>(InstaConnectErrorMessages.FollowNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<FollowResultDTO>();
 
                 return notFoundResult;
             }
@@ -140,7 +140,7 @@ namespace InstaConnect.Business.Services
 
             if (existingFollow == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<FollowResultDTO>(InstaConnectErrorMessages.FollowNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<FollowResultDTO>();
 
                 return notFoundResult;
             }

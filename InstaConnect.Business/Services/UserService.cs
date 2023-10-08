@@ -50,7 +50,7 @@ namespace InstaConnect.Business.Services
 
             if (existingUser == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<UserResultDTO>(InstaConnectErrorMessages.UserNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<UserResultDTO>();
             }
 
             var userResultDTO = _mapper.Map<UserResultDTO>(existingUser);
@@ -65,7 +65,7 @@ namespace InstaConnect.Business.Services
 
             if (existingUser == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<UserResultDTO>(InstaConnectErrorMessages.UserNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<UserResultDTO>();
             }
 
             var userResultDTO = _mapper.Map<UserResultDTO>(existingUser);
@@ -80,7 +80,7 @@ namespace InstaConnect.Business.Services
 
             if (existingUser == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<UserResultDTO>(InstaConnectErrorMessages.UserNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<UserResultDTO>();
             }
 
             var userPersonalResultDTO = _mapper.Map<UserPersonalResultDTO>(existingUser);

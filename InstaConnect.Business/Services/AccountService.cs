@@ -288,7 +288,7 @@ namespace InstaConnect.Business.Services
 
             if (existingUserById == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<AccountResultDTO>(InstaConnectErrorMessages.UserNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<AccountResultDTO>();
 
                 return notFoundResult;
             }
@@ -316,7 +316,7 @@ namespace InstaConnect.Business.Services
 
             if (existingUser == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<AccountResultDTO>(InstaConnectErrorMessages.UserNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<AccountResultDTO>();
 
                 return notFoundResult;
             }

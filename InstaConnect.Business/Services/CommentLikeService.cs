@@ -56,7 +56,7 @@ namespace InstaConnect.Business.Services
 
             if (existingCommentLike == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>();
 
                 return notFoundResult;
             }
@@ -73,7 +73,7 @@ namespace InstaConnect.Business.Services
 
             if (existingCommentLike == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>();
 
                 return notFoundResult;
             }
@@ -90,7 +90,7 @@ namespace InstaConnect.Business.Services
 
             if (existingUser == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>(InstaConnectErrorMessages.UserNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>();
 
                 return notFoundResult;
             }
@@ -127,7 +127,7 @@ namespace InstaConnect.Business.Services
 
             if (existingCommentLike == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>();
 
                 return notFoundResult;
             }
@@ -145,7 +145,7 @@ namespace InstaConnect.Business.Services
 
             if (existingCommentLike == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>(InstaConnectErrorMessages.LikeNotFound);
+                var notFoundResult = _resultFactory.GetNotFoundResult<CommentLikeResultDTO>();
 
                 return notFoundResult;
             }

@@ -49,16 +49,16 @@ namespace InstaConnect.Presentation.API.Controllers
             return this.HandleResponse(response);
         }
 
-        // GET: api/users/personal-details/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // GET: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/personal-details
         [Authorize(InstaConnectConstants.AdminRole)]
         [AccessToken]
-        [HttpGet("personal-details/{userId}")]
+        [HttpGet("{id}/personal-details")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetPersonalByIdAsync([FromRoute] string userId)
+        public async Task<IActionResult> GetPersonalByIdAsync([FromRoute] string id)
         {
-            var response = await _userService.GetPersonalByIdAsync(userId);
+            var response = await _userService.GetPersonalByIdAsync(id);
 
             return this.HandleResponse(response);
         }

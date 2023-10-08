@@ -55,7 +55,6 @@ namespace InstaConnect.Presentation.API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> AddAsync([FromBody] PostCommentAddDTO postCommentAddDTO)
         {
             var response = await _postCommentService.AddAsync(postCommentAddDTO);
@@ -68,7 +67,6 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] PostCommentUpdateDTO postCommentUpdateDTO)
         {
@@ -97,9 +95,8 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpDelete("{id}/by-user/{userId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteAsync([FromRoute] string userId, [FromRoute] string id)
+        public async Task<IActionResult> DeleteByUserIdAsync([FromRoute] string userId, [FromRoute] string id)
         {
             var response = await _postCommentService.DeleteAsync(userId, id);
 

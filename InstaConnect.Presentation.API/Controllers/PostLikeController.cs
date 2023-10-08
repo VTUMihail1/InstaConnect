@@ -77,26 +77,11 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpDelete("by-user/current/by-post/{postId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByCurrentUserIdAndPostIdAsync([FromRoute] string postId)
         {
             var currentUserId = User.GetCurrentUserId();
             var response = await _postLikeService.DeleteByUserIdAndPostIdAsync(currentUserId, postId);
-
-            return this.HandleResponse(response);
-        }
-
-        //DELETE: api/post-likes/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-post/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [Authorize(InstaConnectConstants.AdminRole)]
-        [AccessToken]
-        [HttpDelete("by-user/{userId}/by-post/{postId}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteByUserIdAndPostIdAsync([FromRoute] string userId, [FromRoute] string postId)
-        {
-            var response = await _postLikeService.DeleteByUserIdAndPostIdAsync(userId, postId);
 
             return this.HandleResponse(response);
         }
@@ -111,20 +96,6 @@ namespace InstaConnect.Presentation.API.Controllers
         {
             var currentUserId = User.GetCurrentUserId();
             var response = await _postLikeService.DeleteAsync(currentUserId, id);
-
-            return this.HandleResponse(response);
-        }
-
-        //DELETE: api/post-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [Authorize(InstaConnectConstants.AdminRole)]
-        [AccessToken]
-        [HttpDelete("{id}/by-user/{userId}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteByUserIdAsync([FromRoute] string userId, [FromRoute] string id)
-        {
-            var response = await _postLikeService.DeleteAsync(userId, id);
 
             return this.HandleResponse(response);
         }

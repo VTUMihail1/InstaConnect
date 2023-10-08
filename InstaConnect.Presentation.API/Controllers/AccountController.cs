@@ -105,7 +105,6 @@ namespace InstaConnect.Presentation.API.Controllers
         [HttpPut("current")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> EditByCurrentIdAsync([FromBody] AccountEditDTO accountEditDTO)
         {
@@ -120,7 +119,6 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpDelete("current")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByCurrentIdAsync()
         {
@@ -135,7 +133,6 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByIdAsync([FromRoute] string userId)
         {
