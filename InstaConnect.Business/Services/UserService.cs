@@ -3,7 +3,6 @@ using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.User;
 using InstaConnect.Business.Models.Results;
-using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Data.Abstraction.Repositories;
 
 namespace InstaConnect.Business.Services
