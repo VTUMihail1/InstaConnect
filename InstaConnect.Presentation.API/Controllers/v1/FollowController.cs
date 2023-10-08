@@ -36,7 +36,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         // GET: api/v1/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("{id:alpha}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync([FromRoute] string id)
@@ -47,7 +47,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         //GET: api/v1/follows/by-follower/current/by-following/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-follower/current/by-following/{followingId:alpha}")]
+        [HttpGet("by-follower/current/by-following/{followingId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByFollowerIdAndFollowingIdAsync([FromRoute] string followerId, [FromRoute] string followingId)
@@ -75,7 +75,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         //DELETE: api/v1/follows/by-follower/current/by-following/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [AccessToken]
-        [HttpDelete("by-follower/current/by-following/{followingId:alpha}")]
+        [HttpDelete("by-follower/current/by-following/{followingId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByCurrentFollowerIdAndFollowingIdAsync([FromRoute] string followingId)
@@ -89,7 +89,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         //DELETE: api/v1/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-follower/current
         [Authorize]
         [AccessToken]
-        [HttpDelete("{id:alpha}/by-follower/current")]
+        [HttpDelete("{id}/by-follower/current")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteCurrentFollowerAsync([FromRoute] string id)

@@ -22,7 +22,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         // GET: api/v1/messages/by-sender/current/by-receiver/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [AccessToken]
-        [HttpGet("by-sender/current/by-receiver/{receiverId:alpha}")]
+        [HttpGet("by-sender/current/by-receiver/{receiverId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllBySenderIdAndReceiverIdAsync([FromRoute] string receiverId)
         {
@@ -35,7 +35,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         // GET: api/v1/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [AccessToken]
-        [HttpGet("{id:alpha}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync([FromRoute] string id)
@@ -64,7 +64,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         // PUT: api/v1/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [AccessToken]
-        [HttpPut("{id:alpha}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] MessageUpdateDTO messageUpdateDTO)
@@ -78,7 +78,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         //DELETE: api/v1/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/current
         [Authorize]
         [AccessToken]
-        [HttpDelete("{id:alpha}/by-user/current")]
+        [HttpDelete("{id}/by-user/current")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByCurrentUserIdAsync([FromRoute] string id)

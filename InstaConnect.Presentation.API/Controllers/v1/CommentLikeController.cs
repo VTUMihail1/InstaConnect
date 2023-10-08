@@ -37,7 +37,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         // GET: api/v1/comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("{id:alpha}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync([FromRoute] string id)
@@ -48,7 +48,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         //GET: api/v1/comment-likes/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-post-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [HttpGet("by-user/{userId:alpha}/by-post-comment/{postCommentId:alpha}")]
+        [HttpGet("by-user/{userId}/by-post-comment/{postCommentId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByUserIdAndPostCommentIdAsync([FromRoute] string userId, [FromRoute] string postCommentId)
@@ -76,7 +76,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         //DELETE: api/v1/comment-likes/by-user/current/by-post-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [AccessToken]
-        [HttpDelete("by-user/current/by-post-comment/{postCommentId:alpha}")]
+        [HttpDelete("by-user/current/by-post-comment/{postCommentId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByCurrentUserIdAndPostCommentIdAsync([FromRoute] string postCommentId)
@@ -87,42 +87,16 @@ namespace InstaConnect.Presentation.API.Controllers.v1
             return this.HandleResponse(response);
         }
 
-        //DELETE: api/v1/comment-likes/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-post-comment/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [Authorize(Roles = InstaConnectConstants.AdminRole)]
-        [AccessToken]
-        [HttpDelete("by-user/{userId:alpha}/by-post-comment/{postCommentId:alpha}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteByUserIdAndPostCommentIdAsync([FromRoute] string userId, [FromRoute] string postCommentId)
-        {
-            var response = await _commentLikeService.DeleteByUserIdAndPostCommentIdAsync(userId, postCommentId);
-
-            return this.HandleResponse(response);
-        }
-
         //DELETE: api/v1/comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/current
         [Authorize]
         [AccessToken]
-        [HttpDelete("{id:alpha}/by-user/current")]
+        [HttpDelete("{id}/by-user/current")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByCurrentUserIdAsync([FromRoute] string id)
         {
             var currentUserId = User.GetCurrentUserId();
             var response = await _commentLikeService.DeleteAsync(currentUserId, id);
-
-            return this.HandleResponse(response);
-        }
-
-        //DELETE: api/v1/comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-        [Authorize(Roles = InstaConnectConstants.AdminRole)]
-        [AccessToken]
-        [HttpDelete("{id:alpha}/by-user/{userId}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteByUserIdAsync([FromRoute] string userId, [FromRoute] string id)
-        {
-            var response = await _commentLikeService.DeleteAsync(userId, id);
 
             return this.HandleResponse(response);
         }
