@@ -174,14 +174,21 @@ await app.SetUpDatabase();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapHub<ChatHub>("/chat-hub");
+
+app.UseHsts();
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
+app.UseRouting();
 
 app.UseCors("AllowedOrigins");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<ChatHub>("/chat-hub");
 
 app.MapControllers();
 

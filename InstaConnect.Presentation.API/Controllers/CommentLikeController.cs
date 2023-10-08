@@ -77,7 +77,6 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpDelete("by-user/current/by-post-comment/{postCommentId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByCurrentUserIdAndPostCommentIdAsync([FromRoute] string postCommentId)
         {
@@ -92,7 +91,6 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpDelete("by-user/{userId}/by-post-comment/{postCommentId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByUserIdAndPostCommentIdAsync([FromRoute] string userId, [FromRoute] string postCommentId)
         {
@@ -106,7 +104,6 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpDelete("{id}/by-user/current")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByCurrentUserIdAsync([FromRoute] string id)
         {
@@ -121,7 +118,6 @@ namespace InstaConnect.Presentation.API.Controllers
         [AccessToken]
         [HttpDelete("{id}/by-user/{userId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByUserIdAsync([FromRoute] string userId, [FromRoute] string id)
         {

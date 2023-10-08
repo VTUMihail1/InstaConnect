@@ -26,7 +26,7 @@ namespace InstaConnect.Presentation.API.Filters
 
                 if (currentUserIdentifier != userIdentifier)
                 {
-                    context.Result = new UnauthorizedResult();
+                    context.Result = new ForbidResult();
 
                     return;
                 }
