@@ -1,0 +1,219 @@
+﻿using AutoMapper;
+using InstaConnect.Business.Abstraction.Factories;
+using InstaConnect.Business.Abstraction.Services;
+using InstaConnect.Business.AutoMapper;
+using InstaConnect.Business.Factories;
+using InstaConnect.Business.Models.DTOs.Post;
+using InstaConnect.Business.Models.Enums;
+using InstaConnect.Business.Services;
+using InstaConnect.Data.Abstraction.Helpers;
+using InstaConnect.Data.Abstraction.Repositories;
+using InstaConnect.Data.Models.Entities;
+using Moq;
+using NuGet.Frameworks;
+using NUnit.Framework;
+
+namespace InstaConnect.Business.UnitTests.Tests
+{
+    [TestFixture]
+    public class PostServiceTests
+    {
+        public const string TestValidUserId = "ValidUserId";
+        public const string TestInvalidUserId = "InvalidUserId";
+        public const string TestValidPostId = "ValidPostId";
+        public const string TestInvalidPostId = "InvalidPostId";
+
+        private IMapper _mapper;
+        private IResultFactory _resultFactory;
+        private Mock<IPostRepository> _mockPostRepository;
+        private Mock<IInstaConnectUserManager> _mockInstaConnectUserManager;
+        private IPostService _postService;
+
+        [SetUp]
+        public void Setup()
+        {
+            Post testValidPost = new Post();
+            Post testInvalidPost = null;
+            User testValidUser = new User();
+            User testInvalidUser = null;
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new InstaConnectProfile());
+            });
+            _mapper = config.CreateMapper();
+            _resultFactory = new ResultFactory();
+            _mockPostRepository = new Mock<IPostRepository>();
+            _mockInstaConnectUserManager = new Mock<IInstaConnectUserManager>();
+            _postService = new PostService(_mapper, _resultFactory, _mockPostRepository.Object, _mockInstaConnectUserManager.Object);
+
+            _mockPostRepository.Setup(s => s.FindEntityAsync(p => p.Id == TestValidPostId))
+                .ReturnsAsync(testValidPost);
+
+            _mockPostRepository.Setup(s => s.FindEntityAsync(p => p.Id == TestInvalidPostId))
+                .ReturnsAsync(testInvalidPost);
+
+            _mockPostRepository.Setup(s => s.FindEntityAsync(p => p.Id == TestInvalidPostId && p.UserId == TestInvalidUserId))
+                .ReturnsAsync(testInvalidPost);
+
+            _mockPostRepository.Setup(s => s.FindEntityAsync(p => p.Id == TestValidPostId && p.UserId == TestInvalidUserId))
+                .ReturnsAsync(testInvalidPost);
+
+            _mockPostRepository.Setup(s => s.FindEntityAsync(p => p.Id == TestInvalidPostId && p.UserId == TestValidUserId))
+                .ReturnsAsync(testInvalidPost);
+
+            _mockPostRepository.Setup(s => s.FindEntityAsync(p => p.Id == TestValidPostId && p.UserId == TestValidUserId))
+                .ReturnsAsync(testValidPost);
+
+            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestValidUserId))
+                .ReturnsAsync(testValidUser);
+
+            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestInvalidUserId))
+                .ReturnsAsync(testInvalidUser);
+        }
+
+        [Test]
+        public async Task GetById_HasValidPostId_ReturnsOkResult()
+        {
+            // Act
+            var result = await _postService.GetByIdAsync(TestValidPostId);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.OK));
+        }
+
+        [Test]
+        public async Task GetById_HasInvalidPostId_ReturnsNotFoundResult()
+        {
+            // Act
+            var result = await _postService.GetByIdAsync(TestInvalidPostId);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
+        }
+
+        [Test]
+        public async Task AddAsync_HasInvalidUserId_ReturnsBadRequestResult()
+        {
+            // Arrange
+            var postAddDTO = new PostAddDTO()
+            {
+                UserId = TestInvalidUserId
+            };
+
+            // Act
+            var result = await _postService.AddAsync(postAddDTO);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.BadRequest));
+        }
+
+        [Test]
+        public async Task AddAsync_HasValidUserId_ReturnsNoContentResult()
+        {
+            // Arrange
+            var postAddDTO = new PostAddDTO()
+            {
+                UserId = TestValidUserId
+            };
+
+            // Act
+            var result = await _postService.AddAsync(postAddDTO);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NoContent));
+        }
+
+        [Test]
+        public async Task UpdateAsync_HasInvalidUserIdAndInvalidPostId_ReturnsNotFoundResult()
+        {
+            // Arrange
+            var postUpdateDTO = new PostUpdateDTO();
+
+            // Act
+            var result = await _postService.UpdateAsync(TestInvalidUserId, TestInvalidPostId, postUpdateDTO);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
+        }
+
+        [Test]
+        public async Task UpdateAsync_HasValidUserIdAndInvalidPostId_ReturnsNotFoundResult()
+        {
+            // Arrange
+            var postUpdateDTO = new PostUpdateDTO();
+
+            // Act
+            var result = await _postService.UpdateAsync(TestValidUserId, TestInvalidPostId, postUpdateDTO);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
+        }
+
+        [Test]
+        public async Task UpdateAsync_HasInvalidUserIdAndValidPostId_ReturnsNotFoundResult()
+        {
+            // Arrange
+            var postUpdateDTO = new PostUpdateDTO();
+
+            // Act
+            var result = await _postService.UpdateAsync(TestInvalidUserId, TestValidPostId, postUpdateDTO);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
+        }
+
+        [Test]
+        public async Task UpdateAsync_HasValidUserIdAndValidPostId_ReturnsNoContentResult()
+        {
+            // Arrange
+            var postUpdateDTO = new PostUpdateDTO();
+
+            // Act
+            var result = await _postService.UpdateAsync(TestValidUserId, TestValidPostId, postUpdateDTO);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NoContent));
+        }
+
+        [Test]
+        public async Task DeleteAsync_HasInvalidUserIdAndInvalidPostId_ReturnsNotFoundResult()
+        {
+            // Act
+            var result = await _postService.DeleteAsync(TestInvalidUserId, TestInvalidPostId);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
+        }
+
+        [Test]
+        public async Task DeleteAsync_HasValidUserIdAndInvalidPostId_ReturnsNotFoundResult()
+        {
+            // Act
+            var result = await _postService.DeleteAsync(TestValidUserId, TestInvalidPostId);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
+        }
+
+        [Test]
+        public async Task DeleteAsync_HasInvalidUserIdAndValidPostId_ReturnsNotFoundResult()
+        {
+            // Act
+            var result = await _postService.DeleteAsync(TestInvalidUserId, TestValidPostId);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
+        }
+
+        [Test]
+        public async Task DeleteAsync_HasValidUserIdAndValidPostId_ReturnsNoContentResult()
+        {
+            // Act
+            var result = await _postService.DeleteAsync(TestValidUserId, TestValidPostId);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NoContent));
+        }
+    }
+}
