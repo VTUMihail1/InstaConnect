@@ -60,6 +60,8 @@ builder.Services.AddCors(options =>
 
 builder.Services
     .AddScoped<IDbSeeder, DbSeeder>()
+    .AddScoped<IInstaConnectUserManager, InstaConnectUserManager>()
+    .AddScoped<IInstaConnectSignInManager, InstaConnectSignInManager>()
     .AddScoped<IResultFactory, ResultFactory>()
     .AddScoped<ISendGridClient>(_ => new SendGridClient(emailOptions["APIKey"]))
     .AddScoped<IEmailFactory, EmailFactory>()
@@ -103,6 +105,7 @@ builder.Services
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
+    options.User.RequireUniqueEmail = true;
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireNonAlphanumeric = true;
