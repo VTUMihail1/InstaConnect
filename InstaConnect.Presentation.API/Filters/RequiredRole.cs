@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
-using InstaConnect.Data.Models.Entities;
+﻿using InstaConnect.Data.Models.Entities;
 using InstaConnect.Presentation.API.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace InstaConnect.Presentation.API.Filters
 {

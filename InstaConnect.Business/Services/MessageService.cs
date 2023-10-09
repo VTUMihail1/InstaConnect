@@ -5,9 +5,9 @@ using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
+using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 
 namespace InstaConnect.Business.Services
 {
@@ -17,20 +17,20 @@ namespace InstaConnect.Business.Services
         private readonly IResultFactory _resultFactory;
         private readonly IMessageRepository _messageRepository;
         private readonly IMessageSender _messageSender;
-        private readonly UserManager<User> _userManager;
+        private readonly IInstaConnectUserManager _instaConnectUserManager;
 
         public MessageService(
             IMapper mapper,
             IResultFactory resultFactory,
             IMessageRepository messageRepository,
             IMessageSender messageSender,
-            UserManager<User> userManager)
+            IInstaConnectUserManager instaConnectUserManager)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _messageRepository = messageRepository;
             _messageSender = messageSender;
-            _userManager = userManager;
+            _instaConnectUserManager = instaConnectUserManager;
         }
 
         public async Task<IResult<ICollection<MessageResultDTO>>> GetAllBySenderIdAndReceiverIdAsync(string senderId, string receiverId)
@@ -64,7 +64,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<MessageResultDTO>> AddAsync(MessageAddDTO messageAddDTO)
         {
-            var existingSender = await _userManager.FindByIdAsync(messageAddDTO.SenderId);
+            var existingSender = await _instaConnectUserManager.FindByIdAsync(messageAddDTO.SenderId);
 
             if (existingSender == null)
             {
@@ -73,7 +73,7 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var existingRecipient = await _userManager.FindByIdAsync(messageAddDTO.ReceiverId);
+            var existingRecipient = await _instaConnectUserManager.FindByIdAsync(messageAddDTO.ReceiverId);
 
             if (existingRecipient == null)
             {

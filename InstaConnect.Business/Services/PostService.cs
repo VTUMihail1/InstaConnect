@@ -3,9 +3,9 @@ using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Post;
 using InstaConnect.Business.Models.Results;
+using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 
 namespace InstaConnect.Business.Services
 {
@@ -14,18 +14,18 @@ namespace InstaConnect.Business.Services
         private readonly IMapper _mapper;
         private readonly IResultFactory _resultFactory;
         private readonly IPostRepository _postRepository;
-        private readonly UserManager<User> _userManager;
+        private readonly IInstaConnectUserManager _instaConnectUserManager;
 
         public PostService(
             IMapper mapper,
             IResultFactory resultFactory,
             IPostRepository postRepository,
-            UserManager<User> userManager)
+            IInstaConnectUserManager instaConnectUserManager)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _postRepository = postRepository;
-            _userManager = userManager;
+            _instaConnectUserManager = instaConnectUserManager;
         }
 
         public async Task<IResult<ICollection<PostResultDTO>>> GetAllAsync(
@@ -65,7 +65,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostResultDTO>> AddAsync(PostAddDTO postAddDTO)
         {
-            var existingUser = _userManager.FindByIdAsync(postAddDTO.UserId);
+            var existingUser = _instaConnectUserManager.FindByIdAsync(postAddDTO.UserId);
 
             if (existingUser == null)
             {

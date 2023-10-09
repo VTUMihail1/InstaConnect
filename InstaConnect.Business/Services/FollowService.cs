@@ -4,9 +4,9 @@ using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Follow;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
+using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 
 namespace InstaConnect.Business.Services
 {
@@ -15,18 +15,18 @@ namespace InstaConnect.Business.Services
         private readonly IMapper _mapper;
         private readonly IResultFactory _resultFactory;
         private readonly IFollowRepository _followRepository;
-        private readonly UserManager<User> _userManager;
+        private readonly IInstaConnectUserManager _instaConnectUserManager;
 
         public FollowService(
             IMapper mapper,
             IResultFactory resultFactory,
             IFollowRepository followRepository,
-            UserManager<User> userManager)
+            IInstaConnectUserManager instaConnectUserManager)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _followRepository = followRepository;
-            _userManager = userManager;
+            _instaConnectUserManager = instaConnectUserManager;
         }
 
         public async Task<IResult<ICollection<FollowResultDTO>>> GetAllAsync(string followerId, string followingId, int page, int amount)
@@ -81,7 +81,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<FollowResultDTO>> AddAsync(FollowAddDTO followAddDTO)
         {
-            var existingFollower = await _userManager.FindByIdAsync(followAddDTO.FollowerId);
+            var existingFollower = await _instaConnectUserManager.FindByIdAsync(followAddDTO.FollowerId);
 
             if (existingFollower == null)
             {
@@ -90,7 +90,7 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var existingFollowing = await _userManager.FindByIdAsync(followAddDTO.FollowingId);
+            var existingFollowing = await _instaConnectUserManager.FindByIdAsync(followAddDTO.FollowingId);
 
             if (existingFollowing == null)
             {
