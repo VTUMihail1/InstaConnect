@@ -73,147 +73,64 @@ namespace InstaConnect.Business.UnitTests.Tests
         }
 
         [Test]
-        public async Task GetById_HasValidPostId_ReturnsOkResult()
+        [TestCase(TestInvalidPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestValidPostId, InstaConnectStatusCode.OK)]
+        public async Task GetById_HasId_ReturnsExpectedResult(string id, InstaConnectStatusCode statusCode)
         {
             // Act
-            var result = await _postService.GetByIdAsync(TestValidPostId);
+            var result = await _postService.GetByIdAsync(id);
 
             // Assert
-            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.OK));
+            Assert.That(result.StatusCode, Is.EqualTo(statusCode));
         }
 
         [Test]
-        public async Task GetById_HasInvalidPostId_ReturnsNotFoundResult()
-        {
-            // Act
-            var result = await _postService.GetByIdAsync(TestInvalidPostId);
-
-            // Assert
-            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
-        }
-
-        [Test]
-        public async Task AddAsync_HasInvalidUserId_ReturnsBadRequestResult()
+        [TestCase(TestInvalidUserId, InstaConnectStatusCode.BadRequest)]
+		[TestCase(TestValidUserId, InstaConnectStatusCode.NoContent)]
+		public async Task AddAsync_HasArguments_ReturnsExpectedResult(string userId, InstaConnectStatusCode statusCode)
         {
             // Arrange
             var postAddDTO = new PostAddDTO()
             {
-                UserId = TestInvalidUserId
+                UserId = userId
             };
 
             // Act
             var result = await _postService.AddAsync(postAddDTO);
 
             // Assert
-            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.BadRequest));
+            Assert.That(result.StatusCode, Is.EqualTo(statusCode));
         }
 
         [Test]
-        public async Task AddAsync_HasValidUserId_ReturnsNoContentResult()
-        {
-            // Arrange
-            var postAddDTO = new PostAddDTO()
-            {
-                UserId = TestValidUserId
-            };
-
-            // Act
-            var result = await _postService.AddAsync(postAddDTO);
-
-            // Assert
-            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NoContent));
-        }
-
-        [Test]
-        public async Task UpdateAsync_HasInvalidUserIdAndInvalidPostId_ReturnsNotFoundResult()
+        [TestCase(TestInvalidUserId, TestInvalidPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestValidUserId, TestInvalidPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestInvalidUserId, TestValidPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestValidUserId, TestValidPostId, InstaConnectStatusCode.NoContent)]
+        public async Task UpdateAsync_HasUserIdAndPostId_ReturnsExpectedResult(string userId, string id, InstaConnectStatusCode statusCode)
         {
             // Arrange
             var postUpdateDTO = new PostUpdateDTO();
 
             // Act
-            var result = await _postService.UpdateAsync(TestInvalidUserId, TestInvalidPostId, postUpdateDTO);
+            var result = await _postService.UpdateAsync(userId, id, postUpdateDTO);
 
             // Assert
-            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
+            Assert.That(result.StatusCode, Is.EqualTo(statusCode));
         }
 
         [Test]
-        public async Task UpdateAsync_HasValidUserIdAndInvalidPostId_ReturnsNotFoundResult()
-        {
-            // Arrange
-            var postUpdateDTO = new PostUpdateDTO();
-
-            // Act
-            var result = await _postService.UpdateAsync(TestValidUserId, TestInvalidPostId, postUpdateDTO);
-
-            // Assert
-            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
-        }
-
-        [Test]
-        public async Task UpdateAsync_HasInvalidUserIdAndValidPostId_ReturnsNotFoundResult()
-        {
-            // Arrange
-            var postUpdateDTO = new PostUpdateDTO();
-
-            // Act
-            var result = await _postService.UpdateAsync(TestInvalidUserId, TestValidPostId, postUpdateDTO);
-
-            // Assert
-            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
-        }
-
-        [Test]
-        public async Task UpdateAsync_HasValidUserIdAndValidPostId_ReturnsNoContentResult()
-        {
-            // Arrange
-            var postUpdateDTO = new PostUpdateDTO();
-
-            // Act
-            var result = await _postService.UpdateAsync(TestValidUserId, TestValidPostId, postUpdateDTO);
-
-            // Assert
-            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NoContent));
-        }
-
-        [Test]
-        public async Task DeleteAsync_HasInvalidUserIdAndInvalidPostId_ReturnsNotFoundResult()
+        [TestCase(TestInvalidUserId, TestInvalidPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestValidUserId, TestInvalidPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestInvalidUserId, TestValidPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestValidUserId, TestValidPostId, InstaConnectStatusCode.NoContent)]
+        public async Task DeleteAsync_HasUserIdAndPostId_ReturnsExpectedResult(string userId, string id, InstaConnectStatusCode statusCode)
         {
             // Act
-            var result = await _postService.DeleteAsync(TestInvalidUserId, TestInvalidPostId);
+            var result = await _postService.DeleteAsync(userId, id);
 
             // Assert
-            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
-        }
-
-        [Test]
-        public async Task DeleteAsync_HasValidUserIdAndInvalidPostId_ReturnsNotFoundResult()
-        {
-            // Act
-            var result = await _postService.DeleteAsync(TestValidUserId, TestInvalidPostId);
-
-            // Assert
-            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
-        }
-
-        [Test]
-        public async Task DeleteAsync_HasInvalidUserIdAndValidPostId_ReturnsNotFoundResult()
-        {
-            // Act
-            var result = await _postService.DeleteAsync(TestInvalidUserId, TestValidPostId);
-
-            // Assert
-            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NotFound));
-        }
-
-        [Test]
-        public async Task DeleteAsync_HasValidUserIdAndValidPostId_ReturnsNoContentResult()
-        {
-            // Act
-            var result = await _postService.DeleteAsync(TestValidUserId, TestValidPostId);
-
-            // Assert
-            Assert.That(result.StatusCode, Is.EqualTo(InstaConnectStatusCode.NoContent));
+            Assert.That(result.StatusCode, Is.EqualTo(statusCode));
         }
     }
 }
