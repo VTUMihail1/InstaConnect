@@ -12,6 +12,7 @@ using InstaConnect.Data.Models.Entities;
 using Moq;
 using NuGet.Frameworks;
 using NUnit.Framework;
+using System.Linq.Expressions;
 
 namespace InstaConnect.Business.UnitTests.Tests
 {
@@ -32,8 +33,11 @@ namespace InstaConnect.Business.UnitTests.Tests
         [SetUp]
         public void Setup()
         {
-            Post testValidPost = new Post();
-            Post testInvalidPost = null;
+            var testPostList = new List<Post>()
+            {
+                new Post() { Id = TestValidPostId, UserId = TestValidUserId}
+            };
+
             User testValidUser = new User();
             User testInvalidUser = null;
 
@@ -47,23 +51,8 @@ namespace InstaConnect.Business.UnitTests.Tests
             _mockInstaConnectUserManager = new Mock<IInstaConnectUserManager>();
             _postService = new PostService(_mapper, _resultFactory, _mockPostRepository.Object, _mockInstaConnectUserManager.Object);
 
-            _mockPostRepository.Setup(s => s.FindEntityAsync(p => p.Id == TestValidPostId))
-                .ReturnsAsync(testValidPost);
-
-            _mockPostRepository.Setup(s => s.FindEntityAsync(p => p.Id == TestInvalidPostId))
-                .ReturnsAsync(testInvalidPost);
-
-            _mockPostRepository.Setup(s => s.FindEntityAsync(p => p.Id == TestInvalidPostId && p.UserId == TestInvalidUserId))
-                .ReturnsAsync(testInvalidPost);
-
-            _mockPostRepository.Setup(s => s.FindEntityAsync(p => p.Id == TestValidPostId && p.UserId == TestInvalidUserId))
-                .ReturnsAsync(testInvalidPost);
-
-            _mockPostRepository.Setup(s => s.FindEntityAsync(p => p.Id == TestInvalidPostId && p.UserId == TestValidUserId))
-                .ReturnsAsync(testInvalidPost);
-
-            _mockPostRepository.Setup(s => s.FindEntityAsync(p => p.Id == TestValidPostId && p.UserId == TestValidUserId))
-                .ReturnsAsync(testValidPost);
+            _mockPostRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<Post, bool>>>()))
+               .ReturnsAsync((Expression<Func<Post, bool>> expression) => testPostList.Find(new Predicate<Post>(expression.Compile())));
 
             _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestValidUserId))
                 .ReturnsAsync(testValidUser);
