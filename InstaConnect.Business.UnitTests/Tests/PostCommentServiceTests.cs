@@ -38,12 +38,12 @@ namespace InstaConnect.Business.UnitTests.Tests
 		public void Setup()
 		{
 
-            var testPostList = new List<Post>()
+            var testPosts = new List<Post>()
             {
                 new Post() { Id = TestExistingPostId}
             };
 
-			var testPostCommentList = new List<PostComment>()
+			var testPostComments = new List<PostComment>()
 			{
 				new PostComment() { Id = TestExistingPostCommentId}
 			};
@@ -68,10 +68,10 @@ namespace InstaConnect.Business.UnitTests.Tests
 				_mockInstaConnectUserManager.Object);
 
             _mockPostRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<Post, bool>>>()))
-               .ReturnsAsync((Expression<Func<Post, bool>> expression) => testPostList.Find(new Predicate<Post>(expression.Compile())));
+               .ReturnsAsync((Expression<Func<Post, bool>> expression) => testPosts.Find(new Predicate<Post>(expression.Compile())));
 
             _mockPostCommentRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<PostComment, bool>>>())).
-				ReturnsAsync((Expression<Func<PostComment, bool>> expression) => testPostCommentList.Find(new Predicate<PostComment>(expression.Compile())));
+				ReturnsAsync((Expression<Func<PostComment, bool>> expression) => testPostComments.Find(new Predicate<PostComment>(expression.Compile())));
 
             _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestExistingUserId))
                 .ReturnsAsync(testExistingUser);

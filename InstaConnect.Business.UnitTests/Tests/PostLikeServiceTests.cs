@@ -42,13 +42,13 @@ namespace InstaConnect.Business.UnitTests.Tests
         public void Setup()
         {
 
-            var testPostList = new List<Post>()
+            var testPosts = new List<Post>()
             {
                 new Post() { Id = TestExistingPostId, UserId = TestExistingUserId},
                 new Post() { Id = TestExistingPostIdThatHasPostLike, UserId = TestExistingCommentUserId}
             };
 
-            var testPostLikeList = new List<PostLike>()
+            var testPostLikes = new List<PostLike>()
             {
                 new PostLike() { Id = TestExistingPostLikeId, UserId = TestExistingCommentUserId, PostId = TestExistingPostIdThatHasPostLike},
             };
@@ -73,10 +73,10 @@ namespace InstaConnect.Business.UnitTests.Tests
                 _mockInstaConnectUserManager.Object);
 
             _mockPostRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<Post, bool>>>()))
-               .ReturnsAsync((Expression<Func<Post, bool>> expression) => testPostList.Find(new Predicate<Post>(expression.Compile())));
+               .ReturnsAsync((Expression<Func<Post, bool>> expression) => testPosts.Find(new Predicate<Post>(expression.Compile())));
 
             _mockPostLikeRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<PostLike, bool>>>())).
-                ReturnsAsync((Expression<Func<PostLike, bool>> expression) => testPostLikeList.Find(new Predicate<PostLike>(expression.Compile())));
+                ReturnsAsync((Expression<Func<PostLike, bool>> expression) => testPostLikes.Find(new Predicate<PostLike>(expression.Compile())));
 
             _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestExistingUserId))
                 .ReturnsAsync(testExistingUser);
