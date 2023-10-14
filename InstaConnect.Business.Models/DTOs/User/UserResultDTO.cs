@@ -21,7 +21,7 @@ namespace InstaConnect.Business.Models.DTOs.User
 
         public ICollection<PostLikeResultDTO> PostLikes { get; set; } = new List<PostLikeResultDTO>();
 
-        public ICollection<CommentLikeResultDTO> CommentLikes { get; set; } = new List<CommentLikeResultDTO>();
+        public ICollection<PostCommentLikeResultDTO> CommentLikes { get; set; } = new List<PostCommentLikeResultDTO>();
 
         public ICollection<PostCommentResultDTO> PostComments { get; set; } = new List<PostCommentResultDTO>();
 

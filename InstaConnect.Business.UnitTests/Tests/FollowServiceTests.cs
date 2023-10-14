@@ -40,7 +40,12 @@ namespace InstaConnect.Business.UnitTests.Tests
 
             var testFollows = new List<Follow>()
             {
-                new Follow() {Id = TestExistingFollowId, FollowerId = TestExistingFollowFollowerId, FollowingId = TestExistingFollowFollowingId}
+                new Follow() 
+                {
+                    Id = TestExistingFollowId, 
+                    FollowerId = TestExistingFollowFollowerId, 
+                    FollowingId = TestExistingFollowFollowingId
+                }
             };
 
             var testExistingUser = new User();

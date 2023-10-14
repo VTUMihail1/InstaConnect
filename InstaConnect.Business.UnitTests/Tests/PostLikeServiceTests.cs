@@ -26,9 +26,8 @@ namespace InstaConnect.Business.UnitTests.Tests
         public const string TestNonExistingPostLikeId = "NonExistingPostLikeId";
         public const string TestExistingUserId = "ExistingUserId";
         public const string TestNonExistingUserId = "NonExistingUserId";
-        public const string TestExistingPostIdThatHasPostLike = "ExistingCommentPostId";
-        public const string TestExistingCommentPostLikeId = "ExistingCommentPostLikeId";
-        public const string TestExistingCommentUserId = "ExistingCommentUserId";
+        public const string TestExistingPostCommentPostId = "ExistingPostCommentPostId";
+        public const string TestExistingPostCommentUserId = "ExistingPostCommentUserId";
 
 
         private IMapper _mapper;
@@ -45,12 +44,12 @@ namespace InstaConnect.Business.UnitTests.Tests
             var testPosts = new List<Post>()
             {
                 new Post() { Id = TestExistingPostId, UserId = TestExistingUserId},
-                new Post() { Id = TestExistingPostIdThatHasPostLike, UserId = TestExistingCommentUserId}
+                new Post() { Id = TestExistingPostCommentPostId, UserId = TestExistingPostCommentUserId}
             };
 
             var testPostLikes = new List<PostLike>()
             {
-                new PostLike() { Id = TestExistingPostLikeId, UserId = TestExistingCommentUserId, PostId = TestExistingPostIdThatHasPostLike},
+                new PostLike() { Id = TestExistingPostLikeId, UserId = TestExistingPostCommentUserId, PostId = TestExistingPostCommentPostId},
             };
 
             var testExistingUser = new User();
@@ -81,7 +80,7 @@ namespace InstaConnect.Business.UnitTests.Tests
             _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestExistingUserId))
                 .ReturnsAsync(testExistingUser);
 
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestExistingCommentUserId))
+            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestExistingPostCommentUserId))
                 .ReturnsAsync(testExistingUser);
         }
 
@@ -99,9 +98,9 @@ namespace InstaConnect.Business.UnitTests.Tests
 
         [Test]
         [TestCase(TestNonExistingUserId, TestNonExistingPostId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestExistingUserId, TestNonExistingPostId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestNonExistingUserId, TestExistingPostId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestExistingCommentUserId, TestExistingPostIdThatHasPostLike, InstaConnectStatusCode.OK)]
+        [TestCase(TestExistingPostCommentUserId, TestNonExistingPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestNonExistingUserId, TestExistingPostCommentPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestExistingPostCommentUserId, TestExistingPostCommentPostId, InstaConnectStatusCode.OK)]
         public async Task GetByUserIdAndPostId_HasArguments_ReturnsExpectedResult(string userId, string postId, InstaConnectStatusCode statusCode)
         {
             // Act
@@ -116,9 +115,9 @@ namespace InstaConnect.Business.UnitTests.Tests
         [TestCase(TestNonExistingUserId, TestNonExistingPostId, InstaConnectStatusCode.BadRequest)]
         [TestCase(TestNonExistingUserId, TestExistingPostId, InstaConnectStatusCode.BadRequest)]
         [TestCase(TestExistingUserId, TestNonExistingPostId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(TestExistingUserId, TestExistingPostIdThatHasPostLike, InstaConnectStatusCode.NoContent)]
-        [TestCase(TestExistingCommentUserId, TestExistingPostId, InstaConnectStatusCode.NoContent)]
-        [TestCase(TestExistingCommentUserId, TestExistingPostIdThatHasPostLike, InstaConnectStatusCode.BadRequest)]
+        [TestCase(TestExistingUserId, TestExistingPostCommentPostId, InstaConnectStatusCode.NoContent)]
+        [TestCase(TestExistingPostCommentUserId, TestExistingPostId, InstaConnectStatusCode.NoContent)]
+        [TestCase(TestExistingPostCommentUserId, TestExistingPostCommentPostId, InstaConnectStatusCode.BadRequest)]
         public async Task AddAsync_HasArguments_ReturnsExpectedResult(string userId, string postId, InstaConnectStatusCode statusCode)
         {
             // Arrange
@@ -137,9 +136,9 @@ namespace InstaConnect.Business.UnitTests.Tests
 
         [Test]
         [TestCase(TestNonExistingUserId, TestNonExistingPostLikeId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestExistingUserId, TestNonExistingPostLikeId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestExistingPostCommentUserId, TestNonExistingPostLikeId, InstaConnectStatusCode.NotFound)]
         [TestCase(TestNonExistingUserId, TestExistingPostLikeId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestExistingCommentUserId, TestExistingPostLikeId, InstaConnectStatusCode.NoContent)]
+        [TestCase(TestExistingPostCommentUserId, TestExistingPostLikeId, InstaConnectStatusCode.NoContent)]
         public async Task DeleteAsync_HasId_ReturnsExpectedResult(string userId, string id, InstaConnectStatusCode statusCode)
         {
             // Act
@@ -151,9 +150,9 @@ namespace InstaConnect.Business.UnitTests.Tests
 
         [Test]
         [TestCase(TestNonExistingUserId, TestNonExistingPostId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestExistingUserId, TestNonExistingPostId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestNonExistingUserId, TestExistingPostId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestExistingCommentUserId, TestExistingPostIdThatHasPostLike, InstaConnectStatusCode.NoContent)]
+        [TestCase(TestExistingPostCommentUserId, TestNonExistingPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestNonExistingUserId, TestExistingPostCommentPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestExistingPostCommentUserId, TestExistingPostCommentPostId, InstaConnectStatusCode.NoContent)]
         public async Task DeleteByUserIdAndPostIdAsync_HasArguments_ReturnsExpectedResult(string userId, string postId, InstaConnectStatusCode statusCode)
         {
             // Act

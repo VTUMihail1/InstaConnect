@@ -45,7 +45,12 @@ namespace InstaConnect.Business.UnitTests.Tests
 
 			var testPostComments = new List<PostComment>()
 			{
-				new PostComment() { Id = TestExistingPostCommentId}
+				new PostComment() { 
+					Id = TestExistingPostCommentId, 
+					UserId = TestExistingUserId, 
+					PostId = TestExistingPostId, 
+					PostCommentId = TestExistingPostCommentId
+				}
 			};
 
 			var testExistingUser = new User();
@@ -122,5 +127,36 @@ namespace InstaConnect.Business.UnitTests.Tests
 			// Assert
 			Assert.That(result.StatusCode, Is.EqualTo(statusCode));
 		}
-	}
+
+        [Test]
+        [TestCase(TestExistingUserId, TestNonExistingPostCommentId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestNonExistingUserId, TestExistingPostCommentId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestNonExistingUserId, TestNonExistingPostCommentId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestExistingUserId, TestExistingPostCommentId, InstaConnectStatusCode.NoContent)]
+        public async Task UpdateAsync_HasArguments_ReturnsExpectedResult(string userId, string id, InstaConnectStatusCode statusCode)
+        {
+			// Arrange
+			var postCommentUpdateDTO = new PostCommentUpdateDTO();
+
+            // Act 
+            var result = await _postCommentService.UpdateAsync(userId, id, postCommentUpdateDTO);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(statusCode));
+        }
+
+        [Test]
+        [TestCase(TestExistingUserId, TestNonExistingPostCommentId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestNonExistingUserId, TestExistingPostCommentId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestNonExistingUserId, TestNonExistingPostCommentId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestExistingUserId, TestExistingPostCommentId, InstaConnectStatusCode.NoContent)]
+        public async Task DeleteAsync_HasArguments_ReturnsExpectedResult(string userId, string id, InstaConnectStatusCode statusCode)
+        {
+            // Act 
+            var result = await _postCommentService.DeleteAsync(userId, id);
+
+            // Assert
+            Assert.That(result.StatusCode, Is.EqualTo(statusCode));
+        }
+    }
 }

@@ -39,7 +39,12 @@ namespace InstaConnect.Business.UnitTests.Tests
 
             var testMessages = new List<Message>()
             {
-                new Message() {Id = TestExistingMessageId, SenderId = TestExistingSenderId, ReceiverId = TestExistingReceiverId}
+                new Message() 
+                {
+                    Id = TestExistingMessageId, 
+                    SenderId = TestExistingSenderId, 
+                    ReceiverId = TestExistingReceiverId
+                }
             };
 
             var testExistingUser = new User();

@@ -12,6 +12,6 @@ namespace InstaConnect.Business.Models.DTOs.PostComment
 
         public ICollection<PostCommentResultDTO> PostComments { get; set; }
 
-        public ICollection<CommentLikeResultDTO> CommentLikes { get; set; }
+        public ICollection<PostCommentLikeResultDTO> CommentLikes { get; set; }
     }
 }

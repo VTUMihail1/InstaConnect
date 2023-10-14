@@ -31,7 +31,7 @@ namespace InstaConnect.Business.AutoMapper
             CreateMap<PostLikeAddDTO, PostLike>()
                 .ReverseMap();
 
-            CreateMap<CommentLikeAddDTO, CommentLike>()
+            CreateMap<PostCommentLikeAddDTO, PostCommentLike>()
                 .ReverseMap();
 
             CreateMap<PostCommentAddDTO, PostComment>()
@@ -74,7 +74,7 @@ namespace InstaConnect.Business.AutoMapper
                 .ForMember(dto => dto.ReceiverUsername, opt => opt.MapFrom(l => l.Receiver.UserName))
                 .ReverseMap();
 
-            CreateMap<CommentLike, CommentLikeResultDTO>()
+            CreateMap<PostCommentLike, PostCommentLikeResultDTO>()
                 .ForMember(dto => dto.Username, opt => opt.MapFrom(cl => cl.User.UserName))
                 .ReverseMap();
 

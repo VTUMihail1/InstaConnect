@@ -409,7 +409,7 @@ namespace InstaConnect.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "CommentLikes",
+                name: "PostCommentLikes",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false)
@@ -441,12 +441,12 @@ namespace InstaConnect.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_CommentLikes_PostCommentId",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 column: "PostCommentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CommentLikes_UserId",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -546,7 +546,7 @@ namespace InstaConnect.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CommentLikes");
+                name: "PostCommentLikes");
 
             migrationBuilder.DropTable(
                 name: "Follows");

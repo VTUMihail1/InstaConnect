@@ -6,21 +6,21 @@ using System.Linq.Expressions;
 
 namespace InstaConnect.Data.Repositories
 {
-    public class CommentLikeRepository : Repository<CommentLike>, ICommentLikeRepository
+    public class PostCommentLikeRepository : Repository<PostCommentLike>, IPostCommentLikeRepository
     {
         private readonly InstaConnectContext _instaConnectContext;
 
-        public CommentLikeRepository(InstaConnectContext instaConnectContext) : base(instaConnectContext)
+        public PostCommentLikeRepository(InstaConnectContext instaConnectContext) : base(instaConnectContext)
         {
             _instaConnectContext = instaConnectContext;
         }
 
-        public override async Task<ICollection<CommentLike>> GetAllAsync(
-            Expression<Func<CommentLike, bool>> expression,
+        public override async Task<ICollection<PostCommentLike>> GetAllAsync(
+            Expression<Func<PostCommentLike, bool>> expression,
             int skipAmount = default,
             int takeAmount = int.MaxValue)
         {
-            var commentLikes = await _instaConnectContext.CommentLikes
+            var commentLikes = await _instaConnectContext.PostCommentLikes
                 .Where(expression)
                 .Include(cl => cl.User)
                 .Skip(skipAmount)
@@ -31,9 +31,9 @@ namespace InstaConnect.Data.Repositories
             return commentLikes;
         }
 
-        public override async Task<CommentLike> FindEntityAsync(Expression<Func<CommentLike, bool>> expression)
+        public override async Task<PostCommentLike> FindEntityAsync(Expression<Func<PostCommentLike, bool>> expression)
         {
-            var commentLike = await _instaConnectContext.CommentLikes
+            var commentLike = await _instaConnectContext.PostCommentLikes
                 .Include(cl => cl.User)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(expression);

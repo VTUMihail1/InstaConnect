@@ -35,7 +35,11 @@ namespace InstaConnect.Business.UnitTests.Tests
         {
             var testPosts = new List<Post>()
             {
-                new Post() { Id = TestExistingPostId, UserId = TestExistingUserId}
+                new Post() 
+                { 
+                    Id = TestExistingPostId, 
+                    UserId = TestExistingUserId
+                }
             };
 
             var testExistingUser = new User();

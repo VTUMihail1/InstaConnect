@@ -22,7 +22,7 @@ namespace InstaConnect.Data.Migrations
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("InstaConnect.Data.Models.Entities.CommentLike", b =>
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.PostCommentLike", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -47,7 +47,7 @@ namespace InstaConnect.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CommentLikes");
+                    b.ToTable("PostCommentLikes");
                 });
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.Follow", b =>
@@ -567,16 +567,16 @@ namespace InstaConnect.Data.Migrations
                     b.ToTable("user_token", (string)null);
                 });
 
-            modelBuilder.Entity("InstaConnect.Data.Models.Entities.CommentLike", b =>
+            modelBuilder.Entity("InstaConnect.Data.Models.Entities.PostCommentLike", b =>
                 {
                     b.HasOne("InstaConnect.Data.Models.Entities.PostComment", "PostComment")
-                        .WithMany("CommentLikes")
+                        .WithMany("PostCommentLikes")
                         .HasForeignKey("PostCommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("InstaConnect.Data.Models.Entities.User", "User")
-                        .WithMany("CommentLikes")
+                        .WithMany("PostCommentLikes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -749,14 +749,14 @@ namespace InstaConnect.Data.Migrations
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.PostComment", b =>
                 {
-                    b.Navigation("CommentLikes");
+                    b.Navigation("PostCommentLikes");
 
                     b.Navigation("PostComments");
                 });
 
             modelBuilder.Entity("InstaConnect.Data.Models.Entities.User", b =>
                 {
-                    b.Navigation("CommentLikes");
+                    b.Navigation("PostCommentLikes");
 
                     b.Navigation("Followers");
 
