@@ -53,8 +53,7 @@ namespace InstaConnect.Business.UnitTests.Tests
                 new PostLike() { Id = TestExistingPostLikeId, UserId = TestExistingCommentUserId, PostId = TestExistingPostIdThatHasPostLike},
             };
 
-            User testExistingUser = new User() { Id = TestExistingUserId };
-            User testNonExistingUser = null;
+            var testExistingUser = new User();
 
             var config = new MapperConfiguration(cfg =>
             {
@@ -67,7 +66,8 @@ namespace InstaConnect.Business.UnitTests.Tests
             _mockPostRepository = new Mock<IPostRepository>();
             _mockInstaConnectUserManager = new Mock<IInstaConnectUserManager>();
             _postLikeService = new PostLikeService(
-                _mapper, _resultFactory,
+                _mapper, 
+                _resultFactory,
                 _mockPostLikeRepository.Object,
                 _mockPostRepository.Object,
                 _mockInstaConnectUserManager.Object);
@@ -80,9 +80,6 @@ namespace InstaConnect.Business.UnitTests.Tests
 
             _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestExistingUserId))
                 .ReturnsAsync(testExistingUser);
-
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestNonExistingUserId))
-                .ReturnsAsync(testNonExistingUser);
 
             _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestExistingCommentUserId))
                 .ReturnsAsync(testExistingUser);

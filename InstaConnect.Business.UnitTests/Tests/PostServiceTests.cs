@@ -38,8 +38,7 @@ namespace InstaConnect.Business.UnitTests.Tests
                 new Post() { Id = TestExistingPostId, UserId = TestExistingUserId}
             };
 
-            User testExistingUser = new User();
-            User testNonExistingUser = null;
+            var testExistingUser = new User();
 
             var config = new MapperConfiguration(cfg =>
             {
@@ -49,16 +48,17 @@ namespace InstaConnect.Business.UnitTests.Tests
             _resultFactory = new ResultFactory();
             _mockPostRepository = new Mock<IPostRepository>();
             _mockInstaConnectUserManager = new Mock<IInstaConnectUserManager>();
-            _postService = new PostService(_mapper, _resultFactory, _mockPostRepository.Object, _mockInstaConnectUserManager.Object);
+            _postService = new PostService(
+                _mapper, 
+                _resultFactory, 
+                _mockPostRepository.Object, 
+                _mockInstaConnectUserManager.Object);
 
             _mockPostRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<Post, bool>>>()))
                .ReturnsAsync((Expression<Func<Post, bool>> expression) => testPostList.Find(new Predicate<Post>(expression.Compile())));
 
             _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestExistingUserId))
                 .ReturnsAsync(testExistingUser);
-
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestInvalidUserId))
-                .ReturnsAsync(testNonExistingUser);
         }
 
         [Test]
