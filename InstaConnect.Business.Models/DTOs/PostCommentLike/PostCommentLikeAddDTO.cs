@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Business.Models.DTOs.CommentLike
+namespace InstaConnect.Business.Models.DTOs.PostCommentLike
 {
     public class PostCommentLikeAddDTO
     {

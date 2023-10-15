@@ -1,8 +1,8 @@
-﻿using InstaConnect.Business.Models.DTOs.CommentLike;
-using InstaConnect.Business.Models.DTOs.Follow;
+﻿using InstaConnect.Business.Models.DTOs.Follow;
 using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.DTOs.Post;
 using InstaConnect.Business.Models.DTOs.PostComment;
+using InstaConnect.Business.Models.DTOs.PostCommentLike;
 using InstaConnect.Business.Models.DTOs.PostLike;
 
 namespace InstaConnect.Business.Models.DTOs.User

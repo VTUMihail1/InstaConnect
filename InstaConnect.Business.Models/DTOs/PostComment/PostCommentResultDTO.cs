@@ -1,4 +1,4 @@
-﻿using InstaConnect.Business.Models.DTOs.CommentLike;
+﻿using InstaConnect.Business.Models.DTOs.PostCommentLike;
 
 namespace InstaConnect.Business.Models.DTOs.PostComment
 {

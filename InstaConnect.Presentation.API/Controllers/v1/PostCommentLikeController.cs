@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Models.DTOs.CommentLike;
+using InstaConnect.Business.Models.DTOs.PostCommentLike;
 using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Presentation.API.Extensions;
 using InstaConnect.Presentation.API.Filters;

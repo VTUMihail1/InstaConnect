@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Business.Models.DTOs.CommentLike
+﻿namespace InstaConnect.Business.Models.DTOs.PostCommentLike
 {
     public class PostCommentLikeResultDTO
     {

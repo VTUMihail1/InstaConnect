@@ -3,7 +3,7 @@ using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.AutoMapper;
 using InstaConnect.Business.Factories;
-using InstaConnect.Business.Models.DTOs.CommentLike;
+using InstaConnect.Business.Models.DTOs.PostCommentLike;
 using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.Enums;
 using InstaConnect.Business.Services;

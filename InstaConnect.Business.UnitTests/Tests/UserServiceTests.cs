@@ -83,7 +83,7 @@ namespace InstaConnect.Business.UnitTests.Tests
 
         [Test]
         [TestCase(TestNonExistingUserId, InstaConnectStatusCode.NotFound)]
-        //[TestCase(TestExistingUserId, InstaConnectStatusCode.OK)]
+        [TestCase(TestExistingUserId, InstaConnectStatusCode.OK)]
         public async Task GetPersonalByIdAsync_HasId_ReturnsExpectedResult(string id, InstaConnectStatusCode statusCode)
         {
             // Act
