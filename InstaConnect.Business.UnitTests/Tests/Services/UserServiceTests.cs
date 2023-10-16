@@ -5,6 +5,8 @@ using InstaConnect.Business.AutoMapper;
 using InstaConnect.Business.Factories;
 using InstaConnect.Business.Models.Enums;
 using InstaConnect.Business.Services;
+using InstaConnect.Business.UnitTests.Utilities;
+using InstaConnect.Business.UnitTests.Utilities.Services;
 using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
@@ -12,54 +14,37 @@ using Moq;
 using NUnit.Framework;
 using System.Linq.Expressions;
 
-namespace InstaConnect.Business.UnitTests.Tests
+namespace InstaConnect.Business.UnitTests.Tests.Services
 {
     [TestFixture]
     public class UserServiceTests
     {
-        public const string TestExistingUserId = "ExistingUserId";
-        public const string TestNonExistingUserId = "NonExistingUserId";
-        public const string TestExistingUserUsername = "ExistingUserUsername";
-        public const string TestNonExistingUserUsername = "NonExistingUserUsername";
-
-        private IMapper _mapper;
+        private Mock<IMapper> _mockMapper;
         private IResultFactory _resultFactory;
         private Mock<IUserRepository> _mockUserRepository;
         private IUserService _userService;
 
-        [SetUp]
-        public void Setup()
+        public UserServiceTests()
         {
-            var testUsers = new List<User>()
-            {
-                new User()
-                {
-                    Id = TestExistingUserId,
-                    UserName = TestExistingUserUsername
-                }
-            };
-
-            var testExistingUser = new User();
-
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new InstaConnectProfile());
-            });
-            _mapper = config.CreateMapper();
+            _mockMapper = new Mock<IMapper>();
             _resultFactory = new ResultFactory();
             _mockUserRepository = new Mock<IUserRepository>();
             _userService = new UserService(
-                _mapper,
+                _mockMapper.Object,
                 _resultFactory,
                 _mockUserRepository.Object);
+        }
 
+        [SetUp]
+        public void Setup()
+        {
             _mockUserRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<User, bool>>>()))
-               .ReturnsAsync((Expression<Func<User, bool>> expression) => testUsers.Find(new Predicate<User>(expression.Compile())));
+               .ReturnsAsync((Expression<Func<User, bool>> expression) => TestUserServiceUtilities.TestUsers.Find(new Predicate<User>(expression.Compile())));
         }
 
         [Test]
-        [TestCase(TestNonExistingUserId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestExistingUserId, InstaConnectStatusCode.OK)]
+        [TestCase(TestUserServiceUtilities.TestNonExistingUserId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestUserServiceUtilities.TestExistingUserId, InstaConnectStatusCode.OK)]
         public async Task GetById_HasId_ReturnsExpectedResult(string id, InstaConnectStatusCode statusCode)
         {
             // Act
@@ -70,8 +55,8 @@ namespace InstaConnect.Business.UnitTests.Tests
         }
 
         [Test]
-        [TestCase(TestNonExistingUserUsername, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestExistingUserUsername, InstaConnectStatusCode.OK)]
+        [TestCase(TestUserServiceUtilities.TestNonExistingUserUsername, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestUserServiceUtilities.TestExistingUserUsername, InstaConnectStatusCode.OK)]
         public async Task GetByUsernameAsync_HasUsername_ReturnsExpectedResult(string username, InstaConnectStatusCode statusCode)
         {
             // Act
@@ -82,8 +67,8 @@ namespace InstaConnect.Business.UnitTests.Tests
         }
 
         [Test]
-        [TestCase(TestNonExistingUserId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestExistingUserId, InstaConnectStatusCode.OK)]
+        [TestCase(TestUserServiceUtilities.TestNonExistingUserId, InstaConnectStatusCode.NotFound)]
+        [TestCase(TestUserServiceUtilities.TestExistingUserId, InstaConnectStatusCode.OK)]
         public async Task GetPersonalByIdAsync_HasId_ReturnsExpectedResult(string id, InstaConnectStatusCode statusCode)
         {
             // Act

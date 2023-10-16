@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Business.Abstraction.Helpers;
+using InstaConnect.Data.Models.Entities;
 using System.Text;
 
 namespace InstaConnect.Business.Helpers
@@ -10,6 +11,13 @@ namespace InstaConnect.Business.Helpers
             var decodedToken = Encoding.UTF8.GetString(Convert.FromBase64String(encodedToken));
 
             return decodedToken;
+        }
+
+        public string EncodeToken(string decodedToken)
+        {
+            var encodedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(decodedToken)));
+
+            return encodedToken;
         }
     }
 }
