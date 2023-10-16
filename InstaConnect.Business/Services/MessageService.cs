@@ -85,7 +85,7 @@ namespace InstaConnect.Business.Services
             var message = _mapper.Map<Message>(messageAddDTO);
             await _messageRepository.AddAsync(message);
 
-            await _messageSender.SendMessageToUserAsync(messageAddDTO.ReceiverId, message.Content);
+            await _messageSender.SendMessageToUserAsync(messageAddDTO.ReceiverId, messageAddDTO.Content);
 
             var noContentResult = _resultFactory.GetNoContentResult<MessageResultDTO>();
 

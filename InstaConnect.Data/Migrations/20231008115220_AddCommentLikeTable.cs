@@ -12,18 +12,18 @@ namespace InstaConnect.Data.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_CommentLikes_post_comment_PostCommentId",
-                table: "CommentLikes");
+                table: "PostCommentLikes");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_CommentLikes_user_UserId",
-                table: "CommentLikes");
+                table: "PostCommentLikes");
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_CommentLikes",
-                table: "CommentLikes");
+                table: "PostCommentLikes");
 
             migrationBuilder.RenameTable(
-                name: "CommentLikes",
+                name: "PostCommentLikes",
                 newName: "comment_like");
 
             migrationBuilder.RenameColumn(
@@ -100,51 +100,51 @@ namespace InstaConnect.Data.Migrations
 
             migrationBuilder.RenameTable(
                 name: "comment_like",
-                newName: "CommentLikes");
+                newName: "PostCommentLikes");
 
             migrationBuilder.RenameColumn(
                 name: "id",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 newName: "Id");
 
             migrationBuilder.RenameColumn(
                 name: "user_id",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 newName: "UserId");
 
             migrationBuilder.RenameColumn(
                 name: "updated_at",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 newName: "UpdatedAt");
 
             migrationBuilder.RenameColumn(
                 name: "created_at",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 newName: "CreatedAt");
 
             migrationBuilder.RenameColumn(
                 name: "comment_id",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 newName: "PostCommentId");
 
             migrationBuilder.RenameIndex(
                 name: "IX_comment_like_user_id",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 newName: "IX_CommentLikes_UserId");
 
             migrationBuilder.RenameIndex(
                 name: "IX_comment_like_comment_id",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 newName: "IX_CommentLikes_PostCommentId");
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_CommentLikes",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 column: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_CommentLikes_post_comment_PostCommentId",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 column: "PostCommentId",
                 principalTable: "post_comment",
                 principalColumn: "id",
@@ -152,7 +152,7 @@ namespace InstaConnect.Data.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_CommentLikes_user_UserId",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 column: "UserId",
                 principalTable: "user",
                 principalColumn: "id",

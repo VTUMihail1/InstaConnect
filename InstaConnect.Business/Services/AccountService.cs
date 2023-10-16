@@ -20,6 +20,7 @@ namespace InstaConnect.Business.Services
         private readonly ITokenManager _tokenManager;
         private readonly IInstaConnectUserManager _instaConnectUserManager;
         private readonly IInstaConnectSignInManager _instaConnectSignInManager;
+        private readonly ITokenCryptographer _tokenCryptographer;
 
         public AccountService(
             IMapper mapper,
@@ -27,7 +28,8 @@ namespace InstaConnect.Business.Services
             IEmailManager emailManager,
             ITokenManager tokenManager,
             IInstaConnectUserManager instaConnectUserManager,
-            IInstaConnectSignInManager instaConnectSignInManager)
+            IInstaConnectSignInManager instaConnectSignInManager,
+            ITokenCryptographer tokenCryptographer)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
@@ -35,6 +37,7 @@ namespace InstaConnect.Business.Services
             _tokenManager = tokenManager;
             _instaConnectUserManager = instaConnectUserManager;
             _instaConnectSignInManager = instaConnectSignInManager;
+            _tokenCryptographer = tokenCryptographer;
         }
 
         public async Task<IResult<AccountResultDTO>> LoginAsync(AccountLoginDTO accountLoginDTO)
@@ -101,18 +104,7 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var addUserRoleResult = await _instaConnectUserManager.AddToRoleAsync(user, InstaConnectConstants.UserRole);
-
-            if (!addUserRoleResult.Succeeded)
-            {
-                var errors = addUserRoleResult.Errors
-                    .Select(x => x.Description)
-                    .ToArray();
-
-                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(errors);
-
-                return badRequestResult;
-            }
+            await _instaConnectUserManager.AddToRoleAsync(user, InstaConnectConstants.UserRole);
 
             var token = await _instaConnectUserManager.GenerateEmailConfirmationTokenAsync(user);
 
@@ -189,7 +181,7 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var decodedToken = Encoding.UTF8.GetString(Convert.FromBase64String(encodedToken));
+            var decodedToken = _tokenCryptographer.DecodeToken(encodedToken);
             var confirmEmailResult = await _instaConnectUserManager.ConfirmEmailAsync(existingUser, decodedToken);
 
             if (!confirmEmailResult.Succeeded)
@@ -250,7 +242,7 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var decodedToken = Encoding.UTF8.GetString(Convert.FromBase64String(encodedToken));
+            var decodedToken = _tokenCryptographer.DecodeToken(encodedToken);
             var resetPasswordResult = await _instaConnectUserManager.ResetPasswordAsync(existingUser, decodedToken, accountResetPasswordDTO.Password);
 
             if (!resetPasswordResult.Succeeded)

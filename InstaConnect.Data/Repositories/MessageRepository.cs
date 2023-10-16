@@ -26,6 +26,7 @@ namespace InstaConnect.Data.Repositories
                 .Include(m => m.Receiver)
                 .Skip(skipAmount)
                 .Take(takeAmount)
+                .AsNoTracking()
                 .ToListAsync();
 
             return messages;
@@ -37,6 +38,7 @@ namespace InstaConnect.Data.Repositories
                 .Where(expression)
                 .Include(m => m.Sender)
                 .Include(m => m.Receiver)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(expression);
 
             return message;

@@ -12,7 +12,7 @@ namespace InstaConnect.Data.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_CommentLikes_PostComments_PostCommentId",
-                table: "CommentLikes");
+                table: "PostCommentLikes");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_PostComments_PostComments_PostCommentId",
@@ -102,7 +102,7 @@ namespace InstaConnect.Data.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_CommentLikes_post_comment_PostCommentId",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 column: "PostCommentId",
                 principalTable: "post_comment",
                 principalColumn: "id",
@@ -138,7 +138,7 @@ namespace InstaConnect.Data.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_CommentLikes_post_comment_PostCommentId",
-                table: "CommentLikes");
+                table: "PostCommentLikes");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_post_comment_Posts_post_id",
@@ -228,7 +228,7 @@ namespace InstaConnect.Data.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_CommentLikes_PostComments_PostCommentId",
-                table: "CommentLikes",
+                table: "PostCommentLikes",
                 column: "PostCommentId",
                 principalTable: "PostComments",
                 principalColumn: "Id",

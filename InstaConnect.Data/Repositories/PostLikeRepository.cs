@@ -27,6 +27,7 @@ namespace InstaConnect.Data.Repositories
                 .Include(f => f.Post)
                 .Skip(skipAmount)
                 .Take(takeAmount)
+                .AsNoTracking()
                 .ToListAsync();
 
             return postLikes;
@@ -37,6 +38,7 @@ namespace InstaConnect.Data.Repositories
             var postLike = await _instaConnectContext.PostLikes
                 .Include(f => f.User)
                 .Include(f => f.Post)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(expression);
 
             return postLike;

@@ -3,9 +3,11 @@ using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Post;
 using InstaConnect.Business.Models.Results;
+using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
+using InstaConnect.Data.Models.Utilities;
 
 namespace InstaConnect.Business.Services
 {
@@ -65,13 +67,13 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostResultDTO>> AddAsync(PostAddDTO postAddDTO)
         {
-            var existingUser = _instaConnectUserManager.FindByIdAsync(postAddDTO.UserId);
+            var existingUser = await _instaConnectUserManager.FindByIdAsync(postAddDTO.UserId);
 
             if (existingUser == null)
             {
-                var notFoundResult = _resultFactory.GetNotFoundResult<PostResultDTO>();
+                var badRequestResult = _resultFactory.GetBadRequestResult<PostResultDTO>(InstaConnectErrorMessages.UserNotFound);
 
-                return notFoundResult;
+                return badRequestResult;
             }
 
             var post = _mapper.Map<Post>(postAddDTO);

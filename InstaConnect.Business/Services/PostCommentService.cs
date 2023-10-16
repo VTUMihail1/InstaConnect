@@ -82,7 +82,7 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var existingPost = await _postRepository.FindEntityAsync(pc => pc.Id == postCommentAddDTO.PostId);
+            var existingPost = await _postRepository.FindEntityAsync(p => p.Id == postCommentAddDTO.PostId);
 
             if (existingPost == null)
             {
