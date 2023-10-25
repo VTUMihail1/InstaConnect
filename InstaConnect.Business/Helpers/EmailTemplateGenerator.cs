@@ -8,33 +8,16 @@ namespace InstaConnect.Business.Helpers
 {
     public class EmailTemplateGenerator : IEmailTemplateGenerator
     {
-        private readonly ITokenCryptographer _tokenCryptographer;
-        private readonly EmailOptions _emailOptions;
-
-        public EmailTemplateGenerator(
-            ITokenCryptographer tokenCryptographer,
-            IOptions<EmailOptions> options)
+        public string GenerateEmailConfirmationTemplate(string endpoint)
         {
-            _tokenCryptographer = tokenCryptographer;
-            _emailOptions = options.Value;
-        }
-
-        public string GenerateEmailConfirmationTemplate(string userId, string token)
-        {
-            var encodedToken = _tokenCryptographer.EncodeToken(token);
-            var endpoint = $"{_emailOptions.ConfirmEmailEndpoint}/by-user/{userId}/by-token/{encodedToken}";
-
             var html = File.ReadAllText(InstaConnectConstants.EmailTemplatePrefixPath + InstaConnectConstants.EmailConfirmationTemplatePath);
             var emailConfirmationTemplateHtml = html.Replace(InstaConnectConstants.TemplateLinkPlaceholder, endpoint);
 
             return emailConfirmationTemplateHtml;
         }
 
-        public string GenerateForgotPasswordTemplate(string userId, string token)
+        public string GenerateForgotPasswordTemplate(string endpoint)
         {
-            var encodedToken = _tokenCryptographer.EncodeToken(token);
-            var endpoint = $"{_emailOptions.ResetPasswordEndpoint}/by-user/{userId}/by-token/{encodedToken}";
-
             var html = File.ReadAllText(InstaConnectConstants.EmailTemplatePrefixPath + InstaConnectConstants.ForgotPasswordTemplatePath);
             var passwordResetTemplateHtml = html.Replace(InstaConnectConstants.TemplateLinkPlaceholder, endpoint);
 

@@ -16,13 +16,11 @@ namespace InstaConnect.Data.Abstraction.Helpers
         /// <returns>A task representing the asynchronous operation. The task result contains the identity result.</returns>
         Task<IdentityResult> AddToRoleAsync(User user, string role);
 
-        /// <summary>
-        /// Confirms the user's email using a confirmation token.
-        /// </summary>
-        /// <param name="user">The user whose email needs to be confirmed.</param>
-        /// <param name="token">The email confirmation token.</param>
-        /// <returns>A task representing the asynchronous operation. The task result contains the identity result.</returns>
-        Task<IdentityResult> ConfirmEmailAsync(User user, string token);
+        Task<bool> CheckPasswordAsync(User user, string password);
+
+        Task ConfirmEmailAsync(User user);
+
+        Task ResetPasswordAsync(User user, string password);
 
         /// <summary>
         /// Creates a new user with the specified password.
@@ -44,21 +42,21 @@ namespace InstaConnect.Data.Abstraction.Helpers
         /// </summary>
         /// <param name="email">The email address of the user to find.</param>
         /// <returns>A task representing the asynchronous operation. The task result contains the found user.</returns>
-        Task<User> FindByEmailAsync(string email);
+        Task<User?> FindByEmailAsync(string email);
 
         /// <summary>
         /// Finds a user by their user ID.
         /// </summary>
         /// <param name="id">The user's ID.</param>
         /// <returns>A task representing the asynchronous operation. The task result contains the found user.</returns>
-        Task<User> FindByIdAsync(string id);
+        Task<User?> FindByIdAsync(string  userId);
 
         /// <summary>
         /// Finds a user by their username.
         /// </summary>
         /// <param name="username">The username of the user to find.</param>
         /// <returns>A task representing the asynchronous operation. The task result contains the found user.</returns>
-        Task<User> FindByNameAsync(string username);
+        Task<User?> FindByNameAsync(string username);
 
         /// <summary>
         /// Generates an email confirmation token for a user.

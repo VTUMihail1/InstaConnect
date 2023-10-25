@@ -64,6 +64,7 @@ builder.Services
     .AddScoped<IInstaConnectSignInManager, InstaConnectSignInManager>()
     .AddScoped<IResultFactory, ResultFactory>()
     .AddScoped<ISendGridClient>(_ => new SendGridClient(emailOptions["APIKey"]))
+    .AddScoped<IEndpointHandler, EndpointHandler>()
     .AddScoped<IEmailFactory, EmailFactory>()
     .AddScoped<IEmailSender, EmailSender>()
     .AddScoped<IEmailManager, EmailManager>()

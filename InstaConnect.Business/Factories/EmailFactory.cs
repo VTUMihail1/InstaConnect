@@ -1,31 +1,28 @@
 ﻿using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Models.DTOs.Account;
+using InstaConnect.Business.Models.Options;
 using InstaConnect.Data.Models.Utilities;
+using Microsoft.Extensions.Options;
+using SendGrid.Helpers.Mail;
 
 namespace InstaConnect.Business.Factories
 {
     public class EmailFactory : IEmailFactory
     {
-        public AccountSendEmailDTO GetEmailVerificationDTO(string email, string template)
+        private readonly EmailOptions _emailOptions;
+
+        public EmailFactory(IOptions<EmailOptions> options)
         {
-            return new AccountSendEmailDTO()
-            {
-                Email = email,
-                Subject = InstaConnectConstants.AccountEmailConfirmationTitle,
-                PlainText = string.Empty,
-                Html = template
-            };
+            _emailOptions = options.Value;
         }
 
-        public AccountSendEmailDTO GetPasswordResetDTO(string email, string template)
+        public SendGridMessage GetEmail(string receiver, string subject, string plaintText, string template)
         {
-            return new AccountSendEmailDTO()
-            {
-                Email = email,
-                Subject = InstaConnectConstants.AccountForgotPasswordTitle,
-                PlainText = string.Empty,
-                Html = template
-            };
+            var emailSender = MailHelper.StringToEmailAddress(_emailOptions.Sender);
+            var emailReceiver = MailHelper.StringToEmailAddress(receiver);
+            var email = MailHelper.CreateSingleEmail(emailSender, emailReceiver, subject, plaintText, template);
+
+            return email;
         }
     }
 }

@@ -1,100 +1,59 @@
 ﻿using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Models.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Data.Helpers
 {
-    public class InstaConnectUserManager : IInstaConnectUserManager
+    public class InstaConnectUserManager : UserManager<User>, IInstaConnectUserManager
     {
-        private readonly UserManager<User> _userManager;
-
-        public InstaConnectUserManager(UserManager<User> userManager)
+        public InstaConnectUserManager(
+            IUserStore<User> store, 
+            IOptions<IdentityOptions> optionsAccessor, 
+            IPasswordHasher<User> passwordHasher, 
+            IEnumerable<IUserValidator<User>> userValidators, 
+            IEnumerable<IPasswordValidator<User>> passwordValidators, 
+            ILookupNormalizer keyNormalizer, 
+            IdentityErrorDescriber errors, 
+            IServiceProvider services, 
+            ILogger<UserManager<User>> logger) : 
+            base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger)
         {
-            _userManager = userManager;
         }
 
-        public async Task<User> FindByIdAsync(string id)
+        public async Task ConfirmEmailAsync(User user)
         {
-            var user = await _userManager.FindByIdAsync(id);
-
-            return user;
+             await Users
+                    .Where(u => u.Id == user.Id)
+                    .ExecuteUpdateAsync(u => u.SetProperty(u => u.EmailConfirmed, true));
         }
 
-        public async Task<User> FindByEmailAsync(string email)
+        public async Task ResetPasswordAsync(User user, string password)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var passwordHash = PasswordHasher.HashPassword(user, password);
 
-            return user;
+            await Users
+                 .Where(u => u.Id == user.Id)
+                 .ExecuteUpdateAsync(u => u.SetProperty(u => u.PasswordHash, passwordHash));
         }
 
-        public async Task<User> FindByNameAsync(string username)
+        public string LongestPalindrome(string s)
         {
-            var user = await _userManager.FindByNameAsync(username);
+            string max = "";
+            int middle = s.Length / 2;
 
-            return user;
-        }
-
-        public async Task<string> GenerateEmailConfirmationTokenAsync(User user)
-        {
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-            return token;
-        }
-
-        public async Task<IdentityResult> ConfirmEmailAsync(User user, string token)
-        {
-            var identityResult = await _userManager.ConfirmEmailAsync(user, token);
-
-            return identityResult;
-        }
-
-        public async Task<string> GeneratePasswordResetTokenAsync(User user)
-        {
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-            return token;
-        }
-
-        public async Task<IdentityResult> ResetPasswordAsync(User user, string token, string newPassword)
-        {
-            var identityResult = await _userManager.ResetPasswordAsync(user, token, newPassword);
-
-            return identityResult;
-        }
-
-        public async Task<bool> IsEmailConfirmedAsync(User user)
-        {
-            var result = await _userManager.IsEmailConfirmedAsync(user);
-
-            return result;
-        }
-
-        public async Task<IdentityResult> CreateAsync(User user, string password)
-        {
-            var identityResult = await _userManager.CreateAsync(user, password);
-
-            return identityResult;
-        }
-
-        public async Task<IdentityResult> AddToRoleAsync(User user, string role)
-        {
-            var identityResult = await _userManager.AddToRoleAsync(user, role);
-
-            return identityResult;
-        }
-
-        public async Task<IdentityResult> UpdateAsync(User user)
-        {
-            var identityResult = await _userManager.UpdateAsync(user);
-
-            return identityResult;
-        }
-
-        public async Task<IdentityResult> DeleteAsync(User user)
-        {
-            var identityResult = await _userManager.DeleteAsync(user);
-
-            return identityResult;
-        }
+            for (int i = 0; i < s.Length; i++)
+            {
+                for(int j = 0; j < i; j++)
+                {
+                    if (s.Substring(0, middle).Equals(s.Substring(middle + 1, middle)))
+                    {
+                        return true;
+                    }
+                }
+            }
+    }
     }
 }

@@ -10,21 +10,15 @@ namespace InstaConnect.Business.Helpers
     public class EmailSender : IEmailSender
     {
         private readonly ISendGridClient _sendGridClient;
-        private readonly EmailOptions _emailOptions;
 
-        public EmailSender(ISendGridClient sendGridClient, IOptions<EmailOptions> options)
+        public EmailSender(ISendGridClient sendGridClient)
         {
             _sendGridClient = sendGridClient;
-            _emailOptions = options.Value;
         }
 
-        public async Task<Response> SendEmailAsync(AccountSendEmailDTO accountSendEmailDTO)
+        public async Task<Response> SendEmailAsync(SendGridMessage sendGridMessage)
         {
-            var sender = MailHelper.StringToEmailAddress(_emailOptions.Sender);
-            var receiver = MailHelper.StringToEmailAddress(accountSendEmailDTO.Email);
-            var email = MailHelper.CreateSingleEmail(sender, receiver, accountSendEmailDTO.Subject, accountSendEmailDTO.PlainText, accountSendEmailDTO.Html);
-
-            var result = await _sendGridClient.SendEmailAsync(email);
+            var result = await _sendGridClient.SendEmailAsync(sendGridMessage);
 
             return result;
         }

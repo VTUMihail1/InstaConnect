@@ -20,33 +20,33 @@ namespace InstaConnect.Presentation.API.Controllers.v1
             _accountService = accountService;
         }
 
-        // GET: api/v1/accounts/confirm-email/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
-        [HttpGet("confirm-email/by-user/{userId}/by-token/{encodedToken}")]
+        // GET: api/v1/accounts/confirm-email?userId=5f0f2dd0-e957-4d72-8141-767a36fc6e95&token=Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
+        [HttpGet("confirm-email")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ConfirmEmailAsync([FromRoute] string userId, [FromRoute] string encodedToken)
+        public async Task<IActionResult> ConfirmEmailAsync([FromQuery] string userId, [FromQuery] string token)
         {
-            var response = await _accountService.ConfirmEmailWithTokenAsync(userId, encodedToken);
+            var response = await _accountService.ConfirmEmailWithTokenAsync(userId, token);
 
             return this.HandleResponse(response);
         }
 
-        // GET: api/v1/accounts/resend-confirm-email-token/by-email/user@example.com
-        [HttpGet("resend-confirm-email-token/by-email/{email}")]
+        // GET: api/v1/accounts/resend-confirm-email-token?email=user@example.com
+        [HttpGet("resend-confirm-email-token")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ResendConfirmEmailTokenAsync([FromRoute] string email)
+        public async Task<IActionResult> ResendConfirmEmailTokenAsync([FromQuery] string email)
         {
             var response = await _accountService.ResendEmailConfirmationTokenAsync(email);
 
             return this.HandleResponse(response);
         }
 
-        // GET: api/v1/accounts/send-reset-password-token/by-email/user@example.com
-        [HttpGet("send-reset-password-token/by-email/{email}")]
+        // GET: api/v1/accounts/send-reset-password-token?email=user@example.com
+        [HttpGet("send-reset-password-token")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> SendResetPasswordTokenAsync([FromRoute] string email)
+        public async Task<IActionResult> SendResetPasswordTokenAsync([FromQuery] string email)
         {
             var response = await _accountService.SendPasswordResetTokenByEmailAsync(email);
 
@@ -89,13 +89,13 @@ namespace InstaConnect.Presentation.API.Controllers.v1
             return this.HandleResponse(response);
         }
 
-        // POST: api/v1/accounts/reset-password/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
-        [HttpPost("reset-password/by-user/{userId}/by-token/{encodedToken}")]
+        // POST: api/v1/accounts/reset-password?userId=5f0f2dd0-e957-4d72-8141-767a36fc6e95&token=Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
+        [HttpPost("reset-password")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ResetPasswordAsync([FromRoute] string userId, [FromRoute] string encodedToken, [FromBody] AccountResetPasswordDTO request)
+        public async Task<IActionResult> ResetPasswordAsync([FromQuery] string userId, [FromQuery] string token, [FromBody] AccountResetPasswordDTO request)
         {
-            var response = await _accountService.ResetPasswordWithTokenAsync(userId, encodedToken, request);
+            var response = await _accountService.ResetPasswordWithTokenAsync(userId, token, request);
 
             return this.HandleResponse(response);
         }
