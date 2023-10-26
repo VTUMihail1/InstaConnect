@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Business.Models.DTOs.Account;
+using InstaConnect.Business.Models.DTOs.Token;
 using InstaConnect.Data.Models.Entities;
 
 namespace InstaConnect.Business.UnitTests.Utilities.Services
@@ -69,7 +70,12 @@ namespace InstaConnect.Business.UnitTests.Utilities.Services
             Password = TestNonExistingValidUserPassword
         };
 
-        public static readonly User TestExistingUser = new User()
+        public static readonly TokenResultDTO TestValidToken = new TokenResultDTO()
+        {
+            Value = TestValidUserToken
+        };
+
+		public static readonly User TestExistingUser = new User()
         {
             Id = TestExistingUserId,
             Email = TestExistingUserEmail,

@@ -38,22 +38,5 @@ namespace InstaConnect.Data.Helpers
                  .Where(u => u.Id == user.Id)
                  .ExecuteUpdateAsync(u => u.SetProperty(u => u.PasswordHash, passwordHash));
         }
-
-        public string LongestPalindrome(string s)
-        {
-            string max = "";
-            int middle = s.Length / 2;
-
-            for (int i = 0; i < s.Length; i++)
-            {
-                for(int j = 0; j < i; j++)
-                {
-                    if (s.Substring(0, middle).Equals(s.Substring(middle + 1, middle)))
-                    {
-                        return true;
-                    }
-                }
-            }
-    }
     }
 }

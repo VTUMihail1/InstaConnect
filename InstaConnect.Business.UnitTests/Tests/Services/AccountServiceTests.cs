@@ -25,8 +25,6 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         private readonly Mock<IEmailManager> _mockEmailManager;
         private readonly Mock<ITokenManager> _mockTokenManager;
         private readonly Mock<IInstaConnectUserManager> _mockInstaConnectUserManager;
-        private readonly Mock<IInstaConnectSignInManager> _mockInstaConnectSignInManager;
-        private readonly Mock<ITokenCryptographer> _mockTokenCryptographer;
         private readonly IAccountService _accountService;
 
         public AccountServiceTests()
@@ -36,16 +34,12 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _mockEmailManager = new Mock<IEmailManager>();
             _mockTokenManager = new Mock<ITokenManager>();
             _mockInstaConnectUserManager = new Mock<IInstaConnectUserManager>();
-            _mockInstaConnectSignInManager = new Mock<IInstaConnectSignInManager>();
-            _mockTokenCryptographer = new Mock<ITokenCryptographer>();
             _accountService = new AccountService(
                 _mockMapper.Object,
                 _resultFactory,
                 _mockEmailManager.Object,
                 _mockTokenManager.Object,
-                _mockInstaConnectUserManager.Object,
-                _mockInstaConnectSignInManager.Object,
-                _mockTokenCryptographer.Object);
+                _mockInstaConnectUserManager.Object);
         }
 
         [SetUp]
@@ -114,14 +108,8 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _mockInstaConnectUserManager.Setup(m => m.GeneratePasswordResetTokenAsync(It.IsAny<User>()))
                 .ReturnsAsync(TestAccountServiceUtilities.TestInvalidUserToken);
 
-            _mockInstaConnectUserManager.Setup(m => m.ConfirmEmailAsync(TestAccountServiceUtilities.TestExistingUserWithUnconfirmedEmail, TestAccountServiceUtilities.TestValidUserToken))
-                .ReturnsAsync(IdentityResult.Success);
-
-            _mockInstaConnectUserManager.Setup(m => m.ConfirmEmailAsync(TestAccountServiceUtilities.TestExistingUserWithUnconfirmedEmail, TestAccountServiceUtilities.TestInvalidUserToken))
-                .ReturnsAsync(IdentityResult.Failed());
-
-            _mockInstaConnectUserManager.Setup(m => m.ConfirmEmailAsync(TestAccountServiceUtilities.TestExistingUser, TestAccountServiceUtilities.TestValidUserToken))
-                .ReturnsAsync(IdentityResult.Failed());
+            _mockTokenManager.Setup(m => m.RemoveAsync(TestAccountServiceUtilities.TestValidUserToken))
+                .ReturnsAsync(true);
 
             _mockInstaConnectUserManager.Setup(m => m.ResetPasswordAsync(TestAccountServiceUtilities.TestExistingUser, TestAccountServiceUtilities.TestInvalidUserToken, TestAccountServiceUtilities.TestNonExistingValidUserPassword))
                 .ReturnsAsync(IdentityResult.Failed());
@@ -129,33 +117,30 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _mockInstaConnectUserManager.Setup(m => m.ResetPasswordAsync(TestAccountServiceUtilities.TestExistingUser, TestAccountServiceUtilities.TestValidUserToken, TestAccountServiceUtilities.TestNonExistingValidUserPassword))
                 .ReturnsAsync(IdentityResult.Success);
 
-            _mockEmailManager.Setup(m => m.SendPasswordResetAsync(TestAccountServiceUtilities.TestExistingUserEmail, TestAccountServiceUtilities.TestExistingUserId, TestAccountServiceUtilities.TestInvalidUserToken))
+            _mockEmailManager.Setup(m => m.SendPasswordResetAsync(TestAccountServiceUtilities.TestExistingUserEmail, TestAccountServiceUtilities.TestExistingUserId, It.IsAny<string>()))
                 .ReturnsAsync(true);
 
-            _mockEmailManager.Setup(m => m.SendEmailConfirmationAsync(TestAccountServiceUtilities.TestExistingUserUnconfirmedEmail, TestAccountServiceUtilities.TestExistingUserIdWithUnconfirmedEmail, TestAccountServiceUtilities.TestInvalidUserToken))
+            _mockEmailManager.Setup(m => m.SendEmailConfirmationAsync(TestAccountServiceUtilities.TestExistingUserUnconfirmedEmail, TestAccountServiceUtilities.TestExistingUserIdWithUnconfirmedEmail, It.IsAny<string>()))
                 .ReturnsAsync(true);
 
-            _mockEmailManager.Setup(m => m.SendEmailConfirmationAsync(TestAccountServiceUtilities.TestNonExistingUserValidEmailProvider, TestAccountServiceUtilities.TestNonExistingUserId, TestAccountServiceUtilities.TestInvalidUserToken))
+            _mockEmailManager.Setup(m => m.SendEmailConfirmationAsync(TestAccountServiceUtilities.TestNonExistingUserValidEmailProvider, TestAccountServiceUtilities.TestNonExistingUserId, It.IsAny<string>()))
                 .ReturnsAsync(true);
 
-            _mockInstaConnectSignInManager.Setup(m => m.PasswordSignInAsync(TestAccountServiceUtilities.TestExistingUser, TestAccountServiceUtilities.TestExistingUserPassword, false, false)).
-                ReturnsAsync(SignInResult.Success);
+			_mockInstaConnectUserManager.Setup(m => m.CheckPasswordAsync(TestAccountServiceUtilities.TestExistingUser, TestAccountServiceUtilities.TestExistingUserPassword)).
+                ReturnsAsync(true);
 
-            _mockInstaConnectSignInManager.Setup(m => m.PasswordSignInAsync(TestAccountServiceUtilities.TestExistingUserWithUnconfirmedEmail, TestAccountServiceUtilities.TestExistingUserPassword, false, false)).
-                ReturnsAsync(SignInResult.Success);
+			_mockInstaConnectUserManager.Setup(m => m.CheckPasswordAsync(TestAccountServiceUtilities.TestExistingUserWithUnconfirmedEmail, TestAccountServiceUtilities.TestExistingUserPassword)).
+                ReturnsAsync(true);
 
-            _mockInstaConnectSignInManager.Setup(m => m.PasswordSignInAsync(TestAccountServiceUtilities.TestExistingUserWithUnconfirmedEmail, TestAccountServiceUtilities.TestNonExistingValidUserPassword, false, false)).
-                ReturnsAsync(SignInResult.Failed);
+            _mockTokenManager.Setup(m => m.GenerateAccessToken(It.IsAny<string>())).
+                ReturnsAsync(TestAccountServiceUtilities.TestValidToken);
 
-            _mockInstaConnectSignInManager.Setup(m => m.PasswordSignInAsync(TestAccountServiceUtilities.TestExistingUser, TestAccountServiceUtilities.TestNonExistingValidUserPassword, false, false)).
-                ReturnsAsync(SignInResult.Failed);
+			_mockTokenManager.Setup(m => m.GenerateEmailConfirmationToken(It.IsAny<string>())).
+				ReturnsAsync(TestAccountServiceUtilities.TestValidToken);
 
-            _mockTokenCryptographer.Setup(m => m.DecodeToken(TestAccountServiceUtilities.TestValidUserToken))
-                .Returns(TestAccountServiceUtilities.TestValidUserToken);
-
-            _mockTokenCryptographer.Setup(m => m.DecodeToken(TestAccountServiceUtilities.TestInvalidUserToken))
-                .Returns(TestAccountServiceUtilities.TestInvalidUserToken);
-        }
+			_mockTokenManager.Setup(m => m.GeneratePasswordResetToken(It.IsAny<string>())).
+				ReturnsAsync(TestAccountServiceUtilities.TestValidToken);
+		}
 
         [Test]
         public async Task SignUpAsync_HasInvalidUsername_ReturnsBadRequestResult()

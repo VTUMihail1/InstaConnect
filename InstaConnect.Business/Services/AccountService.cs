@@ -9,6 +9,7 @@ using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Models.Entities;
 using InstaConnect.Data.Models.Utilities;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json.Linq;
 using System.Text;
 
 namespace InstaConnect.Business.Services
@@ -74,9 +75,16 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<AccountResultDTO>> LogoutAsync(string value)
         {
-            await _tokenManager.RemoveAsync(value);
+			var tokenWasDeleted = await _tokenManager.RemoveAsync(value);
 
-            var noContentResult = _resultFactory.GetNoContentResult<AccountResultDTO>();
+			if (!tokenWasDeleted)
+			{
+				var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountInvalidToken);
+
+				return badRequestResult;
+			}
+
+			var noContentResult = _resultFactory.GetNoContentResult<AccountResultDTO>();
 
             return noContentResult;
         }
@@ -126,7 +134,9 @@ namespace InstaConnect.Business.Services
                 return badRequest;
             }
 
-            if (existingUser.EmailConfirmed)
+			var isEmailConfirmed = await _instaConnectUserManager.IsEmailConfirmedAsync(existingUser);
+
+			if (!isEmailConfirmed)
             {
                 var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountEmailAlreadyConfirmed);
 
@@ -169,14 +179,16 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var existingToken = await _tokenManager.GetByValueAsync(token);
+            var tokenWasDeleted = await _tokenManager.RemoveAsync(token);
 
-            if(existingToken == null)
+            if(!tokenWasDeleted)
             {
-                return 
-            }
+				var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountInvalidToken);
 
-            await _tokenManager.RemoveAsync(token);
+				return badRequestResult;
+			}
+
+            await _instaConnectUserManager.ConfirmEmailAsync(existingUser);
 
             var noContentResult = _resultFactory.GetNoContentResult<AccountResultDTO>();
 
@@ -221,20 +233,16 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var resetPasswordResult = await _instaConnectUserManager.ResetPasswordAsync(existingUser, token, accountResetPasswordDTO.Password);
+			var tokenWasDeleted = await _tokenManager.RemoveAsync(token);
 
-            if (!resetPasswordResult.Succeeded)
-            {
-                var errors = resetPasswordResult.Errors
-                    .Select(x => x.Description)
-                    .ToArray();
+			if (!tokenWasDeleted)
+			{
+				var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountInvalidToken);
 
-                var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(errors);
+				return badRequestResult;
+			}
 
-                return badRequestResult;
-            }
-
-            await _tokenManager.RemoveAsync(token);
+            await _instaConnectUserManager.ResetPasswordAsync(existingUser, accountResetPasswordDTO.Password);
 
             var noContentResult = _resultFactory.GetNoContentResult<AccountResultDTO>();
 
