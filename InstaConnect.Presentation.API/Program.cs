@@ -66,6 +66,7 @@ builder.Services
     .AddScoped<IEndpointHandler, EndpointHandler>()
     .AddScoped<IEmailFactory, EmailFactory>()
     .AddScoped<IEmailSender, EmailSender>()
+    .AddScoped<IEndpointHandler, EndpointHandler>()
     .AddScoped<IEmailManager, EmailManager>()
     .AddScoped<IEmailTemplateGenerator, EmailTemplateGenerator>()
     .AddScoped<ITokenFactory, TokenFactory>()

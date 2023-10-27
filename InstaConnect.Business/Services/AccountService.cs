@@ -58,7 +58,7 @@ namespace InstaConnect.Business.Services
 
             var isEmailConfirmed = await _instaConnectUserManager.IsEmailConfirmedAsync(existingUser);
 
-            if (isEmailConfirmed)
+            if (!isEmailConfirmed)
             {
                 var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountEmailNotConfirmed);
 
@@ -136,7 +136,7 @@ namespace InstaConnect.Business.Services
 
 			var isEmailConfirmed = await _instaConnectUserManager.IsEmailConfirmedAsync(existingUser);
 
-			if (!isEmailConfirmed)
+			if (isEmailConfirmed)
             {
                 var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountEmailAlreadyConfirmed);
 
@@ -170,9 +170,9 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var IsUserEmailConfirmed = await _instaConnectUserManager.IsEmailConfirmedAsync(existingUser);
+            var IsEmailConfirmed = await _instaConnectUserManager.IsEmailConfirmedAsync(existingUser);
 
-            if (IsUserEmailConfirmed)
+            if (IsEmailConfirmed)
             {
                 var badRequestResult = _resultFactory.GetBadRequestResult<AccountResultDTO>(InstaConnectErrorMessages.AccountEmailAlreadyConfirmed);
 
