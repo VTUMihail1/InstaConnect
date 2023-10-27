@@ -14,16 +14,16 @@ namespace InstaConnect.Business.Helpers
 
         public string ConfigureEmailConfirmationEndpoint(string userId, string token)
         {
-            var endpoint = $"{_emailOptions.ConfirmEmailEndpoint}?userId={userId}&token={token}";
+			var endpoint = $"{_emailOptions.ConfirmEmailEndpoint}/by-user/{userId}/by-token/{token}";
 
-            return endpoint;
+			return endpoint;
         }
 
         public string ConfigurePasswordResetEndpoint(string userId, string token)
         {
-            var endpoint = $"{_emailOptions.ResetPasswordEndpoint}?userId={userId}&token={token}";
+			var endpoint = $"{_emailOptions.ResetPasswordEndpoint}/by-user/{userId}/by-token/{token}";
 
-            return endpoint;
+			return endpoint;
         }
     }
 }
