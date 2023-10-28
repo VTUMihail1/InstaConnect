@@ -20,7 +20,7 @@ namespace InstaConnect.Business.Abstraction.Services
         /// </summary>
         /// <param name="accountRegistrationDTO">The user's registration information.</param>
         /// <returns>An asynchronous task that returns the result of the registration operation.</returns>
-        Task<IResult<AccountResultDTO>> SignUpAsync(AccountRegistrationDTO accountRegistrationDTO);
+        Task<IResult<AccountResultDTO>> SignUpAsync(AccountRegisterDTO accountRegistrationDTO);
 
         /// <summary>
         /// Resends an email confirmation token to the specified email address.

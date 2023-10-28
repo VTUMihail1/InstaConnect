@@ -16,7 +16,7 @@ namespace InstaConnect.Business.AutoMapper
     {
         public InstaConnectProfile()
         {
-            CreateMap<AccountRegistrationDTO, User>()
+            CreateMap<AccountRegisterDTO, User>()
                 .ReverseMap();
 
             CreateMap<TokenAddDTO, Token>()

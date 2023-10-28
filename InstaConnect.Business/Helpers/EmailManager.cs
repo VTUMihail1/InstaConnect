@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Helpers;
-using InstaConnect.Data.Models.Entities;
 using InstaConnect.Data.Models.Utilities;
 
 namespace InstaConnect.Business.Helpers
@@ -26,9 +25,9 @@ namespace InstaConnect.Business.Helpers
 
         public async Task<bool> SendEmailConfirmationAsync(string email, string userId, string token)
         {
-            var emailConfirmationEndpoint = _endpointHandler.ConfigureEmailConfirmationEndpoint(userId, token); 
+            var emailConfirmationEndpoint = _endpointHandler.ConfigureEmailConfirmationEndpoint(userId, token);
             var emailConfirmationTemplate = _emailTemplateGenerator.GenerateEmailConfirmationTemplate(emailConfirmationEndpoint);
-            var emailConfirmationEmail = _emailFactory.GetEmail(email, InstaConnectConstants.EmailConfirmationTemplatePath, string.Empty, emailConfirmationTemplate);
+            var emailConfirmationEmail = _emailFactory.GetEmail(email, InstaConnectConstants.AccountEmailConfirmationTitle, string.Empty, emailConfirmationTemplate);
 
             var result = await _emailSender.SendEmailAsync(emailConfirmationEmail);
 

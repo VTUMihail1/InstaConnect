@@ -6,7 +6,7 @@ namespace InstaConnect.Data.Abstraction.Helpers
     {
         Task<TokenResultDTO> GenerateAccessToken(string userId);
 
-        Task<TokenResultDTO> GenerateEmailConfirmationToken(string userId);
+        Task<TokenResultDTO> GenerateEmailConfirmationTokenAsync(string userId);
 
         Task<TokenResultDTO> GeneratePasswordResetToken(string userId);
         Task<TokenResultDTO> GetByValueAsync(string value);

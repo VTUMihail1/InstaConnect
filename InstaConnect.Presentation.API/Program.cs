@@ -124,7 +124,7 @@ builder.Services
     {
         configuration.TokenValidationParameters = new TokenValidationParameters
         {
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions["SecurityKey"])),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions["AccessTokenSecurityKey"])),
             ValidateAudience = true,
             ValidAudience = tokenOptions["Audience"],
             ValidateIssuer = true,

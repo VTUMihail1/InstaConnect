@@ -49,7 +49,7 @@ namespace InstaConnect.Data.Abstraction.Helpers
         /// </summary>
         /// <param name="id">The user's ID.</param>
         /// <returns>A task representing the asynchronous operation. The task result contains the found user.</returns>
-        Task<User?> FindByIdAsync(string  userId);
+        Task<User?> FindByIdAsync(string userId);
 
         /// <summary>
         /// Finds a user by their username.

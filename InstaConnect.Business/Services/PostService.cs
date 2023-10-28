@@ -7,7 +7,6 @@ using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
-using InstaConnect.Data.Models.Utilities;
 
 namespace InstaConnect.Business.Services
 {

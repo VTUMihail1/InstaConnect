@@ -1,5 +1,4 @@
-﻿using InstaConnect.Business.Models.DTOs.Account;
-using SendGrid.Helpers.Mail;
+﻿using SendGrid.Helpers.Mail;
 
 namespace InstaConnect.Business.Abstraction.Factories
 {

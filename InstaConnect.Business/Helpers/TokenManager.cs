@@ -3,7 +3,6 @@ using InstaConnect.Business.Models.DTOs.Token;
 using InstaConnect.Data.Abstraction.Factories;
 using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
-using InstaConnect.Data.Models.Entities;
 
 namespace InstaConnect.Data.Helpers
 {
@@ -37,16 +36,16 @@ namespace InstaConnect.Data.Helpers
             return tokenResultDTO;
         }
 
-        public async Task<TokenResultDTO> GenerateEmailConfirmationToken(string userId)
+        public async Task<TokenResultDTO> GenerateEmailConfirmationTokenAsync(string userId)
         {
             var value = _tokenGenerator.GenerateEmailConfirmationTokenValue(userId);
             var token = _tokenFactory.GetConfirmEmailToken(userId, value);
 
             await _tokenRepository.AddAsync(token);
-			var tokenResultDTO = _mapper.Map<TokenResultDTO>(token);
+            var tokenResultDTO = _mapper.Map<TokenResultDTO>(token);
 
-			return tokenResultDTO;
-		}
+            return tokenResultDTO;
+        }
 
         public async Task<TokenResultDTO> GeneratePasswordResetToken(string userId)
         {
@@ -54,31 +53,31 @@ namespace InstaConnect.Data.Helpers
             var token = _tokenFactory.GetConfirmEmailToken(userId, value);
 
             await _tokenRepository.AddAsync(token);
-			var tokenResultDTO = _mapper.Map<TokenResultDTO>(token);
+            var tokenResultDTO = _mapper.Map<TokenResultDTO>(token);
 
-			return tokenResultDTO;
-		}
+            return tokenResultDTO;
+        }
 
         public async Task<TokenResultDTO> GetByValueAsync(string value)
         {
             var token = await _tokenRepository.FindEntityAsync(t => t.Value == value);
-			var tokenResultDTO = _mapper.Map<TokenResultDTO>(token);
+            var tokenResultDTO = _mapper.Map<TokenResultDTO>(token);
 
-			return tokenResultDTO;
+            return tokenResultDTO;
         }
 
         public async Task<bool> RemoveAsync(string value)
         {
             var token = await _tokenRepository.FindEntityAsync(t => t.Value == value);
 
-            if(token == null)
+            if (token == null)
             {
                 return false;
             }
 
             await _tokenRepository.DeleteAsync(token);
 
-			return true;
-		}
+            return true;
+        }
     }
 }

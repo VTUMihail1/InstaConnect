@@ -6,7 +6,11 @@
 
         public string Audience { get; set; }
 
-        public string SecurityKey { get; set; }
+        public string AccessTokenSecurityKey { get; set; }
+
+        public string EmailConfirmationTokenSecurityKey { get; set; }
+
+        public string ResetPasswordTokenSecurityKey { get; set; }
 
         public int AccessTokenLifetimeSeconds { get; set; }
 

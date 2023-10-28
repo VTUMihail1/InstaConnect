@@ -21,7 +21,7 @@ namespace InstaConnect.Data.Helpers
         public string GenerateAccessTokenValue(string userId)
         {
             var claims = GetClaims(userId);
-            var accessTokenValue = GetToken(claims, _tokenOptions.SecurityKey);
+            var accessTokenValue = GetToken(claims, _tokenOptions.AccessTokenSecurityKey);
 
             var value = InstaConnectConstants.AccessTokenPrefix + accessTokenValue;
 
@@ -31,7 +31,7 @@ namespace InstaConnect.Data.Helpers
         public string GenerateEmailConfirmationTokenValue(string userId)
         {
             var claims = GetClaims(userId);
-            var accessTokenValue = GetToken(claims, string.Empty);
+            var accessTokenValue = GetToken(claims, _tokenOptions.EmailConfirmationTokenSecurityKey);
 
             var value = accessTokenValue;
 
@@ -41,7 +41,7 @@ namespace InstaConnect.Data.Helpers
         public string GeneratePasswordResetToken(string userId)
         {
             var claims = GetClaims(userId);
-            var accessTokenValue = GetToken(claims, string.Empty);
+            var accessTokenValue = GetToken(claims, _tokenOptions.ResetPasswordTokenSecurityKey);
 
             var value = accessTokenValue;
 
