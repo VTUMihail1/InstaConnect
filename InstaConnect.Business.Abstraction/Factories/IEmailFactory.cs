@@ -1,26 +1,20 @@
-﻿using InstaConnect.Business.Models.DTOs.Account;
+﻿using SendGrid.Helpers.Mail;
 
 namespace InstaConnect.Business.Abstraction.Factories
 {
     /// <summary>
-    /// Represents an interface for creating email-related data transfer objects (DTOs) for various email purposes.
+    /// Provides a method for creating email messages using SendGridMessage.
     /// </summary>
     public interface IEmailFactory
     {
         /// <summary>
-        /// Creates an email data transfer object (DTO) for email verification.
+        /// Creates an email message using the provided parameters.
         /// </summary>
-        /// <param name="email">The recipient's email address.</param>
-        /// <param name="template">The email template to use for verification.</param>
-        /// <returns>An instance of <see cref="AccountSendEmailDTO"/> containing email verification information.</returns>
-        AccountSendEmailDTO GetEmailVerificationDTO(string email, string template);
-
-        /// <summary>
-        /// Creates an email data transfer object (DTO) for password reset.
-        /// </summary>
-        /// <param name="email">The recipient's email address.</param>
-        /// <param name="template">The email template to use for password reset.</param>
-        /// <returns>An instance of <see cref="AccountSendEmailDTO"/> containing password reset information.</returns>
-        AccountSendEmailDTO GetPasswordResetDTO(string email, string template);
+        /// <param name="receiver">The email address of the message recipient.</param>
+        /// <param name="subject">The subject of the email message.</param>
+        /// <param name="plainText">The plain text content of the email message.</param>
+        /// <param name="template">The template for formatting the email message.</param>
+        /// <returns>A SendGridMessage representing the created email message.</returns>
+        SendGridMessage GetEmail(string receiver, string subject, string plainText, string template);
     }
 }

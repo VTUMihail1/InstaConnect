@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.AutoMapper;
 using InstaConnect.Business.Factories;
 using InstaConnect.Business.Models.Enums;
 using InstaConnect.Business.Services;
-using InstaConnect.Business.UnitTests.Utilities;
-using InstaConnect.Business.UnitTests.Utilities.Services;
-using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
 using Moq;
@@ -19,6 +15,12 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
     [TestFixture]
     public class UserServiceTests
     {
+        public const string ExistingUserId = "ExistingUserId";
+        public const string NonExistingUserId = "NonExistingUserId";
+
+        public const string ExistingUserName = "ExistingUserName";
+        public const string NonExistingUserName = "NonExistingUserName";
+
         private Mock<IMapper> _mockMapper;
         private IResultFactory _resultFactory;
         private Mock<IUserRepository> _mockUserRepository;
@@ -38,14 +40,25 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         [SetUp]
         public void Setup()
         {
+            var existingUsers = new List<User>()
+            {
+                new User()
+                {
+                    Id = ExistingUserId,
+                    UserName = ExistingUserName
+                }
+            };
+
             _mockUserRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<User, bool>>>()))
-               .ReturnsAsync((Expression<Func<User, bool>> expression) => TestUserServiceUtilities.TestUsers.Find(new Predicate<User>(expression.Compile())));
+               .ReturnsAsync((Expression<Func<User, bool>> expression) => existingUsers.Find(new Predicate<User>(expression.Compile())));
         }
 
         [Test]
-        [TestCase(TestUserServiceUtilities.TestNonExistingUserId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestUserServiceUtilities.TestExistingUserId, InstaConnectStatusCode.OK)]
-        public async Task GetById_HasId_ReturnsExpectedResult(string id, InstaConnectStatusCode statusCode)
+        [TestCase(NonExistingUserId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingUserId, InstaConnectStatusCode.OK)]
+        public async Task GetById_HasId_ReturnsExpectedResult(
+            string id,
+            InstaConnectStatusCode statusCode)
         {
             // Act
             var result = await _userService.GetByIdAsync(id);
@@ -55,9 +68,11 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(TestUserServiceUtilities.TestNonExistingUserUsername, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestUserServiceUtilities.TestExistingUserUsername, InstaConnectStatusCode.OK)]
-        public async Task GetByUsernameAsync_HasUsername_ReturnsExpectedResult(string username, InstaConnectStatusCode statusCode)
+        [TestCase(NonExistingUserName, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingUserName, InstaConnectStatusCode.OK)]
+        public async Task GetByUsernameAsync_HasUsername_ReturnsExpectedResult(
+            string username,
+            InstaConnectStatusCode statusCode)
         {
             // Act
             var result = await _userService.GetByUsernameAsync(username);
@@ -67,9 +82,11 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(TestUserServiceUtilities.TestNonExistingUserId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestUserServiceUtilities.TestExistingUserId, InstaConnectStatusCode.OK)]
-        public async Task GetPersonalByIdAsync_HasId_ReturnsExpectedResult(string id, InstaConnectStatusCode statusCode)
+        [TestCase(NonExistingUserId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingUserId, InstaConnectStatusCode.OK)]
+        public async Task GetPersonalByIdAsync_HasId_ReturnsExpectedResult(
+            string id,
+            InstaConnectStatusCode statusCode)
         {
             // Act
             var result = await _userService.GetPersonalByIdAsync(id);

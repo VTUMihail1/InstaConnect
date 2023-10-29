@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.AutoMapper;
 using InstaConnect.Business.Factories;
-using InstaConnect.Business.Models.DTOs.Post;
 using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.Enums;
 using InstaConnect.Business.Services;
-using InstaConnect.Business.UnitTests.Utilities;
-using InstaConnect.Business.UnitTests.Utilities.Services;
 using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
@@ -21,6 +17,17 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
     [TestFixture]
     public class PostLikeServiceTests
     {
+        public const string ExistingPostId = "ExistingPostId";
+        public const string NonExistingPostId = "NonExistingPostId";
+
+        public const string ExistingPostLikeId = "ExistingPostLikeId";
+        public const string NonExistingPostLikeId = "NonExistingPostLikeId";
+
+        public const string ExistingUserId = "ExistingUserId";
+        public const string NonExistingUserId = "NonExistingUserId";
+
+        public const string ExistingPostCommentPostId = "ExistingPostCommentPostId";
+        public const string ExistingPostCommentUserId = "ExistingPostCommentUserId";
 
         private Mock<IMapper> _mockMapper;
         private IResultFactory _resultFactory;
@@ -42,29 +49,56 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
                 _mockPostLikeRepository.Object,
                 _mockPostRepository.Object,
                 _mockInstaConnectUserManager.Object);
-
         }
 
         [SetUp]
         public void Setup()
         {
+            var existingPosts = new List<Post>()
+            {
+                new Post()
+                {
+                    Id = ExistingPostId,
+                    UserId = ExistingUserId
+                },
+                new Post()
+                {
+                    Id = ExistingPostCommentPostId,
+                    UserId = ExistingPostCommentUserId
+                }
+            };
+
+            var existingPostLikes = new List<PostLike>()
+            {
+                new PostLike()
+                {
+                    Id = ExistingPostLikeId,
+                    UserId = ExistingPostCommentUserId,
+                    PostId = ExistingPostCommentPostId
+                },
+            };
+
+            var existingUser = new User();
+
             _mockPostRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<Post, bool>>>()))
-               .ReturnsAsync((Expression<Func<Post, bool>> expression) => TestPostLikeServiceUtilities.TestPosts.Find(new Predicate<Post>(expression.Compile())));
+               .ReturnsAsync((Expression<Func<Post, bool>> expression) => existingPosts.Find(new Predicate<Post>(expression.Compile())));
 
-            _mockPostLikeRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<PostLike, bool>>>())).
-                ReturnsAsync((Expression<Func<PostLike, bool>> expression) => TestPostLikeServiceUtilities.TestPostLikes.Find(new Predicate<PostLike>(expression.Compile())));
+            _mockPostLikeRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<PostLike, bool>>>()))
+                .ReturnsAsync((Expression<Func<PostLike, bool>> expression) => existingPostLikes.Find(new Predicate<PostLike>(expression.Compile())));
 
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestPostLikeServiceUtilities.TestExistingUserId))
-                .ReturnsAsync(TestPostLikeServiceUtilities.TestExistingUser);
+            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingUserId))
+                .ReturnsAsync(existingUser);
 
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestPostLikeServiceUtilities.TestExistingPostCommentUserId))
-                .ReturnsAsync(TestPostLikeServiceUtilities.TestExistingUser);
+            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingPostCommentUserId))
+                .ReturnsAsync(existingUser);
         }
 
         [Test]
-        [TestCase(TestPostLikeServiceUtilities.TestNonExistingPostLikeId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestPostLikeServiceUtilities.TestExistingPostLikeId, InstaConnectStatusCode.OK)]
-        public async Task GetById_HasId_ReturnsExpectedResult(string id, InstaConnectStatusCode statusCode)
+        [TestCase(NonExistingPostLikeId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingPostLikeId, InstaConnectStatusCode.OK)]
+        public async Task GetById_HasId_ReturnsExpectedResult(
+            string id,
+            InstaConnectStatusCode statusCode)
         {
             // Act
             var result = await _postLikeService.GetByIdAsync(id);
@@ -74,11 +108,14 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(TestPostLikeServiceUtilities.TestNonExistingUserId, TestPostLikeServiceUtilities.TestNonExistingPostId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestPostLikeServiceUtilities.TestExistingPostCommentUserId, TestPostLikeServiceUtilities.TestNonExistingPostId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestPostLikeServiceUtilities.TestNonExistingUserId, TestPostLikeServiceUtilities.TestExistingPostCommentPostId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestPostLikeServiceUtilities.TestExistingPostCommentUserId, TestPostLikeServiceUtilities.TestExistingPostCommentPostId, InstaConnectStatusCode.OK)]
-        public async Task GetByUserIdAndPostId_HasArguments_ReturnsExpectedResult(string userId, string postId, InstaConnectStatusCode statusCode)
+        [TestCase(NonExistingUserId, NonExistingPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingPostCommentUserId, NonExistingPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(NonExistingUserId, ExistingPostCommentPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingPostCommentUserId, ExistingPostCommentPostId, InstaConnectStatusCode.OK)]
+        public async Task GetByUserIdAndPostId_HasArguments_ReturnsExpectedResult(
+            string userId,
+            string postId,
+            InstaConnectStatusCode statusCode)
         {
             // Act
             var result = await _postLikeService.GetByUserIdAndPostIdAsync(userId, postId);
@@ -88,14 +125,17 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(TestPostLikeServiceUtilities.TestExistingUserId, TestPostLikeServiceUtilities.TestExistingPostId, InstaConnectStatusCode.NoContent)]
-        [TestCase(TestPostLikeServiceUtilities.TestNonExistingUserId, TestPostLikeServiceUtilities.TestNonExistingPostId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(TestPostLikeServiceUtilities.TestNonExistingUserId, TestPostLikeServiceUtilities.TestExistingPostId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(TestPostLikeServiceUtilities.TestExistingUserId, TestPostLikeServiceUtilities.TestNonExistingPostId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(TestPostLikeServiceUtilities.TestExistingUserId, TestPostLikeServiceUtilities.TestExistingPostCommentPostId, InstaConnectStatusCode.NoContent)]
-        [TestCase(TestPostLikeServiceUtilities.TestExistingPostCommentUserId, TestPostLikeServiceUtilities.TestExistingPostId, InstaConnectStatusCode.NoContent)]
-        [TestCase(TestPostLikeServiceUtilities.TestExistingPostCommentUserId, TestPostLikeServiceUtilities.TestExistingPostCommentPostId, InstaConnectStatusCode.BadRequest)]
-        public async Task AddAsync_HasArguments_ReturnsExpectedResult(string userId, string postId, InstaConnectStatusCode statusCode)
+        [TestCase(ExistingUserId, ExistingPostId, InstaConnectStatusCode.NoContent)]
+        [TestCase(NonExistingUserId, NonExistingPostId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(NonExistingUserId, ExistingPostId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUserId, NonExistingPostId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUserId, ExistingPostCommentPostId, InstaConnectStatusCode.NoContent)]
+        [TestCase(ExistingPostCommentUserId, ExistingPostId, InstaConnectStatusCode.NoContent)]
+        [TestCase(ExistingPostCommentUserId, ExistingPostCommentPostId, InstaConnectStatusCode.BadRequest)]
+        public async Task AddAsync_HasArguments_ReturnsExpectedResult(
+            string userId,
+            string postId,
+            InstaConnectStatusCode statusCode)
         {
             // Arrange
             var postLikeAddDTO = new PostLikeAddDTO()
@@ -112,11 +152,14 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(TestPostLikeServiceUtilities.TestNonExistingUserId, TestPostLikeServiceUtilities.TestNonExistingPostLikeId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestPostLikeServiceUtilities.TestExistingPostCommentUserId, TestPostLikeServiceUtilities.TestNonExistingPostLikeId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestPostLikeServiceUtilities.TestNonExistingUserId, TestPostLikeServiceUtilities.TestExistingPostLikeId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestPostLikeServiceUtilities.TestExistingPostCommentUserId, TestPostLikeServiceUtilities.TestExistingPostLikeId, InstaConnectStatusCode.NoContent)]
-        public async Task DeleteAsync_HasArguments_ReturnsExpectedResult(string userId, string id, InstaConnectStatusCode statusCode)
+        [TestCase(NonExistingUserId, NonExistingPostLikeId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingPostCommentUserId, NonExistingPostLikeId, InstaConnectStatusCode.NotFound)]
+        [TestCase(NonExistingUserId, ExistingPostLikeId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingPostCommentUserId, ExistingPostLikeId, InstaConnectStatusCode.NoContent)]
+        public async Task DeleteAsync_HasArguments_ReturnsExpectedResult(
+            string userId,
+            string id,
+            InstaConnectStatusCode statusCode)
         {
             // Act
             var result = await _postLikeService.DeleteAsync(userId, id);
@@ -126,11 +169,14 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(TestPostLikeServiceUtilities.TestNonExistingUserId, TestPostLikeServiceUtilities.TestNonExistingPostId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestPostLikeServiceUtilities.TestExistingPostCommentUserId, TestPostLikeServiceUtilities.TestNonExistingPostId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestPostLikeServiceUtilities.TestNonExistingUserId, TestPostLikeServiceUtilities.TestExistingPostCommentPostId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestPostLikeServiceUtilities.TestExistingPostCommentUserId, TestPostLikeServiceUtilities.TestExistingPostCommentPostId, InstaConnectStatusCode.NoContent)]
-        public async Task DeleteByUserIdAndPostIdAsync_HasArguments_ReturnsExpectedResult(string userId, string postId, InstaConnectStatusCode statusCode)
+        [TestCase(NonExistingUserId, NonExistingPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingPostCommentUserId, NonExistingPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(NonExistingUserId, ExistingPostCommentPostId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingPostCommentUserId, ExistingPostCommentPostId, InstaConnectStatusCode.NoContent)]
+        public async Task DeleteByUserIdAndPostIdAsync_HasArguments_ReturnsExpectedResult(
+            string userId,
+            string postId,
+            InstaConnectStatusCode statusCode)
         {
             // Act
             var result = await _postLikeService.DeleteByUserIdAndPostIdAsync(userId, postId);

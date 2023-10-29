@@ -2,13 +2,10 @@
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.AutoMapper;
 using InstaConnect.Business.Factories;
 using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.Enums;
 using InstaConnect.Business.Services;
-using InstaConnect.Business.UnitTests.Utilities;
-using InstaConnect.Business.UnitTests.Utilities.Services;
 using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
@@ -21,6 +18,15 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
     [TestFixture]
     public class MessageServiceTests
     {
+        public const string ExistingMessageId = "ExistingMessageId";
+        public const string NonExistingMessageId = "NonExistingMessageId";
+
+        public const string ExistingSenderId = "ExistingSenderId";
+        public const string NonExistingSenderId = "NonExistingSenderId";
+
+        public const string ExistingReceiverId = "ExistingReceiverId";
+        public const string NonExistingReceiverId = "NonExistingReceiverId";
+
         private Mock<IMapper> _mockMapper;
         private IResultFactory _resultFactory;
         private Mock<IMessageRepository> _mockMessageRepository;
@@ -46,22 +52,37 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         [SetUp]
         public void Setup()
         {
+            var existingMessages = new List<Message>()
+            {
+                new Message()
+                {
+                    Id = ExistingMessageId,
+                    SenderId = ExistingSenderId,
+                    ReceiverId = ExistingReceiverId
+                }
+            };
+
+            var existingUser = new User();
+
             _mockMessageRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<Message, bool>>>()))
-                .ReturnsAsync((Expression<Func<Message, bool>> expression) => TestMessageServiceTestUtilities.TestMessages.Find(new Predicate<Message>(expression.Compile())));
+                .ReturnsAsync((Expression<Func<Message, bool>> expression) => existingMessages.Find(new Predicate<Message>(expression.Compile())));
 
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestMessageServiceTestUtilities.TestExistingSenderId))
-                .ReturnsAsync(TestMessageServiceTestUtilities.TestExistingUser);
+            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingSenderId))
+                .ReturnsAsync(existingUser);
 
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(TestMessageServiceTestUtilities.TestExistingReceiverId))
-                .ReturnsAsync(TestMessageServiceTestUtilities.TestExistingUser);
+            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingReceiverId))
+                .ReturnsAsync(existingUser);
         }
 
         [Test]
-        [TestCase(TestMessageServiceTestUtilities.TestExistingSenderId, TestMessageServiceTestUtilities.TestNonExistingMessageId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestMessageServiceTestUtilities.TestNonExistingSenderId, TestMessageServiceTestUtilities.TestExistingMessageId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestMessageServiceTestUtilities.TestNonExistingSenderId, TestMessageServiceTestUtilities.TestNonExistingMessageId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestMessageServiceTestUtilities.TestExistingSenderId, TestMessageServiceTestUtilities.TestExistingMessageId, InstaConnectStatusCode.OK)]
-        public async Task GetById_HasId_ReturnsExpectedResult(string userId, string id, InstaConnectStatusCode statusCode)
+        [TestCase(ExistingSenderId, NonExistingMessageId, InstaConnectStatusCode.NotFound)]
+        [TestCase(NonExistingSenderId, ExistingMessageId, InstaConnectStatusCode.NotFound)]
+        [TestCase(NonExistingSenderId, NonExistingMessageId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingSenderId, ExistingMessageId, InstaConnectStatusCode.OK)]
+        public async Task GetById_HasId_ReturnsExpectedResult(
+            string userId,
+            string id,
+            InstaConnectStatusCode statusCode)
         {
             // Act
             var result = await _messageService.GetByIdAsync(userId, id);
@@ -71,11 +92,14 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(TestMessageServiceTestUtilities.TestNonExistingSenderId, TestMessageServiceTestUtilities.TestNonExistingReceiverId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(TestMessageServiceTestUtilities.TestNonExistingSenderId, TestMessageServiceTestUtilities.TestExistingReceiverId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(TestMessageServiceTestUtilities.TestExistingSenderId, TestMessageServiceTestUtilities.TestNonExistingReceiverId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(TestMessageServiceTestUtilities.TestExistingSenderId, TestMessageServiceTestUtilities.TestExistingReceiverId, InstaConnectStatusCode.NoContent)]
-        public async Task AddAsync_HasArguments_ReturnsExpectedResult(string senderId, string receiverId, InstaConnectStatusCode statusCode)
+        [TestCase(NonExistingSenderId, NonExistingReceiverId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(NonExistingSenderId, ExistingReceiverId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingSenderId, NonExistingReceiverId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingSenderId, ExistingReceiverId, InstaConnectStatusCode.NoContent)]
+        public async Task AddAsync_HasArguments_ReturnsExpectedResult(
+            string senderId,
+            string receiverId,
+            InstaConnectStatusCode statusCode)
         {
             // Arrange
             var messageAddDTO = new MessageAddDTO()
@@ -92,11 +116,14 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(TestMessageServiceTestUtilities.TestNonExistingSenderId, TestMessageServiceTestUtilities.TestNonExistingMessageId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestMessageServiceTestUtilities.TestExistingSenderId, TestMessageServiceTestUtilities.TestNonExistingMessageId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestMessageServiceTestUtilities.TestNonExistingSenderId, TestMessageServiceTestUtilities.TestExistingMessageId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestMessageServiceTestUtilities.TestExistingSenderId, TestMessageServiceTestUtilities.TestExistingMessageId, InstaConnectStatusCode.NoContent)]
-        public async Task UpdateAsync_HasId_ReturnsExpectedResult(string senderId, string id, InstaConnectStatusCode statusCode)
+        [TestCase(NonExistingSenderId, NonExistingMessageId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingSenderId, NonExistingMessageId, InstaConnectStatusCode.NotFound)]
+        [TestCase(NonExistingSenderId, ExistingMessageId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingSenderId, ExistingMessageId, InstaConnectStatusCode.NoContent)]
+        public async Task UpdateAsync_HasId_ReturnsExpectedResult(
+            string senderId,
+            string id,
+            InstaConnectStatusCode statusCode)
         {
             // Arrange
             var messageUpdateDTO = new MessageUpdateDTO();
@@ -109,11 +136,14 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(TestMessageServiceTestUtilities.TestNonExistingSenderId, TestMessageServiceTestUtilities.TestNonExistingMessageId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestMessageServiceTestUtilities.TestExistingSenderId, TestMessageServiceTestUtilities.TestNonExistingMessageId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestMessageServiceTestUtilities.TestNonExistingSenderId, TestMessageServiceTestUtilities.TestExistingMessageId, InstaConnectStatusCode.NotFound)]
-        [TestCase(TestMessageServiceTestUtilities.TestExistingSenderId, TestMessageServiceTestUtilities.TestExistingMessageId, InstaConnectStatusCode.NoContent)]
-        public async Task DeleteAsync_HasId_ReturnsExpectedResult(string senderId, string id, InstaConnectStatusCode statusCode)
+        [TestCase(NonExistingSenderId, NonExistingMessageId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingSenderId, NonExistingMessageId, InstaConnectStatusCode.NotFound)]
+        [TestCase(NonExistingSenderId, ExistingMessageId, InstaConnectStatusCode.NotFound)]
+        [TestCase(ExistingSenderId, ExistingMessageId, InstaConnectStatusCode.NoContent)]
+        public async Task DeleteAsync_HasId_ReturnsExpectedResult(
+            string senderId,
+            string id,
+            InstaConnectStatusCode statusCode)
         {
             // Act
             var result = await _messageService.DeleteAsync(senderId, id);

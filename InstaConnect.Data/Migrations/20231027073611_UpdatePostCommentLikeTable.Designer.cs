@@ -3,6 +3,7 @@ using System;
 using InstaConnect.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstaConnect.Data.Migrations
 {
     [DbContext(typeof(InstaConnectContext))]
-    partial class InstaConnectContextModelSnapshot : ModelSnapshot
+    [Migration("20231027073611_UpdatePostCommentLikeTable")]
+    partial class UpdatePostCommentLikeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

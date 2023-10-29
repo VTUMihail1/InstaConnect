@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InstaConnect.Business.Models.DTOs.Account
 {
-    public class AccountRegistrationDTO
+    public class AccountRegisterDTO
     {
         [Required]
         [MinLength(InstaConnectModelConfigurations.AccountUsernameMinLength)]

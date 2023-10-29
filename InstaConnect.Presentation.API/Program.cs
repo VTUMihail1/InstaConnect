@@ -61,11 +61,12 @@ builder.Services.AddCors(options =>
 builder.Services
     .AddScoped<IDbSeeder, DbSeeder>()
     .AddScoped<IInstaConnectUserManager, InstaConnectUserManager>()
-    .AddScoped<IInstaConnectSignInManager, InstaConnectSignInManager>()
     .AddScoped<IResultFactory, ResultFactory>()
     .AddScoped<ISendGridClient>(_ => new SendGridClient(emailOptions["APIKey"]))
+    .AddScoped<IEndpointHandler, EndpointHandler>()
     .AddScoped<IEmailFactory, EmailFactory>()
     .AddScoped<IEmailSender, EmailSender>()
+    .AddScoped<IEndpointHandler, EndpointHandler>()
     .AddScoped<IEmailManager, EmailManager>()
     .AddScoped<IEmailTemplateGenerator, EmailTemplateGenerator>()
     .AddScoped<ITokenFactory, TokenFactory>()
@@ -123,7 +124,7 @@ builder.Services
     {
         configuration.TokenValidationParameters = new TokenValidationParameters
         {
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions["SecurityKey"])),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions["AccessTokenSecurityKey"])),
             ValidateAudience = true,
             ValidAudience = tokenOptions["Audience"],
             ValidateIssuer = true,

@@ -1,24 +1,22 @@
 ﻿namespace InstaConnect.Business.Abstraction.Helpers
 {
     /// <summary>
-    /// Represents an interface for generating email templates for various purposes such as email confirmation and password reset.
+    /// Provides methods for generating email templates for specific actions.
     /// </summary>
     public interface IEmailTemplateGenerator
     {
         /// <summary>
-        /// Generates an email confirmation template based on the provided <paramref name="userId"/> and <paramref name="token"/>.
+        /// Generates an email template for email confirmation.
         /// </summary>
-        /// <param name="userId">The user's unique identifier.</param>
-        /// <param name="token">The email confirmation token.</param>
-        /// <returns>A string representing the generated email confirmation template.</returns>
-        string GenerateEmailConfirmationTemplate(string userId, string token);
+        /// <param name="endpoint">The URL endpoint for email confirmation.</param>
+        /// <returns>A string representing the generated email template for email confirmation.</returns>
+        string GenerateEmailConfirmationTemplate(string endpoint);
 
         /// <summary>
-        /// Generates a forgot password template based on the provided <paramref name="userId"/> and <paramref name="token"/>.
+        /// Generates an email template for the "Forgot Password" action.
         /// </summary>
-        /// <param name="userId">The user's unique identifier.</param>
-        /// <param name="token">The password reset token.</param>
-        /// <returns>A string representing the generated forgot password template.</returns>
-        string GenerateForgotPasswordTemplate(string userId, string token);
+        /// <param name="endpoint">The URL endpoint for password reset.</param>
+        /// <returns>A string representing the generated email template for the "Forgot Password" action.</returns>
+        string GenerateForgotPasswordTemplate(string endpoint);
     }
 }

@@ -21,12 +21,12 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         // GET: api/v1/accounts/confirm-email/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
-        [HttpGet("confirm-email/by-user/{userId}/by-token/{encodedToken}")]
+        [HttpGet("confirm-email/by-user/{userId}/by-token/{token}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ConfirmEmailAsync([FromRoute] string userId, [FromRoute] string encodedToken)
+        public async Task<IActionResult> ConfirmEmailAsync([FromRoute] string userId, [FromRoute] string token)
         {
-            var response = await _accountService.ConfirmEmailWithTokenAsync(userId, encodedToken);
+            var response = await _accountService.ConfirmEmailWithTokenAsync(userId, token);
 
             return this.HandleResponse(response);
         }
@@ -68,7 +68,7 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         [HttpPost("sign-up")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> SignUpAsync([FromBody] AccountRegistrationDTO request)
+        public async Task<IActionResult> SignUpAsync([FromBody] AccountRegisterDTO request)
         {
             var response = await _accountService.SignUpAsync(request);
 
@@ -90,12 +90,12 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         }
 
         // POST: api/v1/accounts/reset-password/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
-        [HttpPost("reset-password/by-user/{userId}/by-token/{encodedToken}")]
+        [HttpPost("reset-password/by-user/{userId}/by-token/{token}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ResetPasswordAsync([FromRoute] string userId, [FromRoute] string encodedToken, [FromBody] AccountResetPasswordDTO request)
+        public async Task<IActionResult> ResetPasswordAsync([FromRoute] string userId, [FromRoute] string token, [FromBody] AccountResetPasswordDTO request)
         {
-            var response = await _accountService.ResetPasswordWithTokenAsync(userId, encodedToken, request);
+            var response = await _accountService.ResetPasswordWithTokenAsync(userId, token, request);
 
             return this.HandleResponse(response);
         }
