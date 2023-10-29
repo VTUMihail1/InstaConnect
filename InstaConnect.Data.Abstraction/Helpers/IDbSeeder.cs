@@ -1,20 +1,20 @@
 ﻿namespace InstaConnect.Data.Abstraction.Helpers
 {
     /// <summary>
-    /// Represents an interface for seeding a database with initial data asynchronously.
+    /// Provides methods for seeding a database and applying pending migrations.
     /// </summary>
-    /// <remarks>
-    /// Implement this interface to define a mechanism for populating a database with initial data asynchronously.
-    /// The <see cref="SeedAsync"/> method should be implemented to perform the data seeding operation.
-    /// </remarks>
     public interface IDbSeeder
     {
         /// <summary>
-        /// Seeds the database with initial data asynchronously.
+        /// Asynchronously seeds data into the database.
         /// </summary>
-        /// <returns>A task representing the asynchronous operation.</returns>
+        /// <returns>A task that represents the asynchronous seeding operation.</returns>
         Task SeedAsync();
 
+        /// <summary>
+        /// Asynchronously applies pending database migrations.
+        /// </summary>
+        /// <returns>A task that represents the asynchronous migration operation.</returns>
         Task ApplyPendingMigrationsAsync();
     }
 }
