@@ -18,19 +18,39 @@ namespace InstaConnect.Data.Helpers
             _tokenOptions = options.Value;
         }
 
-        public string GenerateAccessToken(string userId)
+        public string GenerateAccessTokenValue(string userId)
         {
             var claims = GetClaims(userId);
-            var accessTokenValue = GetAccessToken(claims);
+            var accessTokenValue = GetToken(claims, _tokenOptions.AccessTokenSecurityKey);
 
             var value = InstaConnectConstants.AccessTokenPrefix + accessTokenValue;
 
             return value;
         }
 
-        private string GetAccessToken(IEnumerable<Claim> claims)
+        public string GenerateEmailConfirmationTokenValue(string userId)
         {
-            var securityKeyAsBytes = Encoding.UTF8.GetBytes(_tokenOptions.SecurityKey);
+            var claims = GetClaims(userId);
+            var accessTokenValue = GetToken(claims, _tokenOptions.EmailConfirmationTokenSecurityKey);
+
+            var value = accessTokenValue;
+
+            return value;
+        }
+
+        public string GeneratePasswordResetToken(string userId)
+        {
+            var claims = GetClaims(userId);
+            var accessTokenValue = GetToken(claims, _tokenOptions.ResetPasswordTokenSecurityKey);
+
+            var value = accessTokenValue;
+
+            return value;
+        }
+
+        private string GetToken(IEnumerable<Claim> claims, string securityKey)
+        {
+            var securityKeyAsBytes = Encoding.UTF8.GetBytes(securityKey);
             var signingKey = new SymmetricSecurityKey(securityKeyAsBytes);
 
             var claimsIdentity = new ClaimsIdentity(claims);

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace InstaConnect.Data.EntityConfigurations
 {
-    public class CommentLikeConfiguration : IEntityTypeConfiguration<CommentLike>
+    public class PostCommentLikeConfiguration : IEntityTypeConfiguration<PostCommentLike>
     {
-        public void Configure(EntityTypeBuilder<CommentLike> builder)
+        public void Configure(EntityTypeBuilder<PostCommentLike> builder)
         {
-            builder.ToTable("comment_like");
+            builder.ToTable("post_comment_like");
 
             builder.HasKey(cl => cl.Id);
 

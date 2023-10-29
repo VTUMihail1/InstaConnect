@@ -60,10 +60,13 @@ builder.Services.AddCors(options =>
 
 builder.Services
     .AddScoped<IDbSeeder, DbSeeder>()
+    .AddScoped<IInstaConnectUserManager, InstaConnectUserManager>()
     .AddScoped<IResultFactory, ResultFactory>()
     .AddScoped<ISendGridClient>(_ => new SendGridClient(emailOptions["APIKey"]))
+    .AddScoped<IEndpointHandler, EndpointHandler>()
     .AddScoped<IEmailFactory, EmailFactory>()
     .AddScoped<IEmailSender, EmailSender>()
+    .AddScoped<IEndpointHandler, EndpointHandler>()
     .AddScoped<IEmailManager, EmailManager>()
     .AddScoped<IEmailTemplateGenerator, EmailTemplateGenerator>()
     .AddScoped<ITokenFactory, TokenFactory>()
@@ -76,8 +79,8 @@ builder.Services
     .AddScoped<IPostCommentService, PostCommentService>()
     .AddScoped<IPostLikeRepository, PostLikeRepository>()
     .AddScoped<IPostLikeService, PostLikeService>()
-    .AddScoped<ICommentLikeRepository, CommentLikeRepository>()
-    .AddScoped<ICommentLikeService, CommentLikeService>()
+    .AddScoped<IPostCommentLikeRepository, PostCommentLikeRepository>()
+    .AddScoped<IPostCommentLikeService, PostCommentLikeService>()
     .AddScoped<IFollowRepository, FollowRepository>()
     .AddScoped<IFollowService, FollowService>()
     .AddScoped<IMessageRepository, MessageRepository>()
@@ -103,6 +106,7 @@ builder.Services
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
+    options.User.RequireUniqueEmail = true;
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireNonAlphanumeric = true;
@@ -120,7 +124,7 @@ builder.Services
     {
         configuration.TokenValidationParameters = new TokenValidationParameters
         {
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions["SecurityKey"])),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions["AccessTokenSecurityKey"])),
             ValidateAudience = true,
             ValidAudience = tokenOptions["Audience"],
             ValidateIssuer = true,

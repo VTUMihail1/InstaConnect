@@ -21,7 +21,7 @@ namespace InstaConnect.Data.Models.Entities
 
         public ICollection<PostLike> PostLikes { get; set; } = new List<PostLike>();
 
-        public ICollection<CommentLike> CommentLikes { get; set; } = new List<CommentLike>();
+        public ICollection<PostCommentLike> CommentLikes { get; set; } = new List<PostCommentLike>();
 
         public ICollection<PostComment> PostComments { get; set; } = new List<PostComment>();
 

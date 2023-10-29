@@ -26,6 +26,7 @@ namespace InstaConnect.Data.Repositories
                 .Include(f => f.Following)
                 .Skip(skipAmount)
                 .Take(takeAmount)
+                .AsNoTracking()
                 .ToListAsync();
 
             return followers;
@@ -36,6 +37,7 @@ namespace InstaConnect.Data.Repositories
             var follower = await _instaConnectContext.Follows
                 .Include(f => f.Follower)
                 .Include(f => f.Following)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(expression);
 
             return follower;

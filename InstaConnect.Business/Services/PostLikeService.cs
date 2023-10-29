@@ -4,9 +4,9 @@ using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
+using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 
 namespace InstaConnect.Business.Services
 {
@@ -16,20 +16,20 @@ namespace InstaConnect.Business.Services
         private readonly IResultFactory _resultFactory;
         private readonly IPostLikeRepository _postLikeRepository;
         private readonly IPostRepository _postRepository;
-        private readonly UserManager<User> _userManager;
+        private readonly IInstaConnectUserManager _instaConnectUserManager;
 
         public PostLikeService(
             IMapper mapper,
             IResultFactory resultFactory,
             IPostLikeRepository postLikeRepository,
             IPostRepository postRepository,
-            UserManager<User> userManager)
+            IInstaConnectUserManager instaConnectUserManager)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _postLikeRepository = postLikeRepository;
             _postRepository = postRepository;
-            _userManager = userManager;
+            _instaConnectUserManager = instaConnectUserManager;
         }
 
         public async Task<IResult<ICollection<PostLikeResultDTO>>> GetAllAsync(
@@ -86,7 +86,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostLikeResultDTO>> AddAsync(PostLikeAddDTO postLikeAddDTO)
         {
-            var existingUser = await _userManager.FindByIdAsync(postLikeAddDTO.UserId);
+            var existingUser = await _instaConnectUserManager.FindByIdAsync(postLikeAddDTO.UserId);
 
             if (existingUser == null)
             {

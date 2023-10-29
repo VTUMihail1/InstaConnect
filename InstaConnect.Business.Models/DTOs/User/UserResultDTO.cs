@@ -1,8 +1,8 @@
-﻿using InstaConnect.Business.Models.DTOs.CommentLike;
-using InstaConnect.Business.Models.DTOs.Follow;
+﻿using InstaConnect.Business.Models.DTOs.Follow;
 using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.DTOs.Post;
 using InstaConnect.Business.Models.DTOs.PostComment;
+using InstaConnect.Business.Models.DTOs.PostCommentLike;
 using InstaConnect.Business.Models.DTOs.PostLike;
 
 namespace InstaConnect.Business.Models.DTOs.User
@@ -21,7 +21,7 @@ namespace InstaConnect.Business.Models.DTOs.User
 
         public ICollection<PostLikeResultDTO> PostLikes { get; set; } = new List<PostLikeResultDTO>();
 
-        public ICollection<CommentLikeResultDTO> CommentLikes { get; set; } = new List<CommentLikeResultDTO>();
+        public ICollection<PostCommentLikeResultDTO> CommentLikes { get; set; } = new List<PostCommentLikeResultDTO>();
 
         public ICollection<PostCommentResultDTO> PostComments { get; set; } = new List<PostCommentResultDTO>();
 

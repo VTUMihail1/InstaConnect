@@ -28,6 +28,7 @@ namespace InstaConnect.Data.Repositories
                 .Include(pc => pc.CommentLikes)
                 .Skip(skipAmount)
                 .Take(takeAmount)
+                .AsNoTracking()
                 .ToListAsync();
 
             return postComments;
@@ -40,6 +41,7 @@ namespace InstaConnect.Data.Repositories
                 .Include(cl => cl.User)
                 .Include(cl => cl.PostComments)
                 .Include(pc => pc.CommentLikes)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(expression);
 
             return postComment;

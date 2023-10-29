@@ -1,4 +1,4 @@
-﻿using InstaConnect.Business.Models.DTOs.CommentLike;
+﻿using InstaConnect.Business.Models.DTOs.PostCommentLike;
 
 namespace InstaConnect.Business.Models.DTOs.PostComment
 {
@@ -12,6 +12,6 @@ namespace InstaConnect.Business.Models.DTOs.PostComment
 
         public ICollection<PostCommentResultDTO> PostComments { get; set; }
 
-        public ICollection<CommentLikeResultDTO> CommentLikes { get; set; }
+        public ICollection<PostCommentLikeResultDTO> CommentLikes { get; set; }
     }
 }
