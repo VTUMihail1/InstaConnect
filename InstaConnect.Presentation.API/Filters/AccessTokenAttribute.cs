@@ -1,4 +1,4 @@
-﻿using InstaConnect.Data.Abstraction.Helpers;
+﻿using InstaConnect.Business.Abstraction.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

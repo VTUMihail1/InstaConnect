@@ -28,7 +28,7 @@ using Microsoft.OpenApi.Models;
 using SendGrid;
 using System.Text;
 using System.Text.Json.Serialization;
-using TokenGenerator = InstaConnect.Data.Helpers.TokenGenerator;
+using TokenGenerator = InstaConnect.Business.Helpers.TokenGenerator;
 using TokenOptions = InstaConnect.Data.Models.Options.TokenOptions;
 
 var builder = WebApplication.CreateBuilder(args);

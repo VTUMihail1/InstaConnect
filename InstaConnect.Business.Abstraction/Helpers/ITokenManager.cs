@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Business.Models.DTOs.Token;
 
-namespace InstaConnect.Data.Abstraction.Helpers
+namespace InstaConnect.Business.Abstraction.Helpers
 {
     /// <summary>
     /// Provides methods for managing tokens related to user authentication and authorization.

@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Business.Helpers
+﻿namespace InstaConnect.Business.Abstraction.Helpers
 {
     /// <summary>
     /// Provides methods for configuring URLs and endpoints related to user actions.

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Data.Abstraction.Helpers;
+﻿using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Data.Models.Options;
 using InstaConnect.Data.Models.Utilities;
 using Microsoft.Extensions.Options;
@@ -7,7 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace InstaConnect.Data.Helpers
+namespace InstaConnect.Business.Helpers
 {
     public class TokenGenerator : ITokenGenerator
     {
