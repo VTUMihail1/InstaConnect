@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Data.Abstraction.Helpers
+﻿namespace InstaConnect.Business.Abstraction.Helpers
 {
     public interface ITokenGenerator
     {

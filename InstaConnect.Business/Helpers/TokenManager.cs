@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Models.DTOs.Token;
 using InstaConnect.Data.Abstraction.Factories;
-using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 
-namespace InstaConnect.Data.Helpers
+namespace InstaConnect.Business.Helpers
 {
     public class TokenManager : ITokenManager
     {
