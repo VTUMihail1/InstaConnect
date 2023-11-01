@@ -16,20 +16,20 @@ namespace InstaConnect.Business.Services
         private readonly IResultFactory _resultFactory;
         private readonly IPostCommentLikeRepository _postCommentLikeRepository;
         private readonly IPostCommentRepository _commentRepository;
-        private readonly IInstaConnectUserManager _instaConnectUserManager;
+        private readonly IUserRepository _userRepository;
 
         public PostCommentLikeService(
             IMapper mapper,
             IResultFactory resultFactory,
             IPostCommentLikeRepository postCommentLikeRepository,
             IPostCommentRepository commentRepository,
-            IInstaConnectUserManager instaConnectUserManager)
+            IUserRepository userRepository)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _postCommentLikeRepository = postCommentLikeRepository;
-            _commentRepository = commentRepository;
-            _instaConnectUserManager = instaConnectUserManager;
+            _commentRepository = commentRepository; ;
+            _userRepository = userRepository;
         }
 
         public async Task<IResult<ICollection<PostCommentLikeResultDTO>>> GetAllAsync(
@@ -86,7 +86,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostCommentLikeResultDTO>> AddAsync(PostCommentLikeAddDTO postCommentLikeAddDTO)
         {
-            var existingUser = await _instaConnectUserManager.FindByIdAsync(postCommentLikeAddDTO.UserId);
+            var existingUser = await _userRepository.FindEntityAsync(f => f.Id == postCommentLikeAddDTO.UserId);
 
             if (existingUser == null)
             {

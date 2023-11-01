@@ -17,20 +17,20 @@ namespace InstaConnect.Business.Services
         private readonly IResultFactory _resultFactory;
         private readonly IMessageRepository _messageRepository;
         private readonly IMessageSender _messageSender;
-        private readonly IInstaConnectUserManager _instaConnectUserManager;
+        private readonly IUserRepository _userRepository;
 
         public MessageService(
             IMapper mapper,
             IResultFactory resultFactory,
             IMessageRepository messageRepository,
             IMessageSender messageSender,
-            IInstaConnectUserManager instaConnectUserManager)
+            IUserRepository userRepository)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _messageRepository = messageRepository;
             _messageSender = messageSender;
-            _instaConnectUserManager = instaConnectUserManager;
+            _userRepository = userRepository;
         }
 
         public async Task<IResult<ICollection<MessageResultDTO>>> GetAllBySenderIdAndReceiverIdAsync(string senderId, string receiverId)
@@ -64,7 +64,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<MessageResultDTO>> AddAsync(MessageAddDTO messageAddDTO)
         {
-            var existingSender = await _instaConnectUserManager.FindByIdAsync(messageAddDTO.SenderId);
+            var existingSender = await _userRepository.FindEntityAsync(f => f.Id == messageAddDTO.SenderId);
 
             if (existingSender == null)
             {
@@ -73,7 +73,7 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var existingRecipient = await _instaConnectUserManager.FindByIdAsync(messageAddDTO.ReceiverId);
+            var existingRecipient = await _userRepository.FindEntityAsync(f => f.Id == messageAddDTO.ReceiverId);
 
             if (existingRecipient == null)
             {

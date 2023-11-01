@@ -30,7 +30,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         private Mock<IMapper> _mockMapper;
         private IResultFactory _resultFactory;
         private Mock<IMessageRepository> _mockMessageRepository;
-        private Mock<IInstaConnectUserManager> _mockInstaConnectUserManager;
+        private Mock<IUserRepository> _mockUserRepository;
         private Mock<IMessageSender> _mockMessageSender;
         private IMessageService _messageService;
 
@@ -40,38 +40,51 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _resultFactory = new ResultFactory();
             _mockMessageRepository = new Mock<IMessageRepository>();
             _mockMessageSender = new Mock<IMessageSender>();
-            _mockInstaConnectUserManager = new Mock<IInstaConnectUserManager>();
+            _mockUserRepository = new Mock<IUserRepository>();
             _messageService = new MessageService(
                 _mockMapper.Object,
                 _resultFactory,
                 _mockMessageRepository.Object,
                 _mockMessageSender.Object,
-                _mockInstaConnectUserManager.Object);
+                _mockUserRepository.Object);
         }
 
         [SetUp]
         public void Setup()
         {
-            var existingMessages = new List<Message>()
+            var existingMessage = new Message()
             {
-                new Message()
-                {
-                    Id = ExistingMessageId,
-                    SenderId = ExistingSenderId,
-                    ReceiverId = ExistingReceiverId
-                }
+                Id = ExistingMessageId,
+                SenderId = ExistingSenderId,
+                ReceiverId = ExistingReceiverId
             };
 
-            var existingUser = new User();
+            var existingMessages = new List<Message>()
+            {
+                existingMessage
+            };
+
+            var existingSender = new User()
+            {
+                Id = ExistingSenderId
+            };
+
+            var existingReceiver = new User()
+            {
+                Id = ExistingReceiverId
+            };
+
+            var existingUsers = new List<User>()
+            {
+                existingSender,
+                existingReceiver
+            };
 
             _mockMessageRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<Message, bool>>>()))
                 .ReturnsAsync((Expression<Func<Message, bool>> expression) => existingMessages.Find(new Predicate<Message>(expression.Compile())));
 
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingSenderId))
-                .ReturnsAsync(existingUser);
-
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingReceiverId))
-                .ReturnsAsync(existingUser);
+            _mockUserRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<User, bool>>>()))
+                .ReturnsAsync((Expression<Func<User, bool>> expression) => existingUsers.Find(new Predicate<User>(expression.Compile())));
         }
 
         [Test]

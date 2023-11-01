@@ -22,18 +22,17 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
 
         public const string ExistingPostCommentId = "ExistingPostCommentId";
         public const string NonExistingPostCommentId = "NonExistingPostCommentId";
+        public const string ExistingPostCommentLikePostCommentId = "ExistingLikePostCommentId";
 
         public const string ExistingUserId = "ExistingUserId";
         public const string NonExistingUserId = "NonExistingUserId";
-
         public const string ExistingPostCommentLikeUserId = "ExistingLikeUserId";
-        public const string ExistingPostCommentLikePostCommentId = "ExistingLikePostCommentId";
 
         private Mock<IMapper> _mockMapper;
         private IResultFactory _resultFactory;
         private Mock<IPostCommentLikeRepository> _mockPostCommentLikeRepository;
         private Mock<IPostCommentRepository> _mockPostCommentRepository;
-        private Mock<IInstaConnectUserManager> _mockInstaConnectUserManager;
+        private Mock<IUserRepository> _mockUserRepository;
         private IPostCommentLikeService _postCommentLikeService;
 
         public PostCommentLikeServiceTests()
@@ -42,41 +41,61 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _resultFactory = new ResultFactory();
             _mockPostCommentLikeRepository = new Mock<IPostCommentLikeRepository>();
             _mockPostCommentRepository = new Mock<IPostCommentRepository>();
-            _mockInstaConnectUserManager = new Mock<IInstaConnectUserManager>();
+            _mockUserRepository = new Mock<IUserRepository>();
             _postCommentLikeService = new PostCommentLikeService(
                 _mockMapper.Object,
                 _resultFactory,
                 _mockPostCommentLikeRepository.Object,
                 _mockPostCommentRepository.Object,
-                _mockInstaConnectUserManager.Object);
+                _mockUserRepository.Object);
         }
 
         [SetUp]
         public void Setup()
         {
+            var existingPostCommentLike = new PostCommentLike()
+            {
+                Id = ExistingPostCommentLikeId,
+                UserId = ExistingPostCommentLikeUserId,
+                PostCommentId = ExistingPostCommentLikePostCommentId
+            };
+
             var existingPostCommentLikes = new List<PostCommentLike>()
             {
-                new PostCommentLike()
-                {
-                    Id = ExistingPostCommentLikeId,
-                    UserId = ExistingPostCommentLikeUserId,
-                    PostCommentId = ExistingPostCommentLikePostCommentId
-                }
+                existingPostCommentLike
+            };
+
+            var existingPostComment = new PostComment()
+            {
+                Id = ExistingPostCommentId
+            };
+
+            var existingChildPostComment = new PostComment()
+            {
+                Id = ExistingPostCommentLikePostCommentId
             };
 
             var existingPostComments = new List<PostComment>()
             {
-                new PostComment()
-                {
-                    Id = ExistingPostCommentId
-                },
-                new PostComment()
-                {
-                    Id = ExistingPostCommentLikePostCommentId
-                }
+                existingPostComment,
+                existingChildPostComment
             };
 
-            var existingUser = new User();
+            var existingUser = new User()
+            {
+                Id = ExistingUserId
+            };
+
+            var existingPostCommentLikeUser = new User()
+            {
+                Id = ExistingPostCommentLikeUserId
+            };
+
+            var existingUsers = new List<User>()
+            {
+                existingUser,
+                existingPostCommentLikeUser
+            };
 
             _mockPostCommentRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<PostComment, bool>>>()))
                 .ReturnsAsync((Expression<Func<PostComment, bool>> expression) => existingPostComments.Find(new Predicate<PostComment>(expression.Compile())));
@@ -84,11 +103,8 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _mockPostCommentLikeRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<PostCommentLike, bool>>>())).
                 ReturnsAsync((Expression<Func<PostCommentLike, bool>> expression) => existingPostCommentLikes.Find(new Predicate<PostCommentLike>(expression.Compile())));
 
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingUserId))
-                .ReturnsAsync(existingUser);
-
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingPostCommentLikeUserId))
-                .ReturnsAsync(existingUser);
+            _mockUserRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<User, bool>>>())).
+                ReturnsAsync((Expression<Func<User, bool>> expression) => existingUsers.Find(new Predicate<User>(expression.Compile())));
         }
 
         [Test]

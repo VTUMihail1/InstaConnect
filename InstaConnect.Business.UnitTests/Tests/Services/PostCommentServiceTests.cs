@@ -30,7 +30,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         private IResultFactory _resultFactory;
         private Mock<IPostCommentRepository> _mockPostCommentRepository;
         private Mock<IPostRepository> _mockPostRepository;
-        private Mock<IInstaConnectUserManager> _mockInstaConnectUserManager;
+        private Mock<IUserRepository> _mockUserRepository;
         private IPostCommentService _postCommentService;
 
         public PostCommentServiceTests()
@@ -39,13 +39,13 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _resultFactory = new ResultFactory();
             _mockPostCommentRepository = new Mock<IPostCommentRepository>();
             _mockPostRepository = new Mock<IPostRepository>();
-            _mockInstaConnectUserManager = new Mock<IInstaConnectUserManager>();
+            _mockUserRepository = new Mock<IUserRepository>();
             _postCommentService = new PostCommentService(
                 _mockMapper.Object,
                 _resultFactory,
                 _mockPostCommentRepository.Object,
                 _mockPostRepository.Object,
-                _mockInstaConnectUserManager.Object);
+                _mockUserRepository.Object);
         }
 
         [SetUp]
@@ -69,7 +69,15 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
                 }
             };
 
-            var existingUser = new User();
+            var existingUser = new User()
+            {
+                Id = ExistingUserId
+            };
+
+            var existingUsers = new List<User>()
+            {
+                existingUser
+            };
 
             _mockPostRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<Post, bool>>>()))
                .ReturnsAsync((Expression<Func<Post, bool>> expression) => existingPosts.Find(new Predicate<Post>(expression.Compile())));
@@ -77,8 +85,8 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _mockPostCommentRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<PostComment, bool>>>())).
                 ReturnsAsync((Expression<Func<PostComment, bool>> expression) => existingPostComments.Find(new Predicate<PostComment>(expression.Compile())));
 
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingUserId))
-                .ReturnsAsync(existingUser);
+            _mockUserRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<User, bool>>>())).
+                ReturnsAsync((Expression<Func<User, bool>> expression) => existingUsers.Find(new Predicate<User>(expression.Compile())));
         }
 
         [Test]

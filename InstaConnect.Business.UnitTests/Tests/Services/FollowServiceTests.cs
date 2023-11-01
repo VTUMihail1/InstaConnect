@@ -22,17 +22,17 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
 
         public const string ExistingFollowerId = "ExistingFollowerId";
         public const string NonExistingFollowerId = "NonExistingFollowerId";
+        public const string ExistingFollowFollowerId = "ExistingFollowFollowerId";
 
         public const string ExistingFollowingId = "ExistingFollowingId";
         public const string NonExistingFollowingId = "NonExistingFolloweingId";
-
-        public const string ExistingFollowFollowerId = "ExistingFollowFollowerId";
         public const string ExistingFollowFollowingId = "ExistingFollowFollowingId";
+
 
         private Mock<IMapper> _mockMapper;
         private IResultFactory _resultFactory;
         private Mock<IFollowRepository> _mockFollowRepository;
-        private Mock<IInstaConnectUserManager> _mockInstaConnectUserManager;
+        private Mock<IUserRepository> _mockUserRepository;
         private IFollowService _followService;
 
         public FollowServiceTests()
@@ -40,43 +40,62 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _mockMapper = new Mock<IMapper>();
             _resultFactory = new ResultFactory();
             _mockFollowRepository = new Mock<IFollowRepository>();
-            _mockInstaConnectUserManager = new Mock<IInstaConnectUserManager>();
+            _mockUserRepository = new Mock<IUserRepository>();
             _followService = new FollowService(
                 _mockMapper.Object,
                 _resultFactory,
                 _mockFollowRepository.Object,
-                _mockInstaConnectUserManager.Object);
+                _mockUserRepository.Object);
         }
 
         [SetUp]
         public void Setup()
         {
-            var existingFollows = new List<Follow>()
+            var existingFollow = new Follow()
             {
-                new Follow()
-                {
-                    Id = ExistingFollowId,
-                    FollowerId = ExistingFollowFollowerId,
-                    FollowingId = ExistingFollowFollowingId
-                }
+                Id = ExistingFollowId,
+                FollowerId = ExistingFollowFollowerId,
+                FollowingId = ExistingFollowFollowingId
             };
 
-            var existingUser = new User();
+            var existingFollows = new List<Follow>()
+            {
+                existingFollow
+            };
+
+            var existingFollower = new User()
+            {
+                Id = ExistingFollowerId
+            };
+
+            var existingFollowFollower = new User()
+            {
+                Id = ExistingFollowFollowerId
+            };
+
+            var existingFollowing = new User()
+            {
+                Id = ExistingFollowingId
+            };
+
+            var existingFollowFollowing = new User()
+            {
+                Id = ExistingFollowFollowingId
+            };
+
+            var existingUsers = new List<User>()
+            {
+                existingFollower,
+                existingFollowFollower,
+                existingFollowing,
+                existingFollowFollowing
+            };
+
+            _mockUserRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<User, bool>>>()))
+                .ReturnsAsync((Expression<Func<User, bool>> expression) => existingUsers.Find(new Predicate<User>(expression.Compile())));
 
             _mockFollowRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<Follow, bool>>>()))
                 .ReturnsAsync((Expression<Func<Follow, bool>> expression) => existingFollows.Find(new Predicate<Follow>(expression.Compile())));
-
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingFollowerId))
-                .ReturnsAsync(existingUser);
-
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingFollowingId))
-                .ReturnsAsync(existingUser);
-
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingFollowFollowerId))
-                .ReturnsAsync(existingUser);
-
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingFollowFollowingId))
-                .ReturnsAsync(existingUser);
         }
 
         [Test]

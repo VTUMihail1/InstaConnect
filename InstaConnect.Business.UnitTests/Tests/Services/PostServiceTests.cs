@@ -26,7 +26,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         private Mock<IMapper> _mockMapper;
         private IResultFactory _resultFactory;
         private Mock<IPostRepository> _mockPostRepository;
-        private Mock<IInstaConnectUserManager> _mockInstaConnectUserManager;
+        private Mock<IUserRepository> _mockUserRepository;
         private IPostService _postService;
 
         public PostServiceTests()
@@ -34,33 +34,43 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _mockMapper = new Mock<IMapper>();
             _resultFactory = new ResultFactory();
             _mockPostRepository = new Mock<IPostRepository>();
-            _mockInstaConnectUserManager = new Mock<IInstaConnectUserManager>();
+            _mockUserRepository = new Mock<IUserRepository>();
             _postService = new PostService(
                 _mockMapper.Object,
                 _resultFactory,
                 _mockPostRepository.Object,
-                _mockInstaConnectUserManager.Object);
+                _mockUserRepository.Object);
         }
 
         [SetUp]
         public void Setup()
         {
-            var existingPosts = new List<Post>()
+            var existingPost = new Post()
             {
-                new Post()
-                {
-                    Id = ExistingPostId,
-                    UserId = ExistingUserId
-                }
+                Id = ExistingPostId,
+                UserId = ExistingUserId
             };
 
-            var existingUser = new User();
+            var existingPosts = new List<Post>()
+            {
+                existingPost
+            };
+
+            var existingUser = new User()
+            {
+                Id = ExistingUserId
+            };
+
+            var existingUsers = new List<User>()
+            {
+                existingUser
+            };
 
             _mockPostRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<Post, bool>>>()))
                .ReturnsAsync((Expression<Func<Post, bool>> expression) => existingPosts.Find(new Predicate<Post>(expression.Compile())));
 
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingUserId))
-                .ReturnsAsync(existingUser);
+            _mockUserRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<User, bool>>>()))
+               .ReturnsAsync((Expression<Func<User, bool>> expression) => existingUsers.Find(new Predicate<User>(expression.Compile())));
         }
 
         [Test]
