@@ -8,10 +8,11 @@ using InstaConnect.Business.Models.DTOs.Token;
 using InstaConnect.Business.Models.Enums;
 using InstaConnect.Business.Services;
 using InstaConnect.Data.Abstraction.Helpers;
+using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
 using Moq;
 using NUnit.Framework;
-
+using System.Linq.Expressions;
 
 namespace InstaConnect.Business.UnitTests.Tests.Services
 {
@@ -34,14 +35,15 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         public const string ExistingUserPassword = "ExistingUserPassword";
         public const string NonExistingUserPassword = "NonExistingUserPassword";
 
-        public const string ExistingUserTokenValue = "ExistingUserTokenValue";
-        public const string NonExistingUserTokenValue = "NonExistingUserTokenValue";
+        public const string ExistingTokenValue = "ExistingTokenValue";
+        public const string NonExistingTokenValue = "NonExistingTokenValue";
 
         private readonly Mock<IMapper> _mockMapper;
         private readonly IResultFactory _resultFactory;
         private readonly Mock<IEmailManager> _mockEmailManager;
         private readonly Mock<ITokenManager> _mockTokenManager;
-        private readonly Mock<IInstaConnectUserManager> _mockInstaConnectUserManager;
+        private readonly Mock<IUserRepository> _mockUserRepository;
+        private readonly Mock<IAccountManager> _accountManager;
         private readonly IAccountService _accountService;
 
         public AccountServiceTests()
@@ -50,13 +52,16 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _resultFactory = new ResultFactory();
             _mockEmailManager = new Mock<IEmailManager>();
             _mockTokenManager = new Mock<ITokenManager>();
-            _mockInstaConnectUserManager = new Mock<IInstaConnectUserManager>();
+            _mockUserRepository = new Mock<IUserRepository>();
+            _accountManager = new Mock<IAccountManager>();
+            
             _accountService = new AccountService(
                 _mockMapper.Object,
                 _resultFactory,
                 _mockEmailManager.Object,
                 _mockTokenManager.Object,
-                _mockInstaConnectUserManager.Object);
+                _mockUserRepository.Object,
+                _accountManager.Object);
         }
 
         [SetUp]
@@ -64,7 +69,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         {
             var existingToken = new TokenResultDTO()
             {
-                Value = ExistingUserTokenValue
+                Value = ExistingTokenValue
             };
 
             var existingUser = new User()
@@ -83,9 +88,14 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
 
             var еxistingInvalidUser = new User()
             {
-                Id = NonExistingUserId,
                 Email = ExistingInvalidUserEmail,
-                UserName = NonExistingUserName
+            };
+
+            var existingUsers = new List<User>() 
+            {
+                existingUser,
+                existingUnconfirmedUser,
+                еxistingInvalidUser
             };
 
             _mockMapper.Setup(m => m.Map<User>(It.IsAny<AccountRegisterDTO>()))
@@ -100,43 +110,19 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
                     return user;
                 });
 
-            _mockInstaConnectUserManager.Setup(m => m.FindByIdAsync(ExistingUserId))
-                .ReturnsAsync(existingUser);
+            _mockUserRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<User, bool>>>()))
+                .ReturnsAsync((Expression<Func<User, bool>> expression) => existingUsers.Find(new Predicate<User>(expression.Compile())));
 
-            _mockInstaConnectUserManager.Setup(m => m.FindByIdAsync(ExistingUnconfirmedUserId))
-                .ReturnsAsync(existingUnconfirmedUser);
-
-            _mockInstaConnectUserManager.Setup(m => m.FindByNameAsync(ExistingUserUsername))
-                .ReturnsAsync(existingUser);
-
-            _mockInstaConnectUserManager.Setup(m => m.FindByNameAsync(ExistingUserUnconfirmedEmailUsername))
-                .ReturnsAsync(еxistingInvalidUser);
-
-            _mockInstaConnectUserManager.Setup(m => m.FindByEmailAsync(ExistingUserEmail))
-                .ReturnsAsync(existingUser);
-
-            _mockInstaConnectUserManager.Setup(m => m.FindByEmailAsync(ExistingInvalidUserEmail))
-                .ReturnsAsync(еxistingInvalidUser);
-
-            _mockInstaConnectUserManager.Setup(m => m.FindByEmailAsync(ExistingUnconfirmedUserEmail))
-                .ReturnsAsync(existingUnconfirmedUser);
-
-            _mockInstaConnectUserManager.Setup(m => m.IsEmailConfirmedAsync(existingUser))
+            _accountManager.Setup(m => m.IsEmailConfirmedAsync(existingUser))
                 .ReturnsAsync(true);
 
-            _mockInstaConnectUserManager.Setup(m => m.GenerateEmailConfirmationTokenAsync(It.IsAny<User>()))
-                .ReturnsAsync(NonExistingUserTokenValue);
-
-            _mockInstaConnectUserManager.Setup(m => m.GeneratePasswordResetTokenAsync(It.IsAny<User>()))
-                .ReturnsAsync(NonExistingUserTokenValue);
-
-            _mockInstaConnectUserManager.Setup(m => m.CheckPasswordAsync(existingUser, ExistingUserPassword)).
+            _accountManager.Setup(m => m.CheckPasswordAsync(existingUser, ExistingUserPassword)).
                 ReturnsAsync(true);
 
-            _mockInstaConnectUserManager.Setup(m => m.CheckPasswordAsync(existingUnconfirmedUser, ExistingUserPassword)).
+            _accountManager.Setup(m => m.CheckPasswordAsync(existingUnconfirmedUser, ExistingUserPassword)).
                 ReturnsAsync(true);
 
-            _mockTokenManager.Setup(m => m.RemoveAsync(ExistingUserTokenValue))
+            _mockTokenManager.Setup(m => m.RemoveAsync(ExistingTokenValue))
                 .ReturnsAsync(true);
 
             _mockEmailManager.Setup(m => m.SendPasswordResetAsync(ExistingUserEmail, It.IsAny<string>(), It.IsAny<string>()))
@@ -238,10 +224,10 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(NonExistingUserId, ExistingUserTokenValue, InstaConnectStatusCode.BadRequest)]
-        [TestCase(ExistingUserId, ExistingUserTokenValue, InstaConnectStatusCode.BadRequest)]
-        [TestCase(ExistingUnconfirmedUserId, ExistingUserTokenValue, InstaConnectStatusCode.NoContent)]
-        [TestCase(ExistingUnconfirmedUserId, NonExistingUserTokenValue, InstaConnectStatusCode.BadRequest)]
+        [TestCase(NonExistingUserId, ExistingTokenValue, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUserId, ExistingTokenValue, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUnconfirmedUserId, ExistingTokenValue, InstaConnectStatusCode.NoContent)]
+        [TestCase(ExistingUnconfirmedUserId, NonExistingTokenValue, InstaConnectStatusCode.BadRequest)]
         public async Task ConfirmEmailWithTokenAsync_HasArguments_ReturnsExpectedResult(
             string userId,
             string token,
@@ -255,9 +241,9 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(ExistingUserId, ExistingUserTokenValue, InstaConnectStatusCode.NoContent)]
-        [TestCase(ExistingUserId, NonExistingUserTokenValue, InstaConnectStatusCode.BadRequest)]
-        [TestCase(NonExistingUserId, ExistingUserTokenValue, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUserId, ExistingTokenValue, InstaConnectStatusCode.NoContent)]
+        [TestCase(ExistingUserId, NonExistingTokenValue, InstaConnectStatusCode.BadRequest)]
+        [TestCase(NonExistingUserId, ExistingTokenValue, InstaConnectStatusCode.BadRequest)]
         public async Task ResetPasswordWithTokenAsync_HasArguments_ReturnsExpectedResult(
             string userId,
             string token,

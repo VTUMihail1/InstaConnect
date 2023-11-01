@@ -60,7 +60,7 @@ builder.Services.AddCors(options =>
 
 builder.Services
     .AddScoped<IDbSeeder, DbSeeder>()
-    .AddScoped<IInstaConnectUserManager, InstaConnectUserManager>()
+    .AddScoped<IAccountManager, AccountManager>()
     .AddScoped<IResultFactory, ResultFactory>()
     .AddScoped<ISendGridClient>(_ => new SendGridClient(emailOptions["APIKey"]))
     .AddScoped<IEndpointHandler, EndpointHandler>()

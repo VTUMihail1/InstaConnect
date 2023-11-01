@@ -40,13 +40,15 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         [SetUp]
         public void Setup()
         {
+            var existingUser = new User()
+            {
+                Id = ExistingUserId,
+                UserName = ExistingUserName
+            };
+
             var existingUsers = new List<User>()
             {
-                new User()
-                {
-                    Id = ExistingUserId,
-                    UserName = ExistingUserName
-                }
+                existingUser
             };
 
             _mockUserRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<User, bool>>>()))

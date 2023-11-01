@@ -15,18 +15,18 @@ namespace InstaConnect.Business.Services
         private readonly IMapper _mapper;
         private readonly IResultFactory _resultFactory;
         private readonly IFollowRepository _followRepository;
-        private readonly IInstaConnectUserManager _instaConnectUserManager;
+        private readonly IUserRepository _userRepository;
 
         public FollowService(
             IMapper mapper,
             IResultFactory resultFactory,
             IFollowRepository followRepository,
-            IInstaConnectUserManager instaConnectUserManager)
+            IUserRepository userRepository)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
-            _followRepository = followRepository;
-            _instaConnectUserManager = instaConnectUserManager;
+            _followRepository = followRepository; ;
+            _userRepository = userRepository;
         }
 
         public async Task<IResult<ICollection<FollowResultDTO>>> GetAllAsync(string followerId, string followingId, int page, int amount)
@@ -81,7 +81,7 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<FollowResultDTO>> AddAsync(FollowAddDTO followAddDTO)
         {
-            var existingFollower = await _instaConnectUserManager.FindByIdAsync(followAddDTO.FollowerId);
+            var existingFollower = await _userRepository.FindEntityAsync(f => f.Id == followAddDTO.FollowerId);
 
             if (existingFollower == null)
             {
@@ -90,7 +90,7 @@ namespace InstaConnect.Business.Services
                 return badRequestResult;
             }
 
-            var existingFollowing = await _instaConnectUserManager.FindByIdAsync(followAddDTO.FollowingId);
+            var existingFollowing = await _userRepository.FindEntityAsync(f => f.Id == followAddDTO.FollowingId);
 
             if (existingFollowing == null)
             {
