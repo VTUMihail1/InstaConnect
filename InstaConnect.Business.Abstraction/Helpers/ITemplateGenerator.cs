@@ -3,7 +3,7 @@
     /// <summary>
     /// Provides methods for generating email templates for specific actions.
     /// </summary>
-    public interface IEmailTemplateGenerator
+    public interface ITemplateGenerator
     {
         /// <summary>
         /// Generates an email template for email confirmation.

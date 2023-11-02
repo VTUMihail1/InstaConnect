@@ -1,31 +1,37 @@
 ﻿using AutoMapper;
+using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Helpers;
+using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Token;
+using InstaConnect.Business.Models.Results;
 using InstaConnect.Data.Abstraction.Factories;
 using InstaConnect.Data.Abstraction.Repositories;
 
-namespace InstaConnect.Business.Helpers
+namespace InstaConnect.Business.Services
 {
-    public class TokenManager : ITokenManager
+    public class TokenService : ITokenService
     {
         private readonly IMapper _mapper;
-        private readonly ITokenRepository _tokenRepository;
-        private readonly ITokenGenerator _tokenGenerator;
+        private readonly IResultFactory _resultFactory;
         private readonly ITokenFactory _tokenFactory;
+        private readonly ITokenGenerator _tokenGenerator;
+        private readonly ITokenRepository _tokenRepository;
 
-        public TokenManager(
+        public TokenService(
             IMapper mapper,
+            IResultFactory resultFactory,
             ITokenRepository tokenRepository,
             ITokenGenerator tokenGenerator,
             ITokenFactory tokenFactory)
         {
             _mapper = mapper;
+            _resultFactory = resultFactory;
             _tokenRepository = tokenRepository;
             _tokenGenerator = tokenGenerator;
             _tokenFactory = tokenFactory;
         }
 
-        public async Task<TokenResultDTO> GenerateAccessToken(string userId)
+        public async Task<IResult<TokenResultDTO>> GenerateAccessTokenAsync(string userId)
         {
             var value = _tokenGenerator.GenerateAccessTokenValue(userId);
             var token = _tokenFactory.GetAccessToken(userId, value);
@@ -33,51 +39,70 @@ namespace InstaConnect.Business.Helpers
             await _tokenRepository.AddAsync(token);
             var tokenResultDTO = _mapper.Map<TokenResultDTO>(token);
 
-            return tokenResultDTO;
+            var okResult = _resultFactory.GetOkResult(tokenResultDTO);
+
+            return okResult;
         }
 
-        public async Task<TokenResultDTO> GenerateEmailConfirmationTokenAsync(string userId)
+        public async Task<IResult<TokenResultDTO>> GenerateEmailConfirmationTokenAsync(string userId)
         {
             var value = _tokenGenerator.GenerateEmailConfirmationTokenValue(userId);
             var token = _tokenFactory.GetConfirmEmailToken(userId, value);
 
             await _tokenRepository.AddAsync(token);
-            var tokenResultDTO = _mapper.Map<TokenResultDTO>(token);
 
-            return tokenResultDTO;
+            var tokenResultDTO = _mapper.Map<TokenResultDTO>(token);
+            var okResult = _resultFactory.GetOkResult(tokenResultDTO);
+
+            return okResult;
         }
 
-        public async Task<TokenResultDTO> GeneratePasswordResetToken(string userId)
+        public async Task<IResult<TokenResultDTO>> GeneratePasswordResetTokenAsync(string userId)
         {
             var value = _tokenGenerator.GenerateEmailConfirmationTokenValue(userId);
             var token = _tokenFactory.GetConfirmEmailToken(userId, value);
 
             await _tokenRepository.AddAsync(token);
-            var tokenResultDTO = _mapper.Map<TokenResultDTO>(token);
 
-            return tokenResultDTO;
+            var tokenResultDTO = _mapper.Map<TokenResultDTO>(token);
+            var okResult = _resultFactory.GetOkResult(tokenResultDTO);
+
+            return okResult;
         }
 
-        public async Task<TokenResultDTO> GetByValueAsync(string value)
+        public async Task<IResult<TokenResultDTO>> GetByValueAsync(string value)
         {
             var token = await _tokenRepository.FindEntityAsync(t => t.Value == value);
-            var tokenResultDTO = _mapper.Map<TokenResultDTO>(token);
 
-            return tokenResultDTO;
+            if(token == null)
+            {
+                var notFoundResult = _resultFactory.GetNotFoundResult<TokenResultDTO>();
+
+                return notFoundResult;
+            }
+
+            var tokenResultDTO = _mapper.Map<TokenResultDTO>(token);
+            var okResult = _resultFactory.GetOkResult(tokenResultDTO);
+
+            return okResult;
         }
 
-        public async Task<bool> RemoveAsync(string value)
+        public async Task<IResult<TokenResultDTO>> DeleteAsync(string value)
         {
             var token = await _tokenRepository.FindEntityAsync(t => t.Value == value);
 
             if (token == null)
             {
-                return false;
+                var notFoundResult = _resultFactory.GetNotFoundResult<TokenResultDTO>();
+
+                return notFoundResult;
             }
 
             await _tokenRepository.DeleteAsync(token);
 
-            return true;
+            var noContentResult = _resultFactory.GetNoContentResult<TokenResultDTO>();
+
+            return noContentResult;
         }
     }
 }

@@ -3,7 +3,7 @@ using InstaConnect.Data.Models.Utilities;
 
 namespace InstaConnect.Business.Helpers
 {
-    public class EmailTemplateGenerator : IEmailTemplateGenerator
+    public class TemplateGenerator : ITemplateGenerator
     {
         public string GenerateEmailConfirmationTemplate(string endpoint)
         {

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Business.Abstraction.Helpers;
+﻿using InstaConnect.Business.Abstraction.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -8,7 +8,7 @@ namespace InstaConnect.Presentation.API.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var tokenManager = context.HttpContext.RequestServices.GetService<ITokenManager>();
+            var tokenManager = context.HttpContext.RequestServices.GetService<ITokenService>();
             var value = context.HttpContext.Request.Headers.Authorization;
 
             var token = tokenManager

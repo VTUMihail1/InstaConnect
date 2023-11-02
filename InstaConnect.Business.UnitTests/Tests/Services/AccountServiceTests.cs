@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
-using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Factories;
 using InstaConnect.Business.Models.DTOs.Account;
+using InstaConnect.Business.Models.DTOs.Email;
 using InstaConnect.Business.Models.DTOs.Token;
 using InstaConnect.Business.Models.Enums;
+using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Services;
 using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
@@ -40,8 +41,8 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
 
         private readonly Mock<IMapper> _mockMapper;
         private readonly IResultFactory _resultFactory;
-        private readonly Mock<IEmailManager> _mockEmailManager;
-        private readonly Mock<ITokenManager> _mockTokenManager;
+        private readonly Mock<IEmailService> _mockEmailService;
+        private readonly Mock<ITokenService> _mockTokenService;
         private readonly Mock<IUserRepository> _mockUserRepository;
         private readonly Mock<IAccountManager> _accountManager;
         private readonly IAccountService _accountService;
@@ -50,16 +51,16 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         {
             _mockMapper = new Mock<IMapper>();
             _resultFactory = new ResultFactory();
-            _mockEmailManager = new Mock<IEmailManager>();
-            _mockTokenManager = new Mock<ITokenManager>();
+            _mockEmailService = new Mock<IEmailService>();
+            _mockTokenService = new Mock<ITokenService>();
             _mockUserRepository = new Mock<IUserRepository>();
             _accountManager = new Mock<IAccountManager>();
             
             _accountService = new AccountService(
                 _mockMapper.Object,
                 _resultFactory,
-                _mockEmailManager.Object,
-                _mockTokenManager.Object,
+                _mockEmailService.Object,
+                _mockTokenService.Object,
                 _mockUserRepository.Object,
                 _accountManager.Object);
         }
@@ -67,7 +68,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         [SetUp]
         public void Setup()
         {
-            var existingToken = new TokenResultDTO()
+            var existingTokenResultDTO = new TokenResultDTO()
             {
                 Value = ExistingTokenValue
             };
@@ -98,6 +99,13 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
                 еxistingInvalidUser
             };
 
+            var tokenOkResult = new OkResult<TokenResultDTO>(existingTokenResultDTO);
+            var tokenNoContentResult = new NoContentResult<TokenResultDTO>();
+            var tokenBadRequestResult = new NotFoundResult<TokenResultDTO>();
+
+            var emailNoContentResult = new NoContentResult<EmailResultDTO>();
+            var emailBadRequestResult = new NotFoundResult<EmailResultDTO>();
+
             _mockMapper.Setup(m => m.Map<User>(It.IsAny<AccountRegisterDTO>()))
                 .Returns((AccountRegisterDTO accountRegistrationDTO) =>
                 {
@@ -122,26 +130,35 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _accountManager.Setup(m => m.CheckPasswordAsync(existingUnconfirmedUser, ExistingUserPassword)).
                 ReturnsAsync(true);
 
-            _mockTokenManager.Setup(m => m.RemoveAsync(ExistingTokenValue))
-                .ReturnsAsync(true);
+            _mockTokenService.Setup(m => m.DeleteAsync(ExistingTokenValue))
+                .ReturnsAsync(tokenNoContentResult);
 
-            _mockEmailManager.Setup(m => m.SendPasswordResetAsync(ExistingUserEmail, It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(true);
+            _mockTokenService.Setup(m => m.DeleteAsync(It.Is<string>(t => t != ExistingTokenValue)))
+                .ReturnsAsync(tokenBadRequestResult);
 
-            _mockEmailManager.Setup(m => m.SendEmailConfirmationAsync(ExistingUnconfirmedUserEmail, It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(true);
+            _mockEmailService.Setup(m => m.SendPasswordResetAsync(ExistingUserEmail, It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(emailNoContentResult);
 
-            _mockEmailManager.Setup(m => m.SendEmailConfirmationAsync(NonExistingUserEmail, It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(true);
+            _mockEmailService.Setup(m => m.SendPasswordResetAsync(It.Is<string>(e => e != ExistingUserEmail), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(emailBadRequestResult);
 
-            _mockTokenManager.Setup(m => m.GenerateAccessToken(It.IsAny<string>())).
-                ReturnsAsync(existingToken);
+            _mockEmailService.Setup(m => m.SendEmailConfirmationAsync(NonExistingUserEmail, It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(emailNoContentResult);
 
-            _mockTokenManager.Setup(m => m.GenerateEmailConfirmationTokenAsync(It.IsAny<string>())).
-                ReturnsAsync(existingToken);
+            _mockEmailService.Setup(m => m.SendEmailConfirmationAsync(ExistingUnconfirmedUserEmail, It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(emailNoContentResult);
 
-            _mockTokenManager.Setup(m => m.GeneratePasswordResetToken(It.IsAny<string>())).
-                ReturnsAsync(existingToken);
+            _mockEmailService.Setup(m => m.SendEmailConfirmationAsync(It.Is<string>(e => e != ExistingUnconfirmedUserEmail && e != NonExistingUserEmail), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(emailBadRequestResult);
+
+            _mockTokenService.Setup(m => m.GenerateAccessTokenAsync(It.IsAny<string>())).
+                ReturnsAsync(tokenOkResult);
+
+            _mockTokenService.Setup(m => m.GenerateEmailConfirmationTokenAsync(It.IsAny<string>())).
+                ReturnsAsync(tokenOkResult);
+
+            _mockTokenService.Setup(m => m.GeneratePasswordResetTokenAsync(It.IsAny<string>())).
+                ReturnsAsync(tokenOkResult);
         }
 
         [Test]
