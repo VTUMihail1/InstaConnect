@@ -74,7 +74,7 @@ namespace InstaConnect.Business.Services
         {
             var token = await _tokenRepository.FindEntityAsync(t => t.Value == value);
 
-            if(token == null)
+            if (token == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<TokenResultDTO>();
 

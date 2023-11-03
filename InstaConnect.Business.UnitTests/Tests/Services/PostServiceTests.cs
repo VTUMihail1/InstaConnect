@@ -5,7 +5,6 @@ using InstaConnect.Business.Factories;
 using InstaConnect.Business.Models.DTOs.Post;
 using InstaConnect.Business.Models.Enums;
 using InstaConnect.Business.Services;
-using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
 using Moq;
@@ -17,11 +16,11 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
     [TestFixture]
     public class PostServiceTests
     {
-        public const string ExistingUserId = "ExistingUserId";
-        public const string NonExistingUserId = "NonExistingUserId";
+        private const string ExistingUserId = "ExistingUserId";
+        private const string NonExistingUserId = "NonExistingUserId";
 
-        public const string ExistingPostId = "ExistingPostId";
-        public const string NonExistingPostId = "NonExistingPostId";
+        private const string ExistingPostId = "ExistingPostId";
+        private const string NonExistingPostId = "NonExistingPostId";
 
         private Mock<IMapper> _mockMapper;
         private IResultFactory _resultFactory;

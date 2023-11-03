@@ -29,7 +29,7 @@ using SendGrid;
 using System.Text;
 using System.Text.Json.Serialization;
 using TokenGenerator = InstaConnect.Business.Helpers.TokenGenerator;
-using TokenOptions = InstaConnect.Data.Models.Options.TokenOptions;
+using TokenOptions = InstaConnect.Business.Models.Options.TokenOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using InstaConnect.Business.Abstraction.Factories;
+﻿using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Email;
@@ -39,7 +38,7 @@ namespace InstaConnect.Business.Services
 
             var result = await _emailSender.SendEmailAsync(emailContent);
 
-            if(!result.IsSuccessStatusCode) 
+            if (!result.IsSuccessStatusCode)
             {
                 var badRequestResult = _resultFactory.GetBadRequestResult<EmailResultDTO>();
 

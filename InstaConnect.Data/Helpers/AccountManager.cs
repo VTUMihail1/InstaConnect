@@ -3,8 +3,6 @@ using InstaConnect.Data.Models.Entities;
 using InstaConnect.Data.Models.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Data.Helpers
 {

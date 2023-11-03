@@ -15,11 +15,11 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
     [TestFixture]
     public class UserServiceTests
     {
-        public const string ExistingUserId = "ExistingUserId";
-        public const string NonExistingUserId = "NonExistingUserId";
+        private const string ExistingUserId = "ExistingUserId";
+        private const string NonExistingUserId = "NonExistingUserId";
 
-        public const string ExistingUserName = "ExistingUserName";
-        public const string NonExistingUserName = "NonExistingUserName";
+        private const string ExistingUserName = "ExistingUserName";
+        private const string NonExistingUserName = "NonExistingUserName";
 
         private Mock<IMapper> _mockMapper;
         private IResultFactory _resultFactory;
