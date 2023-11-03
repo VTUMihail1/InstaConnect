@@ -20,24 +20,24 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
     [TestFixture]
     public class AccountServiceTests
     {
-        public const string ExistingUserId = "ExistingUserId";
-        public const string NonExistingUserId = "NonExistingUserId";
-        public const string ExistingUnconfirmedUserId = "ExistingUnconfirmedUserId";
-
-        public const string ExistingUserEmail = "ExistingUserEmail";
-        public const string NonExistingUserEmail = "NonExistingUserEmail";
-        public const string ExistingUnconfirmedUserEmail = "ExistingUserUnconfimerEmail";
-        public const string ExistingInvalidUserEmail = "ExistingInvalidUserEmail";
-
-        public const string ExistingUserUsername = "ExistingUserName";
-        public const string ExistingUserUnconfirmedEmailUsername = "ExistingUserUnconfirmedEmailUsername";
-        public const string NonExistingUserName = "NonExistingUserName";
-
-        public const string ExistingUserPassword = "ExistingUserPassword";
-        public const string NonExistingUserPassword = "NonExistingUserPassword";
-
-        public const string ExistingTokenValue = "ExistingTokenValue";
-        public const string NonExistingTokenValue = "NonExistingTokenValue";
+        private const string ExistingUserId = "ExistingUserId";
+        private const string NonExistingUserId = "NonExistingUserId";
+        private const string ExistingUnconfirmedUserId = "ExistingUnconfirmedUserId";
+     
+        private const string ExistingUserEmail = "ExistingUserEmail";
+        private const string NonExistingUserEmail = "NonExistingUserEmail";
+        private const string ExistingUnconfirmedUserEmail = "ExistingUserUnconfimerEmail";
+        private const string ExistingInvalidUserEmail = "ExistingInvalidUserEmail";
+     
+        private const string ExistingUserUsername = "ExistingUserName";
+        private const string ExistingUserUnconfirmedEmailUsername = "ExistingUserUnconfirmedEmailUsername";
+        private const string NonExistingUserName = "NonExistingUserName";
+    
+        private const string ExistingUserPassword = "ExistingUserPassword";
+        private const string NonExistingUserPassword = "NonExistingUserPassword";
+       
+        private const string ExistingTokenValue = "ExistingTokenValue";
+        private const string NonExistingTokenValue = "NonExistingTokenValue";
 
         private readonly Mock<IMapper> _mockMapper;
         private readonly IResultFactory _resultFactory;
@@ -55,7 +55,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _mockTokenService = new Mock<ITokenService>();
             _mockUserRepository = new Mock<IUserRepository>();
             _accountManager = new Mock<IAccountManager>();
-            
+
             _accountService = new AccountService(
                 _mockMapper.Object,
                 _resultFactory,
@@ -92,7 +92,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
                 Email = ExistingInvalidUserEmail,
             };
 
-            var existingUsers = new List<User>() 
+            var existingUsers = new List<User>()
             {
                 existingUser,
                 existingUnconfirmedUser,

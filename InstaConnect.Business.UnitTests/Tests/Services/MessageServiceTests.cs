@@ -6,7 +6,6 @@ using InstaConnect.Business.Factories;
 using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.Enums;
 using InstaConnect.Business.Services;
-using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
 using Moq;
@@ -18,14 +17,14 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
     [TestFixture]
     public class MessageServiceTests
     {
-        public const string ExistingMessageId = "ExistingMessageId";
-        public const string NonExistingMessageId = "NonExistingMessageId";
-
-        public const string ExistingSenderId = "ExistingSenderId";
-        public const string NonExistingSenderId = "NonExistingSenderId";
-
-        public const string ExistingReceiverId = "ExistingReceiverId";
-        public const string NonExistingReceiverId = "NonExistingReceiverId";
+        private const string ExistingMessageId = "ExistingMessageId";
+        private const string NonExistingMessageId = "NonExistingMessageId";
+   
+        private const string ExistingSenderId = "ExistingSenderId";
+        private const string NonExistingSenderId = "NonExistingSenderId";
+      
+        private const string ExistingReceiverId = "ExistingReceiverId";
+        private const string NonExistingReceiverId = "NonExistingReceiverId";
 
         private Mock<IMapper> _mockMapper;
         private IResultFactory _resultFactory;

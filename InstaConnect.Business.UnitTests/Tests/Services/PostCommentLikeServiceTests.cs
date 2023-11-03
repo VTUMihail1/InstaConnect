@@ -5,7 +5,6 @@ using InstaConnect.Business.Factories;
 using InstaConnect.Business.Models.DTOs.PostCommentLike;
 using InstaConnect.Business.Models.Enums;
 using InstaConnect.Business.Services;
-using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
 using Moq;
@@ -17,16 +16,16 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
     [TestFixture]
     public class PostCommentLikeServiceTests
     {
-        public const string ExistingPostCommentLikeId = "ExistingPostCommentLikeId";
-        public const string NonExistingPostCommentLikeId = "NonExistingPostCommentLikeId";
-
-        public const string ExistingPostCommentId = "ExistingPostCommentId";
-        public const string NonExistingPostCommentId = "NonExistingPostCommentId";
-        public const string ExistingPostCommentLikePostCommentId = "ExistingLikePostCommentId";
-
-        public const string ExistingUserId = "ExistingUserId";
-        public const string NonExistingUserId = "NonExistingUserId";
-        public const string ExistingPostCommentLikeUserId = "ExistingLikeUserId";
+        private const string ExistingPostCommentLikeId = "ExistingPostCommentLikeId";
+        private const string NonExistingPostCommentLikeId = "NonExistingPostCommentLikeId";
+  
+        private const string ExistingPostCommentId = "ExistingPostCommentId";
+        private const string NonExistingPostCommentId = "NonExistingPostCommentId";
+        private const string ExistingPostCommentLikePostCommentId = "ExistingLikePostCommentId";
+  
+        private const string ExistingUserId = "ExistingUserId";
+        private const string NonExistingUserId = "NonExistingUserId";
+        private const string ExistingPostCommentLikeUserId = "ExistingLikeUserId";
 
         private Mock<IMapper> _mockMapper;
         private IResultFactory _resultFactory;

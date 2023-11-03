@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Data.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 
 namespace InstaConnect.Data.Abstraction.Helpers
 {

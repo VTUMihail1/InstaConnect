@@ -5,7 +5,6 @@ using InstaConnect.Business.Factories;
 using InstaConnect.Business.Models.DTOs.Follow;
 using InstaConnect.Business.Models.Enums;
 using InstaConnect.Business.Services;
-using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
 using Moq;
@@ -17,16 +16,16 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
     [TestFixture]
     public class FollowServiceTests
     {
-        public const string ExistingFollowId = "ExistingFollowId";
-        public const string NonExistingFollowId = "NonExistingFollowId";
-
-        public const string ExistingFollowerId = "ExistingFollowerId";
-        public const string NonExistingFollowerId = "NonExistingFollowerId";
-        public const string ExistingFollowFollowerId = "ExistingFollowFollowerId";
-
-        public const string ExistingFollowingId = "ExistingFollowingId";
-        public const string NonExistingFollowingId = "NonExistingFolloweingId";
-        public const string ExistingFollowFollowingId = "ExistingFollowFollowingId";
+        private const string ExistingFollowId = "ExistingFollowId";
+        private const string NonExistingFollowId = "NonExistingFollowId";
+    
+        private const string ExistingFollowerId = "ExistingFollowerId";
+        private const string NonExistingFollowerId = "NonExistingFollowerId";
+        private const string ExistingFollowFollowerId = "ExistingFollowFollowerId";
+      
+        private const string ExistingFollowingId = "ExistingFollowingId";
+        private const string NonExistingFollowingId = "NonExistingFolloweingId";
+        private const string ExistingFollowFollowingId = "ExistingFollowFollowingId";
 
 
         private Mock<IMapper> _mockMapper;
