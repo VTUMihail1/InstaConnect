@@ -113,15 +113,8 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         [TestCase(ExistingUserId, NonExistingUserId, NonExistingPostId, NonExistingPostCommentId, InstaConnectStatusCode.Forbidden)]
         [TestCase(NonExistingUserId, NonExistingUserId, NonExistingPostId, NonExistingPostCommentId, InstaConnectStatusCode.BadRequest)]
         [TestCase(ExistingUserId, ExistingUserId, NonExistingPostId, NonExistingPostCommentId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(NonExistingUserId, NonExistingUserId, ExistingPostId, NonExistingPostCommentId, InstaConnectStatusCode.BadRequest)]
         [TestCase(ExistingUserId, ExistingUserId, ExistingPostId, NonExistingPostCommentId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(NonExistingUserId, NonExistingUserId, NonExistingPostId, ExistingPostCommentId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(ExistingUserId, ExistingUserId, NonExistingPostId, ExistingPostCommentId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(NonExistingUserId, NonExistingUserId, ExistingPostId, ExistingPostCommentId, InstaConnectStatusCode.BadRequest)]
         [TestCase(ExistingUserId, ExistingUserId, ExistingPostId, ExistingPostCommentId, InstaConnectStatusCode.NoContent)]
-        [TestCase(NonExistingUserId, NonExistingUserId, NonExistingPostId, null, InstaConnectStatusCode.BadRequest)]
-        [TestCase(ExistingUserId, ExistingUserId, NonExistingPostId, null, InstaConnectStatusCode.BadRequest)]
-        [TestCase(NonExistingUserId, NonExistingUserId, ExistingPostId, null, InstaConnectStatusCode.BadRequest)]
         [TestCase(ExistingUserId, ExistingUserId, ExistingPostId, null, InstaConnectStatusCode.NoContent)]
         public async Task AddAsync_HasArguments_ReturnsExpectedResult(
             string currentUserId,

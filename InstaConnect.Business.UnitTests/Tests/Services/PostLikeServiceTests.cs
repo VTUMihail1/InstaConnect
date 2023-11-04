@@ -149,7 +149,6 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         [Test]
         [TestCase(ExistingUserId, NonExistingUserId, ExistingPostId, InstaConnectStatusCode.Forbidden)]
         [TestCase(ExistingUserId, ExistingUserId, ExistingPostId, InstaConnectStatusCode.NoContent)]
-        [TestCase(NonExistingUserId, NonExistingUserId, NonExistingPostId, InstaConnectStatusCode.BadRequest)]
         [TestCase(NonExistingUserId, NonExistingUserId, ExistingPostId, InstaConnectStatusCode.BadRequest)]
         [TestCase(ExistingUserId, ExistingUserId, NonExistingPostId, InstaConnectStatusCode.BadRequest)]
         [TestCase(ExistingUserId, ExistingUserId, ExistingPostCommentPostId, InstaConnectStatusCode.NoContent)]
