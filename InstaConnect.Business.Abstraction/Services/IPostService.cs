@@ -4,48 +4,49 @@ using InstaConnect.Business.Models.Results;
 namespace InstaConnect.Business.Abstraction.Services
 {
     /// <summary>
-    /// Represents a service for managing posts.
+    /// Represents an interface for managing and retrieving posts.
     /// </summary>
     public interface IPostService
     {
         /// <summary>
-        /// Retrieves all posts with pagination support based on user ID.
+        /// Asynchronously retrieves a collection of posts associated with a user, with pagination support.
         /// </summary>
-        /// <param name="userId">The ID of the user.</param>
-        /// <param name="page">The page number for pagination.</param>
+        /// <param name="userId">The ID of the user who created the posts.</param>
+        /// <param name="page">The page number for paginating results.</param>
         /// <param name="amount">The number of posts to retrieve per page.</param>
-        /// <returns>An <see cref="IResult{T}"/> containing a collection of <see cref="PostResultDTO"/>.</returns>
+        /// <returns>A task that represents the asynchronous operation. The task result contains an <see cref="IResult{T}"/> of type <see cref="ICollection{PostResultDTO}"/> with the posts.</returns>
         Task<IResult<ICollection<PostResultDTO>>> GetAllAsync(string userId, int page, int amount);
 
         /// <summary>
-        /// Retrieves a post by its unique identifier.
+        /// Asynchronously retrieves a post by its unique identifier.
         /// </summary>
-        /// <param name="id">The unique identifier of the post.</param>
-        /// <returns>An <see cref="IResult{T}"/> containing a <see cref="PostResultDTO"/>.</returns>
+        /// <param name="id">The unique identifier of the post to retrieve.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains an <see cref="IResult{T}"/> of type <see cref="PostResultDTO"/> with the post details.</returns>
         Task<IResult<PostResultDTO>> GetByIdAsync(string id);
 
         /// <summary>
-        /// Adds a new post.
+        /// Asynchronously adds a new post to the system created by the user.
         /// </summary>
-        /// <param name="postAddDTO">The data for the new post.</param>
-        /// <returns>An <see cref="IResult{T}"/> containing the added <see cref="PostResultDTO"/>.</returns>
-        Task<IResult<PostResultDTO>> AddAsync(PostAddDTO postAddDTO);
+        /// <param name="userId">The ID of the user who is creating the post.</param>
+        /// <param name="postAddDTO">The data for creating the post.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains an <see cref="IResult{T}"/> of type <see cref="PostResultDTO"/> with the result of the post creation.</returns>
+        Task<IResult<PostResultDTO>> AddAsync(string userId, PostAddDTO postAddDTO);
 
         /// <summary>
-        /// Updates an existing post by its unique identifier.
+        /// Asynchronously updates a post created by the user, based on the post's unique identifier.
         /// </summary>
-        /// <param name="userId">The ID of the user performing the action.</param>
+        /// <param name="userId">The ID of the user who created the post.</param>
         /// <param name="id">The unique identifier of the post to update.</param>
-        /// <param name="postUpdateDTO">The data to update the post with.</param>
-        /// <returns>An <see cref="IResult{T}"/> containing the updated <see cref="PostResultDTO"/>.</returns>
+        /// <param name="postUpdateDTO">The data for updating the post.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains an <see cref="IResult{T}"/> of type <see cref="PostResultDTO"/> with the result of the post update.</returns>
         Task<IResult<PostResultDTO>> UpdateAsync(string userId, string id, PostUpdateDTO postUpdateDTO);
 
         /// <summary>
-        /// Deletes a post by its unique identifier.
+        /// Asynchronously deletes a post created by the user, based on the post's unique identifier.
         /// </summary>
-        /// <param name="userId">The ID of the user performing the action.</param>
+        /// <param name="userId">The ID of the user who created the post.</param>
         /// <param name="id">The unique identifier of the post to delete.</param>
-        /// <returns>An <see cref="IResult{T}"/> containing the deleted <see cref="PostResultDTO"/>.</returns>
+        /// <returns>A task that represents the asynchronous operation. The task result contains an <see cref="IResult{T}"/> of type <see cref="PostResultDTO"/> with the result of the post deletion.</returns>
         Task<IResult<PostResultDTO>> DeleteAsync(string userId, string id);
     }
 }

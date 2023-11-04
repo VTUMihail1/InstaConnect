@@ -4,6 +4,7 @@ using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Follow;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
+using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
 
@@ -15,17 +16,20 @@ namespace InstaConnect.Business.Services
         private readonly IResultFactory _resultFactory;
         private readonly IFollowRepository _followRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IAccountManager _accountManager;
 
         public FollowService(
             IMapper mapper,
             IResultFactory resultFactory,
             IFollowRepository followRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IAccountManager accountManager)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _followRepository = followRepository; ;
             _userRepository = userRepository;
+            _accountManager = accountManager;
         }
 
         public async Task<IResult<ICollection<FollowResultDTO>>> GetAllAsync(string followerId, string followingId, int page, int amount)
@@ -78,8 +82,17 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<FollowResultDTO>> AddAsync(FollowAddDTO followAddDTO)
+        public async Task<IResult<FollowResultDTO>> AddAsync(string followerId, FollowAddDTO followAddDTO)
         {
+            var validUser = _accountManager.ValidateUser(followerId, followAddDTO.FollowerId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<FollowResultDTO>();
+
+                return forbiddenResult;
+            }
+
             var existingFollower = await _userRepository.FindEntityAsync(f => f.Id == followAddDTO.FollowerId);
 
             if (existingFollower == null)
@@ -135,13 +148,22 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<FollowResultDTO>> DeleteAsync(string followerId, string id)
         {
-            var existingFollow = await _followRepository.FindEntityAsync(f => f.Id == id && f.FollowerId == followerId);
+            var existingFollow = await _followRepository.FindEntityAsync(f => f.Id == id);
 
             if (existingFollow == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<FollowResultDTO>();
 
                 return notFoundResult;
+            }
+
+            var validUser = _accountManager.ValidateUser(followerId, existingFollow.FollowerId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<FollowResultDTO>();
+
+                return forbiddenResult;
             }
 
             await _followRepository.DeleteAsync(existingFollow);

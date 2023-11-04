@@ -5,6 +5,7 @@ using InstaConnect.Business.Factories;
 using InstaConnect.Business.Models.DTOs.PostCommentLike;
 using InstaConnect.Business.Models.Enums;
 using InstaConnect.Business.Services;
+using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
 using Moq;
@@ -27,12 +28,13 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         private const string NonExistingUserId = "NonExistingUserId";
         private const string ExistingPostCommentLikeUserId = "ExistingLikeUserId";
 
-        private Mock<IMapper> _mockMapper;
-        private IResultFactory _resultFactory;
-        private Mock<IPostCommentLikeRepository> _mockPostCommentLikeRepository;
-        private Mock<IPostCommentRepository> _mockPostCommentRepository;
-        private Mock<IUserRepository> _mockUserRepository;
-        private IPostCommentLikeService _postCommentLikeService;
+        private readonly Mock<IMapper> _mockMapper;
+        private readonly IResultFactory _resultFactory;
+        private readonly Mock<IPostCommentLikeRepository> _mockPostCommentLikeRepository;
+        private readonly Mock<IPostCommentRepository> _mockPostCommentRepository;
+        private readonly Mock<IUserRepository> _mockUserRepository;
+        private readonly Mock<IAccountManager> _mockAccountManager;
+        private readonly IPostCommentLikeService _postCommentLikeService;
 
         public PostCommentLikeServiceTests()
         {
@@ -41,12 +43,14 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _mockPostCommentLikeRepository = new Mock<IPostCommentLikeRepository>();
             _mockPostCommentRepository = new Mock<IPostCommentRepository>();
             _mockUserRepository = new Mock<IUserRepository>();
+            _mockAccountManager = new Mock<IAccountManager>();
             _postCommentLikeService = new PostCommentLikeService(
                 _mockMapper.Object,
                 _resultFactory,
                 _mockPostCommentLikeRepository.Object,
                 _mockPostCommentRepository.Object,
-                _mockUserRepository.Object);
+                _mockUserRepository.Object,
+                _mockAccountManager.Object);
         }
 
         [SetUp]
@@ -104,6 +108,9 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
 
             _mockUserRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<User, bool>>>())).
                 ReturnsAsync((Expression<Func<User, bool>> expression) => existingUsers.Find(new Predicate<User>(expression.Compile())));
+
+            _mockAccountManager.Setup(m => m.ValidateUser(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns<string, string>((currentUserId, userId) => currentUserId == userId);
         }
 
         [Test]
@@ -138,14 +145,15 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(NonExistingUserId, NonExistingPostCommentId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(NonExistingUserId, ExistingPostCommentId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(ExistingUserId, NonExistingPostCommentId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(ExistingUserId, ExistingPostCommentLikePostCommentId, InstaConnectStatusCode.NoContent)]
-        [TestCase(ExistingUserId, ExistingPostCommentLikePostCommentId, InstaConnectStatusCode.NoContent)]
-        [TestCase(ExistingPostCommentLikeUserId, ExistingPostCommentId, InstaConnectStatusCode.NoContent)]
-        [TestCase(ExistingPostCommentLikeUserId, ExistingPostCommentLikePostCommentId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUserId, NonExistingUserId, NonExistingPostCommentId, InstaConnectStatusCode.Forbidden)]
+        [TestCase(NonExistingUserId, NonExistingUserId, ExistingPostCommentId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUserId, ExistingUserId, NonExistingPostCommentId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUserId, ExistingUserId, ExistingPostCommentLikePostCommentId, InstaConnectStatusCode.NoContent)]
+        [TestCase(ExistingUserId, ExistingUserId, ExistingPostCommentLikePostCommentId, InstaConnectStatusCode.NoContent)]
+        [TestCase(ExistingPostCommentLikeUserId, ExistingPostCommentLikeUserId, ExistingPostCommentId, InstaConnectStatusCode.NoContent)]
+        [TestCase(ExistingPostCommentLikeUserId, ExistingPostCommentLikeUserId, ExistingPostCommentLikePostCommentId, InstaConnectStatusCode.BadRequest)]
         public async Task AddAsync_HasArguments_ReturnsExpectedResult(
+            string currentUserId,
             string userId,
             string postCommentId,
             InstaConnectStatusCode statusCode)
@@ -158,7 +166,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             };
 
             // Act
-            var result = await _postCommentLikeService.AddAsync(postCommentLikeAddDTO);
+            var result = await _postCommentLikeService.AddAsync(currentUserId, postCommentLikeAddDTO);
 
             // Assert
             Assert.That(result.StatusCode, Is.EqualTo(statusCode));
@@ -167,7 +175,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         [Test]
         [TestCase(NonExistingUserId, NonExistingPostCommentLikeId, InstaConnectStatusCode.NotFound)]
         [TestCase(ExistingPostCommentLikeUserId, NonExistingPostCommentLikeId, InstaConnectStatusCode.NotFound)]
-        [TestCase(NonExistingUserId, ExistingPostCommentLikeId, InstaConnectStatusCode.NotFound)]
+        [TestCase(NonExistingUserId, ExistingPostCommentLikeId, InstaConnectStatusCode.Forbidden)]
         [TestCase(ExistingPostCommentLikeUserId, ExistingPostCommentLikeId, InstaConnectStatusCode.NoContent)]
         public async Task DeleteAsync_HasId_ReturnsExpectedResult(
             string userId,
