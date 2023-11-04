@@ -28,7 +28,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         private const string NonExistingUserEmail = "NonExistingUserEmail";
         private const string ExistingUnconfirmedUserEmail = "ExistingUserUnconfimerEmail";
         private const string ExistingInvalidUserEmail = "ExistingInvalidUserEmail";
-     
+
         private const string ExistingUserUsername = "ExistingUserName";
         private const string ExistingUserUnconfirmedEmailUsername = "ExistingUserUnconfirmedEmailUsername";
         private const string NonExistingUserName = "NonExistingUserName";
@@ -186,10 +186,10 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(ExistingUserEmail, ExistingUserPassword, InstaConnectStatusCode.OK)]
         [TestCase(NonExistingUserEmail, ExistingUserPassword, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUserEmail, NonExistingUserPassword, InstaConnectStatusCode.BadRequest)]
         [TestCase(ExistingUnconfirmedUserEmail, ExistingUserPassword, InstaConnectStatusCode.BadRequest)]
-        [TestCase(ExistingUnconfirmedUserEmail, NonExistingUserPassword, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUserEmail, ExistingUserPassword, InstaConnectStatusCode.OK)]
         public async Task LoginAsync_HasArguments_ReturnsExpectedResult(
             string email,
             string password,
@@ -210,8 +210,8 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(ExistingUserEmail, InstaConnectStatusCode.BadRequest)]
         [TestCase(NonExistingUserEmail, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUserEmail, InstaConnectStatusCode.BadRequest)]
         [TestCase(ExistingInvalidUserEmail, InstaConnectStatusCode.BadRequest)]
         [TestCase(ExistingUnconfirmedUserEmail, InstaConnectStatusCode.NoContent)]
         public async Task ResendEmailConfirmationTokenAsync_HasArguments_ReturnsExpectedResult(
@@ -226,9 +226,9 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(ExistingUserEmail, InstaConnectStatusCode.NoContent)]
         [TestCase(NonExistingUserEmail, InstaConnectStatusCode.BadRequest)]
         [TestCase(ExistingInvalidUserEmail, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUserEmail, InstaConnectStatusCode.NoContent)]
         public async Task SendPasswordResetTokenByEmailAsync_HasArguments_ReturnsExpectedResult(
             string email,
             InstaConnectStatusCode statusCode)
@@ -243,8 +243,8 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         [Test]
         [TestCase(NonExistingUserId, ExistingTokenValue, InstaConnectStatusCode.BadRequest)]
         [TestCase(ExistingUserId, ExistingTokenValue, InstaConnectStatusCode.BadRequest)]
-        [TestCase(ExistingUnconfirmedUserId, ExistingTokenValue, InstaConnectStatusCode.NoContent)]
         [TestCase(ExistingUnconfirmedUserId, NonExistingTokenValue, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUnconfirmedUserId, ExistingTokenValue, InstaConnectStatusCode.NoContent)]
         public async Task ConfirmEmailWithTokenAsync_HasArguments_ReturnsExpectedResult(
             string userId,
             string token,
@@ -258,9 +258,9 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(ExistingUserId, ExistingTokenValue, InstaConnectStatusCode.NoContent)]
-        [TestCase(ExistingUserId, NonExistingTokenValue, InstaConnectStatusCode.BadRequest)]
         [TestCase(NonExistingUserId, ExistingTokenValue, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUserId, NonExistingTokenValue, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingUserId, ExistingTokenValue, InstaConnectStatusCode.NoContent)]
         public async Task ResetPasswordWithTokenAsync_HasArguments_ReturnsExpectedResult(
             string userId,
             string token,
@@ -277,9 +277,9 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
+        [TestCase(ExistingUserId, ExistingUserUnconfirmedEmailUsername, InstaConnectStatusCode.BadRequest)]
         [TestCase(ExistingUserId, NonExistingUserName, InstaConnectStatusCode.NoContent)]
         [TestCase(ExistingUserId, ExistingUserUsername, InstaConnectStatusCode.NoContent)]
-        [TestCase(ExistingUserId, ExistingUserUnconfirmedEmailUsername, InstaConnectStatusCode.BadRequest)]
         [TestCase(ExistingUnconfirmedUserId, ExistingUserUsername, InstaConnectStatusCode.BadRequest)]
         public async Task EditAsync_HasArguments_ReturnsExpectedResult(
             string userId,
