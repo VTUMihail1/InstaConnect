@@ -56,5 +56,12 @@ namespace InstaConnect.Data.Helpers
                  .Where(u => u.Id == user.Id)
                  .ExecuteUpdateAsync(u => u.SetProperty(u => u.PasswordHash, passwordHash));
         }
+
+        public bool ValidateUser(string currentUserId, string userId)
+        {
+            var result = currentUserId == userId;
+
+            return result;
+        }
     }
 }

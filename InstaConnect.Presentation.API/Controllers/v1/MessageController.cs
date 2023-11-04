@@ -49,14 +49,14 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         // POST: api/v1/messages
         [Authorize]
         [AccessToken]
-        [ValidateUser("SenderId")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> AddAsync([FromBody] MessageAddDTO messageAddDTO)
         {
-            var response = await _messageService.AddAsync(messageAddDTO);
+            var currentSenderId = User.GetCurrentUserId();
+            var response = await _messageService.AddAsync(currentSenderId, messageAddDTO);
 
             return this.HandleResponse(response);
         }

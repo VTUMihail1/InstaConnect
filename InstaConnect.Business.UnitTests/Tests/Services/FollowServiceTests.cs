@@ -5,6 +5,7 @@ using InstaConnect.Business.Factories;
 using InstaConnect.Business.Models.DTOs.Follow;
 using InstaConnect.Business.Models.Enums;
 using InstaConnect.Business.Services;
+using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
 using Moq;
@@ -27,12 +28,12 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         private const string NonExistingFollowingId = "NonExistingFolloweingId";
         private const string ExistingFollowFollowingId = "ExistingFollowFollowingId";
 
-
-        private Mock<IMapper> _mockMapper;
-        private IResultFactory _resultFactory;
-        private Mock<IFollowRepository> _mockFollowRepository;
-        private Mock<IUserRepository> _mockUserRepository;
-        private IFollowService _followService;
+        private readonly Mock<IMapper> _mockMapper;
+        private readonly IResultFactory _resultFactory;
+        private readonly Mock<IFollowRepository> _mockFollowRepository;
+        private readonly Mock<IUserRepository> _mockUserRepository;
+        private readonly Mock<IAccountManager> _mockAccountManager;
+        private readonly IFollowService _followService;
 
         public FollowServiceTests()
         {
@@ -40,11 +41,13 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _resultFactory = new ResultFactory();
             _mockFollowRepository = new Mock<IFollowRepository>();
             _mockUserRepository = new Mock<IUserRepository>();
+            _mockAccountManager = new Mock<IAccountManager>();
             _followService = new FollowService(
                 _mockMapper.Object,
                 _resultFactory,
                 _mockFollowRepository.Object,
-                _mockUserRepository.Object);
+                _mockUserRepository.Object,
+                _mockAccountManager.Object);
         }
 
         [SetUp]
@@ -95,6 +98,9 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
 
             _mockFollowRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<Follow, bool>>>()))
                 .ReturnsAsync((Expression<Func<Follow, bool>> expression) => existingFollows.Find(new Predicate<Follow>(expression.Compile())));
+
+            _mockAccountManager.Setup(m => m.ValidateUser(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns<string, string>((currentUserId, userId) => currentUserId == userId);
         }
 
         [Test]
@@ -129,14 +135,15 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(NonExistingFollowerId, NonExistingFollowingId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(NonExistingFollowerId, ExistingFollowingId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(ExistingFollowerId, NonExistingFollowingId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(ExistingFollowerId, ExistingFollowingId, InstaConnectStatusCode.NoContent)]
-        [TestCase(ExistingFollowerId, ExistingFollowFollowingId, InstaConnectStatusCode.NoContent)]
-        [TestCase(ExistingFollowFollowerId, ExistingFollowingId, InstaConnectStatusCode.NoContent)]
-        [TestCase(ExistingFollowFollowerId, ExistingFollowFollowingId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(NonExistingFollowerId, NonExistingFollowerId, NonExistingFollowingId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingFollowerId, NonExistingFollowerId, ExistingFollowingId, InstaConnectStatusCode.Forbidden)]
+        [TestCase(ExistingFollowerId, ExistingFollowerId, NonExistingFollowingId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingFollowerId, ExistingFollowerId, ExistingFollowingId, InstaConnectStatusCode.NoContent)]
+        [TestCase(ExistingFollowerId, ExistingFollowerId, ExistingFollowFollowingId, InstaConnectStatusCode.NoContent)]
+        [TestCase(ExistingFollowFollowerId, ExistingFollowFollowerId, ExistingFollowingId, InstaConnectStatusCode.NoContent)]
+        [TestCase(ExistingFollowFollowerId, ExistingFollowFollowerId, ExistingFollowFollowingId, InstaConnectStatusCode.BadRequest)]
         public async Task AddAsync_HasArguments_ReturnsExpectedResult(
+            string currentFollowerId,
             string followerId,
             string followingId,
             InstaConnectStatusCode statusCode)
@@ -149,7 +156,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             };
 
             // Act
-            var result = await _followService.AddAsync(followAddDTO);
+            var result = await _followService.AddAsync(currentFollowerId, followAddDTO);
 
             // Assert
             Assert.That(result.StatusCode, Is.EqualTo(statusCode));
@@ -175,7 +182,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         [Test]
         [TestCase(NonExistingFollowerId, NonExistingFollowId, InstaConnectStatusCode.NotFound)]
         [TestCase(ExistingFollowFollowerId, NonExistingFollowId, InstaConnectStatusCode.NotFound)]
-        [TestCase(NonExistingFollowerId, ExistingFollowId, InstaConnectStatusCode.NotFound)]
+        [TestCase(NonExistingFollowerId, ExistingFollowId, InstaConnectStatusCode.Forbidden)]
         [TestCase(ExistingFollowFollowerId, ExistingFollowId, InstaConnectStatusCode.NoContent)]
         public async Task DeleteAsync_HasId_ReturnsExpectedResult(
             string followerId,

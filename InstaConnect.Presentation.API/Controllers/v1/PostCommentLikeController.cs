@@ -60,14 +60,14 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         // POST: api/v1/post-comment-likes
         [Authorize]
         [AccessToken]
-        [ValidateUser("UserId")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> AddAsync([FromBody] PostCommentLikeAddDTO postCommentLikeAddDTO)
         {
-            var response = await _postCommentLikeService.AddAsync(postCommentLikeAddDTO);
+            var currentUserId = User.GetCurrentUserId();
+            var response = await _postCommentLikeService.AddAsync(currentUserId, postCommentLikeAddDTO);
 
             return this.HandleResponse(response);
         }

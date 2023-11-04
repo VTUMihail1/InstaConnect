@@ -21,10 +21,10 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         private const string ExistingUserName = "ExistingUserName";
         private const string NonExistingUserName = "NonExistingUserName";
 
-        private Mock<IMapper> _mockMapper;
-        private IResultFactory _resultFactory;
-        private Mock<IUserRepository> _mockUserRepository;
-        private IUserService _userService;
+        private readonly Mock<IMapper> _mockMapper;
+        private readonly IResultFactory _resultFactory;
+        private readonly Mock<IUserRepository> _mockUserRepository;
+        private readonly IUserService _userService;
 
         public UserServiceTests()
         {

@@ -1,22 +1,22 @@
 ﻿namespace InstaConnect.Business.Abstraction.Helpers
 {
     /// <summary>
-    /// Provides methods for generating email templates for specific actions.
+    /// Represents an interface for generating email templates for specific purposes.
     /// </summary>
     public interface ITemplateGenerator
     {
         /// <summary>
-        /// Generates an email template for email confirmation.
+        /// Generates an email confirmation template for the specified endpoint.
         /// </summary>
-        /// <param name="endpoint">The URL endpoint for email confirmation.</param>
-        /// <returns>A string representing the generated email template for email confirmation.</returns>
+        /// <param name="endpoint">The endpoint URL for confirming the email.</param>
+        /// <returns>A string containing the generated email confirmation template.</returns>
         string GenerateEmailConfirmationTemplate(string endpoint);
 
         /// <summary>
-        /// Generates an email template for the "Forgot Password" action.
+        /// Generates a "Forgot Password" email template for the specified endpoint.
         /// </summary>
-        /// <param name="endpoint">The URL endpoint for password reset.</param>
-        /// <returns>A string representing the generated email template for the "Forgot Password" action.</returns>
+        /// <param name="endpoint">The endpoint URL for resetting the password.</param>
+        /// <returns>A string containing the generated "Forgot Password" email template.</returns>
         string GenerateForgotPasswordTemplate(string endpoint);
     }
 }

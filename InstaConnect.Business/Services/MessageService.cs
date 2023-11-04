@@ -2,9 +2,11 @@
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Helpers;
 using InstaConnect.Business.Abstraction.Services;
+using InstaConnect.Business.Models.DTOs.Follow;
 using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
+using InstaConnect.Data.Abstraction.Helpers;
 using InstaConnect.Data.Abstraction.Repositories;
 using InstaConnect.Data.Models.Entities;
 
@@ -17,19 +19,22 @@ namespace InstaConnect.Business.Services
         private readonly IMessageRepository _messageRepository;
         private readonly IMessageSender _messageSender;
         private readonly IUserRepository _userRepository;
+        private readonly IAccountManager _accountManager;
 
         public MessageService(
             IMapper mapper,
             IResultFactory resultFactory,
             IMessageRepository messageRepository,
             IMessageSender messageSender,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IAccountManager accountManager)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _messageRepository = messageRepository;
             _messageSender = messageSender;
             _userRepository = userRepository;
+            _accountManager = accountManager;
         }
 
         public async Task<IResult<ICollection<MessageResultDTO>>> GetAllBySenderIdAndReceiverIdAsync(string senderId, string receiverId)
@@ -44,9 +49,9 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<MessageResultDTO>> GetByIdAsync(string userId, string id)
+        public async Task<IResult<MessageResultDTO>> GetByIdAsync(string senderId, string id)
         {
-            var existingMessage = await _messageRepository.FindEntityAsync(m => m.Id == id && m.SenderId == userId);
+            var existingMessage = await _messageRepository.FindEntityAsync(m => m.Id == id);
 
             if (existingMessage == null)
             {
@@ -55,14 +60,32 @@ namespace InstaConnect.Business.Services
                 return notFoundResult;
             }
 
+            var validUser = _accountManager.ValidateUser(senderId, existingMessage.SenderId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<MessageResultDTO>();
+
+                return forbiddenResult;
+            }
+
             var messageResultDTO = _mapper.Map<MessageResultDTO>(existingMessage);
             var okResult = _resultFactory.GetOkResult(messageResultDTO);
 
             return okResult;
         }
 
-        public async Task<IResult<MessageResultDTO>> AddAsync(MessageAddDTO messageAddDTO)
+        public async Task<IResult<MessageResultDTO>> AddAsync(string senderId, MessageAddDTO messageAddDTO)
         {
+            var validUser = _accountManager.ValidateUser(senderId, messageAddDTO.SenderId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<MessageResultDTO>();
+
+                return forbiddenResult;
+            }
+
             var existingSender = await _userRepository.FindEntityAsync(f => f.Id == messageAddDTO.SenderId);
 
             if (existingSender == null)
@@ -91,15 +114,24 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<MessageResultDTO>> UpdateAsync(string userId, string id, MessageUpdateDTO messageUpdateDTO)
+        public async Task<IResult<MessageResultDTO>> UpdateAsync(string senderId, string id, MessageUpdateDTO messageUpdateDTO)
         {
-            var existingMessage = await _messageRepository.FindEntityAsync(m => m.Id == id && m.SenderId == userId);
+            var existingMessage = await _messageRepository.FindEntityAsync(m => m.Id == id);
 
             if (existingMessage == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<MessageResultDTO>();
 
                 return notFoundResult;
+            }
+
+            var validUser = _accountManager.ValidateUser(senderId, existingMessage.SenderId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<MessageResultDTO>();
+
+                return forbiddenResult;
             }
 
             _mapper.Map(messageUpdateDTO, existingMessage);
@@ -110,15 +142,24 @@ namespace InstaConnect.Business.Services
             return noContentResult;
         }
 
-        public async Task<IResult<MessageResultDTO>> DeleteAsync(string userId, string id)
+        public async Task<IResult<MessageResultDTO>> DeleteAsync(string senderId, string id)
         {
-            var existingMessage = await _messageRepository.FindEntityAsync(m => m.Id == id && m.SenderId == userId);
+            var existingMessage = await _messageRepository.FindEntityAsync(m => m.Id == id);
 
             if (existingMessage == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<MessageResultDTO>();
 
                 return notFoundResult;
+            }
+
+            var validUser = _accountManager.ValidateUser(senderId, existingMessage.SenderId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<MessageResultDTO>();
+
+                return forbiddenResult;
             }
 
             await _messageRepository.DeleteAsync(existingMessage);

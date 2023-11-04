@@ -60,14 +60,14 @@ namespace InstaConnect.Presentation.API.Controllers.v1
         // POST: api/v1/follows
         [Authorize]
         [AccessToken]
-        [ValidateUser("FollowerId")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> AddAsync([FromBody] FollowAddDTO followAddDTO)
         {
-            var response = await _followService.AddAsync(followAddDTO);
+            var currentFollowerId = User.GetCurrentUserId();
+            var response = await _followService.AddAsync(currentFollowerId, followAddDTO);
 
             return this.HandleResponse(response);
         }
