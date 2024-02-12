@@ -16,20 +16,23 @@ namespace InstaConnect.Business.Services
         private readonly IResultFactory _resultFactory;
         private readonly IPostLikeRepository _postLikeRepository;
         private readonly IPostRepository _postRepository;
-        private readonly IInstaConnectUserManager _instaConnectUserManager;
+        private readonly IUserRepository _userRepository;
+        private readonly IAccountManager _accountManager;
 
         public PostLikeService(
             IMapper mapper,
             IResultFactory resultFactory,
             IPostLikeRepository postLikeRepository,
             IPostRepository postRepository,
-            IInstaConnectUserManager instaConnectUserManager)
+            IUserRepository userRepository,
+            IAccountManager accountManager)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _postLikeRepository = postLikeRepository;
             _postRepository = postRepository;
-            _instaConnectUserManager = instaConnectUserManager;
+            _userRepository = userRepository;
+            _accountManager = accountManager;
         }
 
         public async Task<IResult<ICollection<PostLikeResultDTO>>> GetAllAsync(
@@ -84,9 +87,18 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<PostLikeResultDTO>> AddAsync(PostLikeAddDTO postLikeAddDTO)
+        public async Task<IResult<PostLikeResultDTO>> AddAsync(string userId, PostLikeAddDTO postLikeAddDTO)
         {
-            var existingUser = await _instaConnectUserManager.FindByIdAsync(postLikeAddDTO.UserId);
+            var validUser = _accountManager.ValidateUser(userId, postLikeAddDTO.UserId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<PostLikeResultDTO>();
+
+                return forbiddenResult;
+            }
+
+            var existingUser = await _userRepository.FindEntityAsync(f => f.Id == postLikeAddDTO.UserId);
 
             if (existingUser == null)
             {
@@ -141,13 +153,22 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostLikeResultDTO>> DeleteAsync(string userId, string id)
         {
-            var existingPostLike = await _postLikeRepository.FindEntityAsync(pl => pl.Id == id && pl.UserId == userId);
+            var existingPostLike = await _postLikeRepository.FindEntityAsync(pl => pl.Id == id);
 
             if (existingPostLike == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostLikeResultDTO>();
 
                 return notFoundResult;
+            }
+
+            var validUser = _accountManager.ValidateUser(userId, existingPostLike.UserId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<PostLikeResultDTO>();
+
+                return forbiddenResult;
             }
 
             await _postLikeRepository.DeleteAsync(existingPostLike);

@@ -18,21 +18,22 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
     [TestFixture]
     public class MessageServiceTests
     {
-        public const string ExistingMessageId = "ExistingMessageId";
-        public const string NonExistingMessageId = "NonExistingMessageId";
+        private const string ExistingMessageId = "ExistingMessageId";
+        private const string NonExistingMessageId = "NonExistingMessageId";
+   
+        private const string ExistingSenderId = "ExistingSenderId";
+        private const string NonExistingSenderId = "NonExistingSenderId";
+      
+        private const string ExistingReceiverId = "ExistingReceiverId";
+        private const string NonExistingReceiverId = "NonExistingReceiverId";
 
-        public const string ExistingSenderId = "ExistingSenderId";
-        public const string NonExistingSenderId = "NonExistingSenderId";
-
-        public const string ExistingReceiverId = "ExistingReceiverId";
-        public const string NonExistingReceiverId = "NonExistingReceiverId";
-
-        private Mock<IMapper> _mockMapper;
-        private IResultFactory _resultFactory;
-        private Mock<IMessageRepository> _mockMessageRepository;
-        private Mock<IInstaConnectUserManager> _mockInstaConnectUserManager;
-        private Mock<IMessageSender> _mockMessageSender;
-        private IMessageService _messageService;
+        private readonly Mock<IMapper> _mockMapper;
+        private readonly IResultFactory _resultFactory;
+        private readonly Mock<IMessageRepository> _mockMessageRepository;
+        private readonly Mock<IUserRepository> _mockUserRepository;
+        private readonly Mock<IMessageSender> _mockMessageSender;
+        private readonly Mock<IAccountManager> _mockAccountManager;
+        private readonly IMessageService _messageService;
 
         public MessageServiceTests()
         {
@@ -40,43 +41,61 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             _resultFactory = new ResultFactory();
             _mockMessageRepository = new Mock<IMessageRepository>();
             _mockMessageSender = new Mock<IMessageSender>();
-            _mockInstaConnectUserManager = new Mock<IInstaConnectUserManager>();
+            _mockUserRepository = new Mock<IUserRepository>();
+            _mockAccountManager = new Mock<IAccountManager>();
             _messageService = new MessageService(
                 _mockMapper.Object,
                 _resultFactory,
                 _mockMessageRepository.Object,
                 _mockMessageSender.Object,
-                _mockInstaConnectUserManager.Object);
+                _mockUserRepository.Object,
+                _mockAccountManager.Object);
         }
 
         [SetUp]
         public void Setup()
         {
-            var existingMessages = new List<Message>()
+            var existingMessage = new Message()
             {
-                new Message()
-                {
-                    Id = ExistingMessageId,
-                    SenderId = ExistingSenderId,
-                    ReceiverId = ExistingReceiverId
-                }
+                Id = ExistingMessageId,
+                SenderId = ExistingSenderId,
+                ReceiverId = ExistingReceiverId
             };
 
-            var existingUser = new User();
+            var existingMessages = new List<Message>()
+            {
+                existingMessage
+            };
+
+            var existingSender = new User()
+            {
+                Id = ExistingSenderId
+            };
+
+            var existingReceiver = new User()
+            {
+                Id = ExistingReceiverId
+            };
+
+            var existingUsers = new List<User>()
+            {
+                existingSender,
+                existingReceiver
+            };
 
             _mockMessageRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<Message, bool>>>()))
                 .ReturnsAsync((Expression<Func<Message, bool>> expression) => existingMessages.Find(new Predicate<Message>(expression.Compile())));
 
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingSenderId))
-                .ReturnsAsync(existingUser);
+            _mockUserRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<User, bool>>>()))
+                .ReturnsAsync((Expression<Func<User, bool>> expression) => existingUsers.Find(new Predicate<User>(expression.Compile())));
 
-            _mockInstaConnectUserManager.Setup(s => s.FindByIdAsync(ExistingReceiverId))
-                .ReturnsAsync(existingUser);
+            _mockAccountManager.Setup(m => m.ValidateUser(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns<string, string>((currentUserId, userId) => currentUserId == userId);
         }
 
         [Test]
         [TestCase(ExistingSenderId, NonExistingMessageId, InstaConnectStatusCode.NotFound)]
-        [TestCase(NonExistingSenderId, ExistingMessageId, InstaConnectStatusCode.NotFound)]
+        [TestCase(NonExistingSenderId, ExistingMessageId, InstaConnectStatusCode.Forbidden)]
         [TestCase(NonExistingSenderId, NonExistingMessageId, InstaConnectStatusCode.NotFound)]
         [TestCase(ExistingSenderId, ExistingMessageId, InstaConnectStatusCode.OK)]
         public async Task GetById_HasId_ReturnsExpectedResult(
@@ -92,11 +111,12 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         }
 
         [Test]
-        [TestCase(NonExistingSenderId, NonExistingReceiverId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(NonExistingSenderId, ExistingReceiverId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(ExistingSenderId, NonExistingReceiverId, InstaConnectStatusCode.BadRequest)]
-        [TestCase(ExistingSenderId, ExistingReceiverId, InstaConnectStatusCode.NoContent)]
+        [TestCase(NonExistingSenderId, NonExistingSenderId, NonExistingReceiverId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(NonExistingSenderId, NonExistingSenderId, ExistingReceiverId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingSenderId, ExistingSenderId, NonExistingReceiverId, InstaConnectStatusCode.BadRequest)]
+        [TestCase(ExistingSenderId, ExistingSenderId, ExistingReceiverId, InstaConnectStatusCode.NoContent)]
         public async Task AddAsync_HasArguments_ReturnsExpectedResult(
+            string currentSenderId,
             string senderId,
             string receiverId,
             InstaConnectStatusCode statusCode)
@@ -109,7 +129,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
             };
 
             // Act
-            var result = await _messageService.AddAsync(messageAddDTO);
+            var result = await _messageService.AddAsync(currentSenderId, messageAddDTO);
 
             // Assert
             Assert.That(result.StatusCode, Is.EqualTo(statusCode));
@@ -118,7 +138,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         [Test]
         [TestCase(NonExistingSenderId, NonExistingMessageId, InstaConnectStatusCode.NotFound)]
         [TestCase(ExistingSenderId, NonExistingMessageId, InstaConnectStatusCode.NotFound)]
-        [TestCase(NonExistingSenderId, ExistingMessageId, InstaConnectStatusCode.NotFound)]
+        [TestCase(NonExistingSenderId, ExistingMessageId, InstaConnectStatusCode.Forbidden)]
         [TestCase(ExistingSenderId, ExistingMessageId, InstaConnectStatusCode.NoContent)]
         public async Task UpdateAsync_HasId_ReturnsExpectedResult(
             string senderId,
@@ -138,7 +158,7 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         [Test]
         [TestCase(NonExistingSenderId, NonExistingMessageId, InstaConnectStatusCode.NotFound)]
         [TestCase(ExistingSenderId, NonExistingMessageId, InstaConnectStatusCode.NotFound)]
-        [TestCase(NonExistingSenderId, ExistingMessageId, InstaConnectStatusCode.NotFound)]
+        [TestCase(NonExistingSenderId, ExistingMessageId, InstaConnectStatusCode.Forbidden)]
         [TestCase(ExistingSenderId, ExistingMessageId, InstaConnectStatusCode.NoContent)]
         public async Task DeleteAsync_HasId_ReturnsExpectedResult(
             string senderId,

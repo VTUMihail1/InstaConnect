@@ -2,6 +2,7 @@
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.PostComment;
+using InstaConnect.Business.Models.DTOs.PostCommentLike;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Data.Abstraction.Helpers;
@@ -16,20 +17,23 @@ namespace InstaConnect.Business.Services
         private readonly IResultFactory _resultFactory;
         private readonly IPostCommentRepository _postCommentRepository;
         private readonly IPostRepository _postRepository;
-        private readonly IInstaConnectUserManager _instaConnectUserManager;
+        private readonly IUserRepository _userRepository;
+        private readonly IAccountManager _accountManager;
 
         public PostCommentService(
             IMapper mapper,
             IResultFactory resultFactory,
             IPostCommentRepository postCommentRepository,
             IPostRepository postRepository,
-            IInstaConnectUserManager instaConnectUserManager)
+            IUserRepository userRepository,
+            IAccountManager accountManager)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _postCommentRepository = postCommentRepository;
             _postRepository = postRepository;
-            _instaConnectUserManager = instaConnectUserManager;
+            _userRepository = userRepository;
+            _accountManager = accountManager;
         }
 
         public async Task<IResult<ICollection<PostCommentResultDTO>>> GetAllAsync(
@@ -71,9 +75,18 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<PostCommentResultDTO>> AddAsync(PostCommentAddDTO postCommentAddDTO)
+        public async Task<IResult<PostCommentResultDTO>> AddAsync(string userId, PostCommentAddDTO postCommentAddDTO)
         {
-            var existingUser = await _instaConnectUserManager.FindByIdAsync(postCommentAddDTO.UserId);
+            var validUser = _accountManager.ValidateUser(userId, postCommentAddDTO.UserId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<PostCommentResultDTO>();
+
+                return forbiddenResult;
+            }
+
+            var existingUser = await _userRepository.FindEntityAsync(f => f.Id == postCommentAddDTO.UserId);
 
             if (existingUser == null)
             {
@@ -110,13 +123,22 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostCommentResultDTO>> UpdateAsync(string userId, string id, PostCommentUpdateDTO postCommentUpdateDTO)
         {
-            var existingPostComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id && pc.UserId == userId);
+            var existingPostComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id);
 
             if (existingPostComment == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>();
 
                 return notFoundResult;
+            }
+
+            var validUser = _accountManager.ValidateUser(userId, existingPostComment.UserId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<PostCommentResultDTO>();
+
+                return forbiddenResult;
             }
 
             _mapper.Map(postCommentUpdateDTO, existingPostComment);
@@ -129,13 +151,22 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostCommentResultDTO>> DeleteAsync(string userId, string id)
         {
-            var existingPostComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id && pc.UserId == userId);
+            var existingPostComment = await _postCommentRepository.FindEntityAsync(pc => pc.Id == id);
 
             if (existingPostComment == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentResultDTO>();
 
                 return notFoundResult;
+            }
+
+            var validUser = _accountManager.ValidateUser(userId, existingPostComment.UserId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<PostCommentResultDTO>();
+
+                return forbiddenResult;
             }
 
             await _postCommentRepository.DeleteAsync(existingPostComment);

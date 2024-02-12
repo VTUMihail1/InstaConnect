@@ -28,8 +28,8 @@ using Microsoft.OpenApi.Models;
 using SendGrid;
 using System.Text;
 using System.Text.Json.Serialization;
-using TokenGenerator = InstaConnect.Data.Helpers.TokenGenerator;
-using TokenOptions = InstaConnect.Data.Models.Options.TokenOptions;
+using TokenGenerator = InstaConnect.Business.Helpers.TokenGenerator;
+using TokenOptions = InstaConnect.Business.Models.Options.TokenOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,19 +60,19 @@ builder.Services.AddCors(options =>
 
 builder.Services
     .AddScoped<IDbSeeder, DbSeeder>()
-    .AddScoped<IInstaConnectUserManager, InstaConnectUserManager>()
+    .AddScoped<IAccountManager, AccountManager>()
     .AddScoped<IResultFactory, ResultFactory>()
     .AddScoped<ISendGridClient>(_ => new SendGridClient(emailOptions["APIKey"]))
     .AddScoped<IEndpointHandler, EndpointHandler>()
     .AddScoped<IEmailFactory, EmailFactory>()
     .AddScoped<IEmailSender, EmailSender>()
     .AddScoped<IEndpointHandler, EndpointHandler>()
-    .AddScoped<IEmailManager, EmailManager>()
-    .AddScoped<IEmailTemplateGenerator, EmailTemplateGenerator>()
+    .AddScoped<IEmailService, EmailService>()
+    .AddScoped<ITemplateGenerator, TemplateGenerator>()
     .AddScoped<ITokenFactory, TokenFactory>()
     .AddScoped<ITokenGenerator, TokenGenerator>()
     .AddScoped<ITokenRepository, TokenRepository>()
-    .AddScoped<ITokenManager, TokenManager>()
+    .AddScoped<ITokenService, TokenService>()
     .AddScoped<IPostRepository, PostRepository>()
     .AddScoped<IPostService, PostService>()
     .AddScoped<IPostCommentRepository, PostCommentRepository>()

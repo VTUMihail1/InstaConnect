@@ -15,16 +15,16 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
     [TestFixture]
     public class UserServiceTests
     {
-        public const string ExistingUserId = "ExistingUserId";
-        public const string NonExistingUserId = "NonExistingUserId";
+        private const string ExistingUserId = "ExistingUserId";
+        private const string NonExistingUserId = "NonExistingUserId";
 
-        public const string ExistingUserName = "ExistingUserName";
-        public const string NonExistingUserName = "NonExistingUserName";
+        private const string ExistingUserName = "ExistingUserName";
+        private const string NonExistingUserName = "NonExistingUserName";
 
-        private Mock<IMapper> _mockMapper;
-        private IResultFactory _resultFactory;
-        private Mock<IUserRepository> _mockUserRepository;
-        private IUserService _userService;
+        private readonly Mock<IMapper> _mockMapper;
+        private readonly IResultFactory _resultFactory;
+        private readonly Mock<IUserRepository> _mockUserRepository;
+        private readonly IUserService _userService;
 
         public UserServiceTests()
         {
@@ -40,13 +40,15 @@ namespace InstaConnect.Business.UnitTests.Tests.Services
         [SetUp]
         public void Setup()
         {
+            var existingUser = new User()
+            {
+                Id = ExistingUserId,
+                UserName = ExistingUserName
+            };
+
             var existingUsers = new List<User>()
             {
-                new User()
-                {
-                    Id = ExistingUserId,
-                    UserName = ExistingUserName
-                }
+                existingUser
             };
 
             _mockUserRepository.Setup(m => m.FindEntityAsync(It.IsAny<Expression<Func<User, bool>>>()))

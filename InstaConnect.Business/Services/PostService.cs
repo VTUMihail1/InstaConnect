@@ -2,6 +2,7 @@
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
 using InstaConnect.Business.Models.DTOs.Post;
+using InstaConnect.Business.Models.DTOs.PostLike;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
 using InstaConnect.Data.Abstraction.Helpers;
@@ -15,18 +16,21 @@ namespace InstaConnect.Business.Services
         private readonly IMapper _mapper;
         private readonly IResultFactory _resultFactory;
         private readonly IPostRepository _postRepository;
-        private readonly IInstaConnectUserManager _instaConnectUserManager;
+        private readonly IUserRepository _userRepository;
+        private readonly IAccountManager _accountManager;
 
         public PostService(
             IMapper mapper,
             IResultFactory resultFactory,
             IPostRepository postRepository,
-            IInstaConnectUserManager instaConnectUserManager)
+            IUserRepository userRepository,
+            IAccountManager accountManager)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _postRepository = postRepository;
-            _instaConnectUserManager = instaConnectUserManager;
+            _userRepository = userRepository;
+            _accountManager = accountManager;
         }
 
         public async Task<IResult<ICollection<PostResultDTO>>> GetAllAsync(
@@ -64,9 +68,18 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<PostResultDTO>> AddAsync(PostAddDTO postAddDTO)
+        public async Task<IResult<PostResultDTO>> AddAsync(string userId, PostAddDTO postAddDTO)
         {
-            var existingUser = await _instaConnectUserManager.FindByIdAsync(postAddDTO.UserId);
+            var validUser = _accountManager.ValidateUser(userId, postAddDTO.UserId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<PostResultDTO>();
+
+                return forbiddenResult;
+            }
+
+            var existingUser = await _userRepository.FindEntityAsync(f => f.Id == postAddDTO.UserId);
 
             if (existingUser == null)
             {
@@ -85,13 +98,22 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostResultDTO>> UpdateAsync(string userId, string id, PostUpdateDTO postUpdateDTO)
         {
-            var existingPost = await _postRepository.FindEntityAsync(p => p.Id == id && p.UserId == userId);
+            var existingPost = await _postRepository.FindEntityAsync(p => p.Id == id);
 
             if (existingPost == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostResultDTO>();
 
                 return notFoundResult;
+            }
+
+            var validUser = _accountManager.ValidateUser(userId, existingPost.UserId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<PostResultDTO>();
+
+                return forbiddenResult;
             }
 
             _mapper.Map(postUpdateDTO, existingPost);
@@ -104,13 +126,22 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostResultDTO>> DeleteAsync(string userId, string id)
         {
-            var existingPost = await _postRepository.FindEntityAsync(p => p.Id == id && p.UserId == userId);
+            var existingPost = await _postRepository.FindEntityAsync(p => p.Id == id);
 
             if (existingPost == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostResultDTO>();
 
                 return notFoundResult;
+            }
+
+            var validUser = _accountManager.ValidateUser(userId, existingPost.UserId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<PostResultDTO>();
+
+                return forbiddenResult;
             }
 
             await _postRepository.DeleteAsync(existingPost);

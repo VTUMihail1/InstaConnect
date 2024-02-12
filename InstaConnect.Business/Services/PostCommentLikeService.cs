@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Business.Abstraction.Factories;
 using InstaConnect.Business.Abstraction.Services;
+using InstaConnect.Business.Models.DTOs.Message;
 using InstaConnect.Business.Models.DTOs.PostCommentLike;
 using InstaConnect.Business.Models.Results;
 using InstaConnect.Business.Models.Utilities;
@@ -16,20 +17,23 @@ namespace InstaConnect.Business.Services
         private readonly IResultFactory _resultFactory;
         private readonly IPostCommentLikeRepository _postCommentLikeRepository;
         private readonly IPostCommentRepository _commentRepository;
-        private readonly IInstaConnectUserManager _instaConnectUserManager;
+        private readonly IUserRepository _userRepository;
+        private readonly IAccountManager _accountManager;
 
         public PostCommentLikeService(
             IMapper mapper,
             IResultFactory resultFactory,
             IPostCommentLikeRepository postCommentLikeRepository,
             IPostCommentRepository commentRepository,
-            IInstaConnectUserManager instaConnectUserManager)
+            IUserRepository userRepository,
+            IAccountManager accountManager)
         {
             _mapper = mapper;
             _resultFactory = resultFactory;
             _postCommentLikeRepository = postCommentLikeRepository;
-            _commentRepository = commentRepository;
-            _instaConnectUserManager = instaConnectUserManager;
+            _commentRepository = commentRepository; ;
+            _userRepository = userRepository;
+            _accountManager = accountManager;
         }
 
         public async Task<IResult<ICollection<PostCommentLikeResultDTO>>> GetAllAsync(
@@ -84,9 +88,18 @@ namespace InstaConnect.Business.Services
             return okResult;
         }
 
-        public async Task<IResult<PostCommentLikeResultDTO>> AddAsync(PostCommentLikeAddDTO postCommentLikeAddDTO)
+        public async Task<IResult<PostCommentLikeResultDTO>> AddAsync(string userId, PostCommentLikeAddDTO postCommentLikeAddDTO)
         {
-            var existingUser = await _instaConnectUserManager.FindByIdAsync(postCommentLikeAddDTO.UserId);
+            var validUser = _accountManager.ValidateUser(userId, postCommentLikeAddDTO.UserId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<PostCommentLikeResultDTO>();
+
+                return forbiddenResult;
+            }
+
+            var existingUser = await _userRepository.FindEntityAsync(f => f.Id == postCommentLikeAddDTO.UserId);
 
             if (existingUser == null)
             {
@@ -141,13 +154,22 @@ namespace InstaConnect.Business.Services
 
         public async Task<IResult<PostCommentLikeResultDTO>> DeleteAsync(string userId, string id)
         {
-            var existingPostCommentLike = await _postCommentLikeRepository.FindEntityAsync(cl => cl.Id == id && cl.UserId == userId);
+            var existingPostCommentLike = await _postCommentLikeRepository.FindEntityAsync(cl => cl.Id == id);
 
             if (existingPostCommentLike == null)
             {
                 var notFoundResult = _resultFactory.GetNotFoundResult<PostCommentLikeResultDTO>();
 
                 return notFoundResult;
+            }
+
+            var validUser = _accountManager.ValidateUser(userId, existingPostCommentLike.UserId);
+
+            if (!validUser)
+            {
+                var forbiddenResult = _resultFactory.GetForbiddenResult<PostCommentLikeResultDTO>();
+
+                return forbiddenResult;
             }
 
             await _postCommentLikeRepository.DeleteAsync(existingPostCommentLike);
