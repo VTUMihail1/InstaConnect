@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InstaConnect.Business.Abstraction\InstaConnect.Business.Abstraction.csproj" />
+    <ProjectReference Include="..\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Data.Abstraction\InstaConnect.Data.Abstraction.csproj" />
   </ItemGroup>
 
