@@ -1,16 +1,16 @@
 ﻿using InstaConnect.Business.Models.Enums;
 using InstaConnect.Common.Exceptions.Base;
 
-namespace InstaConnect.Common.Exceptions.User
+namespace InstaConnect.Common.Exceptions.Follow
 {
-    public class UserException : BaseException
+    public class FollowException : BaseException
     {
-        public UserException(string message, InstaConnectStatusCode statusCode)
+        public FollowException(string message, InstaConnectStatusCode statusCode)
             : base(message, statusCode)
         {
         }
 
-        public UserException(string message, Exception exception, InstaConnectStatusCode statusCode)
+        public FollowException(string message, Exception exception, InstaConnectStatusCode statusCode)
             : base(message, exception, statusCode)
         {
         }

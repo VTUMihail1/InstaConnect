@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Business.Models.Enums;
-using InstaConnect.Common.Exceptions.User;
 
-namespace EGames.Common.Exceptions.User
+namespace InstaConnect.Common.Exceptions.User
 {
     public class UserNotFoundException : UserException
     {

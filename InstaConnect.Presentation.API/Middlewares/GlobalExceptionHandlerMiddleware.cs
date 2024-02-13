@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Base;
+﻿using InstaConnect.Common.Exceptions.Base;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Presentation.API.Middlewares

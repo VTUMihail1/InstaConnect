@@ -1,13 +1,12 @@
-﻿using EGames.Common.Enums;
-using InstaConnect.Common.Exceptions.User;
+﻿using InstaConnect.Business.Models.Enums;
 
-namespace EGames.Common.Exceptions.User
+namespace InstaConnect.Common.Exceptions.User
 {
     public class UserNotCurrentException : UserException
     {
         private const string ERROR_MESSAGE = "User is not current";
 
-        public UserNotCurrentException() : base(ERROR_MESSAGE, EGamesStatusCode.Forbidden)
+        public UserNotCurrentException() : base(ERROR_MESSAGE, InstaConnectStatusCode.Forbidden)
         {
         }
     }

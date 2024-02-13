@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Business.Models.Enums;
 using InstaConnect.Common.Exceptions.Base;
 
-namespace InstaConnect.Common.Exceptions.User
+namespace InstaConnect.Common.Exceptions.Account
 {
     public class AccountException : BaseException
     {
