@@ -1,6 +1,6 @@
-﻿using InstaConnect.Business.Models.Options;
-using InstaConnect.Data.Abstraction.Factories;
+﻿using InstaConnect.Data.Abstraction.Factories;
 using InstaConnect.Data.Models.Entities;
+using InstaConnect.Data.Models.Options;
 using InstaConnect.Data.Models.Utilities;
 using Microsoft.Extensions.Options;
 

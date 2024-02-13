@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Business.Models.Options
+﻿namespace InstaConnect.Data.Models.Options
 {
     public class TokenOptions
     {

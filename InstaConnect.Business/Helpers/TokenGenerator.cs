@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Business.Abstraction.Helpers;
-using InstaConnect.Business.Models.Options;
+using InstaConnect.Data.Models.Options;
 using InstaConnect.Data.Models.Utilities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
