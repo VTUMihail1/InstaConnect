@@ -6,6 +6,7 @@ using InstaConnect.Data.Factories;
 using InstaConnect.Data.Helpers;
 using InstaConnect.Data.Models.Entities;
 using InstaConnect.Data.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +36,11 @@ namespace InstaConnect.Data.Extensions
                 .AddScoped<IFollowRepository, FollowRepository>()
                 .AddScoped<ITokenFactory, TokenFactory>()
                 .AddScoped<ITokenRepository, TokenRepository>();
+
+            services
+                .AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<InstaConnectContext>()
+                .AddDefaultTokenProviders();
 
             return services;
         }
