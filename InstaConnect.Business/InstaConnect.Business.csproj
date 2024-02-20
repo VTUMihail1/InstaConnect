@@ -16,12 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InstaConnect.Business.Abstraction\InstaConnect.Business.Abstraction.csproj" />
-    <ProjectReference Include="..\InstaConnect.Data.Abstraction\InstaConnect.Data.Abstraction.csproj" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
+    <ProjectReference Include="..\InstaConnect.Data\InstaConnect.Data.csproj" />
   </ItemGroup>
 
 </Project>
