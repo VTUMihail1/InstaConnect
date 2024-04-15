@@ -12,5 +12,14 @@ namespace InstaConnect.Data.Repositories
         {
             _instaConnectContext = instaConnectContext;
         }
+
+        public async Task<Token?> GetByValueAsync(string value)
+        {
+            var token = await _.Tokens
+                .AsNoTracking()
+                .FirstOrDefaultAsync(e => e.Value == value);
+
+            return token;
+        }
     }
 }

@@ -6,15 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Data
 {
-    public class InstaConnectContext : IdentityDbContext<
-    User,
-    Role,
-    string,
-    UserClaim,
-    UserRole,
-    UserLogin,
-    RoleClaim,
-    UserToken>
+    public class InstaConnectContext : BaseDbContext
     {
         public InstaConnectContext(DbContextOptions<InstaConnectContext> options) : base(options)
         { }

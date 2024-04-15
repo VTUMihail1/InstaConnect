@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Presentation.API.Controllers.v1
+namespace InstaConnect.Users.Web.Controllers
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/users")]

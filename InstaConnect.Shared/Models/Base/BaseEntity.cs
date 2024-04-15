@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Data.Models.Entities.Base
+﻿namespace InstaConnect.Shared.Models.Base
 {
     /// <summary>
     /// Represents a base entity class that includes audit information for creation and update timestamps.
