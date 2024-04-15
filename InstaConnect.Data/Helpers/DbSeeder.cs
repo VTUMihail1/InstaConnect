@@ -10,7 +10,7 @@ namespace InstaConnect.Data.Helpers
 {
     public class DbSeeder : IDbSeeder
     {
-        private readonly InstaConnectContext _instaConnectContext;
+        private readonly  _instaConnectContext;
         private readonly RoleManager<Role> _roleManager;
         private readonly IAccountManager _accountManager;
         private readonly AdminOptions _adminOptions;

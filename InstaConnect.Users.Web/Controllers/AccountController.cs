@@ -6,7 +6,7 @@ using InstaConnect.Presentation.API.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Presentation.API.Controllers.v1
+namespace InstaConnect.Users.Web.Controllers
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/accounts")]
