@@ -1,11 +1,5 @@
-﻿using EGames.Business.Services;
-using InstaConnect.Shared.Messaging;
-using InstaConnect.Users.Business.Commands.Account.AccountLogout;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InstaConnect.Shared.Business.Messaging;
+using InstaConnect.Users.Business.Abstractions;
 
 namespace InstaConnect.Users.Business.Commands.AccountLogout
 {
@@ -20,7 +14,7 @@ namespace InstaConnect.Users.Business.Commands.AccountLogout
 
         public async Task Handle(AccountLogoutCommand request, CancellationToken cancellationToken)
         {
-            await _tokenService.DeleteAsync(request.Value);
+            await _tokenService.DeleteAsync(request.Value, cancellationToken);
         }
     }
 }

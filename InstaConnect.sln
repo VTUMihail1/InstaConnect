@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Presentation.API", "InstaConnect.Presentation.API\InstaConnect.Presentation.API.csproj", "{D4C69A24-2D55-4B18-9991-40D5019BC4B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Users.Web", "InstaConnect.Users.Web\InstaConnect.Users.Web.csproj", "{5D4B1A7A-8060-490E-90B4-6527B5287F76}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Business", "InstaConnect.Business\InstaConnect.Business.csproj", "{4F5192F0-5727-4592-A3F0-91E164C6AE8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Users.Business", "InstaConnect.Users.Business\InstaConnect.Users.Business.csproj", "{376163BB-E169-463B-8203-5E73131A3D3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Data", "InstaConnect.Data\InstaConnect.Data.csproj", "{5221A8FC-0A67-4ACD-8208-BEDFC388754B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Users.Data", "InstaConnect.Users.Data\InstaConnect.Users.Data.csproj", "{0645BFA8-64BC-4A3F-B83C-D4CB3AB186D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Business.UnitTests", "InstaConnect.Business.UnitTests\InstaConnect.Business.UnitTests.csproj", "{A364ECBE-8DBF-4A92-BA15-A4B4C5318418}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Users.Business.UnitTests", "InstaConnect.Users.Business.UnitTests\InstaConnect.Users.Business.UnitTests.csproj", "{A742A1E2-1FD7-4FD9-B8BF-C91115E943A1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{26BD01CD-AE26-4898-B320-CDCEFA815A65}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{496CE8BB-036D-46DE-B1B9-8837D0ECF0AF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{93084E66-68ED-474E-B2D7-2FBEA13043C0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{784F1AC5-95E4-40FA-9C0E-A54E2480BC94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Users.Web", "InstaConnect.Users.Web\InstaConnect.Users.Web.csproj", "{5D4B1A7A-8060-490E-90B4-6527B5287F76}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{A33DFF0A-28FD-4C10-B11B-25CE03BBB440}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Users.Business", "InstaConnect.Users.Business\InstaConnect.Users.Business.csproj", "{376163BB-E169-463B-8203-5E73131A3D3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Shared.Data", "InstaConnect.Shared.Data\InstaConnect.Shared.Data.csproj", "{7AFC4931-FA0E-42FD-B057-3381424621A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Users.Data", "InstaConnect.Users.Data\InstaConnect.Users.Data.csproj", "{0645BFA8-64BC-4A3F-B83C-D4CB3AB186D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Shared.Business", "InstaConnect.Shared.Business\InstaConnect.Shared.Business.csproj", "{FCADD418-C7F3-4125-8C08-857FC408AEF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Users.Business.UnitTests", "InstaConnect.Users.Business.UnitTests\InstaConnect.Users.Business.UnitTests.csproj", "{A742A1E2-1FD7-4FD9-B8BF-C91115E943A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Shared.Web", "InstaConnect.Shared.Web\InstaConnect.Shared.Web.csproj", "{BCFA2395-20E9-4685-A5CE-5603E2E62771}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,22 +29,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D4C69A24-2D55-4B18-9991-40D5019BC4B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4C69A24-2D55-4B18-9991-40D5019BC4B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D4C69A24-2D55-4B18-9991-40D5019BC4B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D4C69A24-2D55-4B18-9991-40D5019BC4B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F5192F0-5727-4592-A3F0-91E164C6AE8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F5192F0-5727-4592-A3F0-91E164C6AE8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F5192F0-5727-4592-A3F0-91E164C6AE8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F5192F0-5727-4592-A3F0-91E164C6AE8B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5221A8FC-0A67-4ACD-8208-BEDFC388754B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5221A8FC-0A67-4ACD-8208-BEDFC388754B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5221A8FC-0A67-4ACD-8208-BEDFC388754B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5221A8FC-0A67-4ACD-8208-BEDFC388754B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A364ECBE-8DBF-4A92-BA15-A4B4C5318418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A364ECBE-8DBF-4A92-BA15-A4B4C5318418}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A364ECBE-8DBF-4A92-BA15-A4B4C5318418}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A364ECBE-8DBF-4A92-BA15-A4B4C5318418}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5D4B1A7A-8060-490E-90B4-6527B5287F76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D4B1A7A-8060-490E-90B4-6527B5287F76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D4B1A7A-8060-490E-90B4-6527B5287F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,15 +45,32 @@ Global
 		{A742A1E2-1FD7-4FD9-B8BF-C91115E943A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A742A1E2-1FD7-4FD9-B8BF-C91115E943A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A742A1E2-1FD7-4FD9-B8BF-C91115E943A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AFC4931-FA0E-42FD-B057-3381424621A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AFC4931-FA0E-42FD-B057-3381424621A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AFC4931-FA0E-42FD-B057-3381424621A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AFC4931-FA0E-42FD-B057-3381424621A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCADD418-C7F3-4125-8C08-857FC408AEF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCADD418-C7F3-4125-8C08-857FC408AEF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCADD418-C7F3-4125-8C08-857FC408AEF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCADD418-C7F3-4125-8C08-857FC408AEF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCFA2395-20E9-4685-A5CE-5603E2E62771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCFA2395-20E9-4685-A5CE-5603E2E62771}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCFA2395-20E9-4685-A5CE-5603E2E62771}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCFA2395-20E9-4685-A5CE-5603E2E62771}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{D4C69A24-2D55-4B18-9991-40D5019BC4B7} = {26BD01CD-AE26-4898-B320-CDCEFA815A65}
-		{4F5192F0-5727-4592-A3F0-91E164C6AE8B} = {26BD01CD-AE26-4898-B320-CDCEFA815A65}
-		{5221A8FC-0A67-4ACD-8208-BEDFC388754B} = {26BD01CD-AE26-4898-B320-CDCEFA815A65}
-		{A364ECBE-8DBF-4A92-BA15-A4B4C5318418} = {93084E66-68ED-474E-B2D7-2FBEA13043C0}
+		{5D4B1A7A-8060-490E-90B4-6527B5287F76} = {A33DFF0A-28FD-4C10-B11B-25CE03BBB440}
+		{376163BB-E169-463B-8203-5E73131A3D3A} = {A33DFF0A-28FD-4C10-B11B-25CE03BBB440}
+		{0645BFA8-64BC-4A3F-B83C-D4CB3AB186D3} = {A33DFF0A-28FD-4C10-B11B-25CE03BBB440}
+		{A742A1E2-1FD7-4FD9-B8BF-C91115E943A1} = {A33DFF0A-28FD-4C10-B11B-25CE03BBB440}
+		{784F1AC5-95E4-40FA-9C0E-A54E2480BC94} = {496CE8BB-036D-46DE-B1B9-8837D0ECF0AF}
+		{A33DFF0A-28FD-4C10-B11B-25CE03BBB440} = {496CE8BB-036D-46DE-B1B9-8837D0ECF0AF}
+		{7AFC4931-FA0E-42FD-B057-3381424621A5} = {784F1AC5-95E4-40FA-9C0E-A54E2480BC94}
+		{FCADD418-C7F3-4125-8C08-857FC408AEF6} = {784F1AC5-95E4-40FA-9C0E-A54E2480BC94}
+		{BCFA2395-20E9-4685-A5CE-5603E2E62771} = {784F1AC5-95E4-40FA-9C0E-A54E2480BC94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74CDCE11-9171-4345-A1A8-63E51F48297C}

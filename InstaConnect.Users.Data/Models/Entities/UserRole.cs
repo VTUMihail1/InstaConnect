@@ -1,7 +1,7 @@
-﻿using InstaConnect.Shared.Models.Base;
+﻿using InstaConnect.Shared.Data.Models.Base;
 using Microsoft.AspNetCore.Identity;
 
-namespace InstaConnect.Data.Models.Entities
+namespace InstaConnect.Users.Data.Models.Entities
 {
     public class UserRole : IdentityUserRole<string>, IBaseEntity
     {

@@ -1,21 +1,14 @@
-﻿using InstaConnect.Shared.Repositories.Abstract;
-using InstaConnect.Shared.Repositories;
+﻿using InstaConnect.Users.Data.Abstraction.Factories;
+using InstaConnect.Users.Data.Abstraction.Helpers;
+using InstaConnect.Users.Data.Abstraction.Repositories;
+using InstaConnect.Users.Data.Factories;
+using InstaConnect.Users.Data.Helpers;
+using InstaConnect.Users.Data.Models.Entities;
+using InstaConnect.Users.Data.Repositories;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using InstaConnect.Users.Data.Abstraction.Repositories;
-using InstaConnect.Users.Data.Repositories;
-using InstaConnect.Users.Data.Factories;
-using InstaConnect.Users.Data.Abstraction.Factories;
-using InstaConnect.Users.Data.Abstraction.Helpers;
-using InstaConnect.Users.Data.Helpers;
-using Microsoft.EntityFrameworkCore;
-using InstaConnect.Users.Data.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 
 namespace InstaConnect.Users.Data.Extensions
 {
@@ -25,10 +18,13 @@ namespace InstaConnect.Users.Data.Extensions
 
         public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
+            var tokenOptions = configuration.GetSection(nameof(TokenOptions));
+
             serviceCollection.AddDbContext<UsersContext>(options =>
             {
                 var connectionString = configuration.GetConnectionString(CONNECTION_STRING_KEY);
                 var serverVersion = ServerVersion.AutoDetect(connectionString);
+
                 options.UseMySql(connectionString, serverVersion);
             });
 

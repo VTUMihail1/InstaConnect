@@ -1,5 +1,4 @@
-﻿using InstaConnect.Shared.Messaging;
-using InstaConnect.Users.Business.Query.Account;
+﻿using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Users.Business.Commands.AccountRegister
 {

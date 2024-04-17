@@ -1,6 +1,6 @@
-﻿using InstaConnect.Data.Models.Entities.Base;
+﻿using InstaConnect.Shared.Data.Models.Base;
 
-namespace InstaConnect.Data.Models.Entities
+namespace InstaConnect.Users.Data.Models.Entities
 {
     public class Token : BaseEntity
     {

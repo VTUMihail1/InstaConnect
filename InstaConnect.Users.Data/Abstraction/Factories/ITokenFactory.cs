@@ -1,6 +1,6 @@
-﻿using EGames.Data.Models.Entities;
+﻿using InstaConnect.Users.Data.Models.Entities;
 
-namespace EGames.Data.Factories.Abstract
+namespace InstaConnect.Users.Data.Abstraction.Factories
 {
     /// <summary>
     /// Represents a token factory interface for creating access tokens.

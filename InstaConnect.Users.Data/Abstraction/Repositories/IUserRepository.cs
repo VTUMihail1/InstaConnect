@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Repositories.Abstract;
+﻿using InstaConnect.Shared.Data.Repositories.Abstract;
 using InstaConnect.Users.Data.Models.Entities;
 
 namespace InstaConnect.Users.Data.Abstraction.Repositories
@@ -8,8 +8,8 @@ namespace InstaConnect.Users.Data.Abstraction.Repositories
     /// </summary>
     public interface IUserRepository : IBaseRepository<User>
     {
-        Task<User?> GetByEmailAsync(string email);
+        Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken);
 
-        Task<User?> GetByNameAsync(string name);
+        Task<User?> GetByNameAsync(string name, CancellationToken cancellationToken);
     }
 }

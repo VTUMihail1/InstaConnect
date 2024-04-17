@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared;
+﻿using InstaConnect.Shared.Data;
 using InstaConnect.Users.Data.EntityConfigurations;
 using InstaConnect.Users.Data.Models.Entities;
 using Microsoft.EntityFrameworkCore;
