@@ -1,4 +1,4 @@
-﻿using InstaConnect.Data.Models.Entities;
+﻿using InstaConnect.Users.Data.Models.Entities;
 
 namespace InstaConnect.Users.Data.Abstraction.Helpers
 {

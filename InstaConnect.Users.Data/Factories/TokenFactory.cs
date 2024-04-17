@@ -1,10 +1,7 @@
-﻿using InstaConnect.Data.Abstraction.Factories;
-using InstaConnect.Data.Models.Entities;
-using InstaConnect.Data.Models.Options;
-using InstaConnect.Data.Models.Utilities;
-using Microsoft.Extensions.Options;
+﻿using InstaConnect.Users.Data.Abstraction.Factories;
+using InstaConnect.Users.Data.Models.Entities;
 
-namespace InstaConnect.Data.Factories
+namespace InstaConnect.Users.Data.Factories
 {
     internal class TokenFactory : ITokenFactory
     {

@@ -43,44 +43,6 @@ namespace InstaConnect.Users.Data.EntityConfigurations
                 .HasForeignKey(t => t.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(u => u.Posts)
-                .WithOne(l => l.User)
-                .HasForeignKey(l => l.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(u => u.PostLikes)
-                .WithOne(l => l.User)
-                .HasForeignKey(l => l.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(u => u.PostComments)
-                .WithOne(c => c.User)
-                .HasForeignKey(c => c.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(u => u.Followers)
-                .WithOne(f => f.Follower)
-                .HasForeignKey(f => f.FollowerId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(u => u.Followings)
-                .WithOne(f => f.Following)
-                .HasForeignKey(f => f.FollowingId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(u => u.Senders)
-                .WithOne(m => m.Sender)
-                .HasForeignKey(m => m.SenderId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(u => u.Receivers)
-                .WithOne(m => m.Receiver)
-                .HasForeignKey(m => m.ReceiverId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

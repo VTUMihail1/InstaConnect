@@ -1,8 +1,7 @@
-﻿using InstaConnect.Shared.Messaging;
+﻿using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Users.Business.Models;
-using MediatR;
 
-namespace InstaConnect.Users.Business.Commands.Account
+namespace InstaConnect.Users.Business.Commands.AccountLogin
 {
     public class AccountLoginCommand : ICommand<AccountViewDTO>
     {

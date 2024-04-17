@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Utilities;
+﻿using InstaConnect.Shared.Data.Utilities;
 using InstaConnect.Users.Data.Abstraction.Helpers;
 using InstaConnect.Users.Data.Models.Entities;
 using InstaConnect.Users.Data.Models.Options;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Users.Data.Helpers
 {
-    public class DatabaseSeeder : IDatabaseSeeder
+    internal class DatabaseSeeder : IDatabaseSeeder
     {
         private readonly UsersContext _usersContext;
         private readonly RoleManager<Role> _roleManager;

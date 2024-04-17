@@ -1,146 +1,198 @@
-﻿using InstaConnect.Business.Abstraction.Services;
-using InstaConnect.Business.Models.DTOs.Account;
-using InstaConnect.Data.Models.Utilities;
-using InstaConnect.Presentation.API.Extensions;
-using InstaConnect.Presentation.API.Filters;
+﻿using AutoMapper;
+using InstaConnect.Shared.Data.Utilities;
+using InstaConnect.Users.Business.Commands.AccountConfirmEmail;
+using InstaConnect.Users.Business.Commands.AccountDelete;
+using InstaConnect.Users.Business.Commands.AccountEdit;
+using InstaConnect.Users.Business.Commands.AccountLogin;
+using InstaConnect.Users.Business.Commands.AccountLogout;
+using InstaConnect.Users.Business.Commands.AccountRegister;
+using InstaConnect.Users.Business.Commands.AccountResendEmailConfirmation;
+using InstaConnect.Users.Business.Commands.AccountResetPassword;
+using InstaConnect.Users.Web.Extensions;
+using InstaConnect.Users.Web.Filters;
+using InstaConnect.Users.Web.Models.Requests.Account;
+using InstaConnect.Users.Web.Models.Response.Account;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Users.Web.Controllers
 {
     [ApiController]
-    [Route("api/v{version:apiVersion}/accounts")]
-    [ApiVersion("1.0")]
+    [Route("api/accounts")]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
+        private readonly ISender _sender;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(
+            IMapper mapper,
+            ISender sender)
         {
-            _accountService = accountService;
+            _mapper = mapper;
+            _sender = sender;
         }
 
-        // GET: api/v1/accounts/confirm-email/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
+        // GET: api/accounts/confirm-email/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
         [HttpGet("confirm-email/by-user/{userId}/by-token/{token}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ConfirmEmailAsync([FromRoute] string userId, [FromRoute] string token)
+        public async Task<IActionResult> ConfirmEmailAsync(
+            [FromRoute] AccountConfirmEmailTokenRequestModel request,
+            CancellationToken cancellationToken)
         {
-            var response = await _accountService.ConfirmEmailWithTokenAsync(userId, token);
+            var accountConfirmEmailCommand = _mapper.Map<AccountConfirmEmailCommand>(request);
 
-            return this.HandleResponse(response);
+            await _sender.Send(accountConfirmEmailCommand, cancellationToken);
+
+            return NoContent();
         }
 
-        // GET: api/v1/accounts/resend-confirm-email-token/by-email/user@example.com
-        [HttpGet("resend-confirm-email-token/by-email/{email}")]
+        // GET: api/accounts/resend-confirm-email/by-email/user@example.com
+        [HttpGet("resend-confirm-email/by-email/{email}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ResendConfirmEmailTokenAsync([FromRoute] string email)
+        public async Task<IActionResult> ResendConfirmEmailAsync(
+            [FromRoute] AccountResendConfirmEmailRequestModel request,
+            CancellationToken cancellationToken)
         {
-            var response = await _accountService.ResendEmailConfirmationTokenAsync(email);
+            var accountResendEmailConfirmationCommand = _mapper.Map<AccountResendEmailConfirmationCommand>(request);
 
-            return this.HandleResponse(response);
+            await _sender.Send(accountResendEmailConfirmationCommand, cancellationToken);
+
+            return NoContent();
         }
 
-        // GET: api/v1/accounts/send-reset-password-token/by-email/user@example.com
-        [HttpGet("send-reset-password-token/by-email/{email}")]
+        // GET: api/accounts/send-reset-password/by-email/user@example.com
+        [HttpGet("send-reset-password/by-email/{email}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> SendResetPasswordTokenAsync([FromRoute] string email)
+        public async Task<IActionResult> SendResetPasswordAsync(
+            [FromRoute] AccountSendPasswordResetRequestModel request,
+            CancellationToken cancellationToken)
         {
-            var response = await _accountService.SendPasswordResetTokenByEmailAsync(email);
+            var accountResendEmailConfirmationCommand = _mapper.Map<AccountSendPasswordResetRequestModel>(request);
 
-            return this.HandleResponse(response);
+            await _sender.Send(accountResendEmailConfirmationCommand, cancellationToken);
+
+            return NoContent();
         }
 
-        // POST: api/v1/accounts/login
+        // POST: api/accounts/login
         [HttpPost("login")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> LoginAsync([FromBody] AccountLoginDTO request)
+        public async Task<IActionResult> LoginAsync(
+            [FromBody] AccountLoginRequestModel request,
+            CancellationToken cancellationToken)
         {
-            var response = await _accountService.LoginAsync(request);
+            var accountLoginCommand = _mapper.Map<AccountLoginCommand>(request);
 
-            return this.HandleResponse(response);
+            var accountViewDTO = await _sender.Send(accountLoginCommand, cancellationToken);
+
+            var response = _mapper.Map<AccountResponseModel>(accountViewDTO);
+
+            return Ok(response);
         }
 
-        // POST: api/v1/accounts/sign-up
-        [HttpPost("sign-up")]
+        // POST: api/accounts/register
+        [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> SignUpAsync([FromBody] AccountRegisterDTO request)
+        public async Task<IActionResult> RegisterAsync(
+            [FromBody] AccountRegisterRequestModel request,
+            CancellationToken cancellationToken)
         {
-            var response = await _accountService.SignUpAsync(request);
+            var accountRegisterCommand = _mapper.Map<AccountRegisterCommand>(request);
 
-            return this.HandleResponse(response);
+            await _sender.Send(accountRegisterCommand, cancellationToken);
+
+            return NoContent();
         }
 
-        // DELETE: api/v1/accounts/logout
+        // DELETE: api/accounts/logout
         [HttpDelete("logout")]
         [Authorize]
         [AccessToken]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> LogoutAsync()
+        public async Task<IActionResult> LogoutAsync(CancellationToken cancellationToken)
         {
-            var accessToken = HttpContext.Request.Headers.Authorization;
-            var response = await _accountService.LogoutAsync(accessToken);
+            var request = HttpContext!.GetTokenRequestModel();
+            var accountLogoutCommand = _mapper.Map<AccountLogoutCommand>(request);
 
-            return this.HandleResponse(response);
+            await _sender.Send(accountLogoutCommand, cancellationToken);
+
+            return NoContent();
         }
 
-        // POST: api/v1/accounts/reset-password/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
+        // POST: api/accounts/reset-password/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
         [HttpPost("reset-password/by-user/{userId}/by-token/{token}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ResetPasswordAsync([FromRoute] string userId, [FromRoute] string token, [FromBody] AccountResetPasswordDTO request)
+        public async Task<IActionResult> ResetPasswordAsync(
+            AccountResetPasswordRequestModel request,
+            CancellationToken cancellationToken)
         {
-            var response = await _accountService.ResetPasswordWithTokenAsync(userId, token, request);
+            var accountResetPasswordCommand = _mapper.Map<AccountResetPasswordCommand>(request);
 
-            return this.HandleResponse(response);
+            await _sender.Send(accountResetPasswordCommand, cancellationToken);
+
+            return NoContent();
         }
 
-        // PUT: api/v1/accounts/current
+        // PUT: api/accounts
         [Authorize]
         [AccessToken]
-        [HttpPut("current")]
+        [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> EditByCurrentIdAsync([FromBody] AccountEditDTO accountEditDTO)
+        public async Task<IActionResult> EditAsync(
+            [FromBody] AccountEditRequestModel request,
+            CancellationToken cancellationToken)
         {
-            var currentUserId = User.GetCurrentUserId();
-            var response = await _accountService.EditAsync(currentUserId, accountEditDTO);
+            var userRequestModel = User.GetUserRequestModel();
+            var accountEditCommand = _mapper.Map<AccountEditCommand>(request);
+            _mapper.Map(userRequestModel, accountEditCommand);
 
-            return this.HandleResponse(response);
+            await _sender.Send(accountEditCommand, cancellationToken);
+
+            return NoContent();
         }
 
-        // DELETE: api/v1/accounts/current
+        // DELETE: api/accounts
         [Authorize]
         [AccessToken]
-        [HttpDelete("current")]
+        [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteByCurrentIdAsync()
+        public async Task<IActionResult> DeleteByCurrentIdAsync(CancellationToken cancellationToken)
         {
-            var currentUserId = User.GetCurrentUserId();
-            var response = await _accountService.DeleteAsync(currentUserId);
+            var userRequestModel = User.GetUserRequestModel();
+            var accountDeleteCommand = _mapper.Map<AccountDeleteCommand>(userRequestModel);
 
-            return this.HandleResponse(response);
+            await _sender.Send(accountDeleteCommand, cancellationToken);
+
+            return NoContent();
         }
 
-        // DELETE: api/v1/accounts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        // DELETE: api/accounts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
         [Authorize]
         [AccessToken]
-        [RequiredRole(InstaConnectConstants.AdminRole)]
+        [RequiredRole(Roles.Admin)]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteByIdAsync([FromRoute] string userId)
+        public async Task<IActionResult> DeleteByIdAsync(
+            [FromRoute] AccountDeleteRequestModel request,
+            CancellationToken cancellationToken)
         {
-            var response = await _accountService.DeleteAsync(userId);
+            var accountDeleteCommand = _mapper.Map<AccountDeleteCommand>(request);
 
-            return this.HandleResponse(response);
+            await _sender.Send(accountDeleteCommand, cancellationToken);
+
+            return NoContent();
         }
     }
 }

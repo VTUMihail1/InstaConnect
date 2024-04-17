@@ -1,19 +1,20 @@
-﻿using EGames.Common.Options;
-using EGames.Data.Factories.Abstract;
-using EGames.Data.Helpers.Abstract;
-using EGames.Data.Models.Entities;
+﻿using InstaConnect.Users.Data.Abstraction.Factories;
+using InstaConnect.Users.Data.Abstraction.Helpers;
+using InstaConnect.Users.Data.Models.Entities;
+using InstaConnect.Users.Data.Models.Options;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace EGames.Data.Helpers
+namespace InstaConnect.Users.Data.Helpers
 {
     internal class TokenGenerator : ITokenGenerator
     {
         private const string ACCESS_TOKEN_TYPE = "Bearer ";
         private const string EMAIL_CONFIRMATION_TOKEN_TYPE = "Email Confirmation";
+        private const string PASSWORD_RESET_TOKEN_TYPE = "Password Reset";
 
         private readonly TokenOptions _tokenOptions;
         private readonly ITokenFactory _tokenFactory;
@@ -56,6 +57,23 @@ namespace EGames.Data.Helpers
                 userId,
                 value,
                 EMAIL_CONFIRMATION_TOKEN_TYPE,
+                _tokenOptions.AccountTokenLifetimeSeconds);
+
+            return token;
+        }
+
+        public Token GeneratePasswordResetToken(string userId)
+        {
+            var claims = GetClaims(userId);
+            var value = GetToken(
+                claims,
+                _tokenOptions.AccountTokenSecurityKey,
+                _tokenOptions.AccountTokenLifetimeSeconds);
+
+            var token = _tokenFactory.GetTokenToken(
+                userId,
+                value,
+                PASSWORD_RESET_TOKEN_TYPE,
                 _tokenOptions.AccountTokenLifetimeSeconds);
 
             return token;

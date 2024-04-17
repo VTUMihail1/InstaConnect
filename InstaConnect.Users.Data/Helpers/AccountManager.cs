@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Utilities;
+﻿using InstaConnect.Shared.Data.Utilities;
 using InstaConnect.Users.Data.Abstraction.Helpers;
 using InstaConnect.Users.Data.Models.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Users.Data.Helpers
 {
-    public class AccountManager : IAccountManager
+    internal class AccountManager : IAccountManager
     {
         private readonly UserManager<User> _userManager;
 

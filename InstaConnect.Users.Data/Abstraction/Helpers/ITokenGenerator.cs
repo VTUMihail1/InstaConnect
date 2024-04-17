@@ -20,5 +20,7 @@ namespace InstaConnect.Users.Data.Abstraction.Helpers
         /// <param name="userId">The unique identifier of the user.</param>
         /// <returns>A <see cref="Token"/> object representing the generated email confirmation token.</returns>
         Token GenerateEmailConfirmationToken(string userId);
+
+        Token GeneratePasswordResetToken(string userId);
     }
 }
