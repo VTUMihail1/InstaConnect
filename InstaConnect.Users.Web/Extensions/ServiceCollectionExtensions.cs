@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 using TokenOptions = InstaConnect.Users.Data.Models.Options.TokenOptions;
@@ -101,6 +102,7 @@ namespace InstaConnect.Users.Web.Extensions
 
             serviceCollections.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
 
+            serviceCollections.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
             return serviceCollections;
         }
