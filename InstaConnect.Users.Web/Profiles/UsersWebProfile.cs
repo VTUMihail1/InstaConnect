@@ -11,7 +11,7 @@ using InstaConnect.Users.Business.Commands.AccountResetPassword;
 using InstaConnect.Users.Business.Models;
 using InstaConnect.Users.Business.Queries.GetAllFilteredUsers;
 using InstaConnect.Users.Business.Queries.GetAllUsers;
-using InstaConnect.Users.Business.Queries.GetPersonalUserById;
+using InstaConnect.Users.Business.Queries.GetDetailedUserById;
 using InstaConnect.Users.Business.Queries.GetUserById;
 using InstaConnect.Users.Business.Queries.GetUserByName;
 using InstaConnect.Users.Data.Models.Filters;
@@ -54,16 +54,6 @@ namespace InstaConnect.Users.Web.Profiles
             CreateMap<CollectionRequestModel, GetAllUsersQuery>();
 
             CreateMap<GetUserCollectionRequestModel, GetAllFilteredUsersQuery>();
-
-            CreateMap<GetAllFilteredUsersQuery, UserFilteredCollection>()
-                .ConstructUsing(src =>
-                     new UserFilteredCollection
-                     {
-                         Expression = p => (src.UserName == string.Empty || p.UserName.Contains(src.UserName)) &&
-                                           (src.FirstName == string.Empty || p.FirstName.Contains(src.UserName)) &&
-                                           (src.LastName == string.Empty || p.LastName.Contains(src.UserName))
-                     });
-
 
             CreateMap<UserRequestModel, GetDetailedUserByIdQuery>();
 
