@@ -17,11 +17,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{784F1A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{A33DFF0A-28FD-4C10-B11B-25CE03BBB440}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Shared.Data", "InstaConnect.Shared.Data\InstaConnect.Shared.Data.csproj", "{7AFC4931-FA0E-42FD-B057-3381424621A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Shared.Data", "InstaConnect.Shared.Data\InstaConnect.Shared.Data.csproj", "{7AFC4931-FA0E-42FD-B057-3381424621A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Shared.Business", "InstaConnect.Shared.Business\InstaConnect.Shared.Business.csproj", "{FCADD418-C7F3-4125-8C08-857FC408AEF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Shared.Business", "InstaConnect.Shared.Business\InstaConnect.Shared.Business.csproj", "{FCADD418-C7F3-4125-8C08-857FC408AEF6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Shared.Web", "InstaConnect.Shared.Web\InstaConnect.Shared.Web.csproj", "{BCFA2395-20E9-4685-A5CE-5603E2E62771}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Posts", "Posts", "{C4F8B861-018B-4AF1-914F-A70529251289}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Posts.Data", "InstaConnect.Posts.Data\InstaConnect.Posts.Data.csproj", "{E3BEFE63-6592-4618-B496-552B77DCDC11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Posts.Business", "InstaConnect.Posts.Business\InstaConnect.Posts.Business.csproj", "{B85F63A8-257A-4AFC-BB49-FB69E0AEB1FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Business.UnitTests", "InstaConnect.Business.UnitTests\InstaConnect.Business.UnitTests.csproj", "{9BE107A2-E359-47EB-87AD-064C7F168738}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Posts.Web", "InstaConnect.Posts.Web\InstaConnect.Posts.Web.csproj", "{25E1C75E-7574-4167-8D58-10FEB8EAA4B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +67,22 @@ Global
 		{BCFA2395-20E9-4685-A5CE-5603E2E62771}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCFA2395-20E9-4685-A5CE-5603E2E62771}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCFA2395-20E9-4685-A5CE-5603E2E62771}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3BEFE63-6592-4618-B496-552B77DCDC11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3BEFE63-6592-4618-B496-552B77DCDC11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3BEFE63-6592-4618-B496-552B77DCDC11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3BEFE63-6592-4618-B496-552B77DCDC11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B85F63A8-257A-4AFC-BB49-FB69E0AEB1FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B85F63A8-257A-4AFC-BB49-FB69E0AEB1FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B85F63A8-257A-4AFC-BB49-FB69E0AEB1FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B85F63A8-257A-4AFC-BB49-FB69E0AEB1FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BE107A2-E359-47EB-87AD-064C7F168738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BE107A2-E359-47EB-87AD-064C7F168738}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BE107A2-E359-47EB-87AD-064C7F168738}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BE107A2-E359-47EB-87AD-064C7F168738}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25E1C75E-7574-4167-8D58-10FEB8EAA4B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25E1C75E-7574-4167-8D58-10FEB8EAA4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25E1C75E-7574-4167-8D58-10FEB8EAA4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25E1C75E-7574-4167-8D58-10FEB8EAA4B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +97,11 @@ Global
 		{7AFC4931-FA0E-42FD-B057-3381424621A5} = {784F1AC5-95E4-40FA-9C0E-A54E2480BC94}
 		{FCADD418-C7F3-4125-8C08-857FC408AEF6} = {784F1AC5-95E4-40FA-9C0E-A54E2480BC94}
 		{BCFA2395-20E9-4685-A5CE-5603E2E62771} = {784F1AC5-95E4-40FA-9C0E-A54E2480BC94}
+		{C4F8B861-018B-4AF1-914F-A70529251289} = {496CE8BB-036D-46DE-B1B9-8837D0ECF0AF}
+		{E3BEFE63-6592-4618-B496-552B77DCDC11} = {C4F8B861-018B-4AF1-914F-A70529251289}
+		{B85F63A8-257A-4AFC-BB49-FB69E0AEB1FA} = {C4F8B861-018B-4AF1-914F-A70529251289}
+		{9BE107A2-E359-47EB-87AD-064C7F168738} = {C4F8B861-018B-4AF1-914F-A70529251289}
+		{25E1C75E-7574-4167-8D58-10FEB8EAA4B0} = {C4F8B861-018B-4AF1-914F-A70529251289}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74CDCE11-9171-4345-A1A8-63E51F48297C}

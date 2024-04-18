@@ -5,16 +5,16 @@ namespace InstaConnect.Shared.Web.Models.Filters
 {
     public class CollectionRequestModel
     {
-        [FromQuery]
-        public SortOrder SortOrder { get; set; }
+        [FromQuery(Name = "sortOrder")]
+        public SortOrder SortOrder { get; set; } = SortOrder.ASC;
 
-        [FromQuery]
-        public string SortPropertyName { get; set; }
+        [FromQuery(Name = "orderPropertyType")]
+        public string SortPropertyName { get; set; } = "CreatedAt";
 
-        [FromQuery]
-        public int Offset { get; set; }
+        [FromQuery(Name = "offset")]
+        public int Offset { get; set; } = 0;
 
-        [FromQuery]
-        public int Limit { get; set; }
+        [FromQuery(Name = "limit")]
+        public int Limit { get; set; } = 20;
     }
 }

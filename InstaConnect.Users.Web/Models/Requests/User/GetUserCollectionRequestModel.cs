@@ -5,13 +5,13 @@ namespace InstaConnect.Users.Web.Models.Requests.User
 {
     public class GetUserCollectionRequestModel : CollectionRequestModel
     {
-        [FromQuery]
-        public string UserName { get; set; }
+        [FromQuery(Name = "userName")]
+        public string UserName { get; set; } = string.Empty;
 
-        [FromQuery]
-        public string FirstName { get; set; }
+        [FromQuery(Name = "firstName")]
+        public string FirstName { get; set; } = string.Empty;
 
-        [FromQuery]
-        public string LastName { get; set; }
+        [FromQuery(Name = "lastName")]
+        public string LastName { get; set; } = string.Empty;
     }
 }

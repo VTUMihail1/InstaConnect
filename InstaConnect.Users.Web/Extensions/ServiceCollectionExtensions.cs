@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Users.Data.Models.Options;
+using InstaConnect.Users.Web.Profiles;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -14,17 +15,17 @@ namespace InstaConnect.Users.Web.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollections, IConfiguration configuration)
+        public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
             var tokenOptions = configuration.GetSection(nameof(TokenOptions));
             var adminOptions = configuration.GetSection(nameof(AdminOptions));
 
-            serviceCollections.Configure<TokenOptions>(tokenOptions);
-            serviceCollections.Configure<AdminOptions>(adminOptions);
+            serviceCollection.Configure<TokenOptions>(tokenOptions);
+            serviceCollection.Configure<AdminOptions>(adminOptions);
 
             var tokenOptionsObj = tokenOptions.Get<TokenOptions>()!;
 
-            serviceCollections
+            serviceCollection
                 .AddControllers()
                 .AddJsonOptions(options =>
                 {
@@ -32,7 +33,7 @@ namespace InstaConnect.Users.Web.Extensions
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
-            serviceCollections.Configure<IdentityOptions>(options =>
+            serviceCollection.Configure<IdentityOptions>(options =>
             {
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequireDigit = true;
@@ -42,7 +43,7 @@ namespace InstaConnect.Users.Web.Extensions
                 options.Password.RequiredLength = 8;
             });
 
-            serviceCollections
+            serviceCollection
                 .AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -64,7 +65,7 @@ namespace InstaConnect.Users.Web.Extensions
                 }
             );
 
-            serviceCollections
+            serviceCollection
                 .AddSwaggerGen(c =>
                 {
                     c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
@@ -76,7 +77,7 @@ namespace InstaConnect.Users.Web.Extensions
 
                     c.AddSecurityRequirement(new OpenApiSecurityRequirement
                     {
-            {
+                {
                 new OpenApiSecurityScheme
                 {
                     Reference = new OpenApiReference
@@ -86,25 +87,25 @@ namespace InstaConnect.Users.Web.Extensions
                     }
                 },
                 Array.Empty<string>()
-            }
+                }
                     });
                 }
             );
 
-            serviceCollections.AddEndpointsApiExplorer();
-            serviceCollections.AddSwaggerGen();
+            serviceCollection.AddEndpointsApiExplorer();
+            serviceCollection.AddSwaggerGen();
 
-            serviceCollections
+            serviceCollection
                 .Configure<CookieAuthenticationOptions>(options =>
                 {
                     options.ExpireTimeSpan = TimeSpan.FromSeconds(tokenOptionsObj.AccountTokenLifetimeSeconds);
                 });
 
-            serviceCollections.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
+            serviceCollection.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
 
-            serviceCollections.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            serviceCollection.AddAutoMapper(typeof(UsersWebProfile));
 
-            return serviceCollections;
+            return serviceCollection;
         }
     }
 }

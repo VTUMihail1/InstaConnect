@@ -2,6 +2,7 @@
 using InstaConnect.Users.Business.Profiles;
 using InstaConnect.Users.Business.Services;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace InstaConnect.Users.Business.Extensions
 {
@@ -12,6 +13,8 @@ namespace InstaConnect.Users.Business.Extensions
             serviceCollection
                 .AddScoped<ITokenService, TokenService>()
                 .AddAutoMapper(typeof(UsersBusinessProfile));
+
+            serviceCollection.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly));
 
             return serviceCollection;
         }
