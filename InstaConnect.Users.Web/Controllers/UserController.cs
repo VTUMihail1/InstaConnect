@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using InstaConnect.Shared.Data.Utilities;
 using InstaConnect.Shared.Web.Models.Filters;
-using InstaConnect.Users.Business.Queries.GetAllFilteredUsers;
-using InstaConnect.Users.Business.Queries.GetAllUsers;
-using InstaConnect.Users.Business.Queries.GetDetailedUserById;
-using InstaConnect.Users.Business.Queries.GetUserById;
-using InstaConnect.Users.Business.Queries.GetUserByName;
+using InstaConnect.Users.Business.Queries.User.GetAllFilteredUsers;
+using InstaConnect.Users.Business.Queries.User.GetAllUsers;
+using InstaConnect.Users.Business.Queries.User.GetDetailedUserById;
+using InstaConnect.Users.Business.Queries.User.GetUserById;
+using InstaConnect.Users.Business.Queries.User.GetUserByName;
 using InstaConnect.Users.Web.Extensions;
 using InstaConnect.Users.Web.Filters;
 using InstaConnect.Users.Web.Models.Requests.User;

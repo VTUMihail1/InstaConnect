@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using InstaConnect.Shared.Data.Utilities;
-using InstaConnect.Users.Business.Commands.AccountConfirmEmail;
-using InstaConnect.Users.Business.Commands.AccountDelete;
-using InstaConnect.Users.Business.Commands.AccountEdit;
-using InstaConnect.Users.Business.Commands.AccountLogin;
-using InstaConnect.Users.Business.Commands.AccountLogout;
-using InstaConnect.Users.Business.Commands.AccountRegister;
-using InstaConnect.Users.Business.Commands.AccountResendEmailConfirmation;
-using InstaConnect.Users.Business.Commands.AccountResetPassword;
+using InstaConnect.Users.Business.Commands.Account.ConfirmAccountEmail;
+using InstaConnect.Users.Business.Commands.Account.DeleteAccount;
+using InstaConnect.Users.Business.Commands.Account.EditAccount;
+using InstaConnect.Users.Business.Commands.Account.LoginAccount;
+using InstaConnect.Users.Business.Commands.Account.LogoutAccount;
+using InstaConnect.Users.Business.Commands.Account.RegisterAccount;
+using InstaConnect.Users.Business.Commands.Account.ResendAccountEmailConfirmation;
+using InstaConnect.Users.Business.Commands.Account.ResetAccountPassword;
 using InstaConnect.Users.Web.Extensions;
 using InstaConnect.Users.Web.Filters;
 using InstaConnect.Users.Web.Models.Requests.Account;
@@ -38,12 +38,12 @@ namespace InstaConnect.Users.Web.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ConfirmEmailAsync(
-            [FromRoute] AccountConfirmEmailTokenRequestModel request,
+            [FromRoute] ConfirmAccountEmailTokenRequestModel request,
             CancellationToken cancellationToken)
         {
-            var accountConfirmEmailCommand = _mapper.Map<AccountConfirmEmailCommand>(request);
+            var confirmAccountEmailCommand = _mapper.Map<ConfirmAccountEmailCommand>(request);
 
-            await _sender.Send(accountConfirmEmailCommand, cancellationToken);
+            await _sender.Send(confirmAccountEmailCommand, cancellationToken);
 
             return NoContent();
         }
@@ -53,12 +53,12 @@ namespace InstaConnect.Users.Web.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ResendConfirmEmailAsync(
-            [FromRoute] AccountResendConfirmEmailRequestModel request,
+            [FromRoute] ResendAccountConfirmEmailRequestModel request,
             CancellationToken cancellationToken)
         {
-            var accountResendEmailConfirmationCommand = _mapper.Map<AccountResendEmailConfirmationCommand>(request);
+            var resendAccountEmailConfirmationCommand = _mapper.Map<ResendAccountEmailConfirmationCommand>(request);
 
-            await _sender.Send(accountResendEmailConfirmationCommand, cancellationToken);
+            await _sender.Send(resendAccountEmailConfirmationCommand, cancellationToken);
 
             return NoContent();
         }
@@ -68,12 +68,12 @@ namespace InstaConnect.Users.Web.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SendResetPasswordAsync(
-            [FromRoute] AccountSendPasswordResetRequestModel request,
+            [FromRoute] SendAccountPasswordResetRequestModel request,
             CancellationToken cancellationToken)
         {
-            var accountResendEmailConfirmationCommand = _mapper.Map<AccountSendPasswordResetRequestModel>(request);
+            var sendAccountPasswordResetRequestModel = _mapper.Map<SendAccountPasswordResetRequestModel>(request);
 
-            await _sender.Send(accountResendEmailConfirmationCommand, cancellationToken);
+            await _sender.Send(sendAccountPasswordResetRequestModel, cancellationToken);
 
             return NoContent();
         }
@@ -83,12 +83,12 @@ namespace InstaConnect.Users.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> LoginAsync(
-            [FromBody] AccountLoginRequestModel request,
+            [FromBody] LoginAccountRequestModel request,
             CancellationToken cancellationToken)
         {
-            var accountLoginCommand = _mapper.Map<AccountLoginCommand>(request);
+            var loginAccountCommand = _mapper.Map<LoginAccountCommand>(request);
 
-            var accountViewDTO = await _sender.Send(accountLoginCommand, cancellationToken);
+            var accountViewDTO = await _sender.Send(loginAccountCommand, cancellationToken);
 
             var response = _mapper.Map<AccountResponseModel>(accountViewDTO);
 
@@ -100,12 +100,12 @@ namespace InstaConnect.Users.Web.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RegisterAsync(
-            [FromBody] AccountRegisterRequestModel request,
+            [FromBody] RegisterAccountRequestModel request,
             CancellationToken cancellationToken)
         {
-            var accountRegisterCommand = _mapper.Map<AccountRegisterCommand>(request);
+            var registerAccountCommand = _mapper.Map<RegisterAccountCommand>(request);
 
-            await _sender.Send(accountRegisterCommand, cancellationToken);
+            await _sender.Send(registerAccountCommand, cancellationToken);
 
             return NoContent();
         }
@@ -119,9 +119,9 @@ namespace InstaConnect.Users.Web.Controllers
         public async Task<IActionResult> LogoutAsync(CancellationToken cancellationToken)
         {
             var request = HttpContext!.GetTokenRequestModel();
-            var accountLogoutCommand = _mapper.Map<AccountLogoutCommand>(request);
+            var logoutaccountCommand = _mapper.Map<LogoutAccountCommand>(request);
 
-            await _sender.Send(accountLogoutCommand, cancellationToken);
+            await _sender.Send(logoutaccountCommand, cancellationToken);
 
             return NoContent();
         }
@@ -131,12 +131,12 @@ namespace InstaConnect.Users.Web.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ResetPasswordAsync(
-            AccountResetPasswordRequestModel request,
+            ResetAccountPasswordRequestModel request,
             CancellationToken cancellationToken)
         {
-            var accountResetPasswordCommand = _mapper.Map<AccountResetPasswordCommand>(request);
+            var resetAccountPasswordCommand = _mapper.Map<ResetAccountPasswordCommand>(request);
 
-            await _sender.Send(accountResetPasswordCommand, cancellationToken);
+            await _sender.Send(resetAccountPasswordCommand, cancellationToken);
 
             return NoContent();
         }
@@ -149,14 +149,14 @@ namespace InstaConnect.Users.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> EditAsync(
-            [FromBody] AccountEditRequestModel request,
+            [FromBody] EditAccountRequestModel request,
             CancellationToken cancellationToken)
         {
             var userRequestModel = User.GetUserRequestModel();
-            var accountEditCommand = _mapper.Map<AccountEditCommand>(request);
-            _mapper.Map(userRequestModel, accountEditCommand);
+            var editAccountCommand = _mapper.Map<EditAccountCommand>(request);
+            _mapper.Map(userRequestModel, editAccountCommand);
 
-            await _sender.Send(accountEditCommand, cancellationToken);
+            await _sender.Send(editAccountCommand, cancellationToken);
 
             return NoContent();
         }
@@ -170,9 +170,9 @@ namespace InstaConnect.Users.Web.Controllers
         public async Task<IActionResult> DeleteByCurrentIdAsync(CancellationToken cancellationToken)
         {
             var userRequestModel = User.GetUserRequestModel();
-            var accountDeleteCommand = _mapper.Map<AccountDeleteCommand>(userRequestModel);
+            var deleteAccountCommand = _mapper.Map<DeleteAccountCommand>(userRequestModel);
 
-            await _sender.Send(accountDeleteCommand, cancellationToken);
+            await _sender.Send(deleteAccountCommand, cancellationToken);
 
             return NoContent();
         }
@@ -185,12 +185,12 @@ namespace InstaConnect.Users.Web.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteByIdAsync(
-            [FromRoute] AccountDeleteRequestModel request,
+            [FromRoute] DeleteAccountRequestModel request,
             CancellationToken cancellationToken)
         {
-            var accountDeleteCommand = _mapper.Map<AccountDeleteCommand>(request);
+            var deleteAccountCommand = _mapper.Map<DeleteAccountCommand>(request);
 
-            await _sender.Send(accountDeleteCommand, cancellationToken);
+            await _sender.Send(deleteAccountCommand, cancellationToken);
 
             return NoContent();
         }

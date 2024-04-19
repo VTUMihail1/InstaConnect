@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using InstaConnect.Shared.Data.Models.Filters;
-using InstaConnect.Users.Business.Commands.AccountEdit;
-using InstaConnect.Users.Business.Commands.AccountRegister;
+using InstaConnect.Users.Business.Commands.Account.EditAccount;
+using InstaConnect.Users.Business.Commands.Account.RegisterAccount;
 using InstaConnect.Users.Business.Models;
-using InstaConnect.Users.Business.Queries.GetAllFilteredUsers;
-using InstaConnect.Users.Business.Queries.GetAllUsers;
+using InstaConnect.Users.Business.Queries.User.GetAllFilteredUsers;
+using InstaConnect.Users.Business.Queries.User.GetAllUsers;
 using InstaConnect.Users.Data.Models.Entities;
 using InstaConnect.Users.Data.Models.Filters;
 
@@ -25,9 +25,9 @@ namespace InstaConnect.Users.Business.Profiles
 
             CreateMap<GetAllUsersQuery, CollectionQuery>();
 
-            CreateMap<AccountRegisterCommand, User>();
+            CreateMap<RegisterAccountCommand, User>();
 
-            CreateMap<AccountEditCommand, User>();
+            CreateMap<EditAccountCommand, User>();
 
             CreateMap<User, AccountViewDTO>();
 

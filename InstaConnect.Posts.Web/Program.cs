@@ -1,3 +1,7 @@
+using InstaConnect.Posts.Business.Extensions;
+using InstaConnect.Posts.Data.Extensions;
+using InstaConnect.Posts.Web.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services
+    .AddDataLayer(builder.Configuration)
+    .AddBusinessLayer()
+    .AddWebLayer();
 
 var app = builder.Build();
 
