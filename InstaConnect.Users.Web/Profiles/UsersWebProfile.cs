@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
 using InstaConnect.Shared.Web.Models.Filters;
-using InstaConnect.Users.Business.Commands.AccountConfirmEmail;
-using InstaConnect.Users.Business.Commands.AccountDelete;
-using InstaConnect.Users.Business.Commands.AccountEdit;
-using InstaConnect.Users.Business.Commands.AccountLogin;
-using InstaConnect.Users.Business.Commands.AccountLogout;
-using InstaConnect.Users.Business.Commands.AccountRegister;
-using InstaConnect.Users.Business.Commands.AccountResendEmailConfirmation;
-using InstaConnect.Users.Business.Commands.AccountResetPassword;
+using InstaConnect.Users.Business.Commands.Account.ConfirmAccountEmail;
+using InstaConnect.Users.Business.Commands.Account.DeleteAccount;
+using InstaConnect.Users.Business.Commands.Account.EditAccount;
+using InstaConnect.Users.Business.Commands.Account.LoginAccount;
+using InstaConnect.Users.Business.Commands.Account.LogoutAccount;
+using InstaConnect.Users.Business.Commands.Account.RegisterAccount;
+using InstaConnect.Users.Business.Commands.Account.ResendAccountEmailConfirmation;
+using InstaConnect.Users.Business.Commands.Account.ResetAccountPassword;
 using InstaConnect.Users.Business.Models;
-using InstaConnect.Users.Business.Queries.GetAllFilteredUsers;
-using InstaConnect.Users.Business.Queries.GetAllUsers;
-using InstaConnect.Users.Business.Queries.GetDetailedUserById;
-using InstaConnect.Users.Business.Queries.GetUserById;
-using InstaConnect.Users.Business.Queries.GetUserByName;
+using InstaConnect.Users.Business.Queries.User.GetAllFilteredUsers;
+using InstaConnect.Users.Business.Queries.User.GetAllUsers;
+using InstaConnect.Users.Business.Queries.User.GetDetailedUserById;
+using InstaConnect.Users.Business.Queries.User.GetUserById;
+using InstaConnect.Users.Business.Queries.User.GetUserByName;
 using InstaConnect.Users.Data.Models.Filters;
 using InstaConnect.Users.Web.Models.Requests.Account;
 using InstaConnect.Users.Web.Models.Requests.Token;
@@ -27,27 +27,27 @@ namespace InstaConnect.Users.Web.Profiles
     {
         public UsersWebProfile()
         {
-            CreateMap<AccountConfirmEmailTokenRequestModel, AccountConfirmEmailCommand>();
+            CreateMap<ConfirmAccountEmailTokenRequestModel, ConfirmAccountEmailCommand>();
 
-            CreateMap<AccountResendConfirmEmailRequestModel, AccountResendEmailConfirmationCommand>();
+            CreateMap<ResendAccountConfirmEmailRequestModel, ResendAccountEmailConfirmationCommand>();
 
-            CreateMap<AccountSendPasswordResetRequestModel, AccountSendPasswordResetRequestModel>();
+            CreateMap<SendAccountPasswordResetRequestModel, SendAccountPasswordResetRequestModel>();
 
-            CreateMap<AccountLoginRequestModel, AccountLoginCommand>();
+            CreateMap<LoginAccountRequestModel, LoginAccountCommand>();
 
-            CreateMap<AccountRegisterRequestModel, AccountRegisterCommand>();
+            CreateMap<RegisterAccountRequestModel, RegisterAccountCommand>();
 
-            CreateMap<AccountResetPasswordRequestModel, AccountResetPasswordCommand>();
+            CreateMap<ResetAccountPasswordRequestModel, ResetAccountPasswordCommand>();
 
-            CreateMap<AccountEditRequestModel, AccountEditCommand>();
+            CreateMap<EditAccountRequestModel, EditAccountCommand>();
 
-            CreateMap<TokenRequestModel, AccountLogoutCommand>();
+            CreateMap<TokenRequestModel, LogoutAccountCommand>();
 
-            CreateMap<UserRequestModel, AccountEditCommand>();
+            CreateMap<UserRequestModel, EditAccountCommand>();
 
-            CreateMap<UserRequestModel, AccountDeleteCommand>();
+            CreateMap<UserRequestModel, DeleteAccountCommand>();
 
-            CreateMap<AccountDeleteRequestModel, AccountDeleteCommand>();
+            CreateMap<DeleteAccountRequestModel, DeleteAccountCommand>();
 
             CreateMap<AccountViewDTO, AccountResponseModel>();
 
