@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Posts.Business.Queries.GetPostById
+namespace InstaConnect.Posts.Business.Queries.Posts.GetPostById
 {
     public class GetPostByIdQueryHandler : IQueryHandler<GetPostByIdQuery, PostViewDTO>
     {
@@ -28,7 +28,7 @@ namespace InstaConnect.Posts.Business.Queries.GetPostById
         {
             var post = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
 
-            if(post == null)
+            if (post == null)
             {
                 throw new PostNotFoundException();
             }

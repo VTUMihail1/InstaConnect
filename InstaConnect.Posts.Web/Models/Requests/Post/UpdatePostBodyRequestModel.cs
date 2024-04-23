@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Posts.Web.Models.Requests
+﻿namespace InstaConnect.Posts.Web.Models.Requests.Post
 {
-    public class UpdatePostBodyRequestModel 
+    public class UpdatePostBodyRequestModel
     {
         public string Title { get; set; }
 

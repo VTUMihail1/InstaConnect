@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Posts.Business.Queries.GetAllFilteredPosts
+namespace InstaConnect.Posts.Business.Queries.Posts.GetAllFilteredPosts
 {
     public class GetAllFilteredPostsQueryHandler : IQueryHandler<GetAllFilteredPostsQuery, ICollection<PostViewDTO>>
     {
@@ -17,7 +17,7 @@ namespace InstaConnect.Posts.Business.Queries.GetAllFilteredPosts
         private readonly IPostRepository _postRepository;
 
         public GetAllFilteredPostsQueryHandler(
-            IMapper mapper, 
+            IMapper mapper,
             IPostRepository postRepository)
         {
             _mapper = mapper;

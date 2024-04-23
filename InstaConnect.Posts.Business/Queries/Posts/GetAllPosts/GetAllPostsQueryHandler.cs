@@ -5,7 +5,7 @@ using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Users.Data.Models.Filters;
 
-namespace InstaConnect.Posts.Business.Queries.GetAllPosts
+namespace InstaConnect.Posts.Business.Queries.Posts.GetAllPosts
 {
     public class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, ICollection<PostViewDTO>>
     {
@@ -13,7 +13,7 @@ namespace InstaConnect.Posts.Business.Queries.GetAllPosts
         private readonly IPostRepository _postRepository;
 
         public GetAllPostsQueryHandler(
-            IMapper mapper, 
+            IMapper mapper,
             IPostRepository postRepository)
         {
             _mapper = mapper;

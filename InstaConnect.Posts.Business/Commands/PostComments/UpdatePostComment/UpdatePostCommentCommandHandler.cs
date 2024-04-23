@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Data.Abstract.Repositories;
+using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Shared.Business.Exceptions.Account;
+using InstaConnect.Shared.Business.Exceptions.PostComment;
 using InstaConnect.Shared.Business.Exceptions.Posts;
+using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
@@ -9,34 +12,32 @@ using InstaConnect.Shared.Business.RequestClients;
 
 namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePost
 {
-    public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand>
+    public class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommand>
     {
         private readonly IMapper _mapper;
-        private readonly IPostRepository _postRepository;
+        private readonly IPostCommentRepository _postCommentRepository;
         private readonly IValidateUserByIdRequestClient _requestClient;
 
-        public UpdatePostCommandHandler(
-            IMapper mapper,
-            IPostRepository postRepository,
+        public UpdatePostCommentCommandHandler(
+            IMapper mapper, 
+            IPostCommentRepository postCommentRepository, 
             IValidateUserByIdRequestClient requestClient)
         {
             _mapper = mapper;
-            _postRepository = postRepository;
+            _postCommentRepository = postCommentRepository;
             _requestClient = requestClient;
         }
 
-        public async Task Handle(UpdatePostCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdatePostCommentCommand request, CancellationToken cancellationToken)
         {
-            var existingPost = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
+            var existingPostComment = await _postCommentRepository.GetByIdAsync(request.Id, cancellationToken);
 
-            if (existingPost == null)
+            if (existingPostComment == null)
             {
-                throw new PostNotFoundException();
+                throw new PostCommentNotFoundException();
             }
 
             var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-            _mapper.Map(existingPost, validateUserByIdRequest);
-
             var validateUserByIdResponse = await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
             if (!validateUserByIdResponse.Message.IsValid)
@@ -44,8 +45,8 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePost
                 throw new AccountForbiddenException();
             }
 
-            _mapper.Map(request, existingPost);
-            await _postRepository.UpdateAsync(existingPost, cancellationToken);
+            _mapper.Map(request, existingPostComment);
+            await _postCommentRepository.UpdateAsync(existingPostComment, cancellationToken);
         }
     }
 }

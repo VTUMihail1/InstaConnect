@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Web.Models.Requests
+﻿namespace InstaConnect.Posts.Web.Models.Requests.Post
 {
     public class AddPostBodyRequestModel
     {
