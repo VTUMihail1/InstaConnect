@@ -1,6 +1,9 @@
 using InstaConnect.Users.Data.Extensions;
 using InstaConnect.Users.Business.Extensions;
 using InstaConnect.Users.Web.Extensions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 

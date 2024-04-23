@@ -25,13 +25,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Shared.Web", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Posts", "Posts", "{C4F8B861-018B-4AF1-914F-A70529251289}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Posts.Data", "InstaConnect.Posts.Data\InstaConnect.Posts.Data.csproj", "{E3BEFE63-6592-4618-B496-552B77DCDC11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Posts.Data", "InstaConnect.Posts.Data\InstaConnect.Posts.Data.csproj", "{E3BEFE63-6592-4618-B496-552B77DCDC11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Posts.Business", "InstaConnect.Posts.Business\InstaConnect.Posts.Business.csproj", "{B85F63A8-257A-4AFC-BB49-FB69E0AEB1FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Posts.Business", "InstaConnect.Posts.Business\InstaConnect.Posts.Business.csproj", "{B85F63A8-257A-4AFC-BB49-FB69E0AEB1FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Business.UnitTests", "InstaConnect.Business.UnitTests\InstaConnect.Business.UnitTests.csproj", "{9BE107A2-E359-47EB-87AD-064C7F168738}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Posts.Business.UnitTests", "InstaConnect.Business.UnitTests\InstaConnect.Posts.Business.UnitTests.csproj", "{9BE107A2-E359-47EB-87AD-064C7F168738}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Posts.Web", "InstaConnect.Posts.Web\InstaConnect.Posts.Web.csproj", "{25E1C75E-7574-4167-8D58-10FEB8EAA4B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Posts.Web", "InstaConnect.Posts.Web\InstaConnect.Posts.Web.csproj", "{25E1C75E-7574-4167-8D58-10FEB8EAA4B0}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3D287ADF-63AE-4D5C-80D2-2FF65D56913C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,10 @@ Global
 		{25E1C75E-7574-4167-8D58-10FEB8EAA4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25E1C75E-7574-4167-8D58-10FEB8EAA4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25E1C75E-7574-4167-8D58-10FEB8EAA4B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D287ADF-63AE-4D5C-80D2-2FF65D56913C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D287ADF-63AE-4D5C-80D2-2FF65D56913C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D287ADF-63AE-4D5C-80D2-2FF65D56913C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D287ADF-63AE-4D5C-80D2-2FF65D56913C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

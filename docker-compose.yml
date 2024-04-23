@@ -1,0 +1,53 @@
+version: '3.4'
+
+services:
+  instaconnect.users.web:
+    image: ${DOCKER_REGISTRY-}instaconnectusersweb
+    container_name: instaconnect.users.web
+    build:
+      context: .
+      dockerfile: InstaConnect.Users.Web/Dockerfile
+
+  instaconnect.users.database:
+     image: mysql:latest
+     container_name: instaconnect.users.database
+     environment: 
+       - MYSQL_DB=instaconnect.users
+       - MYSQL_USER=mihail
+       - MYSQL_ROOT_PASSWORD=mihail
+     volumes:
+       - ./.containers/users-db:/var/lib/mysql
+     ports:
+       - 3306
+
+  instaconnect.posts.web:
+    image: ${DOCKER_REGISTRY-}instaconnectpostsweb
+    container_name: instaconnect.posts.web
+    build:
+      context: .
+      dockerfile: InstaConnect.Posts.Web/Dockerfile
+
+  instaconnect.posts.database:
+     image: mysql:latest
+     container_name: instaconnect.posts.database
+     environment: 
+       - MYSQL_DB=instaconnect.posts
+       - MYSQL_USER=mihail
+       - MYSQL_ROOT_PASSWORD=mihail
+     volumes:
+       - ./.containers/posts-db:/var/lib/mysql
+     ports:
+       - 3306
+
+  instaconnect.rabbitmq:
+     image: rabbitmq:management
+     container_name: instaconnect.rabbitmq
+     environment: 
+         RABBITMQ_DEFAULT_HOST: amqp://instaconnect.rabbitmq:5672
+         RABBITMQ_DEFAULT_USER: mihail
+         RABBITMQ_DEFAULT_PASS: mihail
+     volumes:
+       - ./.containers/queue/data/:/var/lib/rabbitmq
+       - ./.containers/queue/log/:/var/log/rabbitmq
+
+

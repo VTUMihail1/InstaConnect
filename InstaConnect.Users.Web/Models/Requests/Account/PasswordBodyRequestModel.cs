@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Users.Web.Models.Requests.Account
 {
-    public class PasswordRequestModel
+    public class PasswordBodyRequestModel
     {
         public string Password { get; set; }
 

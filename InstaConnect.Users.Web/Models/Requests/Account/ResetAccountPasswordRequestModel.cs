@@ -11,6 +11,6 @@ namespace InstaConnect.Users.Web.Models.Requests.Account
         public string Token { get; set; }
 
         [FromBody]
-        public PasswordRequestModel PasswordRequestModel { get; set; }
+        public PasswordBodyRequestModel PasswordBodyRequestModel { get; set; }
     }
 }

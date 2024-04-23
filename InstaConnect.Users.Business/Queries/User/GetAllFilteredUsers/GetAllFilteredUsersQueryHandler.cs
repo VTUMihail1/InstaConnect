@@ -20,7 +20,7 @@ namespace InstaConnect.Users.Business.Queries.User.GetAllFilteredUsers
         }
         public async Task<ICollection<UserViewDTO>> Handle(GetAllFilteredUsersQuery request, CancellationToken cancellationToken)
         {
-            var filteredCollection = _mapper.Map<UserFilteredCollection>(request);
+            var filteredCollection = _mapper.Map<UserFilteredCollectionQuery>(request);
             var users = await _userRepository.GetAllFilteredAsync(filteredCollection, cancellationToken);
 
             var userViewDTOs = _mapper.Map<ICollection<UserViewDTO>>(users);
