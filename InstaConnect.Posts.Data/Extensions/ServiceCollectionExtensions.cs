@@ -8,13 +8,17 @@ namespace InstaConnect.Posts.Data.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        private const string CONNECTION_STRING_KEY = "DefaultConnection";
+        private const string CONNECTION_STRING_KEY = "Server=instaconnect.posts.database;Port=3306;Database={0};Uid={1};Pwd={2};";
 
         public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
             serviceCollection.AddDbContext<PostsContext>(options =>
             {
-                var connectionString = configuration.GetConnectionString(CONNECTION_STRING_KEY);
+                var connectionString = configuration.GetConnectionString(
+                    string.Format(CONNECTION_STRING_KEY,
+                    Environment.GetEnvironmentVariable("MYSQL_DB"),
+                    Environment.GetEnvironmentVariable("MYSQL_USER"),
+                    Environment.GetEnvironmentVariable("MYSQL_ROOT_PASSWORD")));
                 var serverVersion = ServerVersion.AutoDetect(connectionString);
 
                 options.UseMySql(connectionString, serverVersion);

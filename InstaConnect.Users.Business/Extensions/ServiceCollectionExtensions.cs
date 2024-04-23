@@ -1,6 +1,9 @@
 ﻿using InstaConnect.Users.Business.Abstractions;
+using InstaConnect.Users.Business.Consumers;
 using InstaConnect.Users.Business.Profiles;
 using InstaConnect.Users.Business.Services;
+using MassTransit;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -15,6 +18,25 @@ namespace InstaConnect.Users.Business.Extensions
                 .AddAutoMapper(typeof(UsersBusinessProfile));
 
             serviceCollection.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly));
+
+            serviceCollection.AddMassTransit(busConfigurator =>
+            {
+                busConfigurator.SetKebabCaseEndpointNameFormatter();
+
+                busConfigurator.AddConsumer<GetUserByIdConsumer>();
+                busConfigurator.AddConsumer<ValidateUserByIdConsumer>();
+
+                busConfigurator.UsingRabbitMq((context, configurator) =>
+                {
+                    configurator.Host(new Uri(Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_HOST")!), h =>
+                    {
+                        h.Username(Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER")!);
+                        h.Password(Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS")!);
+                    });
+
+                    configurator.ConfigureEndpoints(context);
+                });
+            });
 
             return serviceCollection;
         }

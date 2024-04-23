@@ -14,9 +14,9 @@ namespace InstaConnect.Users.Business.Profiles
     {
         public UsersBusinessProfile()
         {
-            CreateMap<GetAllFilteredUsersQuery, UserFilteredCollection>()
+            CreateMap<GetAllFilteredUsersQuery, UserFilteredCollectionQuery>()
                 .ConstructUsing(src =>
-                     new UserFilteredCollection
+                     new UserFilteredCollectionQuery
                      {
                          Expression = p => (src.UserName == string.Empty || p.UserName.Contains(src.UserName)) &&
                                            (src.FirstName == string.Empty || p.FirstName.Contains(src.UserName)) &&
