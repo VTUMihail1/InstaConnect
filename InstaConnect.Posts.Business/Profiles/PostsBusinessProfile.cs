@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Commands.Posts.AddPost;
-using InstaConnect.Posts.Business.Commands.Posts.DeletePost;
-using InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
+using InstaConnect.Posts.Business.Commands.PostComments.AddPost;
+using InstaConnect.Posts.Business.Commands.PostComments.DeletePost;
+using InstaConnect.Posts.Business.Commands.PostComments.UpdatePost;
 using InstaConnect.Posts.Business.Models;
-using InstaConnect.Posts.Business.Queries.GetAllFilteredPosts;
+using InstaConnect.Posts.Business.Queries.Posts.GetAllFilteredPosts;
 using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Users.Data.Models.Filters;
@@ -39,6 +39,10 @@ namespace InstaConnect.Posts.Business.Profiles
             CreateMap<UpdatePostCommand, Post>();
 
             CreateMap<Post, PostViewDTO>();
+
+            CreateMap<AddPostCommentCommand, PostComment>();
+
+            CreateMap<UpdatePostCommentCommand, PostComment>();
         }
     }
 }

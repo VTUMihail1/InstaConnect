@@ -3,13 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePost
 {
-    public class UpdatePostCommand : ICommand
+    public class UpdatePostCommentCommand : ICommand
     {
         public string Id { get; set; }
 
         public string UserId { get; set; }
-
-        public string Title { get; set; }
 
         public string Content { get; set; }
     }

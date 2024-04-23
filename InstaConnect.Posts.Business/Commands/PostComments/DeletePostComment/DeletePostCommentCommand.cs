@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Posts.Business.Commands.PostComments.DeletePost
 {
-    public class DeletePostCommand : ICommand
+    public class DeletePostCommentCommand : ICommand
     {
         public string Id { get; set; }
 

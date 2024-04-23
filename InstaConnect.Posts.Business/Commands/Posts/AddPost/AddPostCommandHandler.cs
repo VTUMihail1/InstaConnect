@@ -15,7 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Posts.Business.Commands.Posts.AddPost
+namespace InstaConnect.Posts.Business.Commands.PostComments.AddPost
 {
     public class AddPostCommandHandler : ICommandHandler<AddPostCommand>
     {
@@ -24,7 +24,7 @@ namespace InstaConnect.Posts.Business.Commands.Posts.AddPost
         private readonly IGetUserByIdRequestClient _requestClient;
 
         public AddPostCommandHandler(
-            IMapper mapper, 
+            IMapper mapper,
             IPostRepository postRepository,
             IGetUserByIdRequestClient requestClient)
         {
