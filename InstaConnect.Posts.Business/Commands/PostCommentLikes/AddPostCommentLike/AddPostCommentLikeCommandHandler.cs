@@ -11,7 +11,7 @@ using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Posts.Business.Commands.PostComments.AddPost
+namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLike
 {
     public class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostCommentLikeCommand>
     {
@@ -24,7 +24,7 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.AddPost
 
         public AddPostCommentLikeCommandHandler(
             IMapper mapper,
-            IGetUserByIdRequestClient requestClient, 
+            IGetUserByIdRequestClient requestClient,
             IPostCommentRepository postCommentRepository,
             IPostCommentLikeRepository postCommentLikeRepository)
         {

@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Models;
 using InstaConnect.Posts.Data.Abstract.Repositories;
-using InstaConnect.Posts.Data.Repositories;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Data.Models.Filters;
-using InstaConnect.Users.Data.Models.Filters;
 
-namespace InstaConnect.Posts.Business.Queries.Posts.GetAllPosts
+namespace InstaConnect.Posts.Business.Queries.PostCommentLikes.GetAllPostCommentLikes
 {
     public class GetAllPostCommentLikesQueryHandler : IQueryHandler<GetAllPostCommentLikesQuery, ICollection<PostCommentLikeViewDTO>>
     {

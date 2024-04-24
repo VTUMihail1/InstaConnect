@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Shared.Business.Messaging;
 using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePost
+namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment
 {
     public class UpdatePostCommentCommand : ICommand
     {

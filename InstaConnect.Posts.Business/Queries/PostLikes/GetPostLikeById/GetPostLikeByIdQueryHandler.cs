@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Posts.Business.Queries.Posts.GetPostById
+namespace InstaConnect.Posts.Business.Queries.PostLikes.GetPostLikeById
 {
     public class GetPostLikeByIdQueryHandler : IQueryHandler<GetPostLikeByIdQuery, PostLikeViewDTO>
     {

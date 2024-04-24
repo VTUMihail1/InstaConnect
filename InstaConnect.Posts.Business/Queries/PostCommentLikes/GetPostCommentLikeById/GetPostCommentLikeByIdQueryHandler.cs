@@ -4,7 +4,7 @@ using InstaConnect.Posts.Data.Abstract.Repositories;
 using InstaConnect.Shared.Business.Exceptions.PostCommentLike;
 using InstaConnect.Shared.Business.Messaging;
 
-namespace InstaConnect.Posts.Business.Queries.Posts.GetPostById
+namespace InstaConnect.Posts.Business.Queries.PostCommentLikes.GetPostCommentLikeById
 {
     public class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostCommentLikeByIdQuery, PostCommentLikeViewDTO>
     {

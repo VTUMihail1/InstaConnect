@@ -9,7 +9,7 @@ using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Posts.Business.Commands.PostComments.DeletePost
+namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommentLike
 {
     public class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostCommentLikeCommand>
     {

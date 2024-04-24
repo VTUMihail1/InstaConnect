@@ -7,7 +7,7 @@ using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Posts.Business.Commands.PostComments.DeletePost
+namespace InstaConnect.Posts.Business.Commands.Posts.DeletePost
 {
     public class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
     {

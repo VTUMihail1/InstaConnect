@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Commands.PostComments.AddPost;
-using InstaConnect.Posts.Business.Commands.PostComments.DeletePost;
-using InstaConnect.Posts.Business.Commands.PostComments.UpdatePost;
-using InstaConnect.Posts.Business.Queries.Posts.GetAllFilteredPosts;
-using InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
-using InstaConnect.Posts.Business.Queries.Posts.GetPostById;
-using InstaConnect.Posts.Web.Models.Requests.Post;
+using InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLike;
+using InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommentLike;
+using InstaConnect.Posts.Business.Queries.PostCommentLikes.GetAllPostCommentLikes;
+using InstaConnect.Posts.Business.Queries.PostCommentLikes.GetPostCommentLikeById;
+using InstaConnect.Posts.Business.Queries.PostLikes.GetAllFilteredPostLikes;
+using InstaConnect.Posts.Web.Models.Requests.PostCommentLike;
 using InstaConnect.Posts.Web.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
 using MediatR;
@@ -28,8 +27,8 @@ namespace InstaConnect.Posts.Web.Controllers
             _sender = sender;
         }
 
-		// GET: api/post-comment-likes
-		[HttpGet]
+        // GET: api/post-comment-likes
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllAsync(CollectionRequestModel collectionRequestModel)
@@ -41,8 +40,8 @@ namespace InstaConnect.Posts.Web.Controllers
             return Ok(postCommentLikeViewModels);
         }
 
-		// GET: api/post-comment-likes/filtered
-		[HttpGet]
+        // GET: api/post-comment-likes/filtered
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllFilteredAsync(GetPostCommentLikesCollectionRequestModel getPostCommentLikesCollectionRequestModel)
@@ -54,8 +53,8 @@ namespace InstaConnect.Posts.Web.Controllers
             return Ok(postCommentLikeViewModels);
         }
 
-		// GET: api/post-comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-		[HttpGet("{id}")]
+        // GET: api/post-comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync(GetPostCommentLikeByIdRequestModel getPostCommentLikeByIdRequestModel)
@@ -67,8 +66,8 @@ namespace InstaConnect.Posts.Web.Controllers
             return Ok(postCommentLikeViewModel);
         }
 
-		// POST: api/post-comment-likes
-		[HttpPost]
+        // POST: api/post-comment-likes
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -80,8 +79,8 @@ namespace InstaConnect.Posts.Web.Controllers
             return NoContent();
         }
 
-		//DELETE: api/posts-comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-		[HttpDelete("{id}/by-user/{userId}")]
+        //DELETE: api/posts-comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+        [HttpDelete("{id}/by-user/{userId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

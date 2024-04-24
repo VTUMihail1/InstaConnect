@@ -3,7 +3,6 @@ using InstaConnect.Posts.Business.Models;
 using InstaConnect.Posts.Data.Abstract.Repositories;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Data.Models.Filters;
-using InstaConnect.Users.Data.Models.Filters;
 
 namespace InstaConnect.Posts.Business.Queries.Posts.GetAllPosts
 {

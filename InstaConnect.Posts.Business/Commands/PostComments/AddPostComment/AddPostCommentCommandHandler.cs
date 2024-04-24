@@ -9,7 +9,7 @@ using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Posts.Business.Commands.PostComments.AddPost
+namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment
 {
     public class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentCommand>
     {
@@ -34,7 +34,7 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.AddPost
         {
             var post = await _postRepository.GetByIdAsync(request.PostId, cancellationToken);
 
-            if(post == null)
+            if (post == null)
             {
                 throw new PostNotFoundException();
             }

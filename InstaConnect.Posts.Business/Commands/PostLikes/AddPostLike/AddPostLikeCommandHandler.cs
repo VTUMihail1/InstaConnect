@@ -9,7 +9,7 @@ using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Posts.Business.Commands.PostComments.AddPost
+namespace InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike
 {
     public class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
     {

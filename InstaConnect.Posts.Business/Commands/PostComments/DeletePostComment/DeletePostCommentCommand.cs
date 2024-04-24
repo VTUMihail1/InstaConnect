@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Business.Messaging;
 
-namespace InstaConnect.Posts.Business.Commands.PostComments.DeletePost
+namespace InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment
 {
     public class DeletePostCommentCommand : ICommand
     {

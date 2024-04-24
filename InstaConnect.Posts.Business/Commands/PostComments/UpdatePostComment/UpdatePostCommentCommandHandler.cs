@@ -10,7 +10,7 @@ using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePost
+namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment
 {
     public class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommand>
     {
@@ -19,8 +19,8 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePost
         private readonly IValidateUserByIdRequestClient _requestClient;
 
         public UpdatePostCommentCommandHandler(
-            IMapper mapper, 
-            IPostCommentRepository postCommentRepository, 
+            IMapper mapper,
+            IPostCommentRepository postCommentRepository,
             IValidateUserByIdRequestClient requestClient)
         {
             _mapper = mapper;

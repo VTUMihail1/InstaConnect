@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Posts.Web.Models.Requests.Post
+namespace InstaConnect.Posts.Web.Models.Requests.PostComment
 {
     public class AddPostCommentRequestModel
     {
