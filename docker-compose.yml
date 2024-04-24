@@ -50,4 +50,9 @@ services:
        - ./.containers/queue/data/:/var/lib/rabbitmq
        - ./.containers/queue/log/:/var/log/rabbitmq
 
+  instaconnect.messages.web:
+    image: ${DOCKER_REGISTRY-}instaconnectmessagesweb
+    build:
+      context: .
+      dockerfile: ../InstaConnect.Messages.Web/Dockerfile
 

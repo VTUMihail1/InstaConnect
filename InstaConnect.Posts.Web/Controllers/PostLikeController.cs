@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Commands.PostComments.AddPost;
-using InstaConnect.Posts.Business.Commands.PostComments.DeletePost;
-using InstaConnect.Posts.Business.Commands.PostComments.UpdatePost;
-using InstaConnect.Posts.Business.Queries.Posts.GetAllFilteredPosts;
-using InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
-using InstaConnect.Posts.Business.Queries.Posts.GetPostById;
-using InstaConnect.Posts.Web.Models.Requests.Post;
+using InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
+using InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
+using InstaConnect.Posts.Business.Queries.PostLikes.GetAllFilteredPostLikes;
+using InstaConnect.Posts.Business.Queries.PostLikes.GetAllPostLikes;
+using InstaConnect.Posts.Business.Queries.PostLikes.GetPostLikeById;
+using InstaConnect.Posts.Web.Models.Requests.PostLike;
 using InstaConnect.Posts.Web.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
 using MediatR;

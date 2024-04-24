@@ -1,15 +1,27 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Commands.PostComments.AddPost;
-using InstaConnect.Posts.Business.Commands.PostComments.DeletePost;
-using InstaConnect.Posts.Business.Commands.PostComments.UpdatePost;
+using InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLike;
+using InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommentLike;
+using InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
+using InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment;
+using InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment;
+using InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
+using InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
+using InstaConnect.Posts.Business.Commands.Posts.AddPost;
+using InstaConnect.Posts.Business.Commands.Posts.DeletePost;
+using InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
 using InstaConnect.Posts.Business.Models;
+using InstaConnect.Posts.Business.Queries.PostCommentLikes.GetAllFilteredPostCommentLikes;
+using InstaConnect.Posts.Business.Queries.PostCommentLikes.GetAllPostCommentLikes;
+using InstaConnect.Posts.Business.Queries.PostComments.GetAllFilteredPostComments;
+using InstaConnect.Posts.Business.Queries.PostComments.GetAllPostComments;
+using InstaConnect.Posts.Business.Queries.PostLikes.GetAllFilteredPostLikes;
+using InstaConnect.Posts.Business.Queries.PostLikes.GetAllPostLikes;
 using InstaConnect.Posts.Business.Queries.Posts.GetAllFilteredPosts;
 using InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
 using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Posts.Data.Models.Filters;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Data.Models.Filters;
-using InstaConnect.Users.Data.Models.Filters;
 
 namespace InstaConnect.Posts.Business.Profiles
 {

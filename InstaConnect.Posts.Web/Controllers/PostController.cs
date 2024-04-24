@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Commands.PostComments.AddPost;
-using InstaConnect.Posts.Business.Commands.PostComments.DeletePost;
-using InstaConnect.Posts.Business.Commands.PostComments.UpdatePost;
+using InstaConnect.Posts.Business.Commands.Posts.AddPost;
+using InstaConnect.Posts.Business.Commands.Posts.DeletePost;
+using InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
 using InstaConnect.Posts.Business.Queries.Posts.GetAllFilteredPosts;
 using InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
 using InstaConnect.Posts.Business.Queries.Posts.GetPostById;

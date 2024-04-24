@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Models;
 using InstaConnect.Posts.Data.Abstract.Repositories;
+using InstaConnect.Posts.Data.Models.Filters;
 using InstaConnect.Shared.Business.Messaging;
-using InstaConnect.Users.Data.Models.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;

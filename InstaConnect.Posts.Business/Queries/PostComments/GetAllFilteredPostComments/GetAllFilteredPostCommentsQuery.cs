@@ -3,7 +3,7 @@ using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Filters;
 using MediatR;
 
-namespace InstaConnect.Posts.Business.Queries.Posts.GetAllFilteredPosts
+namespace InstaConnect.Posts.Business.Queries.PostComments.GetAllFilteredPostComments
 {
     public class GetAllFilteredPostCommentsQuery : CollectionDTO, IQuery<ICollection<PostCommentViewDTO>>
     {
