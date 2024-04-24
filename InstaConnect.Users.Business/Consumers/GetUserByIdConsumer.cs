@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Shared.Business.Models.Response;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 using MassTransit;

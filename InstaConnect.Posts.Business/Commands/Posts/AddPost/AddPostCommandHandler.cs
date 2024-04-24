@@ -6,14 +6,6 @@ using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
-using MassTransit;
-using MassTransit.RabbitMqTransport;
-using MassTransit.RabbitMqTransport.Integration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InstaConnect.Posts.Business.Commands.PostComments.AddPost
 {

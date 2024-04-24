@@ -2,12 +2,10 @@
 
 namespace InstaConnect.Posts.Web.Models.Requests.Post
 {
-    public class AddPostRequestModel
+    public class AddPostCommentLikeRequestModel
     {
         public string UserId { get; set; }
 
-        public string Title { get; set; }
-
-        public string Content { get; set; }
+        public string PostCommentId { get; set; }
     }
 }
