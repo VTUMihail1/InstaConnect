@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLike;
 using InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommentLike;
+using InstaConnect.Posts.Business.Queries.PostCommentLikes.GetAllFilteredPostCommentLikes;
 using InstaConnect.Posts.Business.Queries.PostCommentLikes.GetAllPostCommentLikes;
 using InstaConnect.Posts.Business.Queries.PostCommentLikes.GetPostCommentLikeById;
 using InstaConnect.Posts.Business.Queries.PostLikes.GetAllFilteredPostLikes;
@@ -46,7 +47,7 @@ namespace InstaConnect.Posts.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllFilteredAsync(GetPostCommentLikesCollectionRequestModel getPostCommentLikesCollectionRequestModel)
         {
-            var getAllFilteredPostCommentLikesQuery = _mapper.Map<GetAllFilteredPostLikesQuery>(getPostCommentLikesCollectionRequestModel);
+            var getAllFilteredPostCommentLikesQuery = _mapper.Map<GetAllFilteredPostCommentLikesQuery>(getPostCommentLikesCollectionRequestModel);
             var response = await _sender.Send(getAllFilteredPostCommentLikesQuery);
             var postCommentLikeViewModels = _mapper.Map<ICollection<PostLikeViewModel>>(response);
 

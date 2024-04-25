@@ -1,6 +1,10 @@
-﻿using InstaConnect.Follows.Business.Profiles;
-using MassTransit;
+﻿using InstaConnect.Follows.Web.Profiles;
+using InstaConnect.Users.Business.Abstractions;
+using InstaConnect.Users.Business.Profiles;
+using InstaConnect.Users.Business.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace InstaConnect.Follows.Web.Extensions
 {
@@ -8,6 +12,10 @@ namespace InstaConnect.Follows.Web.Extensions
     {
         public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollection)
         {
+            serviceCollection.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
+
+            serviceCollection.AddAutoMapper(typeof(FollowsWebProfile));
+
             return serviceCollection;
         }
     }
