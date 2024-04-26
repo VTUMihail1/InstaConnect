@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Follows.Web.Models.Requests.PostCommentLike
+namespace InstaConnect.Follows.Web.Models.Requests.Follows
 {
     public class DeleteFollowRequestModel
     {

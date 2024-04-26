@@ -6,12 +6,12 @@ using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Posts.Business.Queries.PostComments.GetAllFilteredPostComments
 {
-    public class GetAllFilteredPostCommentssQueryHandler : IQueryHandler<GetAllFilteredPostCommentsQuery, ICollection<PostCommentViewDTO>>
+    public class GetAllFilteredPostCommentsQueryHandler : IQueryHandler<GetAllFilteredPostCommentsQuery, ICollection<PostCommentViewDTO>>
     {
         private readonly IMapper _mapper;
         private readonly IPostCommentRepository _postCommentRepository;
 
-        public GetAllFilteredPostCommentssQueryHandler(
+        public GetAllFilteredPostCommentsQueryHandler(
             IMapper mapper,
             IPostCommentRepository postCommentRepository)
         {

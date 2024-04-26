@@ -49,6 +49,7 @@ namespace InstaConnect.Users.Data.Extensions
                 .AddEntityFrameworkStores<UsersContext>()
                 .AddDefaultTokenProviders();
 
+
             return serviceCollection;
         }
     }

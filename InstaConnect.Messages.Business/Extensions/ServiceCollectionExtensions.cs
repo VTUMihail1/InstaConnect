@@ -8,7 +8,7 @@ namespace InstaConnect.Messages.Business.Extensions
     {
         public static IServiceCollection AddBusinessLayer(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddAutoMapper(typeof(MessagesBusinessProfile));
+            serviceCollection.AddAutoMapper(typeof(MessagesProfile));
 
             serviceCollection.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly));
 

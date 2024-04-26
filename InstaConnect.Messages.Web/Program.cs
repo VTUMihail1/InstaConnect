@@ -1,3 +1,4 @@
+using InstaConnect.Business.Helpers.Hubs;
 using InstaConnect.Messages.Business.Extensions;
 using InstaConnect.Messages.Data.Extensions;
 using InstaConnect.Messages.Web.Extensions;
@@ -12,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services
-    .AddDataLayer()
+    .AddDataLayer(builder.Configuration)
     .AddBusinessLayer()
     .AddWebLayer();
 
@@ -28,6 +29,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.MapHub<ChatHub>("/chat-hub");
 
 app.MapControllers();
 
