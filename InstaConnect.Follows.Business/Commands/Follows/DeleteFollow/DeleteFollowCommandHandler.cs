@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Follows.Data.Abstractions.Repositories;
-using InstaConnect.Posts.Data.Abstract.Repositories;
-using InstaConnect.Posts.Data.Repositories;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Follow;
-using InstaConnect.Shared.Business.Exceptions.PostLike;
-using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
