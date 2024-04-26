@@ -39,6 +39,42 @@ services:
      ports:
        - 3306
 
+  instaconnect.messages.web:
+    image: ${DOCKER_REGISTRY-}instaconnectmessagesweb
+    build:
+      context: .
+      dockerfile: ../InstaConnect.Messages.Web/Dockerfile
+
+  instaconnect.messages.database:
+     image: mysql:latest
+     container_name: instaconnect.messages.database
+     environment: 
+       - MYSQL_DB=instaconnect.messages
+       - MYSQL_USER=mihail
+       - MYSQL_ROOT_PASSWORD=mihail
+     volumes:
+       - ./.containers/messages-db:/var/lib/mysql
+     ports:
+       - 3306
+
+  instaconnect.follows.web:
+    image: ${DOCKER_REGISTRY-}instaconnectfollowsweb
+    build:
+      context: .
+      dockerfile: ../InstaConnect.Follows.Web/Dockerfile
+
+  instaconnect.follows.database:
+     image: mysql:latest
+     container_name: instaconnect.follows.database
+     environment: 
+       - MYSQL_DB=instaconnect.follows
+       - MYSQL_USER=mihail
+       - MYSQL_ROOT_PASSWORD=mihail
+     volumes:
+       - ./.containers/follows-db:/var/lib/mysql
+     ports:
+       - 3306
+
   instaconnect.rabbitmq:
      image: rabbitmq:management
      container_name: instaconnect.rabbitmq
@@ -49,10 +85,4 @@ services:
      volumes:
        - ./.containers/queue/data/:/var/lib/rabbitmq
        - ./.containers/queue/log/:/var/log/rabbitmq
-
-  instaconnect.messages.web:
-    image: ${DOCKER_REGISTRY-}instaconnectmessagesweb
-    build:
-      context: .
-      dockerfile: ../InstaConnect.Messages.Web/Dockerfile
 
