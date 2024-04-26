@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Business.Consumers;
+using InstaConnect.Users.Business.Helpers;
 using InstaConnect.Users.Business.Profiles;
 using InstaConnect.Users.Business.Services;
 using MassTransit;
@@ -15,6 +16,8 @@ namespace InstaConnect.Users.Business.Extensions
         {
             serviceCollection
                 .AddScoped<ITokenService, TokenService>()
+                .AddScoped<ICurrentUserContext, CurrentUserContext>()
+                .AddHttpContextAccessor()
                 .AddAutoMapper(typeof(UsersBusinessProfile));
 
             serviceCollection.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly));
@@ -25,6 +28,7 @@ namespace InstaConnect.Users.Business.Extensions
 
                 busConfigurator.AddConsumer<GetUserByIdConsumer>();
                 busConfigurator.AddConsumer<ValidateUserByIdConsumer>();
+                busConfigurator.AddConsumer<GetCurrentUserDetailsConsumer>();
 
                 busConfigurator.UsingRabbitMq((context, configurator) =>
                 {
