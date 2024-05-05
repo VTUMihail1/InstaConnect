@@ -9,16 +9,16 @@ using InstaConnect.Shared.Business.RequestClients;
 
 namespace InstaConnect.Posts.Business.Commands.Posts.AddPost
 {
-    public class AddPostCommandHandler : ICommandHandler<AddPostCommand>
+    internal class AddPostCommandHandler : ICommandHandler<AddPostCommand>
     {
         private readonly IMapper _mapper;
         private readonly IPostRepository _postRepository;
-        private readonly IGetUserByIdRequestClient _requestClient;
+        private readonly IGetCurrentUserRequestClient _requestClient;
 
         public AddPostCommandHandler(
             IMapper mapper,
             IPostRepository postRepository,
-            IGetUserByIdRequestClient requestClient)
+            IGetCurrentUserRequestClient requestClient)
         {
             _mapper = mapper;
             _postRepository = postRepository;
@@ -27,16 +27,11 @@ namespace InstaConnect.Posts.Business.Commands.Posts.AddPost
 
         public async Task Handle(AddPostCommand request, CancellationToken cancellationToken)
         {
-            var getUserByIdRequest = _mapper.Map<ValidateUserIdRequest>(request);
-
-            var getUserByIdResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getUserByIdRequest, cancellationToken);
-
-            if (!getUserByIdResponse.Message.Exists)
-            {
-                throw new UserNotFoundException();
-            }
+            var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
+            var getCurrentUserResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
 
             var post = _mapper.Map<Post>(request);
+            _mapper.Map(getCurrentUserResponse.Message, post);
             await _postRepository.AddAsync(post, cancellationToken);
         }
     }

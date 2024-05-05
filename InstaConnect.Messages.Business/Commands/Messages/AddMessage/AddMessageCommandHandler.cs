@@ -16,13 +16,13 @@ namespace InstaConnect.Messages.Business.Commands.PostComments.AddPostComment
         private readonly IMapper _mapper;
         private readonly IMessageSender _messageSender;
         private readonly IMessageRepository _messageRepository;
-        private readonly IGetUserByIdRequestClient _requestClient;
+        private readonly IValidateUserIdRequestClient _requestClient;
 
         public AddMessageCommandHandler(
             IMapper mapper,
             IMessageSender messageSender,
             IMessageRepository messageRepository,
-            IGetUserByIdRequestClient requestClient)
+            IValidateUserIdRequestClient requestClient)
         {
             _mapper = mapper;
             _messageSender = messageSender;

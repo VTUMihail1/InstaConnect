@@ -13,18 +13,18 @@ using InstaConnect.Shared.Business.RequestClients;
 
 namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLike
 {
-    public class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostCommentLikeCommand>
+    internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostCommentLikeCommand>
     {
         private const string POST_COMMENT_ALREADY_LIKED = "This user has already liked this comment";
 
         private readonly IMapper _mapper;
-        private readonly IGetUserByIdRequestClient _requestClient;
+        private readonly IValidateUserIdRequestClient _requestClient;
         private readonly IPostCommentRepository _postCommentRepository;
         private readonly IPostCommentLikeRepository _postCommentLikeRepository;
 
         public AddPostCommentLikeCommandHandler(
             IMapper mapper,
-            IGetUserByIdRequestClient requestClient,
+            IValidateUserIdRequestClient requestClient,
             IPostCommentRepository postCommentRepository,
             IPostCommentLikeRepository postCommentLikeRepository)
         {
@@ -43,10 +43,10 @@ namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLi
                 throw new PostCommentNotFoundException();
             }
 
-            var getCurrentUserDetailsRequest = _mapper.Map<GetCurrentUserRequest>(request);
-            var getCurrentUserDetailsResponse = await _requestClient.GetResponse<ValidateUserIdResponse>(getCurrentUserDetailsRequest, cancellationToken);
+            var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
+            var getCurrentUserResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
 
-            var existingPostLike = _postCommentLikeRepository.GetByUserIdAndPostCommentIdAsync(getCurrentUserDetailsResponse.Message.Id, request.PostCommentId, cancellationToken);
+            var existingPostLike = _postCommentLikeRepository.GetByUserIdAndPostCommentIdAsync(getCurrentUserResponse.Message.Id, request.PostCommentId, cancellationToken);
 
             if (existingPostLike == null)
             {
@@ -54,7 +54,7 @@ namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLi
             }
 
             var postCommentLike = _mapper.Map<PostCommentLike>(request);
-            _mapper.Map(getCurrentUserDetailsResponse.Message, postCommentLike);
+            _mapper.Map(getCurrentUserResponse.Message, postCommentLike);
             await _postCommentLikeRepository.AddAsync(postCommentLike, cancellationToken);
         }
     }

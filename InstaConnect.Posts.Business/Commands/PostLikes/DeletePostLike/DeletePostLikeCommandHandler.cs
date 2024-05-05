@@ -11,7 +11,7 @@ using InstaConnect.Shared.Business.RequestClients;
 
 namespace InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike
 {
-    public class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeCommand>
+    internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeCommand>
     {
         private readonly IMapper _mapper;
         private readonly IPostLikeRepository _postLikeRepository;
@@ -36,15 +36,8 @@ namespace InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike
                 throw new PostLikeNotFoundException();
             }
 
-            var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-            _mapper.Map(existingPostLike, validateUserByIdRequest);
-
-            var validateUserByIdResponse = await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
-
-            if (!validateUserByIdResponse.Message.IsValid)
-            {
-                throw new AccountForbiddenException();
-            }
+            var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingPostLike);
+            await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
             await _postLikeRepository.DeleteAsync(existingPostLike, cancellationToken);
         }

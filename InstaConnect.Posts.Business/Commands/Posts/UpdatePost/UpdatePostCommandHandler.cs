@@ -34,15 +34,8 @@ namespace InstaConnect.Posts.Business.Commands.Posts.UpdatePost
                 throw new PostNotFoundException();
             }
 
-            var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-            _mapper.Map(existingPost, validateUserByIdRequest);
-
-            var validateUserByIdResponse = await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
-
-            if (!validateUserByIdResponse.Message.IsValid)
-            {
-                throw new AccountForbiddenException();
-            }
+            var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingPost);
+            await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
             _mapper.Map(request, existingPost);
             await _postRepository.UpdateAsync(existingPost, cancellationToken);

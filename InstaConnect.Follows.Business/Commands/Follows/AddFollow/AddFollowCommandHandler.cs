@@ -16,12 +16,12 @@ namespace InstaConnect.Follows.Business.Commands.Follows.AddFollow
 
         private readonly IMapper _mapper;
         private readonly IFollowRepository _followRepository;
-        private readonly IGetUserByIdRequestClient _requestClient;
+        private readonly IValidateUserIdRequestClient _requestClient;
 
         public AddFollowCommandHandler(
             IMapper mapper,
             IFollowRepository followRepository,
-            IGetUserByIdRequestClient requestClient)
+            IValidateUserIdRequestClient requestClient)
         {
             _mapper = mapper;
             _followRepository = followRepository;

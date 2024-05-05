@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Data.Abstract.Repositories;
-using InstaConnect.Posts.Data.Repositories;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.PostLike;
-using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
@@ -11,7 +8,7 @@ using InstaConnect.Shared.Business.RequestClients;
 
 namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommentLike
 {
-    public class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostCommentLikeCommand>
+    internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostCommentLikeCommand>
     {
         private readonly IMapper _mapper;
         private readonly IValidateUserByIdRequestClient _requestClient;
@@ -36,15 +33,8 @@ namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommen
                 throw new PostLikeNotFoundException();
             }
 
-            var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-            _mapper.Map(existingPostCommentLike, validateUserByIdRequest);
-
-            var validateUserByIdResponse = await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
-
-            if (!validateUserByIdResponse.Message.IsValid)
-            {
-                throw new AccountForbiddenException();
-            }
+            var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingPostCommentLike);
+            await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
             await _postCommentLikeRepository.DeleteAsync(existingPostCommentLike, cancellationToken);
         }

@@ -12,7 +12,7 @@ using InstaConnect.Shared.Business.RequestClients;
 
 namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment
 {
-    public class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommand>
+    internal class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommand>
     {
         private readonly IMapper _mapper;
         private readonly IPostCommentRepository _postCommentRepository;
@@ -38,12 +38,7 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment
             }
 
             var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-            var validateUserByIdResponse = await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
-
-            if (!validateUserByIdResponse.Message.IsValid)
-            {
-                throw new AccountForbiddenException();
-            }
+            await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
             _mapper.Map(request, existingPostComment);
             await _postCommentRepository.UpdateAsync(existingPostComment, cancellationToken);

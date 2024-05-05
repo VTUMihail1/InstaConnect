@@ -11,25 +11,25 @@ using InstaConnect.Shared.Business.RequestClients;
 
 namespace InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike
 {
-    public class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
+    internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
     {
         private const string POST_ALREADY_LIKED = "This user has already liked this post";
 
         private readonly IMapper _mapper;
         private readonly IPostRepository _postRepository;
-        private readonly IGetUserByIdRequestClient _requestClient;
         private readonly IPostLikeRepository _postLikeRepository;
+        private readonly IGetCurrentUserRequestClient _requestClient;
 
         public AddPostLikeCommandHandler(
-            IMapper mapper,
-            IPostRepository postRepository,
-            IGetUserByIdRequestClient requestClient,
-            IPostLikeRepository postLikeRepository)
+            IMapper mapper, 
+            IPostRepository postRepository, 
+            IPostLikeRepository postLikeRepository, 
+            IGetCurrentUserRequestClient requestClient)
         {
             _mapper = mapper;
             _postRepository = postRepository;
-            _requestClient = requestClient;
             _postLikeRepository = postLikeRepository;
+            _requestClient = requestClient;
         }
 
         public async Task Handle(AddPostLikeCommand request, CancellationToken cancellationToken)
@@ -41,15 +41,10 @@ namespace InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike
                 throw new PostNotFoundException();
             }
 
-            var getUserByIdRequest = _mapper.Map<ValidateUserIdRequest>(request);
-            var getUserByIdResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getUserByIdRequest, cancellationToken);
+            var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
+            var getCurrentUserResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
 
-            if (!getUserByIdResponse.Message.Exists)
-            {
-                throw new UserNotFoundException();
-            }
-
-            var existingPostLike = _postLikeRepository.GetByUserIdAndPostIdAsync(request.UserId, request.PostId, cancellationToken);
+            var existingPostLike = _postLikeRepository.GetByUserIdAndPostIdAsync(getCurrentUserResponse.Message.Id, request.PostId, cancellationToken);
 
             if (existingPostLike == null)
             {
@@ -57,6 +52,7 @@ namespace InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike
             }
 
             var postLike = _mapper.Map<PostLike>(request);
+            _mapper.Map(getCurrentUserResponse, postLike);
             await _postLikeRepository.AddAsync(postLike, cancellationToken);
         }
     }

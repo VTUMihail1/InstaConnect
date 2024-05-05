@@ -9,7 +9,7 @@ using InstaConnect.Shared.Business.RequestClients;
 
 namespace InstaConnect.Posts.Business.Commands.Posts.DeletePost
 {
-    public class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
+    internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
     {
         private readonly IMapper _mapper;
         private readonly IPostRepository _postRepository;
@@ -34,15 +34,8 @@ namespace InstaConnect.Posts.Business.Commands.Posts.DeletePost
                 throw new PostNotFoundException();
             }
 
-            var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-            _mapper.Map(existingPost, validateUserByIdRequest);
-
-            var validateUserByIdResponse = await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
-
-            if (!validateUserByIdResponse.Message.IsValid)
-            {
-                throw new AccountForbiddenException();
-            }
+            var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingPost);
+            await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
             await _postRepository.DeleteAsync(existingPost, cancellationToken);
         }
