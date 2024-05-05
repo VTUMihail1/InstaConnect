@@ -41,7 +41,7 @@ namespace InstaConnect.Posts.Business.Profiles
 
             CreateMap<GetAllPostsQuery, CollectionQuery>();
 
-            CreateMap<AddPostCommand, GetUserByIdRequest>()
+            CreateMap<AddPostCommand, ValidateUserIdRequest>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
 
             CreateMap<UpdatePostCommand, ValidateUserByIdRequest>()
@@ -72,7 +72,7 @@ namespace InstaConnect.Posts.Business.Profiles
 
             CreateMap<GetAllPostCommentsQuery, CollectionQuery>();
 
-            CreateMap<AddPostCommentCommand, GetUserByIdRequest>()
+            CreateMap<AddPostCommentCommand, ValidateUserIdRequest>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
 
             CreateMap<UpdatePostCommentCommand, ValidateUserByIdRequest>()
@@ -102,7 +102,7 @@ namespace InstaConnect.Posts.Business.Profiles
 
             CreateMap<GetAllPostLikesQuery, CollectionQuery>();
 
-            CreateMap<AddPostLikeCommand, GetUserByIdRequest>()
+            CreateMap<AddPostLikeCommand, ValidateUserIdRequest>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
 
             CreateMap<DeletePostLikeCommand, ValidateUserByIdRequest>()
@@ -127,7 +127,7 @@ namespace InstaConnect.Posts.Business.Profiles
 
             CreateMap<GetAllPostCommentLikesQuery, CollectionQuery>();
 
-            CreateMap<AddPostCommentLikeCommand, GetUserByIdRequest>()
+            CreateMap<AddPostCommentLikeCommand, ValidateUserIdRequest>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
 
             CreateMap<DeletePostCommentLikeCommand, ValidateUserByIdRequest>()

@@ -43,15 +43,10 @@ namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLi
                 throw new PostCommentNotFoundException();
             }
 
-            var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
-            var getUserByIdResponse = await _requestClient.GetResponse<GetUserByIdResponse>(getUserByIdRequest, cancellationToken);
+            var getCurrentUserDetailsRequest = _mapper.Map<GetCurrentUserRequest>(request);
+            var getCurrentUserDetailsResponse = await _requestClient.GetResponse<ValidateUserIdResponse>(getCurrentUserDetailsRequest, cancellationToken);
 
-            if (!getUserByIdResponse.Message.Exists)
-            {
-                throw new UserNotFoundException();
-            }
-
-            var existingPostLike = _postCommentLikeRepository.GetByUserIdAndPostCommentIdAsync(request.UserId, request.PostCommentId, cancellationToken);
+            var existingPostLike = _postCommentLikeRepository.GetByUserIdAndPostCommentIdAsync(getCurrentUserDetailsResponse.Message.Id, request.PostCommentId, cancellationToken);
 
             if (existingPostLike == null)
             {
@@ -59,6 +54,7 @@ namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLi
             }
 
             var postCommentLike = _mapper.Map<PostCommentLike>(request);
+            _mapper.Map(getCurrentUserDetailsResponse.Message, postCommentLike);
             await _postCommentLikeRepository.AddAsync(postCommentLike, cancellationToken);
         }
     }

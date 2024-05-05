@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InstaConnect.Shared.Business.RequestClients
 {
-    public interface IGetUserByIdRequestClient : IRequestClient<GetUserByIdRequest>
+    public interface IGetUserByIdRequestClient : IRequestClient<ValidateUserIdRequest>
     {
     }
 }

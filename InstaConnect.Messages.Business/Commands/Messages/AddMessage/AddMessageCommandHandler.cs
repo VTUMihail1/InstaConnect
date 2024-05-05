@@ -32,16 +32,16 @@ namespace InstaConnect.Messages.Business.Commands.PostComments.AddPostComment
 
         public async Task Handle(AddMessageCommand request, CancellationToken cancellationToken)
         {
-            var getUserByFollowerIdRequest = _mapper.Map<GetUserByIdRequest>(request);
-            var getUserByFollowerIdResponse = await _requestClient.GetResponse<GetUserByIdResponse>(getUserByFollowerIdRequest, cancellationToken);
+            var getUserByFollowerIdRequest = _mapper.Map<ValidateUserIdRequest>(request);
+            var getUserByFollowerIdResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getUserByFollowerIdRequest, cancellationToken);
 
             if (!getUserByFollowerIdResponse.Message.Exists)
             {
                 throw new UserNotFoundException();
             }
 
-            var getUserByFollowingIdRequest = _mapper.Map<GetUserByIdRequest>(request);
-            var getUserByFollowingIdResponse = await _requestClient.GetResponse<GetUserByIdResponse>(getUserByFollowingIdRequest, cancellationToken);
+            var getUserByFollowingIdRequest = _mapper.Map<ValidateUserIdRequest>(request);
+            var getUserByFollowingIdResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getUserByFollowingIdRequest, cancellationToken);
 
             if (!getUserByFollowingIdResponse.Message.Exists)
             {

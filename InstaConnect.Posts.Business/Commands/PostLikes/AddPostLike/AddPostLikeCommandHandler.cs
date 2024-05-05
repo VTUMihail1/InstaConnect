@@ -41,8 +41,8 @@ namespace InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike
                 throw new PostNotFoundException();
             }
 
-            var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
-            var getUserByIdResponse = await _requestClient.GetResponse<GetUserByIdResponse>(getUserByIdRequest, cancellationToken);
+            var getUserByIdRequest = _mapper.Map<ValidateUserIdRequest>(request);
+            var getUserByIdResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getUserByIdRequest, cancellationToken);
 
             if (!getUserByIdResponse.Message.Exists)
             {

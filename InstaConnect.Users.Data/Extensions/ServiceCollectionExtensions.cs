@@ -4,11 +4,13 @@ using InstaConnect.Users.Data.Abstraction.Repositories;
 using InstaConnect.Users.Data.Factories;
 using InstaConnect.Users.Data.Helpers;
 using InstaConnect.Users.Data.Models.Entities;
+using InstaConnect.Users.Data.Models.Options;
 using InstaConnect.Users.Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TokenOptions = InstaConnect.Users.Data.Models.Options.TokenOptions;
 
 namespace InstaConnect.Users.Data.Extensions
 {
@@ -18,8 +20,6 @@ namespace InstaConnect.Users.Data.Extensions
 
         public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            var tokenOptions = configuration.GetSection(nameof(TokenOptions));
-
             serviceCollection.AddDbContext<UsersContext>(options =>
             {
                 var connectionString = configuration.GetConnectionString(

@@ -40,7 +40,7 @@ namespace InstaConnect.Users.Business.Profiles
 
             CreateMap<User, UserDetailedViewDTO>();
 
-            CreateMap<UserDetailsViewDTO, GetCurrentUserDetailsResponse>();
+            CreateMap<UserDetailsViewDTO, ValidateUserIdResponse>();
         }
     }
 }

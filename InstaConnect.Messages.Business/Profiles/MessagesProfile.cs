@@ -30,7 +30,7 @@ namespace InstaConnect.Messages.Business.Profiles
 
             CreateMap<GetAllMessagesQuery, CollectionQuery>();
 
-            CreateMap<AddMessageCommand, GetUserByIdRequest>()
+            CreateMap<AddMessageCommand, ValidateUserIdRequest>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SenderId));
 
             CreateMap<UpdateMessageCommand, ValidateUserByIdRequest>()

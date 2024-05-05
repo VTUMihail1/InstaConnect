@@ -39,13 +39,8 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment
                 throw new PostNotFoundException();
             }
 
-            var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
-            var getUserByIdResponse = await _requestClient.GetResponse<GetUserByIdResponse>(getUserByIdRequest, cancellationToken);
-
-            if (!getUserByIdResponse.Message.Exists)
-            {
-                throw new UserNotFoundException();
-            }
+            var getCurrentUserDetailsRequest = _mapper.Map<GetCurrentUserRequest>(request);
+            var getCurrentUserDetailsResponse = await _requestClient.GetResponse<GetCurrentUserRequest>(getCurrentUserDetailsRequest, cancellationToken);
 
             var existingPostComment = await _postCommentRepository.GetByIdAsync(request.PostCommentId, cancellationToken);
 
@@ -55,6 +50,7 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment
             }
 
             var postComment = _mapper.Map<PostComment>(request);
+            _mapper.Map(getCurrentUserDetailsResponse.Message, postComment);
             await _postCommentRepository.AddAsync(postComment, cancellationToken);
         }
     }

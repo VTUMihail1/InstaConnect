@@ -3,11 +3,6 @@ using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Business.Extensions;
 using InstaConnect.Users.Business.Models;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InstaConnect.Users.Business.Helpers
 {
@@ -20,12 +15,9 @@ namespace InstaConnect.Users.Business.Helpers
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public UserDetailsViewDTO GetUserDetails()
+        public string? GetUsedId()
         {
-            return new()
-            {
-                Id = _httpContextAccessor?.HttpContext.User.GetUserId() ?? throw new AccountUnauthorizedException()
-            };
+            return _httpContextAccessor?.HttpContext.User.GetUserId();
         }
     }
 }

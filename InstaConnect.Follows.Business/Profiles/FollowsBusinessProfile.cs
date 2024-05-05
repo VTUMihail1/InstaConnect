@@ -27,7 +27,7 @@ namespace InstaConnect.Follows.Business.Profiles
 
             CreateMap<GetAllFollowsQuery, CollectionQuery>();
 
-            CreateMap<AddFollowCommand, GetUserByIdRequest>()
+            CreateMap<AddFollowCommand, ValidateUserIdRequest>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.FollowingId));
 
             CreateMap<DeleteFollowCommand, ValidateUserByIdRequest>()

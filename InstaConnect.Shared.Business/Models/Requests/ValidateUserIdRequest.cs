@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Shared.Business.Models.Requests
 {
-    public class GetUserByIdRequest
+    public class ValidateUserIdRequest
     {
         public string Id { get; set; }
     }

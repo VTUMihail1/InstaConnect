@@ -4,12 +4,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 using TokenOptions = InstaConnect.Users.Data.Models.Options.TokenOptions;
@@ -23,8 +19,17 @@ namespace InstaConnect.Users.Web.Extensions
             var tokenOptions = configuration.GetSection(nameof(TokenOptions));
             var adminOptions = configuration.GetSection(nameof(AdminOptions));
 
-            serviceCollection.Configure<TokenOptions>(tokenOptions);
-            serviceCollection.Configure<AdminOptions>(adminOptions);
+            serviceCollection
+                .AddOptions<TokenOptions>()
+                .BindConfiguration(nameof(TokenOptions))
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+
+            serviceCollection
+                .AddOptions<AdminOptions>()
+                .BindConfiguration(nameof(AdminOptions))
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
 
             var tokenOptionsObj = tokenOptions.Get<TokenOptions>()!;
 

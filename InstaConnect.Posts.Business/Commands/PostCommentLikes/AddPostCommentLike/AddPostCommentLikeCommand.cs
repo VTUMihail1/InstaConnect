@@ -5,8 +5,6 @@ namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLi
 {
     public class AddPostCommentLikeCommand : ICommand
     {
-        public string UserId { get; set; }
-
         public string PostCommentId { get; set; }
     }
 }
