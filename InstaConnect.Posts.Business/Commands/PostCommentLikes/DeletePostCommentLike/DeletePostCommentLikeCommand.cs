@@ -5,7 +5,5 @@ namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommen
     public class DeletePostCommentLikeCommand : ICommand
     {
         public string Id { get; set; }
-
-        public string UserId { get; set; }
     }
 }

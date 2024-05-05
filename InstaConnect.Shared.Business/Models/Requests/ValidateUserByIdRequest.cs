@@ -3,7 +3,5 @@
     public class ValidateUserByIdRequest
     {
         public string Id { get; set; }
-
-        public string CurrentUserId { get; set; }
     }
 }

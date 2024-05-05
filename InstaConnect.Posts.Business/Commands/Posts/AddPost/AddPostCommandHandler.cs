@@ -27,9 +27,9 @@ namespace InstaConnect.Posts.Business.Commands.Posts.AddPost
 
         public async Task Handle(AddPostCommand request, CancellationToken cancellationToken)
         {
-            var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
+            var getUserByIdRequest = _mapper.Map<ValidateUserIdRequest>(request);
 
-            var getUserByIdResponse = await _requestClient.GetResponse<GetUserByIdResponse>(getUserByIdRequest, cancellationToken);
+            var getUserByIdResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getUserByIdRequest, cancellationToken);
 
             if (!getUserByIdResponse.Message.Exists)
             {

@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Shared.Data.Utilities;
+using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Data.Abstraction.Helpers;
 using InstaConnect.Users.Data.Models.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -55,13 +56,6 @@ namespace InstaConnect.Users.Data.Helpers
             await _userManager.Users
                  .Where(u => u.Id == user.Id)
                  .ExecuteUpdateAsync(u => u.SetProperty(u => u.PasswordHash, passwordHash));
-        }
-
-        public bool ValidateUser(string currentUserId, string userId)
-        {
-            var result = currentUserId == userId;
-
-            return result;
         }
     }
 }

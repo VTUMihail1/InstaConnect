@@ -26,9 +26,9 @@ namespace InstaConnect.Users.Business.Extensions
             {
                 busConfigurator.SetKebabCaseEndpointNameFormatter();
 
-                busConfigurator.AddConsumer<GetUserByIdConsumer>();
+                busConfigurator.AddConsumer<GetCurrentUserByIdConsumer>();
                 busConfigurator.AddConsumer<ValidateUserByIdConsumer>();
-                busConfigurator.AddConsumer<GetCurrentUserDetailsConsumer>();
+                busConfigurator.AddConsumer<ValidateUserIdConsumer>();
 
                 busConfigurator.UsingRabbitMq((context, configurator) =>
                 {

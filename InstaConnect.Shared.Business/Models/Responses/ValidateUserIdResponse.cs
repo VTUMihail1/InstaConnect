@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InstaConnect.Shared.Business.Models.Responses
 {
-    public class GetCurrentUserDetailsResponse
+    public class ValidateUserIdResponse
     {
         public string Id { get; set; }
     }

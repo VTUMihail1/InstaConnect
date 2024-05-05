@@ -4,6 +4,6 @@ namespace InstaConnect.Users.Business.Abstractions
 {
     public interface ICurrentUserContext
     {
-        UserDetailsViewDTO GetUserDetails();
+        string? GetUsedId();
     }
 }
