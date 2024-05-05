@@ -5,8 +5,6 @@ namespace InstaConnect.Posts.Business.Commands.Posts.AddPost
 {
     public class AddPostCommand : ICommand
     {
-        public string UserId { get; set; }
-
         public string Title { get; set; }
 
         public string Content { get; set; }

@@ -37,12 +37,7 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment
             }
 
             var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-            var validateUserByIdResponse = await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
-
-            if (!validateUserByIdResponse.Message.IsValid)
-            {
-                throw new AccountForbiddenException();
-            }
+            await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
             await _postCommentRepository.DeleteAsync(existingPostComment, cancellationToken);
         }

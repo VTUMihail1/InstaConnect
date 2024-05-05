@@ -11,18 +11,18 @@ using InstaConnect.Shared.Business.RequestClients;
 
 namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment
 {
-    public class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentCommand>
+    internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentCommand>
     {
         private readonly IMapper _mapper;
         private readonly IPostRepository _postRepository;
         private readonly IPostCommentRepository _postCommentRepository;
-        private readonly IGetUserByIdRequestClient _requestClient;
+        private readonly IValidateUserIdRequestClient _requestClient;
 
         public AddPostCommentCommandHandler(
             IMapper mapper,
             IPostRepository postRepository,
             IPostCommentRepository postCommentRepository,
-            IGetUserByIdRequestClient requestClient)
+            IValidateUserIdRequestClient requestClient)
         {
             _mapper = mapper;
             _postRepository = postRepository;
@@ -39,8 +39,8 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment
                 throw new PostNotFoundException();
             }
 
-            var getCurrentUserDetailsRequest = _mapper.Map<GetCurrentUserRequest>(request);
-            var getCurrentUserDetailsResponse = await _requestClient.GetResponse<GetCurrentUserRequest>(getCurrentUserDetailsRequest, cancellationToken);
+            var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
+            var getCurrentUserResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
 
             var existingPostComment = await _postCommentRepository.GetByIdAsync(request.PostCommentId, cancellationToken);
 
@@ -50,7 +50,7 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment
             }
 
             var postComment = _mapper.Map<PostComment>(request);
-            _mapper.Map(getCurrentUserDetailsResponse.Message, postComment);
+            _mapper.Map(getCurrentUserResponse.Message, postComment);
             await _postCommentRepository.AddAsync(postComment, cancellationToken);
         }
     }

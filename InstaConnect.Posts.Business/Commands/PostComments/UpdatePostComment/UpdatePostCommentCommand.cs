@@ -7,8 +7,6 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment
     {
         public string Id { get; set; }
 
-        public string UserId { get; set; }
-
         public string Content { get; set; }
     }
 }
