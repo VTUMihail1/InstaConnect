@@ -39,7 +39,7 @@ public static class ServiceCollectionExtensions
         {
             busConfigurator.SetKebabCaseEndpointNameFormatter();
 
-            busConfigurator.AddConsumer<GetCurrentUserByIdConsumer>();
+            busConfigurator.AddConsumer<GetCurrentUserConsumer>();
             busConfigurator.AddConsumer<ValidateUserByIdConsumer>();
             busConfigurator.AddConsumer<ValidateUserIdConsumer>();
 

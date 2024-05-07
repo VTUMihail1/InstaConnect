@@ -8,6 +8,7 @@ using InstaConnect.Messages.Business.Queries.PostComments.GetAllFilteredPostComm
 using InstaConnect.Messages.Business.Queries.PostComments.GetAllPostComments;
 using InstaConnect.Messages.Data.Models.Filters;
 using InstaConnect.Shared.Business.Models.Requests;
+using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Data.Models.Filters;
 using System.Linq;
 
@@ -30,17 +31,18 @@ namespace InstaConnect.Messages.Business.Profiles
 
             CreateMap<GetAllMessagesQuery, CollectionQuery>();
 
-            CreateMap<AddMessageCommand, ValidateUserIdRequest>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SenderId));
+            CreateMap<AddMessageCommand, GetCurrentUserRequest>();
 
             CreateMap<UpdateMessageCommand, ValidateUserByIdRequest>()
                 .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.SenderId));
 
             CreateMap<DeleteMessageCommand, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.SenderId));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SenderId));
 
             CreateMap<Message, ValidateUserByIdRequest>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SenderId));
+
+            CreateMap<GetCurrentUserResponse, Message>();
 
             CreateMap<AddMessageCommand, Message>();
 

@@ -27,7 +27,7 @@ services:
 
   instaconnect.users.database:
      image: mysql:latest
-     container_name: instaconnect.users.database
+     container_name: users.database
      environment: 
        - MYSQL_DB=instaconnect.users
        - MYSQL_USER=mihail
@@ -55,13 +55,13 @@ services:
      image: mysql:latest
      container_name: instaconnect.posts.database
      environment: 
-       - MYSQL_DB=instaconnect.posts
+       - MYSQL_DB=posts
        - MYSQL_USER=mihail
        - MYSQL_ROOT_PASSWORD=mihail
      volumes:
        - ./.containers/posts-db:/var/lib/mysql
      ports:
-       - 3306
+       - 3307
      networks:
       - proxybackend
 
@@ -80,13 +80,13 @@ services:
      image: mysql:latest
      container_name: instaconnect.messages.database
      environment: 
-       - MYSQL_DB=instaconnect.messages
+       - MYSQL_DB=messages
        - MYSQL_USER=mihail
        - MYSQL_ROOT_PASSWORD=mihail
      volumes:
        - ./.containers/messages-db:/var/lib/mysql
      ports:
-       - 3306
+       - 3308
      networks:
       - proxybackend
 
@@ -103,7 +103,7 @@ services:
 
   instaconnect.follows.database:
      image: mysql:latest
-     container_name: instaconnect.follows.database
+     container_name: follows.database
      environment: 
        - MYSQL_DB=instaconnect.follows
        - MYSQL_USER=mihail
@@ -111,7 +111,7 @@ services:
      volumes:
        - ./.containers/follows-db:/var/lib/mysql
      ports:
-       - 3306
+       - 3309
      networks:
       - proxybackend
 

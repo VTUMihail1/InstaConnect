@@ -21,124 +21,114 @@ using InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
 using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Posts.Data.Models.Filters;
 using InstaConnect.Shared.Business.Models.Requests;
+using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Data.Models.Filters;
 
-namespace InstaConnect.Posts.Business.Profiles
+namespace InstaConnect.Posts.Business.Profiles;
+
+public class PostsBusinessProfile : Profile
 {
-    public class PostsBusinessProfile : Profile
+    public PostsBusinessProfile()
     {
-        public PostsBusinessProfile()
-        {
-            // Posts
+        // Posts
 
-            CreateMap<GetAllFilteredPostsQuery, PostFilteredCollectionQuery>()
-                .ConstructUsing(src =>
-                     new PostFilteredCollectionQuery
-                     {
-                         Expression = p => (src.UserId == string.Empty || p.UserId == src.UserId) &&
-                                           (src.Title == string.Empty || p.Title == src.Title)
-                     });
+        CreateMap<GetAllFilteredPostsQuery, PostFilteredCollectionQuery>()
+            .ConstructUsing(src =>
+                 new PostFilteredCollectionQuery
+                 {
+                     Expression = p => (src.UserId == string.Empty || p.UserId == src.UserId) &&
+                                       (src.Title == string.Empty || p.Title == src.Title)
+                 });
 
-            CreateMap<GetAllPostsQuery, CollectionQuery>();
+        CreateMap<GetAllPostsQuery, CollectionQuery>();
 
-            CreateMap<AddPostCommand, ValidateUserIdRequest>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
+        CreateMap<AddPostCommand, GetCurrentUserRequest>();
 
-            CreateMap<UpdatePostCommand, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.UserId));
+        CreateMap<GetCurrentUserResponse, Post>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
-            CreateMap<DeletePostCommand, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.UserId));
+        CreateMap<Post, ValidateUserByIdRequest>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
 
-            CreateMap<Post, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
+        CreateMap<AddPostCommand, Post>();
 
-            CreateMap<AddPostCommand, Post>();
+        CreateMap<UpdatePostCommand, Post>();
 
-            CreateMap<UpdatePostCommand, Post>();
+        CreateMap<Post, PostViewDTO>();
 
-            CreateMap<Post, PostViewDTO>();
+        // Post Comments
 
-            // Post Comments
+        CreateMap<GetAllFilteredPostCommentsQuery, PostCommentFilteredCollectionQuery>()
+            .ConstructUsing(src =>
+                 new PostCommentFilteredCollectionQuery
+                 {
+                     Expression = p => (src.UserId == string.Empty || p.UserId == src.UserId) &&
+                                       (src.PostId == string.Empty || p.PostId == src.PostId) &&
+                                       (src.PostCommentId == string.Empty || p.PostCommentId == src.PostCommentId)
+                 });
 
-            CreateMap<GetAllFilteredPostCommentsQuery, PostCommentFilteredCollectionQuery>()
-                .ConstructUsing(src =>
-                     new PostCommentFilteredCollectionQuery
-                     {
-                         Expression = p => (src.UserId == string.Empty || p.UserId == src.UserId) &&
-                                           (src.PostId == string.Empty || p.PostId == src.PostId) &&
-                                           (src.PostCommentId == string.Empty || p.PostCommentId == src.PostCommentId)
-                     });
+        CreateMap<GetAllPostCommentsQuery, CollectionQuery>();
 
-            CreateMap<GetAllPostCommentsQuery, CollectionQuery>();
+        CreateMap<AddPostCommentCommand, GetCurrentUserRequest>();
 
-            CreateMap<AddPostCommentCommand, ValidateUserIdRequest>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
+        CreateMap<GetCurrentUserResponse, PostComment>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
-            CreateMap<UpdatePostCommentCommand, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.UserId));
+        CreateMap<PostComment, ValidateUserByIdRequest>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
 
-            CreateMap<DeletePostCommentCommand, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.UserId));
+        CreateMap<AddPostCommentCommand, PostComment>();
 
-            CreateMap<PostComment, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
+        CreateMap<UpdatePostCommentCommand, PostComment>();
 
-            CreateMap<AddPostCommentCommand, PostComment>();
+        CreateMap<PostComment, PostCommentViewDTO>();
 
-            CreateMap<UpdatePostCommentCommand, PostComment>();
+        // Post Likes
 
-            CreateMap<PostComment, PostCommentViewDTO>();
+        CreateMap<GetAllFilteredPostLikesQuery, PostLikeFilteredCollectionQuery>()
+            .ConstructUsing(src =>
+                 new PostLikeFilteredCollectionQuery
+                 {
+                     Expression = p => (src.UserId == string.Empty || p.UserId == src.UserId) &&
+                                       (src.PostId == string.Empty || p.PostId == src.PostId)
+                 });
 
-            // Post Likes
+        CreateMap<GetAllPostLikesQuery, CollectionQuery>();
 
-            CreateMap<GetAllFilteredPostLikesQuery, PostLikeFilteredCollectionQuery>()
-                .ConstructUsing(src =>
-                     new PostLikeFilteredCollectionQuery
-                     {
-                         Expression = p => (src.UserId == string.Empty || p.UserId == src.UserId) &&
-                                           (src.PostId == string.Empty || p.PostId == src.PostId)
-                     });
+        CreateMap<AddPostLikeCommand, GetCurrentUserRequest>();
 
-            CreateMap<GetAllPostLikesQuery, CollectionQuery>();
+        CreateMap<PostLike, ValidateUserByIdRequest>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
 
-            CreateMap<AddPostLikeCommand, ValidateUserIdRequest>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
+        CreateMap<GetCurrentUserResponse, PostLike>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
-            CreateMap<DeletePostLikeCommand, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.UserId));
+        CreateMap<AddPostLikeCommand, PostLike>();
 
-            CreateMap<PostLike, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
+        CreateMap<PostLike, PostLikeViewDTO>();
 
-            CreateMap<AddPostLikeCommand, PostLike>();
+        // Post Comment Likes
 
-            CreateMap<PostLike, PostLikeViewDTO>();
+        CreateMap<GetAllFilteredPostCommentLikesQuery, PostCommentLikeFilteredCollectionQuery>()
+            .ConstructUsing(src =>
+                 new PostCommentLikeFilteredCollectionQuery
+                 {
+                     Expression = p => (src.UserId == string.Empty || p.UserId == src.UserId) &&
+                                       (src.PostCommentId == string.Empty || p.PostCommentId == src.PostCommentId)
+                 });
 
-            // Post Comment Likes
+        CreateMap<GetAllPostCommentLikesQuery, CollectionQuery>();
 
-            CreateMap<GetAllFilteredPostCommentLikesQuery, PostCommentLikeFilteredCollectionQuery>()
-                .ConstructUsing(src =>
-                     new PostCommentLikeFilteredCollectionQuery
-                     {
-                         Expression = p => (src.UserId == string.Empty || p.UserId == src.UserId) &&
-                                           (src.PostCommentId == string.Empty || p.PostCommentId == src.PostCommentId)
-                     });
+        CreateMap<AddPostCommentLikeCommand, GetCurrentUserRequest>();
 
-            CreateMap<GetAllPostCommentLikesQuery, CollectionQuery>();
+        CreateMap<GetCurrentUserResponse, PostComment>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
-            CreateMap<AddPostCommentLikeCommand, ValidateUserIdRequest>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
+        CreateMap<PostCommentLike, ValidateUserByIdRequest>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
 
-            CreateMap<DeletePostCommentLikeCommand, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.UserId));
+        CreateMap<AddPostCommentLikeCommand, PostCommentLike>();
 
-            CreateMap<PostCommentLike, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
-
-            CreateMap<AddPostCommentLikeCommand, PostCommentLike>();
-
-            CreateMap<PostCommentLike, PostCommentLikeViewDTO>();
-        }
+        CreateMap<PostCommentLike, PostCommentLikeViewDTO>();
     }
 }
