@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Users.Business.Models
+namespace InstaConnect.Users.Business.Models;
+
+public class UserDetailsViewDTO
 {
-    public class UserDetailsViewDTO
-    {
-        public string Id { get; set; }
-    }
+    public string Id { get; set; }
 }

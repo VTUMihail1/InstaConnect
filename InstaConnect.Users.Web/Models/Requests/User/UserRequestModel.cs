@@ -1,7 +1,6 @@
-﻿namespace InstaConnect.Users.Web.Models.Requests.User
+﻿namespace InstaConnect.Users.Web.Models.Requests.User;
+
+public class UserRequestModel
 {
-    public class UserRequestModel
-    {
-        public string Id { get; set; }
-    }
+    public string Id { get; set; }
 }

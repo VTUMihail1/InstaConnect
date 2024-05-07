@@ -5,13 +5,12 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Users.Business.Extensions
+namespace InstaConnect.Users.Business.Extensions;
+
+internal static class ClaimsPrincipalExtensions
 {
-    internal static class ClaimsPrincipalExtensions
+    public static string GetUserId(this ClaimsPrincipal? principal)
     {
-        public static string GetUserId(this ClaimsPrincipal? principal)
-        {
-            return principal?.FindFirstValue(ClaimTypes.NameIdentifier)!;
-        }
+        return principal?.FindFirstValue(ClaimTypes.NameIdentifier)!;
     }
 }

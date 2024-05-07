@@ -6,9 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Shared.Business.RequestClients
+namespace InstaConnect.Shared.Business.RequestClients;
+
+public interface IGetCurrentUserRequestClient : IRequestClient<GetCurrentUserRequest>
 {
-    public interface IGetCurrentUserRequestClient : IRequestClient<GetCurrentUserRequest>
-    {
-    }
 }

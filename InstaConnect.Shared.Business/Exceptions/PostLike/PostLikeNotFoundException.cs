@@ -5,18 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Shared.Business.Exceptions.PostLike
+namespace InstaConnect.Shared.Business.Exceptions.PostLike;
+
+public class PostLikeNotFoundException : NotFoundException
 {
-    public class PostLikeNotFoundException : NotFoundException
+    private const string ERROR_MESSAGE = "Post like not found";
+
+    public PostLikeNotFoundException() : base(ERROR_MESSAGE)
     {
-        private const string ERROR_MESSAGE = "Post like not found";
+    }
 
-        public PostLikeNotFoundException() : base(ERROR_MESSAGE)
-        {
-        }
-
-        public PostLikeNotFoundException(Exception exception) : base(ERROR_MESSAGE, exception)
-        {
-        }
+    public PostLikeNotFoundException(Exception exception) : base(ERROR_MESSAGE, exception)
+    {
     }
 }

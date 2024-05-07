@@ -6,71 +6,70 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace InstaConnect.Users.Data.Helpers
+namespace InstaConnect.Users.Data.Helpers;
+
+internal class DatabaseSeeder : IDatabaseSeeder
 {
-    internal class DatabaseSeeder : IDatabaseSeeder
+    private readonly UsersContext _usersContext;
+    private readonly RoleManager<Role> _roleManager;
+    private readonly IAccountManager _accountManager;
+    private readonly AdminOptions _adminOptions;
+
+    public DatabaseSeeder(
+        UsersContext usersContext,
+        RoleManager<Role> roleManager,
+        IAccountManager accountManager,
+        IOptions<AdminOptions> options)
     {
-        private readonly UsersContext _usersContext;
-        private readonly RoleManager<Role> _roleManager;
-        private readonly IAccountManager _accountManager;
-        private readonly AdminOptions _adminOptions;
+        _usersContext = usersContext;
+        _roleManager = roleManager;
+        _accountManager = accountManager;
+        _adminOptions = options.Value;
+    }
 
-        public DatabaseSeeder(
-            UsersContext usersContext,
-            RoleManager<Role> roleManager,
-            IAccountManager accountManager,
-            IOptions<AdminOptions> options)
+    public async Task SeedAsync()
+    {
+        await SeedRolesAsync();
+        await SeedAdminAsync();
+    }
+
+    public async Task ApplyPendingMigrationsAsync()
+    {
+        var pendingMigrations = await _usersContext.Database.GetPendingMigrationsAsync();
+
+        if (pendingMigrations.Any())
         {
-            _usersContext = usersContext;
-            _roleManager = roleManager;
-            _accountManager = accountManager;
-            _adminOptions = options.Value;
+            await _usersContext.Database.MigrateAsync();
+        }
+    }
+
+    private async Task SeedRolesAsync()
+    {
+        if (await _usersContext.Roles.AnyAsync())
+        {
+            return;
         }
 
-        public async Task SeedAsync()
+        await _roleManager.CreateAsync(new Role(Roles.User));
+        await _roleManager.CreateAsync(new Role(Roles.Admin));
+    }
+
+    private async Task SeedAdminAsync()
+    {
+        if (await _usersContext.Users.AnyAsync())
         {
-            await SeedRolesAsync();
-            await SeedAdminAsync();
+            return;
         }
 
-        public async Task ApplyPendingMigrationsAsync()
+        var adminUser = new User
         {
-            var pendingMigrations = await _usersContext.Database.GetPendingMigrationsAsync();
+            FirstName = "Admin",
+            LastName = "Admin",
+            Email = _adminOptions.Email,
+            UserName = "InstaConnectAdmin"
+        };
 
-            if (pendingMigrations.Any())
-            {
-                await _usersContext.Database.MigrateAsync();
-            }
-        }
-
-        private async Task SeedRolesAsync()
-        {
-            if (await _usersContext.Roles.AnyAsync())
-            {
-                return;
-            }
-
-            await _roleManager.CreateAsync(new Role(Roles.User));
-            await _roleManager.CreateAsync(new Role(Roles.Admin));
-        }
-
-        private async Task SeedAdminAsync()
-        {
-            if (await _usersContext.Users.AnyAsync())
-            {
-                return;
-            }
-
-            var adminUser = new User
-            {
-                FirstName = "Admin",
-                LastName = "Admin",
-                Email = _adminOptions.Email,
-                UserName = "InstaConnectAdmin"
-            };
-
-            await _accountManager.RegisterAdminAsync(adminUser, _adminOptions.Password);
-            await _accountManager.ConfirmEmailAsync(adminUser);
-        }
+        await _accountManager.RegisterAdminAsync(adminUser, _adminOptions.Password);
+        await _accountManager.ConfirmEmailAsync(adminUser);
     }
 }

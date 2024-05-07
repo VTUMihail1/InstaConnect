@@ -1,9 +1,8 @@
 ﻿using InstaConnect.Messages.Business.Models;
 
-namespace InstaConnect.Messages.Business.Abstract.Helpers
+namespace InstaConnect.Messages.Business.Abstract.Helpers;
+
+public interface IMessageSender
 {
-    public interface IMessageSender
-    {
-        Task SendMessageToUserAsync(SendMessageDTO sendMessageDTO);
-    }
+    Task SendMessageToUserAsync(SendMessageDTO sendMessageDTO);
 }

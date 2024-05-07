@@ -6,9 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Messages.Data.Abstractions.Repositories
+namespace InstaConnect.Messages.Data.Abstractions.Repositories;
+
+public interface IMessageRepository : IBaseRepository<Message>
 {
-    public interface IMessageRepository : IBaseRepository<Message>
-    {
-    }
 }

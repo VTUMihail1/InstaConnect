@@ -7,23 +7,22 @@ using InstaConnect.Follows.Business.Queries.Follows.GetFollowById;
 using InstaConnect.Follows.Web.Models.Requests.Follows;
 using InstaConnect.Shared.Web.Models.Filters;
 
-namespace InstaConnect.Follows.Web.Profiles
+namespace InstaConnect.Follows.Web.Profiles;
+
+public class FollowsWebProfile : Profile
 {
-    public class FollowsWebProfile : Profile
+    public FollowsWebProfile()
     {
-        public FollowsWebProfile()
-        {
-            // Follows
+        // Follows
 
-            CreateMap<CollectionRequestModel, GetAllFollowsQuery>();
+        CreateMap<CollectionRequestModel, GetAllFollowsQuery>();
 
-            CreateMap<GetFollowCollectionRequestModel, GetAllFilteredFollowsQuery>();
+        CreateMap<GetFollowCollectionRequestModel, GetAllFilteredFollowsQuery>();
 
-            CreateMap<GetFollowByIdRequestModel, GetFollowByIdQuery>();
+        CreateMap<GetFollowByIdRequestModel, GetFollowByIdQuery>();
 
-            CreateMap<AddFollowRequestModel, AddFollowCommand>();
+        CreateMap<AddFollowRequestModel, AddFollowCommand>();
 
-            CreateMap<DeleteFollowRequestModel, DeleteFollowCommand>();
-        }
+        CreateMap<DeleteFollowRequestModel, DeleteFollowCommand>();
     }
 }

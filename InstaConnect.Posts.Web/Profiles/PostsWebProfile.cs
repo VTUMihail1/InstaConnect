@@ -27,65 +27,64 @@ using InstaConnect.Posts.Web.Models.Requests.PostCommentLike;
 using InstaConnect.Posts.Web.Models.Requests.PostLike;
 using InstaConnect.Shared.Web.Models.Filters;
 
-namespace InstaConnect.Posts.Web.Profiles
+namespace InstaConnect.Posts.Web.Profiles;
+
+public class PostsWebProfile : Profile
 {
-    public class PostsWebProfile : Profile
+    public PostsWebProfile()
     {
-        public PostsWebProfile()
-        {
-            // Posts
+        // Posts
 
-            CreateMap<CollectionRequestModel, GetAllPostsQuery>();
+        CreateMap<CollectionRequestModel, GetAllPostsQuery>();
 
-            CreateMap<GetPostsCollectionRequestModel, GetAllFilteredPostsQuery>();
+        CreateMap<GetPostsCollectionRequestModel, GetAllFilteredPostsQuery>();
 
-            CreateMap<GetPostByIdRequestModel, GetPostByIdQuery>();
+        CreateMap<GetPostByIdRequestModel, GetPostByIdQuery>();
 
-            CreateMap<AddPostRequestModel, AddPostCommand>();
+        CreateMap<AddPostRequestModel, AddPostCommand>();
 
-            CreateMap<UpdatePostRequestModel, UpdatePostCommand>()
-                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.UpdatePostBodyRequestModel.Title))
-                .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.UpdatePostBodyRequestModel.Content));
+        CreateMap<UpdatePostRequestModel, UpdatePostCommand>()
+            .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.UpdatePostBodyRequestModel.Title))
+            .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.UpdatePostBodyRequestModel.Content));
 
-            CreateMap<DeletePostRequestModel, DeletePostCommand>();
+        CreateMap<DeletePostRequestModel, DeletePostCommand>();
 
-            // Post Comments
+        // Post Comments
 
-            CreateMap<CollectionRequestModel, GetAllPostCommentsQuery>();
+        CreateMap<CollectionRequestModel, GetAllPostCommentsQuery>();
 
-            CreateMap<GetPostCommentsCollectionRequestModel, GetAllFilteredPostCommentsQuery>();
+        CreateMap<GetPostCommentsCollectionRequestModel, GetAllFilteredPostCommentsQuery>();
 
-            CreateMap<GetPostCommentByIdRequestModel, GetPostCommentByIdQuery>();
+        CreateMap<GetPostCommentByIdRequestModel, GetPostCommentByIdQuery>();
 
-            CreateMap<AddPostCommentRequestModel, AddPostCommentCommand>();
+        CreateMap<AddPostCommentRequestModel, AddPostCommentCommand>();
 
-            CreateMap<UpdatePostCommentRequestModel, UpdatePostCommentCommand>();
+        CreateMap<UpdatePostCommentRequestModel, UpdatePostCommentCommand>();
 
-            CreateMap<DeletePostCommentRequestModel, DeletePostCommentCommand>();
+        CreateMap<DeletePostCommentRequestModel, DeletePostCommentCommand>();
 
-            // Post Likes
+        // Post Likes
 
-            CreateMap<CollectionRequestModel, GetAllPostLikesQuery>();
+        CreateMap<CollectionRequestModel, GetAllPostLikesQuery>();
 
-            CreateMap<GetPostLikesCollectionRequestModel, GetAllFilteredPostLikesQuery>();
+        CreateMap<GetPostLikesCollectionRequestModel, GetAllFilteredPostLikesQuery>();
 
-            CreateMap<GetPostLikeByIdRequestModel, GetPostLikeByIdQuery>();
+        CreateMap<GetPostLikeByIdRequestModel, GetPostLikeByIdQuery>();
 
-            CreateMap<AddPostLikeRequestModel, AddPostLikeCommand>();
+        CreateMap<AddPostLikeRequestModel, AddPostLikeCommand>();
 
-            CreateMap<DeletePostLikeRequestModel, DeletePostLikeCommand>();
+        CreateMap<DeletePostLikeRequestModel, DeletePostLikeCommand>();
 
-            // Post Comment Likes
+        // Post Comment Likes
 
-            CreateMap<CollectionRequestModel, GetAllPostCommentLikesQuery>();
+        CreateMap<CollectionRequestModel, GetAllPostCommentLikesQuery>();
 
-            CreateMap<GetPostCommentLikesCollectionRequestModel, GetAllFilteredPostCommentLikesQuery>();
+        CreateMap<GetPostCommentLikesCollectionRequestModel, GetAllFilteredPostCommentLikesQuery>();
 
-            CreateMap<GetPostCommentLikeByIdRequestModel, GetPostCommentLikeByIdQuery>();
+        CreateMap<GetPostCommentLikeByIdRequestModel, GetPostCommentLikeByIdQuery>();
 
-            CreateMap<AddPostCommentLikeRequestModel, AddPostCommentLikeCommand>();
+        CreateMap<AddPostCommentLikeRequestModel, AddPostCommentLikeCommand>();
 
-            CreateMap<DeletePostCommentLikeRequestModel, DeletePostCommentLikeCommand>();
-        }
+        CreateMap<DeletePostCommentLikeRequestModel, DeletePostCommentLikeCommand>();
     }
 }

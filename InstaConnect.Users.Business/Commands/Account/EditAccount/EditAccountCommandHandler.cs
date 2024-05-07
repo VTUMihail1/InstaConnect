@@ -4,39 +4,38 @@ using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 
-namespace InstaConnect.Users.Business.Commands.Account.EditAccount
+namespace InstaConnect.Users.Business.Commands.Account.EditAccount;
+
+public class EditAccountCommandHandler : ICommandHandler<EditAccountCommand>
 {
-    public class EditAccountCommandHandler : ICommandHandler<EditAccountCommand>
+    private readonly IMapper _mapper;
+    private readonly IUserRepository _userRepository;
+
+    public EditAccountCommandHandler(
+        IMapper mapper,
+        IUserRepository userRepository)
     {
-        private readonly IMapper _mapper;
-        private readonly IUserRepository _userRepository;
+        _mapper = mapper;
+        _userRepository = userRepository;
+    }
 
-        public EditAccountCommandHandler(
-            IMapper mapper,
-            IUserRepository userRepository)
+    public async Task Handle(EditAccountCommand request, CancellationToken cancellationToken)
+    {
+        var existingUserById = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
+
+        if (existingUserById == null)
         {
-            _mapper = mapper;
-            _userRepository = userRepository;
+            throw new UserNotFoundException();
         }
 
-        public async Task Handle(EditAccountCommand request, CancellationToken cancellationToken)
+        var existingUserByName = await _userRepository.GetByNameAsync(request.UserName, cancellationToken);
+
+        if (existingUserById.UserName != request.UserName && existingUserByName != null)
         {
-            var existingUserById = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
-
-            if (existingUserById == null)
-            {
-                throw new UserNotFoundException();
-            }
-
-            var existingUserByName = await _userRepository.GetByNameAsync(request.UserName, cancellationToken);
-
-            if (existingUserById.UserName != request.UserName && existingUserByName != null)
-            {
-                throw new AccountUsernameAlreadyTakenException();
-            }
-
-            _mapper.Map(request, existingUserById);
-            await _userRepository.UpdateAsync(existingUserById, cancellationToken);
+            throw new AccountUsernameAlreadyTakenException();
         }
+
+        _mapper.Map(request, existingUserById);
+        await _userRepository.UpdateAsync(existingUserById, cancellationToken);
     }
 }

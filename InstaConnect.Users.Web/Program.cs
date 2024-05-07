@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services
     .AddDataLayer(builder.Configuration)
-    .AddBusinessLayer()
+    .AddBusinessLayer(builder.Configuration)
     .AddWebLayer(builder.Configuration);
 
 var app = builder.Build();

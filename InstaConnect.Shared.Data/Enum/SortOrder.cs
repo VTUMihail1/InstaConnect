@@ -1,8 +1,7 @@
-﻿namespace InstaConnect.Shared.Data.Enum
+﻿namespace InstaConnect.Shared.Data.Enum;
+
+public enum SortOrder
 {
-    public enum SortOrder
-    {
-        ASC = 1,
-        DESC = 2,
-    }
+    ASC = 1,
+    DESC = 2,
 }

@@ -1,9 +1,8 @@
 ﻿using InstaConnect.Users.Business.Models;
 
-namespace InstaConnect.Users.Business.Abstractions
+namespace InstaConnect.Users.Business.Abstractions;
+
+public interface ICurrentUserContext
 {
-    public interface ICurrentUserContext
-    {
-        string? GetUsedId();
-    }
+    string? GetUsedId();
 }

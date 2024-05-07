@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Posts.Web.Models.Requests.Post
+namespace InstaConnect.Posts.Web.Models.Requests.Post;
+
+public class UpdatePostRequestModel
 {
-    public class UpdatePostRequestModel
-    {
-        [FromRoute]
-        public string PostId { get; set; }
+    [FromRoute]
+    public string PostId { get; set; }
 
-        [FromRoute]
-        public string UserId { get; set; }
+    [FromRoute]
+    public string UserId { get; set; }
 
-        [FromBody]
-        public UpdatePostBodyRequestModel UpdatePostBodyRequestModel { get; set; }
-    }
+    [FromBody]
+    public UpdatePostBodyRequestModel UpdatePostBodyRequestModel { get; set; }
 }

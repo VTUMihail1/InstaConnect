@@ -5,33 +5,32 @@ using InstaConnect.Shared.Business.Exceptions.Follow;
 using InstaConnect.Shared.Business.Exceptions.PostCommentLike;
 using InstaConnect.Shared.Business.Messaging;
 
-namespace InstaConnect.Follows.Business.Queries.Follows.GetFollowById
+namespace InstaConnect.Follows.Business.Queries.Follows.GetFollowById;
+
+public class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, FollowViewDTO>
 {
-    public class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, FollowViewDTO>
+    private readonly IMapper _mapper;
+    private readonly IFollowRepository _followRepository;
+
+    public GetFollowByIdQueryHandler(
+        IMapper mapper,
+        IFollowRepository followRepository)
     {
-        private readonly IMapper _mapper;
-        private readonly IFollowRepository _followRepository;
+        _mapper = mapper;
+        _followRepository = followRepository;
+    }
 
-        public GetFollowByIdQueryHandler(
-            IMapper mapper,
-            IFollowRepository followRepository)
+    public async Task<FollowViewDTO> Handle(GetFollowByIdQuery request, CancellationToken cancellationToken)
+    {
+        var follow = await _followRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (follow == null)
         {
-            _mapper = mapper;
-            _followRepository = followRepository;
+            throw new FollowNotFoundException();
         }
 
-        public async Task<FollowViewDTO> Handle(GetFollowByIdQuery request, CancellationToken cancellationToken)
-        {
-            var follow = await _followRepository.GetByIdAsync(request.Id, cancellationToken);
+        var followViewDTO = _mapper.Map<FollowViewDTO>(follow);
 
-            if (follow == null)
-            {
-                throw new FollowNotFoundException();
-            }
-
-            var followViewDTO = _mapper.Map<FollowViewDTO>(follow);
-
-            return followViewDTO;
-        }
+        return followViewDTO;
     }
 }

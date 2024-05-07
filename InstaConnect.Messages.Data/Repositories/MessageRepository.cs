@@ -2,15 +2,14 @@
 using InstaConnect.Messages.Data.Abstractions.Repositories;
 using InstaConnect.Shared.Data.Repositories;
 
-namespace InstaConnect.Messages.Data.Repositories
-{
-    public class MessageRepository : BaseRepository<Message>, IMessageRepository
-    {
-        private readonly MessageContext _messageContext;
+namespace InstaConnect.Messages.Data.Repositories;
 
-        public MessageRepository(MessageContext messageContext) : base(messageContext)
-        {
-            _messageContext = messageContext;
-        }
+public class MessageRepository : BaseRepository<Message>, IMessageRepository
+{
+    private readonly MessageContext _messageContext;
+
+    public MessageRepository(MessageContext messageContext) : base(messageContext)
+    {
+        _messageContext = messageContext;
     }
 }

@@ -1,6 +1,5 @@
-﻿namespace InstaConnect.Users.Web.Models.Response.User
+﻿namespace InstaConnect.Users.Web.Models.Response.User;
+
+public class UserDetailedResponseModel
 {
-    public class UserDetailedResponseModel
-    {
-    }
 }

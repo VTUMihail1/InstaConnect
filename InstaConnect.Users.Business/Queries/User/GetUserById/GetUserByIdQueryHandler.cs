@@ -4,33 +4,32 @@ using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Users.Business.Models;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 
-namespace InstaConnect.Users.Business.Queries.User.GetUserById
+namespace InstaConnect.Users.Business.Queries.User.GetUserById;
+
+public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserViewDTO>
 {
-    public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserViewDTO>
+    private readonly IMapper _mapper;
+    private readonly IUserRepository _userRepository;
+
+    public GetUserByIdQueryHandler(
+        IMapper mapper,
+        IUserRepository userRepository)
     {
-        private readonly IMapper _mapper;
-        private readonly IUserRepository _userRepository;
+        _mapper = mapper;
+        _userRepository = userRepository;
+    }
 
-        public GetUserByIdQueryHandler(
-            IMapper mapper,
-            IUserRepository userRepository)
+    public async Task<UserViewDTO> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+    {
+        var existingUser = await _userRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (existingUser == null)
         {
-            _mapper = mapper;
-            _userRepository = userRepository;
+            throw new UserNotFoundException();
         }
 
-        public async Task<UserViewDTO> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
-        {
-            var existingUser = await _userRepository.GetByIdAsync(request.Id, cancellationToken);
+        var userViewDTO = _mapper.Map<UserViewDTO>(existingUser);
 
-            if (existingUser == null)
-            {
-                throw new UserNotFoundException();
-            }
-
-            var userViewDTO = _mapper.Map<UserViewDTO>(existingUser);
-
-            return userViewDTO;
-        }
+        return userViewDTO;
     }
 }

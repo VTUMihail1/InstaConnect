@@ -6,17 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace InstaConnect.Posts.Web.Extensions
+namespace InstaConnect.Posts.Web.Extensions;
+
+public static class ServiceCollectionExtensions
 {
-    public static class ServiceCollectionExtensions
+    public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollection)
     {
-        public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollection)
-        {
-            serviceCollection.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
+        serviceCollection.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
 
-            serviceCollection.AddAutoMapper(typeof(PostsWebProfile));
+        serviceCollection.AddAutoMapper(typeof(PostsWebProfile));
 
-            return serviceCollection;
-        }
+        return serviceCollection;
     }
 }

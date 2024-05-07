@@ -8,25 +8,24 @@ using InstaConnect.Messages.Business.Queries.PostComments.GetPostCommentById;
 using InstaConnect.Messages.Web.Models.Requests.PostComment;
 using InstaConnect.Shared.Web.Models.Filters;
 
-namespace InstaConnect.Messages.Web.Profiles
+namespace InstaConnect.Messages.Web.Profiles;
+
+public class MessagesWebProfile : Profile
 {
-    public class MessagesWebProfile : Profile
+    public MessagesWebProfile()
     {
-        public MessagesWebProfile()
-        {
-            // Messages
+        // Messages
 
-            CreateMap<CollectionRequestModel, GetAllMessagesQuery>();
+        CreateMap<CollectionRequestModel, GetAllMessagesQuery>();
 
-            CreateMap<GetMessageCollectionRequestModel, GetAllFilteredMessagesQuery>();
+        CreateMap<GetMessageCollectionRequestModel, GetAllFilteredMessagesQuery>();
 
-            CreateMap<GetMessageByIdRequestModel, GetMessageByIdQuery>();
+        CreateMap<GetMessageByIdRequestModel, GetMessageByIdQuery>();
 
-            CreateMap<AddMessageRequestModel, AddMessageCommand>();
+        CreateMap<AddMessageRequestModel, AddMessageCommand>();
 
-            CreateMap<UpdateMessageRequestModel, UpdateMessageCommand>();
+        CreateMap<UpdateMessageRequestModel, UpdateMessageCommand>();
 
-            CreateMap<DeleteMessageRequestModel, DeleteMessageCommand>();
-        }
+        CreateMap<DeleteMessageRequestModel, DeleteMessageCommand>();
     }
 }

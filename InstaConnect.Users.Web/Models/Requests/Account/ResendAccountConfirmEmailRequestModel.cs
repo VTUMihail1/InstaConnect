@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Users.Web.Models.Requests.Account
+namespace InstaConnect.Users.Web.Models.Requests.Account;
+
+public class ResendAccountConfirmEmailRequestModel
 {
-    public class ResendAccountConfirmEmailRequestModel
-    {
-        [FromRoute]
-        public string Email { get; set; }
-    }
+    [FromRoute]
+    public string Email { get; set; }
 }

@@ -19,12 +19,6 @@ public static class ServiceCollectionExtensions
     {
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
-        serviceCollection
-            .AddOptions<TokenOptions>()
-            .BindConfiguration(nameof(TokenOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
         var tokenOptions = configuration.GetSection(nameof(TokenOptions)).Get<TokenOptions>()!;
 
         serviceCollection
@@ -94,7 +88,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddSwaggerGen();
 
         serviceCollection
-            .Configure<CookieAuthenticationOptions>(options => options.ExpireTimeSpan = TimeSpan.FromSeconds(tokenOptionsObj.AccountTokenLifetimeSeconds));
+            .Configure<CookieAuthenticationOptions>(options => options.ExpireTimeSpan = TimeSpan.FromSeconds(tokenOptions.AccountTokenLifetimeSeconds));
 
         serviceCollection.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
 

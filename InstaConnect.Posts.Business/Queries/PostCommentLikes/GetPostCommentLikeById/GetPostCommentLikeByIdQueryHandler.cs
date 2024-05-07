@@ -4,33 +4,32 @@ using InstaConnect.Posts.Data.Abstract.Repositories;
 using InstaConnect.Shared.Business.Exceptions.PostCommentLike;
 using InstaConnect.Shared.Business.Messaging;
 
-namespace InstaConnect.Posts.Business.Queries.PostCommentLikes.GetPostCommentLikeById
+namespace InstaConnect.Posts.Business.Queries.PostCommentLikes.GetPostCommentLikeById;
+
+public class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostCommentLikeByIdQuery, PostCommentLikeViewDTO>
 {
-    public class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostCommentLikeByIdQuery, PostCommentLikeViewDTO>
+    private readonly IMapper _mapper;
+    private readonly IPostCommentLikeRepository _postCommentLikeRepository;
+
+    public GetPostCommentLikeByIdQueryHandler(
+        IMapper mapper,
+        IPostCommentLikeRepository postCommentLikeRepository)
     {
-        private readonly IMapper _mapper;
-        private readonly IPostCommentLikeRepository _postCommentLikeRepository;
+        _mapper = mapper;
+        _postCommentLikeRepository = postCommentLikeRepository;
+    }
 
-        public GetPostCommentLikeByIdQueryHandler(
-            IMapper mapper,
-            IPostCommentLikeRepository postCommentLikeRepository)
+    public async Task<PostCommentLikeViewDTO> Handle(GetPostCommentLikeByIdQuery request, CancellationToken cancellationToken)
+    {
+        var postCommentLike = await _postCommentLikeRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (postCommentLike == null)
         {
-            _mapper = mapper;
-            _postCommentLikeRepository = postCommentLikeRepository;
+            throw new PostCommentLikeNotFoundException();
         }
 
-        public async Task<PostCommentLikeViewDTO> Handle(GetPostCommentLikeByIdQuery request, CancellationToken cancellationToken)
-        {
-            var postCommentLike = await _postCommentLikeRepository.GetByIdAsync(request.Id, cancellationToken);
+        var postCommentLikeViewDTO = _mapper.Map<PostCommentLikeViewDTO>(postCommentLike);
 
-            if (postCommentLike == null)
-            {
-                throw new PostCommentLikeNotFoundException();
-            }
-
-            var postCommentLikeViewDTO = _mapper.Map<PostCommentLikeViewDTO>(postCommentLike);
-
-            return postCommentLikeViewDTO;
-        }
+        return postCommentLikeViewDTO;
     }
 }

@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Posts.Web.Models.Requests.PostCommentLike
+namespace InstaConnect.Posts.Web.Models.Requests.PostCommentLike;
+
+public class GetPostCommentLikeByIdRequestModel
 {
-    public class GetPostCommentLikeByIdRequestModel
-    {
-        [FromRoute]
-        public string Id { get; set; }
-    }
+    [FromRoute]
+    public string Id { get; set; }
 }

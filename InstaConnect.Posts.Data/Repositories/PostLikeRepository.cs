@@ -4,25 +4,24 @@ using InstaConnect.Shared.Data;
 using InstaConnect.Shared.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Posts.Data.Repositories
+namespace InstaConnect.Posts.Data.Repositories;
+
+public class PostLikeRepository : BaseRepository<PostLike>, IPostLikeRepository
 {
-    public class PostLikeRepository : BaseRepository<PostLike>, IPostLikeRepository
+    private readonly PostsContext _postsContext;
+
+    public PostLikeRepository(PostsContext postsContext) : base(postsContext)
     {
-        private readonly PostsContext _postsContext;
+        _postsContext = postsContext;
+    }
 
-        public PostLikeRepository(PostsContext postsContext) : base(postsContext)
-        {
-            _postsContext = postsContext;
-        }
+    public virtual async Task<PostLike?> GetByUserIdAndPostIdAsync(string userId, string postId, CancellationToken cancellationToken)
+    {
+        var postLike =
+        await IncludeProperties(
+            _postsContext.PostLikes)
+            .FirstOrDefaultAsync(pl => pl.UserId == userId && pl.PostId == postId);
 
-        public virtual async Task<PostLike?> GetByUserIdAndPostIdAsync(string userId, string postId, CancellationToken cancellationToken)
-        {
-            var postLike =
-            await IncludeProperties(
-                _postsContext.PostLikes)
-                .FirstOrDefaultAsync(pl => pl.UserId == userId && pl.PostId == postId);
-
-            return postLike;
-        }
+        return postLike;
     }
 }

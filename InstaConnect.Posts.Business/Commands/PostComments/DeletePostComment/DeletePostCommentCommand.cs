@@ -1,9 +1,8 @@
 ﻿using InstaConnect.Shared.Business.Messaging;
 
-namespace InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment
+namespace InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment;
+
+public class DeletePostCommentCommand : ICommand
 {
-    public class DeletePostCommentCommand : ICommand
-    {
-        public string Id { get; set; }
-    }
+    public string Id { get; set; }
 }

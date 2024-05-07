@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Messages.Web.Models.Requests.PostComment
+namespace InstaConnect.Messages.Web.Models.Requests.PostComment;
+
+public class GetMessageByIdRequestModel
 {
-    public class GetMessageByIdRequestModel
-    {
-        [FromRoute]
-        public string Id { get; set; }
-    }
+    [FromRoute]
+    public string Id { get; set; }
 }

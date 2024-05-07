@@ -10,33 +10,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Posts.Business.Queries.PostComments.GetPostCommentById
+namespace InstaConnect.Posts.Business.Queries.PostComments.GetPostCommentById;
+
+public class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentByIdQuery, PostCommentViewDTO>
 {
-    public class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentByIdQuery, PostCommentViewDTO>
+    private readonly IMapper _mapper;
+    private readonly IPostCommentRepository _postCommentRepository;
+
+    public GetPostCommentByIdQueryHandler(
+        IMapper mapper,
+        IPostCommentRepository postCommentRepository)
     {
-        private readonly IMapper _mapper;
-        private readonly IPostCommentRepository _postCommentRepository;
+        _mapper = mapper;
+        _postCommentRepository = postCommentRepository;
+    }
 
-        public GetPostCommentByIdQueryHandler(
-            IMapper mapper,
-            IPostCommentRepository postCommentRepository)
+    public async Task<PostCommentViewDTO> Handle(GetPostCommentByIdQuery request, CancellationToken cancellationToken)
+    {
+        var postComment = await _postCommentRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (postComment == null)
         {
-            _mapper = mapper;
-            _postCommentRepository = postCommentRepository;
+            throw new PostCommentNotFoundException();
         }
 
-        public async Task<PostCommentViewDTO> Handle(GetPostCommentByIdQuery request, CancellationToken cancellationToken)
-        {
-            var postComment = await _postCommentRepository.GetByIdAsync(request.Id, cancellationToken);
+        var postCommentViewDTO = _mapper.Map<PostCommentViewDTO>(postComment);
 
-            if (postComment == null)
-            {
-                throw new PostCommentNotFoundException();
-            }
-
-            var postCommentViewDTO = _mapper.Map<PostCommentViewDTO>(postComment);
-
-            return postCommentViewDTO;
-        }
+        return postCommentViewDTO;
     }
 }
