@@ -1,14 +1,17 @@
-﻿namespace InstaConnect.Gateway.API.Extensions
-{
-    public static class ServiceCollectionExtensions
-    {
-        public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
-        {
-            serviceCollection
-                .AddReverseProxy()
-                .LoadFromConfig(configuration.GetSection("ReverseProxy"));
+﻿namespace InstaConnect.Gateway.Web.Extensions;
 
-            return serviceCollection;
-        }
+public static class ServiceCollectionExtensions
+{
+    public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
+    {
+        serviceCollection.AddControllers();
+        serviceCollection.AddEndpointsApiExplorer();
+        serviceCollection.AddSwaggerGen();
+
+        serviceCollection
+            .AddReverseProxy()
+            .LoadFromConfig(configuration.GetSection("ReverseProxy"));
+
+        return serviceCollection;
     }
 }

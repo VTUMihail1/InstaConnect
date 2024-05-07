@@ -1,22 +1,23 @@
 ﻿using InstaConnect.Follows.Web.Profiles;
-using InstaConnect.Users.Business.Abstractions;
-using InstaConnect.Users.Business.Profiles;
-using InstaConnect.Users.Business.Services;
+using InstaConnect.Shared.Business.Models.Options;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
-namespace InstaConnect.Follows.Web.Extensions
+namespace InstaConnect.Follows.Web.Extensions;
+
+public static class ServiceCollectionExtensions
 {
-    public static class ServiceCollectionExtensions
+    public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollection)
     {
-        public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollection)
-        {
-            serviceCollection.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
+        var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
-            serviceCollection.AddAutoMapper(typeof(FollowsWebProfile));
+        serviceCollection.AddControllers();
+        serviceCollection.AddEndpointsApiExplorer();
+        serviceCollection.AddSwaggerGen();
 
-            return serviceCollection;
-        }
+        serviceCollection.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
+
+        serviceCollection.AddAutoMapper(currentAssembly);
+
+        return serviceCollection;
     }
 }

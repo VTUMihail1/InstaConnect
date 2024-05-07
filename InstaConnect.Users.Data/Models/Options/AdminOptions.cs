@@ -1,9 +1,12 @@
-﻿namespace InstaConnect.Users.Data.Models.Options
-{
-    public class AdminOptions
-    {
-        public string Email { get; set; }
+﻿using System.ComponentModel.DataAnnotations;
 
-        public string Password { get; set; }
-    }
+namespace InstaConnect.Users.Data.Models.Options;
+
+internal class AdminOptions
+{
+    [Required]
+    public string Email { get; set; }
+
+    [Required]
+    public string Password { get; set; }
 }

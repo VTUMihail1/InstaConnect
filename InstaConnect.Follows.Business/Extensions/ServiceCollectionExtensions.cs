@@ -1,34 +1,45 @@
 ﻿using InstaConnect.Follows.Business.Profiles;
+using InstaConnect.Shared.Business.Models.Options;
 using MassTransit;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Follows.Business.Extensions
+namespace InstaConnect.Follows.Business.Extensions;
+
+public static class ServiceCollectionExtensions
 {
-    public static class ServiceCollectionExtensions
+    public static IServiceCollection AddBusinessLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        public static IServiceCollection AddBusinessLayer(this IServiceCollection serviceCollection)
+        var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
+
+        serviceCollection
+            .AddOptions<MessageBrokerOptions>()
+            .BindConfiguration(nameof(MessageBrokerOptions))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        var messageBrokerOptions = configuration.GetSection(nameof(MessageBrokerOptions)).Get<MessageBrokerOptions>()!;
+
+        serviceCollection.AddAutoMapper(currentAssembly);
+
+        serviceCollection.AddMediatR(cf => cf.RegisterServicesFromAssembly(currentAssembly));
+
+        serviceCollection.AddMassTransit(busConfigurator =>
         {
-            serviceCollection.AddAutoMapper(typeof(FollowsBusinessProfile));
+            busConfigurator.SetKebabCaseEndpointNameFormatter();
 
-            serviceCollection.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly));
-
-            serviceCollection.AddMassTransit(busConfigurator =>
+            busConfigurator.UsingRabbitMq((context, configurator) =>
             {
-                busConfigurator.SetKebabCaseEndpointNameFormatter();
-
-                busConfigurator.UsingRabbitMq((context, configurator) =>
+                configurator.Host(new Uri(messageBrokerOptions.Host), h =>
                 {
-                    configurator.Host(new Uri(Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_HOST")!), h =>
-                    {
-                        h.Username(Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER")!);
-                        h.Password(Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS")!);
-                    });
-
-                    configurator.ConfigureEndpoints(context);
+                    h.Username(messageBrokerOptions.Username);
+                    h.Password(messageBrokerOptions.Password);
                 });
-            });
 
-            return serviceCollection;
-        }
+                configurator.ConfigureEndpoints(context);
+            });
+        });
+
+        return serviceCollection;
     }
 }

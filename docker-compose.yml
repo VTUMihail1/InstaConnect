@@ -1,12 +1,29 @@
 version: '3.4'
 
 services:
+  instaconnect.gateway.web:
+    image: ${DOCKER_REGISTRY-}instaconnectusersweb
+    container_name: instaconnect.gateway.web
+    build:
+      context: .
+      dockerfile: InstaConnect.Gateway.Web/Dockerfile
+    ports:
+      - "5100:5100"
+      - "5101:5101"
+    networks:
+      - proxybackend
+
   instaconnect.users.web:
     image: ${DOCKER_REGISTRY-}instaconnectusersweb
     container_name: instaconnect.users.web
     build:
       context: .
       dockerfile: InstaConnect.Users.Web/Dockerfile
+    ports:
+      - "5200:5200"
+      - "5201:5201"
+    networks:
+      - proxybackend
 
   instaconnect.users.database:
      image: mysql:latest
@@ -19,6 +36,8 @@ services:
        - ./.containers/users-db:/var/lib/mysql
      ports:
        - 3306
+     networks:
+       - proxybackend
 
   instaconnect.posts.web:
     image: ${DOCKER_REGISTRY-}instaconnectpostsweb
@@ -26,6 +45,11 @@ services:
     build:
       context: .
       dockerfile: InstaConnect.Posts.Web/Dockerfile
+    ports:
+      - "5300:5300"
+      - "5301:5301"
+    networks:
+      - proxybackend
 
   instaconnect.posts.database:
      image: mysql:latest
@@ -38,12 +62,19 @@ services:
        - ./.containers/posts-db:/var/lib/mysql
      ports:
        - 3306
+     networks:
+      - proxybackend
 
   instaconnect.messages.web:
     image: ${DOCKER_REGISTRY-}instaconnectmessagesweb
     build:
       context: .
       dockerfile: ../InstaConnect.Messages.Web/Dockerfile
+    ports:
+      - "5400:5400"
+      - "5401:5401"
+    networks:
+      - proxybackend
 
   instaconnect.messages.database:
      image: mysql:latest
@@ -56,12 +87,19 @@ services:
        - ./.containers/messages-db:/var/lib/mysql
      ports:
        - 3306
+     networks:
+      - proxybackend
 
   instaconnect.follows.web:
     image: ${DOCKER_REGISTRY-}instaconnectfollowsweb
     build:
       context: .
       dockerfile: ../InstaConnect.Follows.Web/Dockerfile
+    ports:
+      - "5500:5500"
+      - "5501:5501"
+    networks:
+      - proxybackend
 
   instaconnect.follows.database:
      image: mysql:latest
@@ -74,6 +112,8 @@ services:
        - ./.containers/follows-db:/var/lib/mysql
      ports:
        - 3306
+     networks:
+      - proxybackend
 
   instaconnect.rabbitmq:
      image: rabbitmq:management
@@ -86,3 +126,7 @@ services:
        - ./.containers/queue/data/:/var/lib/rabbitmq
        - ./.containers/queue/log/:/var/log/rabbitmq
 
+networks:
+  proxybackend:
+    name: proxybackend
+    driver: bridge
