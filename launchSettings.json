@@ -6,7 +6,9 @@
       "serviceActions": {
         "instaconnect.users.web": "StartDebugging",
         "instaconnect.posts.web": "StartDebugging",
-        "instaconnect.messages.web": "StartDebugging"
+        "instaconnect.messages.web": "StartDebugging",
+        "instaconnect.follows.web": "StartDebugging",
+        "instaconnect.gateway.web": "StartDebugging"
       }
     }
   }

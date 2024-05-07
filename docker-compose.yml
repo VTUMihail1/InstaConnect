@@ -27,7 +27,7 @@ services:
 
   instaconnect.users.database:
      image: mysql:latest
-     container_name: users.database
+     container_name: instaconnect.users.database
      environment: 
        - MYSQL_DB=instaconnect.users
        - MYSQL_USER=mihail
@@ -67,6 +67,7 @@ services:
 
   instaconnect.messages.web:
     image: ${DOCKER_REGISTRY-}instaconnectmessagesweb
+    container_name: instaconnect.messages.web
     build:
       context: .
       dockerfile: ../InstaConnect.Messages.Web/Dockerfile
@@ -92,6 +93,7 @@ services:
 
   instaconnect.follows.web:
     image: ${DOCKER_REGISTRY-}instaconnectfollowsweb
+    container_name: instaconnect.follows.web
     build:
       context: .
       dockerfile: ../InstaConnect.Follows.Web/Dockerfile
@@ -103,7 +105,7 @@ services:
 
   instaconnect.follows.database:
      image: mysql:latest
-     container_name: follows.database
+     container_name: instaconnect.follows.database
      environment: 
        - MYSQL_DB=instaconnect.follows
        - MYSQL_USER=mihail
