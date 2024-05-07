@@ -1,23 +1,38 @@
 version: '3.4'
 
 services:
-  instaconnect.users.web:
+  instaconnect.gateway.web:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTP_PORTS=5100
+      - ASPNETCORE_HTTPS_PORTS=5101
     ports:
-      - "80"
-      - "443"
+      - "5100"
+      - "5101"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  instaconnect.users.web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5200
+      - ASPNETCORE_HTTPS_PORTS=5201
+    ports:
+      - "5200"
+      - "5201"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
   instaconnect.posts.web:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTP_PORTS=5300
+      - ASPNETCORE_HTTPS_PORTS=5301
     ports:
-      - "80"
-      - "443"
+      - "5300"
+      - "5301"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -25,10 +40,23 @@ services:
   instaconnect.messages.web:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_HTTP_PORTS=5400
+      - ASPNETCORE_HTTPS_PORTS=5401
     ports:
-      - "8080"
-      - "8081"
+      - "5400"
+      - "5401"
     volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+   
+  instaconnect.follows.web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5500
+      - ASPNETCORE_HTTPS_PORTS=5501
+    ports:
+      - "5500"
+      - "5501"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro

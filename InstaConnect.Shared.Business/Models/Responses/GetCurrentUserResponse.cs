@@ -1,7 +1,6 @@
-﻿namespace InstaConnect.Shared.Business.Models.Responses
+﻿namespace InstaConnect.Shared.Business.Models.Responses;
+
+public class GetCurrentUserResponse
 {
-    public class GetCurrentUserResponse
-    {
-        public string Id { get; set; }
-    }
+    public string Id { get; set; }
 }

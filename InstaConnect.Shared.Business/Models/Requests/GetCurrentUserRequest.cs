@@ -1,6 +1,5 @@
-﻿namespace InstaConnect.Shared.Business.Models.Requests
+﻿namespace InstaConnect.Shared.Business.Models.Requests;
+
+public class GetCurrentUserRequest
 {
-    public class GetCurrentUserRequest
-    {
-    }
 }

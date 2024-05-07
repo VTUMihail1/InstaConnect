@@ -40,7 +40,7 @@ dotnet_style_parentheses_in_relational_binary_operators = never_if_unnecessary:e
 dotnet_style_require_accessibility_modifiers = for_non_interface_members:error
 
 # Expression-level preferences
-dotnet_style_coalesce_expression = true:error
+dotnet_style_coalesce_expression = false:error
 dotnet_style_collection_initializer = true:error
 dotnet_style_explicit_tuple_names = true:error
 dotnet_style_null_propagation = true:error
@@ -66,7 +66,7 @@ csharp_style_namespace_declarations=file_scoped:error
 
 # Expression-bodied members
 csharp_style_expression_bodied_accessors = true:error
-csharp_style_expression_bodied_constructors = true:error
+csharp_style_expression_bodied_constructors = false:error
 csharp_style_expression_bodied_indexers = true:error
 csharp_style_expression_bodied_lambdas = true:error
 csharp_style_expression_bodied_local_functions = true:error
