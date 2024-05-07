@@ -41,7 +41,6 @@ public static class ServiceCollectionExtensions
 
             busConfigurator.AddConsumer<GetCurrentUserConsumer>();
             busConfigurator.AddConsumer<ValidateUserByIdConsumer>();
-            busConfigurator.AddConsumer<ValidateUserIdConsumer>();
 
             busConfigurator.UsingRabbitMq((context, configurator) =>
             {

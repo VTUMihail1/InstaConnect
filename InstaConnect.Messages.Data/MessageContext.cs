@@ -3,20 +3,19 @@ using InstaConnect.Data.Models.Entities;
 using InstaConnect.Shared.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Messages.Data
+namespace InstaConnect.Messages.Data;
+
+public class MessageContext : BaseDbContext
 {
-    public class MessageContext : BaseDbContext
+    public MessageContext(DbContextOptions<MessageContext> options) : base(options)
+    { }
+
+    public DbSet<Message> Messages { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public MessageContext(DbContextOptions<MessageContext> options) : base(options)
-        { }
+        base.OnModelCreating(modelBuilder);
 
-        public DbSet<Message> Messages { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.ApplyConfiguration(new MessageConfiguration());
-        }
+        modelBuilder.ApplyConfiguration(new MessageConfiguration());
     }
 }

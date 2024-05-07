@@ -7,44 +7,38 @@ using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Follows.Business.Commands.Follows.DeleteFollow
+namespace InstaConnect.Follows.Business.Commands.Follows.DeleteFollow;
+
+public class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommand>
 {
-    public class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommand>
+    private readonly IMapper _mapper;
+    private readonly IFollowRepository _followRepository;
+    private readonly IValidateUserByIdRequestClient _requestClient;
+
+    public DeleteFollowCommandHandler(
+        IMapper mapper,
+        IFollowRepository followRepository,
+        IValidateUserByIdRequestClient requestClient)
     {
-        private readonly IMapper _mapper;
-        private readonly IFollowRepository _followRepository;
-        private readonly IValidateUserByIdRequestClient _requestClient;
+        _mapper = mapper;
+        _followRepository = followRepository;
+        _requestClient = requestClient;
+    }
 
-        public DeleteFollowCommandHandler(
-            IMapper mapper,
-            IFollowRepository followRepository,
-            IValidateUserByIdRequestClient requestClient)
+    public async Task Handle(DeleteFollowCommand request, CancellationToken cancellationToken)
+    {
+        var existingFollow = await _followRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (existingFollow == null)
         {
-            _mapper = mapper;
-            _followRepository = followRepository;
-            _requestClient = requestClient;
+            throw new FollowNotFoundException();
         }
 
-        public async Task Handle(DeleteFollowCommand request, CancellationToken cancellationToken)
-        {
-            var existingFollow = await _followRepository.GetByIdAsync(request.Id, cancellationToken);
+        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
+        _mapper.Map(existingFollow, validateUserByIdRequest);
 
-            if (existingFollow == null)
-            {
-                throw new FollowNotFoundException();
-            }
+        await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
-            var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-            _mapper.Map(existingFollow, validateUserByIdRequest);
-
-            var validateUserByIdResponse = await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
-
-            if (!validateUserByIdResponse.Message.IsValid)
-            {
-                throw new AccountForbiddenException();
-            }
-
-            await _followRepository.DeleteAsync(existingFollow, cancellationToken);
-        }
+        await _followRepository.DeleteAsync(existingFollow, cancellationToken);
     }
 }

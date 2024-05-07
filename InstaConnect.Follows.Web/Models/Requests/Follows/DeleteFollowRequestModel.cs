@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Follows.Web.Models.Requests.Follows
-{
-    public class DeleteFollowRequestModel
-    {
-        [FromRoute]
-        public string Id { get; set; }
+namespace InstaConnect.Follows.Web.Models.Requests.Follows;
 
-        [FromRoute]
-        public string FollowerId { get; set; }
-    }
+public class DeleteFollowRequestModel
+{
+    [FromRoute]
+    public string Id { get; set; }
+
+    [FromRoute]
+    public string FollowerId { get; set; }
 }

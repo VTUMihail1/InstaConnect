@@ -9,33 +9,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Posts.Business.Queries.Posts.GetPostById
+namespace InstaConnect.Posts.Business.Queries.Posts.GetPostById;
+
+public class GetPostByIdQueryHandler : IQueryHandler<GetPostByIdQuery, PostViewDTO>
 {
-    public class GetPostByIdQueryHandler : IQueryHandler<GetPostByIdQuery, PostViewDTO>
+    private readonly IMapper _mapper;
+    private readonly IPostRepository _postRepository;
+
+    public GetPostByIdQueryHandler(
+        IMapper mapper,
+        IPostRepository postRepository)
     {
-        private readonly IMapper _mapper;
-        private readonly IPostRepository _postRepository;
+        _mapper = mapper;
+        _postRepository = postRepository;
+    }
 
-        public GetPostByIdQueryHandler(
-            IMapper mapper,
-            IPostRepository postRepository)
+    public async Task<PostViewDTO> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
+    {
+        var post = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (post == null)
         {
-            _mapper = mapper;
-            _postRepository = postRepository;
+            throw new PostNotFoundException();
         }
 
-        public async Task<PostViewDTO> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
-        {
-            var post = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
+        var postViewDTO = _mapper.Map<PostViewDTO>(post);
 
-            if (post == null)
-            {
-                throw new PostNotFoundException();
-            }
-
-            var postViewDTO = _mapper.Map<PostViewDTO>(post);
-
-            return postViewDTO;
-        }
+        return postViewDTO;
     }
 }

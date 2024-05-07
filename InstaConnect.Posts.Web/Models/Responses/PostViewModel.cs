@@ -1,11 +1,10 @@
-﻿namespace InstaConnect.Posts.Web.Models.Responses
+﻿namespace InstaConnect.Posts.Web.Models.Responses;
+
+public class PostViewModel
 {
-    public class PostViewModel
-    {
-        public string Id { get; set; }
+    public string Id { get; set; }
 
-        public string Title { get; set; }
+    public string Title { get; set; }
 
-        public string Content { get; set; }
-    }
+    public string Content { get; set; }
 }

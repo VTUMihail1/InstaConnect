@@ -1,13 +1,12 @@
-﻿namespace InstaConnect.Shared.Business.Enum
+﻿namespace InstaConnect.Shared.Business.Enum;
+
+public enum InstaConnectStatusCode
 {
-    public enum InstaConnectStatusCode
-    {
-        OK,
-        Created,
-        NoContent,
-        NotFound,
-        BadRequest,
-        Unauthorized,
-        Forbidden
-    }
+    OK,
+    Created,
+    NoContent,
+    NotFound,
+    BadRequest,
+    Unauthorized,
+    Forbidden
 }

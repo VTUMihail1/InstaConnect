@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Posts.Web.Models.Requests.Post
+namespace InstaConnect.Posts.Web.Models.Requests.Post;
+
+public class GetPostByIdRequestModel
 {
-    public class GetPostByIdRequestModel
-    {
-        [FromRoute]
-        public string Id { get; set; }
-    }
+    [FromRoute]
+    public string Id { get; set; }
 }

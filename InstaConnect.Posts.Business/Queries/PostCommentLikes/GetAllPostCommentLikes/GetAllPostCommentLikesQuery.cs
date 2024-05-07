@@ -7,9 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Posts.Business.Queries.PostCommentLikes.GetAllPostCommentLikes
+namespace InstaConnect.Posts.Business.Queries.PostCommentLikes.GetAllPostCommentLikes;
+
+public class GetAllPostCommentLikesQuery : CollectionDTO, IQuery<ICollection<PostCommentLikeViewDTO>>
 {
-    public class GetAllPostCommentLikesQuery : CollectionDTO, IQuery<ICollection<PostCommentLikeViewDTO>>
-    {
-    }
 }

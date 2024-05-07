@@ -6,9 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Posts.Data.Models.Filters
+namespace InstaConnect.Posts.Data.Models.Filters;
+
+public class PostCommentLikeFilteredCollectionQuery : FilteredCollectionQuery<PostCommentLike>
 {
-    public class PostCommentLikeFilteredCollectionQuery : FilteredCollectionQuery<PostCommentLike>
-    {
-    }
 }

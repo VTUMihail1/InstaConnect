@@ -5,33 +5,32 @@ using InstaConnect.Shared.Business.Exceptions.Message;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
 using InstaConnect.Shared.Business.Messaging;
 
-namespace InstaConnect.Messages.Business.Queries.PostComments.GetPostCommentById
+namespace InstaConnect.Messages.Business.Queries.PostComments.GetPostCommentById;
+
+public class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, MessageViewDTO>
 {
-    public class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, MessageViewDTO>
+    private readonly IMapper _mapper;
+    private readonly IMessageRepository _messageRepository;
+
+    public GetMessageByIdQueryHandler(
+        IMapper mapper,
+        IMessageRepository messageRepository)
     {
-        private readonly IMapper _mapper;
-        private readonly IMessageRepository _messageRepository;
+        _mapper = mapper;
+        _messageRepository = messageRepository;
+    }
 
-        public GetMessageByIdQueryHandler(
-            IMapper mapper,
-            IMessageRepository messageRepository)
+    public async Task<MessageViewDTO> Handle(GetMessageByIdQuery request, CancellationToken cancellationToken)
+    {
+        var message = await _messageRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (message == null)
         {
-            _mapper = mapper;
-            _messageRepository = messageRepository;
+            throw new MessageNotFoundException();
         }
 
-        public async Task<MessageViewDTO> Handle(GetMessageByIdQuery request, CancellationToken cancellationToken)
-        {
-            var message = await _messageRepository.GetByIdAsync(request.Id, cancellationToken);
+        var messageViewDTO = _mapper.Map<MessageViewDTO>(message);
 
-            if (message == null)
-            {
-                throw new MessageNotFoundException();
-            }
-
-            var messageViewDTO = _mapper.Map<MessageViewDTO>(message);
-
-            return messageViewDTO;
-        }
+        return messageViewDTO;
     }
 }

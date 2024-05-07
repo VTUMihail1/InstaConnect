@@ -10,33 +10,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Posts.Business.Queries.PostLikes.GetPostLikeById
+namespace InstaConnect.Posts.Business.Queries.PostLikes.GetPostLikeById;
+
+public class GetPostLikeByIdQueryHandler : IQueryHandler<GetPostLikeByIdQuery, PostLikeViewDTO>
 {
-    public class GetPostLikeByIdQueryHandler : IQueryHandler<GetPostLikeByIdQuery, PostLikeViewDTO>
+    private readonly IMapper _mapper;
+    private readonly IPostLikeRepository _postLikeRepository;
+
+    public GetPostLikeByIdQueryHandler(
+        IMapper mapper,
+        IPostLikeRepository postLikeRepository)
     {
-        private readonly IMapper _mapper;
-        private readonly IPostLikeRepository _postLikeRepository;
+        _mapper = mapper;
+        _postLikeRepository = postLikeRepository;
+    }
 
-        public GetPostLikeByIdQueryHandler(
-            IMapper mapper,
-            IPostLikeRepository postLikeRepository)
+    public async Task<PostLikeViewDTO> Handle(GetPostLikeByIdQuery request, CancellationToken cancellationToken)
+    {
+        var postLike = await _postLikeRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (postLike == null)
         {
-            _mapper = mapper;
-            _postLikeRepository = postLikeRepository;
+            throw new PostLikeNotFoundException();
         }
 
-        public async Task<PostLikeViewDTO> Handle(GetPostLikeByIdQuery request, CancellationToken cancellationToken)
-        {
-            var postLike = await _postLikeRepository.GetByIdAsync(request.Id, cancellationToken);
+        var postLikeViewDTO = _mapper.Map<PostLikeViewDTO>(postLike);
 
-            if (postLike == null)
-            {
-                throw new PostLikeNotFoundException();
-            }
-
-            var postLikeViewDTO = _mapper.Map<PostLikeViewDTO>(postLike);
-
-            return postLikeViewDTO;
-        }
+        return postLikeViewDTO;
     }
 }

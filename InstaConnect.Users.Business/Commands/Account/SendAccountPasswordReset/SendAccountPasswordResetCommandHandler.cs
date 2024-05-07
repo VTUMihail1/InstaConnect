@@ -3,31 +3,30 @@ using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 
-namespace InstaConnect.Users.Business.Commands.Account.SendAccountPasswordReset
+namespace InstaConnect.Users.Business.Commands.Account.SendAccountPasswordReset;
+
+public class SendAccountPasswordResetCommandHandler : ICommandHandler<SendAccountPasswordResetCommand>
 {
-    public class SendAccountPasswordResetCommandHandler : ICommandHandler<SendAccountPasswordResetCommand>
+    private readonly ITokenService _tokenService;
+    private readonly IUserRepository _userRepository;
+
+    public SendAccountPasswordResetCommandHandler(
+        ITokenService tokenService,
+        IUserRepository userRepository)
     {
-        private readonly ITokenService _tokenService;
-        private readonly IUserRepository _userRepository;
+        _tokenService = tokenService;
+        _userRepository = userRepository;
+    }
 
-        public SendAccountPasswordResetCommandHandler(
-            ITokenService tokenService,
-            IUserRepository userRepository)
+    public async Task Handle(SendAccountPasswordResetCommand request, CancellationToken cancellationToken)
+    {
+        var existingUser = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
+
+        if (existingUser == null)
         {
-            _tokenService = tokenService;
-            _userRepository = userRepository;
+            throw new UserNotFoundException();
         }
 
-        public async Task Handle(SendAccountPasswordResetCommand request, CancellationToken cancellationToken)
-        {
-            var existingUser = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
-
-            if (existingUser == null)
-            {
-                throw new UserNotFoundException();
-            }
-
-            var tokenResult = await _tokenService.GeneratePasswordResetTokenAsync(existingUser.Id, cancellationToken);
-        }
+        var tokenResult = await _tokenService.GeneratePasswordResetTokenAsync(existingUser.Id, cancellationToken);
     }
 }

@@ -9,37 +9,36 @@ using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike
+namespace InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
+
+internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeCommand>
 {
-    internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeCommand>
+    private readonly IMapper _mapper;
+    private readonly IPostLikeRepository _postLikeRepository;
+    private readonly IValidateUserByIdRequestClient _requestClient;
+
+    public DeletePostLikeCommandHandler(
+        IMapper mapper,
+        IPostLikeRepository postLikeRepository,
+        IValidateUserByIdRequestClient requestClient)
     {
-        private readonly IMapper _mapper;
-        private readonly IPostLikeRepository _postLikeRepository;
-        private readonly IValidateUserByIdRequestClient _requestClient;
+        _mapper = mapper;
+        _postLikeRepository = postLikeRepository;
+        _requestClient = requestClient;
+    }
 
-        public DeletePostLikeCommandHandler(
-            IMapper mapper,
-            IPostLikeRepository postLikeRepository,
-            IValidateUserByIdRequestClient requestClient)
+    public async Task Handle(DeletePostLikeCommand request, CancellationToken cancellationToken)
+    {
+        var existingPostLike = await _postLikeRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (existingPostLike == null)
         {
-            _mapper = mapper;
-            _postLikeRepository = postLikeRepository;
-            _requestClient = requestClient;
+            throw new PostLikeNotFoundException();
         }
 
-        public async Task Handle(DeletePostLikeCommand request, CancellationToken cancellationToken)
-        {
-            var existingPostLike = await _postLikeRepository.GetByIdAsync(request.Id, cancellationToken);
+        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingPostLike);
+        await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
-            if (existingPostLike == null)
-            {
-                throw new PostLikeNotFoundException();
-            }
-
-            var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingPostLike);
-            await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
-
-            await _postLikeRepository.DeleteAsync(existingPostLike, cancellationToken);
-        }
+        await _postLikeRepository.DeleteAsync(existingPostLike, cancellationToken);
     }
 }

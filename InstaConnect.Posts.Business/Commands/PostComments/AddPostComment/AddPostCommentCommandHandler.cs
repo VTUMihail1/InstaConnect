@@ -9,49 +9,48 @@ using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment
+namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
+
+internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentCommand>
 {
-    internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentCommand>
+    private readonly IMapper _mapper;
+    private readonly IPostRepository _postRepository;
+    private readonly IPostCommentRepository _postCommentRepository;
+    private readonly IGetCurrentUserRequestClient _requestClient;
+
+    public AddPostCommentCommandHandler(
+        IMapper mapper,
+        IPostRepository postRepository,
+        IPostCommentRepository postCommentRepository,
+        IGetCurrentUserRequestClient requestClient)
     {
-        private readonly IMapper _mapper;
-        private readonly IPostRepository _postRepository;
-        private readonly IPostCommentRepository _postCommentRepository;
-        private readonly IValidateUserIdRequestClient _requestClient;
+        _mapper = mapper;
+        _postRepository = postRepository;
+        _postCommentRepository = postCommentRepository;
+        _requestClient = requestClient;
+    }
 
-        public AddPostCommentCommandHandler(
-            IMapper mapper,
-            IPostRepository postRepository,
-            IPostCommentRepository postCommentRepository,
-            IValidateUserIdRequestClient requestClient)
+    public async Task Handle(AddPostCommentCommand request, CancellationToken cancellationToken)
+    {
+        var post = await _postRepository.GetByIdAsync(request.PostId, cancellationToken);
+
+        if (post == null)
         {
-            _mapper = mapper;
-            _postRepository = postRepository;
-            _postCommentRepository = postCommentRepository;
-            _requestClient = requestClient;
+            throw new PostNotFoundException();
         }
 
-        public async Task Handle(AddPostCommentCommand request, CancellationToken cancellationToken)
+        var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
+        var getCurrentUserResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
+
+        var existingPostComment = await _postCommentRepository.GetByIdAsync(request.PostCommentId, cancellationToken);
+
+        if (request.PostCommentId != null && existingPostComment == null)
         {
-            var post = await _postRepository.GetByIdAsync(request.PostId, cancellationToken);
-
-            if (post == null)
-            {
-                throw new PostNotFoundException();
-            }
-
-            var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
-            var getCurrentUserResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
-
-            var existingPostComment = await _postCommentRepository.GetByIdAsync(request.PostCommentId, cancellationToken);
-
-            if (request.PostCommentId != null && existingPostComment == null)
-            {
-                throw new PostCommentNotFoundException();
-            }
-
-            var postComment = _mapper.Map<PostComment>(request);
-            _mapper.Map(getCurrentUserResponse.Message, postComment);
-            await _postCommentRepository.AddAsync(postComment, cancellationToken);
+            throw new PostCommentNotFoundException();
         }
+
+        var postComment = _mapper.Map<PostComment>(request);
+        _mapper.Map(getCurrentUserResponse.Message, postComment);
+        await _postCommentRepository.AddAsync(postComment, cancellationToken);
     }
 }

@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Users.Web.Models.Requests.Account
+namespace InstaConnect.Users.Web.Models.Requests.Account;
+
+public class DeleteAccountRequestModel
 {
-    public class DeleteAccountRequestModel
-    {
-        [FromRoute]
-        public string Id { get; set; }
-    }
+    [FromRoute]
+    public string Id { get; set; }
 }

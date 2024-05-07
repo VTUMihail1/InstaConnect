@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TokenOptions = InstaConnect.Users.Data.Models.Options.TokenOptions;
 
 namespace InstaConnect.Users.Data.Extensions;
 
@@ -20,6 +21,12 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddOptions<AdminOptions>()
             .BindConfiguration(nameof(AdminOptions))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        serviceCollection
+            .AddOptions<TokenOptions>()
+            .BindConfiguration(nameof(TokenOptions))
             .ValidateDataAnnotations()
             .ValidateOnStart();
 

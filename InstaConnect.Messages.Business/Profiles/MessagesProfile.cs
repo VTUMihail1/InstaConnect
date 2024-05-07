@@ -12,43 +12,39 @@ using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Data.Models.Filters;
 using System.Linq;
 
-namespace InstaConnect.Messages.Business.Profiles
+namespace InstaConnect.Messages.Business.Profiles;
+
+public class MessagesProfile : Profile
 {
-    public class MessagesProfile : Profile
+    public MessagesProfile()
     {
-        public MessagesProfile()
-        {
-            // Post Comments
+        // Post Comments
 
-            CreateMap<GetAllFilteredMessagesQuery, MessageFilteredCollectionQuery>()
-                .ConstructUsing(src =>
-                     new MessageFilteredCollectionQuery
-                     {
-                         Expression = p => (src.SenderId == string.Empty || p.SenderId == src.SenderId) &&
-                                           (src.ReceiverId == string.Empty || p.ReceiverId == src.ReceiverId) &&
-                                           (src.Content == string.Empty || p.Content.Contains(src.Content))
-                     });
+        CreateMap<GetAllFilteredMessagesQuery, MessageFilteredCollectionQuery>()
+            .ConstructUsing(src =>
+                 new MessageFilteredCollectionQuery
+                 {
+                     Expression = p => (src.SenderId == string.Empty || p.SenderId == src.SenderId) &&
+                                       (src.ReceiverId == string.Empty || p.ReceiverId == src.ReceiverId) &&
+                                       (src.Content == string.Empty || p.Content.Contains(src.Content))
+                 });
 
-            CreateMap<GetAllMessagesQuery, CollectionQuery>();
+        CreateMap<GetAllMessagesQuery, CollectionQuery>();
 
-            CreateMap<AddMessageCommand, GetCurrentUserRequest>();
+        CreateMap<AddMessageCommand, GetCurrentUserRequest>();
 
-            CreateMap<UpdateMessageCommand, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.SenderId));
+        CreateMap<DeleteMessageCommand, ValidateUserByIdRequest>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SenderId));
 
-            CreateMap<DeleteMessageCommand, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SenderId));
+        CreateMap<Message, ValidateUserByIdRequest>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SenderId));
 
-            CreateMap<Message, ValidateUserByIdRequest>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SenderId));
+        CreateMap<GetCurrentUserResponse, Message>();
 
-            CreateMap<GetCurrentUserResponse, Message>();
+        CreateMap<AddMessageCommand, Message>();
 
-            CreateMap<AddMessageCommand, Message>();
+        CreateMap<UpdateMessageCommand, Message>();
 
-            CreateMap<UpdateMessageCommand, Message>();
-
-            CreateMap<Message, MessageViewDTO>();
-        }
+        CreateMap<Message, MessageViewDTO>();
     }
 }

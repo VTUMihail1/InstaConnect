@@ -1,9 +1,8 @@
 ﻿using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Shared.Data.Models.Filters;
 
-namespace InstaConnect.Posts.Data.Models.Filters
+namespace InstaConnect.Posts.Data.Models.Filters;
+
+public class PostFilteredCollectionQuery : FilteredCollectionQuery<Post>
 {
-    public class PostFilteredCollectionQuery : FilteredCollectionQuery<Post>
-    {
-    }
 }

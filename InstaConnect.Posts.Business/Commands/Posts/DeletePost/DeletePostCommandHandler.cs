@@ -7,37 +7,36 @@ using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Posts.Business.Commands.Posts.DeletePost
+namespace InstaConnect.Posts.Business.Commands.Posts.DeletePost;
+
+internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
 {
-    internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
+    private readonly IMapper _mapper;
+    private readonly IPostRepository _postRepository;
+    private readonly IValidateUserByIdRequestClient _requestClient;
+
+    public DeletePostCommandHandler(
+        IMapper mapper,
+        IPostRepository postRepository,
+        IValidateUserByIdRequestClient requestClient)
     {
-        private readonly IMapper _mapper;
-        private readonly IPostRepository _postRepository;
-        private readonly IValidateUserByIdRequestClient _requestClient;
+        _mapper = mapper;
+        _postRepository = postRepository;
+        _requestClient = requestClient;
+    }
 
-        public DeletePostCommandHandler(
-            IMapper mapper,
-            IPostRepository postRepository,
-            IValidateUserByIdRequestClient requestClient)
+    public async Task Handle(DeletePostCommand request, CancellationToken cancellationToken)
+    {
+        var existingPost = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (existingPost == null)
         {
-            _mapper = mapper;
-            _postRepository = postRepository;
-            _requestClient = requestClient;
+            throw new PostNotFoundException();
         }
 
-        public async Task Handle(DeletePostCommand request, CancellationToken cancellationToken)
-        {
-            var existingPost = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
+        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingPost);
+        await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
-            if (existingPost == null)
-            {
-                throw new PostNotFoundException();
-            }
-
-            var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingPost);
-            await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
-
-            await _postRepository.DeleteAsync(existingPost, cancellationToken);
-        }
+        await _postRepository.DeleteAsync(existingPost, cancellationToken);
     }
 }

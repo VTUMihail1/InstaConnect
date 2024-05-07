@@ -1,7 +1,6 @@
-﻿namespace InstaConnect.Users.Web.Models.Requests.Token
+﻿namespace InstaConnect.Users.Web.Models.Requests.Token;
+
+public class TokenRequestModel
 {
-    public class TokenRequestModel
-    {
-        public string Value { get; set; }
-    }
+    public string Value { get; set; }
 }

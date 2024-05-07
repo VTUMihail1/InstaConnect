@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Users.Web.Models.Requests.User
+namespace InstaConnect.Users.Web.Models.Requests.User;
+
+public class GetUserByUserNameRequestModel
 {
-    public class GetUserByUserNameRequestModel
-    {
-        [FromRoute]
-        public string UserName { get; set; }
-    }
+    [FromRoute]
+    public string UserName { get; set; }
 }

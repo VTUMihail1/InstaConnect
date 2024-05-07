@@ -9,37 +9,36 @@ using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment
+namespace InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment;
+
+public class DeletePostCommentCommandHandler : ICommandHandler<DeletePostCommentCommand>
 {
-    public class DeletePostCommentCommandHandler : ICommandHandler<DeletePostCommentCommand>
+    private readonly IMapper _mapper;
+    private readonly IPostCommentRepository _postCommentRepository;
+    private readonly IValidateUserByIdRequestClient _requestClient;
+
+    public DeletePostCommentCommandHandler(
+        IMapper mapper,
+        IPostCommentRepository postCommentRepository,
+        IValidateUserByIdRequestClient requestClient)
     {
-        private readonly IMapper _mapper;
-        private readonly IPostCommentRepository _postCommentRepository;
-        private readonly IValidateUserByIdRequestClient _requestClient;
+        _mapper = mapper;
+        _postCommentRepository = postCommentRepository;
+        _requestClient = requestClient;
+    }
 
-        public DeletePostCommentCommandHandler(
-            IMapper mapper,
-            IPostCommentRepository postCommentRepository,
-            IValidateUserByIdRequestClient requestClient)
+    public async Task Handle(DeletePostCommentCommand request, CancellationToken cancellationToken)
+    {
+        var existingPostComment = await _postCommentRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (existingPostComment == null)
         {
-            _mapper = mapper;
-            _postCommentRepository = postCommentRepository;
-            _requestClient = requestClient;
+            throw new PostCommentNotFoundException();
         }
 
-        public async Task Handle(DeletePostCommentCommand request, CancellationToken cancellationToken)
-        {
-            var existingPostComment = await _postCommentRepository.GetByIdAsync(request.Id, cancellationToken);
+        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
+        await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
-            if (existingPostComment == null)
-            {
-                throw new PostCommentNotFoundException();
-            }
-
-            var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-            await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
-
-            await _postCommentRepository.DeleteAsync(existingPostComment, cancellationToken);
-        }
+        await _postCommentRepository.DeleteAsync(existingPostComment, cancellationToken);
     }
 }

@@ -21,53 +21,52 @@ using InstaConnect.Users.Web.Models.Requests.User;
 using InstaConnect.Users.Web.Models.Response.Account;
 using InstaConnect.Users.Web.Models.Response.User;
 
-namespace InstaConnect.Users.Web.Profiles
+namespace InstaConnect.Users.Web.Profiles;
+
+public class UsersWebProfile : Profile
 {
-    public class UsersWebProfile : Profile
+    public UsersWebProfile()
     {
-        public UsersWebProfile()
-        {
-            CreateMap<ConfirmAccountEmailTokenRequestModel, ConfirmAccountEmailCommand>();
+        CreateMap<ConfirmAccountEmailTokenRequestModel, ConfirmAccountEmailCommand>();
 
-            CreateMap<ResendAccountConfirmEmailRequestModel, ResendAccountEmailConfirmationCommand>();
+        CreateMap<ResendAccountConfirmEmailRequestModel, ResendAccountEmailConfirmationCommand>();
 
-            CreateMap<SendAccountPasswordResetRequestModel, SendAccountPasswordResetRequestModel>();
+        CreateMap<SendAccountPasswordResetRequestModel, SendAccountPasswordResetRequestModel>();
 
-            CreateMap<LoginAccountRequestModel, LoginAccountCommand>();
+        CreateMap<LoginAccountRequestModel, LoginAccountCommand>();
 
-            CreateMap<RegisterAccountRequestModel, RegisterAccountCommand>();
+        CreateMap<RegisterAccountRequestModel, RegisterAccountCommand>();
 
-            CreateMap<ResetAccountPasswordRequestModel, ResetAccountPasswordCommand>();
+        CreateMap<ResetAccountPasswordRequestModel, ResetAccountPasswordCommand>();
 
-            CreateMap<EditAccountRequestModel, EditAccountCommand>();
+        CreateMap<EditAccountRequestModel, EditAccountCommand>();
 
-            CreateMap<TokenRequestModel, LogoutAccountCommand>();
+        CreateMap<TokenRequestModel, LogoutAccountCommand>();
 
-            CreateMap<UserRequestModel, EditAccountCommand>();
+        CreateMap<UserRequestModel, EditAccountCommand>();
 
-            CreateMap<UserRequestModel, DeleteAccountCommand>();
+        CreateMap<UserRequestModel, DeleteAccountCommand>();
 
-            CreateMap<DeleteAccountRequestModel, DeleteAccountCommand>();
+        CreateMap<DeleteAccountRequestModel, DeleteAccountCommand>();
 
-            CreateMap<AccountViewDTO, AccountResponseModel>();
+        CreateMap<AccountViewDTO, AccountResponseModel>();
 
-            CreateMap<CollectionRequestModel, GetAllUsersQuery>();
+        CreateMap<CollectionRequestModel, GetAllUsersQuery>();
 
-            CreateMap<GetUserCollectionRequestModel, GetAllFilteredUsersQuery>();
+        CreateMap<GetUserCollectionRequestModel, GetAllFilteredUsersQuery>();
 
-            CreateMap<UserRequestModel, GetDetailedUserByIdQuery>();
+        CreateMap<UserRequestModel, GetDetailedUserByIdQuery>();
 
-            CreateMap<GetUserDetailedByIdRequestModel, GetDetailedUserByIdQuery>();
+        CreateMap<GetUserDetailedByIdRequestModel, GetDetailedUserByIdQuery>();
 
-            CreateMap<UserRequestModel, GetUserByIdQuery>();
+        CreateMap<UserRequestModel, GetUserByIdQuery>();
 
-            CreateMap<GetUserByIdRequestModel, GetUserByIdQuery>();
+        CreateMap<GetUserByIdRequestModel, GetUserByIdQuery>();
 
-            CreateMap<GetUserByUserNameRequestModel, GetUserByNameQuery>();
+        CreateMap<GetUserByUserNameRequestModel, GetUserByNameQuery>();
 
-            CreateMap<UserViewDTO, UserResponseModel>();
+        CreateMap<UserViewDTO, UserResponseModel>();
 
-            CreateMap<UserDetailedViewDTO, UserDetailedResponseModel>();
-        }
+        CreateMap<UserDetailedViewDTO, UserDetailedResponseModel>();
     }
 }

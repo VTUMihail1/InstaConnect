@@ -1,10 +1,9 @@
 ﻿using InstaConnect.Shared.Business.Messaging;
 using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike
+namespace InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
+
+public class AddPostLikeCommand : ICommand
 {
-    public class AddPostLikeCommand : ICommand
-    {
-        public string PostId { get; set; }
-    }
+    public string PostId { get; set; }
 }

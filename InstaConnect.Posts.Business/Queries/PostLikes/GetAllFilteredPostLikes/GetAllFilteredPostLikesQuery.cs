@@ -3,12 +3,11 @@ using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Filters;
 using MediatR;
 
-namespace InstaConnect.Posts.Business.Queries.PostLikes.GetAllFilteredPostLikes
-{
-    public class GetAllFilteredPostLikesQuery : CollectionDTO, IQuery<ICollection<PostLikeViewDTO>>
-    {
-        public string UserId { get; set; }
+namespace InstaConnect.Posts.Business.Queries.PostLikes.GetAllFilteredPostLikes;
 
-        public string PostId { get; set; }
-    }
+public class GetAllFilteredPostLikesQuery : CollectionDTO, IQuery<ICollection<PostLikeViewDTO>>
+{
+    public string UserId { get; set; }
+
+    public string PostId { get; set; }
 }

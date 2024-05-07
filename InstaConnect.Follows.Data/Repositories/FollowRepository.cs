@@ -9,25 +9,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Follows.Data.Repositories
+namespace InstaConnect.Follows.Data.Repositories;
+
+public class FollowRepository : BaseRepository<Follow>, IFollowRepository
 {
-    public class FollowRepository : BaseRepository<Follow>, IFollowRepository
+    private readonly FollowsContext _followsContext;
+
+    public FollowRepository(FollowsContext followsContext) : base(followsContext)
     {
-        private readonly FollowsContext _followsContext;
+        _followsContext = followsContext;
+    }
 
-        public FollowRepository(FollowsContext followsContext) : base(followsContext)
-        {
-            _followsContext = followsContext;
-        }
+    public virtual async Task<Follow?> GetByFollowerIdAndFollowingIdAsync(string followerId, string followingId, CancellationToken cancellationToken)
+    {
+        var follow =
+        await IncludeProperties(
+            _followsContext.Follows)
+            .FirstOrDefaultAsync(f => f.FollowerId == followerId && f.FollowingId == followingId);
 
-        public virtual async Task<Follow?> GetByFollowerIdAndFollowingIdAsync(string followerId, string followingId, CancellationToken cancellationToken)
-        {
-            var follow =
-            await IncludeProperties(
-                _followsContext.Follows)
-                .FirstOrDefaultAsync(f => f.FollowerId == followerId && f.FollowingId == followingId);
-
-            return follow;
-        }
+        return follow;
     }
 }

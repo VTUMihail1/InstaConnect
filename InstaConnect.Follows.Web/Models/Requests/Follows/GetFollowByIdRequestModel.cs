@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Follows.Web.Models.Requests.Follows
+namespace InstaConnect.Follows.Web.Models.Requests.Follows;
+
+public class GetFollowByIdRequestModel
 {
-    public class GetFollowByIdRequestModel
-    {
-        [FromRoute]
-        public string Id { get; set; }
-    }
+    [FromRoute]
+    public string Id { get; set; }
 }

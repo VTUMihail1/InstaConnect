@@ -7,9 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InstaConnect.Follows.Business.Queries.Follows.GetAllFollows
+namespace InstaConnect.Follows.Business.Queries.Follows.GetAllFollows;
+
+public class GetAllFollowsQuery : CollectionDTO, IQuery<ICollection<FollowViewDTO>>
 {
-    public class GetAllFollowsQuery : CollectionDTO, IQuery<ICollection<FollowViewDTO>>
-    {
-    }
 }

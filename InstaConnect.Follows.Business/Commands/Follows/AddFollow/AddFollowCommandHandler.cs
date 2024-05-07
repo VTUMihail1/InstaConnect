@@ -8,53 +8,46 @@ using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Follows.Business.Commands.Follows.AddFollow
+namespace InstaConnect.Follows.Business.Commands.Follows.AddFollow;
+
+public class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
 {
-    public class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
+    private const string USER_ALREADY_FOLLOWED = "This user has already been followed";
+
+    private readonly IMapper _mapper;
+    private readonly IFollowRepository _followRepository;
+    private readonly IGetCurrentUserRequestClient _requestClient;
+    private readonly IValidateUserByIdRequestClient _validateUserByIdRequestClient;
+
+    public AddFollowCommandHandler(
+        IMapper mapper,
+        IFollowRepository followRepository,
+        IGetCurrentUserRequestClient requestClient,
+        IValidateUserByIdRequestClient validateUserByIdRequestClient)
     {
-        private const string USER_ALREADY_FOLLOWED = "This user has already been followed";
+        _mapper = mapper;
+        _followRepository = followRepository;
+        _requestClient = requestClient;
+        _validateUserByIdRequestClient = validateUserByIdRequestClient;
+    }
 
-        private readonly IMapper _mapper;
-        private readonly IFollowRepository _followRepository;
-        private readonly IValidateUserIdRequestClient _requestClient;
+    public async Task Handle(AddFollowCommand request, CancellationToken cancellationToken)
+    {
+        var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
+        var getCurrentUserResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
 
-        public AddFollowCommandHandler(
-            IMapper mapper,
-            IFollowRepository followRepository,
-            IValidateUserIdRequestClient requestClient)
+        var getUserByFollowingIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
+        var getUserByFollowingIdResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getUserByFollowingIdRequest, cancellationToken);
+
+        var existingPostLike = _followRepository.GetByFollowerIdAndFollowingIdAsync(getCurrentUserResponse.Message.Id, request.FollowingId, cancellationToken);
+
+        if (existingPostLike == null)
         {
-            _mapper = mapper;
-            _followRepository = followRepository;
-            _requestClient = requestClient;
+            throw new BadRequestException(USER_ALREADY_FOLLOWED);
         }
 
-        public async Task Handle(AddFollowCommand request, CancellationToken cancellationToken)
-        {
-            var getUserByFollowerIdRequest = _mapper.Map<ValidateUserIdRequest>(request);
-            var getUserByFollowerIdResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getUserByFollowerIdRequest, cancellationToken);
-
-            if (!getUserByFollowerIdResponse.Message.Exists)
-            {
-                throw new UserNotFoundException();
-            }
-
-            var getUserByFollowingIdRequest = _mapper.Map<ValidateUserIdRequest>(request);
-            var getUserByFollowingIdResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getUserByFollowingIdRequest, cancellationToken);
-
-            if (!getUserByFollowingIdResponse.Message.Exists)
-            {
-                throw new UserNotFoundException();
-            }
-
-            var existingPostLike = _followRepository.GetByFollowerIdAndFollowingIdAsync(request.FollowerId, request.FollowingId, cancellationToken);
-
-            if (existingPostLike == null)
-            {
-                throw new BadRequestException(USER_ALREADY_FOLLOWED);
-            }
-
-            var follow = _mapper.Map<Follow>(request);
-            await _followRepository.AddAsync(follow, cancellationToken);
-        }
+        var follow = _mapper.Map<Follow>(request);
+        _mapper.Map(getCurrentUserResponse.Message, follow);
+        await _followRepository.AddAsync(follow, cancellationToken);
     }
 }

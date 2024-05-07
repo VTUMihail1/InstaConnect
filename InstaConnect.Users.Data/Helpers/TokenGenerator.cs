@@ -8,110 +8,109 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace InstaConnect.Users.Data.Helpers
+namespace InstaConnect.Users.Data.Helpers;
+
+internal class TokenGenerator : ITokenGenerator
 {
-    internal class TokenGenerator : ITokenGenerator
+    private const string ACCESS_TOKEN_TYPE = "Bearer ";
+    private const string EMAIL_CONFIRMATION_TOKEN_TYPE = "Email Confirmation";
+    private const string PASSWORD_RESET_TOKEN_TYPE = "Password Reset";
+
+    private readonly TokenOptions _tokenOptions;
+    private readonly ITokenFactory _tokenFactory;
+
+    public TokenGenerator(
+        IOptions<TokenOptions> options,
+        ITokenFactory tokenFactory)
     {
-        private const string ACCESS_TOKEN_TYPE = "Bearer ";
-        private const string EMAIL_CONFIRMATION_TOKEN_TYPE = "Email Confirmation";
-        private const string PASSWORD_RESET_TOKEN_TYPE = "Password Reset";
+        _tokenOptions = options.Value;
+        _tokenFactory = tokenFactory;
+    }
 
-        private readonly TokenOptions _tokenOptions;
-        private readonly ITokenFactory _tokenFactory;
+    public Token GenerateAccessToken(string userId)
+    {
+        var claims = GetClaims(userId);
+        var value = GetToken(
+            claims,
+            _tokenOptions.AccessTokenSecurityKey,
+            _tokenOptions.AccessTokenLifetimeSeconds,
+            ACCESS_TOKEN_TYPE);
 
-        public TokenGenerator(
-            IOptions<TokenOptions> options,
-            ITokenFactory tokenFactory)
+        var token = _tokenFactory.GetTokenToken(
+            userId,
+            value,
+            ACCESS_TOKEN_TYPE,
+            _tokenOptions.AccessTokenLifetimeSeconds);
+
+        return token;
+    }
+
+    public Token GenerateEmailConfirmationToken(string userId)
+    {
+        var claims = GetClaims(userId);
+        var value = GetToken(
+            claims,
+            _tokenOptions.AccountTokenSecurityKey,
+            _tokenOptions.AccountTokenLifetimeSeconds);
+
+        var token = _tokenFactory.GetTokenToken(
+            userId,
+            value,
+            EMAIL_CONFIRMATION_TOKEN_TYPE,
+            _tokenOptions.AccountTokenLifetimeSeconds);
+
+        return token;
+    }
+
+    public Token GeneratePasswordResetToken(string userId)
+    {
+        var claims = GetClaims(userId);
+        var value = GetToken(
+            claims,
+            _tokenOptions.AccountTokenSecurityKey,
+            _tokenOptions.AccountTokenLifetimeSeconds);
+
+        var token = _tokenFactory.GetTokenToken(
+            userId,
+            value,
+            PASSWORD_RESET_TOKEN_TYPE,
+            _tokenOptions.AccountTokenLifetimeSeconds);
+
+        return token;
+    }
+
+    private string GetToken(IEnumerable<Claim> claims, string securityKey, int lifeTime, string prefix = "")
+    {
+        var securityKeyAsBytes = Encoding.UTF8.GetBytes(securityKey);
+        var signingKey = new SymmetricSecurityKey(securityKeyAsBytes);
+
+        var claimsIdentity = new ClaimsIdentity(claims);
+
+        var tokenDescriptor = new SecurityTokenDescriptor
         {
-            _tokenOptions = options.Value;
-            _tokenFactory = tokenFactory;
-        }
+            Subject = claimsIdentity,
+            SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature),
+            Issuer = _tokenOptions.Issuer,
+            Audience = _tokenOptions.Audience,
+            Expires = DateTime.Now.AddSeconds(lifeTime)
+        };
 
-        public Token GenerateAccessToken(string userId)
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+        var token = prefix + tokenHandler.WriteToken(securityToken);
+
+        return token;
+    }
+
+    private IEnumerable<Claim> GetClaims(string userId)
+    {
+        var claims = new List<Claim>
         {
-            var claims = GetClaims(userId);
-            var value = GetToken(
-                claims,
-                _tokenOptions.AccessTokenSecurityKey,
-                _tokenOptions.AccessTokenLifetimeSeconds,
-                ACCESS_TOKEN_TYPE);
+            new Claim(JwtRegisteredClaimNames.Sub, userId),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString())
+        };
 
-            var token = _tokenFactory.GetTokenToken(
-                userId,
-                value,
-                ACCESS_TOKEN_TYPE,
-                _tokenOptions.AccessTokenLifetimeSeconds);
-
-            return token;
-        }
-
-        public Token GenerateEmailConfirmationToken(string userId)
-        {
-            var claims = GetClaims(userId);
-            var value = GetToken(
-                claims,
-                _tokenOptions.AccountTokenSecurityKey,
-                _tokenOptions.AccountTokenLifetimeSeconds);
-
-            var token = _tokenFactory.GetTokenToken(
-                userId,
-                value,
-                EMAIL_CONFIRMATION_TOKEN_TYPE,
-                _tokenOptions.AccountTokenLifetimeSeconds);
-
-            return token;
-        }
-
-        public Token GeneratePasswordResetToken(string userId)
-        {
-            var claims = GetClaims(userId);
-            var value = GetToken(
-                claims,
-                _tokenOptions.AccountTokenSecurityKey,
-                _tokenOptions.AccountTokenLifetimeSeconds);
-
-            var token = _tokenFactory.GetTokenToken(
-                userId,
-                value,
-                PASSWORD_RESET_TOKEN_TYPE,
-                _tokenOptions.AccountTokenLifetimeSeconds);
-
-            return token;
-        }
-
-        private string GetToken(IEnumerable<Claim> claims, string securityKey, int lifeTime, string prefix = "")
-        {
-            var securityKeyAsBytes = Encoding.UTF8.GetBytes(securityKey);
-            var signingKey = new SymmetricSecurityKey(securityKeyAsBytes);
-
-            var claimsIdentity = new ClaimsIdentity(claims);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = claimsIdentity,
-                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha512Signature),
-                Issuer = _tokenOptions.Issuer,
-                Audience = _tokenOptions.Audience,
-                Expires = DateTime.Now.AddSeconds(lifeTime)
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            var token = prefix + tokenHandler.WriteToken(securityToken);
-
-            return token;
-        }
-
-        private IEnumerable<Claim> GetClaims(string userId)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, userId),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString())
-            };
-
-            return claims;
-        }
+        return claims;
     }
 }

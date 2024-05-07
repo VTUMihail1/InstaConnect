@@ -2,27 +2,26 @@
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 
-namespace InstaConnect.Users.Business.Commands.Account.DeleteAccount
+namespace InstaConnect.Users.Business.Commands.Account.DeleteAccount;
+
+public class DeleteAccountCommandHandler : ICommandHandler<DeleteAccountCommand>
 {
-    public class DeleteAccountCommandHandler : ICommandHandler<DeleteAccountCommand>
+    private readonly IUserRepository _userRepository;
+
+    public DeleteAccountCommandHandler(IUserRepository userRepository)
     {
-        private readonly IUserRepository _userRepository;
+        _userRepository = userRepository;
+    }
 
-        public DeleteAccountCommandHandler(IUserRepository userRepository)
+    public async Task Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
+    {
+        var existingUser = await _userRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (existingUser == null)
         {
-            _userRepository = userRepository;
+            throw new UserNotFoundException();
         }
 
-        public async Task Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
-        {
-            var existingUser = await _userRepository.GetByIdAsync(request.Id, cancellationToken);
-
-            if (existingUser == null)
-            {
-                throw new UserNotFoundException();
-            }
-
-            await _userRepository.DeleteAsync(existingUser, cancellationToken);
-        }
+        await _userRepository.DeleteAsync(existingUser, cancellationToken);
     }
 }

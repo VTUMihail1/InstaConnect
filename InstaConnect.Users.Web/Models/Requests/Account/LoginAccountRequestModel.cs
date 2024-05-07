@@ -1,9 +1,8 @@
-﻿namespace InstaConnect.Users.Web.Models.Requests.Account
-{
-    public class LoginAccountRequestModel
-    {
-        public string Email { get; set; }
+﻿namespace InstaConnect.Users.Web.Models.Requests.Account;
 
-        public string Password { get; set; }
-    }
+public class LoginAccountRequestModel
+{
+    public string Email { get; set; }
+
+    public string Password { get; set; }
 }

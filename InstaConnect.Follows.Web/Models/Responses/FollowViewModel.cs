@@ -1,11 +1,10 @@
-﻿namespace InstaConnect.Follows.Web.Models.Responses
+﻿namespace InstaConnect.Follows.Web.Models.Responses;
+
+public class FollowViewModel
 {
-    public class FollowViewModel
-    {
-        public string Id { get; set; }
+    public string Id { get; set; }
 
-        public string FollowerId { get; set; }
+    public string FollowerId { get; set; }
 
-        public string FollowingId { get; set; }
-    }
+    public string FollowingId { get; set; }
 }
