@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Users.Business.Commands.Account.EditAccount;
 using InstaConnect.Users.Business.Commands.Account.RegisterAccount;

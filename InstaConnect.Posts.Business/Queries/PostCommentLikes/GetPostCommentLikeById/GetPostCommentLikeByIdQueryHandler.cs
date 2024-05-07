@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Posts.Business.Queries.PostCommentLikes.GetPostCommentLikeById;
 
-public class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostCommentLikeByIdQuery, PostCommentLikeViewDTO>
+internal class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostCommentLikeByIdQuery, PostCommentLikeViewDTO>
 {
     private readonly IMapper _mapper;
     private readonly IPostCommentLikeRepository _postCommentLikeRepository;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InstaConnect.Posts.Business.Models;
+﻿namespace InstaConnect.Posts.Business.Models;
 
 public class PostCommentLikeViewDTO
 {

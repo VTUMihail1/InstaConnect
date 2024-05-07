@@ -39,7 +39,6 @@ public class UserController : ControllerBase
         CancellationToken cancellationToken)
     {
         var getAllUsersQuery = _mapper.Map<GetAllUsersQuery>(request);
-
         var userViewDTOs = await _sender.Send(getAllUsersQuery, cancellationToken);
 
         var userResponseModels = _mapper.Map<ICollection<UserResponseModel>>(userViewDTOs);
@@ -55,7 +54,6 @@ public class UserController : ControllerBase
         CancellationToken cancellationToken)
     {
         var getAllFilteredUsersQuery = _mapper.Map<GetAllFilteredUsersQuery>(request);
-
         var userViewDTOs = await _sender.Send(getAllFilteredUsersQuery, cancellationToken);
 
         var userResponseModels = _mapper.Map<ICollection<UserResponseModel>>(userViewDTOs);

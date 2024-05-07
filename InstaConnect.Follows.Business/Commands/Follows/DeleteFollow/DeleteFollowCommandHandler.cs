@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using InstaConnect.Follows.Data.Abstractions.Repositories;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Follow;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
@@ -34,9 +33,7 @@ public class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommand>
             throw new FollowNotFoundException();
         }
 
-        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-        _mapper.Map(existingFollow, validateUserByIdRequest);
-
+        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingFollow);
         await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
         await _followRepository.DeleteAsync(existingFollow, cancellationToken);

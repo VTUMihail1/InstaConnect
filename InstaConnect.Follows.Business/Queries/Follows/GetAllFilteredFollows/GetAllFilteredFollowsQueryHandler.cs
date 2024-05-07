@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Follows.Business.Queries.Follows.GetAllFilteredFollows;
 
-public class GetAllFilteredFollowsQueryHandler : IQueryHandler<GetAllFilteredFollowsQuery, ICollection<FollowViewDTO>>
+internal class GetAllFilteredFollowsQueryHandler : IQueryHandler<GetAllFilteredFollowsQuery, ICollection<FollowViewDTO>>
 {
     private readonly IMapper _mapper;
     private readonly IFollowRepository _followRepository;

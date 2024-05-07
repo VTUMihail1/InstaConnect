@@ -2,17 +2,11 @@
 using InstaConnect.Posts.Business.Models;
 using InstaConnect.Posts.Data.Abstract.Repositories;
 using InstaConnect.Shared.Business.Exceptions.PostLike;
-using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Messaging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InstaConnect.Posts.Business.Queries.PostLikes.GetPostLikeById;
 
-public class GetPostLikeByIdQueryHandler : IQueryHandler<GetPostLikeByIdQuery, PostLikeViewDTO>
+internal class GetPostLikeByIdQueryHandler : IQueryHandler<GetPostLikeByIdQuery, PostLikeViewDTO>
 {
     private readonly IMapper _mapper;
     private readonly IPostLikeRepository _postLikeRepository;

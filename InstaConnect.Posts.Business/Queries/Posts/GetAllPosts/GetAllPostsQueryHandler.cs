@@ -6,7 +6,7 @@ using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
 
-public class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, ICollection<PostViewDTO>>
+internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, ICollection<PostViewDTO>>
 {
     private readonly IMapper _mapper;
     private readonly IPostRepository _postRepository;

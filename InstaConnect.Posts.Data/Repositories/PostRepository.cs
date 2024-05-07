@@ -1,5 +1,4 @@
-﻿using InstaConnect.Posts.Data;
-using InstaConnect.Posts.Data.Abstract.Repositories;
+﻿using InstaConnect.Posts.Data.Abstract.Repositories;
 using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Shared.Data.Repositories;
 

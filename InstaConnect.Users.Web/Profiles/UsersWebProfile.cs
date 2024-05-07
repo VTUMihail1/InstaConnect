@@ -14,7 +14,6 @@ using InstaConnect.Users.Business.Queries.User.GetAllUsers;
 using InstaConnect.Users.Business.Queries.User.GetDetailedUserById;
 using InstaConnect.Users.Business.Queries.User.GetUserById;
 using InstaConnect.Users.Business.Queries.User.GetUserByName;
-using InstaConnect.Users.Data.Models.Filters;
 using InstaConnect.Users.Web.Models.Requests.Account;
 using InstaConnect.Users.Web.Models.Requests.Token;
 using InstaConnect.Users.Web.Models.Requests.User;

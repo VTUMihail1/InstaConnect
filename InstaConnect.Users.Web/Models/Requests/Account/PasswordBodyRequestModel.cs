@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace InstaConnect.Users.Web.Models.Requests.Account;
+﻿namespace InstaConnect.Users.Web.Models.Requests.Account;
 
 public class PasswordBodyRequestModel
 {

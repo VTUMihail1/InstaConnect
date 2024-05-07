@@ -7,13 +7,9 @@ using InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
 using InstaConnect.Posts.Business.Queries.Posts.GetPostById;
 using InstaConnect.Posts.Web.Models.Requests.Post;
 using InstaConnect.Posts.Web.Models.Responses;
-using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Web.Models.Filters;
-using InstaConnect.Users.Data.Models.Filters;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace InstaConnect.Posts.Web.Controllers;
 
@@ -84,8 +80,8 @@ public class PostController : ControllerBase
         return NoContent();
     }
 
-    // PUT: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpPut("{id}/by-user/{userId}")]
+    // PUT: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -97,12 +93,12 @@ public class PostController : ControllerBase
         return NoContent();
     }
 
-    //DELETE: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpDelete("{id}/by-user/{userId}")]
+    //DELETE: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteByUserAsync(DeletePostRequestModel deletePostRequestModel)
+    public async Task<IActionResult> DeleteAsync(DeletePostRequestModel deletePostRequestModel)
     {
         var deletePostCommand = _mapper.Map<DeletePostCommand>(deletePostRequestModel);
         await _sender.Send(deletePostCommand);

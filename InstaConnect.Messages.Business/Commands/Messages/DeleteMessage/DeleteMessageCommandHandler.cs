@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Data.Abstractions.Repositories;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Messages.Business.Commands.PostComments.DeletePostComment;
+namespace InstaConnect.Messages.Business.Commands.Messages.DeleteMessage;
 
-public class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageCommand>
+internal class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageCommand>
 {
     private readonly IMapper _mapper;
     private readonly IMessageRepository _messageRepository;

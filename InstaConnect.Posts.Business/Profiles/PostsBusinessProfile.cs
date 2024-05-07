@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLike;
-using InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommentLike;
 using InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
-using InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment;
 using InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment;
 using InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
-using InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
 using InstaConnect.Posts.Business.Commands.Posts.AddPost;
-using InstaConnect.Posts.Business.Commands.Posts.DeletePost;
 using InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
 using InstaConnect.Posts.Business.Models;
 using InstaConnect.Posts.Business.Queries.PostCommentLikes.GetAllFilteredPostCommentLikes;

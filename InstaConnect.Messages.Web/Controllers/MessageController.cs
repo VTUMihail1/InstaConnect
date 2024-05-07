@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Business.Commands.PostComments.AddPostComment;
-using InstaConnect.Messages.Business.Commands.PostComments.DeletePostComment;
-using InstaConnect.Messages.Business.Commands.PostComments.UpdatePostComment;
-using InstaConnect.Messages.Business.Queries.PostComments.GetAllFilteredPostComments;
-using InstaConnect.Messages.Business.Queries.PostComments.GetAllPostComments;
-using InstaConnect.Messages.Business.Queries.PostComments.GetPostCommentById;
-using InstaConnect.Messages.Web.Models.Requests.PostComment;
+using InstaConnect.Messages.Business.Commands.Messages.AddMessage;
+using InstaConnect.Messages.Business.Commands.Messages.DeleteMessage;
+using InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
+using InstaConnect.Messages.Business.Queries.Messages.GetAllFilteredMessages;
+using InstaConnect.Messages.Business.Queries.Messages.GetAllMessages;
+using InstaConnect.Messages.Business.Queries.Messages.GetMessageById;
+using InstaConnect.Messages.Web.Models.Requests.Messages;
 using InstaConnect.Messages.Web.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
 using MediatR;
@@ -80,8 +80,8 @@ public class MessageController : ControllerBase
         return NoContent();
     }
 
-    // PUT: api/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpPut("{id}/by-user/{userId}")]
+    // PUT: api/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -93,12 +93,12 @@ public class MessageController : ControllerBase
         return NoContent();
     }
 
-    //DELETE: api/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpDelete("{id}/by-user/{userId}")]
+    //DELETE: api/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteByUserAsync(DeleteMessageRequestModel deleteMessageRequestModel)
+    public async Task<IActionResult> DeleteAsync(DeleteMessageRequestModel deleteMessageRequestModel)
     {
         var deleteMessageCommand = _mapper.Map<DeleteMessageCommand>(deleteMessageRequestModel);
         await _sender.Send(deleteMessageCommand);

@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
-using InstaConnect.Data.Models.Entities;
 using InstaConnect.Messages.Business.Abstract.Helpers;
 using InstaConnect.Messages.Business.Models;
 using InstaConnect.Messages.Data.Abstractions.Repositories;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Messages.Data.Models.Entities;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.RequestClients;
 
-namespace InstaConnect.Messages.Business.Commands.PostComments.AddPostComment;
+namespace InstaConnect.Messages.Business.Commands.Messages.AddMessage;
 
-public class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
+internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
 {
     private readonly IMapper _mapper;
     private readonly IMessageSender _messageSender;
@@ -36,7 +35,7 @@ public class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
     public async Task Handle(AddMessageCommand request, CancellationToken cancellationToken)
     {
         var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
-        var getCurrentUserResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
+        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
 
         var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
         var validateUserByIdResponse = await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);

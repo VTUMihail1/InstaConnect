@@ -1,5 +1,4 @@
-﻿using InstaConnect.Messages.Business.Profiles;
-using InstaConnect.Shared.Business.Models.Options;
+﻿using InstaConnect.Shared.Business.Models.Options;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
