@@ -79,12 +79,12 @@ public class FollowController : ControllerBase
         return NoContent();
     }
 
-    //DELETE: api/posts-comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpDelete("{id}/by-user/{userId}")]
+    //DELETE: api/posts-comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteByUserAsync(DeleteFollowRequestModel deleteFollowRequestModel)
+    public async Task<IActionResult> DeleteAsync(DeleteFollowRequestModel deleteFollowRequestModel)
     {
         var deleteFollowCommand = _mapper.Map<DeleteFollowCommand>(deleteFollowRequestModel);
         await _sender.Send(deleteFollowCommand);

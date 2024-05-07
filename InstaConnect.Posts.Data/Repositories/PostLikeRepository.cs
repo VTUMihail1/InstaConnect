@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Posts.Data.Abstract.Repositories;
 using InstaConnect.Posts.Data.Models.Entities;
-using InstaConnect.Shared.Data;
 using InstaConnect.Shared.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 

@@ -3,7 +3,6 @@ using InstaConnect.Posts.Data.Abstract.Repositories;
 using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Posts;
-using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
@@ -21,9 +20,9 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
     private readonly IGetCurrentUserRequestClient _requestClient;
 
     public AddPostLikeCommandHandler(
-        IMapper mapper, 
-        IPostRepository postRepository, 
-        IPostLikeRepository postLikeRepository, 
+        IMapper mapper,
+        IPostRepository postRepository,
+        IPostLikeRepository postLikeRepository,
         IGetCurrentUserRequestClient requestClient)
     {
         _mapper = mapper;

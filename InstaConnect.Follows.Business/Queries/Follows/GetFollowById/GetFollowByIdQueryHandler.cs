@@ -2,12 +2,11 @@
 using InstaConnect.Follows.Business.Models;
 using InstaConnect.Follows.Data.Abstractions.Repositories;
 using InstaConnect.Shared.Business.Exceptions.Follow;
-using InstaConnect.Shared.Business.Exceptions.PostCommentLike;
 using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Follows.Business.Queries.Follows.GetFollowById;
 
-public class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, FollowViewDTO>
+internal class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, FollowViewDTO>
 {
     private readonly IMapper _mapper;
     private readonly IFollowRepository _followRepository;

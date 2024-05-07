@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Shared.Business.Messaging;
-using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Messages.Business.Commands.PostComments.AddPostComment;
+namespace InstaConnect.Messages.Business.Commands.Messages.AddMessage;
 
 public class AddMessageCommand : ICommand
 {

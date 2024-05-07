@@ -2,12 +2,10 @@
 using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Business.Consumers;
 using InstaConnect.Users.Business.Helpers;
-using InstaConnect.Users.Business.Profiles;
 using InstaConnect.Users.Business.Services;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace InstaConnect.Users.Business.Extensions;
 

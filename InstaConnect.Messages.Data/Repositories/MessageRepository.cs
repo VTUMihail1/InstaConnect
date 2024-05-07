@@ -1,5 +1,5 @@
-﻿using InstaConnect.Data.Models.Entities;
-using InstaConnect.Messages.Data.Abstractions.Repositories;
+﻿using InstaConnect.Messages.Data.Abstractions.Repositories;
+using InstaConnect.Messages.Data.Models.Entities;
 using InstaConnect.Shared.Data.Repositories;
 
 namespace InstaConnect.Messages.Data.Repositories;

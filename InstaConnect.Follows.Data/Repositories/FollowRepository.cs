@@ -1,13 +1,7 @@
 ﻿using InstaConnect.Follows.Data.Abstractions.Repositories;
 using InstaConnect.Follows.Data.Models.Entities;
-using InstaConnect.Shared.Data;
 using InstaConnect.Shared.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InstaConnect.Follows.Data.Repositories;
 

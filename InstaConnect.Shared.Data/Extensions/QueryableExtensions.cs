@@ -1,6 +1,6 @@
-﻿using InstaConnect.Shared.Data.Enum;
+﻿using System.Linq.Expressions;
+using InstaConnect.Shared.Data.Enum;
 using InstaConnect.Shared.Data.Models.Base;
-using System.Linq.Expressions;
 
 namespace InstaConnect.Shared.Data.Extensions;
 

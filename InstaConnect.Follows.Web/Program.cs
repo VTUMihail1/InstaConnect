@@ -1,5 +1,5 @@
-using InstaConnect.Follows.Data.Extensions;
 using InstaConnect.Follows.Business.Extensions;
+using InstaConnect.Follows.Data.Extensions;
 using InstaConnect.Follows.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

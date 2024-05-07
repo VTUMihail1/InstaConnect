@@ -79,12 +79,12 @@ public class PostLikeController : ControllerBase
         return NoContent();
     }
 
-    //DELETE: api/post-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpDelete("{id}/by-user/{userId}")]
+    //DELETE: api/post-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteByUserAsync(DeletePostLikeRequestModel deletePostLikeRequestModel)
+    public async Task<IActionResult> DeleteAsync(DeletePostLikeRequestModel deletePostLikeRequestModel)
     {
         var deletePostLikeCommand = _mapper.Map<DeletePostLikeCommand>(deletePostLikeRequestModel);
         await _sender.Send(deletePostLikeCommand);

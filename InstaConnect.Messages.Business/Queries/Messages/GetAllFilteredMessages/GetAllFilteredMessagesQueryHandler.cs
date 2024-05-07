@@ -4,9 +4,9 @@ using InstaConnect.Messages.Data.Abstractions.Repositories;
 using InstaConnect.Messages.Data.Models.Filters;
 using InstaConnect.Shared.Business.Messaging;
 
-namespace InstaConnect.Messages.Business.Queries.PostComments.GetAllFilteredPostComments;
+namespace InstaConnect.Messages.Business.Queries.Messages.GetAllFilteredMessages;
 
-public class GetAllFilteredMessagesQueryHandler : IQueryHandler<GetAllFilteredMessagesQuery, ICollection<MessageViewDTO>>
+internal class GetAllFilteredMessagesQueryHandler : IQueryHandler<GetAllFilteredMessagesQuery, ICollection<MessageViewDTO>>
 {
     private readonly IMapper _mapper;
     private readonly IMessageRepository _messageRepository;

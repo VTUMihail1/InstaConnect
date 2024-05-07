@@ -2,12 +2,11 @@
 using InstaConnect.Messages.Business.Models;
 using InstaConnect.Messages.Data.Abstractions.Repositories;
 using InstaConnect.Shared.Business.Exceptions.Message;
-using InstaConnect.Shared.Business.Exceptions.PostComment;
 using InstaConnect.Shared.Business.Messaging;
 
-namespace InstaConnect.Messages.Business.Queries.PostComments.GetPostCommentById;
+namespace InstaConnect.Messages.Business.Queries.Messages.GetMessageById;
 
-public class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, MessageViewDTO>
+internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, MessageViewDTO>
 {
     private readonly IMapper _mapper;
     private readonly IMessageRepository _messageRepository;

@@ -1,9 +1,8 @@
 ﻿using InstaConnect.Messages.Business.Models;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Filters;
-using MediatR;
 
-namespace InstaConnect.Messages.Business.Queries.PostComments.GetAllFilteredPostComments;
+namespace InstaConnect.Messages.Business.Queries.Messages.GetAllFilteredMessages;
 
 public class GetAllFilteredMessagesQuery : CollectionDTO, IQuery<ICollection<MessageViewDTO>>
 {

@@ -1,5 +1,5 @@
-﻿using InstaConnect.Data.EntityConfigurations;
-using InstaConnect.Data.Models.Entities;
+﻿using InstaConnect.Messages.Data.EntitiyConfigurations;
+using InstaConnect.Messages.Data.Models.Entities;
 using InstaConnect.Shared.Data;
 using Microsoft.EntityFrameworkCore;
 

@@ -3,9 +3,6 @@ using InstaConnect.Posts.Data.Abstract.Repositories;
 using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
-using InstaConnect.Shared.Business.Exceptions.PostCommentLike;
-using InstaConnect.Shared.Business.Exceptions.Posts;
-using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
@@ -18,19 +15,19 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
     private const string POST_COMMENT_ALREADY_LIKED = "This user has already liked this comment";
 
     private readonly IMapper _mapper;
-    private readonly IPostCommentRepository _postCommentRepository;
     private readonly IGetCurrentUserRequestClient _requestClient;
+    private readonly IPostCommentRepository _postCommentRepository;
     private readonly IPostCommentLikeRepository _postCommentLikeRepository;
 
     public AddPostCommentLikeCommandHandler(
-        IMapper mapper, 
+        IMapper mapper,
+        IGetCurrentUserRequestClient requestClient,
         IPostCommentRepository postCommentRepository,
-        IGetCurrentUserRequestClient requestClient, 
         IPostCommentLikeRepository postCommentLikeRepository)
     {
         _mapper = mapper;
-        _postCommentRepository = postCommentRepository;
         _requestClient = requestClient;
+        _postCommentRepository = postCommentRepository;
         _postCommentLikeRepository = postCommentLikeRepository;
     }
 

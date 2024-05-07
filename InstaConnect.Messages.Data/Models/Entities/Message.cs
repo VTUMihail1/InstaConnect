@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Data.Models.Base;
 
-namespace InstaConnect.Data.Models.Entities;
+namespace InstaConnect.Messages.Data.Models.Entities;
 
 public class Message : BaseEntity
 {

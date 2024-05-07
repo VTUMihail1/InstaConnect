@@ -7,6 +7,11 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollection)
     {
+
+        serviceCollection.AddControllers();
+        serviceCollection.AddEndpointsApiExplorer();
+        serviceCollection.AddSwaggerGen();
+
         serviceCollection.AddSignalR();
 
         serviceCollection.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);

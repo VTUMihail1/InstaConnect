@@ -80,8 +80,8 @@ public class PostCommentController : ControllerBase
         return NoContent();
     }
 
-    // PUT: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpPut("{id}/by-user/{userId}")]
+    // PUT: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -93,12 +93,12 @@ public class PostCommentController : ControllerBase
         return NoContent();
     }
 
-    //DELETE: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpDelete("{id}/by-user/{userId}")]
+    //DELETE: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteByUserAsync(DeletePostCommentRequestModel deletePostCommentRequestModel)
+    public async Task<IActionResult> DeleteAsync(DeletePostCommentRequestModel deletePostCommentRequestModel)
     {
         var deletePostCommentCommand = _mapper.Map<DeletePostCommentCommand>(deletePostCommentRequestModel);
         await _sender.Send(deletePostCommentCommand);

@@ -1,14 +1,11 @@
-﻿using InstaConnect.Shared.Business.Models.Options;
-using InstaConnect.Users.Data.Models.Options;
-using InstaConnect.Users.Web.Profiles;
+﻿using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
-using System.Text.Json.Serialization;
 using TokenOptions = InstaConnect.Users.Data.Models.Options.TokenOptions;
 
 namespace InstaConnect.Users.Web.Extensions;
@@ -20,6 +17,10 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         var tokenOptions = configuration.GetSection(nameof(TokenOptions)).Get<TokenOptions>()!;
+
+        serviceCollection.AddControllers();
+        serviceCollection.AddEndpointsApiExplorer();
+        serviceCollection.AddSwaggerGen();
 
         serviceCollection
             .AddControllers()
@@ -85,7 +86,6 @@ public static class ServiceCollectionExtensions
         );
 
         serviceCollection.AddEndpointsApiExplorer();
-        serviceCollection.AddSwaggerGen();
 
         serviceCollection
             .Configure<CookieAuthenticationOptions>(options => options.ExpireTimeSpan = TimeSpan.FromSeconds(tokenOptions.AccountTokenLifetimeSeconds));

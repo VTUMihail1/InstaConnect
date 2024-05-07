@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using InstaConnect.Follows.Business.Commands.Follows.AddFollow;
-using InstaConnect.Follows.Business.Commands.Follows.DeleteFollow;
 using InstaConnect.Follows.Business.Models;
 using InstaConnect.Follows.Business.Queries.Follows.GetAllFilteredFollows;
 using InstaConnect.Follows.Business.Queries.Follows.GetAllFollows;

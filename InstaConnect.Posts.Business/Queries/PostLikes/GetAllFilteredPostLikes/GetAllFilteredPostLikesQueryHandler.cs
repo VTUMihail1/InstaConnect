@@ -6,12 +6,12 @@ using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Posts.Business.Queries.PostLikes.GetAllFilteredPostLikes;
 
-public class GetAllFilteredPostLikeQueryHandler : IQueryHandler<GetAllFilteredPostLikesQuery, ICollection<PostLikeViewDTO>>
+internal class GetAllFilteredPostLikesQueryHandler : IQueryHandler<GetAllFilteredPostLikesQuery, ICollection<PostLikeViewDTO>>
 {
     private readonly IMapper _mapper;
     private readonly IPostLikeRepository _postLikeRepository;
 
-    public GetAllFilteredPostLikeQueryHandler(
+    public GetAllFilteredPostLikesQueryHandler(
         IMapper mapper,
         IPostLikeRepository postLikeRepository)
     {

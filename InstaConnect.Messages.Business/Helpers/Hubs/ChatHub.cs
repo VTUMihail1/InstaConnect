@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace InstaConnect.Business.Helpers.Hubs;
+namespace InstaConnect.Messages.Business.Helpers.Hubs;
 
 public class ChatHub : Hub
 {

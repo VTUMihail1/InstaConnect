@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Messages.Web.Models.Requests.PostComment;
+namespace InstaConnect.Messages.Web.Models.Requests.Messages;
 
 public class GetMessageByIdRequestModel
 {

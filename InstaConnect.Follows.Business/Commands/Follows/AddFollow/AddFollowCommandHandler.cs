@@ -2,7 +2,6 @@
 using InstaConnect.Follows.Data.Abstractions.Repositories;
 using InstaConnect.Follows.Data.Models.Entities;
 using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
@@ -10,7 +9,7 @@ using InstaConnect.Shared.Business.RequestClients;
 
 namespace InstaConnect.Follows.Business.Commands.Follows.AddFollow;
 
-public class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
+internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
 {
     private const string USER_ALREADY_FOLLOWED = "This user has already been followed";
 
@@ -36,8 +35,8 @@ public class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
         var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
         var getCurrentUserResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
 
-        var getUserByFollowingIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-        var getUserByFollowingIdResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getUserByFollowingIdRequest, cancellationToken);
+        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
+        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
         var existingPostLike = _followRepository.GetByFollowerIdAndFollowingIdAsync(getCurrentUserResponse.Message.Id, request.FollowingId, cancellationToken);
 

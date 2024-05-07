@@ -1,5 +1,5 @@
-﻿using InstaConnect.Users.Web.Models.Requests.User;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using InstaConnect.Users.Web.Models.Requests.User;
 
 namespace InstaConnect.Users.Web.Extensions;
 

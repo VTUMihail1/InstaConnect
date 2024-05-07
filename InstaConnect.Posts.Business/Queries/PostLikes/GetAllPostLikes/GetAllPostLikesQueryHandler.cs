@@ -6,7 +6,7 @@ using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Posts.Business.Queries.PostLikes.GetAllPostLikes;
 
-public class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQuery, ICollection<PostLikeViewDTO>>
+internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQuery, ICollection<PostLikeViewDTO>>
 {
     private readonly IMapper _mapper;
     private readonly IPostLikeRepository _postLikeRepository;

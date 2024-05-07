@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Users.Web.Models.Requests.Token;
-using Microsoft.AspNetCore.Http;
 
 namespace InstaConnect.Users.Web.Extensions;
 

@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
-using InstaConnect.Data.Models.Entities;
-using InstaConnect.Messages.Business.Commands.PostComments.AddPostComment;
-using InstaConnect.Messages.Business.Commands.PostComments.DeletePostComment;
-using InstaConnect.Messages.Business.Commands.PostComments.UpdatePostComment;
+using InstaConnect.Messages.Business.Commands.Messages.AddMessage;
+using InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
 using InstaConnect.Messages.Business.Models;
-using InstaConnect.Messages.Business.Queries.PostComments.GetAllFilteredPostComments;
-using InstaConnect.Messages.Business.Queries.PostComments.GetAllPostComments;
+using InstaConnect.Messages.Business.Queries.Messages.GetAllFilteredMessages;
+using InstaConnect.Messages.Business.Queries.Messages.GetAllMessages;
+using InstaConnect.Messages.Data.Models.Entities;
 using InstaConnect.Messages.Data.Models.Filters;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Data.Models.Filters;
-using System.Linq;
 
 namespace InstaConnect.Messages.Business.Profiles;
 
@@ -32,9 +30,6 @@ public class MessagesProfile : Profile
         CreateMap<GetAllMessagesQuery, CollectionQuery>();
 
         CreateMap<AddMessageCommand, GetCurrentUserRequest>();
-
-        CreateMap<DeleteMessageCommand, ValidateUserByIdRequest>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SenderId));
 
         CreateMap<Message, ValidateUserByIdRequest>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SenderId));

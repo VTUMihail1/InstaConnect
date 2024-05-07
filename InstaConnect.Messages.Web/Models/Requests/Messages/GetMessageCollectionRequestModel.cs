@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Shared.Web.Models.Filters;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Messages.Web.Models.Requests.PostComment;
+namespace InstaConnect.Messages.Web.Models.Requests.Messages;
 
 public class GetMessageCollectionRequestModel : CollectionRequestModel
 {

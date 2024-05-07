@@ -1,6 +1,4 @@
-﻿using InstaConnect.Follows.Web.Profiles;
-using InstaConnect.Shared.Business.Models.Options;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Follows.Web.Extensions;
 

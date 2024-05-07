@@ -1,7 +1,4 @@
 ﻿using InstaConnect.Users.Data.Abstraction.Helpers;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System.Threading.Tasks;
 
 namespace InstaConnect.Users.Web.Extensions;
 
