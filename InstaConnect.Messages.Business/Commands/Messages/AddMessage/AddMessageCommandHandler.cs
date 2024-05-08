@@ -6,7 +6,7 @@ using InstaConnect.Messages.Data.Models.Entities;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
-using InstaConnect.Shared.Business.RequestClients;
+using MassTransit;
 
 namespace InstaConnect.Messages.Business.Commands.Messages.AddMessage;
 
@@ -15,21 +15,21 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
     private readonly IMapper _mapper;
     private readonly IMessageSender _messageSender;
     private readonly IMessageRepository _messageRepository;
-    private readonly IValidateUserByIdRequestClient _requestClient;
-    private readonly IGetCurrentUserRequestClient _getCurrentUserRequestClient;
+    private readonly IRequestClient<GetCurrentUserRequest> _getCurrentUserRequestClient;
+    private readonly IRequestClient<ValidateUserByIdRequest> _validateUserByIdRequestClient;
 
     public AddMessageCommandHandler(
-        IMapper mapper,
-        IMessageSender messageSender,
-        IMessageRepository messageRepository,
-        IValidateUserByIdRequestClient requestClient,
-        IGetCurrentUserRequestClient getCurrentUserRequestClient)
+        IMapper mapper, 
+        IMessageSender messageSender, 
+        IMessageRepository messageRepository, 
+        IRequestClient<GetCurrentUserRequest> getCurrentUserRequestClient, 
+        IRequestClient<ValidateUserByIdRequest> validateUserByIdRequestClient)
     {
         _mapper = mapper;
         _messageSender = messageSender;
         _messageRepository = messageRepository;
-        _requestClient = requestClient;
         _getCurrentUserRequestClient = getCurrentUserRequestClient;
+        _validateUserByIdRequestClient = validateUserByIdRequestClient;
     }
 
     public async Task Handle(AddMessageCommand request, CancellationToken cancellationToken)
@@ -38,7 +38,7 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
         var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
 
         var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-        var validateUserByIdResponse = await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
+        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
         var message = _mapper.Map<Message>(request);
         _mapper.Map(getCurrentUserResponse.Message, message);

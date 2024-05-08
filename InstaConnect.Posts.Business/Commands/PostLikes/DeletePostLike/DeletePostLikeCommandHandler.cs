@@ -4,7 +4,7 @@ using InstaConnect.Shared.Business.Exceptions.PostLike;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
-using InstaConnect.Shared.Business.RequestClients;
+using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
 
@@ -12,16 +12,16 @@ internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeComm
 {
     private readonly IMapper _mapper;
     private readonly IPostLikeRepository _postLikeRepository;
-    private readonly IValidateUserByIdRequestClient _requestClient;
+    private readonly IRequestClient<ValidateUserByIdRequest> _validateUserByIdRequestClient;
 
     public DeletePostLikeCommandHandler(
         IMapper mapper,
         IPostLikeRepository postLikeRepository,
-        IValidateUserByIdRequestClient requestClient)
+        IRequestClient<ValidateUserByIdRequest> validateUserByIdRequestClient)
     {
         _mapper = mapper;
         _postLikeRepository = postLikeRepository;
-        _requestClient = requestClient;
+        _validateUserByIdRequestClient = validateUserByIdRequestClient;
     }
 
     public async Task Handle(DeletePostLikeCommand request, CancellationToken cancellationToken)
@@ -34,7 +34,7 @@ internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeComm
         }
 
         var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingPostLike);
-        await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
+        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
         await _postLikeRepository.DeleteAsync(existingPostLike, cancellationToken);
     }

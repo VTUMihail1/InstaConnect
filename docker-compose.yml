@@ -55,7 +55,7 @@ services:
      image: mysql:latest
      container_name: instaconnect.posts.database
      environment: 
-       - MYSQL_DB=posts
+       - MYSQL_DB=instaconnect.posts
        - MYSQL_USER=mihail
        - MYSQL_ROOT_PASSWORD=mihail
      volumes:
@@ -70,7 +70,7 @@ services:
     container_name: instaconnect.messages.web
     build:
       context: .
-      dockerfile: ../InstaConnect.Messages.Web/Dockerfile
+      dockerfile: InstaConnect.Messages.Web/Dockerfile
     ports:
       - "5400:5400"
       - "5401:5401"
@@ -81,7 +81,7 @@ services:
      image: mysql:latest
      container_name: instaconnect.messages.database
      environment: 
-       - MYSQL_DB=messages
+       - MYSQL_DB=instaconnect.messages
        - MYSQL_USER=mihail
        - MYSQL_ROOT_PASSWORD=mihail
      volumes:
@@ -96,7 +96,7 @@ services:
     container_name: instaconnect.follows.web
     build:
       context: .
-      dockerfile: ../InstaConnect.Follows.Web/Dockerfile
+      dockerfile: InstaConnect.Follows.Web/Dockerfile
     ports:
       - "5500:5500"
       - "5501:5501"
@@ -125,8 +125,8 @@ services:
          RABBITMQ_DEFAULT_USER: mihail
          RABBITMQ_DEFAULT_PASS: mihail
      volumes:
-       - ./.containers/queue/data/:/var/lib/rabbitmq
-       - ./.containers/queue/log/:/var/log/rabbitmq
+       - ./.containers/rabbit-mq/data/:/var/lib/rabbitmq
+       - ./.containers/rabbit-mq/log/:/var/log/rabbitmq
 
 networks:
   proxybackend:

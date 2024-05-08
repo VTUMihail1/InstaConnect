@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
-using InstaConnect.Shared.Business.RequestClients;
+using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
 
@@ -17,18 +17,18 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
     private readonly IMapper _mapper;
     private readonly IPostRepository _postRepository;
     private readonly IPostLikeRepository _postLikeRepository;
-    private readonly IGetCurrentUserRequestClient _requestClient;
+    private readonly IRequestClient<GetCurrentUserRequest> _getCurrentUserRequestClient;
 
     public AddPostLikeCommandHandler(
         IMapper mapper,
         IPostRepository postRepository,
         IPostLikeRepository postLikeRepository,
-        IGetCurrentUserRequestClient requestClient)
+        IRequestClient<GetCurrentUserRequest> getCurrentUserRequestClient)
     {
         _mapper = mapper;
         _postRepository = postRepository;
         _postLikeRepository = postLikeRepository;
-        _requestClient = requestClient;
+        _getCurrentUserRequestClient = getCurrentUserRequestClient;
     }
 
     public async Task Handle(AddPostLikeCommand request, CancellationToken cancellationToken)
@@ -41,7 +41,7 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
         }
 
         var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
-        var getCurrentUserResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
+        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
 
         var existingPostLike = _postLikeRepository.GetByUserIdAndPostIdAsync(getCurrentUserResponse.Message.Id, request.PostId, cancellationToken);
 

@@ -4,7 +4,7 @@ using InstaConnect.Shared.Business.Exceptions.Message;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
-using InstaConnect.Shared.Business.RequestClients;
+using MassTransit;
 
 namespace InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
 
@@ -12,16 +12,16 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
 {
     private readonly IMapper _mapper;
     private readonly IMessageRepository _messageRepository;
-    private readonly IValidateUserByIdRequestClient _requestClient;
+    private readonly IRequestClient<ValidateUserByIdRequest> _validateUserByIdRequestClient;
 
     public UpdateMessageCommandHandler(
         IMapper mapper,
         IMessageRepository messageRepository,
-        IValidateUserByIdRequestClient requestClient)
+        IRequestClient<ValidateUserByIdRequest> validateUserByIdRequestClient)
     {
         _mapper = mapper;
         _messageRepository = messageRepository;
-        _requestClient = requestClient;
+        _validateUserByIdRequestClient = validateUserByIdRequestClient;
     }
 
     public async Task Handle(UpdateMessageCommand request, CancellationToken cancellationToken)
@@ -34,7 +34,7 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
         }
 
         var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-        var validateUserByIdResponse = await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
+        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
         _mapper.Map(request, existingMessage);
         await _messageRepository.UpdateAsync(existingMessage, cancellationToken);

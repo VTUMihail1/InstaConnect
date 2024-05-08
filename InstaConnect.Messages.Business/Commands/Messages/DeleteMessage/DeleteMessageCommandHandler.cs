@@ -4,7 +4,7 @@ using InstaConnect.Shared.Business.Exceptions.Message;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
-using InstaConnect.Shared.Business.RequestClients;
+using MassTransit;
 
 namespace InstaConnect.Messages.Business.Commands.Messages.DeleteMessage;
 
@@ -12,16 +12,16 @@ internal class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageComman
 {
     private readonly IMapper _mapper;
     private readonly IMessageRepository _messageRepository;
-    private readonly IValidateUserByIdRequestClient _requestClient;
+    private readonly IRequestClient<ValidateUserByIdRequest> _validateUserByIdRequestClient;
 
     public DeleteMessageCommandHandler(
         IMapper mapper,
         IMessageRepository messageRepository,
-        IValidateUserByIdRequestClient requestClient)
+        IRequestClient<ValidateUserByIdRequest> validateUserByIdRequestClient)
     {
         _mapper = mapper;
         _messageRepository = messageRepository;
-        _requestClient = requestClient;
+        _validateUserByIdRequestClient = validateUserByIdRequestClient;
     }
 
     public async Task Handle(DeleteMessageCommand request, CancellationToken cancellationToken)
@@ -34,7 +34,7 @@ internal class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageComman
         }
 
         var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-        await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
+        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
         await _messageRepository.DeleteAsync(existingMessage, cancellationToken);
     }

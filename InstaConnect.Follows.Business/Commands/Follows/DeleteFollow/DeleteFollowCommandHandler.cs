@@ -4,7 +4,7 @@ using InstaConnect.Shared.Business.Exceptions.Follow;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
-using InstaConnect.Shared.Business.RequestClients;
+using MassTransit;
 
 namespace InstaConnect.Follows.Business.Commands.Follows.DeleteFollow;
 
@@ -12,16 +12,16 @@ public class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommand>
 {
     private readonly IMapper _mapper;
     private readonly IFollowRepository _followRepository;
-    private readonly IValidateUserByIdRequestClient _requestClient;
+    private readonly IRequestClient<ValidateUserByIdRequest> _validateUserByIdRequestClient;
 
     public DeleteFollowCommandHandler(
         IMapper mapper,
         IFollowRepository followRepository,
-        IValidateUserByIdRequestClient requestClient)
+        IRequestClient<ValidateUserByIdRequest> validateUserByIdRequestClient)
     {
         _mapper = mapper;
         _followRepository = followRepository;
-        _requestClient = requestClient;
+        _validateUserByIdRequestClient = validateUserByIdRequestClient;
     }
 
     public async Task Handle(DeleteFollowCommand request, CancellationToken cancellationToken)
@@ -34,7 +34,7 @@ public class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommand>
         }
 
         var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingFollow);
-        await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
+        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
         await _followRepository.DeleteAsync(existingFollow, cancellationToken);
     }
