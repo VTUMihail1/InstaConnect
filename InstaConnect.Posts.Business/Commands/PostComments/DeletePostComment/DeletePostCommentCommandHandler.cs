@@ -4,7 +4,7 @@ using InstaConnect.Shared.Business.Exceptions.PostComment;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
-using InstaConnect.Shared.Business.RequestClients;
+using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment;
 
@@ -12,16 +12,16 @@ internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostComme
 {
     private readonly IMapper _mapper;
     private readonly IPostCommentRepository _postCommentRepository;
-    private readonly IValidateUserByIdRequestClient _requestClient;
+    private readonly IRequestClient<ValidateUserByIdRequest> _validateUserByIdRequestClient;
 
     public DeletePostCommentCommandHandler(
         IMapper mapper,
         IPostCommentRepository postCommentRepository,
-        IValidateUserByIdRequestClient requestClient)
+        IRequestClient<ValidateUserByIdRequest> validateUserByIdRequestClient)
     {
         _mapper = mapper;
         _postCommentRepository = postCommentRepository;
-        _requestClient = requestClient;
+        _validateUserByIdRequestClient = validateUserByIdRequestClient;
     }
 
     public async Task Handle(DeletePostCommentCommand request, CancellationToken cancellationToken)
@@ -34,7 +34,7 @@ internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostComme
         }
 
         var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-        await _requestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
+        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
 
         await _postCommentRepository.DeleteAsync(existingPostComment, cancellationToken);
     }

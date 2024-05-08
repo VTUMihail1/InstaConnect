@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
-using InstaConnect.Shared.Business.RequestClients;
+using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
 
@@ -15,18 +15,18 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
     private readonly IMapper _mapper;
     private readonly IPostRepository _postRepository;
     private readonly IPostCommentRepository _postCommentRepository;
-    private readonly IGetCurrentUserRequestClient _requestClient;
+    private readonly IRequestClient<GetCurrentUserRequest> _getCurrentUserRequestClient;
 
     public AddPostCommentCommandHandler(
         IMapper mapper,
         IPostRepository postRepository,
         IPostCommentRepository postCommentRepository,
-        IGetCurrentUserRequestClient requestClient)
+        IRequestClient<GetCurrentUserRequest> getCurrentUserRequestClient)
     {
         _mapper = mapper;
         _postRepository = postRepository;
         _postCommentRepository = postCommentRepository;
-        _requestClient = requestClient;
+        _getCurrentUserRequestClient = getCurrentUserRequestClient;
     }
 
     public async Task Handle(AddPostCommentCommand request, CancellationToken cancellationToken)
@@ -39,7 +39,7 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
         }
 
         var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
-        var getCurrentUserResponse = await _requestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
+        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
 
         var existingPostComment = await _postCommentRepository.GetByIdAsync(request.PostCommentId, cancellationToken);
 

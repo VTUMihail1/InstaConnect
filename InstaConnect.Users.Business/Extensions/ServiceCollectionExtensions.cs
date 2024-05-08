@@ -23,11 +23,11 @@ public static class ServiceCollectionExtensions
 
         var messageBrokerOptions = configuration.GetSection(nameof(MessageBrokerOptions)).Get<MessageBrokerOptions>()!;
 
+        serviceCollection.AddHttpContextAccessor();
+
         serviceCollection
             .AddScoped<ITokenService, TokenService>()
             .AddScoped<ICurrentUserContext, CurrentUserContext>();
-
-        serviceCollection.AddHttpContextAccessor();
 
         serviceCollection.AddAutoMapper(currentAssembly);
 
