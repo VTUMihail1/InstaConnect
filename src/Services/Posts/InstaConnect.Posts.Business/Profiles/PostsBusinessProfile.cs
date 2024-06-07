@@ -17,7 +17,7 @@ using InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
 using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Posts.Data.Models.Filters;
 using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Shared.Business.Models.Responses;
+using InstaConnect.Shared.Business.Models.Users;
 using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Posts.Business.Profiles;
@@ -38,13 +38,8 @@ public class PostsBusinessProfile : Profile
 
         CreateMap<GetAllPostsQuery, CollectionQuery>();
 
-        CreateMap<AddPostCommand, GetCurrentUserRequest>();
-
         CreateMap<CurrentUserDetails, Post>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
-
-        CreateMap<Post, ValidateUserByIdRequest>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
 
         CreateMap<AddPostCommand, Post>();
 
@@ -65,13 +60,8 @@ public class PostsBusinessProfile : Profile
 
         CreateMap<GetAllPostCommentsQuery, CollectionQuery>();
 
-        CreateMap<AddPostCommentCommand, GetCurrentUserRequest>();
-
         CreateMap<CurrentUserDetails, PostComment>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
-
-        CreateMap<PostComment, ValidateUserByIdRequest>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
 
         CreateMap<AddPostCommentCommand, PostComment>();
 
@@ -90,11 +80,6 @@ public class PostsBusinessProfile : Profile
                  });
 
         CreateMap<GetAllPostLikesQuery, CollectionQuery>();
-
-        CreateMap<AddPostLikeCommand, GetCurrentUserRequest>();
-
-        CreateMap<PostLike, ValidateUserByIdRequest>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
 
         CreateMap<CurrentUserDetails, PostLike>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
@@ -115,13 +100,8 @@ public class PostsBusinessProfile : Profile
 
         CreateMap<GetAllPostCommentLikesQuery, CollectionQuery>();
 
-        CreateMap<AddPostCommentLikeCommand, GetCurrentUserRequest>();
-
         CreateMap<CurrentUserDetails, PostComment>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
-
-        CreateMap<PostCommentLike, ValidateUserByIdRequest>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
 
         CreateMap<AddPostCommentLikeCommand, PostCommentLike>();
 

@@ -7,7 +7,7 @@ using InstaConnect.Messages.Business.Queries.Messages.GetAllMessages;
 using InstaConnect.Messages.Data.Models.Entities;
 using InstaConnect.Messages.Data.Models.Filters;
 using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Shared.Business.Models.Responses;
+using InstaConnect.Shared.Business.Models.Users;
 using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Messages.Business.Profiles;
@@ -16,7 +16,7 @@ public class MessagesProfile : Profile
 {
     public MessagesProfile()
     {
-        // Post Comments
+        // Messages
 
         CreateMap<GetAllFilteredMessagesQuery, MessageFilteredCollectionQuery>()
             .ConstructUsing(src =>
@@ -29,10 +29,7 @@ public class MessagesProfile : Profile
 
         CreateMap<GetAllMessagesQuery, CollectionQuery>();
 
-        CreateMap<AddMessageCommand, GetCurrentUserRequest>();
-
-        CreateMap<Message, ValidateUserByIdRequest>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SenderId));
+        CreateMap<AddMessageCommand, GetUserByIdRequest>();
 
         CreateMap<CurrentUserDetails, Message>();
 

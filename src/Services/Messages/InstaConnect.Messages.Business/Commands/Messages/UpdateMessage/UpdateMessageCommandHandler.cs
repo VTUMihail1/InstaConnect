@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Data.Abstractions.Repositories;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
@@ -12,16 +14,16 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
 {
     private readonly IMapper _mapper;
     private readonly IMessageRepository _messageRepository;
-    private readonly IRequestClient<ValidateUserByIdRequest> _validateUserByIdRequestClient;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public UpdateMessageCommandHandler(
         IMapper mapper,
         IMessageRepository messageRepository,
-        IRequestClient<ValidateUserByIdRequest> validateUserByIdRequestClient)
+        ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
         _messageRepository = messageRepository;
-        _validateUserByIdRequestClient = validateUserByIdRequestClient;
+        _currentUserContext = currentUserContext;
     }
 
     public async Task Handle(UpdateMessageCommand request, CancellationToken cancellationToken)
@@ -33,8 +35,12 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
             throw new MessageNotFoundException();
         }
 
-        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
+        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+
+        if(currentUserDetails.Id != existingMessage.SenderId)
+        {
+            throw new AccountForbiddenException();
+        }
 
         _mapper.Map(request, existingMessage);
         await _messageRepository.UpdateAsync(existingMessage, cancellationToken);

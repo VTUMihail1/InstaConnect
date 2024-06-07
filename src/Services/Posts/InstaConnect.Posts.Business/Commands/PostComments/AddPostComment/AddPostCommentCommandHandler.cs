@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Data.Abstract.Repositories;
 using InstaConnect.Posts.Data.Models.Entities;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
 using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Shared.Business.Models.Responses;
+using InstaConnect.Shared.Business.Models.Users;
 using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
@@ -14,19 +15,19 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
 {
     private readonly IMapper _mapper;
     private readonly IPostRepository _postRepository;
+    private readonly ICurrentUserContext _currentUserContext;
     private readonly IPostCommentRepository _postCommentRepository;
-    private readonly IRequestClient<GetCurrentUserRequest> _getCurrentUserRequestClient;
 
     public AddPostCommentCommandHandler(
         IMapper mapper,
         IPostRepository postRepository,
-        IPostCommentRepository postCommentRepository,
-        IRequestClient<GetCurrentUserRequest> getCurrentUserRequestClient)
+        ICurrentUserContext currentUserContext,
+        IPostCommentRepository postCommentRepository)
     {
         _mapper = mapper;
         _postRepository = postRepository;
+        _currentUserContext = currentUserContext;
         _postCommentRepository = postCommentRepository;
-        _getCurrentUserRequestClient = getCurrentUserRequestClient;
     }
 
     public async Task Handle(AddPostCommentCommand request, CancellationToken cancellationToken)
@@ -38,9 +39,6 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
             throw new PostNotFoundException();
         }
 
-        var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
-        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<CurrentUserDetails>(getCurrentUserRequest, cancellationToken);
-
         var existingPostComment = await _postCommentRepository.GetByIdAsync(request.PostCommentId, cancellationToken);
 
         if (request.PostCommentId != null && existingPostComment == null)
@@ -48,8 +46,9 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
             throw new PostCommentNotFoundException();
         }
 
+        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
         var postComment = _mapper.Map<PostComment>(request);
-        _mapper.Map(getCurrentUserResponse.Message, postComment);
+        _mapper.Map(currentUserDetails, postComment);
         await _postCommentRepository.AddAsync(postComment, cancellationToken);
     }
 }

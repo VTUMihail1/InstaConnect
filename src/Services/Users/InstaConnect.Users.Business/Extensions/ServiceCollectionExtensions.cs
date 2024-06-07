@@ -38,8 +38,7 @@ public static class ServiceCollectionExtensions
         {
             busConfigurator.SetKebabCaseEndpointNameFormatter();
 
-            busConfigurator.AddConsumer<GetCurrentUserConsumer>();
-            busConfigurator.AddConsumer<ValidateUserByIdConsumer>();
+            busConfigurator.AddConsumer<GetUserByIdConsumer>();
 
             busConfigurator.UsingRabbitMq((context, configurator) =>
             {

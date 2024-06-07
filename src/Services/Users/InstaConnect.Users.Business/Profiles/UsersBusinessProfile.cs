@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Users.Business.Commands.Account.EditAccount;
 using InstaConnect.Users.Business.Commands.Account.RegisterAccount;
@@ -38,5 +39,7 @@ public class UsersBusinessProfile : Profile
         CreateMap<User, UserViewDTO>();
 
         CreateMap<User, UserDetailedViewDTO>();
+
+        CreateMap<User, GetUserByIdResponse>();
     }
 }

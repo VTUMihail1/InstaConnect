@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using InstaConnect.Follows.Data.Abstractions.Repositories;
 using InstaConnect.Follows.Data.Models.Entities;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Base;
+using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
+using InstaConnect.Shared.Business.Models.Users;
 using MassTransit;
 
 namespace InstaConnect.Follows.Business.Commands.Follows.AddFollow;
@@ -15,38 +18,42 @@ internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
 
     private readonly IMapper _mapper;
     private readonly IFollowRepository _followRepository;
-    private readonly IRequestClient<GetCurrentUserRequest> _getCurrentUserRequestClient;
-    private readonly IRequestClient<ValidateUserByIdRequest> _validateUserByIdRequestClient;
+    private readonly ICurrentUserContext _currentUserContext;
+    private readonly IRequestClient<GetUserByIdRequest> _getUserByIdRequestClient;
 
     public AddFollowCommandHandler(
-        IMapper mapper, 
-        IFollowRepository followRepository, 
-        IRequestClient<GetCurrentUserRequest> getCurrentUserRequestClient, 
-        IRequestClient<ValidateUserByIdRequest> validateUserByIdRequestClient)
+        IMapper mapper,
+        IFollowRepository followRepository,
+        ICurrentUserContext currentUserContext,
+        IRequestClient<GetUserByIdRequest> getUserByIdRequestClient)
     {
         _mapper = mapper;
         _followRepository = followRepository;
-        _getCurrentUserRequestClient = getCurrentUserRequestClient;
-        _validateUserByIdRequestClient = validateUserByIdRequestClient;
+        _currentUserContext = currentUserContext;
+        _getUserByIdRequestClient = getUserByIdRequestClient;
     }
 
     public async Task Handle(AddFollowCommand request, CancellationToken cancellationToken)
     {
-        var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
-        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<CurrentUserDetails>(getCurrentUserRequest, cancellationToken);
+        var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
+        var getUserByIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(getUserByIdRequest, cancellationToken);
 
-        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
+        if(getUserByIdResponse == null)
+        {
+            throw new UserNotFoundException();
+        }
 
-        var existingPostLike = _followRepository.GetByFollowerIdAndFollowingIdAsync(getCurrentUserResponse.Message.Id, request.FollowingId, cancellationToken);
+        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
 
-        if (existingPostLike == null)
+        var existingFollow = _followRepository.GetByFollowerIdAndFollowingIdAsync(currentUserDetails.Id!, request.FollowingId, cancellationToken);
+
+        if (existingFollow != null)
         {
             throw new BadRequestException(USER_ALREADY_FOLLOWED);
         }
 
         var follow = _mapper.Map<Follow>(request);
-        _mapper.Map(getCurrentUserResponse.Message, follow);
+        _mapper.Map(currentUserDetails, follow);
         await _followRepository.AddAsync(follow, cancellationToken);
     }
 }
