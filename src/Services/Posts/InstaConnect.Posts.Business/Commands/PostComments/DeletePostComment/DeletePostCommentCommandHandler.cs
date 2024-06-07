@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Data.Abstract.Repositories;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
@@ -10,18 +12,15 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment;
 
 internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostCommentCommand>
 {
-    private readonly IMapper _mapper;
+    private readonly ICurrentUserContext _currentUserContext;
     private readonly IPostCommentRepository _postCommentRepository;
-    private readonly IRequestClient<ValidateUserByIdRequest> _validateUserByIdRequestClient;
 
     public DeletePostCommentCommandHandler(
-        IMapper mapper,
-        IPostCommentRepository postCommentRepository,
-        IRequestClient<ValidateUserByIdRequest> validateUserByIdRequestClient)
+        ICurrentUserContext currentUserContext, 
+        IPostCommentRepository postCommentRepository)
     {
-        _mapper = mapper;
+        _currentUserContext = currentUserContext;
         _postCommentRepository = postCommentRepository;
-        _validateUserByIdRequestClient = validateUserByIdRequestClient;
     }
 
     public async Task Handle(DeletePostCommentCommand request, CancellationToken cancellationToken)
@@ -33,8 +32,12 @@ internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostComme
             throw new PostCommentNotFoundException();
         }
 
-        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
+        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+
+        if (currentUserDetails.Id != existingPostComment.UserId)
+        {
+            throw new AccountForbiddenException();
+        }
 
         await _postCommentRepository.DeleteAsync(existingPostComment, cancellationToken);
     }

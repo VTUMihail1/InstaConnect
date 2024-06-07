@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Data.Abstract.Repositories;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.PostLike;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
@@ -10,18 +12,15 @@ namespace InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
 
 internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeCommand>
 {
-    private readonly IMapper _mapper;
     private readonly IPostLikeRepository _postLikeRepository;
-    private readonly IRequestClient<ValidateUserByIdRequest> _validateUserByIdRequestClient;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public DeletePostLikeCommandHandler(
-        IMapper mapper,
         IPostLikeRepository postLikeRepository,
-        IRequestClient<ValidateUserByIdRequest> validateUserByIdRequestClient)
+        ICurrentUserContext currentUserContext)
     {
-        _mapper = mapper;
         _postLikeRepository = postLikeRepository;
-        _validateUserByIdRequestClient = validateUserByIdRequestClient;
+        _currentUserContext = currentUserContext;
     }
 
     public async Task Handle(DeletePostLikeCommand request, CancellationToken cancellationToken)
@@ -33,8 +32,12 @@ internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeComm
             throw new PostLikeNotFoundException();
         }
 
-        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingPostLike);
-        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
+        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+
+        if (currentUserDetails.Id != existingPostLike.UserId)
+        {
+            throw new AccountForbiddenException();
+        }
 
         await _postLikeRepository.DeleteAsync(existingPostLike, cancellationToken);
     }

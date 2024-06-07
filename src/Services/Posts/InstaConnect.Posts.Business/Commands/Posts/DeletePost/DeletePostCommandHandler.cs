@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Data.Abstract.Repositories;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
@@ -10,18 +12,15 @@ namespace InstaConnect.Posts.Business.Commands.Posts.DeletePost;
 
 internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
 {
-    private readonly IMapper _mapper;
     private readonly IPostRepository _postRepository;
-    private readonly IRequestClient<ValidateUserByIdRequest> _validateUserByIdRequestClient;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public DeletePostCommandHandler(
-        IMapper mapper,
         IPostRepository postRepository,
-        IRequestClient<ValidateUserByIdRequest> validateUserByIdRequestClient)
+        ICurrentUserContext currentUserContext)
     {
-        _mapper = mapper;
         _postRepository = postRepository;
-        _validateUserByIdRequestClient = validateUserByIdRequestClient;
+        _currentUserContext = currentUserContext;
     }
 
     public async Task Handle(DeletePostCommand request, CancellationToken cancellationToken)
@@ -33,8 +32,12 @@ internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
             throw new PostNotFoundException();
         }
 
-        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingPost);
-        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
+        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+
+        if (currentUserDetails.Id != existingPost.UserId)
+        {
+            throw new AccountForbiddenException();
+        }
 
         await _postRepository.DeleteAsync(existingPost, cancellationToken);
     }

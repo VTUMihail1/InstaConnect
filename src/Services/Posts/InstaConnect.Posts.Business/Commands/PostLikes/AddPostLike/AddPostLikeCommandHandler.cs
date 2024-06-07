@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Data.Abstract.Repositories;
 using InstaConnect.Posts.Data.Models.Entities;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Shared.Business.Models.Responses;
+using InstaConnect.Shared.Business.Models.Users;
 using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
@@ -17,18 +18,18 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
     private readonly IMapper _mapper;
     private readonly IPostRepository _postRepository;
     private readonly IPostLikeRepository _postLikeRepository;
-    private readonly IRequestClient<GetCurrentUserRequest> _getCurrentUserRequestClient;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public AddPostLikeCommandHandler(
         IMapper mapper,
         IPostRepository postRepository,
         IPostLikeRepository postLikeRepository,
-        IRequestClient<GetCurrentUserRequest> getCurrentUserRequestClient)
+        ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
         _postRepository = postRepository;
         _postLikeRepository = postLikeRepository;
-        _getCurrentUserRequestClient = getCurrentUserRequestClient;
+        _currentUserContext = currentUserContext;
     }
 
     public async Task Handle(AddPostLikeCommand request, CancellationToken cancellationToken)
@@ -40,10 +41,9 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
             throw new PostNotFoundException();
         }
 
-        var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
-        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<CurrentUserDetails>(getCurrentUserRequest, cancellationToken);
+        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
 
-        var existingPostLike = _postLikeRepository.GetByUserIdAndPostIdAsync(getCurrentUserResponse.Message.Id, request.PostId, cancellationToken);
+        var existingPostLike = _postLikeRepository.GetByUserIdAndPostIdAsync(currentUserDetails.Id!, request.PostId, cancellationToken);
 
         if (existingPostLike == null)
         {
@@ -51,7 +51,7 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
         }
 
         var postLike = _mapper.Map<PostLike>(request);
-        _mapper.Map(getCurrentUserResponse, postLike);
+        _mapper.Map(currentUserDetails, postLike);
         await _postLikeRepository.AddAsync(postLike, cancellationToken);
     }
 }

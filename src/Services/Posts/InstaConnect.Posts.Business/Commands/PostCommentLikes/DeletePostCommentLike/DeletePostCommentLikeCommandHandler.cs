@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Data.Abstract.Repositories;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.PostLike;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
@@ -10,18 +12,15 @@ namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommen
 
 internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostCommentLikeCommand>
 {
-    private readonly IMapper _mapper;
+    private readonly ICurrentUserContext _currentUserContext;
     private readonly IPostCommentLikeRepository _postCommentLikeRepository;
-    private readonly IRequestClient<ValidateUserByIdRequest> _validateUserByIdRequestClient;
 
     public DeletePostCommentLikeCommandHandler(
-        IMapper mapper,
-        IPostCommentLikeRepository postCommentLikeRepository,
-        IRequestClient<ValidateUserByIdRequest> validateUserByIdRequestClient)
+        ICurrentUserContext currentUserContext, 
+        IPostCommentLikeRepository postCommentLikeRepository)
     {
-        _mapper = mapper;
+        _currentUserContext = currentUserContext;
         _postCommentLikeRepository = postCommentLikeRepository;
-        _validateUserByIdRequestClient = validateUserByIdRequestClient;
     }
 
     public async Task Handle(DeletePostCommentLikeCommand request, CancellationToken cancellationToken)
@@ -33,8 +32,12 @@ internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostC
             throw new PostLikeNotFoundException();
         }
 
-        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(existingPostCommentLike);
-        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
+        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+
+        if (currentUserDetails.Id != existingPostCommentLike.UserId)
+        {
+            throw new AccountForbiddenException();
+        }
 
         await _postCommentLikeRepository.DeleteAsync(existingPostCommentLike, cancellationToken);
     }

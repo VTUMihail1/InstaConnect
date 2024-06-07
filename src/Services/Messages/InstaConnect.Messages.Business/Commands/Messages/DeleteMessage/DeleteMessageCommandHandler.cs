@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Data.Abstractions.Repositories;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
@@ -10,18 +12,15 @@ namespace InstaConnect.Messages.Business.Commands.Messages.DeleteMessage;
 
 internal class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageCommand>
 {
-    private readonly IMapper _mapper;
     private readonly IMessageRepository _messageRepository;
-    private readonly IRequestClient<ValidateUserByIdRequest> _validateUserByIdRequestClient;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public DeleteMessageCommandHandler(
-        IMapper mapper,
         IMessageRepository messageRepository,
-        IRequestClient<ValidateUserByIdRequest> validateUserByIdRequestClient)
+        ICurrentUserContext currentUserContext)
     {
-        _mapper = mapper;
         _messageRepository = messageRepository;
-        _validateUserByIdRequestClient = validateUserByIdRequestClient;
+        _currentUserContext = currentUserContext;
     }
 
     public async Task Handle(DeleteMessageCommand request, CancellationToken cancellationToken)
@@ -33,8 +32,12 @@ internal class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageComman
             throw new MessageNotFoundException();
         }
 
-        var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
-        await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
+        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+
+        if (currentUserDetails.Id != existingMessage.SenderId)
+        {
+            throw new AccountForbiddenException();
+        }
 
         await _messageRepository.DeleteAsync(existingMessage, cancellationToken);
     }
