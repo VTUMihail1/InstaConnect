@@ -41,7 +41,7 @@ public class PostCommentLikeController : ControllerBase
     }
 
     // GET: api/post-comment-likes/filtered
-    [HttpGet]
+    [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllFilteredAsync(GetPostCommentLikesCollectionRequestModel getPostCommentLikesCollectionRequestModel)

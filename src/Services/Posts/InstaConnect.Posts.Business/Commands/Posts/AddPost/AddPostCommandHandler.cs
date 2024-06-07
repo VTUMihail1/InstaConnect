@@ -27,7 +27,7 @@ internal class AddPostCommandHandler : ICommandHandler<AddPostCommand>
     public async Task Handle(AddPostCommand request, CancellationToken cancellationToken)
     {
         var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
-        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
+        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<CurrentUserDetails>(getCurrentUserRequest, cancellationToken);
 
         var post = _mapper.Map<Post>(request);
         _mapper.Map(getCurrentUserResponse.Message, post);

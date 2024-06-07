@@ -34,7 +34,7 @@ public class MessagesProfile : Profile
         CreateMap<Message, ValidateUserByIdRequest>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.SenderId));
 
-        CreateMap<GetCurrentUserResponse, Message>();
+        CreateMap<CurrentUserDetails, Message>();
 
         CreateMap<AddMessageCommand, Message>();
 

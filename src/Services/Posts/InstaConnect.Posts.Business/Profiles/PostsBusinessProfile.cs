@@ -40,7 +40,7 @@ public class PostsBusinessProfile : Profile
 
         CreateMap<AddPostCommand, GetCurrentUserRequest>();
 
-        CreateMap<GetCurrentUserResponse, Post>()
+        CreateMap<CurrentUserDetails, Post>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<Post, ValidateUserByIdRequest>()
@@ -67,7 +67,7 @@ public class PostsBusinessProfile : Profile
 
         CreateMap<AddPostCommentCommand, GetCurrentUserRequest>();
 
-        CreateMap<GetCurrentUserResponse, PostComment>()
+        CreateMap<CurrentUserDetails, PostComment>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<PostComment, ValidateUserByIdRequest>()
@@ -96,7 +96,7 @@ public class PostsBusinessProfile : Profile
         CreateMap<PostLike, ValidateUserByIdRequest>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
 
-        CreateMap<GetCurrentUserResponse, PostLike>()
+        CreateMap<CurrentUserDetails, PostLike>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<AddPostLikeCommand, PostLike>();
@@ -117,7 +117,7 @@ public class PostsBusinessProfile : Profile
 
         CreateMap<AddPostCommentLikeCommand, GetCurrentUserRequest>();
 
-        CreateMap<GetCurrentUserResponse, PostComment>()
+        CreateMap<CurrentUserDetails, PostComment>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<PostCommentLike, ValidateUserByIdRequest>()

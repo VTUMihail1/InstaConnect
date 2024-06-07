@@ -39,7 +39,7 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
         }
 
         var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
-        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
+        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<CurrentUserDetails>(getCurrentUserRequest, cancellationToken);
 
         var existingPostComment = await _postCommentRepository.GetByIdAsync(request.PostCommentId, cancellationToken);
 

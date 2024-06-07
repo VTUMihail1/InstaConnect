@@ -33,7 +33,7 @@ internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
     public async Task Handle(AddFollowCommand request, CancellationToken cancellationToken)
     {
         var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
-        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
+        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<CurrentUserDetails>(getCurrentUserRequest, cancellationToken);
 
         var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
         await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);

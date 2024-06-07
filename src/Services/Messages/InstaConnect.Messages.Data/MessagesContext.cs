@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Messages.Data;
 
-public class MessageContext : BaseDbContext
+public class MessagesContext : BaseDbContext
 {
-    public MessageContext(DbContextOptions<MessageContext> options) : base(options)
+    public MessagesContext(DbContextOptions<MessagesContext> options) : base(options)
     { }
 
     public DbSet<Message> Messages { get; set; }

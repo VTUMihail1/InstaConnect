@@ -6,9 +6,9 @@ namespace InstaConnect.Messages.Data.Repositories;
 
 public class MessageRepository : BaseRepository<Message>, IMessageRepository
 {
-    private readonly MessageContext _messageContext;
+    private readonly MessagesContext _messageContext;
 
-    public MessageRepository(MessageContext messageContext) : base(messageContext)
+    public MessageRepository(MessagesContext messageContext) : base(messageContext)
     {
         _messageContext = messageContext;
     }

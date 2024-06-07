@@ -1,40 +1,30 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 as build
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER app
 WORKDIR /app
 EXPOSE 5500
 EXPOSE 5501
 
-# copy all .csproj files and restore as distinct layers.   Use of the same COPY command
-# for every dockerfile in the project to take advantage of docker caching
-COPY InstaConnect.sln InstaConnect.sln
-COPY src/Services/InstaConnect.Users.Web/InstaConnect.Users.Web.csproj src/Services/InstaConnect.Users.Web/InstaConnect.Users.Web.csproj
-COPY src/Services/InstaConnect.Users.Business/InstaConnect.Users.Business.csproj src/Services/InstaConnect.Users.Business/InstaConnect.Users.Business.csproj
-COPY src/Services/InstaConnect.Users.Data/InstaConnect.Users.Data.csproj src/Services/InstaConnect.Users.Data/InstaConnect.Users.Data.csproj
-COPY src/Services/InstaConnect.Posts.Web/InstaConnect.Posts.Web.csproj src/Services/InstaConnect.Posts.Web/InstaConnect.Posts.Web.csproj
-COPY src/Services/InstaConnect.Posts.Business/InstaConnect.Posts.Business.csproj src/Services/InstaConnect.Posts.Business/InstaConnect.Posts.Business.csproj
-COPY src/Services/InstaConnect.Posts.Data/InstaConnect.Posts.Data.csproj src/Services/InstaConnect.Posts.Data/InstaConnect.Posts.Data.csproj
-COPY src/Services/InstaConnect.Messages.Web/InstaConnect.Messages.Web.csproj src/Services/InstaConnect.Messages.Web/InstaConnect.Messages.Web.csproj
-COPY src/Services/InstaConnect.Messages.Business/InstaConnect.Messages.Business.csproj src/Services/InstaConnect.Messages.Business/InstaConnect.Messages.Business.csproj
-COPY src/Services/InstaConnect.Messages.Data/InstaConnect.Messages.Data.csproj src/Services/InstaConnect.Messages.Data/InstaConnect.Messages.Data.csproj
-COPY src/Services/InstaConnect.Follows.Web/InstaConnect.Follows.Web.csproj src/Services/InstaConnect.Follows.Web/InstaConnect.Follows.Web.csproj
-COPY src/Services/InstaConnect.Follows.Business/InstaConnect.Follows.Business.csproj src/Services/InstaConnect.Follows.Business/InstaConnect.Follows.Business.csproj
-COPY src/Services/InstaConnect.Follows.Data/InstaConnect.Follows.Data.csproj src/Services/InstaConnect.Follows.Data/InstaConnect.Follows.Data.csproj
-COPY src/Services/InstaConnect.Gateway.Web/InstaConnect.Gateway.Web.csproj src/Services/InstaConnect.Gateway.Web/InstaConnect.Gateway.Web.csproj
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
+COPY ["src/Services/Follows/InstaConnect.Follows.Web/InstaConnect.Follows.Web.csproj", "src/Services/Follows/InstaConnect.Follows.Web/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Web/InstaConnect.Shared.Web.csproj", "src/Services/Shared/InstaConnect.Shared.Web/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Business/InstaConnect.Shared.Business.csproj", "src/Services/Shared/InstaConnect.Shared.Business/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Data/InstaConnect.Shared.Data.csproj", "src/Services/Shared/InstaConnect.Shared.Data/"]
+COPY ["src/Services/Follows/InstaConnect.Follows.Business/InstaConnect.Follows.Business.csproj", "src/Services/Follows/InstaConnect.Follows.Business/"]
+COPY ["src/Services/Follows/InstaConnect.Follows.Data/InstaConnect.Follows.Data.csproj", "src/Services/Follows/InstaConnect.Follows.Data/"]
+RUN dotnet restore "./src/Services/Follows/InstaConnect.Follows.Web/InstaConnect.Follows.Web.csproj"
+COPY . .
+WORKDIR "/src/src/Services/Follows/InstaConnect.Follows.Web"
+RUN dotnet build "./InstaConnect.Follows.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Restore package deps
-RUN dotnet restore InstaConnect.sln
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./InstaConnect.Follows.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Copy the app folders over
-COPY src/Services/InstaConnect.Follows.Web src/Services/InstaConnect.Follows.Web
-COPY src/Services/InstaConnect.Follows.Business src/Services/InstaConnect.Follows.Business
-COPY src/Services/InstaConnect.Follows.Data src/Services/InstaConnect.Follows.Data
-COPY src/Services/InstaConnect.Shared.Web src/Services/InstaConnect.Shared.Web
-COPY src/Services/InstaConnect.Shared.Business src/Services/InstaConnect.Shared.Business
-COPY src/Services/InstaConnect.Shared.Data src/Services/InstaConnect.Shared.Data
-WORKDIR /app/src/Services/InstaConnect.Posts.Web
-RUN dotnet publish -c Release -o /app/src/Services/out
-
-# Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+FROM base AS final
 WORKDIR /app
-COPY --from=build /app/src/Services/out .
-ENTRYPOINT [ "dotnet", "InstaConnect.Follows.Web" ]
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "InstaConnect.Follows.Web.dll"]

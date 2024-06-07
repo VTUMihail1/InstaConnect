@@ -35,7 +35,7 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
     public async Task Handle(AddMessageCommand request, CancellationToken cancellationToken)
     {
         var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
-        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
+        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<CurrentUserDetails>(getCurrentUserRequest, cancellationToken);
 
         var validateUserByIdRequest = _mapper.Map<ValidateUserByIdRequest>(request);
         await _validateUserByIdRequestClient.GetResponse<ValidateUserByIdResponse>(validateUserByIdRequest, cancellationToken);
