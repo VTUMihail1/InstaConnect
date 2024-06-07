@@ -29,7 +29,7 @@ public class FollowsBusinessProfile : Profile
 
         CreateMap<AddFollowCommand, GetCurrentUserRequest>();
 
-        CreateMap<GetCurrentUserResponse, Follow>()
+        CreateMap<CurrentUserDetails, Follow>()
             .ForMember(dest => dest.FollowerId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<Follow, ValidateUserByIdRequest>()

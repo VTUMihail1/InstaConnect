@@ -41,7 +41,7 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
         }
 
         var getCurrentUserRequest = _mapper.Map<GetCurrentUserRequest>(request);
-        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<GetCurrentUserResponse>(getCurrentUserRequest, cancellationToken);
+        var getCurrentUserResponse = await _getCurrentUserRequestClient.GetResponse<CurrentUserDetails>(getCurrentUserRequest, cancellationToken);
 
         var existingPostLike = _postLikeRepository.GetByUserIdAndPostIdAsync(getCurrentUserResponse.Message.Id, request.PostId, cancellationToken);
 

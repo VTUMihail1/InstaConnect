@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InstaConnect.Shared.Data\InstaConnect.Shared.Data.csproj" />
+    <ProjectReference Include="..\..\Follows\InstaConnect.Follows.Data\InstaConnect.Follows.Data.csproj" />
+    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Data\InstaConnect.Shared.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="7.0.15" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
   </ItemGroup>
 

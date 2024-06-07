@@ -42,7 +42,7 @@ public class PostCommentController : ControllerBase
     }
 
     // GET: api/post-comments/filtered
-    [HttpGet]
+    [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllFilteredAsync(GetPostCommentsCollectionRequestModel getPostCommentsCollectionRequestModel)

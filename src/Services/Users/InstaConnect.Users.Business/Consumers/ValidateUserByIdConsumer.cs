@@ -1,7 +1,7 @@
-﻿using InstaConnect.Shared.Business.Exceptions.Account;
+﻿using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 using MassTransit;
 

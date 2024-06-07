@@ -10,20 +10,15 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        serviceCollection.AddDbContext<MessageContext>(options =>
-        {
-            var connectionString = configuration.GetConnectionString("ConnectionString");
-            var serverVersion = ServerVersion.AutoDetect(connectionString);
-
-            options.UseMySql(connectionString, serverVersion);
-        });
+        serviceCollection.AddDbContext<MessagesContext>(
+            options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
         serviceCollection
             .AddScoped<IMessageRepository, MessageRepository>();
 
         serviceCollection
             .AddHealthChecks()
-            .AddDbContextCheck<MessageContext>();
+            .AddDbContextCheck<MessagesContext>();
 
         return serviceCollection;
     }

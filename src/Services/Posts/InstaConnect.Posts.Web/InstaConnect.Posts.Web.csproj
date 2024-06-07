@@ -1,11 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>393fb491-91c4-489c-800c-bb6a81fe843f</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..\..</DockerfileContext>
+    <UserSecretsId>7c1d163a-f1a5-4cb8-889d-3ea9596e1f4a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InstaConnect.Posts.Business\InstaConnect.Posts.Business.csproj" />
-    <ProjectReference Include="..\InstaConnect.Shared.Web\InstaConnect.Shared.Web.csproj" />
+    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Web\InstaConnect.Shared.Web.csproj" />
+    <ProjectReference Include="..\..\Posts\InstaConnect.Posts.Business\InstaConnect.Posts.Business.csproj" />
   </ItemGroup>
 
 </Project>

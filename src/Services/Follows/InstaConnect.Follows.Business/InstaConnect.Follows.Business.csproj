@@ -9,11 +9,12 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InstaConnect.Follows.Data\InstaConnect.Follows.Data.csproj" />
-    <ProjectReference Include="..\InstaConnect.Shared.Business\InstaConnect.Shared.Business.csproj" />
+    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Business\InstaConnect.Shared.Business.csproj" />
+    <ProjectReference Include="..\..\Follows\InstaConnect.Follows.Data\InstaConnect.Follows.Data.csproj" />
   </ItemGroup>
 
 </Project>

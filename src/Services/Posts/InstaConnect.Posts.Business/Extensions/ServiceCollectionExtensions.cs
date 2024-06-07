@@ -1,4 +1,6 @@
-﻿using InstaConnect.Shared.Business.Models.Options;
+﻿using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Helpers;
+using InstaConnect.Shared.Business.Models.Options;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,11 @@ public static class ServiceCollectionExtensions
             .ValidateOnStart();
 
         var messageBrokerOptions = configuration.GetSection(nameof(MessageBrokerOptions)).Get<MessageBrokerOptions>()!;
+
+        serviceCollection.AddHttpContextAccessor();
+
+        serviceCollection
+            .AddScoped<ICurrentUserContext, CurrentUserContext>();
 
         serviceCollection.AddAutoMapper(currentAssembly);
 

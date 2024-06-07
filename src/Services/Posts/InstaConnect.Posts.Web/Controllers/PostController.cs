@@ -42,7 +42,7 @@ public class PostController : ControllerBase
     }
 
     // GET: api/posts/filtered
-    [HttpGet]
+    [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllFilteredAsync(GetPostsCollectionRequestModel getPostsCollectionRequestModel)

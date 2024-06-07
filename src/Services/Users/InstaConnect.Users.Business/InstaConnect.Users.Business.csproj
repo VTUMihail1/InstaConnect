@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InstaConnect.Shared.Business\InstaConnect.Shared.Business.csproj" />
-    <ProjectReference Include="..\InstaConnect.Users.Data\InstaConnect.Users.Data.csproj" />
+    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Business\InstaConnect.Shared.Business.csproj" />
+    <ProjectReference Include="..\..\Users\InstaConnect.Users.Data\InstaConnect.Users.Data.csproj" />
   </ItemGroup>
 
 </Project>

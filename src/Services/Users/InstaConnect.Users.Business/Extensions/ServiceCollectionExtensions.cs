@@ -1,7 +1,8 @@
-﻿using InstaConnect.Shared.Business.Models.Options;
+﻿using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Helpers;
+using InstaConnect.Shared.Business.Models.Options;
 using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Business.Consumers;
-using InstaConnect.Users.Business.Helpers;
 using InstaConnect.Users.Business.Services;
 using MassTransit;
 using Microsoft.Extensions.Configuration;

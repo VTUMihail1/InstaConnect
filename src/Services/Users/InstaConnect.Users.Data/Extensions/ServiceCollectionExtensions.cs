@@ -30,13 +30,8 @@ public static class ServiceCollectionExtensions
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        serviceCollection.AddDbContext<UsersContext>(options =>
-        {
-            var connectionString = configuration.GetConnectionString("ConnectionString");
-            var serverVersion = ServerVersion.AutoDetect(connectionString);
-
-            options.UseMySql(connectionString, serverVersion);
-        });
+        serviceCollection.AddDbContext<UsersContext>(
+            options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
         serviceCollection
             .AddScoped<ITokenRepository, TokenRepository>()

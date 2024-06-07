@@ -10,13 +10,8 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        serviceCollection.AddDbContext<FollowsContext>(options =>
-        {
-            var connectionString = configuration.GetConnectionString("ConnectionString");
-            var serverVersion = ServerVersion.AutoDetect(connectionString);
-
-            options.UseMySql(connectionString, serverVersion);
-        });
+        serviceCollection.AddDbContext<FollowsContext>(
+            options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
         serviceCollection
             .AddScoped<IFollowRepository, FollowRepository>();

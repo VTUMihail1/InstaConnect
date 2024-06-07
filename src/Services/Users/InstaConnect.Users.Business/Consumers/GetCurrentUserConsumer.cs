@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
-using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 using MassTransit;
 
@@ -27,7 +27,7 @@ public class GetCurrentUserConsumer : IConsumer<GetCurrentUserRequest>
 
     public async Task Consume(ConsumeContext<GetCurrentUserRequest> context)
     {
-        var currentUserId = _currentUserContext.GetUsedId();
+        var currentUserId = _currentUserContext.GetCurrentUserDetails();
 
         if (currentUserId == null)
         {
@@ -41,7 +41,7 @@ public class GetCurrentUserConsumer : IConsumer<GetCurrentUserRequest>
             throw new UserNotFoundException();
         }
 
-        var getCurrentUserResponse = _mapper.Map<GetCurrentUserResponse>(user);
+        var getCurrentUserResponse = _mapper.Map<CurrentUserDetails>(user);
 
         await context.RespondAsync(getCurrentUserResponse);
     }

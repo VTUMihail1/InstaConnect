@@ -41,7 +41,7 @@ public class FollowController : ControllerBase
     }
 
     // GET: api/follows/filtered
-    [HttpGet]
+    [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllFilteredAsync(GetFollowCollectionRequestModel getFollowCollectionRequestModel)

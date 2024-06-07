@@ -42,7 +42,7 @@ public class MessageController : ControllerBase
     }
 
     // GET: api/messages/filtered
-    [HttpGet]
+    [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllFilteredAsync(GetMessageCollectionRequestModel getMessageCollectionRequestModel)
