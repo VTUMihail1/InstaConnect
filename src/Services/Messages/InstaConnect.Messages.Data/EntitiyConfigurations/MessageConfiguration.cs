@@ -8,31 +8,44 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
 {
     public void Configure(EntityTypeBuilder<Message> builder)
     {
-        builder.ToTable("message");
+        builder
+            .ToTable("message");
 
-        builder.HasKey(m => m.Id);
+        builder
+            .HasKey(m => m.Id);
 
-        builder.Property(m => m.Id)
+        builder
+            .Property(m => m.Id)
             .HasColumnName("id")
             .ValueGeneratedNever()
             .IsRequired();
 
-        builder.Property(m => m.SenderId)
+        builder
+            .Property(m => m.SenderId)
             .HasColumnName("sender_id")
             .HasMaxLength(255)
             .IsRequired();
 
-        builder.Property(m => m.ReceiverId)
+        builder
+            .Property(m => m.ReceiverId)
             .HasColumnName("receiver_id")
             .HasMaxLength(255)
             .IsRequired();
 
-        builder.Property(m => m.Content)
+        builder
+            .Property(m => m.Content)
             .HasColumnName("content")
             .HasMaxLength(2000)
             .IsRequired();
 
-        builder.Property(m => m.CreatedAt).HasColumnName("created_at");
-        builder.Property(m => m.UpdatedAt).HasColumnName("updated_at");
+        builder
+            .Property(t => t.CreatedAt)
+            .HasColumnType("timestamp(6)")
+            .HasColumnName("created_at");
+
+        builder
+            .Property(t => t.UpdatedAt)
+            .HasColumnType("timestamp(6)")
+            .HasColumnName("updated_at");
     }
 }

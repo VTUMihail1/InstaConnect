@@ -16,7 +16,6 @@ using InstaConnect.Posts.Business.Queries.Posts.GetAllFilteredPosts;
 using InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
 using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Posts.Data.Models.Filters;
-using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Users;
 using InstaConnect.Shared.Data.Models.Filters;
 

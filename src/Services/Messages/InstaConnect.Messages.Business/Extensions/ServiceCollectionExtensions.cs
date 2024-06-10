@@ -1,4 +1,6 @@
-﻿using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Messages.Business.Abstract.Helpers;
+using InstaConnect.Messages.Business.Helpers;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.Models.Options;
 using MassTransit;
@@ -24,7 +26,8 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddHttpContextAccessor();
 
         serviceCollection
-            .AddScoped<ICurrentUserContext, CurrentUserContext>();
+            .AddScoped<ICurrentUserContext, CurrentUserContext>()
+            .AddScoped<IMessageSender, MessageSender>();
 
         serviceCollection.AddAutoMapper(currentAssembly);
 

@@ -8,16 +8,20 @@ public class FollowConfiguration : IEntityTypeConfiguration<Follow>
 {
     public void Configure(EntityTypeBuilder<Follow> builder)
     {
-        builder.ToTable("follow");
+        builder
+            .ToTable("follow");
 
-        builder.HasKey(f => f.Id);
+        builder
+            .HasKey(f => f.Id);
 
-        builder.Property(f => f.Id)
+        builder
+            .Property(f => f.Id)
             .HasColumnName("id")
             .IsRequired()
             .ValueGeneratedNever();
 
-        builder.Property(f => f.FollowerId)
+        builder
+            .Property(f => f.FollowerId)
             .HasColumnName("follower_id")
             .HasMaxLength(255)
             .IsRequired();
@@ -27,7 +31,14 @@ public class FollowConfiguration : IEntityTypeConfiguration<Follow>
             .HasMaxLength(255)
             .IsRequired();
 
-        builder.Property(f => f.CreatedAt).HasColumnName("created_at");
-        builder.Property(f => f.UpdatedAt).HasColumnName("updated_at");
+        builder
+            .Property(t => t.CreatedAt)
+            .HasColumnType("timestamp(6)")
+            .HasColumnName("created_at");
+
+        builder
+            .Property(t => t.UpdatedAt)
+            .HasColumnType("timestamp(6)")
+            .HasColumnName("updated_at");
     }
 }
