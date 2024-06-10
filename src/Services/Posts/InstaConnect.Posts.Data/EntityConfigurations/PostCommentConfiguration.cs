@@ -8,43 +8,59 @@ public class PostCommentConfiguration : IEntityTypeConfiguration<PostComment>
 {
     public void Configure(EntityTypeBuilder<PostComment> builder)
     {
-        builder.ToTable("post_comment");
+        builder
+            .ToTable("post_comment");
 
-        builder.HasKey(pc => pc.Id);
+        builder
+            .HasKey(pc => pc.Id);
 
-        builder.Property(pc => pc.Id)
+        builder
+            .Property(pc => pc.Id)
             .HasColumnName("id")
             .IsRequired()
             .ValueGeneratedNever();
 
-        builder.Property(pc => pc.Content)
+        builder
+            .Property(pc => pc.Content)
             .HasColumnName("content")
             .HasMaxLength(255)
             .IsRequired();
 
-        builder.Property(pc => pc.UserId)
+        builder
+            .Property(pc => pc.UserId)
             .HasColumnName("user_id")
             .HasMaxLength(255)
             .IsRequired();
 
-        builder.Property(pc => pc.PostId)
+        builder
+            .Property(pc => pc.PostId)
             .HasColumnName("post_id")
             .HasMaxLength(255)
             .IsRequired();
 
-        builder.Property(pc => pc.PostCommentId)
+        builder
+            .Property(pc => pc.PostCommentId)
             .HasColumnName("comment_id")
             .HasMaxLength(255);
 
-        builder.Property(pc => pc.CreatedAt).HasColumnName("created_at");
-        builder.Property(pc => pc.UpdatedAt).HasColumnName("updated_at");
+        builder
+            .Property(t => t.CreatedAt)
+            .HasColumnType("timestamp(6)")
+            .HasColumnName("created_at");
 
-        builder.HasOne(pc => pc.Post)
+        builder
+            .Property(t => t.UpdatedAt)
+            .HasColumnType("timestamp(6)")
+            .HasColumnName("updated_at");
+
+        builder
+            .HasOne(pc => pc.Post)
             .WithMany(p => p.PostComments)
             .HasForeignKey(pc => pc.PostId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(c => c.PostComments)
+        builder
+            .HasMany(c => c.PostComments)
             .WithOne()
             .HasForeignKey(c => c.PostCommentId)
             .OnDelete(DeleteBehavior.Cascade);

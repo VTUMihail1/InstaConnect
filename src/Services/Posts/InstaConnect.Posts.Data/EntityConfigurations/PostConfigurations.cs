@@ -8,41 +8,56 @@ public class PostConfigurations : IEntityTypeConfiguration<Post>
 {
     public void Configure(EntityTypeBuilder<Post> builder)
     {
-        builder.ToTable("post");
+        builder
+            .ToTable("post");
 
-        builder.HasKey(p => p.Id);
+        builder
+            .HasKey(p => p.Id);
 
-        builder.Property(p => p.Id)
+        builder
+            .Property(p => p.Id)
             .HasColumnName("id")
             .HasMaxLength(255)
             .ValueGeneratedNever()
             .IsRequired();
 
-        builder.Property(p => p.Title)
+        builder
+            .Property(p => p.Title)
             .HasColumnName("title")
             .HasMaxLength(255)
             .IsRequired();
 
-        builder.Property(p => p.Content)
+        builder
+            .Property(p => p.Content)
             .HasColumnName("content")
             .HasMaxLength(5000)
             .IsRequired();
 
-        builder.Property(p => p.UserId)
+        builder
+            .Property(p => p.UserId)
             .HasColumnName("user_id")
             .HasMaxLength(255)
             .IsRequired();
 
-        builder.Property(p => p.CreatedAt).HasColumnName("created_at");
-        builder.Property(p => p.UpdatedAt).HasColumnName("updated_at");
+        builder
+            .Property(t => t.CreatedAt)
+            .HasColumnType("timestamp(6)")
+            .HasColumnName("created_at");
 
-        builder.HasMany(p => p.PostLikes)
+        builder
+            .Property(t => t.UpdatedAt)
+            .HasColumnType("timestamp(6)")
+            .HasColumnName("updated_at");
+
+        builder
+            .HasMany(p => p.PostLikes)
             .WithOne(pl => pl.Post)
             .HasForeignKey(pl => pl.PostId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(p => p.PostComments)
+        builder
+            .HasMany(p => p.PostComments)
             .WithOne(c => c.Post)
             .HasForeignKey(c => c.PostId)
             .IsRequired()

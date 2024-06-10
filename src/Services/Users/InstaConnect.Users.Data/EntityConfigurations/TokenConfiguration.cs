@@ -8,39 +8,54 @@ public class TokenConfiguration : IEntityTypeConfiguration<Token>
 {
     public void Configure(EntityTypeBuilder<Token> builder)
     {
-        builder.ToTable("token");
+        builder
+            .ToTable("token");
 
-        builder.HasKey(t => t.Id);
+        builder
+            .HasKey(t => t.Id);
 
-        builder.Property(t => t.Id)
+        builder
+            .Property(t => t.Id)
             .HasColumnName("id")
             .HasMaxLength(255)
             .ValueGeneratedNever()
             .IsRequired();
 
-        builder.Property(t => t.Type)
+        builder
+            .Property(t => t.Type)
             .HasColumnName("type")
             .HasMaxLength(255)
             .IsRequired();
 
-        builder.Property(t => t.Value)
+        builder
+            .Property(t => t.Value)
             .HasColumnName("value")
             .HasMaxLength(1000)
             .IsRequired();
 
-        builder.Property(t => t.ValidUntil)
+        builder
+            .Property(t => t.ValidUntil)
             .HasColumnName("is_valid_until")
             .IsRequired();
 
-        builder.Property(t => t.UserId)
+        builder
+            .Property(t => t.UserId)
             .HasColumnName("user_id")
             .HasMaxLength(255)
             .IsRequired();
 
-        builder.Property(t => t.CreatedAt).HasColumnName("created_at");
-        builder.Property(t => t.UpdatedAt).HasColumnName("updated_at");
+        builder
+            .Property(t => t.CreatedAt)
+            .HasColumnType("timestamp(6)")
+            .HasColumnName("created_at");
 
-        builder.HasOne(t => t.User)
+        builder
+            .Property(t => t.UpdatedAt)
+            .HasColumnType("timestamp(6)")
+            .HasColumnName("updated_at");
+
+        builder
+            .HasOne(t => t.User)
             .WithMany(u => u.Tokens)
             .HasForeignKey(t => t.UserId)
             .IsRequired()
