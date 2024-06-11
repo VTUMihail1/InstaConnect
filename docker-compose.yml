@@ -1,29 +1,32 @@
-version: '3.4'
+networks:
+  instaconnect:
 
 services:
-  postgres:
-    image: postgres
+  sqlserver:
+    hostname: sqlserver
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    user: root
     environment:
-      - POSTGRES_USERNAME=postgres
-      - POSTGRES_PASSWORD=postgrespw
+            SA_PASSWORD: "password123!"
+            ACCEPT_EULA: "Y"
     ports:
-      - 5432:5432
+      - "1433:1433"
     volumes:
-      - /var/lib/postresql/data
+      - ./.containers/mysql:/var/opt/mssql/data
     networks:
       - instaconnect
 
   rabbitmq:
-     image: rabbitmq:management
-     hostname: rabbitmq
-     environment: 
-         RABBITMQ_DEFAULT_USER: guest
-         RABBITMQ_DEFAULT_PASS: guest
-     volumes:
-       - ./.containers/rabbit-mq/data/:/var/lib/rabbitmq
-       - ./.containers/rabbit-mq/log/:/var/log/rabbitmq
-     networks:
-       - instaconnect
+    image: rabbitmq:management
+    hostname: rabbitmq
+    environment: 
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - ./.containers/rabbit-mq/data/:/var/lib/rabbitmq
+      - ./.containers/rabbit-mq/log/:/var/log/rabbitmq
+    networks:
+      - instaconnect
 
   instaconnect.gateway.web:
     image: ${DOCKER_REGISTRY-}instaconnectgatewayweb
@@ -31,39 +34,37 @@ services:
       context: .
       dockerfile: src/Gateway/InstaConnect.Gateway.Web/Dockerfile
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
-      - ReverseProxy__Clusters__users-cluster__Destinations__destination1__Address=http://localhost:5200
-      - ReverseProxy__Clusters__posts-cluster__Destinations__destination1__Address=http://localhost:5300
-      - ReverseProxy__Clusters__messages-cluster__Destinations__destination1__Address=http://localhost:5400
-      - ReverseProxy__Clusters__follows-cluster__Destinations__destination1__Address=http://localhost:5500
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
+      ReverseProxy__Clusters__users-cluster__Destinations__destination1__Address: http://localhost:5200
+      ReverseProxy__Clusters__posts-cluster__Destinations__destination1__Address: http://localhost:5300
+      ReverseProxy__Clusters__messages-cluster__Destinations__destination1__Address: http://localhost:5400
+      ReverseProxy__Clusters__follows-cluster__Destinations__destination1__Address: http://localhost:5500
     ports:
-      - "5100:5100"
-      - "5101:5101"
+      - "5100:80"
     networks:
       - instaconnect
-
+  
   instaconnect.users.web:
     image: ${DOCKER_REGISTRY-}instaconnectusersweb
     build: 
       context: .
       dockerfile: src/Services/Users/InstaConnect.Users.Web/Dockerfile
     environment:
-      - ConnectionStrings__DefaultConnection=Server=postgres:5432;User Id=postgres;Password=postgrespw;Database=instaconnect.users
-      - MessageBrokerOptions__Host=amqp://rabbitmq:5672
-      - MessageBrokerOptions__Username=guest
-      - MessageBrokerOptions__Password=guest
-      - AdminOptions__Email=admin@instaconnect.com
-      - AdminOptions__Password=SecureAdminPass123!
-      - TokenOptions__AccessTokenSecurityKey=6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      - TokenOptions__AccountTokenSecurityKey=8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+      ConnectionStrings__DefaultConnection: Server=sqlserver;Database=instaconnect.users;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      MessageBrokerOptions__Host: amqp://rabbitmq:5672
+      MessageBrokerOptions__Username: guest
+      MessageBrokerOptions__Password: guest
+      AdminOptions__Email: admin@instaconnect.com
+      AdminOptions__Password: SecureAdminPass123!
+      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
+      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
     ports:
-      - "5200:5200"
-      - "5201:5201"
+      - "5200:80"
     depends_on:
-      - postgres
+      - sqlserver
       - rabbitmq
     networks:
       - instaconnect
@@ -74,15 +75,17 @@ services:
       context: .
       dockerfile: src/Services/Posts/InstaConnect.Posts.Web/Dockerfile
     environment:
-      - ConnectionStrings__DefaultConnection=Server=postgres:5432;User Id=postgres;Password=postgrespw;Database=instaconnect.users
-      - MessageBrokerOptions__Host=amqp://rabbitmq:5672
-      - MessageBrokerOptions__Username=guest
-      - MessageBrokerOptions__Password=guest
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+      ConnectionStrings__DefaultConnection: Server=sqlserver;Database=instaconnect.posts;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      MessageBrokerOptions__Host: amqp://rabbitmq:5672
+      MessageBrokerOptions__Username: guest
+      MessageBrokerOptions__Password: guest
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
     ports:
-      - "5300:5300"
-      - "5301:5301"
+      - "5300:80"
+    depends_on:
+      - sqlserver
+      - rabbitmq
     networks:
       - instaconnect
 
@@ -92,15 +95,17 @@ services:
       context: .
       dockerfile: src/Services/Messages/InstaConnect.Messages.Web/Dockerfile
     environment:
-      - ConnectionStrings__DefaultConnection=Server=postgres:5432;User Id=postgres;Password=postgrespw;Database=instaconnect.users
-      - MessageBrokerOptions__Host=amqp://rabbitmq:5672
-      - MessageBrokerOptions__Username=guest
-      - MessageBrokerOptions__Password=guest
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+      ConnectionStrings__DefaultConnection: Server=sqlserver;Database=instaconnect.messages;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      MessageBrokerOptions__Host: amqp://rabbitmq:5672
+      MessageBrokerOptions__Username: guest
+      MessageBrokerOptions__Password: guest
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
     ports:
-      - "5400:5400"
-      - "5401:5401"
+      - "5400:80"
+    depends_on:
+      - sqlserver
+      - rabbitmq
     networks:
       - instaconnect
 
@@ -110,20 +115,16 @@ services:
       context: .
       dockerfile: src/Services/Follows/InstaConnect.Follows.Web/Dockerfile
     environment:
-      - ConnectionStrings__DefaultConnection=Server=postgres:5432;User Id=postgres;Password=postgrespw;Database=instaconnect.users
-      - MessageBrokerOptions__Host=amqp://rabbitmq:5672
-      - MessageBrokerOptions__Username=guest
-      - MessageBrokerOptions__Password=guest
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+      ConnectionStrings__DefaultConnection: Server=sqlserver;Database=instaconnect.follows;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      MessageBrokerOptions__Host: amqp://rabbitmq:5672
+      MessageBrokerOptions__Username: guest
+      MessageBrokerOptions__Password: guest
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
     ports:
-      - "5500:5500"
-      - "5501:5501"
+      - "5500:80"
+    depends_on:
+      - sqlserver
+      - rabbitmq
     networks:
       - instaconnect
-
-networks:
-  instaconnect:
-    ipam:
-      config:
-        - subnet: 10.5.0.0/16

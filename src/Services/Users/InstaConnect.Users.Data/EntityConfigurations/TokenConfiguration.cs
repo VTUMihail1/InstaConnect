@@ -41,17 +41,14 @@ public class TokenConfiguration : IEntityTypeConfiguration<Token>
         builder
             .Property(t => t.UserId)
             .HasColumnName("user_id")
-            .HasMaxLength(255)
             .IsRequired();
 
         builder
             .Property(t => t.CreatedAt)
-            .HasColumnType("timestamp(6)")
             .HasColumnName("created_at");
 
         builder
             .Property(t => t.UpdatedAt)
-            .HasColumnType("timestamp(6)")
             .HasColumnName("updated_at");
 
         builder

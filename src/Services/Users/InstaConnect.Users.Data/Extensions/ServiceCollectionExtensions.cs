@@ -30,8 +30,8 @@ public static class ServiceCollectionExtensions
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        serviceCollection.AddDbContext<UsersContext>(
-            options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+        serviceCollection
+            .AddDbContext<UsersContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         serviceCollection
             .AddScoped<ITokenRepository, TokenRepository>()

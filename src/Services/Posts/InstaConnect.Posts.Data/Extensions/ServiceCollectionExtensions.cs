@@ -10,8 +10,8 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        serviceCollection.AddDbContext<PostsContext>(
-            options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+        serviceCollection
+            .AddDbContext<PostsContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         serviceCollection
             .AddScoped<IPostRepository, PostRepository>()
