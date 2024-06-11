@@ -3,8 +3,8 @@ using System;
 using InstaConnect.Posts.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -17,42 +17,42 @@ namespace InstaConnect.Posts.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.15")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("ProductVersion", "7.0.20")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.Post", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("id");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(5000)
-                        .HasColumnType("character varying(5000)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("content");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp(6)")
+                        .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("title");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp(6)")
+                        .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id");
@@ -63,38 +63,38 @@ namespace InstaConnect.Posts.Data.Migrations
             modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.PostComment", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("id");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("content");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp(6)")
+                        .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
                     b.Property<string>("PostCommentId")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("comment_id");
 
                     b.Property<string>("PostId")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("post_id");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp(6)")
+                        .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id");
@@ -109,27 +109,27 @@ namespace InstaConnect.Posts.Data.Migrations
             modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.PostCommentLike", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp(6)")
+                        .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
                     b.Property<string>("PostCommentId")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("comment_id");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp(6)")
+                        .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id");
@@ -142,27 +142,27 @@ namespace InstaConnect.Posts.Data.Migrations
             modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.PostLike", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp(6)")
+                        .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
                     b.Property<string>("PostId")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("post_id");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp(6)")
+                        .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id");

@@ -3,8 +3,8 @@ using System;
 using InstaConnect.Messages.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -18,40 +18,40 @@ namespace InstaConnect.Messages.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.20")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("InstaConnect.Messages.Data.Models.Entities.Message", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("id");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)")
+                        .HasColumnType("nvarchar(2000)")
                         .HasColumnName("content");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp(6)")
+                        .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
                     b.Property<string>("ReceiverId")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("receiver_id");
 
                     b.Property<string>("SenderId")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("sender_id");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp(6)")
+                        .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");

@@ -85,12 +85,10 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder
             .Property(t => t.CreatedAt)
-            .HasColumnType("timestamp(6)")
             .HasColumnName("created_at");
 
         builder
             .Property(t => t.UpdatedAt)
-            .HasColumnType("timestamp(6)")
             .HasColumnName("updated_at");
 
         builder.HasMany(u => u.Tokens)

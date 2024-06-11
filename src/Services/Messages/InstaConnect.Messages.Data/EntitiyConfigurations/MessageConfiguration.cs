@@ -40,12 +40,10 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
 
         builder
             .Property(t => t.CreatedAt)
-            .HasColumnType("timestamp(6)")
             .HasColumnName("created_at");
 
         builder
             .Property(t => t.UpdatedAt)
-            .HasColumnType("timestamp(6)")
             .HasColumnName("updated_at");
     }
 }
