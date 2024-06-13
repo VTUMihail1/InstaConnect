@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Messaging;
+using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 
 namespace InstaConnect.Users.Business.Commands.Account.EditAccount;
@@ -9,19 +11,26 @@ namespace InstaConnect.Users.Business.Commands.Account.EditAccount;
 public class EditAccountCommandHandler : ICommandHandler<EditAccountCommand>
 {
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public EditAccountCommandHandler(
         IMapper mapper,
-        IUserRepository userRepository)
+        IUnitOfWork unitOfWork,
+        IUserRepository userRepository,
+        ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
         _userRepository = userRepository;
+        _currentUserContext = currentUserContext;
     }
 
     public async Task Handle(EditAccountCommand request, CancellationToken cancellationToken)
     {
-        var existingUserById = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
+        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+        var existingUserById = await _userRepository.GetByIdAsync(currentUserDetails.Id, cancellationToken);
 
         if (existingUserById == null)
         {
@@ -36,6 +45,8 @@ public class EditAccountCommandHandler : ICommandHandler<EditAccountCommand>
         }
 
         _mapper.Map(request, existingUserById);
-        await _userRepository.UpdateAsync(existingUserById, cancellationToken);
+        _userRepository.Update(existingUserById);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

@@ -11,7 +11,7 @@ builder.Services
 
 var app = builder.Build();
 
-await app.SetUpDatabase();
+await app.SetUpDatabaseAsync();
 
 if (app.Environment.IsDevelopment())
 {

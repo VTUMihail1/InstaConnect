@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Messaging;
+using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Users.Business.Abstractions;
-using InstaConnect.Users.Data.Abstraction.Helpers;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 using InstaConnect.Users.Data.Models.Entities;
 
@@ -11,20 +11,20 @@ namespace InstaConnect.Users.Business.Commands.Account.RegisterAccount;
 public class RegisterAccountCommandHandler : ICommandHandler<RegisterAccountCommand>
 {
     private readonly IMapper _mapper;
-    private readonly IAccountManager _accountManager;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
-    private readonly ITokenService _tokenService;
+    private readonly IPasswordHasher _passwordHasher;
 
     public RegisterAccountCommandHandler(
         IMapper mapper,
+        IUnitOfWork unitOfWork,
         IUserRepository userRepository,
-        IAccountManager accountManager,
-        ITokenService tokenService)
+        IPasswordHasher passwordHasher)
     {
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
         _userRepository = userRepository;
-        _accountManager = accountManager;
-        _tokenService = tokenService;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task Handle(RegisterAccountCommand request, CancellationToken cancellationToken)
@@ -44,8 +44,10 @@ public class RegisterAccountCommandHandler : ICommandHandler<RegisterAccountComm
         }
 
         var user = _mapper.Map<User>(request);
-        await _accountManager.RegisterUserAsync(user, request.Password);
+        var passwordHash = _passwordHasher.Hash(request.Password);
+        _mapper.Map(passwordHash, user);
+        _userRepository.Add(user);
 
-        var tokenViewDTO = await _tokenService.GenerateAccessTokenAsync(user.Id, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

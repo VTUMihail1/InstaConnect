@@ -17,15 +17,15 @@ public class UserClaimConfiguration : IEntityTypeConfiguration<UserClaim>
 
         builder
             .Property(uc => uc.UserId)
-            .HasColumnName("role_id");
+            .HasColumnName("user_id");
 
         builder
-            .Property(uc => uc.ClaimType)
-            .HasColumnName("claim_type");
+            .Property(uc => uc.Claim)
+            .HasColumnName("claim");
 
         builder
-            .Property(uc => uc.ClaimValue)
-            .HasColumnName("claim_value");
+            .Property(uc => uc.Value)
+            .HasColumnName("value");
 
         builder
             .Property(t => t.CreatedAt)
@@ -34,5 +34,12 @@ public class UserClaimConfiguration : IEntityTypeConfiguration<UserClaim>
         builder
             .Property(t => t.UpdatedAt)
             .HasColumnName("updated_at");
+
+        builder
+            .HasOne(t => t.User)
+            .WithMany(u => u.UserClaims)
+            .HasForeignKey(t => t.UserId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

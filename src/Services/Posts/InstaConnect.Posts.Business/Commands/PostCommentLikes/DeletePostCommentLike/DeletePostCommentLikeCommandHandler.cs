@@ -6,19 +6,23 @@ using InstaConnect.Shared.Business.Exceptions.PostLike;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
+using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommentLike;
 
 internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostCommentLikeCommand>
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserContext _currentUserContext;
     private readonly IPostCommentLikeRepository _postCommentLikeRepository;
 
     public DeletePostCommentLikeCommandHandler(
+        IUnitOfWork unitOfWork,
         ICurrentUserContext currentUserContext, 
         IPostCommentLikeRepository postCommentLikeRepository)
     {
+        _unitOfWork = unitOfWork;
         _currentUserContext = currentUserContext;
         _postCommentLikeRepository = postCommentLikeRepository;
     }
@@ -39,6 +43,8 @@ internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostC
             throw new AccountForbiddenException();
         }
 
-        await _postCommentLikeRepository.DeleteAsync(existingPostCommentLike, cancellationToken);
+        _postCommentLikeRepository.Delete(existingPostCommentLike);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

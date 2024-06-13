@@ -4,5 +4,4 @@ namespace InstaConnect.Users.Business.Commands.Account.DeleteAccount;
 
 public class DeleteAccountCommand : ICommand
 {
-    public string Id { get; set; }
 }

@@ -11,4 +11,8 @@ public interface IUserRepository : IBaseRepository<User>
     Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken);
 
     Task<User?> GetByNameAsync(string name, CancellationToken cancellationToken);
+
+    Task ConfirmEmailAsync(string id, CancellationToken cancellationToken);
+
+    Task ResetPasswordAsync(string id, string passwordHash, CancellationToken cancellationToken);
 }

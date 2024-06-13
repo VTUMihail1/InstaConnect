@@ -6,6 +6,7 @@ using InstaConnect.Shared.Business.Exceptions.Message;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
+using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
 namespace InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
@@ -13,15 +14,18 @@ namespace InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
 internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageCommand>
 {
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMessageRepository _messageRepository;
     private readonly ICurrentUserContext _currentUserContext;
 
     public UpdateMessageCommandHandler(
         IMapper mapper,
+        IUnitOfWork unitOfWork,
         IMessageRepository messageRepository,
         ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
         _messageRepository = messageRepository;
         _currentUserContext = currentUserContext;
     }
@@ -43,6 +47,8 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
         }
 
         _mapper.Map(request, existingMessage);
-        await _messageRepository.UpdateAsync(existingMessage, cancellationToken);
+        _messageRepository.Update(existingMessage);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

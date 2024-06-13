@@ -6,6 +6,8 @@ using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
+using InstaConnect.Shared.Data;
+using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
@@ -13,15 +15,18 @@ namespace InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
 public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand>
 {
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IPostRepository _postRepository;
     private readonly ICurrentUserContext _currentUserContext;
 
     public UpdatePostCommandHandler(
         IMapper mapper,
+        IUnitOfWork unitOfWork,
         IPostRepository postRepository,
         ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
         _postRepository = postRepository;
         _currentUserContext = currentUserContext;
     }
@@ -43,6 +48,8 @@ public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand>
         }
 
         _mapper.Map(request, existingPost);
-        await _postRepository.UpdateAsync(existingPost, cancellationToken);
+        _postRepository.Update(existingPost);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

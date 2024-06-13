@@ -18,7 +18,7 @@ public class CurrentUserContext : ICurrentUserContext
     {
         return new CurrentUserDetails
         {
-            Id = _httpContextAccessor?.HttpContext.User.GetUserId()
+            Id = _httpContextAccessor.HttpContext.User.GetUserId()
         };
     }
 }

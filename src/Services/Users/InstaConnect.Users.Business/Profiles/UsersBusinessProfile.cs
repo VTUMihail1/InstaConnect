@@ -6,6 +6,7 @@ using InstaConnect.Users.Business.Commands.Account.RegisterAccount;
 using InstaConnect.Users.Business.Models;
 using InstaConnect.Users.Business.Queries.User.GetAllFilteredUsers;
 using InstaConnect.Users.Business.Queries.User.GetAllUsers;
+using InstaConnect.Users.Data.Helpers;
 using InstaConnect.Users.Data.Models.Entities;
 using InstaConnect.Users.Data.Models.Filters;
 
@@ -30,11 +31,9 @@ public class UsersBusinessProfile : Profile
 
         CreateMap<EditAccountCommand, User>();
 
-        CreateMap<User, AccountViewDTO>();
+        CreateMap<Token, AccountViewDTO>();
 
-        CreateMap<Token, TokenViewDTO>();
-
-        CreateMap<TokenViewDTO, AccountViewDTO>();
+        CreateMap<PasswordHashResultDTO, User>();
 
         CreateMap<User, UserViewDTO>();
 

@@ -1,5 +1,7 @@
 ﻿using InstaConnect.Messages.Data.Abstractions.Repositories;
 using InstaConnect.Messages.Data.Repositories;
+using InstaConnect.Shared.Data.Abstract;
+using InstaConnect.Shared.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,7 @@ public static class ServiceCollectionExtensions
             .AddDbContext<MessagesContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         serviceCollection
+            .AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(sp.GetRequiredService<MessagesContext>()))
             .AddScoped<IMessageRepository, MessageRepository>();
 
         serviceCollection

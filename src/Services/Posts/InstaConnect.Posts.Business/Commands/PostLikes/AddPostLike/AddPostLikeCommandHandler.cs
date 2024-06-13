@@ -7,6 +7,7 @@ using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Users;
+using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
@@ -16,17 +17,20 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
     private const string POST_ALREADY_LIKED = "This user has already liked this post";
 
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IPostRepository _postRepository;
     private readonly IPostLikeRepository _postLikeRepository;
     private readonly ICurrentUserContext _currentUserContext;
 
     public AddPostLikeCommandHandler(
         IMapper mapper,
+        IUnitOfWork unitOfWork,
         IPostRepository postRepository,
         IPostLikeRepository postLikeRepository,
         ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
         _postRepository = postRepository;
         _postLikeRepository = postLikeRepository;
         _currentUserContext = currentUserContext;
@@ -52,6 +56,8 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
 
         var postLike = _mapper.Map<PostLike>(request);
         _mapper.Map(currentUserDetails, postLike);
-        await _postLikeRepository.AddAsync(postLike, cancellationToken);
+        _postLikeRepository.Add(postLike);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

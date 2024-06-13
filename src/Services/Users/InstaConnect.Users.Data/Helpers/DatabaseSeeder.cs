@@ -1,6 +1,9 @@
-﻿using InstaConnect.Shared.Data.Utilities;
+﻿using InstaConnect.Shared.Data.Abstract;
+using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Data.Abstraction.Helpers;
+using InstaConnect.Users.Data.Abstraction.Repositories;
 using InstaConnect.Users.Data.Models.Entities;
+using InstaConnect.Users.Data.Models.Enums;
 using InstaConnect.Users.Data.Models.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,53 +13,44 @@ namespace InstaConnect.Users.Data.Helpers;
 
 internal class DatabaseSeeder : IDatabaseSeeder
 {
-    private readonly UsersContext _usersContext;
-    private readonly RoleManager<Role> _roleManager;
-    private readonly IAccountManager _accountManager;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly AdminOptions _adminOptions;
+    private readonly IPasswordHasher _passwordHasher;
+    private readonly IUserRepository _userRepository;
+    private readonly IUserClaimRepository _userClaimRepository;
 
     public DatabaseSeeder(
-        UsersContext usersContext,
-        RoleManager<Role> roleManager,
-        IAccountManager accountManager,
-        IOptions<AdminOptions> options)
+        IUnitOfWork unitOfWork,
+        IOptions<AdminOptions> options,
+        IPasswordHasher passwordHasher,
+        IUserRepository userRepository,
+        IUserClaimRepository userClaimRepository)
     {
-        _usersContext = usersContext;
-        _roleManager = roleManager;
-        _accountManager = accountManager;
+        _unitOfWork = unitOfWork;
         _adminOptions = options.Value;
+        _passwordHasher = passwordHasher;
+        _userRepository = userRepository;
+        _userClaimRepository = userClaimRepository;
     }
 
-    public async Task SeedAsync()
+    public async Task SeedAsync(CancellationToken cancellationToken)
     {
-        await SeedRolesAsync();
-        await SeedAdminAsync();
+        await SeedAdminAsync(cancellationToken);
     }
 
-    public async Task ApplyPendingMigrationsAsync()
+    public async Task ApplyPendingMigrationsAsync(CancellationToken cancellationToken)
     {
-        var pendingMigrations = await _usersContext.Database.GetPendingMigrationsAsync();
+        var pendingMigrations = await _unitOfWork.Database.GetPendingMigrationsAsync(cancellationToken);
 
         if (pendingMigrations.Any())
         {
-            await _usersContext.Database.MigrateAsync();
+            await _unitOfWork.Database.MigrateAsync(cancellationToken);
         }
     }
 
-    private async Task SeedRolesAsync()
+    private async Task SeedAdminAsync(CancellationToken cancellationToken)
     {
-        if (await _usersContext.Roles.AnyAsync())
-        {
-            return;
-        }
-
-        await _roleManager.CreateAsync(new Role(Roles.User));
-        await _roleManager.CreateAsync(new Role(Roles.Admin));
-    }
-
-    private async Task SeedAdminAsync()
-    {
-        if (await _usersContext.Users.AnyAsync())
+        if (await _userRepository.AnyAsync(cancellationToken))
         {
             return;
         }
@@ -66,10 +60,21 @@ internal class DatabaseSeeder : IDatabaseSeeder
             FirstName = "Admin",
             LastName = "Admin",
             Email = _adminOptions.Email,
-            UserName = "InstaConnectAdmin"
+            UserName = "InstaConnectAdmin",
+            PasswordHash = _passwordHasher.Hash(_adminOptions.Password).PasswordHash,
         };
 
-        await _accountManager.RegisterAdminAsync(adminUser, _adminOptions.Password);
-        await _accountManager.ConfirmEmailAsync(adminUser);
+        var adminClaim = new UserClaim
+        {
+            UserId = adminUser.Id,
+            Claim = Claims.Admin,
+            Value = nameof(Claims.Admin)
+        };
+
+        _userRepository.Add(adminUser);
+        await _userRepository.ConfirmEmailAsync(adminUser.Id, cancellationToken);
+        _userClaimRepository.Add(adminClaim);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

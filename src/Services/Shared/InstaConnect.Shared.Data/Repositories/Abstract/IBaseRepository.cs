@@ -14,14 +14,14 @@ public interface IBaseRepository<TEntity> where TEntity : class, IBaseEntity
     /// </summary>
     /// <param name="entity">The entity to be added.</param>
     /// <returns>An asynchronous operation representing the addition of the entity to the repository.</returns>
-    Task AddAsync(TEntity entity, CancellationToken cancellationToken);
+    void Add(TEntity entity);
 
     /// <summary>
     /// Asynchronously deletes an entity from the repository.
     /// </summary>
     /// <param name="entity">The entity to be deleted.</param>
     /// <returns>An asynchronous operation representing the deletion of the entity from the repository.</returns>
-    Task DeleteAsync(TEntity entity, CancellationToken cancellationToken);
+    void Delete(TEntity entity);
 
     /// <summary>
     /// Asynchronously retrieves an entity by its unique identifier.
@@ -30,12 +30,14 @@ public interface IBaseRepository<TEntity> where TEntity : class, IBaseEntity
     /// <returns>An asynchronous operation representing the retrieval of the entity by its unique identifier.</returns>
     Task<TEntity?> GetByIdAsync(string id, CancellationToken cancellationToken);
     Task<ICollection<TEntity>> GetAllAsync(CollectionQuery collectionQuery, CancellationToken cancellationToken);
-    Task UpdateAsync(TEntity entity, CancellationToken cancellationToken);
+    void Update(TEntity entity);
     Task<ICollection<TEntity>> GetAllFilteredAsync(FilteredCollectionQuery<TEntity> filteredCollectionQuery, CancellationToken cancellationToken);
 
-    Task AddRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken);
+    void AddRange(ICollection<TEntity> entities);
 
-    Task UpdateRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken);
+    void UpdateRange(ICollection<TEntity> entities);
 
-    Task DeleteRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken);
+    void DeleteRange(ICollection<TEntity> entities);
+
+    Task<bool> AnyAsync(CancellationToken cancellationToken);
 }

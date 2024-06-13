@@ -7,6 +7,7 @@ using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.Models.Users;
+using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment;
@@ -14,15 +15,18 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment;
 internal class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommand>
 {
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserContext _currentUserContext;
     private readonly IPostCommentRepository _postCommentRepository;
 
     public UpdatePostCommentCommandHandler(
         IMapper mapper,
+        IUnitOfWork unitOfWork,
         ICurrentUserContext currentUserContext,
         IPostCommentRepository postCommentRepository)
     {
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
         _currentUserContext = currentUserContext;
         _postCommentRepository = postCommentRepository;
     }
@@ -44,6 +48,8 @@ internal class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostComme
         }
 
         _mapper.Map(request, existingPostComment);
-        await _postCommentRepository.UpdateAsync(existingPostComment, cancellationToken);
+        _postCommentRepository.Update(existingPostComment);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

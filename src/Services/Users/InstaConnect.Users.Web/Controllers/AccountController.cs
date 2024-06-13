@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
-using InstaConnect.Shared.Data.Utilities;
 using InstaConnect.Users.Business.Commands.Account.ConfirmAccountEmail;
 using InstaConnect.Users.Business.Commands.Account.DeleteAccount;
+using InstaConnect.Users.Business.Commands.Account.DeleteAccountById;
 using InstaConnect.Users.Business.Commands.Account.EditAccount;
 using InstaConnect.Users.Business.Commands.Account.LoginAccount;
-using InstaConnect.Users.Business.Commands.Account.LogoutAccount;
 using InstaConnect.Users.Business.Commands.Account.RegisterAccount;
 using InstaConnect.Users.Business.Commands.Account.ResendAccountEmailConfirmation;
 using InstaConnect.Users.Business.Commands.Account.ResetAccountPassword;
 using InstaConnect.Users.Web.Extensions;
-using InstaConnect.Users.Web.Filters;
 using InstaConnect.Users.Web.Models.Requests.Account;
 using InstaConnect.Users.Web.Models.Response.Account;
 using MediatR;
@@ -38,11 +36,10 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ConfirmEmailAsync(
-        [FromRoute] ConfirmAccountEmailTokenRequestModel request,
+        ConfirmAccountEmailTokenRequestModel request,
         CancellationToken cancellationToken)
     {
         var confirmAccountEmailCommand = _mapper.Map<ConfirmAccountEmailCommand>(request);
-
         await _sender.Send(confirmAccountEmailCommand, cancellationToken);
 
         return NoContent();
@@ -53,11 +50,10 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ResendConfirmEmailAsync(
-        [FromRoute] ResendAccountConfirmEmailRequestModel request,
+        ResendAccountConfirmEmailRequestModel request,
         CancellationToken cancellationToken)
     {
         var resendAccountEmailConfirmationCommand = _mapper.Map<ResendAccountEmailConfirmationCommand>(request);
-
         await _sender.Send(resendAccountEmailConfirmationCommand, cancellationToken);
 
         return NoContent();
@@ -68,11 +64,10 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> SendResetPasswordAsync(
-        [FromRoute] SendAccountPasswordResetRequestModel request,
+        SendAccountPasswordResetRequestModel request,
         CancellationToken cancellationToken)
     {
         var sendAccountPasswordResetRequestModel = _mapper.Map<SendAccountPasswordResetRequestModel>(request);
-
         await _sender.Send(sendAccountPasswordResetRequestModel, cancellationToken);
 
         return NoContent();
@@ -87,7 +82,6 @@ public class AccountController : ControllerBase
         CancellationToken cancellationToken)
     {
         var loginAccountCommand = _mapper.Map<LoginAccountCommand>(request);
-
         var accountViewDTO = await _sender.Send(loginAccountCommand, cancellationToken);
 
         var response = _mapper.Map<AccountResponseModel>(accountViewDTO);
@@ -104,24 +98,7 @@ public class AccountController : ControllerBase
         CancellationToken cancellationToken)
     {
         var registerAccountCommand = _mapper.Map<RegisterAccountCommand>(request);
-
         await _sender.Send(registerAccountCommand, cancellationToken);
-
-        return NoContent();
-    }
-
-    // DELETE: api/accounts/logout
-    [HttpDelete("logout")]
-    [Authorize]
-    [AccessToken]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> LogoutAsync(CancellationToken cancellationToken)
-    {
-        var request = HttpContext!.GetTokenRequestModel();
-        var logoutaccountCommand = _mapper.Map<LogoutAccountCommand>(request);
-
-        await _sender.Send(logoutaccountCommand, cancellationToken);
 
         return NoContent();
     }
@@ -135,7 +112,6 @@ public class AccountController : ControllerBase
         CancellationToken cancellationToken)
     {
         var resetAccountPasswordCommand = _mapper.Map<ResetAccountPasswordCommand>(request);
-
         await _sender.Send(resetAccountPasswordCommand, cancellationToken);
 
         return NoContent();
@@ -143,7 +119,6 @@ public class AccountController : ControllerBase
 
     // PUT: api/accounts
     [Authorize]
-    [AccessToken]
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -152,10 +127,7 @@ public class AccountController : ControllerBase
         [FromBody] EditAccountRequestModel request,
         CancellationToken cancellationToken)
     {
-        var userRequestModel = User.GetUserRequestModel();
         var editAccountCommand = _mapper.Map<EditAccountCommand>(request);
-        _mapper.Map(userRequestModel, editAccountCommand);
-
         await _sender.Send(editAccountCommand, cancellationToken);
 
         return NoContent();
@@ -163,15 +135,14 @@ public class AccountController : ControllerBase
 
     // DELETE: api/accounts
     [Authorize]
-    [AccessToken]
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteByCurrentIdAsync(CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteAsync(
+        DeleteAccountRequestModel request,
+        CancellationToken cancellationToken)
     {
-        var userRequestModel = User.GetUserRequestModel();
-        var deleteAccountCommand = _mapper.Map<DeleteAccountCommand>(userRequestModel);
-
+        var deleteAccountCommand = _mapper.Map<DeleteAccountCommand>(request);
         await _sender.Send(deleteAccountCommand, cancellationToken);
 
         return NoContent();
@@ -179,18 +150,15 @@ public class AccountController : ControllerBase
 
     // DELETE: api/accounts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [Authorize]
-    [AccessToken]
-    [RequiredRole(Roles.Admin)]
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteByIdAsync(
-        [FromRoute] DeleteAccountRequestModel request,
+        [FromRoute] DeleteAccountByIdRequestModel request,
         CancellationToken cancellationToken)
     {
-        var deleteAccountCommand = _mapper.Map<DeleteAccountCommand>(request);
-
-        await _sender.Send(deleteAccountCommand, cancellationToken);
+        var deleteAccountByIdCommand = _mapper.Map<DeleteAccountByIdCommand>(request);
+        await _sender.Send(deleteAccountByIdCommand, cancellationToken);
 
         return NoContent();
     }
