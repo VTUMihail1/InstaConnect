@@ -1,4 +1,8 @@
-﻿using InstaConnect.Users.Data.Abstraction.Factories;
+﻿using InstaConnect.Shared.Data.Abstract;
+using InstaConnect.Shared.Data;
+using InstaConnect.Users.Business.Abstractions;
+using InstaConnect.Users.Business.Helpers;
+using InstaConnect.Users.Data.Abstraction.Factories;
 using InstaConnect.Users.Data.Abstraction.Helpers;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 using InstaConnect.Users.Data.Factories;
@@ -34,21 +38,18 @@ public static class ServiceCollectionExtensions
             .AddDbContext<UsersContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         serviceCollection
+            .AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(sp.GetRequiredService<UsersContext>()))
             .AddScoped<ITokenRepository, TokenRepository>()
             .AddScoped<ITokenFactory, TokenFactory>()
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<ITokenGenerator, TokenGenerator>()
-            .AddScoped<IAccountManager, AccountManager>()
+            .AddScoped<IUserClaimRepository, UserClaimRepository>()
+            .AddScoped<IPasswordHasher, PasswordHasher>()
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>();
 
         serviceCollection
             .AddHealthChecks()
             .AddDbContextCheck<UsersContext>();
-
-        serviceCollection
-            .AddIdentity<User, Role>()
-            .AddEntityFrameworkStores<UsersContext>()
-            .AddDefaultTokenProviders();
 
 
         return serviceCollection;

@@ -1,18 +1,17 @@
 ﻿using InstaConnect.Shared.Data.Models.Base;
+using InstaConnect.Users.Data.Models.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace InstaConnect.Users.Data.Models.Entities;
 
-public class UserClaim : IdentityUserClaim<string>, IBaseEntity
+public class UserClaim : BaseEntity
 {
-    public UserClaim() : base()
-    {
-        Id = Guid.NewGuid().ToString();
-    }
 
-    public string Id { get; set; }
+    public Claims Claim { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public string Value { get; set; }
 
-    public DateTime UpdatedAt { get; set; }
+    public string UserId { get; set; }
+
+    public User User { get; set; }
 }

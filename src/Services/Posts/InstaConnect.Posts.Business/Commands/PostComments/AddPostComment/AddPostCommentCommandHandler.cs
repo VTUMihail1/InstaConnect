@@ -7,6 +7,7 @@ using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Users;
+using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
@@ -14,17 +15,20 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
 internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentCommand>
 {
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IPostRepository _postRepository;
     private readonly ICurrentUserContext _currentUserContext;
     private readonly IPostCommentRepository _postCommentRepository;
 
     public AddPostCommentCommandHandler(
         IMapper mapper,
+        IUnitOfWork unitOfWork,
         IPostRepository postRepository,
         ICurrentUserContext currentUserContext,
         IPostCommentRepository postCommentRepository)
     {
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
         _postRepository = postRepository;
         _currentUserContext = currentUserContext;
         _postCommentRepository = postCommentRepository;
@@ -49,6 +53,8 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
         var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
         var postComment = _mapper.Map<PostComment>(request);
         _mapper.Map(currentUserDetails, postComment);
-        await _postCommentRepository.AddAsync(postComment, cancellationToken);
+        _postCommentRepository.Add(postComment);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

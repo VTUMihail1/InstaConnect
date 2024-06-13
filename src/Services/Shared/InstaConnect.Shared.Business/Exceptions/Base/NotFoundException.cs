@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Business.Enum;
+﻿using InstaConnect.Shared.Business.Models.Enum;
 
 namespace InstaConnect.Shared.Business.Exceptions.Base;
 

@@ -4,11 +4,11 @@ namespace InstaConnect.Shared.Data.Models.Filters;
 
 public class CollectionQuery
 {
-    public SortOrder SortOrder { get; set; }
+    public SortOrder SortOrder { get; set; } = SortOrder.ASC;
 
-    public string SortPropertyName { get; set; }
+    public string SortPropertyName { get; set; } = "CreatedAt";
 
-    public int Offset { get; set; }
+    public int Offset { get; set; } = 0;
 
-    public int Limit { get; set; }
+    public int Limit { get; set; } = int.MaxValue;
 }

@@ -1,9 +1,7 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.Models.Options;
-using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Business.Consumers;
-using InstaConnect.Users.Business.Services;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +25,6 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddHttpContextAccessor();
 
         serviceCollection
-            .AddScoped<ITokenService, TokenService>()
             .AddScoped<ICurrentUserContext, CurrentUserContext>();
 
         serviceCollection.AddAutoMapper(currentAssembly);

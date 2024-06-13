@@ -50,40 +50,43 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
         return entity;
     }
 
-    public virtual async Task AddAsync(TEntity entity, CancellationToken cancellationToken)
+    public virtual Task<bool> AnyAsync(CancellationToken cancellationToken)
+    {
+        var any = _baseDbContext
+            .Set<TEntity>()
+            .AnyAsync(cancellationToken);
+
+        return any;
+    }
+
+    public virtual void Add(TEntity entity)
     {
         _baseDbContext.Set<TEntity>().Add(entity);
-        await _baseDbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public virtual async Task AddRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken)
+    public virtual void AddRange(ICollection<TEntity> entities)
     {
         _baseDbContext.Set<TEntity>().AddRange(entities);
-        await _baseDbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public virtual async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
+    public virtual void Update(TEntity entity)
     {
         _baseDbContext.Set<TEntity>().Update(entity);
-        await _baseDbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public virtual async Task UpdateRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken)
+    public virtual void UpdateRange(ICollection<TEntity> entities)
     {
         _baseDbContext.Set<TEntity>().UpdateRange(entities);
-        await _baseDbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public virtual async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
+    public virtual void Delete(TEntity entity)
     {
         _baseDbContext.Set<TEntity>().Remove(entity);
-        await _baseDbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public virtual async Task DeleteRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken)
+    public virtual void DeleteRange(ICollection<TEntity> entities)
     {
         _baseDbContext.Set<TEntity>().RemoveRange(entities);
-        await _baseDbContext.SaveChangesAsync(cancellationToken);
     }
 
     protected virtual IQueryable<TEntity> IncludeProperties(IQueryable<TEntity> queryable)

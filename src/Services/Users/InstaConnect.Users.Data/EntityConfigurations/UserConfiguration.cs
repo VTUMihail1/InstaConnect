@@ -12,6 +12,10 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .ToTable("user");
 
         builder
+            .Property(p => p.Id)
+            .HasColumnName("id");
+
+        builder
             .Property(p => p.FirstName)
             .HasColumnName("first_name")
             .HasMaxLength(255)
@@ -24,60 +28,16 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired();
 
         builder
-            .Property(p => p.Id)
-            .HasColumnName("id");
-
-        builder
-            .Property(p => p.AccessFailedCount)
-            .HasColumnName("access_failed_count");
-
-        builder
-            .Property(p => p.ConcurrencyStamp)
-            .HasColumnName("concurrency_stamp");
-
-        builder
             .Property(p => p.Email)
             .HasColumnName("email");
 
         builder
-            .Property(p => p.EmailConfirmed)
-            .HasColumnName("email_is_confirmed");
-
-        builder
-            .Property(p => p.LockoutEnd)
-            .HasColumnName("lockout_end");
-
-        builder
-            .Property(p => p.LockoutEnabled)
-            .HasColumnName("lockout_is_enabled");
-
-        builder
-            .Property(p => p.NormalizedEmail)
-            .HasColumnName("normalized_email");
-
-        builder
-            .Property(p => p.NormalizedUserName)
-            .HasColumnName("normalized_username");
+            .Property(p => p.IsEmailConfirmed)
+            .HasColumnName("is_email_confirmed");
 
         builder
             .Property(p => p.PasswordHash)
             .HasColumnName("password_hash");
-
-        builder
-            .Property(p => p.PhoneNumber)
-            .HasColumnName("phone_number");
-
-        builder
-            .Property(p => p.PhoneNumberConfirmed)
-            .HasColumnName("phone_number_is_confirmed");
-
-        builder
-            .Property(p => p.SecurityStamp)
-            .HasColumnName("security_stamp");
-
-        builder
-            .Property(p => p.TwoFactorEnabled)
-            .HasColumnName("two_factor_is_enabled");
 
         builder
             .Property(p => p.UserName)
@@ -90,6 +50,12 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder
             .Property(t => t.UpdatedAt)
             .HasColumnName("updated_at");
+
+        builder.HasMany(u => u.UserClaims)
+            .WithOne(t => t.User)
+            .HasForeignKey(t => t.UserId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(u => u.Tokens)
             .WithOne(t => t.User)

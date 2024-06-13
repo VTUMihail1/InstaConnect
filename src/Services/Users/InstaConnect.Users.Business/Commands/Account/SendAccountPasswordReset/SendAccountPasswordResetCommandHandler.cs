@@ -1,21 +1,29 @@
 ﻿using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Messaging;
+using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Users.Business.Abstractions;
+using InstaConnect.Users.Data.Abstraction.Helpers;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 
 namespace InstaConnect.Users.Business.Commands.Account.SendAccountPasswordReset;
 
 public class SendAccountPasswordResetCommandHandler : ICommandHandler<SendAccountPasswordResetCommand>
 {
-    private readonly ITokenService _tokenService;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
+    private readonly ITokenGenerator _tokenGenerator;
+    private readonly ITokenRepository _tokenRepository;
 
     public SendAccountPasswordResetCommandHandler(
-        ITokenService tokenService,
-        IUserRepository userRepository)
+        IUnitOfWork unitOfWork,
+        IUserRepository userRepository,
+        ITokenGenerator tokenGenerator,
+        ITokenRepository tokenRepository)
     {
-        _tokenService = tokenService;
+        _unitOfWork = unitOfWork;
         _userRepository = userRepository;
+        _tokenGenerator = tokenGenerator;
+        _tokenRepository = tokenRepository;
     }
 
     public async Task Handle(SendAccountPasswordResetCommand request, CancellationToken cancellationToken)
@@ -27,6 +35,9 @@ public class SendAccountPasswordResetCommandHandler : ICommandHandler<SendAccoun
             throw new UserNotFoundException();
         }
 
-        var tokenResult = await _tokenService.GeneratePasswordResetTokenAsync(existingUser.Id, cancellationToken);
+        var token = _tokenGenerator.GeneratePasswordResetToken(existingUser.Id);
+        _tokenRepository.Add(token);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

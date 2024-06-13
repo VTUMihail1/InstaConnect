@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Messaging;
+using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Business.Models;
 using InstaConnect.Users.Data.Abstraction.Helpers;
@@ -11,20 +12,26 @@ namespace InstaConnect.Users.Business.Commands.Account.LoginAccount;
 public class LoginAccountCommandHandler : ICommandHandler<LoginAccountCommand, AccountViewDTO>
 {
     private readonly IMapper _mapper;
-    private readonly IAccountManager _accountManager;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly ITokenGenerator _tokenGenerator;
     private readonly IUserRepository _userRepository;
-    private readonly ITokenService _tokenService;
+    private readonly IPasswordHasher _passwordHasher;
+    private readonly ITokenRepository _tokenRepository;
 
     public LoginAccountCommandHandler(
         IMapper mapper,
-        IAccountManager accountManager,
+        IUnitOfWork unitOfWork,
+        ITokenGenerator tokenGenerator,
         IUserRepository userRepository,
-        ITokenService tokenService)
+        IPasswordHasher passwordHasher,
+        ITokenRepository tokenRepository)
     {
         _mapper = mapper;
-        _accountManager = accountManager;
+        _unitOfWork = unitOfWork;
+        _tokenGenerator = tokenGenerator;
         _userRepository = userRepository;
-        _tokenService = tokenService;
+        _passwordHasher = passwordHasher;
+        _tokenRepository = tokenRepository;
     }
 
     public async Task<AccountViewDTO> Handle(LoginAccountCommand request, CancellationToken cancellationToken)
@@ -36,15 +43,19 @@ public class LoginAccountCommandHandler : ICommandHandler<LoginAccountCommand, A
             throw new AccountInvalidDetailsException();
         }
 
-        var validPassword = await _accountManager.CheckPasswordAsync(existingUser, request.Password);
+        var isValidPassword = _passwordHasher.Verify(request.Password, existingUser.PasswordHash);
 
-        if (!validPassword)
+        if (!isValidPassword)
         {
             throw new AccountInvalidDetailsException();
         }
 
-        var tokenViewDTO = await _tokenService.GenerateAccessTokenAsync(existingUser.Id, cancellationToken);
-        var accountViewDTO = _mapper.Map<AccountViewDTO>(tokenViewDTO);
+        var token = _tokenGenerator.GenerateAccessToken(existingUser.Id);
+        _tokenRepository.Add(token);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        var accountViewDTO = _mapper.Map<AccountViewDTO>(token);
 
         return accountViewDTO;
     }

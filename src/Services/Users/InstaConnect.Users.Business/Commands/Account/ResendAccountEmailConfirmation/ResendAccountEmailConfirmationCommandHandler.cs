@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Messaging;
+using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Data.Abstraction.Helpers;
 using InstaConnect.Users.Data.Abstraction.Repositories;
@@ -9,18 +10,21 @@ namespace InstaConnect.Users.Business.Commands.Account.ResendAccountEmailConfirm
 
 public class ResendAccountEmailConfirmationCommandHandler : ICommandHandler<ResendAccountEmailConfirmationCommand>
 {
-    private readonly ITokenService _tokenService;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
-    private readonly IAccountManager _accountManager;
+    private readonly ITokenGenerator _tokenGenerator;
+    private readonly ITokenRepository _tokenRepository;
 
     public ResendAccountEmailConfirmationCommandHandler(
-        ITokenService tokenService,
-        IUserRepository userRepository,
-        IAccountManager accountManager)
+        IUnitOfWork unitOfWork,
+        IUserRepository userRepository, 
+        ITokenGenerator tokenGenerator, 
+        ITokenRepository tokenRepository)
     {
-        _tokenService = tokenService;
+        _unitOfWork = unitOfWork;
         _userRepository = userRepository;
-        _accountManager = accountManager;
+        _tokenGenerator = tokenGenerator;
+        _tokenRepository = tokenRepository;
     }
 
     public async Task Handle(ResendAccountEmailConfirmationCommand request, CancellationToken cancellationToken)
@@ -32,13 +36,14 @@ public class ResendAccountEmailConfirmationCommandHandler : ICommandHandler<Rese
             throw new UserNotFoundException();
         }
 
-        var emailIsConfirmed = await _accountManager.IsEmailConfirmedAsync(existingUser);
-
-        if (emailIsConfirmed)
+        if (existingUser.IsEmailConfirmed)
         {
             throw new AccountEmailAlreadyConfirmedException();
         }
 
-        var tokenResult = await _tokenService.GenerateEmailConfirmationTokenAsync(existingUser.Id, cancellationToken);
+        var token = _tokenGenerator.GenerateEmailConfirmationToken(existingUser.Id);
+        _tokenRepository.Add(token);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

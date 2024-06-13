@@ -8,6 +8,7 @@ using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
+using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLike;
@@ -17,17 +18,20 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
     private const string POST_COMMENT_ALREADY_LIKED = "This user has already liked this comment";
 
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserContext _currentUserContext;
     private readonly IPostCommentRepository _postCommentRepository;
     private readonly IPostCommentLikeRepository _postCommentLikeRepository;
 
     public AddPostCommentLikeCommandHandler(
         IMapper mapper,
+        IUnitOfWork unitOfWork,
         ICurrentUserContext currentUserContext,
         IPostCommentRepository postCommentRepository,
         IPostCommentLikeRepository postCommentLikeRepository)
     {
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
         _currentUserContext = currentUserContext;
         _postCommentRepository = postCommentRepository;
         _postCommentLikeRepository = postCommentLikeRepository;
@@ -35,7 +39,7 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
 
     public async Task Handle(AddPostCommentLikeCommand request, CancellationToken cancellationToken)
     {
-        var existingPostComment = _postCommentRepository.GetByIdAsync(request.PostCommentId, cancellationToken);
+        var existingPostComment = await _postCommentRepository.GetByIdAsync(request.PostCommentId, cancellationToken);
 
         if (existingPostComment == null)
         {
@@ -44,7 +48,7 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
 
         var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
 
-        var existingPostLike = _postCommentLikeRepository.GetByUserIdAndPostCommentIdAsync(currentUserDetails.Id!, request.PostCommentId, cancellationToken);
+        var existingPostLike = await _postCommentLikeRepository.GetByUserIdAndPostCommentIdAsync(currentUserDetails.Id!, request.PostCommentId, cancellationToken);
 
         if (existingPostLike == null)
         {
@@ -53,6 +57,8 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
 
         var postCommentLike = _mapper.Map<PostCommentLike>(request);
         _mapper.Map(currentUserDetails, postCommentLike);
-        await _postCommentLikeRepository.AddAsync(postCommentLike, cancellationToken);
+        _postCommentLikeRepository.Add(postCommentLike);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

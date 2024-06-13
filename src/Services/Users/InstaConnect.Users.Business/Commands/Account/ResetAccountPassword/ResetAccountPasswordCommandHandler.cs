@@ -1,5 +1,7 @@
-﻿using InstaConnect.Shared.Business.Exceptions.User;
+﻿using InstaConnect.Shared.Business.Exceptions.Token;
+using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Messaging;
+using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Data.Abstraction.Helpers;
 using InstaConnect.Users.Data.Abstraction.Repositories;
@@ -8,18 +10,21 @@ namespace InstaConnect.Users.Business.Commands.Account.ResetAccountPassword;
 
 public class ResetAccountPasswordCommandHandler : ICommandHandler<ResetAccountPasswordCommand>
 {
-    private readonly ITokenService _tokenService;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IPasswordHasher _passwordHasher;
     private readonly IUserRepository _userRepository;
-    private readonly IAccountManager _accountManager;
+    private readonly ITokenRepository _tokenRepository;
 
     public ResetAccountPasswordCommandHandler(
-        ITokenService tokenService,
+        IUnitOfWork unitOfWork,
+        IPasswordHasher passwordHasher,
         IUserRepository userRepository,
-        IAccountManager accountManager)
+        ITokenRepository tokenRepository)
     {
-        _tokenService = tokenService;
+        _unitOfWork = unitOfWork;
+        _passwordHasher = passwordHasher;
         _userRepository = userRepository;
-        _accountManager = accountManager;
+        _tokenRepository = tokenRepository;
     }
 
     public async Task Handle(ResetAccountPasswordCommand request, CancellationToken cancellationToken)
@@ -31,7 +36,18 @@ public class ResetAccountPasswordCommandHandler : ICommandHandler<ResetAccountPa
             throw new UserNotFoundException();
         }
 
-        await _tokenService.DeleteAsync(request.Token, cancellationToken);
-        await _accountManager.ResetPasswordAsync(existingUser, request.Password);
+        var existingToken = await _tokenRepository.GetByValueAsync(request.Token, cancellationToken);
+
+        if (existingToken == null)
+        {
+            throw new TokenNotFoundException();
+        }
+
+        var passwordHashResultDTO = _passwordHasher.Hash(request.Password);
+        await _userRepository.ResetPasswordAsync(existingUser.Id, passwordHashResultDTO.PasswordHash, cancellationToken);
+        
+        _tokenRepository.Delete(existingToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

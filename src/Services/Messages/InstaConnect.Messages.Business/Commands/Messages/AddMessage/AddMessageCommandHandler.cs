@@ -9,6 +9,7 @@ using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Users;
+using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
 namespace InstaConnect.Messages.Business.Commands.Messages.AddMessage;
@@ -16,19 +17,22 @@ namespace InstaConnect.Messages.Business.Commands.Messages.AddMessage;
 internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
 {
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMessageSender _messageSender;
     private readonly IMessageRepository _messageRepository;
     private readonly ICurrentUserContext _currentUserContext;
     private readonly IRequestClient<GetUserByIdRequest> _getUserByIdRequestClient;
 
     public AddMessageCommandHandler(
-        IMapper mapper, 
+        IMapper mapper,
+        IUnitOfWork unitOfWork,
         IMessageSender messageSender, 
         IMessageRepository messageRepository,
         ICurrentUserContext currentUserContext,
         IRequestClient<GetUserByIdRequest> getUserByIdRequestClient)
     {
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
         _messageSender = messageSender;
         _messageRepository = messageRepository;
         _currentUserContext = currentUserContext;
@@ -49,9 +53,12 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
 
         var message = _mapper.Map<Message>(request);
         _mapper.Map(currentUserDetails, message);
-        await _messageRepository.AddAsync(message, cancellationToken);
+        _messageRepository.Add(message);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var sendMessageDTO = _mapper.Map<SendMessageDTO>(request);
         await _messageSender.SendMessageToUserAsync(sendMessageDTO);
+
     }
 }

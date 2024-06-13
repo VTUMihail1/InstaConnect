@@ -2,5 +2,5 @@
 
 public class CurrentUserDetails
 {
-    public string? Id { get; set; }
+    public string Id { get; set; }
 }

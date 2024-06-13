@@ -6,19 +6,23 @@ using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Business.Models.Requests;
 using InstaConnect.Shared.Business.Models.Responses;
+using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.Posts.DeletePost;
 
 internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IPostRepository _postRepository;
     private readonly ICurrentUserContext _currentUserContext;
 
     public DeletePostCommandHandler(
+        IUnitOfWork unitOfWork,
         IPostRepository postRepository,
         ICurrentUserContext currentUserContext)
     {
+        _unitOfWork = unitOfWork;
         _postRepository = postRepository;
         _currentUserContext = currentUserContext;
     }
@@ -39,6 +43,8 @@ internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
             throw new AccountForbiddenException();
         }
 
-        await _postRepository.DeleteAsync(existingPost, cancellationToken);
+        _postRepository.Delete(existingPost);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }
