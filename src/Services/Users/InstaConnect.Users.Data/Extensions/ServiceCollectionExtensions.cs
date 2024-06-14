@@ -33,7 +33,10 @@ public static class ServiceCollectionExtensions
             .ValidateOnStart();
 
         serviceCollection
-            .AddDbContext<UsersContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            .AddDbContext<UsersContext>(options =>
+            options.UseSqlServer(
+                configuration.GetConnectionString("DefaultConnection"),
+                options => options.EnableRetryOnFailure()));
 
         serviceCollection
             .AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(sp.GetRequiredService<UsersContext>()))
