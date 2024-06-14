@@ -13,7 +13,10 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
-            .AddDbContext<MessagesContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            .AddDbContext<MessagesContext>(options => 
+            options.UseSqlServer(
+                configuration.GetConnectionString("DefaultConnection"), 
+                options => options.EnableRetryOnFailure()));
 
         serviceCollection
             .AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(sp.GetRequiredService<MessagesContext>()))
