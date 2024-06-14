@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Business.Models;
-using InstaConnect.Messages.Data.Abstractions.Repositories;
+using InstaConnect.Messages.Data.Abstractions;
 using InstaConnect.Messages.Data.Models.Filters;
 using InstaConnect.Shared.Business.Messaging;
 

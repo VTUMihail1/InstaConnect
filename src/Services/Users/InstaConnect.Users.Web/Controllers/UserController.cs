@@ -2,11 +2,11 @@
 using InstaConnect.Shared.Web.Models.Filters;
 using InstaConnect.Users.Business.Queries.User.GetAllFilteredUsers;
 using InstaConnect.Users.Business.Queries.User.GetAllUsers;
-using InstaConnect.Users.Business.Queries.User.GetDetailedUserById;
 using InstaConnect.Users.Business.Queries.User.GetUser;
 using InstaConnect.Users.Business.Queries.User.GetUserById;
 using InstaConnect.Users.Business.Queries.User.GetUserByName;
 using InstaConnect.Users.Business.Queries.User.GetUserDetailed;
+using InstaConnect.Users.Business.Queries.User.GetUserDetailedById;
 using InstaConnect.Users.Web.Models.Requests.User;
 using InstaConnect.Users.Web.Models.Response.User;
 using MediatR;

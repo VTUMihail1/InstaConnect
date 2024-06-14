@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Business.Abstract.Helpers;
 using InstaConnect.Messages.Business.Models;
-using InstaConnect.Messages.Data.Abstractions.Repositories;
+using InstaConnect.Messages.Data.Abstractions;
 using InstaConnect.Messages.Data.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.User;

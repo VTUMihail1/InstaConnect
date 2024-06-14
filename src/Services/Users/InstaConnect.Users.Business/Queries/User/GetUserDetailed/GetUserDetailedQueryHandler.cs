@@ -5,7 +5,7 @@ using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Users.Business.Models;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 
-namespace InstaConnect.Users.Business.Queries.User.GetDetailedUserById;
+namespace InstaConnect.Users.Business.Queries.User.GetUserDetailed;
 
 public class GetUserDetailedQueryHandler : IQueryHandler<GetUserDetailedQuery, UserDetailedViewDTO>
 {

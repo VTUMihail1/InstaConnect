@@ -2,7 +2,6 @@
 using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Data.Abstract;
-using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Data.Abstraction.Helpers;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 
@@ -17,8 +16,8 @@ public class ResendAccountEmailConfirmationCommandHandler : ICommandHandler<Rese
 
     public ResendAccountEmailConfirmationCommandHandler(
         IUnitOfWork unitOfWork,
-        IUserRepository userRepository, 
-        ITokenGenerator tokenGenerator, 
+        IUserRepository userRepository,
+        ITokenGenerator tokenGenerator,
         ITokenRepository tokenRepository)
     {
         _unitOfWork = unitOfWork;

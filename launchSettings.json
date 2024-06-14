@@ -4,11 +4,11 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "instaconnect.users.web": "StartDebugging",
-        "instaconnect.posts.web": "StartDebugging",
-        "instaconnect.messages.web": "StartDebugging",
-        "instaconnect.follows.web": "StartDebugging",
-        "instaconnect.gateway.web": "StartDebugging"
+        "users-svc": "StartDebugging",
+        "posts-svc": "StartDebugging",
+        "messages-svc": "StartDebugging",
+        "follows-svc": "StartDebugging",
+        "gateway-svc": "StartDebugging"
       }
     }
   }

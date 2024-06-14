@@ -1,10 +1,10 @@
-﻿using InstaConnect.Messages.Data.Abstractions.Repositories;
-using InstaConnect.Messages.Data.Repositories;
+﻿using InstaConnect.Messages.Data.Repositories;
 using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Shared.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using InstaConnect.Messages.Data.Abstractions;
 
 namespace InstaConnect.Messages.Data.Extensions;
 

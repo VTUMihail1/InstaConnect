@@ -1,4 +1,4 @@
-﻿using InstaConnect.Follows.Data.Abstractions.Repositories;
+﻿using InstaConnect.Follows.Data.Abstractions;
 using InstaConnect.Follows.Data.Models.Entities;
 using InstaConnect.Shared.Data.Repositories;
 using Microsoft.EntityFrameworkCore;

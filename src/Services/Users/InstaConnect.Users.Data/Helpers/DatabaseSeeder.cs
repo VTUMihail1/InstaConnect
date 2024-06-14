@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Shared.Data.Abstract;
-using InstaConnect.Users.Business.Abstractions;
 using InstaConnect.Users.Data.Abstraction.Helpers;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 using InstaConnect.Users.Data.Models.Entities;

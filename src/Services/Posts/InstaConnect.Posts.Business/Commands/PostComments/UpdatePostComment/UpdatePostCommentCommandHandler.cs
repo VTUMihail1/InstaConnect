@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Data.Abstract.Repositories;
+using InstaConnect.Posts.Data.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
