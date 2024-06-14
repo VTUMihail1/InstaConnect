@@ -6,7 +6,7 @@ using InstaConnect.Users.Business.Commands.Account.RegisterAccount;
 using InstaConnect.Users.Business.Models;
 using InstaConnect.Users.Business.Queries.User.GetAllFilteredUsers;
 using InstaConnect.Users.Business.Queries.User.GetAllUsers;
-using InstaConnect.Users.Data.Helpers;
+using InstaConnect.Users.Data.Models;
 using InstaConnect.Users.Data.Models.Entities;
 using InstaConnect.Users.Data.Models.Filters;
 

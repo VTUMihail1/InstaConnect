@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Users.Data.Helpers;
+﻿namespace InstaConnect.Users.Data.Models;
 
 public class PasswordHashResultDTO
 {

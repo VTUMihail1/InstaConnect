@@ -1,8 +1,8 @@
 ﻿using BCrypt.Net;
-using InstaConnect.Users.Business.Abstractions;
-using InstaConnect.Users.Data.Helpers;
+using InstaConnect.Users.Data.Abstraction.Helpers;
+using InstaConnect.Users.Data.Models;
 
-namespace InstaConnect.Users.Business.Helpers;
+namespace InstaConnect.Users.Data.Helpers;
 
 public class PasswordHasher : IPasswordHasher
 {

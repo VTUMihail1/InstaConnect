@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Data.Abstractions.Repositories;
+using InstaConnect.Follows.Data.Abstractions;
 using InstaConnect.Follows.Data.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Base;

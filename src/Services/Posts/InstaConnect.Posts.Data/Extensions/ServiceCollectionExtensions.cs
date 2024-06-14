@@ -1,4 +1,4 @@
-﻿using InstaConnect.Posts.Data.Abstract.Repositories;
+﻿using InstaConnect.Posts.Data.Abstract;
 using InstaConnect.Posts.Data.Repositories;
 using InstaConnect.Shared.Data;
 using InstaConnect.Shared.Data.Abstract;

@@ -3,8 +3,6 @@ using InstaConnect.Shared.Business.Exceptions.Token;
 using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Data.Abstract;
-using InstaConnect.Users.Business.Abstractions;
-using InstaConnect.Users.Data.Abstraction.Helpers;
 using InstaConnect.Users.Data.Abstraction.Repositories;
 
 namespace InstaConnect.Users.Business.Commands.Account.ConfirmAccountEmail;
@@ -41,7 +39,7 @@ public class ConfirmAccountEmailCommandHandler : ICommandHandler<ConfirmAccountE
 
         var existingToken = await _tokenRepository.GetByValueAsync(request.Token, cancellationToken);
 
-        if(existingToken == null)
+        if (existingToken == null)
         {
             throw new TokenNotFoundException();
         }

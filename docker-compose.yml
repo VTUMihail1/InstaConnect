@@ -22,31 +22,34 @@ services:
     environment: 
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "15672:15672"
+      - "5672:5672" 
     volumes:
       - ./.containers/rabbit-mq/data/:/var/lib/rabbitmq
       - ./.containers/rabbit-mq/log/:/var/log/rabbitmq
     networks:
       - instaconnect
 
-  instaconnect.gateway.web:
-    image: ${DOCKER_REGISTRY-}instaconnectgatewayweb
+  gateway-svc:
+    image: ${DOCKER_REGISTRY-}gateway-svc
     build:
       context: .
       dockerfile: src/Gateway/InstaConnect.Gateway.Web/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
-      ReverseProxy__Clusters__users-cluster__Destinations__destination1__Address: http://localhost:5200
-      ReverseProxy__Clusters__posts-cluster__Destinations__destination1__Address: http://localhost:5300
-      ReverseProxy__Clusters__messages-cluster__Destinations__destination1__Address: http://localhost:5400
-      ReverseProxy__Clusters__follows-cluster__Destinations__destination1__Address: http://localhost:5500
+      ReverseProxy__Clusters__users-cluster__Destinations__destination1__Address: http://user-svc
+      ReverseProxy__Clusters__posts-cluster__Destinations__destination1__Address: http://post-svc
+      ReverseProxy__Clusters__messages-cluster__Destinations__destination1__Address: http://message-svc
+      ReverseProxy__Clusters__follows-cluster__Destinations__destination1__Address: http://follow-svc
     ports:
       - "5100:80"
     networks:
       - instaconnect
   
-  instaconnect.users.web:
-    image: ${DOCKER_REGISTRY-}instaconnectusersweb
+  users-svc:
+    image: ${DOCKER_REGISTRY-}users-svc
     build: 
       context: .
       dockerfile: src/Services/Users/InstaConnect.Users.Web/Dockerfile
@@ -69,8 +72,8 @@ services:
     networks:
       - instaconnect
 
-  instaconnect.posts.web:
-    image: ${DOCKER_REGISTRY-}instaconnectpostsweb
+  posts-svc:
+    image: ${DOCKER_REGISTRY-}posts-svc
     build:
       context: .
       dockerfile: src/Services/Posts/InstaConnect.Posts.Web/Dockerfile
@@ -89,8 +92,8 @@ services:
     networks:
       - instaconnect
 
-  instaconnect.messages.web:
-    image: ${DOCKER_REGISTRY-}instaconnectmessagesweb
+  messages-svc:
+    image: ${DOCKER_REGISTRY-}messages-svc
     build:
       context: .
       dockerfile: src/Services/Messages/InstaConnect.Messages.Web/Dockerfile
@@ -109,8 +112,8 @@ services:
     networks:
       - instaconnect
 
-  instaconnect.follows.web:
-    image: ${DOCKER_REGISTRY-}instaconnectfollowsweb
+  follows-svc:
+    image: ${DOCKER_REGISTRY-}follows-svc
     build:
       context: .
       dockerfile: src/Services/Follows/InstaConnect.Follows.Web/Dockerfile
