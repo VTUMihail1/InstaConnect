@@ -25,8 +25,7 @@ namespace InstaConnect.Posts.Data.Migrations
             modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.Post", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("id");
 
                     b.Property<string>("Content")
@@ -51,9 +50,13 @@ namespace InstaConnect.Posts.Data.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("user_id");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("user_name");
 
                     b.HasKey("Id");
 
@@ -83,8 +86,7 @@ namespace InstaConnect.Posts.Data.Migrations
 
                     b.Property<string>("PostId")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("post_id");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -93,9 +95,13 @@ namespace InstaConnect.Posts.Data.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("user_id");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("user_name");
 
                     b.HasKey("Id");
 
@@ -118,8 +124,7 @@ namespace InstaConnect.Posts.Data.Migrations
 
                     b.Property<string>("PostCommentId")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("comment_id");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -128,9 +133,13 @@ namespace InstaConnect.Posts.Data.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("user_id");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("user_name");
 
                     b.HasKey("Id");
 
@@ -151,8 +160,7 @@ namespace InstaConnect.Posts.Data.Migrations
 
                     b.Property<string>("PostId")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("post_id");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -161,9 +169,13 @@ namespace InstaConnect.Posts.Data.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("user_id");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("user_name");
 
                     b.HasKey("Id");
 

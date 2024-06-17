@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Posts.Business.Queries.PostLikes.GetAllFilteredPostLikes;
 
-internal class GetAllFilteredPostLikesQueryHandler : IQueryHandler<GetAllFilteredPostLikesQuery, ICollection<PostLikeViewDTO>>
+internal class GetAllFilteredPostLikesQueryHandler : IQueryHandler<GetAllFilteredPostLikesQuery, ICollection<PostLikeViewModel>>
 {
     private readonly IMapper _mapper;
     private readonly IPostLikeRepository _postLikeRepository;
@@ -19,13 +19,13 @@ internal class GetAllFilteredPostLikesQueryHandler : IQueryHandler<GetAllFiltere
         _postLikeRepository = postLikeRepository;
     }
 
-    public async Task<ICollection<PostLikeViewDTO>> Handle(GetAllFilteredPostLikesQuery request, CancellationToken cancellationToken)
+    public async Task<ICollection<PostLikeViewModel>> Handle(GetAllFilteredPostLikesQuery request, CancellationToken cancellationToken)
     {
-        var postLikeFilteredCollectionQuery = _mapper.Map<PostLikeFilteredCollectionQuery>(request);
+        var filteredCollectionQuery = _mapper.Map<PostLikeFilteredCollectionQuery>(request);
 
-        var postLikes = await _postLikeRepository.GetAllFilteredAsync(postLikeFilteredCollectionQuery, cancellationToken);
-        var postLikeViewDTOs = _mapper.Map<ICollection<PostLikeViewDTO>>(postLikes);
+        var postLikes = await _postLikeRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
+        var response = _mapper.Map<ICollection<PostLikeViewModel>>(postLikes);
 
-        return postLikeViewDTOs;
+        return response;
     }
 }

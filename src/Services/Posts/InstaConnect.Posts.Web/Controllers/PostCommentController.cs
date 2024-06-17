@@ -32,39 +32,39 @@ public class PostCommentController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllAsync(CollectionRequestModel collectionRequestModel)
+    public async Task<IActionResult> GetAllAsync(CollectionRequest request)
     {
-        var getAllPostCommentsQuery = _mapper.Map<GetAllPostCommentsQuery>(collectionRequestModel);
-        var response = await _sender.Send(getAllPostCommentsQuery);
-        var postCommentViewModels = _mapper.Map<ICollection<PostCommentViewModel>>(response);
+        var queryRequest = _mapper.Map<GetAllPostCommentsQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest);
+        var response = _mapper.Map<ICollection<PostCommentResponse>>(queryResponse);
 
-        return Ok(postCommentViewModels);
+        return Ok(response);
     }
 
     // GET: api/post-comments/filtered
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllFilteredAsync(GetPostCommentsCollectionRequestModel getPostCommentsCollectionRequestModel)
+    public async Task<IActionResult> GetAllFilteredAsync(GetPostCommentsCollectionRequest request)
     {
-        var getAllFilteredPostCommentsQuery = _mapper.Map<GetAllFilteredPostCommentsQuery>(getPostCommentsCollectionRequestModel);
-        var response = await _sender.Send(getAllFilteredPostCommentsQuery);
-        var postCommentViewModels = _mapper.Map<ICollection<PostCommentViewModel>>(response);
+        var queryRequest = _mapper.Map<GetAllFilteredPostCommentsQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest);
+        var response = _mapper.Map<ICollection<PostCommentResponse>>(queryResponse);
 
-        return Ok(postCommentViewModels);
+        return Ok(response);
     }
 
     // GET: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetByIdAsync(GetPostCommentByIdRequestModel getPostCommentByIdRequestModel)
+    public async Task<IActionResult> GetByIdAsync(GetPostCommentByIdRequest request)
     {
-        var getPostCommentByIdQuery = _mapper.Map<GetPostCommentByIdQuery>(getPostCommentByIdRequestModel);
-        var response = await _sender.Send(getPostCommentByIdQuery);
-        var postCommentViewModel = _mapper.Map<PostCommentViewModel>(response);
+        var queryRequest = _mapper.Map<GetPostCommentByIdQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest);
+        var response = _mapper.Map<PostCommentResponse>(queryResponse);
 
-        return Ok(postCommentViewModel);
+        return Ok(response);
     }
 
     // POST: api/post-comments
@@ -72,10 +72,10 @@ public class PostCommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddAsync(AddPostCommentRequestModel addPostCommentRequestModel)
+    public async Task<IActionResult> AddAsync(AddPostCommentRequest request)
     {
-        var addPostCommentCommand = _mapper.Map<AddPostCommentCommand>(addPostCommentRequestModel);
-        await _sender.Send(addPostCommentCommand);
+        var commandRequest = _mapper.Map<AddPostCommentCommand>(request);
+        await _sender.Send(commandRequest);
 
         return NoContent();
     }
@@ -85,10 +85,10 @@ public class PostCommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateAsync(UpdatePostCommentRequestModel updatePostCommentRequestModel)
+    public async Task<IActionResult> UpdateAsync(UpdatePostCommentRequest request)
     {
-        var updatePostCommentCommand = _mapper.Map<UpdatePostCommentCommand>(updatePostCommentRequestModel);
-        await _sender.Send(updatePostCommentCommand);
+        var commandRequest = _mapper.Map<UpdatePostCommentCommand>(request);
+        await _sender.Send(commandRequest);
 
         return NoContent();
     }
@@ -98,10 +98,10 @@ public class PostCommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteAsync(DeletePostCommentRequestModel deletePostCommentRequestModel)
+    public async Task<IActionResult> DeleteAsync(DeletePostCommentRequest request)
     {
-        var deletePostCommentCommand = _mapper.Map<DeletePostCommentCommand>(deletePostCommentRequestModel);
-        await _sender.Send(deletePostCommentCommand);
+        var commandRequest = _mapper.Map<DeletePostCommentCommand>(request);
+        await _sender.Send(commandRequest);
 
         return NoContent();
     }

@@ -4,6 +4,6 @@ using InstaConnect.Shared.Business.Models.Filters;
 
 namespace InstaConnect.Posts.Business.Queries.PostCommentLikes.GetAllPostCommentLikes;
 
-public class GetAllPostCommentLikesQuery : CollectionDTO, IQuery<ICollection<PostCommentLikeViewDTO>>
+public class GetAllPostCommentLikesQuery : CollectionDTO, IQuery<ICollection<PostCommentLikeViewModel>>
 {
 }

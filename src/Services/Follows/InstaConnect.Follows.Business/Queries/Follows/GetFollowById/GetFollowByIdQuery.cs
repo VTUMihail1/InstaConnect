@@ -3,7 +3,7 @@ using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Follows.Business.Queries.Follows.GetFollowById;
 
-public class GetFollowByIdQuery : IQuery<FollowViewDTO>
+public class GetFollowByIdQuery : IQuery<FollowViewModel>
 {
     public string Id { get; set; }
 }

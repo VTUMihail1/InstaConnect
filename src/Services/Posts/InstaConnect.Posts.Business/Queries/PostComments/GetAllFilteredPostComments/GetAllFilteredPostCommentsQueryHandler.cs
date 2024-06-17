@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Posts.Business.Queries.PostComments.GetAllFilteredPostComments;
 
-internal class GetAllFilteredPostCommentsQueryHandler : IQueryHandler<GetAllFilteredPostCommentsQuery, ICollection<PostCommentViewDTO>>
+internal class GetAllFilteredPostCommentsQueryHandler : IQueryHandler<GetAllFilteredPostCommentsQuery, ICollection<PostCommentViewModel>>
 {
     private readonly IMapper _mapper;
     private readonly IPostCommentRepository _postCommentRepository;
@@ -19,13 +19,13 @@ internal class GetAllFilteredPostCommentsQueryHandler : IQueryHandler<GetAllFilt
         _postCommentRepository = postCommentRepository;
     }
 
-    public async Task<ICollection<PostCommentViewDTO>> Handle(GetAllFilteredPostCommentsQuery request, CancellationToken cancellationToken)
+    public async Task<ICollection<PostCommentViewModel>> Handle(GetAllFilteredPostCommentsQuery request, CancellationToken cancellationToken)
     {
-        var postCommentFilteredCollectionQuery = _mapper.Map<PostCommentFilteredCollectionQuery>(request);
+        var filteredCollectionQuery = _mapper.Map<PostCommentFilteredCollectionQuery>(request);
 
-        var postComments = await _postCommentRepository.GetAllFilteredAsync(postCommentFilteredCollectionQuery, cancellationToken);
-        var postCommentViewDTOs = _mapper.Map<ICollection<PostCommentViewDTO>>(postComments);
+        var postComments = await _postCommentRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
+        var response = _mapper.Map<ICollection<PostCommentViewModel>>(postComments);
 
-        return postCommentViewDTOs;
+        return response;
     }
 }

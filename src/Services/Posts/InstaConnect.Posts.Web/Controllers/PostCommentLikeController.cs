@@ -31,39 +31,39 @@ public class PostCommentLikeController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllAsync(CollectionRequestModel collectionRequestModel)
+    public async Task<IActionResult> GetAllAsync(CollectionRequest request)
     {
-        var getAllPostCommentLikesQuery = _mapper.Map<GetAllPostCommentLikesQuery>(collectionRequestModel);
-        var response = await _sender.Send(getAllPostCommentLikesQuery);
-        var postCommentLikeViewModels = _mapper.Map<ICollection<PostCommentLikeViewModel>>(response);
+        var queryRequest = _mapper.Map<GetAllPostCommentLikesQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest);
+        var response = _mapper.Map<ICollection<PostCommentLikeResponse>>(queryResponse);
 
-        return Ok(postCommentLikeViewModels);
+        return Ok(response);
     }
 
     // GET: api/post-comment-likes/filtered
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllFilteredAsync(GetPostCommentLikesCollectionRequestModel getPostCommentLikesCollectionRequestModel)
+    public async Task<IActionResult> GetAllFilteredAsync(GetPostCommentLikesCollectionRequest request)
     {
-        var getAllFilteredPostCommentLikesQuery = _mapper.Map<GetAllFilteredPostCommentLikesQuery>(getPostCommentLikesCollectionRequestModel);
-        var response = await _sender.Send(getAllFilteredPostCommentLikesQuery);
-        var postCommentLikeViewModels = _mapper.Map<ICollection<PostLikeViewModel>>(response);
+        var queryRequest = _mapper.Map<GetAllFilteredPostCommentLikesQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest);
+        var response = _mapper.Map<ICollection<PostLikeResponse>>(queryResponse);
 
-        return Ok(postCommentLikeViewModels);
+        return Ok(response);
     }
 
     // GET: api/post-comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetByIdAsync(GetPostCommentLikeByIdRequestModel getPostCommentLikeByIdRequestModel)
+    public async Task<IActionResult> GetByIdAsync(GetPostCommentLikeByIdRequest request)
     {
-        var getPostCommentLikeByIdQuery = _mapper.Map<GetPostCommentLikeByIdQuery>(getPostCommentLikeByIdRequestModel);
-        var response = await _sender.Send(getPostCommentLikeByIdQuery);
-        var postCommentLikeViewModel = _mapper.Map<PostCommentLikeViewModel>(response);
+        var queryRequest = _mapper.Map<GetPostCommentLikeByIdQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest);
+        var response = _mapper.Map<PostCommentLikeResponse>(queryResponse);
 
-        return Ok(postCommentLikeViewModel);
+        return Ok(response);
     }
 
     // POST: api/post-comment-likes
@@ -71,10 +71,10 @@ public class PostCommentLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddAsync(AddPostCommentLikeRequestModel addPostCommentLikeRequestModel)
+    public async Task<IActionResult> AddAsync(AddPostCommentLikeRequest request)
     {
-        var addPostCommentLikeCommand = _mapper.Map<AddPostCommentLikeCommand>(addPostCommentLikeRequestModel);
-        await _sender.Send(addPostCommentLikeCommand);
+        var commandRequest = _mapper.Map<AddPostCommentLikeCommand>(request);
+        await _sender.Send(commandRequest);
 
         return NoContent();
     }
@@ -84,10 +84,10 @@ public class PostCommentLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteAsync(DeletePostCommentLikeRequestModel deletePostCommentLikeRequestModel)
+    public async Task<IActionResult> DeleteAsync(DeletePostCommentLikeRequest request)
     {
-        var deletePostCommentLikeCommand = _mapper.Map<DeletePostCommentLikeCommand>(deletePostCommentLikeRequestModel);
-        await _sender.Send(deletePostCommentLikeCommand);
+        var commandRequest = _mapper.Map<DeletePostCommentLikeCommand>(request);
+        await _sender.Send(commandRequest);
 
         return NoContent();
     }

@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Follows.Business.Queries.Follows.GetAllFilteredFollows;
 
-internal class GetAllFilteredFollowsQueryHandler : IQueryHandler<GetAllFilteredFollowsQuery, ICollection<FollowViewDTO>>
+internal class GetAllFilteredFollowsQueryHandler : IQueryHandler<GetAllFilteredFollowsQuery, ICollection<FollowViewModel>>
 {
     private readonly IMapper _mapper;
     private readonly IFollowRepository _followRepository;
@@ -19,13 +19,13 @@ internal class GetAllFilteredFollowsQueryHandler : IQueryHandler<GetAllFilteredF
         _followRepository = followRepository;
     }
 
-    public async Task<ICollection<FollowViewDTO>> Handle(GetAllFilteredFollowsQuery request, CancellationToken cancellationToken)
+    public async Task<ICollection<FollowViewModel>> Handle(GetAllFilteredFollowsQuery request, CancellationToken cancellationToken)
     {
-        var followFilteredCollectionQuery = _mapper.Map<FollowFilteredCollectionQuery>(request);
+        var filteredQuery = _mapper.Map<FollowFilteredCollectionQuery>(request);
 
-        var follows = await _followRepository.GetAllFilteredAsync(followFilteredCollectionQuery, cancellationToken);
-        var followViewDTOs = _mapper.Map<ICollection<FollowViewDTO>>(follows);
+        var follows = await _followRepository.GetAllFilteredAsync(filteredQuery, cancellationToken);
+        var response = _mapper.Map<ICollection<FollowViewModel>>(follows);
 
-        return followViewDTOs;
+        return response;
     }
 }

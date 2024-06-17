@@ -32,39 +32,39 @@ public class MessageController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllAsync(CollectionRequestModel collectionRequestModel)
+    public async Task<IActionResult> GetAllAsync(CollectionRequest request)
     {
-        var getAllMessagesQuery = _mapper.Map<GetAllMessagesQuery>(collectionRequestModel);
-        var response = await _sender.Send(getAllMessagesQuery);
-        var messageViewModels = _mapper.Map<ICollection<MessageViewModel>>(response);
+        var queryRequest = _mapper.Map<GetAllMessagesQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest);
+        var response = _mapper.Map<ICollection<MessageViewModel>>(queryResponse);
 
-        return Ok(messageViewModels);
+        return Ok(response);
     }
 
     // GET: api/messages/filtered
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllFilteredAsync(GetMessageCollectionRequestModel getMessageCollectionRequestModel)
+    public async Task<IActionResult> GetAllFilteredAsync(GetMessageCollectionRequest request)
     {
-        var getAllFilteredMessagesQuery = _mapper.Map<GetAllFilteredMessagesQuery>(getMessageCollectionRequestModel);
-        var response = await _sender.Send(getAllFilteredMessagesQuery);
-        var messageViewModels = _mapper.Map<ICollection<MessageViewModel>>(response);
+        var queryRequest = _mapper.Map<GetAllFilteredMessagesQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest);
+        var response = _mapper.Map<ICollection<MessageViewModel>>(queryResponse);
 
-        return Ok(messageViewModels);
+        return Ok(response);
     }
 
     // GET: api/messages/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetByIdAsync(GetMessageByIdRequestModel getMessageByIdRequestModel)
+    public async Task<IActionResult> GetByIdAsync(GetMessageByIdRequest request)
     {
-        var getMessageByIdQuery = _mapper.Map<GetMessageByIdQuery>(getMessageByIdRequestModel);
-        var response = await _sender.Send(getMessageByIdQuery);
-        var messageViewModel = _mapper.Map<MessageViewModel>(response);
+        var queryRequest = _mapper.Map<GetMessageByIdQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest);
+        var response = _mapper.Map<MessageViewModel>(queryResponse);
 
-        return Ok(messageViewModel);
+        return Ok(response);
     }
 
     // POST: api/messages
@@ -72,10 +72,10 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddAsync(AddMessageRequestModel addMessageRequestModel)
+    public async Task<IActionResult> AddAsync(AddMessageRequest request)
     {
-        var addMessageCommand = _mapper.Map<AddMessageCommand>(addMessageRequestModel);
-        await _sender.Send(addMessageCommand);
+        var commandQuery = _mapper.Map<AddMessageCommand>(request);
+        await _sender.Send(commandQuery);
 
         return NoContent();
     }
@@ -85,10 +85,10 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateAsync(UpdateMessageRequestModel updateMessageRequestModel)
+    public async Task<IActionResult> UpdateAsync(UpdateMessageRequest request)
     {
-        var updateMessageCommand = _mapper.Map<UpdateMessageCommand>(updateMessageRequestModel);
-        await _sender.Send(updateMessageCommand);
+        var commandQuery = _mapper.Map<UpdateMessageCommand>(request);
+        await _sender.Send(commandQuery);
 
         return NoContent();
     }
@@ -98,10 +98,10 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteAsync(DeleteMessageRequestModel deleteMessageRequestModel)
+    public async Task<IActionResult> DeleteAsync(DeleteMessageRequest request)
     {
-        var deleteMessageCommand = _mapper.Map<DeleteMessageCommand>(deleteMessageRequestModel);
-        await _sender.Send(deleteMessageCommand);
+        var commandQuery = _mapper.Map<DeleteMessageCommand>(request);
+        await _sender.Send(commandQuery);
 
         return NoContent();
     }

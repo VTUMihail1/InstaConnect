@@ -40,15 +40,23 @@ namespace InstaConnect.Messages.Data.Migrations
 
                     b.Property<string>("ReceiverId")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("receiver_id");
+
+                    b.Property<string>("ReceiverName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("receiver_name");
 
                     b.Property<string>("SenderId")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("sender_id");
+
+                    b.Property<string>("SenderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("sender_name");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2")

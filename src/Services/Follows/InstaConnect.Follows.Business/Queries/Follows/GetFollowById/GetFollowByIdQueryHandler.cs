@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Follows.Business.Queries.Follows.GetFollowById;
 
-internal class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, FollowViewDTO>
+internal class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, FollowViewModel>
 {
     private readonly IMapper _mapper;
     private readonly IFollowRepository _followRepository;
@@ -19,7 +19,7 @@ internal class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, Fol
         _followRepository = followRepository;
     }
 
-    public async Task<FollowViewDTO> Handle(GetFollowByIdQuery request, CancellationToken cancellationToken)
+    public async Task<FollowViewModel> Handle(GetFollowByIdQuery request, CancellationToken cancellationToken)
     {
         var follow = await _followRepository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -28,8 +28,8 @@ internal class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, Fol
             throw new FollowNotFoundException();
         }
 
-        var followViewDTO = _mapper.Map<FollowViewDTO>(follow);
+        var response = _mapper.Map<FollowViewModel>(follow);
 
-        return followViewDTO;
+        return response;
     }
 }

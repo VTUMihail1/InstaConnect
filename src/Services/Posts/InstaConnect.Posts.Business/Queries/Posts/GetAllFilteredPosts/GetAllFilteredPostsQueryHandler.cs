@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Posts.Business.Queries.Posts.GetAllFilteredPosts;
 
-internal class GetAllFilteredPostsQueryHandler : IQueryHandler<GetAllFilteredPostsQuery, ICollection<PostViewDTO>>
+internal class GetAllFilteredPostsQueryHandler : IQueryHandler<GetAllFilteredPostsQuery, ICollection<PostViewModel>>
 {
     private readonly IMapper _mapper;
     private readonly IPostRepository _postRepository;
@@ -19,13 +19,13 @@ internal class GetAllFilteredPostsQueryHandler : IQueryHandler<GetAllFilteredPos
         _postRepository = postRepository;
     }
 
-    public async Task<ICollection<PostViewDTO>> Handle(GetAllFilteredPostsQuery request, CancellationToken cancellationToken)
+    public async Task<ICollection<PostViewModel>> Handle(GetAllFilteredPostsQuery request, CancellationToken cancellationToken)
     {
-        var postFilteredCollectionQuery = _mapper.Map<PostFilteredCollectionQuery>(request);
+        var filteredCollectionQuery = _mapper.Map<PostFilteredCollectionQuery>(request);
 
-        var posts = await _postRepository.GetAllFilteredAsync(postFilteredCollectionQuery, cancellationToken);
-        var postViewDTOs = _mapper.Map<ICollection<PostViewDTO>>(posts);
+        var posts = await _postRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
+        var response = _mapper.Map<ICollection<PostViewModel>>(posts);
 
-        return postViewDTOs;
+        return response;
     }
 }

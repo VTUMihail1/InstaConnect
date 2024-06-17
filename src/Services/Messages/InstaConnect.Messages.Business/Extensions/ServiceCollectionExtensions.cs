@@ -1,4 +1,4 @@
-﻿using InstaConnect.Messages.Business.Abstract.Helpers;
+﻿using InstaConnect.Messages.Business.Abstract;
 using InstaConnect.Messages.Business.Helpers;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;

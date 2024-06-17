@@ -23,13 +23,16 @@ public class PostLikeConfiguration : IEntityTypeConfiguration<PostLike>
         builder
             .Property(pl => pl.UserId)
             .HasColumnName("user_id")
-            .HasMaxLength(255)
+            .IsRequired();
+
+        builder
+            .Property(pc => pc.UserName)
+            .HasColumnName("user_name")
             .IsRequired();
 
         builder
             .Property(pl => pl.PostId)
             .HasColumnName("post_id")
-            .HasMaxLength(255)
             .IsRequired();
 
         builder

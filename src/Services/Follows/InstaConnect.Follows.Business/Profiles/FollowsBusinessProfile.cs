@@ -6,6 +6,7 @@ using InstaConnect.Follows.Business.Queries.Follows.GetAllFollows;
 using InstaConnect.Follows.Data.Models.Entities;
 using InstaConnect.Follows.Data.Models.Filters;
 using InstaConnect.Shared.Business.Models.Requests;
+using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Business.Models.Users;
 using InstaConnect.Shared.Data.Models.Filters;
 
@@ -22,7 +23,9 @@ public class FollowsBusinessProfile : Profile
                  new FollowFilteredCollectionQuery
                  {
                      Expression = p => (src.FollowerId == string.Empty || p.FollowerId == src.FollowerId) &&
-                                       (src.FollowingId == string.Empty || p.FollowingId == src.FollowingId)
+                                       (src.FollowerName == string.Empty || p.FollowerName == src.FollowerName) &&
+                                       (src.FollowingId == string.Empty || p.FollowingId == src.FollowingId) &&
+                                       (src.FollowingName == string.Empty || p.FollowingName == src.FollowingName)
                  });
 
         CreateMap<GetAllFollowsQuery, CollectionQuery>();
@@ -30,10 +33,15 @@ public class FollowsBusinessProfile : Profile
         CreateMap<AddFollowCommand, GetUserByIdRequest>();
 
         CreateMap<CurrentUserDetails, Follow>()
-            .ForMember(dest => dest.FollowerId, opt => opt.MapFrom(src => src.Id));
+            .ForMember(dest => dest.FollowerId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.FollowerName, opt => opt.MapFrom(src => src.UserName));
+
+        CreateMap<GetUserByIdResponse, Follow>()
+            .ForMember(dest => dest.FollowingId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.FollowerName, opt => opt.MapFrom(src => src.UserName));
 
         CreateMap<AddFollowCommand, Follow>();
 
-        CreateMap<Follow, FollowViewDTO>();
+        CreateMap<Follow, FollowViewModel>();
     }
 }

@@ -31,11 +31,11 @@ public class FollowController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllAsync(CollectionRequestModel collectionRequestModel)
+    public async Task<IActionResult> GetAllAsync(CollectionRequest request)
     {
-        var getAllFollowsQuery = _mapper.Map<GetAllFollowsQuery>(collectionRequestModel);
-        var response = await _sender.Send(getAllFollowsQuery);
-        var followViewModels = _mapper.Map<ICollection<FollowViewModel>>(response);
+        var queryRequest = _mapper.Map<GetAllFollowsQuery>(request);
+        var response = await _sender.Send(queryRequest);
+        var followViewModels = _mapper.Map<ICollection<FollowResponse>>(response);
 
         return Ok(followViewModels);
     }
@@ -44,26 +44,26 @@ public class FollowController : ControllerBase
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllFilteredAsync(GetFollowCollectionRequestModel getFollowCollectionRequestModel)
+    public async Task<IActionResult> GetAllFilteredAsync(GetFollowCollectionRequest request)
     {
-        var getAllFilteredFollowsQuery = _mapper.Map<GetAllFilteredFollowsQuery>(getFollowCollectionRequestModel);
-        var response = await _sender.Send(getAllFilteredFollowsQuery);
-        var followViewModels = _mapper.Map<ICollection<FollowViewModel>>(response);
+        var queryRequest = _mapper.Map<GetAllFilteredFollowsQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest);
+        var response = _mapper.Map<ICollection<FollowResponse>>(queryResponse);
 
-        return Ok(followViewModels);
+        return Ok(response);
     }
 
     // GET: api/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetByIdAsync(GetFollowByIdRequestModel getFollowByIdRequestModel)
+    public async Task<IActionResult> GetByIdAsync(GetFollowByIdRequest request)
     {
-        var getFollowByIdQuery = _mapper.Map<GetFollowByIdQuery>(getFollowByIdRequestModel);
-        var response = await _sender.Send(getFollowByIdQuery);
-        var followLikeViewModel = _mapper.Map<FollowViewModel>(response);
+        var queryRequest = _mapper.Map<GetFollowByIdQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest);
+        var response = _mapper.Map<FollowResponse>(queryResponse);
 
-        return Ok(followLikeViewModel);
+        return Ok(response);
     }
 
     // POST: api/follows
@@ -71,10 +71,10 @@ public class FollowController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddAsync(AddFollowRequestModel addFollowRequestModel)
+    public async Task<IActionResult> AddAsync(AddFollowRequest request)
     {
-        var addFollowCommand = _mapper.Map<AddFollowCommand>(addFollowRequestModel);
-        await _sender.Send(addFollowCommand);
+        var commandRequest = _mapper.Map<AddFollowCommand>(request);
+        await _sender.Send(commandRequest);
 
         return NoContent();
     }
@@ -84,10 +84,10 @@ public class FollowController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteAsync(DeleteFollowRequestModel deleteFollowRequestModel)
+    public async Task<IActionResult> DeleteAsync(DeleteFollowRequest request)
     {
-        var deleteFollowCommand = _mapper.Map<DeleteFollowCommand>(deleteFollowRequestModel);
-        await _sender.Send(deleteFollowCommand);
+        var commandRequest = _mapper.Map<DeleteFollowCommand>(request);
+        await _sender.Send(commandRequest);
 
         return NoContent();
     }

@@ -3,7 +3,7 @@ using InstaConnect.Users.Business.Models;
 
 namespace InstaConnect.Users.Business.Queries.User.GetUserByName;
 
-public class GetUserByNameQuery : IQuery<UserViewDTO>
+public class GetUserByNameQuery : IQuery<UserViewModel>
 {
     public string UserName { get; set; }
 }

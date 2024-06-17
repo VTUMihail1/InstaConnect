@@ -8,7 +8,7 @@ using InstaConnect.Users.Business.Queries.User.GetUserByName;
 using InstaConnect.Users.Business.Queries.User.GetUserDetailed;
 using InstaConnect.Users.Business.Queries.User.GetUserDetailedById;
 using InstaConnect.Users.Web.Models.Requests.User;
-using InstaConnect.Users.Web.Models.Response.User;
+using InstaConnect.Users.Web.Models.Response;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,30 +34,30 @@ public class UserController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllAsync(
-        CollectionRequestModel request,
+        CollectionRequest request,
         CancellationToken cancellationToken)
     {
-        var getAllUsersQuery = _mapper.Map<GetAllUsersQuery>(request);
-        var userViewDTOs = await _sender.Send(getAllUsersQuery, cancellationToken);
+        var queryRequest = _mapper.Map<GetAllUsersQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
 
-        var userResponseModels = _mapper.Map<ICollection<UserResponseModel>>(userViewDTOs);
+        var response = _mapper.Map<ICollection<UserResponse>>(queryResponse);
 
-        return Ok(userResponseModels);
+        return Ok(response);
     }
 
     // GET: api/users/filtered
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllAsync(
-        GetUserCollectionRequestModel request,
+        GetUserCollectionRequest request,
         CancellationToken cancellationToken)
     {
-        var getAllFilteredUsersQuery = _mapper.Map<GetAllFilteredUsersQuery>(request);
-        var userViewDTOs = await _sender.Send(getAllFilteredUsersQuery, cancellationToken);
+        var queryRequest = _mapper.Map<GetAllFilteredUsersQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
 
-        var userResponseModels = _mapper.Map<ICollection<UserResponseModel>>(userViewDTOs);
+        var response = _mapper.Map<ICollection<UserResponse>>(queryResponse);
 
-        return Ok(userResponseModels);
+        return Ok(response);
     }
 
     // GET: api/users/current/detailed
@@ -67,15 +67,15 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetDetailedAsync(
-        GetUserDetailedRequestModel request,
+        GetUserDetailedRequest request,
         CancellationToken cancellationToken)
     {
-        var getUserDetailedQuery = _mapper.Map<GetUserDetailedQuery>(request);
-        var userDetailedViewDTO = await _sender.Send(getUserDetailedQuery, cancellationToken);
+        var queryRequest = _mapper.Map<GetUserDetailedQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
 
-        var userDetailedResponseModel = _mapper.Map<UserDetailedResponseModel>(userDetailedViewDTO);
+        var response = _mapper.Map<UserDetailedResponse>(queryResponse);
 
-        return Ok(userDetailedResponseModel);
+        return Ok(response);
     }
 
     // GET: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/detailed
@@ -85,15 +85,15 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetDetailedByIdAsync(
-        GetUserDetailedByIdRequestModel request,
+        GetUserDetailedByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var getUserDetailedByIdQuery = _mapper.Map<GetUserDetailedByIdQuery>(request);
-        var userDetailedViewDTO = await _sender.Send(getUserDetailedByIdQuery, cancellationToken);
+        var queryRequest = _mapper.Map<GetUserDetailedByIdQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
 
-        var userDetailedResponseModel = _mapper.Map<UserDetailedResponseModel>(userDetailedViewDTO);
+        var response = _mapper.Map<UserDetailedResponse>(queryResponse);
 
-        return Ok(userDetailedResponseModel);
+        return Ok(response);
     }
 
     // GET: api/users/current
@@ -101,15 +101,15 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAsync(
-        GetUserRequestModel request,
+        GetUserRequest request,
         CancellationToken cancellationToken)
     {
-        var getUserQuery = _mapper.Map<GetUserQuery>(request);
-        var userViewDTO = await _sender.Send(getUserQuery, cancellationToken);
+        var queryRequest = _mapper.Map<GetUserQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
 
-        var userResponseModel = _mapper.Map<UserResponseModel>(userViewDTO);
+        var response = _mapper.Map<UserResponse>(queryResponse);
 
-        return Ok(userResponseModel);
+        return Ok(response);
     }
 
     // GET: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95
@@ -117,15 +117,15 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetByIdAsync(
-        GetUserByIdRequestModel request,
+        GetUserByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var getUserByIdQuery = _mapper.Map<GetUserByIdQuery>(request);
-        var userViewDTO = await _sender.Send(getUserByIdQuery, cancellationToken);
+        var queryRequest = _mapper.Map<GetUserByIdQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
 
-        var userResponseModel = _mapper.Map<UserResponseModel>(userViewDTO);
+        var response = _mapper.Map<UserResponse>(queryResponse);
 
-        return Ok(userResponseModel);
+        return Ok(response);
     }
 
     // GET: api/users/by-username/example
@@ -133,14 +133,14 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetByUsernameAsync(
-        GetUserByNameRequestModel request,
+        GetUserByNameRequest request,
         CancellationToken cancellationToken)
     {
-        var getUserByNameQuery = _mapper.Map<GetUserByNameQuery>(request);
-        var userViewDTO = await _sender.Send(getUserByNameQuery, cancellationToken);
+        var queryRequest = _mapper.Map<GetUserByNameQuery>(request);
+        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
 
-        var userResponseModel = _mapper.Map<UserResponseModel>(userViewDTO);
+        var response = _mapper.Map<UserResponse>(queryResponse);
 
-        return Ok(userResponseModel);
+        return Ok(response);
     }
 }

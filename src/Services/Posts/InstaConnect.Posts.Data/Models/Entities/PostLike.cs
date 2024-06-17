@@ -8,5 +8,7 @@ public class PostLike : BaseEntity
 
     public string UserId { get; set; }
 
+    public string UserName { get; set; }
+
     public Post Post { get; set; }
 }

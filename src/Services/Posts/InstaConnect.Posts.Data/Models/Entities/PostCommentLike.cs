@@ -8,5 +8,7 @@ public class PostCommentLike : BaseEntity
 
     public string UserId { get; set; }
 
+    public string UserName { get; set; }
+
     public PostComment PostComment { get; set; }
 }

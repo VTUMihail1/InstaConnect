@@ -17,9 +17,8 @@ public class PostConfigurations : IEntityTypeConfiguration<Post>
         builder
             .Property(p => p.Id)
             .HasColumnName("id")
-            .HasMaxLength(255)
-            .ValueGeneratedNever()
-            .IsRequired();
+            .IsRequired()
+            .ValueGeneratedNever();
 
         builder
             .Property(p => p.Title)
@@ -36,7 +35,11 @@ public class PostConfigurations : IEntityTypeConfiguration<Post>
         builder
             .Property(p => p.UserId)
             .HasColumnName("user_id")
-            .HasMaxLength(255)
+            .IsRequired();
+
+        builder
+            .Property(pc => pc.UserName)
+            .HasColumnName("user_name")
             .IsRequired();
 
         builder

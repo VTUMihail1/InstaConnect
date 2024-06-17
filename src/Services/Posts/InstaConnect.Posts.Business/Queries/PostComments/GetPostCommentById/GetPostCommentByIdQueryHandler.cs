@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Posts.Business.Queries.PostComments.GetPostCommentById;
 
-internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentByIdQuery, PostCommentViewDTO>
+internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentByIdQuery, PostCommentViewModel>
 {
     private readonly IMapper _mapper;
     private readonly IPostCommentRepository _postCommentRepository;
@@ -19,7 +19,7 @@ internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentById
         _postCommentRepository = postCommentRepository;
     }
 
-    public async Task<PostCommentViewDTO> Handle(GetPostCommentByIdQuery request, CancellationToken cancellationToken)
+    public async Task<PostCommentViewModel> Handle(GetPostCommentByIdQuery request, CancellationToken cancellationToken)
     {
         var postComment = await _postCommentRepository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -28,8 +28,8 @@ internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentById
             throw new PostCommentNotFoundException();
         }
 
-        var postCommentViewDTO = _mapper.Map<PostCommentViewDTO>(postComment);
+        var response = _mapper.Map<PostCommentViewModel>(postComment);
 
-        return postCommentViewDTO;
+        return response;
     }
 }

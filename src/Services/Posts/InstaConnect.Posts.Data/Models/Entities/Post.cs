@@ -10,6 +10,8 @@ public class Post : BaseEntity
 
     public string UserId { get; set; }
 
+    public string UserName { get; set; }
+
     public ICollection<PostLike> PostLikes { get; set; } = new List<PostLike>();
 
     public ICollection<PostComment> PostComments { get; set; } = new List<PostComment>();

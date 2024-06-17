@@ -16,16 +16,16 @@ public class MessagesWebProfile : Profile
     {
         // Messages
 
-        CreateMap<CollectionRequestModel, GetAllMessagesQuery>();
+        CreateMap<CollectionRequest, GetAllMessagesQuery>();
 
-        CreateMap<GetMessageCollectionRequestModel, GetAllFilteredMessagesQuery>();
+        CreateMap<GetMessageCollectionRequest, GetAllFilteredMessagesQuery>();
 
-        CreateMap<GetMessageByIdRequestModel, GetMessageByIdQuery>();
+        CreateMap<GetMessageByIdRequest, GetMessageByIdQuery>();
 
-        CreateMap<AddMessageRequestModel, AddMessageCommand>();
+        CreateMap<AddMessageRequest, AddMessageCommand>();
 
-        CreateMap<UpdateMessageRequestModel, UpdateMessageCommand>();
+        CreateMap<UpdateMessageRequest, UpdateMessageCommand>();
 
-        CreateMap<DeleteMessageRequestModel, DeleteMessageCommand>();
+        CreateMap<DeleteMessageRequest, DeleteMessageCommand>();
     }
 }

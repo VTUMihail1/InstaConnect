@@ -23,13 +23,21 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
         builder
             .Property(m => m.SenderId)
             .HasColumnName("sender_id")
-            .HasMaxLength(255)
+            .IsRequired();
+
+        builder
+            .Property(m => m.SenderName)
+            .HasColumnName("sender_name")
             .IsRequired();
 
         builder
             .Property(m => m.ReceiverId)
             .HasColumnName("receiver_id")
-            .HasMaxLength(255)
+            .IsRequired();
+
+        builder
+            .Property(m => m.ReceiverName)
+            .HasColumnName("receiver_name")
             .IsRequired();
 
         builder

@@ -32,19 +32,21 @@ public class PostsBusinessProfile : Profile
                  new PostFilteredCollectionQuery
                  {
                      Expression = p => (src.UserId == string.Empty || p.UserId == src.UserId) &&
+                                       (src.UserName == string.Empty || p.UserName == src.UserName) &&
                                        (src.Title == string.Empty || p.Title == src.Title)
                  });
 
         CreateMap<GetAllPostsQuery, CollectionQuery>();
 
         CreateMap<CurrentUserDetails, Post>()
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
 
         CreateMap<AddPostCommand, Post>();
 
         CreateMap<UpdatePostCommand, Post>();
 
-        CreateMap<Post, PostViewDTO>();
+        CreateMap<Post, PostViewModel>();
 
         // Post Comments
 
@@ -60,13 +62,14 @@ public class PostsBusinessProfile : Profile
         CreateMap<GetAllPostCommentsQuery, CollectionQuery>();
 
         CreateMap<CurrentUserDetails, PostComment>()
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
 
         CreateMap<AddPostCommentCommand, PostComment>();
 
         CreateMap<UpdatePostCommentCommand, PostComment>();
 
-        CreateMap<PostComment, PostCommentViewDTO>();
+        CreateMap<PostComment, PostCommentViewModel>();
 
         // Post Likes
 
@@ -81,11 +84,12 @@ public class PostsBusinessProfile : Profile
         CreateMap<GetAllPostLikesQuery, CollectionQuery>();
 
         CreateMap<CurrentUserDetails, PostLike>()
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
 
         CreateMap<AddPostLikeCommand, PostLike>();
 
-        CreateMap<PostLike, PostLikeViewDTO>();
+        CreateMap<PostLike, PostLikeViewModel>();
 
         // Post Comment Likes
 
@@ -100,10 +104,11 @@ public class PostsBusinessProfile : Profile
         CreateMap<GetAllPostCommentLikesQuery, CollectionQuery>();
 
         CreateMap<CurrentUserDetails, PostComment>()
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
 
         CreateMap<AddPostCommentLikeCommand, PostCommentLike>();
 
-        CreateMap<PostCommentLike, PostCommentLikeViewDTO>();
+        CreateMap<PostCommentLike, PostCommentLikeViewModel>();
     }
 }

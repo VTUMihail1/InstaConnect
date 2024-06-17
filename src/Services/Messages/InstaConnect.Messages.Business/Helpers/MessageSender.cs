@@ -1,4 +1,4 @@
-﻿using InstaConnect.Messages.Business.Abstract.Helpers;
+﻿using InstaConnect.Messages.Business.Abstract;
 using InstaConnect.Messages.Business.Helpers.Hubs;
 using InstaConnect.Messages.Business.Models;
 using Microsoft.AspNetCore.SignalR;
@@ -14,7 +14,7 @@ public class MessageSender : IMessageSender
         _hubContext = hubContext;
     }
 
-    public async Task SendMessageToUserAsync(SendMessageDTO sendMessageDTO)
+    public async Task SendMessageToUserAsync(SendMessageModel sendMessageDTO)
     {
         await _hubContext.Clients.User(sendMessageDTO.ReceiverId).SendAsync("ReceiveMessage", sendMessageDTO.Content);
     }

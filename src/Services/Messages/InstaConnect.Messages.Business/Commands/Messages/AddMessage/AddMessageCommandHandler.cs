@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Business.Abstract.Helpers;
+using InstaConnect.Messages.Business.Abstract;
 using InstaConnect.Messages.Business.Models;
 using InstaConnect.Messages.Data.Abstractions;
 using InstaConnect.Messages.Data.Models.Entities;
@@ -57,7 +57,7 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var sendMessageDTO = _mapper.Map<SendMessageDTO>(request);
+        var sendMessageDTO = _mapper.Map<SendMessageModel>(request);
         await _messageSender.SendMessageToUserAsync(sendMessageDTO);
 
     }

@@ -9,7 +9,7 @@ using InstaConnect.Users.Business.Commands.Account.ResendAccountEmailConfirmatio
 using InstaConnect.Users.Business.Commands.Account.ResetAccountPassword;
 using InstaConnect.Users.Web.Extensions;
 using InstaConnect.Users.Web.Models.Requests.Account;
-using InstaConnect.Users.Web.Models.Response.Account;
+using InstaConnect.Users.Web.Models.Response;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,11 +36,11 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ConfirmEmailAsync(
-        ConfirmAccountEmailTokenRequestModel request,
+        ConfirmAccountEmailTokenRequest request,
         CancellationToken cancellationToken)
     {
-        var confirmAccountEmailCommand = _mapper.Map<ConfirmAccountEmailCommand>(request);
-        await _sender.Send(confirmAccountEmailCommand, cancellationToken);
+        var commandRequest = _mapper.Map<ConfirmAccountEmailCommand>(request);
+        await _sender.Send(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -50,11 +50,11 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ResendConfirmEmailAsync(
-        ResendAccountConfirmEmailRequestModel request,
+        ResendAccountConfirmEmailRequest request,
         CancellationToken cancellationToken)
     {
-        var resendAccountEmailConfirmationCommand = _mapper.Map<ResendAccountEmailConfirmationCommand>(request);
-        await _sender.Send(resendAccountEmailConfirmationCommand, cancellationToken);
+        var commandRequest = _mapper.Map<ResendAccountEmailConfirmationCommand>(request);
+        await _sender.Send(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -64,11 +64,11 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> SendResetPasswordAsync(
-        SendAccountPasswordResetRequestModel request,
+        SendAccountPasswordResetRequest request,
         CancellationToken cancellationToken)
     {
-        var sendAccountPasswordResetRequestModel = _mapper.Map<SendAccountPasswordResetRequestModel>(request);
-        await _sender.Send(sendAccountPasswordResetRequestModel, cancellationToken);
+        var commandRequest = _mapper.Map<SendAccountPasswordResetRequest>(request);
+        await _sender.Send(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -78,13 +78,13 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> LoginAsync(
-        [FromBody] LoginAccountRequestModel request,
+        [FromBody] LoginAccountRequest request,
         CancellationToken cancellationToken)
     {
-        var loginAccountCommand = _mapper.Map<LoginAccountCommand>(request);
-        var accountViewDTO = await _sender.Send(loginAccountCommand, cancellationToken);
+        var commandRequest = _mapper.Map<LoginAccountCommand>(request);
+        var commandResponse = await _sender.Send(commandRequest, cancellationToken);
 
-        var response = _mapper.Map<AccountResponseModel>(accountViewDTO);
+        var response = _mapper.Map<AccountResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -94,11 +94,11 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RegisterAsync(
-        [FromBody] RegisterAccountRequestModel request,
+        [FromBody] RegisterAccountRequest request,
         CancellationToken cancellationToken)
     {
-        var registerAccountCommand = _mapper.Map<RegisterAccountCommand>(request);
-        await _sender.Send(registerAccountCommand, cancellationToken);
+        var commandRequest = _mapper.Map<RegisterAccountCommand>(request);
+        await _sender.Send(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -108,11 +108,11 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ResetPasswordAsync(
-        ResetAccountPasswordRequestModel request,
+        ResetAccountPasswordRequest request,
         CancellationToken cancellationToken)
     {
-        var resetAccountPasswordCommand = _mapper.Map<ResetAccountPasswordCommand>(request);
-        await _sender.Send(resetAccountPasswordCommand, cancellationToken);
+        var commandRequest = _mapper.Map<ResetAccountPasswordCommand>(request);
+        await _sender.Send(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -124,11 +124,11 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> EditAsync(
-        [FromBody] EditAccountRequestModel request,
+        [FromBody] EditAccountRequest request,
         CancellationToken cancellationToken)
     {
-        var editAccountCommand = _mapper.Map<EditAccountCommand>(request);
-        await _sender.Send(editAccountCommand, cancellationToken);
+        var commandRequest = _mapper.Map<EditAccountCommand>(request);
+        await _sender.Send(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -139,11 +139,11 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAsync(
-        DeleteAccountRequestModel request,
+        DeleteAccountRequest request,
         CancellationToken cancellationToken)
     {
-        var deleteAccountCommand = _mapper.Map<DeleteAccountCommand>(request);
-        await _sender.Send(deleteAccountCommand, cancellationToken);
+        var commandRequest = _mapper.Map<DeleteAccountCommand>(request);
+        await _sender.Send(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -154,11 +154,11 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteByIdAsync(
-        [FromRoute] DeleteAccountByIdRequestModel request,
+        [FromRoute] DeleteAccountByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var deleteAccountByIdCommand = _mapper.Map<DeleteAccountByIdCommand>(request);
-        await _sender.Send(deleteAccountByIdCommand, cancellationToken);
+        var commandRequest = _mapper.Map<DeleteAccountByIdCommand>(request);
+        await _sender.Send(commandRequest, cancellationToken);
 
         return NoContent();
     }

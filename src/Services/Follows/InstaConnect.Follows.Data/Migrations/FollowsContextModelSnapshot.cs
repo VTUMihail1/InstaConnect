@@ -34,15 +34,23 @@ namespace InstaConnect.Follows.Data.Migrations
 
                     b.Property<string>("FollowerId")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("follower_id");
+
+                    b.Property<string>("FollowerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("follower_name");
 
                     b.Property<string>("FollowingId")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("following_id");
+
+                    b.Property<string>("FollowingName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("following_name");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2")
