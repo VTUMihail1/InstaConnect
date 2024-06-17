@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Web.Models.Requests.PostComment;
 
-public class AddPostCommentRequestModel
+public class AddPostCommentRequest
 {
     public string PostId { get; set; }
 

@@ -108,7 +108,7 @@ namespace InstaConnect.Users.Data.Migrations
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("username");
+                        .HasColumnName("user_name");
 
                     b.HasKey("Id");
 

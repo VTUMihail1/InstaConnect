@@ -6,7 +6,7 @@ using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Posts.Business.Queries.PostComments.GetAllPostComments;
 
-internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostCommentsQuery, ICollection<PostCommentViewDTO>>
+internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostCommentsQuery, ICollection<PostCommentViewModel>>
 {
     private readonly IMapper _mapper;
     private readonly IPostCommentRepository _postCommentRepository;
@@ -19,13 +19,13 @@ internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostComments
         _postCommentRepository = postCommentRepository;
     }
 
-    public async Task<ICollection<PostCommentViewDTO>> Handle(GetAllPostCommentsQuery request, CancellationToken cancellationToken)
+    public async Task<ICollection<PostCommentViewModel>> Handle(GetAllPostCommentsQuery request, CancellationToken cancellationToken)
     {
         var collectionQuery = _mapper.Map<CollectionQuery>(request);
 
         var postComments = await _postCommentRepository.GetAllAsync(collectionQuery, cancellationToken);
-        var postCommentViewDTOs = _mapper.Map<ICollection<PostCommentViewDTO>>(postComments);
+        var response  = _mapper.Map<ICollection<PostCommentViewModel>>(postComments);
 
-        return postCommentViewDTOs;
+        return response;
     }
 }

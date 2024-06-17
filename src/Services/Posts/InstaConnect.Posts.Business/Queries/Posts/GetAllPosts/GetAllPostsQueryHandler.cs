@@ -6,7 +6,7 @@ using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
 
-internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, ICollection<PostViewDTO>>
+internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, ICollection<PostViewModel>>
 {
     private readonly IMapper _mapper;
     private readonly IPostRepository _postRepository;
@@ -19,13 +19,13 @@ internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, ICollec
         _postRepository = postRepository;
     }
 
-    public async Task<ICollection<PostViewDTO>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
+    public async Task<ICollection<PostViewModel>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
     {
         var collectionQuery = _mapper.Map<CollectionQuery>(request);
 
         var posts = await _postRepository.GetAllAsync(collectionQuery, cancellationToken);
-        var postViewDTOs = _mapper.Map<ICollection<PostViewDTO>>(posts);
+        var response = _mapper.Map<ICollection<PostViewModel>>(posts);
 
-        return postViewDTOs;
+        return response;
     }
 }

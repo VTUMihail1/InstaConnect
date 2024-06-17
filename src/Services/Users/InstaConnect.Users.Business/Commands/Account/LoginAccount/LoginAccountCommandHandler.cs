@@ -8,7 +8,7 @@ using InstaConnect.Users.Data.Abstraction.Repositories;
 
 namespace InstaConnect.Users.Business.Commands.Account.LoginAccount;
 
-public class LoginAccountCommandHandler : ICommandHandler<LoginAccountCommand, AccountViewDTO>
+public class LoginAccountCommandHandler : ICommandHandler<LoginAccountCommand, AccountViewModel>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -33,7 +33,7 @@ public class LoginAccountCommandHandler : ICommandHandler<LoginAccountCommand, A
         _tokenRepository = tokenRepository;
     }
 
-    public async Task<AccountViewDTO> Handle(LoginAccountCommand request, CancellationToken cancellationToken)
+    public async Task<AccountViewModel> Handle(LoginAccountCommand request, CancellationToken cancellationToken)
     {
         var existingUser = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
 
@@ -54,7 +54,7 @@ public class LoginAccountCommandHandler : ICommandHandler<LoginAccountCommand, A
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var accountViewDTO = _mapper.Map<AccountViewDTO>(token);
+        var accountViewDTO = _mapper.Map<AccountViewModel>(token);
 
         return accountViewDTO;
     }

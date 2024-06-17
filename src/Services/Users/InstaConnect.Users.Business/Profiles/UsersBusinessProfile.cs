@@ -31,13 +31,13 @@ public class UsersBusinessProfile : Profile
 
         CreateMap<EditAccountCommand, User>();
 
-        CreateMap<Token, AccountViewDTO>();
+        CreateMap<Token, AccountViewModel>();
 
         CreateMap<PasswordHashResultDTO, User>();
 
-        CreateMap<User, UserViewDTO>();
+        CreateMap<User, UserViewModel>();
 
-        CreateMap<User, UserDetailedViewDTO>();
+        CreateMap<User, UserDetailedViewModel>();
 
         CreateMap<User, GetUserByIdResponse>();
     }

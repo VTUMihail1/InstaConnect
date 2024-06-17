@@ -6,7 +6,7 @@ using InstaConnect.Users.Data.Abstraction.Repositories;
 
 namespace InstaConnect.Users.Business.Queries.User.GetUserByName;
 
-public class GetUserByNameQueryHandler : IQueryHandler<GetUserByNameQuery, UserViewDTO>
+public class GetUserByNameQueryHandler : IQueryHandler<GetUserByNameQuery, UserViewModel>
 {
     private readonly IMapper _mapper;
     private readonly IUserRepository _userRepository;
@@ -19,7 +19,7 @@ public class GetUserByNameQueryHandler : IQueryHandler<GetUserByNameQuery, UserV
         _userRepository = userRepository;
     }
 
-    public async Task<UserViewDTO> Handle(GetUserByNameQuery request, CancellationToken cancellationToken)
+    public async Task<UserViewModel> Handle(GetUserByNameQuery request, CancellationToken cancellationToken)
     {
         var existingUser = await _userRepository.GetByNameAsync(request.UserName, cancellationToken);
 
@@ -28,8 +28,8 @@ public class GetUserByNameQueryHandler : IQueryHandler<GetUserByNameQuery, UserV
             throw new UserNotFoundException();
         }
 
-        var userViewDTO = _mapper.Map<UserViewDTO>(existingUser);
+        var response = _mapper.Map<UserViewModel>(existingUser);
 
-        return userViewDTO;
+        return response;
     }
 }

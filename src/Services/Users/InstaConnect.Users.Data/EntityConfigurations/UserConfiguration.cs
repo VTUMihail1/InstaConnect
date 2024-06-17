@@ -41,7 +41,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder
             .Property(p => p.UserName)
-            .HasColumnName("username");
+            .HasColumnName("user_name");
 
         builder
             .Property(t => t.CreatedAt)

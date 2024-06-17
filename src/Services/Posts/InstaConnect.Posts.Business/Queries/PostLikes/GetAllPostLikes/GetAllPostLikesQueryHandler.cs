@@ -6,7 +6,7 @@ using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Posts.Business.Queries.PostLikes.GetAllPostLikes;
 
-internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQuery, ICollection<PostLikeViewDTO>>
+internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQuery, ICollection<PostLikeViewModel>>
 {
     private readonly IMapper _mapper;
     private readonly IPostLikeRepository _postLikeRepository;
@@ -19,13 +19,13 @@ internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQuery,
         _postLikeRepository = postLikeRepository;
     }
 
-    public async Task<ICollection<PostLikeViewDTO>> Handle(GetAllPostLikesQuery request, CancellationToken cancellationToken)
+    public async Task<ICollection<PostLikeViewModel>> Handle(GetAllPostLikesQuery request, CancellationToken cancellationToken)
     {
         var collectionQuery = _mapper.Map<CollectionQuery>(request);
 
         var postLikes = await _postLikeRepository.GetAllAsync(collectionQuery, cancellationToken);
-        var postLikeViewDTOs = _mapper.Map<ICollection<PostLikeViewDTO>>(postLikes);
+        var response = _mapper.Map<ICollection<PostLikeViewModel>>(postLikes);
 
-        return postLikeViewDTOs;
+        return response;
     }
 }

@@ -4,6 +4,6 @@ using InstaConnect.Shared.Business.Models.Filters;
 
 namespace InstaConnect.Messages.Business.Queries.Messages.GetAllMessages;
 
-public class GetAllMessagesQuery : CollectionDTO, IQuery<ICollection<MessageViewDTO>>
+public class GetAllMessagesQuery : CollectionDTO, IQuery<ICollection<MessageViewModel>>
 {
 }

@@ -4,6 +4,6 @@ using InstaConnect.Shared.Business.Models.Filters;
 
 namespace InstaConnect.Posts.Business.Queries.PostComments.GetAllPostComments;
 
-public class GetAllPostCommentsQuery : CollectionDTO, IQuery<ICollection<PostCommentViewDTO>>
+public class GetAllPostCommentsQuery : CollectionDTO, IQuery<ICollection<PostCommentViewModel>>
 {
 }

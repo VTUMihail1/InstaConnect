@@ -4,7 +4,7 @@ using InstaConnect.Users.Business.Models;
 
 namespace InstaConnect.Users.Business.Queries.User.GetAllFilteredUsers;
 
-public class GetAllFilteredUsersQuery : CollectionDTO, IQuery<ICollection<UserViewDTO>>
+public class GetAllFilteredUsersQuery : CollectionDTO, IQuery<ICollection<UserViewModel>>
 {
     public string UserName { get; set; }
 

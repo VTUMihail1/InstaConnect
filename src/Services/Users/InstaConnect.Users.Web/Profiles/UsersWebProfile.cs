@@ -18,8 +18,7 @@ using InstaConnect.Users.Business.Queries.User.GetUserDetailed;
 using InstaConnect.Users.Business.Queries.User.GetUserDetailedById;
 using InstaConnect.Users.Web.Models.Requests.Account;
 using InstaConnect.Users.Web.Models.Requests.User;
-using InstaConnect.Users.Web.Models.Response.Account;
-using InstaConnect.Users.Web.Models.Response.User;
+using InstaConnect.Users.Web.Models.Response;
 
 namespace InstaConnect.Users.Web.Profiles;
 
@@ -29,44 +28,44 @@ public class UsersWebProfile : Profile
     {
         // Account 
 
-        CreateMap<ConfirmAccountEmailTokenRequestModel, ConfirmAccountEmailCommand>();
+        CreateMap<ConfirmAccountEmailTokenRequest, ConfirmAccountEmailCommand>();
 
-        CreateMap<ResendAccountConfirmEmailRequestModel, ResendAccountEmailConfirmationCommand>();
+        CreateMap<ResendAccountConfirmEmailRequest, ResendAccountEmailConfirmationCommand>();
 
-        CreateMap<SendAccountPasswordResetRequestModel, SendAccountPasswordResetRequestModel>();
+        CreateMap<SendAccountPasswordResetRequest, SendAccountPasswordResetRequest>();
 
-        CreateMap<LoginAccountRequestModel, LoginAccountCommand>();
+        CreateMap<LoginAccountRequest, LoginAccountCommand>();
 
-        CreateMap<RegisterAccountRequestModel, RegisterAccountCommand>();
+        CreateMap<RegisterAccountRequest, RegisterAccountCommand>();
 
-        CreateMap<ResetAccountPasswordRequestModel, ResetAccountPasswordCommand>();
+        CreateMap<ResetAccountPasswordRequest, ResetAccountPasswordCommand>();
 
-        CreateMap<EditAccountRequestModel, EditAccountCommand>();
+        CreateMap<EditAccountRequest, EditAccountCommand>();
 
-        CreateMap<DeleteAccountRequestModel, DeleteAccountCommand>();
+        CreateMap<DeleteAccountRequest, DeleteAccountCommand>();
 
-        CreateMap<DeleteAccountByIdRequestModel, DeleteAccountByIdCommand>();
+        CreateMap<DeleteAccountByIdRequest, DeleteAccountByIdCommand>();
 
-        CreateMap<AccountViewDTO, AccountResponseModel>();
+        CreateMap<AccountViewModel, AccountResponse>();
 
         // Users
 
-        CreateMap<CollectionRequestModel, GetAllUsersQuery>();
+        CreateMap<CollectionRequest, GetAllUsersQuery>();
 
-        CreateMap<GetUserCollectionRequestModel, GetAllFilteredUsersQuery>();
+        CreateMap<GetUserCollectionRequest, GetAllFilteredUsersQuery>();
 
-        CreateMap<GetUserDetailedRequestModel, GetUserDetailedQuery>();
+        CreateMap<GetUserDetailedRequest, GetUserDetailedQuery>();
 
-        CreateMap<GetUserDetailedByIdRequestModel, GetUserDetailedByIdQuery>();
+        CreateMap<GetUserDetailedByIdRequest, GetUserDetailedByIdQuery>();
 
-        CreateMap<GetUserRequestModel, GetUserQuery>();
+        CreateMap<GetUserRequest, GetUserQuery>();
 
-        CreateMap<GetUserByIdRequestModel, GetUserByIdQuery>();
+        CreateMap<GetUserByIdRequest, GetUserByIdQuery>();
 
-        CreateMap<GetUserByNameRequestModel, GetUserByNameQuery>();
+        CreateMap<GetUserByNameRequest, GetUserByNameQuery>();
 
-        CreateMap<UserViewDTO, UserResponseModel>();
+        CreateMap<UserViewModel, UserResponse>();
 
-        CreateMap<UserDetailedViewDTO, UserDetailedResponseModel>();
+        CreateMap<UserDetailedViewModel, UserDetailedResponse>();
     }
 }

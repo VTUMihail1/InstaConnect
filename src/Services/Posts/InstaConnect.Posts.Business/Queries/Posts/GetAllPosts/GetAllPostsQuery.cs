@@ -4,6 +4,6 @@ using InstaConnect.Shared.Business.Models.Filters;
 
 namespace InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
 
-public class GetAllPostsQuery : CollectionDTO, IQuery<ICollection<PostViewDTO>>
+public class GetAllPostsQuery : CollectionDTO, IQuery<ICollection<PostViewModel>>
 {
 }

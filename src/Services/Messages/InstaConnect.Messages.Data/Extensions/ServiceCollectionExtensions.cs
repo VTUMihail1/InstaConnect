@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using InstaConnect.Messages.Data.Abstractions;
+using InstaConnect.Messages.Data.Helpers;
 
 namespace InstaConnect.Messages.Data.Extensions;
 
@@ -20,7 +21,8 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(sp.GetRequiredService<MessagesContext>()))
-            .AddScoped<IMessageRepository, MessageRepository>();
+            .AddScoped<IMessageRepository, MessageRepository>()
+            .AddScoped<IDatabaseSeeder, DatabaseSeeder>();
 
         serviceCollection
             .AddHealthChecks()

@@ -29,13 +29,16 @@ public class PostCommentConfiguration : IEntityTypeConfiguration<PostComment>
         builder
             .Property(pc => pc.UserId)
             .HasColumnName("user_id")
-            .HasMaxLength(255)
+            .IsRequired();
+
+        builder
+            .Property(pc => pc.UserName)
+            .HasColumnName("user_name")
             .IsRequired();
 
         builder
             .Property(pc => pc.PostId)
             .HasColumnName("post_id")
-            .HasMaxLength(255)
             .IsRequired();
 
         builder

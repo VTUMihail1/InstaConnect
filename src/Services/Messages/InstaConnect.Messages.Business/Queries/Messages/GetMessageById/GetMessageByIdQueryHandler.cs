@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Messages.Business.Queries.Messages.GetMessageById;
 
-internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, MessageViewDTO>
+internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, MessageViewModel>
 {
     private readonly IMapper _mapper;
     private readonly IMessageRepository _messageRepository;
@@ -19,7 +19,7 @@ internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, M
         _messageRepository = messageRepository;
     }
 
-    public async Task<MessageViewDTO> Handle(GetMessageByIdQuery request, CancellationToken cancellationToken)
+    public async Task<MessageViewModel> Handle(GetMessageByIdQuery request, CancellationToken cancellationToken)
     {
         var message = await _messageRepository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -28,8 +28,8 @@ internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, M
             throw new MessageNotFoundException();
         }
 
-        var messageViewDTO = _mapper.Map<MessageViewDTO>(message);
+        var response = _mapper.Map<MessageViewModel>(message);
 
-        return messageViewDTO;
+        return response;
     }
 }

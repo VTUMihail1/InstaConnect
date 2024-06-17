@@ -23,12 +23,20 @@ public class FollowConfiguration : IEntityTypeConfiguration<Follow>
         builder
             .Property(f => f.FollowerId)
             .HasColumnName("follower_id")
-            .HasMaxLength(255)
+            .IsRequired();
+
+        builder
+            .Property(f => f.FollowerName)
+            .HasColumnName("follower_name")
             .IsRequired();
 
         builder.Property(f => f.FollowingId)
             .HasColumnName("following_id")
-            .HasMaxLength(255)
+            .IsRequired();
+
+        builder
+            .Property(f => f.FollowingName)
+            .HasColumnName("following_name")
             .IsRequired();
 
         builder

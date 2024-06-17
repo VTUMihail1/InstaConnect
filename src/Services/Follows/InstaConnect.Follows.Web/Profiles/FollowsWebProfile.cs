@@ -15,14 +15,14 @@ public class FollowsWebProfile : Profile
     {
         // Follows
 
-        CreateMap<CollectionRequestModel, GetAllFollowsQuery>();
+        CreateMap<CollectionRequest, GetAllFollowsQuery>();
 
-        CreateMap<GetFollowCollectionRequestModel, GetAllFilteredFollowsQuery>();
+        CreateMap<GetFollowCollectionRequest, GetAllFilteredFollowsQuery>();
 
-        CreateMap<GetFollowByIdRequestModel, GetFollowByIdQuery>();
+        CreateMap<GetFollowByIdRequest, GetFollowByIdQuery>();
 
-        CreateMap<AddFollowRequestModel, AddFollowCommand>();
+        CreateMap<AddFollowRequest, AddFollowCommand>();
 
-        CreateMap<DeleteFollowRequestModel, DeleteFollowCommand>();
+        CreateMap<DeleteFollowRequest, DeleteFollowCommand>();
     }
 }

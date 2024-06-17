@@ -6,7 +6,7 @@ using InstaConnect.Users.Data.Models.Filters;
 
 namespace InstaConnect.Users.Business.Queries.User.GetAllFilteredUsers;
 
-public class GetAllFilteredUsersQueryHandler : IQueryHandler<GetAllFilteredUsersQuery, ICollection<UserViewDTO>>
+public class GetAllFilteredUsersQueryHandler : IQueryHandler<GetAllFilteredUsersQuery, ICollection<UserViewModel>>
 {
     private readonly IMapper _mapper;
     private readonly IUserRepository _userRepository;
@@ -18,13 +18,13 @@ public class GetAllFilteredUsersQueryHandler : IQueryHandler<GetAllFilteredUsers
         _mapper = mapper;
         _userRepository = userRepository;
     }
-    public async Task<ICollection<UserViewDTO>> Handle(GetAllFilteredUsersQuery request, CancellationToken cancellationToken)
+    public async Task<ICollection<UserViewModel>> Handle(GetAllFilteredUsersQuery request, CancellationToken cancellationToken)
     {
-        var filteredCollection = _mapper.Map<UserFilteredCollectionQuery>(request);
-        var users = await _userRepository.GetAllFilteredAsync(filteredCollection, cancellationToken);
+        var filteredCollectionQuery = _mapper.Map<UserFilteredCollectionQuery>(request);
+        var users = await _userRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
 
-        var userViewDTOs = _mapper.Map<ICollection<UserViewDTO>>(users);
+        var response = _mapper.Map<ICollection<UserViewModel>>(users);
 
-        return userViewDTOs;
+        return response;
     }
 }

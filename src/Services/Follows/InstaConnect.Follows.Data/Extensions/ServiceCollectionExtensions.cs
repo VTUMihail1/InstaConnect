@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Azure.Messaging;
 using InstaConnect.Follows.Data.Abstractions;
+using InstaConnect.Follows.Data.Helpers;
 
 namespace InstaConnect.Follows.Data.Extensions;
 
@@ -21,7 +22,8 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(sp.GetRequiredService<FollowsContext>()))
-            .AddScoped<IFollowRepository, FollowRepository>();
+            .AddScoped<IFollowRepository, FollowRepository>()
+            .AddScoped<IDatabaseSeeder, DatabaseSeeder>();
 
         serviceCollection
             .AddHealthChecks()
