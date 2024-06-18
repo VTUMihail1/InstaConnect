@@ -10,7 +10,4 @@ public class GetPostCommentsCollectionRequest : CollectionRequest
 
     [FromQuery(Name = "postId")]
     public string PostId { get; set; } = string.Empty;
-
-    [FromQuery(Name = "postCommentId")]
-    public string? PostCommentId { get; set; }
 }

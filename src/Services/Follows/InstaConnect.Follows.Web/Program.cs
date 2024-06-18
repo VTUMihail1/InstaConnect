@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddDataLayer(builder.Configuration)
     .AddBusinessLayer(builder.Configuration)
-    .AddWebLayer();
+    .AddWebLayer(builder.Configuration);
 
 var app = builder.Build();
 

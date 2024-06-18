@@ -42,11 +42,6 @@ public class PostCommentConfiguration : IEntityTypeConfiguration<PostComment>
             .IsRequired();
 
         builder
-            .Property(pc => pc.PostCommentId)
-            .HasColumnName("comment_id")
-            .HasMaxLength(255);
-
-        builder
             .Property(t => t.CreatedAt)
             .HasColumnName("created_at");
 
@@ -58,12 +53,6 @@ public class PostCommentConfiguration : IEntityTypeConfiguration<PostComment>
             .HasOne(pc => pc.Post)
             .WithMany(p => p.PostComments)
             .HasForeignKey(pc => pc.PostId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder
-            .HasMany(c => c.PostComments)
-            .WithOne()
-            .HasForeignKey(c => c.PostCommentId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

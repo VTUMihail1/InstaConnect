@@ -4,7 +4,5 @@ public class AddPostCommentRequest
 {
     public string PostId { get; set; }
 
-    public string? PostCommentId { get; set; }
-
     public string Content { get; set; }
 }

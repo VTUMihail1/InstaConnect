@@ -39,10 +39,12 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
-      ReverseProxy__Clusters__users-cluster__Destinations__destination1__Address: http://user-svc
-      ReverseProxy__Clusters__posts-cluster__Destinations__destination1__Address: http://post-svc
-      ReverseProxy__Clusters__messages-cluster__Destinations__destination1__Address: http://message-svc
-      ReverseProxy__Clusters__follows-cluster__Destinations__destination1__Address: http://follow-svc
+      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
+      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
+      ReverseProxy__Clusters__users-cluster__Destinations__destination1__Address: http://users-svc
+      ReverseProxy__Clusters__posts-cluster__Destinations__destination1__Address: http://posts-svc
+      ReverseProxy__Clusters__messages-cluster__Destinations__destination1__Address: http://messages-svc
+      ReverseProxy__Clusters__follows-cluster__Destinations__destination1__Address: http://follows-svc
     ports:
       - "5100:80"
     networks:
@@ -82,6 +84,8 @@ services:
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest
+      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
+      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
     ports:
@@ -102,6 +106,8 @@ services:
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest
+      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
+      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
     ports:
@@ -122,6 +128,8 @@ services:
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest
+      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
+      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
     ports:

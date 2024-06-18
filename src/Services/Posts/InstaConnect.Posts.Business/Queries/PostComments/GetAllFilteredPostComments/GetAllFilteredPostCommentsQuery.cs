@@ -9,6 +9,4 @@ public class GetAllFilteredPostCommentsQuery : CollectionDTO, IQuery<ICollection
     public string UserId { get; set; }
 
     public string PostId { get; set; }
-
-    public string PostCommentId { get; set; }
 }
