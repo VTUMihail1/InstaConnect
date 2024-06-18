@@ -79,11 +79,6 @@ namespace InstaConnect.Posts.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
-                    b.Property<string>("PostCommentId")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("comment_id");
-
                     b.Property<string>("PostId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
@@ -104,8 +99,6 @@ namespace InstaConnect.Posts.Data.Migrations
                         .HasColumnName("user_name");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PostCommentId");
 
                     b.HasIndex("PostId");
 
@@ -186,11 +179,6 @@ namespace InstaConnect.Posts.Data.Migrations
 
             modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.PostComment", b =>
                 {
-                    b.HasOne("InstaConnect.Posts.Data.Models.Entities.PostComment", null)
-                        .WithMany("PostComments")
-                        .HasForeignKey("PostCommentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("InstaConnect.Posts.Data.Models.Entities.Post", "Post")
                         .WithMany("PostComments")
                         .HasForeignKey("PostId")
@@ -232,8 +220,6 @@ namespace InstaConnect.Posts.Data.Migrations
             modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.PostComment", b =>
                 {
                     b.Navigation("CommentLikes");
-
-                    b.Navigation("PostComments");
                 });
 #pragma warning restore 612, 618
         }

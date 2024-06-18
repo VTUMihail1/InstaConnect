@@ -34,19 +34,12 @@ public partial class Initial : Migration
                 user_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 post_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 content = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                comment_id = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                 created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                 updated_at = table.Column<DateTime>(type: "datetime2", nullable: false)
             },
             constraints: table =>
             {
                 table.PrimaryKey("PK_post_comment", x => x.id);
-                table.ForeignKey(
-                    name: "FK_post_comment_post_comment_comment_id",
-                    column: x => x.comment_id,
-                    principalTable: "post_comment",
-                    principalColumn: "id",
-                    onDelete: ReferentialAction.Cascade);
                 table.ForeignKey(
                     name: "FK_post_comment_post_post_id",
                     column: x => x.post_id,
@@ -98,11 +91,6 @@ public partial class Initial : Migration
                     principalColumn: "id",
                     onDelete: ReferentialAction.Cascade);
             });
-
-        migrationBuilder.CreateIndex(
-            name: "IX_post_comment_comment_id",
-            table: "post_comment",
-            column: "comment_id");
 
         migrationBuilder.CreateIndex(
             name: "IX_post_comment_post_id",

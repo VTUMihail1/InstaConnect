@@ -55,8 +55,7 @@ public class PostsBusinessProfile : Profile
                  new PostCommentFilteredCollectionQuery
                  {
                      Expression = p => (src.UserId == string.Empty || p.UserId == src.UserId) &&
-                                       (src.PostId == string.Empty || p.PostId == src.PostId) &&
-                                       (src.PostCommentId == string.Empty || p.PostCommentId == src.PostCommentId)
+                                       (src.PostId == string.Empty || p.PostId == src.PostId)
                  });
 
         CreateMap<GetAllPostCommentsQuery, CollectionQuery>();

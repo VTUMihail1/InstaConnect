@@ -43,13 +43,6 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
             throw new PostNotFoundException();
         }
 
-        var existingPostComment = await _postCommentRepository.GetByIdAsync(request.PostCommentId, cancellationToken);
-
-        if (request.PostCommentId != null && existingPostComment == null)
-        {
-            throw new PostCommentNotFoundException();
-        }
-
         var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
         var postComment = _mapper.Map<PostComment>(request);
         _mapper.Map(currentUserDetails, postComment);

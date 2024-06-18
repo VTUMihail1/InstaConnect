@@ -15,5 +15,6 @@ if (app.Environment.IsDevelopment())
 app.MapReverseProxy();
 
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
