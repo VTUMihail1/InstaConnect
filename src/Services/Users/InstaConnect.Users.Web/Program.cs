@@ -11,6 +11,8 @@ builder.Services
     .AddBusinessLayer(builder.Configuration)
     .AddWebLayer(builder.Configuration);
 
+builder.Host.AddSerilog();
+
 var app = builder.Build();
 
 await app.SetUpDatabaseAsync(cancellationTokenSource.Token);
