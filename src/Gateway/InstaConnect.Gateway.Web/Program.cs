@@ -1,8 +1,11 @@
 using InstaConnect.Gateway.Web.Extensions;
+using InstaConnect.Shared.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddWebLayer(builder.Configuration);
+
+builder.Host.AddSerilog();
 
 var app = builder.Build();
 
