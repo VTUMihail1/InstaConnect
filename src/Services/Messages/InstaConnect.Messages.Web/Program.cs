@@ -29,4 +29,6 @@ app.MapHub<ChatHub>("/chat-hub");
 
 app.MapControllers();
 
+app.UseExceptionHandler();
+
 app.Run();

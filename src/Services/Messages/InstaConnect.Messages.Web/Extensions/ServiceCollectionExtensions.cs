@@ -18,7 +18,8 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddJwtBearer(configuration)
             .AddApiControllers()
-            .AddAutoMapper(currentAssembly);
+            .AddAutoMapper(currentAssembly)
+            .AddExceptionHandler();
 
         serviceCollection.AddEndpointsApiExplorer();
         serviceCollection.AddSwaggerGen();

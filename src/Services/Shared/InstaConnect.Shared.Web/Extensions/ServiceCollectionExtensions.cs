@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Data.Models.Options;
+using InstaConnect.Shared.Web.ExceptionHandlers;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
@@ -68,6 +69,14 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection
             .Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddExceptionHandler(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddExceptionHandler<GlobalExceptionHandler>();
+        serviceCollection.AddProblemDetails();
 
         return serviceCollection;
     }

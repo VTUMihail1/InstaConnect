@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Shared.Data.Abstract;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -14,6 +15,5 @@ public static class HostExtensions
 
         await databaseInitializer.ApplyPendingMigrationsAsync(cancellationToken);
         await databaseInitializer.SeedAsync(cancellationToken);
-
     }
 }

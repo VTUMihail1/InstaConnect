@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Shared.Data.Repositories;
 using InstaConnect.Users.Data.Abstraction;
 using InstaConnect.Users.Data.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Users.Data.Repositories;

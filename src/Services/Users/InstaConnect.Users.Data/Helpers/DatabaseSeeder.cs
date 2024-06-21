@@ -3,7 +3,6 @@ using InstaConnect.Users.Data.Abstraction;
 using InstaConnect.Users.Data.Models.Entities;
 using InstaConnect.Users.Data.Models.Enums;
 using InstaConnect.Users.Data.Models.Options;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
