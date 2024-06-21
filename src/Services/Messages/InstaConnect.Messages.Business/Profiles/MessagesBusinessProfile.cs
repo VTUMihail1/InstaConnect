@@ -6,8 +6,7 @@ using InstaConnect.Messages.Business.Queries.Messages.GetAllFilteredMessages;
 using InstaConnect.Messages.Business.Queries.Messages.GetAllMessages;
 using InstaConnect.Messages.Data.Models.Entities;
 using InstaConnect.Messages.Data.Models.Filters;
-using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Shared.Business.Models.Responses;
+using InstaConnect.Shared.Business.Contracts;
 using InstaConnect.Shared.Business.Models.Users;
 using InstaConnect.Shared.Data.Models.Filters;
 

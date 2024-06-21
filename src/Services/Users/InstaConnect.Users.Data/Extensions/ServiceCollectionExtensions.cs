@@ -12,7 +12,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TokenOptions = InstaConnect.Users.Data.Models.Options.TokenOptions;
+using TokenOptions = InstaConnect.Shared.Data.Models.Options.TokenOptions;
+using InstaConnect.Users.Data.Abstraction;
+using InstaConnect.Shared.Data.Extensions;
 
 namespace InstaConnect.Users.Data.Extensions;
 
@@ -27,30 +29,16 @@ public static class ServiceCollectionExtensions
             .ValidateOnStart();
 
         serviceCollection
-            .AddOptions<TokenOptions>()
-            .BindConfiguration(nameof(TokenOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        serviceCollection
-            .AddDbContext<UsersContext>(options =>
-            options.UseSqlServer(
-                configuration.GetConnectionString("DefaultConnection"),
-                options => options.EnableRetryOnFailure()));
-
-        serviceCollection
-            .AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(sp.GetRequiredService<UsersContext>()))
             .AddScoped<ITokenRepository, TokenRepository>()
             .AddScoped<ITokenFactory, TokenFactory>()
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<ITokenGenerator, TokenGenerator>()
             .AddScoped<IUserClaimRepository, UserClaimRepository>()
             .AddScoped<IPasswordHasher, PasswordHasher>()
-            .AddScoped<IDatabaseSeeder, DatabaseSeeder>();
-
-        serviceCollection
-            .AddHealthChecks()
-            .AddDbContextCheck<UsersContext>();
+            .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
+            .AddDatabaseContext<UsersContext>(configuration)
+            .AddUnitOfWork<UsersContext>();
+        ;
 
 
         return serviceCollection;

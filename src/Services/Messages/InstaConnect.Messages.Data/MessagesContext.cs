@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Messages.Data;
 
-public class MessagesContext : BaseDbContext
+public class MessagesContext : DbContext
 {
     public MessagesContext(DbContextOptions<MessagesContext> options) : base(options)
     { }

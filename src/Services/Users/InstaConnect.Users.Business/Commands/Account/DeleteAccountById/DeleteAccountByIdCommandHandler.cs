@@ -1,7 +1,7 @@
-﻿using InstaConnect.Shared.Business.Exceptions.User;
-using InstaConnect.Shared.Business.Messaging;
+﻿using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
-using InstaConnect.Users.Data.Abstraction.Repositories;
+using InstaConnect.Users.Data.Abstraction;
 
 namespace InstaConnect.Users.Business.Commands.Account.DeleteAccountById;
 

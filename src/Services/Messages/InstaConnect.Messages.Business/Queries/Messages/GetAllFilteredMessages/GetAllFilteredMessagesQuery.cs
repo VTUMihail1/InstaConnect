@@ -1,10 +1,10 @@
 ﻿using InstaConnect.Messages.Business.Models;
-using InstaConnect.Shared.Business.Messaging;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Models.Filters;
 
 namespace InstaConnect.Messages.Business.Queries.Messages.GetAllFilteredMessages;
 
-public class GetAllFilteredMessagesQuery : CollectionDTO, IQuery<ICollection<MessageViewModel>>
+public class GetAllFilteredMessagesQuery : CollectionModel, IQuery<ICollection<MessageViewModel>>
 {
     public string SenderId { get; set; }
 

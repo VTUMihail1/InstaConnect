@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using InstaConnect.Follows.Business.Models;
 using InstaConnect.Follows.Data.Abstractions;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Follow;
-using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Follows.Business.Queries.Follows.GetFollowById;
 

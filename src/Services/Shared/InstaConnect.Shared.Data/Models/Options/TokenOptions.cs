@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Users.Data.Models.Options;
+namespace InstaConnect.Shared.Data.Models.Options;
 
 public class TokenOptions
 {

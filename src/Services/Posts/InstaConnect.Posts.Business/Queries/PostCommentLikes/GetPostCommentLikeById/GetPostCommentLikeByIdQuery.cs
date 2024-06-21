@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Posts.Business.Models;
-using InstaConnect.Shared.Business.Messaging;
+using InstaConnect.Shared.Business.Abstractions;
 
 namespace InstaConnect.Posts.Business.Queries.PostCommentLikes.GetPostCommentLikeById;
 

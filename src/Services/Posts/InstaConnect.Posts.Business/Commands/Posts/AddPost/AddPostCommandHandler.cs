@@ -2,11 +2,7 @@
 using InstaConnect.Posts.Data.Abstract;
 using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Messaging;
-using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Shared.Business.Models.Users;
 using InstaConnect.Shared.Data.Abstract;
-using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.Posts.AddPost;
 

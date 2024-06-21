@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Messages.Business.Models;
-using InstaConnect.Shared.Business.Messaging;
+using InstaConnect.Shared.Business.Abstractions;
 
 namespace InstaConnect.Messages.Business.Queries.Messages.GetMessageById;
 

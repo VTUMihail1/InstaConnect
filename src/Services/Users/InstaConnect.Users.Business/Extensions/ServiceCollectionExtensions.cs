@@ -5,6 +5,7 @@ using InstaConnect.Users.Business.Consumers;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using InstaConnect.Shared.Business.Extensions;
 
 namespace InstaConnect.Users.Business.Extensions;
 
@@ -15,39 +16,11 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
-            .AddOptions<MessageBrokerOptions>()
-            .BindConfiguration(nameof(MessageBrokerOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var messageBrokerOptions = configuration.GetSection(nameof(MessageBrokerOptions)).Get<MessageBrokerOptions>()!;
-
-        serviceCollection.AddHttpContextAccessor();
-
-        serviceCollection
-            .AddScoped<ICurrentUserContext, CurrentUserContext>();
-
-        serviceCollection.AddAutoMapper(currentAssembly);
-
-        serviceCollection.AddMediatR(cf => cf.RegisterServicesFromAssembly(currentAssembly));
-
-        serviceCollection.AddMassTransit(busConfigurator =>
-        {
-            busConfigurator.SetKebabCaseEndpointNameFormatter();
-
-            busConfigurator.AddConsumer<GetUserByIdConsumer>();
-
-            busConfigurator.UsingRabbitMq((context, configurator) =>
-            {
-                configurator.Host(new Uri(messageBrokerOptions.Host), h =>
-                {
-                    h.Username(messageBrokerOptions.Username);
-                    h.Password(messageBrokerOptions.Password);
-                });
-
-                configurator.ConfigureEndpoints(context);
-            });
-        });
+            .AddMediatR(currentAssembly)
+            .AddAutoMapper(currentAssembly)
+            .AddCurrentUserContext()
+            .AddMessageBroker(configuration, busConfigurator => 
+            busConfigurator.AddConsumer<GetUserByIdConsumer>());
 
         return serviceCollection;
     }

@@ -2,7 +2,7 @@
 using InstaConnect.Messages.Business.Models;
 using InstaConnect.Messages.Data.Abstractions;
 using InstaConnect.Messages.Data.Models.Filters;
-using InstaConnect.Shared.Business.Messaging;
+using InstaConnect.Shared.Business.Abstractions;
 
 namespace InstaConnect.Messages.Business.Queries.Messages.GetAllFilteredMessages;
 

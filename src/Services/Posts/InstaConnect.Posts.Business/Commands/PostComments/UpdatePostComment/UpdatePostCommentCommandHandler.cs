@@ -3,12 +3,7 @@ using InstaConnect.Posts.Data.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
-using InstaConnect.Shared.Business.Messaging;
-using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Shared.Business.Models.Responses;
-using InstaConnect.Shared.Business.Models.Users;
 using InstaConnect.Shared.Data.Abstract;
-using MassTransit;
 
 namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment;
 

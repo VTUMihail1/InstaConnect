@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Data.Models.Base;
+﻿namespace InstaConnect.Shared.Data.Abstract;
 
 /// <summary>
 /// Represents an interface for entities that track creation and update timestamps.

@@ -1,13 +1,8 @@
-﻿using AutoMapper;
-using InstaConnect.Messages.Data.Abstractions;
+﻿using InstaConnect.Messages.Data.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
-using InstaConnect.Shared.Business.Messaging;
-using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Data.Abstract;
-using MassTransit;
 
 namespace InstaConnect.Messages.Business.Commands.Messages.DeleteMessage;
 

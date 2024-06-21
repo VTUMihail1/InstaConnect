@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Data.Enum;
+﻿using InstaConnect.Shared.Data.Models.Enum;
 
 namespace InstaConnect.Shared.Data.Models.Filters;
 

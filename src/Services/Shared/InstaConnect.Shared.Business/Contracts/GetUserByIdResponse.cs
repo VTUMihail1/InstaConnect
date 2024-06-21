@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Business.Models.Responses;
+﻿namespace InstaConnect.Shared.Business.Contracts;
 public class GetUserByIdResponse
 {
     public string Id { get; set; }

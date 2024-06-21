@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Follows.Data;
 
-public class FollowsContext : BaseDbContext
+public class FollowsContext : DbContext
 {
     public FollowsContext(DbContextOptions<FollowsContext> options) : base(options)
     { }

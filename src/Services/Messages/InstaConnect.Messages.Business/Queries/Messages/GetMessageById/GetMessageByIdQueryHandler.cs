@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Business.Models;
 using InstaConnect.Messages.Data.Abstractions;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Message;
-using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Messages.Business.Queries.Messages.GetMessageById;
 

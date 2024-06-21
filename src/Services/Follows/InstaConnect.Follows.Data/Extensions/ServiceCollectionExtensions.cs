@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Azure.Messaging;
 using InstaConnect.Follows.Data.Abstractions;
 using InstaConnect.Follows.Data.Helpers;
+using InstaConnect.Shared.Data.Extensions;
 
 namespace InstaConnect.Follows.Data.Extensions;
 
@@ -15,19 +16,10 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
-            .AddDbContext<FollowsContext>(options =>
-            options.UseSqlServer(
-                configuration.GetConnectionString("DefaultConnection"),
-                options => options.EnableRetryOnFailure()));
-
-        serviceCollection
-            .AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(sp.GetRequiredService<FollowsContext>()))
             .AddScoped<IFollowRepository, FollowRepository>()
-            .AddScoped<IDatabaseSeeder, DatabaseSeeder>();
-
-        serviceCollection
-            .AddHealthChecks()
-            .AddDbContextCheck<FollowsContext>();
+            .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
+            .AddDatabaseContext<FollowsContext>(configuration)
+            .AddUnitOfWork<FollowsContext>();
 
         return serviceCollection;
     }

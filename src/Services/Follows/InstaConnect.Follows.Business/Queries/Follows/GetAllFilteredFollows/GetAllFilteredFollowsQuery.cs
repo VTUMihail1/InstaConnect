@@ -1,10 +1,10 @@
 ﻿using InstaConnect.Follows.Business.Models;
-using InstaConnect.Shared.Business.Messaging;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Models.Filters;
 
 namespace InstaConnect.Follows.Business.Queries.Follows.GetAllFilteredFollows;
 
-public class GetAllFilteredFollowsQuery : CollectionDTO, IQuery<ICollection<FollowViewModel>>
+public class GetAllFilteredFollowsQuery : CollectionModel, IQuery<ICollection<FollowViewModel>>
 {
     public string FollowerId { get; set; }
 

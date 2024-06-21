@@ -4,19 +4,19 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace InstaConnect.Shared.Data;
 
-public class UnitOfWork : IUnitOfWork
+internal class UnitOfWork : IUnitOfWork
 {
-    private readonly BaseDbContext _baseDbContext;
+    private readonly DbContext _dbContext;
 
-    public UnitOfWork(BaseDbContext baseDbContext)
+    public UnitOfWork(DbContext dbContext)
     {
-        _baseDbContext = baseDbContext;
+        _dbContext = dbContext;
     }
 
-    public DatabaseFacade Database => _baseDbContext.Database;
+    public DatabaseFacade Database => _dbContext.Database;
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {
-        return await _baseDbContext.SaveChangesAsync(cancellationToken);
+        return await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

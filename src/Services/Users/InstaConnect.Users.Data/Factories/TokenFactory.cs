@@ -1,4 +1,4 @@
-﻿using InstaConnect.Users.Data.Abstraction.Factories;
+﻿using InstaConnect.Users.Data.Abstraction;
 using InstaConnect.Users.Data.Models.Entities;
 
 namespace InstaConnect.Users.Data.Factories;

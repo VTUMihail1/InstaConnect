@@ -1,8 +1,8 @@
-﻿using InstaConnect.Shared.Data.Enum;
+﻿using InstaConnect.Shared.Data.Models.Enum;
 
 namespace InstaConnect.Shared.Business.Models.Filters;
 
-public class CollectionDTO
+public class CollectionModel
 {
     public SortOrder SortOrder { get; set; }
 

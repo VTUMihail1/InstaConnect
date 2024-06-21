@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace InstaConnect.Shared.Business.Models.Options;
-public class MessageBrokerOptions
+internal class MessageBrokerOptions
 {
     [Required]
     public string Host { get; set; }

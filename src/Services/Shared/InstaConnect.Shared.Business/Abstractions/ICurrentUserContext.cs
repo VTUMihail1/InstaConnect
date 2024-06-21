@@ -1,5 +1,4 @@
-﻿using InstaConnect.Shared.Business.Models.Responses;
-using InstaConnect.Shared.Business.Models.Users;
+﻿using InstaConnect.Shared.Business.Models.Users;
 
 namespace InstaConnect.Shared.Business.Abstractions;
 

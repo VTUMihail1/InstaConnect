@@ -3,7 +3,6 @@ using InstaConnect.Follows.Data.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Follow;
-using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Data.Abstract;
 
 namespace InstaConnect.Follows.Business.Commands.Follows.DeleteFollow;
