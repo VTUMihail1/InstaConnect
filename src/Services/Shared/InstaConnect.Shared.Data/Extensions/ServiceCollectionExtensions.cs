@@ -9,7 +9,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddUnitOfWork<TContext>(this IServiceCollection serviceCollection)
     where TContext : DbContext
     {
-        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>(sp => 
+        new UnitOfWork(sp.GetRequiredService<TContext>()));
 
         return serviceCollection;
     }
