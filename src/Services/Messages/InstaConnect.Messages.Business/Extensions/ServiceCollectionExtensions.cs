@@ -17,6 +17,7 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
+            .AddScoped<IMessageSender, MessageSender>()
             .AddMediatR(currentAssembly)
             .AddAutoMapper(currentAssembly)
             .AddCurrentUserContext()
