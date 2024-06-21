@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Shared.Data.Models.Base;
-using Microsoft.AspNetCore.Identity;
 
 namespace InstaConnect.Users.Data.Models.Entities;
 

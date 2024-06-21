@@ -1,20 +1,12 @@
 ﻿using InstaConnect.Shared.Data.Abstract;
-using InstaConnect.Shared.Data;
-using InstaConnect.Users.Data.Abstraction.Factories;
-using InstaConnect.Users.Data.Abstraction.Helpers;
-using InstaConnect.Users.Data.Abstraction.Repositories;
+using InstaConnect.Shared.Data.Extensions;
+using InstaConnect.Users.Data.Abstraction;
 using InstaConnect.Users.Data.Factories;
 using InstaConnect.Users.Data.Helpers;
-using InstaConnect.Users.Data.Models.Entities;
 using InstaConnect.Users.Data.Models.Options;
 using InstaConnect.Users.Data.Repositories;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TokenOptions = InstaConnect.Shared.Data.Models.Options.TokenOptions;
-using InstaConnect.Users.Data.Abstraction;
-using InstaConnect.Shared.Data.Extensions;
 
 namespace InstaConnect.Users.Data.Extensions;
 
