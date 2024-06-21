@@ -1,15 +1,16 @@
-﻿using InstaConnect.Users.Data.Abstraction.Helpers;
+﻿using InstaConnect.Shared.Data.Abstract;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-namespace InstaConnect.Users.Web.Extensions;
+namespace InstaConnect.Shared.Web.Extensions;
 
 public static class HostExtensions
 {
-    public static async Task SetUpDatabaseAsync(this IHost host)
+    public static async Task SetUpDatabaseAsync(this IHost host, CancellationToken cancellationToken)
     {
         using var scope = host.Services.CreateScope();
 
         var databaseInitializer = scope.ServiceProvider.GetRequiredService<IDatabaseSeeder>();
-        var cancellationToken = new CancellationToken();
 
         await databaseInitializer.ApplyPendingMigrationsAsync(cancellationToken);
         await databaseInitializer.SeedAsync(cancellationToken);

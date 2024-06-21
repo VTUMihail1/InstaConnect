@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
-using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Shared.Data.Abstract;
-using InstaConnect.Users.Data.Abstraction.Helpers;
-using InstaConnect.Users.Data.Abstraction.Repositories;
+using InstaConnect.Users.Data.Abstraction;
 using InstaConnect.Users.Data.Models.Entities;
 
 namespace InstaConnect.Users.Business.Commands.Account.RegisterAccount;

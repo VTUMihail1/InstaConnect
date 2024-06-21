@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Users.Data;
 
-public class UsersContext : BaseDbContext
+public class UsersContext : DbContext
 {
     public UsersContext(DbContextOptions options) : base(options)
     { }

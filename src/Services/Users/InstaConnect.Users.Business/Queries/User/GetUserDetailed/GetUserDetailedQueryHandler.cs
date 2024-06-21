@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.User;
-using InstaConnect.Shared.Business.Messaging;
 using InstaConnect.Users.Business.Models;
-using InstaConnect.Users.Data.Abstraction.Repositories;
+using InstaConnect.Users.Data.Abstraction;
 
 namespace InstaConnect.Users.Business.Queries.User.GetUserDetailed;
 

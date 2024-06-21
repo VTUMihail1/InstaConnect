@@ -1,7 +1,6 @@
-﻿using InstaConnect.Shared.Data.Models.Base;
-using InstaConnect.Shared.Data.Models.Filters;
+﻿using InstaConnect.Shared.Data.Models.Filters;
 
-namespace InstaConnect.Shared.Data.Repositories.Abstract;
+namespace InstaConnect.Shared.Data.Abstract;
 
 /// <summary>
 /// Represents a generic repository interface for basic CRUD operations on entities.

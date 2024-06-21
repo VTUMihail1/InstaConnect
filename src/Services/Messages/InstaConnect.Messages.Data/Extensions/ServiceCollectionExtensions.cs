@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using InstaConnect.Messages.Data.Abstractions;
 using InstaConnect.Messages.Data.Helpers;
+using InstaConnect.Shared.Data.Extensions;
 
 namespace InstaConnect.Messages.Data.Extensions;
 
@@ -14,19 +15,10 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
-            .AddDbContext<MessagesContext>(options => 
-            options.UseSqlServer(
-                configuration.GetConnectionString("DefaultConnection"), 
-                options => options.EnableRetryOnFailure()));
-
-        serviceCollection
-            .AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(sp.GetRequiredService<MessagesContext>()))
             .AddScoped<IMessageRepository, MessageRepository>()
-            .AddScoped<IDatabaseSeeder, DatabaseSeeder>();
-
-        serviceCollection
-            .AddHealthChecks()
-            .AddDbContextCheck<MessagesContext>();
+            .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
+            .AddDatabaseContext<MessagesContext>(configuration)
+            .AddUnitOfWork<MessagesContext>();
 
         return serviceCollection;
     }

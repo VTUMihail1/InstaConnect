@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Data.Enum;
+﻿using InstaConnect.Shared.Data.Models.Enum;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Shared.Web.Models.Filters;
@@ -8,7 +8,7 @@ public class CollectionRequest
     [FromQuery(Name = "sortOrder")]
     public SortOrder SortOrder { get; set; } = SortOrder.ASC;
 
-    [FromQuery(Name = "orderPropertyType")]
+    [FromQuery(Name = "orderPropertyName")]
     public string SortPropertyName { get; set; } = "CreatedAt";
 
     [FromQuery(Name = "offset")]

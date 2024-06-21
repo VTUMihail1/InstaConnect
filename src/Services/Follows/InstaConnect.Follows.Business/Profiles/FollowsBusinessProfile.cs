@@ -5,8 +5,7 @@ using InstaConnect.Follows.Business.Queries.Follows.GetAllFilteredFollows;
 using InstaConnect.Follows.Business.Queries.Follows.GetAllFollows;
 using InstaConnect.Follows.Data.Models.Entities;
 using InstaConnect.Follows.Data.Models.Filters;
-using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Shared.Business.Models.Responses;
+using InstaConnect.Shared.Business.Contracts;
 using InstaConnect.Shared.Business.Models.Users;
 using InstaConnect.Shared.Data.Models.Filters;
 

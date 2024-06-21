@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Business.Messaging;
+﻿using InstaConnect.Shared.Business.Abstractions;
 
 namespace InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
 

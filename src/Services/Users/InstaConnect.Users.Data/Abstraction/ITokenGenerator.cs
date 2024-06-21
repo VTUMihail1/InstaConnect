@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Users.Data.Models.Entities;
 
-namespace InstaConnect.Users.Data.Abstraction.Helpers;
+namespace InstaConnect.Users.Data.Abstraction;
 
 /// <summary>
 /// Represents an interface for generating tokens, including access tokens and email confirmation tokens.

@@ -1,5 +1,5 @@
 ﻿using BCrypt.Net;
-using InstaConnect.Users.Data.Abstraction.Helpers;
+using InstaConnect.Users.Data.Abstraction;
 using InstaConnect.Users.Data.Models;
 
 namespace InstaConnect.Users.Data.Helpers;

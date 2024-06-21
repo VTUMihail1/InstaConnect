@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Posts.Data.Models.Entities;
-using InstaConnect.Shared.Data.Repositories.Abstract;
+using InstaConnect.Shared.Data.Abstract;
 
 namespace InstaConnect.Posts.Data.Abstract;
 

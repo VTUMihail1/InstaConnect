@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Users.Data.Models.Entities;
 
-namespace InstaConnect.Users.Data.Abstraction.Factories;
+namespace InstaConnect.Users.Data.Abstraction;
 
 /// <summary>
 /// Represents a token factory interface for creating access tokens.

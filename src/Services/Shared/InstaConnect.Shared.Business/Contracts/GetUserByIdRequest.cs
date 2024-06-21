@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Business.Models.Requests;
+﻿namespace InstaConnect.Shared.Business.Contracts;
 public class GetUserByIdRequest
 {
     public string Id { get; set; }

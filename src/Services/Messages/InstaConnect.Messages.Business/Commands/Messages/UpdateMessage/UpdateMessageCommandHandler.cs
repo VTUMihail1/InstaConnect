@@ -3,11 +3,7 @@ using InstaConnect.Messages.Data.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
-using InstaConnect.Shared.Business.Messaging;
-using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Shared.Business.Models.Responses;
 using InstaConnect.Shared.Data.Abstract;
-using MassTransit;
 
 namespace InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
 
@@ -41,7 +37,7 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
 
         var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
 
-        if(currentUserDetails.Id != existingMessage.SenderId)
+        if (currentUserDetails.Id != existingMessage.SenderId)
         {
             throw new AccountForbiddenException();
         }

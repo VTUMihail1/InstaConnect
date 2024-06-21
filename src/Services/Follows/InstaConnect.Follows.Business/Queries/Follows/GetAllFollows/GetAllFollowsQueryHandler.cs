@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Follows.Business.Models;
 using InstaConnect.Follows.Data.Abstractions;
-using InstaConnect.Shared.Business.Messaging;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Follows.Business.Queries.Follows.GetAllFollows;

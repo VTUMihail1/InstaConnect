@@ -3,6 +3,7 @@ using InstaConnect.Posts.Data.Helpers;
 using InstaConnect.Posts.Data.Repositories;
 using InstaConnect.Shared.Data;
 using InstaConnect.Shared.Data.Abstract;
+using InstaConnect.Shared.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,22 +15,13 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
-            .AddDbContext<PostsContext>(options =>
-            options.UseSqlServer(
-                configuration.GetConnectionString("DefaultConnection"),
-                options => options.EnableRetryOnFailure()));
-
-        serviceCollection
-            .AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(sp.GetRequiredService<PostsContext>()))
             .AddScoped<IPostRepository, PostRepository>()
             .AddScoped<IPostLikeRepository, PostLikeRepository>()
             .AddScoped<IPostCommentRepository, PostCommentRepository>()
             .AddScoped<IPostCommentLikeRepository, PostCommentLikeRepository>()
-            .AddScoped<IDatabaseSeeder, DatabaseSeeder>();
-
-        serviceCollection
-            .AddHealthChecks()
-            .AddDbContextCheck<PostsContext>();
+            .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
+            .AddDatabaseContext<PostsContext>(configuration)
+            .AddUnitOfWork<PostsContext>();
 
         return serviceCollection;
     }

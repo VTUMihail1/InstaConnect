@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace InstaConnect.Shared.Business.Messaging;
+namespace InstaConnect.Shared.Business.Abstractions;
 
 public interface ICommandHandler<TCommand> : IRequestHandler<TCommand>
     where TCommand : ICommand

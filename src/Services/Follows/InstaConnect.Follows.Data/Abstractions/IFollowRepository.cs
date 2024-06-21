@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Follows.Data.Models.Entities;
-using InstaConnect.Shared.Data.Repositories.Abstract;
+using InstaConnect.Shared.Data.Abstract;
 
 namespace InstaConnect.Follows.Data.Abstractions;
 

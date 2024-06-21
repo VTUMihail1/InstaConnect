@@ -2,12 +2,9 @@
 using InstaConnect.Follows.Data.Abstractions;
 using InstaConnect.Follows.Data.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Contracts;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.User;
-using InstaConnect.Shared.Business.Messaging;
-using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Shared.Business.Models.Responses;
-using InstaConnect.Shared.Business.Models.Users;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
@@ -42,7 +39,7 @@ internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
         var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
         var getUserByIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(getUserByIdRequest, cancellationToken);
 
-        if(getUserByIdResponse == null)
+        if (getUserByIdResponse == null)
         {
             throw new UserNotFoundException();
         }

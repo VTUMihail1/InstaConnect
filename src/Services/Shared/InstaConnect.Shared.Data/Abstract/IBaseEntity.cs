@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Data.Models.Base;
+﻿namespace InstaConnect.Shared.Data.Abstract;
 
 /// <summary>
 /// Represents a base entity abstraction.

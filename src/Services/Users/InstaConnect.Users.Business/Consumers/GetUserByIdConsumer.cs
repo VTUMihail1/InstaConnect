@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
 using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Contracts;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.User;
-using InstaConnect.Shared.Business.Models.Requests;
-using InstaConnect.Shared.Business.Models.Responses;
-using InstaConnect.Users.Data.Abstraction.Repositories;
+using InstaConnect.Users.Data.Abstraction;
 using MassTransit;
 
 namespace InstaConnect.Users.Business.Consumers;
-public class GetUserByIdConsumer : IConsumer<GetUserByIdRequest>
+internal class GetUserByIdConsumer : IConsumer<GetUserByIdRequest>
 {
     private readonly IMapper _mapper;
     private readonly IUserRepository _userRepository;

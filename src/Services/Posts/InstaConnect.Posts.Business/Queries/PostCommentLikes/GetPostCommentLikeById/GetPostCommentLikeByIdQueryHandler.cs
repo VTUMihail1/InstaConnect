@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Models;
 using InstaConnect.Posts.Data.Abstract;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.PostCommentLike;
-using InstaConnect.Shared.Business.Messaging;
 
 namespace InstaConnect.Posts.Business.Queries.PostCommentLikes.GetPostCommentLikeById;
 
