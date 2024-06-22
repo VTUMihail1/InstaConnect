@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using AutoMapper;
 using InstaConnect.Shared.Business.Contracts;
 using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Users.Business.Commands.Account.EditAccount;
@@ -33,12 +35,33 @@ public class UsersBusinessProfile : Profile
 
         CreateMap<Token, AccountViewModel>();
 
-        CreateMap<PasswordHashResultDTO, User>();
+        CreateMap<PasswordHashResultModel, User>();
 
         CreateMap<User, UserViewModel>();
 
         CreateMap<User, UserDetailedViewModel>();
 
         CreateMap<User, GetUserByIdResponse>();
+
+        CreateMap<User, UserClaimFilteredCollectionQuery>()
+            .ConstructUsing(src =>
+                 new UserClaimFilteredCollectionQuery
+                 {
+                     Expression = p => src.Id == p.UserId
+                 });
+
+        CreateMap<UserClaim, Claim>()
+            .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
+            .ForMember(dest => dest.ValueType, opt => opt.MapFrom(src => src.Claim));
+
+        CreateMap<User, CreateAccessTokenModel>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Claims, opt => opt.MapFrom(src => 
+            new List<Claim>() 
+            {
+            }));
+
+        CreateMap<User, CreateAccountTokenModel>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
     }
 }

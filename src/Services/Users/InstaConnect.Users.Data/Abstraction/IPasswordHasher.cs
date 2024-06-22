@@ -3,6 +3,6 @@
 namespace InstaConnect.Users.Data.Abstraction;
 public interface IPasswordHasher
 {
-    PasswordHashResultDTO Hash(string password);
+    PasswordHashResultModel Hash(string password);
     bool Verify(string password, string passwordHash);
 }

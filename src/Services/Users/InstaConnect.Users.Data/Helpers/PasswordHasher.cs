@@ -6,9 +6,9 @@ namespace InstaConnect.Users.Data.Helpers;
 
 public class PasswordHasher : IPasswordHasher
 {
-    public PasswordHashResultDTO Hash(string password)
+    public PasswordHashResultModel Hash(string password)
     {
-        return new PasswordHashResultDTO
+        return new PasswordHashResultModel
         {
             PasswordHash = BCrypt.Net.BCrypt.EnhancedHashPassword(password)
         };
