@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InstaConnect.Shared.Web.Utils;
 using InstaConnect.Users.Business.Commands.Account.ConfirmAccountEmail;
 using InstaConnect.Users.Business.Commands.Account.DeleteAccount;
 using InstaConnect.Users.Business.Commands.Account.DeleteAccountById;
@@ -148,9 +149,9 @@ public class AccountController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/accounts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [Authorize]
-    [HttpDelete("{id}")]
+    // DELETE: api/accounts/admin/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    [Authorize(AppPolicies.AdminPolicy)]
+    [HttpDelete("admin/{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteByIdAsync(
