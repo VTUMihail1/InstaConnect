@@ -165,10 +165,6 @@ public static class ServiceCollectionExtensions
                             Array.Empty<string>()
                         }
                     });
-
-                    var fileName = Assembly.GetExecutingAssembly().GetName().Name + ".xml";
-                    var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
-                    c.IncludeXmlComments(filePath);
                 });
 
         return serviceCollection;
