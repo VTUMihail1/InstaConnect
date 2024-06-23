@@ -21,6 +21,7 @@ public static class ServiceCollectionExtensions
             .AddAuthorizationPolicies()
             .AddCorsPolicies(configuration)
             .AddSwagger()
+            .AddRateLimiterPolicies()
             .AddExceptionHandler();
 
         serviceCollection.ConfigureApiBehaviorOptions();

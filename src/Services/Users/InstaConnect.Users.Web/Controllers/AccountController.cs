@@ -14,11 +14,13 @@ using InstaConnect.Users.Web.Models.Response;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace InstaConnect.Users.Web.Controllers;
 
 [ApiController]
 [Route("api/accounts")]
+[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class AccountController : ControllerBase
 {
     private readonly IMapper _mapper;

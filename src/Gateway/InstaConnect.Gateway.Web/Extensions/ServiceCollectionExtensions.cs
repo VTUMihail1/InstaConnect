@@ -14,6 +14,7 @@ public static class ServiceCollectionExtensions
             .AddJwtBearer(configuration)
             .AddAuthorizationPolicies()
             .AddCorsPolicies(configuration)
+            .AddRateLimiterPolicies()
             .AddSwagger();
 
         serviceCollection

@@ -8,13 +8,17 @@ using InstaConnect.Posts.Business.Queries.PostComments.GetPostCommentById;
 using InstaConnect.Posts.Web.Models.Requests.PostComment;
 using InstaConnect.Posts.Web.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
+using InstaConnect.Shared.Web.Utils;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace InstaConnect.Posts.Web.Controllers;
 
 [ApiController]
 [Route("api/post-comments")]
+[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class PostCommentController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -69,6 +73,7 @@ public class PostCommentController : ControllerBase
 
     // POST: api/post-comments
     [HttpPost]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -82,6 +87,7 @@ public class PostCommentController : ControllerBase
 
     // PUT: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpPut("{id}")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -95,6 +101,7 @@ public class PostCommentController : ControllerBase
 
     //DELETE: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpDelete("{id}")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -8,13 +8,17 @@ using InstaConnect.Posts.Business.Queries.Posts.GetPostById;
 using InstaConnect.Posts.Web.Models.Requests.Post;
 using InstaConnect.Posts.Web.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
+using InstaConnect.Shared.Web.Utils;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace InstaConnect.Posts.Web.Controllers;
 
 [ApiController]
 [Route("api/posts")]
+[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class PostController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -69,6 +73,7 @@ public class PostController : ControllerBase
 
     // POST: api/posts
     [HttpPost]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -82,6 +87,7 @@ public class PostController : ControllerBase
 
     // PUT: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpPut("{id}")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -95,6 +101,7 @@ public class PostController : ControllerBase
 
     //DELETE: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpDelete("{id}")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
