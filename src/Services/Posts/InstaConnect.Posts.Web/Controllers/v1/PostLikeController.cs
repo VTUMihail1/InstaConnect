@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
 using InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
 using InstaConnect.Posts.Business.Queries.PostLikes.GetAllFilteredPostLikes;
@@ -13,10 +14,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Posts.Web.Controllers;
+namespace InstaConnect.Posts.Web.Controllers.v1;
 
-[ApiController]
-[Route("api/post-likes")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/post-likes")]
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class PostLikeController : ControllerBase
 {

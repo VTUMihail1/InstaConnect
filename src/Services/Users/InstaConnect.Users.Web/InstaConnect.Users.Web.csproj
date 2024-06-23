@@ -22,10 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Web\InstaConnect.Shared.Web.csproj" />
     <ProjectReference Include="..\..\Users\InstaConnect.Users.Business\InstaConnect.Users.Business.csproj" />
   </ItemGroup>

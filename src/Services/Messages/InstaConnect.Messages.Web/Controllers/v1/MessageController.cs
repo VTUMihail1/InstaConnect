@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using InstaConnect.Messages.Business.Commands.Messages.AddMessage;
 using InstaConnect.Messages.Business.Commands.Messages.DeleteMessage;
 using InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
@@ -14,10 +15,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Messages.Web.Controllers;
+namespace InstaConnect.Messages.Web.Controllers.v1;
 
-[ApiController]
-[Route("api/messages")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/messages")]
 [Authorize]
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class MessageController : ControllerBase

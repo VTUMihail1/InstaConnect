@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using InstaConnect.Follows.Business.Commands.Follows.AddFollow;
 using InstaConnect.Follows.Business.Commands.Follows.DeleteFollow;
 using InstaConnect.Follows.Business.Queries.Follows.GetAllFilteredFollows;
@@ -13,10 +14,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Follows.Web.Controllers;
+namespace InstaConnect.Follows.Web.Controllers.v1;
 
 [ApiController]
-[Route("api/follows")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/follows")]
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class FollowController : ControllerBase
 {

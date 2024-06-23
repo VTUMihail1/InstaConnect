@@ -23,6 +23,7 @@ public static class ServiceCollectionExtensions
             .AddCorsPolicies(configuration)
             .AddSwagger()
             .AddRateLimiterPolicies()
+            .AddVersioning()
             .AddExceptionHandler();
 
         serviceCollection.AddSignalR();

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using InstaConnect.Posts.Business.Commands.Posts.AddPost;
 using InstaConnect.Posts.Business.Commands.Posts.DeletePost;
 using InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
@@ -14,10 +15,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Posts.Web.Controllers;
+namespace InstaConnect.Posts.Web.Controllers.v1;
 
-[ApiController]
-[Route("api/posts")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/posts")]
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class PostController : ControllerBase
 {
