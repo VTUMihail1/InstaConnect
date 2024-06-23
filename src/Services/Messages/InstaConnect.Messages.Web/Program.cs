@@ -27,6 +27,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(AppPolicies.CorsPolicy);
 
+app.UseRateLimiter();
+
 app.UseAuthorization();
 app.UseAuthorization();
 

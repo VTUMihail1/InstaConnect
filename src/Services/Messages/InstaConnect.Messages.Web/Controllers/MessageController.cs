@@ -8,13 +8,18 @@ using InstaConnect.Messages.Business.Queries.Messages.GetMessageById;
 using InstaConnect.Messages.Web.Models.Requests.Messages;
 using InstaConnect.Messages.Web.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
+using InstaConnect.Shared.Web.Utils;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace InstaConnect.Messages.Web.Controllers;
 
 [ApiController]
 [Route("api/messages")]
+[Authorize]
+[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class MessageController : ControllerBase
 {
     private readonly IMapper _mapper;

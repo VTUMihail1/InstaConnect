@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Threading.RateLimiting;
 using System.Threading.Tasks;
 using IdentityModel;
 using InstaConnect.Shared.Business.Abstractions;
@@ -18,6 +19,8 @@ using InstaConnect.Shared.Web.Utils;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -116,10 +119,18 @@ public static class ServiceCollectionExtensions
             .GetSection(nameof(CorsOptions))
             .Get<CorsOptions>()!;
 
-        serviceCollection.AddCors(options => options.AddDefaultPolicy(
-                builder => builder.WithOrigins(corsOptions.AllowedOrigins)
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()));
+        serviceCollection.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+                builder.AllowAnyOrigin()
+                       .AllowAnyHeader()
+                       .AllowAnyMethod());
+
+            options.AddPolicy(AppPolicies.CorsPolicy, builder =>
+                builder.WithOrigins(corsOptions.AllowedOrigins)
+                       .AllowAnyHeader()
+                       .AllowAnyMethod());
+        });
 
         return serviceCollection;
     }
@@ -156,6 +167,25 @@ public static class ServiceCollectionExtensions
                     var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
                     c.IncludeXmlComments(filePath);
                 });
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddRateLimiterPolicies(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddRateLimiter(options =>
+        {
+            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+            options.AddPolicy(AppPolicies.RateLimiterPolicy,
+                httpContext => RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
+                    factory: _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 10,
+                        Window = TimeSpan.FromSeconds(10),
+                    }));
+        });
 
         return serviceCollection;
     }

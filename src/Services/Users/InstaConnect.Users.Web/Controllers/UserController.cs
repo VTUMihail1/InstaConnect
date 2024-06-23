@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Shared.Web.Models.Filters;
+using InstaConnect.Shared.Web.Utils;
 using InstaConnect.Users.Business.Queries.User.GetAllFilteredUsers;
 using InstaConnect.Users.Business.Queries.User.GetAllUsers;
 using InstaConnect.Users.Business.Queries.User.GetUser;
@@ -12,11 +13,13 @@ using InstaConnect.Users.Web.Models.Response;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace InstaConnect.Users.Web.Controllers;
 
 [ApiController]
 [Route("api/users")]
+[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class UserController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -48,7 +51,7 @@ public class UserController : ControllerBase
     // GET: api/users/filtered
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAllAsync(
+    public async Task<IActionResult> GetAllFilteredAsync(
         GetUserCollectionRequest request,
         CancellationToken cancellationToken)
     {
@@ -61,12 +64,12 @@ public class UserController : ControllerBase
     }
 
     // GET: api/users/current/detailed
-    [Authorize]
     [HttpGet("current/detailed")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetDetailedAsync(
+    public async Task<IActionResult> GetCurrentDetailedAsync(
         GetUserDetailedRequest request,
         CancellationToken cancellationToken)
     {
@@ -79,7 +82,6 @@ public class UserController : ControllerBase
     }
 
     // GET: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/detailed
-    [Authorize]
     [HttpGet("{id}/detailed")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -98,9 +100,10 @@ public class UserController : ControllerBase
 
     // GET: api/users/current
     [HttpGet("current")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAsync(
+    public async Task<IActionResult> GetCurrentAsync(
         GetUserRequest request,
         CancellationToken cancellationToken)
     {

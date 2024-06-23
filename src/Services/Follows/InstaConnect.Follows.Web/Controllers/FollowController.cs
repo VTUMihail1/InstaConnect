@@ -7,13 +7,17 @@ using InstaConnect.Follows.Business.Queries.Follows.GetFollowById;
 using InstaConnect.Follows.Web.Models.Requests.Follows;
 using InstaConnect.Follows.Web.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
+using InstaConnect.Shared.Web.Utils;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace InstaConnect.Follows.Web.Controllers;
 
 [ApiController]
 [Route("api/follows")]
+[EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class FollowController : ControllerBase
 {
     private readonly IMapper _mapper;
@@ -68,6 +72,7 @@ public class FollowController : ControllerBase
 
     // POST: api/follows
     [HttpPost]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -81,6 +86,7 @@ public class FollowController : ControllerBase
 
     //DELETE: api/posts-comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpDelete("{id}")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
