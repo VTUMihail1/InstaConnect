@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
 using InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment;
 using InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment;
@@ -14,10 +15,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Posts.Web.Controllers;
+namespace InstaConnect.Posts.Web.Controllers.v1;
 
-[ApiController]
-[Route("api/post-comments")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/post-comments")]
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class PostCommentController : ControllerBase
 {

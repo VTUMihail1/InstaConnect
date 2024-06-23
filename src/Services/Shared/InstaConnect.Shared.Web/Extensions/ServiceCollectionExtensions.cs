@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using System.Threading.Tasks;
+using Asp.Versioning;
 using IdentityModel;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
@@ -139,6 +140,8 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection.AddEndpointsApiExplorer();
 
+        serviceCollection.ConfigureOptions<ConfigureSwaggerOptions>();
+
         serviceCollection.AddSwaggerGen(c =>
                 {
                     c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
@@ -186,6 +189,24 @@ public static class ServiceCollectionExtensions
                         Window = TimeSpan.FromSeconds(10),
                     }));
         });
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddVersioning(this IServiceCollection serviceCollection)
+    {
+        serviceCollection
+            .AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1);
+                options.ReportApiVersions = true;
+            
+            })
+            .AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+            });
 
         return serviceCollection;
     }

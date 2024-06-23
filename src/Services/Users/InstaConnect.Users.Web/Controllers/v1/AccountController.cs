@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using InstaConnect.Shared.Web.Utils;
 using InstaConnect.Users.Business.Commands.Account.ConfirmAccountEmail;
 using InstaConnect.Users.Business.Commands.Account.DeleteAccount;
@@ -16,10 +17,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Users.Web.Controllers;
+namespace InstaConnect.Users.Web.Controllers.v1;
 
-[ApiController]
-[Route("api/accounts")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/accounts")]
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class AccountController : ControllerBase
 {
