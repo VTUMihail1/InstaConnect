@@ -19,10 +19,10 @@ public static class ServiceCollectionExtensions
             .AddJwtBearer(configuration)
             .AddApiControllers()
             .AddAutoMapper(currentAssembly)
+            .AddAuthorizationPolicies()
+            .AddCorsPolicies(configuration)
+            .AddSwagger()
             .AddExceptionHandler();
-
-        serviceCollection.AddEndpointsApiExplorer();
-        serviceCollection.AddSwaggerGen();
 
         serviceCollection.AddSignalR();
 

@@ -15,4 +15,8 @@
     <Folder Include="Abstractions\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="7.0.0" />
+  </ItemGroup>
+
 </Project>

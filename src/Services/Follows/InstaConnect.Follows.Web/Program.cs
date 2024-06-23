@@ -2,6 +2,7 @@ using InstaConnect.Follows.Business.Extensions;
 using InstaConnect.Follows.Data.Extensions;
 using InstaConnect.Follows.Web.Extensions;
 using InstaConnect.Shared.Web.Extensions;
+using InstaConnect.Shared.Web.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 var cancellationTokenSource = new CancellationTokenSource();
@@ -22,6 +23,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(AppPolicies.CorsPolicy);
 
 app.UseAuthentication();
 app.UseAuthorization();
