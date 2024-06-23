@@ -1,4 +1,5 @@
 using InstaConnect.Shared.Web.Extensions;
+using InstaConnect.Shared.Web.Utils;
 using InstaConnect.Users.Business.Extensions;
 using InstaConnect.Users.Data.Extensions;
 using InstaConnect.Users.Web.Extensions;
@@ -22,6 +23,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(AppPolicies.CorsPolicy);
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -10,10 +10,11 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        serviceCollection.AddJwtBearer(configuration);
-
-        serviceCollection.AddEndpointsApiExplorer();
-        serviceCollection.AddSwaggerGen();
+        serviceCollection
+            .AddJwtBearer(configuration)
+            .AddAuthorizationPolicies()
+            .AddCorsPolicies(configuration)
+            .AddSwagger();
 
         serviceCollection
             .AddReverseProxy()

@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Shared.Data.Abstract;
+using InstaConnect.Shared.Data.Models.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,11 +22,21 @@ public static class ServiceCollectionExtensions
         Action<DbContextOptionsBuilder>? optionsAction = null)
     where TContext : DbContext
     {
+        serviceCollection
+            .AddOptions<DatabaseOptions>()
+            .BindConfiguration(nameof(DatabaseOptions))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        var databaseOptions = configuration
+            .GetSection(nameof(DatabaseOptions))
+            .Get<DatabaseOptions>()!;
+
         serviceCollection.AddDbContext<TContext>(options =>
         {
             options
               .UseSqlServer(
-                  configuration.GetConnectionString("DefaultConnection"),
+                  databaseOptions.ConnectionString,
                   sqlServerOptions => sqlServerOptions.EnableRetryOnFailure())
               .AddInterceptors(new AuditableEntityInterceptor());
 

@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Shared.Data.Abstract;
+using InstaConnect.Shared.Data.Utils;
 using InstaConnect.Users.Data.Abstraction;
 using InstaConnect.Users.Data.Models.Entities;
-using InstaConnect.Users.Data.Models.Enums;
 using InstaConnect.Users.Data.Models.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -64,8 +64,8 @@ internal class DatabaseSeeder : IDatabaseSeeder
         var adminClaim = new UserClaim
         {
             UserId = adminUser.Id,
-            Claim = Claims.Admin,
-            Value = nameof(Claims.Admin)
+            Claim = AppClaims.Admin,
+            Value = AppClaims.Admin,
         };
 
         _userRepository.Add(adminUser);

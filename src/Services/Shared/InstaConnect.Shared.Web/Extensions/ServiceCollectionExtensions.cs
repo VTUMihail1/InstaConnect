@@ -2,19 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using IdentityModel;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
+using InstaConnect.Shared.Business.Models.Options;
 using InstaConnect.Shared.Data.Models.Options;
+using InstaConnect.Shared.Data.Utils;
 using InstaConnect.Shared.Web.ExceptionHandlers;
+using InstaConnect.Shared.Web.Models.Options;
+using InstaConnect.Shared.Web.Utils;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace InstaConnect.Shared.Web.Extensions;
 public static class ServiceCollectionExtensions
@@ -77,6 +85,77 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection.AddExceptionHandler<GlobalExceptionHandler>();
         serviceCollection.AddProblemDetails();
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddAuthorizationPolicies(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddAuthorization(options =>
+        {
+            options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .RequireClaim(JwtClaimTypes.Subject)
+                .Build();
+
+            options.AddPolicy(AppPolicies.AdminPolicy, policy => policy.RequireClaim(AppClaims.Admin));
+        });
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddCorsPolicies(this IServiceCollection serviceCollection, IConfiguration configuration)
+    {
+        serviceCollection
+            .AddOptions<CorsOptions>()
+            .BindConfiguration(nameof(CorsOptions))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        var corsOptions = configuration
+            .GetSection(nameof(CorsOptions))
+            .Get<CorsOptions>()!;
+
+        serviceCollection.AddCors(options => options.AddDefaultPolicy(
+                builder => builder.WithOrigins(corsOptions.AllowedOrigins)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()));
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddSwagger(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddEndpointsApiExplorer();
+
+        serviceCollection.AddSwaggerGen(c =>
+                {
+                    c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+                    {
+                        In = ParameterLocation.Header,
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey,
+                    });
+
+                    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = JwtBearerDefaults.AuthenticationScheme
+                                }
+                            },
+                            Array.Empty<string>()
+                        }
+                    });
+
+                    var fileName = Assembly.GetExecutingAssembly().GetName().Name + ".xml";
+                    var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
+                    c.IncludeXmlComments(filePath);
+                });
 
         return serviceCollection;
     }
