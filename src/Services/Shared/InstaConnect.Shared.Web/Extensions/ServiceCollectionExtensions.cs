@@ -127,7 +127,7 @@ public static class ServiceCollectionExtensions
                        .AllowAnyMethod());
 
             options.AddPolicy(AppPolicies.CorsPolicy, builder =>
-                builder.WithOrigins(corsOptions.AllowedOrigins)
+                builder.WithOrigins(corsOptions.AllowedOrigins.Split(", "))
                        .AllowAnyHeader()
                        .AllowAnyMethod());
         });
