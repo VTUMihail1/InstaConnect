@@ -140,8 +140,6 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection.AddEndpointsApiExplorer();
 
-        serviceCollection.ConfigureOptions<ConfigureSwaggerOptions>();
-
         serviceCollection.AddSwaggerGen(c =>
                 {
                     c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme

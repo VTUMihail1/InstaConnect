@@ -1,10 +1,12 @@
 ﻿using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Shared.Data.Extensions;
+using InstaConnect.Shared.Data.Models.Options;
 using InstaConnect.Users.Data.Abstraction;
 using InstaConnect.Users.Data.Factories;
 using InstaConnect.Users.Data.Helpers;
 using InstaConnect.Users.Data.Models.Options;
 using InstaConnect.Users.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,7 +19,7 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddOptions<AdminOptions>()
             .BindConfiguration(nameof(AdminOptions))
-            .ValidateDataAnnotations()
+        .ValidateDataAnnotations()
             .ValidateOnStart();
 
         serviceCollection
@@ -30,8 +32,6 @@ public static class ServiceCollectionExtensions
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
             .AddDatabaseContext<UsersContext>(configuration)
             .AddUnitOfWork<UsersContext>();
-        ;
-
 
         return serviceCollection;
     }
