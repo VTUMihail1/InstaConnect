@@ -16,6 +16,7 @@ using InstaConnect.Posts.Business.Queries.Posts.GetAllFilteredPosts;
 using InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
 using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Posts.Data.Models.Filters;
+using InstaConnect.Shared.Business.Contracts;
 using InstaConnect.Shared.Business.Models.Users;
 using InstaConnect.Shared.Data.Models.Filters;
 
@@ -26,6 +27,13 @@ public class PostsBusinessProfile : Profile
     public PostsBusinessProfile()
     {
         // Posts
+
+        CreateMap<UserDeletedEvent, PostFilteredCollectionQuery>()
+            .ConstructUsing(src =>
+                 new PostFilteredCollectionQuery
+                 {
+                     Expression = p => p.UserId == src.Id
+                 });
 
         CreateMap<GetAllFilteredPostsQuery, PostFilteredCollectionQuery>()
             .ConstructUsing(src =>
@@ -50,6 +58,13 @@ public class PostsBusinessProfile : Profile
 
         // Post Comments
 
+        CreateMap<UserDeletedEvent, PostCommentFilteredCollectionQuery>()
+            .ConstructUsing(src =>
+                 new PostCommentFilteredCollectionQuery
+                 {
+                     Expression = p => p.UserId == src.Id
+                 });
+
         CreateMap<GetAllFilteredPostCommentsQuery, PostCommentFilteredCollectionQuery>()
             .ConstructUsing(src =>
                  new PostCommentFilteredCollectionQuery
@@ -72,6 +87,13 @@ public class PostsBusinessProfile : Profile
 
         // Post Likes
 
+        CreateMap<UserDeletedEvent, PostLikeFilteredCollectionQuery>()
+            .ConstructUsing(src =>
+                 new PostLikeFilteredCollectionQuery
+                 {
+                     Expression = p => p.UserId == src.Id
+                 });
+
         CreateMap<GetAllFilteredPostLikesQuery, PostLikeFilteredCollectionQuery>()
             .ConstructUsing(src =>
                  new PostLikeFilteredCollectionQuery
@@ -91,6 +113,13 @@ public class PostsBusinessProfile : Profile
         CreateMap<PostLike, PostLikeViewModel>();
 
         // Post Comment Likes
+
+        CreateMap<UserDeletedEvent, PostCommentLikeFilteredCollectionQuery>()
+            .ConstructUsing(src =>
+                 new PostCommentLikeFilteredCollectionQuery
+                 {
+                     Expression = p => p.UserId == src.Id
+                 });
 
         CreateMap<GetAllFilteredPostCommentLikesQuery, PostCommentLikeFilteredCollectionQuery>()
             .ConstructUsing(src =>

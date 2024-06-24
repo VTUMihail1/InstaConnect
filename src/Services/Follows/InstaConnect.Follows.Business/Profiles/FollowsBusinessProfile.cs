@@ -17,6 +17,13 @@ public class FollowsBusinessProfile : Profile
     {
         // Follows
 
+        CreateMap<UserDeletedEvent, FollowFilteredCollectionQuery>()
+            .ConstructUsing(src =>
+                 new FollowFilteredCollectionQuery
+                 {
+                     Expression = p => p.FollowerId == src.Id
+                 });
+
         CreateMap<GetAllFilteredFollowsQuery, FollowFilteredCollectionQuery>()
             .ConstructUsing(src =>
                  new FollowFilteredCollectionQuery

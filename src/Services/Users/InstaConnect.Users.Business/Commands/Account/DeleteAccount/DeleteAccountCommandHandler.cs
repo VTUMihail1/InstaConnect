@@ -1,23 +1,32 @@
-﻿using InstaConnect.Shared.Business.Abstractions;
+﻿using AutoMapper;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Contracts;
 using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Users.Data.Abstraction;
+using MassTransit;
 
 namespace InstaConnect.Users.Business.Commands.Account.DeleteAccount;
 
 public class DeleteAccountCommandHandler : ICommandHandler<DeleteAccountCommand>
 {
+    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
+    private readonly IPublishEndpoint _publishEndpoint;
     private readonly ICurrentUserContext _currentUserContext;
 
     public DeleteAccountCommandHandler(
+        IMapper mapper,
         IUnitOfWork unitOfWork,
         IUserRepository userRepository, 
+        IPublishEndpoint publishEndpoint,
         ICurrentUserContext currentUserContext)
     {
+        _mapper = mapper;
         _unitOfWork = unitOfWork;
         _userRepository = userRepository;
+        _publishEndpoint = publishEndpoint;
         _currentUserContext = currentUserContext;
     }
 
@@ -34,5 +43,8 @@ public class DeleteAccountCommandHandler : ICommandHandler<DeleteAccountCommand>
         _userRepository.Delete(existingUser);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        var userDeletedEvent = _mapper.Map<UserDeletedEvent>(existingUser);
+        await _publishEndpoint.Publish(userDeletedEvent);
     }
 }

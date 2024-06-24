@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Messages.Business.Abstract;
+using InstaConnect.Messages.Business.Consumers;
 using InstaConnect.Messages.Business.Helpers;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Extensions;
@@ -21,7 +22,8 @@ public static class ServiceCollectionExtensions
             .AddMediatR(currentAssembly)
             .AddAutoMapper(currentAssembly)
             .AddCurrentUserContext()
-            .AddMessageBroker(configuration);
+            .AddMessageBroker(configuration, busConfigurator =>
+             busConfigurator.AddConsumer<UserDeletedEventConsumer>());
 
         return serviceCollection;
     }
