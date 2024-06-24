@@ -55,7 +55,7 @@ public partial class Initial : Migration
             columns: table => new
             {
                 id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                claim = table.Column<int>(type: "int", nullable: false),
+                claim = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 value = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 user_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 created_at = table.Column<DateTime>(type: "datetime2", nullable: false),

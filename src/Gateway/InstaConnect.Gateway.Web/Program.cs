@@ -1,5 +1,6 @@
 using InstaConnect.Gateway.Web.Extensions;
 using InstaConnect.Shared.Web.Extensions;
+using InstaConnect.Shared.Web.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(AppPolicies.CorsPolicy);
 
 app.UseRateLimiter();
 
