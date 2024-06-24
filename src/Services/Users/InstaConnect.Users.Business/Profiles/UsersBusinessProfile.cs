@@ -19,6 +19,8 @@ public class UsersBusinessProfile : Profile
 {
     public UsersBusinessProfile()
     {
+        // User
+
         CreateMap<GetAllFilteredUsersQuery, UserFilteredCollectionQuery>()
             .ConstructUsing(src =>
                  new UserFilteredCollectionQuery
@@ -44,16 +46,9 @@ public class UsersBusinessProfile : Profile
 
         CreateMap<User, GetUserByIdResponse>();
 
-        CreateMap<User, UserClaimFilteredCollectionQuery>()
-            .ConstructUsing(src =>
-                 new UserClaimFilteredCollectionQuery
-                 {
-                     Expression = p => src.Id == p.UserId
-                 });
+        CreateMap<User, UserDeletedEvent>();
 
-        CreateMap<UserClaim, Claim>()
-            .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
-            .ForMember(dest => dest.ValueType, opt => opt.MapFrom(src => src.Claim));
+        // User claims
 
         CreateMap<User, CreateAccessTokenModel>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
@@ -72,5 +67,16 @@ public class UsersBusinessProfile : Profile
 
         CreateMap<User, CreateAccountTokenModel>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+
+        CreateMap<User, UserClaimFilteredCollectionQuery>()
+            .ConstructUsing(src =>
+                 new UserClaimFilteredCollectionQuery
+                 {
+                     Expression = p => src.Id == p.UserId
+                 });
+
+        CreateMap<UserClaim, Claim>()
+            .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
+            .ForMember(dest => dest.ValueType, opt => opt.MapFrom(src => src.Claim));
     }
 }

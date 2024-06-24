@@ -18,6 +18,13 @@ public class MessagesBusinessProfile : Profile
     {
         // Messages
 
+        CreateMap<UserDeletedEvent, MessageFilteredCollectionQuery>()
+            .ConstructUsing(src =>
+                 new MessageFilteredCollectionQuery
+                 {
+                     Expression = p => p.SenderId == src.Id
+                 });
+
         CreateMap<GetAllFilteredMessagesQuery, MessageFilteredCollectionQuery>()
             .ConstructUsing(src =>
                  new MessageFilteredCollectionQuery
