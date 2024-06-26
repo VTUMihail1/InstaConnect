@@ -1,0 +1,12 @@
+﻿using InstaConnect.Posts.Business.Read.Models;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Models.Filters;
+
+namespace InstaConnect.Posts.Business.Read.Queries.PostLikes.GetAllFilteredPostLikes;
+
+public class GetAllFilteredPostLikesQuery : CollectionModel, IQuery<ICollection<PostLikeViewModel>>
+{
+    public string UserId { get; set; }
+
+    public string PostId { get; set; }
+}

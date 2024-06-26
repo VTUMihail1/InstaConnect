@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using AutoMapper;
 using IdentityModel;
-using InstaConnect.Shared.Business.Contracts;
+using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Users.Business.Commands.Account.EditAccount;
 using InstaConnect.Users.Business.Commands.Account.RegisterAccount;
