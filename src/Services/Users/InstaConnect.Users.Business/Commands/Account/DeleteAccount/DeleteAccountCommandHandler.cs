@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Contracts;
+using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Users.Data.Abstraction;
