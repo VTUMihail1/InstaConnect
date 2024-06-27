@@ -4,12 +4,15 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
 EXPOSE 5100
-EXPOSE 5101
+EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Gateway/InstaConnect.Gateway.Web/InstaConnect.Gateway.Web.csproj", "src/Gateway/InstaConnect.Gateway.Web/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Web/InstaConnect.Shared.Web.csproj", "src/Services/Shared/InstaConnect.Shared.Web/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Business/InstaConnect.Shared.Business.csproj", "src/Services/Shared/InstaConnect.Shared.Business/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Data/InstaConnect.Shared.Data.csproj", "src/Services/Shared/InstaConnect.Shared.Data/"]
 RUN dotnet restore "./src/Gateway/InstaConnect.Gateway.Web/InstaConnect.Gateway.Web.csproj"
 COPY . .
 WORKDIR "/src/src/Gateway/InstaConnect.Gateway.Web"

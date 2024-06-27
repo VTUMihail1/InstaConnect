@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace InstaConnect.Follows.Data.Read.EntitiyConfigurations;
 
-public class FollowConfiguration : IEntityTypeConfiguration<Follow>
+internal class FollowConfiguration : IEntityTypeConfiguration<Follow>
 {
     public void Configure(EntityTypeBuilder<Follow> builder)
     {

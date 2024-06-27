@@ -17,28 +17,13 @@ public static class ServiceCollectionExtensions
     }
 
     public static IServiceCollection AddDatabaseContext<TContext>(
-        this IServiceCollection serviceCollection, 
-        IConfiguration configuration, 
+        this IServiceCollection serviceCollection,
         Action<DbContextOptionsBuilder>? optionsAction = null)
     where TContext : DbContext
     {
-        serviceCollection
-            .AddOptions<DatabaseOptions>()
-            .BindConfiguration(nameof(DatabaseOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var databaseOptions = configuration
-            .GetSection(nameof(DatabaseOptions))
-            .Get<DatabaseOptions>()!;
-
         serviceCollection.AddDbContext<TContext>(options =>
         {
-            options
-              .UseSqlServer(
-                  databaseOptions.ConnectionString,
-                  sqlServerOptions => sqlServerOptions.EnableRetryOnFailure())
-              .AddInterceptors(new AuditableEntityInterceptor());
+            options.AddInterceptors(new AuditableEntityInterceptor());
 
             options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
@@ -48,6 +33,17 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddHealthChecks()
             .AddDbContextCheck<TContext>();
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddDatabaseOptions(this IServiceCollection serviceCollection)
+    {
+        serviceCollection
+            .AddOptions<DatabaseOptions>()
+            .BindConfiguration(nameof(DatabaseOptions))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
         return serviceCollection;
     }

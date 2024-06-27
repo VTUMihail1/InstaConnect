@@ -9,6 +9,7 @@ using InstaConnect.Follows.Data.Read;
 using InstaConnect.Follows.Data.Read.Helpers;
 using InstaConnect.Follows.Data.Read.Repositories;
 using InstaConnect.Follows.Data.Read.Abstractions;
+using InstaConnect.Shared.Data.Models.Options;
 
 namespace InstaConnect.Follows.Data.Read.Extensions;
 
@@ -16,11 +17,25 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
+        serviceCollection.AddDbContext<FollowsContext>(options => options.UseSqlServer(""));
+
+        serviceCollection
+            .AddDatabaseOptions()
+            .AddDatabaseContext<FollowsContext>(options =>
+            {
+                var databaseOptions = configuration
+                    .GetSection(nameof(DatabaseOptions))
+                    .Get<DatabaseOptions>()!;
+
+                options.UseSqlServer(
+                    databaseOptions.ConnectionString,
+                    sqlServerOptions => sqlServerOptions.EnableRetryOnFailure());
+            });
+
         serviceCollection
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IFollowRepository, FollowRepository>()
-            .AddDatabaseContext<FollowsContext>(configuration)
             .AddUnitOfWork<FollowsContext>();
 
         return serviceCollection;

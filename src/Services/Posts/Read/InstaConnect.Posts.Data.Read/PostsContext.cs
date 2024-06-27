@@ -24,12 +24,10 @@ public class PostsContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        var currentAssembly = typeof(PostsContext).Assembly;
+
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfiguration(new PostConfigurations());
-        modelBuilder.ApplyConfiguration(new PostLikeConfiguration());
-        modelBuilder.ApplyConfiguration(new PostCommentConfiguration());
-        modelBuilder.ApplyConfiguration(new PostCommentLikeConfiguration());
-        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfigurationsFromAssembly(currentAssembly);
     }
 }

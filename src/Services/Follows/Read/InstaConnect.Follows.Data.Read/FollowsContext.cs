@@ -15,9 +15,10 @@ public class FollowsContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        var currentAssembly = typeof(FollowsContext).Assembly;
+
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfiguration(new FollowConfiguration());
-        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfigurationsFromAssembly(currentAssembly);
     }
 }

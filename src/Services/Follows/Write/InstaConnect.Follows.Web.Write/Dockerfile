@@ -3,28 +3,28 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 5500
+EXPOSE 5800
 EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/Services/Follows/InstaConnect.Follows.Web/InstaConnect.Follows.Web.csproj", "src/Services/Follows/InstaConnect.Follows.Web/"]
-COPY ["src/Services/Shared/InstaConnect.Shared.Web/InstaConnect.Shared.Web.csproj", "src/Services/Shared/InstaConnect.Shared.Web/"]
-COPY ["src/Services/Shared/InstaConnect.Shared.Business/InstaConnect.Shared.Business.csproj", "src/Services/Shared/InstaConnect.Shared.Business/"]
-COPY ["src/Services/Shared/InstaConnect.Shared.Data/InstaConnect.Shared.Data.csproj", "src/Services/Shared/InstaConnect.Shared.Data/"]
-COPY ["src/Services/Follows/InstaConnect.Follows.Business/InstaConnect.Follows.Business.csproj", "src/Services/Follows/InstaConnect.Follows.Business/"]
-COPY ["src/Services/Follows/InstaConnect.Follows.Data/InstaConnect.Follows.Data.csproj", "src/Services/Follows/InstaConnect.Follows.Data/"]
-RUN dotnet restore "./src/Services/Follows/InstaConnect.Follows.Web/InstaConnect.Follows.Web.csproj"
+COPY ["Services/Follows/Write/InstaConnect.Follows.Web.Write/InstaConnect.Follows.Web.Write.csproj", "Services/Follows/Write/InstaConnect.Follows.Web.Write/"]
+COPY ["Services/Shared/InstaConnect.Shared.Web/InstaConnect.Shared.Web.csproj", "Services/Shared/InstaConnect.Shared.Web/"]
+COPY ["Services/Shared/InstaConnect.Shared.Business/InstaConnect.Shared.Business.csproj", "Services/Shared/InstaConnect.Shared.Business/"]
+COPY ["Services/Shared/InstaConnect.Shared.Data/InstaConnect.Shared.Data.csproj", "Services/Shared/InstaConnect.Shared.Data/"]
+COPY ["Services/Follows/Write/InstaConnect.Follows.Business.Write/InstaConnect.Follows.Business.Write.csproj", "Services/Follows/Write/InstaConnect.Follows.Business.Write/"]
+COPY ["Services/Follows/Write/InstaConnect.Follows.Data.Write/InstaConnect.Follows.Data.Write.csproj", "Services/Follows/Write/InstaConnect.Follows.Data.Write/"]
+RUN dotnet restore "./Services/Follows/Write/InstaConnect.Follows.Web.Write/InstaConnect.Follows.Web.Write.csproj"
 COPY . .
-WORKDIR "/src/src/Services/Follows/InstaConnect.Follows.Web"
-RUN dotnet build "./InstaConnect.Follows.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Services/Follows/Write/InstaConnect.Follows.Web.Write"
+RUN dotnet build "./InstaConnect.Follows.Web.Write.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./InstaConnect.Follows.Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./InstaConnect.Follows.Web.Write.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "InstaConnect.Follows.Web.dll"]
+ENTRYPOINT ["dotnet", "InstaConnect.Follows.Web.Write.dll"]
