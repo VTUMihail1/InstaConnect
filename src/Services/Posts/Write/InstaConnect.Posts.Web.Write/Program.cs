@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var cancellationTokenSource = new CancellationTokenSource();
 
 builder.Services
-    .AddDataLayer(builder.Configuration)
+    .AddDataLayer()
     .AddBusinessLayer(builder.Configuration)
     .AddWebLayer(builder.Configuration);
 

@@ -6,6 +6,7 @@ using InstaConnect.Posts.Data.Read.Repositories;
 using InstaConnect.Shared.Data;
 using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Shared.Data.Extensions;
+using InstaConnect.Shared.Data.Models.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,19 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
+            .AddDatabaseOptions()
+            .AddDatabaseContext<PostsContext>(options =>
+            {
+                var databaseOptions = configuration
+                    .GetSection(nameof(DatabaseOptions))
+                    .Get<DatabaseOptions>()!;
+           
+                options.UseSqlServer(
+                    databaseOptions.ConnectionString,
+                    sqlServerOptions => sqlServerOptions.EnableRetryOnFailure());
+            });
+
+        serviceCollection
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IPostRepository, PostRepository>()
             .AddScoped<IPostLikeRepository, PostLikeRepository>()
@@ -24,7 +38,6 @@ public static class ServiceCollectionExtensions
             .AddScoped<IPostCommentLikeRepository, PostCommentLikeRepository>()
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
-            .AddDatabaseContext<PostsContext>(configuration)
             .AddUnitOfWork<PostsContext>();
 
         return serviceCollection;

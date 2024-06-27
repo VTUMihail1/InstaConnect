@@ -3,13 +3,18 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 5700
+EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Services/Follows/Read/InstaConnect.Follows.Web.Read/InstaConnect.Follows.Web.Read.csproj", "src/Services/Follows/Read/InstaConnect.Follows.Web.Read/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Web/InstaConnect.Shared.Web.csproj", "src/Services/Shared/InstaConnect.Shared.Web/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Business/InstaConnect.Shared.Business.csproj", "src/Services/Shared/InstaConnect.Shared.Business/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Data/InstaConnect.Shared.Data.csproj", "src/Services/Shared/InstaConnect.Shared.Data/"]
+COPY ["src/Services/Follows/Read/InstaConnect.Follows.Business.Read/InstaConnect.Follows.Business.Read.csproj", "src/Services/Follows/Read/InstaConnect.Follows.Business.Read/"]
+COPY ["src/Services/Follows/Read/InstaConnect.Follows.Data.Read/InstaConnect.Follows.Data.Read.csproj", "src/Services/Follows/Read/InstaConnect.Follows.Data.Read/"]
 RUN dotnet restore "./src/Services/Follows/Read/InstaConnect.Follows.Web.Read/InstaConnect.Follows.Web.Read.csproj"
 COPY . .
 WORKDIR "/src/src/Services/Follows/Read/InstaConnect.Follows.Web.Read"

@@ -14,8 +14,10 @@ public class MessagesContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        var currentAssembly = typeof(MessagesContext).Assembly;
+
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfiguration(new MessageConfiguration());
+        modelBuilder.ApplyConfigurationsFromAssembly(currentAssembly);
     }
 }
