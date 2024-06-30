@@ -57,6 +57,7 @@ public static class ServiceCollectionExtentions
 
                 cf.AddOpenBehavior(typeof(LoggingBehavior<,>));
                 cf.AddOpenBehavior(typeof(ValidationBehavior<,>));
+                cf.AddOpenBehavior(typeof(CachingPipelineBehavior<,>));
             });
 
         return serviceCollection;

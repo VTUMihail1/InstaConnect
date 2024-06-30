@@ -19,13 +19,15 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
-            .AddScoped<IMessageSender, MessageSender>()
+            .AddMemoryCache()
             .AddValidatorsFromAssembly(currentAssembly)
             .AddMediatR(currentAssembly)
             .AddAutoMapper(currentAssembly)
             .AddCurrentUserContext()
             .AddMessageBroker(configuration, busConfigurator =>
              busConfigurator.AddConsumer<UserDeletedEventConsumer>());
+
+        serviceCollection.AddScoped<IMessageSender, MessageSender>();
 
         return serviceCollection;
     }

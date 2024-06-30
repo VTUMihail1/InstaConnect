@@ -1,12 +1,10 @@
-using System.Windows.Input;
-using InstaConnect.Shared.Business.Abstractions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace InstaConnect.Shared.Business.Behaviors;
 
 public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : ICommand<TResponse>, IQuery<TResponse>
+    where TRequest : IRequest
 {
     private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
 
