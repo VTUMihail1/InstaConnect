@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Business.Read.Consumers;
+﻿using FluentValidation;
+using InstaConnect.Posts.Business.Read.Consumers;
 using InstaConnect.Posts.Business.Read.Consumers.PostCommentLikes;
 using InstaConnect.Posts.Business.Read.Consumers.PostComments;
 using InstaConnect.Posts.Business.Read.Consumers.PostLikes;
@@ -22,6 +23,7 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
+            .AddValidatorsFromAssembly(currentAssembly)
             .AddMediatR(currentAssembly)
             .AddAutoMapper(currentAssembly)
             .AddCurrentUserContext()

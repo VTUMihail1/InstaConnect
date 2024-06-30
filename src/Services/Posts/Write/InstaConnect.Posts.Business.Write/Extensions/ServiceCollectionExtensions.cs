@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Business.Consumers;
+﻿using FluentValidation;
+using InstaConnect.Posts.Business.Consumers;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts;
 using InstaConnect.Shared.Business.Extensions;
@@ -17,6 +18,7 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
+            .AddValidatorsFromAssembly(currentAssembly)
             .AddMediatR(currentAssembly)
             .AddAutoMapper(currentAssembly)
             .AddCurrentUserContext()

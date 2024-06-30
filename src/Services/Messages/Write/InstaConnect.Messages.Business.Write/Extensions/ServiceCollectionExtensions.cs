@@ -1,4 +1,5 @@
-﻿using InstaConnect.Messages.Business.Abstract;
+﻿using FluentValidation;
+using InstaConnect.Messages.Business.Abstract;
 using InstaConnect.Messages.Business.Consumers;
 using InstaConnect.Messages.Business.Helpers;
 using InstaConnect.Shared.Business.Abstractions;
@@ -19,6 +20,7 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddScoped<IMessageSender, MessageSender>()
+            .AddValidatorsFromAssembly(currentAssembly)
             .AddMediatR(currentAssembly)
             .AddAutoMapper(currentAssembly)
             .AddCurrentUserContext()
