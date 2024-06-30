@@ -2,13 +2,14 @@
 using AutoMapper;
 using InstaConnect.Identity.Business.Queries.User.GetAllFilteredUsers;
 using InstaConnect.Identity.Business.Queries.User.GetAllUsers;
-using InstaConnect.Identity.Business.Queries.User.GetUser;
+using InstaConnect.Identity.Business.Queries.User.GetCurrentUser;
+using InstaConnect.Identity.Business.Queries.User.GetCurrentUserDetailed;
 using InstaConnect.Identity.Business.Queries.User.GetUserById;
 using InstaConnect.Identity.Business.Queries.User.GetUserByName;
-using InstaConnect.Identity.Business.Queries.User.GetUserDetailed;
 using InstaConnect.Identity.Business.Queries.User.GetUserDetailedById;
 using InstaConnect.Identity.Web.Models.Requests.User;
 using InstaConnect.Identity.Web.Models.Response;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Web.Models.Filters;
 using InstaConnect.Shared.Web.Utils;
 using MediatR;
@@ -25,13 +26,16 @@ public class UserController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly ISender _sender;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public UserController(
         IMapper mapper,
-        ISender sender)
+        ISender sender,
+        ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
         _sender = sender;
+        _currentUserContext = currentUserContext;
     }
 
     // GET: api/users
@@ -70,11 +74,10 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetCurrentDetailedAsync(
-        GetUserDetailedRequest request,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> GetCurrentDetailedAsync(CancellationToken cancellationToken)
     {
-        var queryRequest = _mapper.Map<GetUserDetailedQuery>(request);
+        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+        var queryRequest = _mapper.Map<GetCurrentUserDetailedQuery>(currentUserDetails);
         var queryResponse = await _sender.Send(queryRequest, cancellationToken);
 
         var response = _mapper.Map<UserDetailedResponse>(queryResponse);
@@ -104,11 +107,10 @@ public class UserController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetCurrentAsync(
-        GetUserRequest request,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> GetCurrentAsync(CancellationToken cancellationToken)
     {
-        var queryRequest = _mapper.Map<GetUserQuery>(request);
+        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+        var queryRequest = _mapper.Map<GetCurrentUserQuery>(currentUserDetails);
         var queryResponse = await _sender.Send(queryRequest, cancellationToken);
 
         var response = _mapper.Map<UserResponse>(queryResponse);
