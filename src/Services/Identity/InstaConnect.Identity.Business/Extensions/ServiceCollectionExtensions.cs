@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using InstaConnect.Shared.Business.Extensions;
 using InstaConnect.Identity.Business.Consumers;
+using FluentValidation;
 
 namespace InstaConnect.Identity.Business.Extensions;
 
@@ -16,6 +17,7 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
+            .AddValidatorsFromAssembly(currentAssembly)
             .AddMediatR(currentAssembly)
             .AddAutoMapper(currentAssembly)
             .AddCurrentUserContext()

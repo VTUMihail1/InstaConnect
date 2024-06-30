@@ -1,4 +1,5 @@
-﻿using InstaConnect.Messages.Business.Read.Consumers.Messages;
+﻿using FluentValidation;
+using InstaConnect.Messages.Business.Read.Consumers.Messages;
 using InstaConnect.Messages.Business.Read.Consumers.Users;
 using InstaConnect.Shared.Business.Extensions;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
+            .AddValidatorsFromAssembly(currentAssembly)
             .AddMediatR(currentAssembly)
             .AddAutoMapper(currentAssembly)
             .AddCurrentUserContext()
