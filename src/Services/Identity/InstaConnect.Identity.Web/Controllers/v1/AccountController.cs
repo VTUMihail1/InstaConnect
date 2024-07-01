@@ -10,7 +10,8 @@ using InstaConnect.Identity.Business.Commands.Account.ResendAccountEmailConfirma
 using InstaConnect.Identity.Business.Commands.Account.ResetAccountPassword;
 using InstaConnect.Identity.Web.Models.Requests.Account;
 using InstaConnect.Identity.Web.Models.Response;
-using InstaConnect.Shared.Web.Utils;
+using InstaConnect.Shared.Web.Abstractions;
+using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,13 +26,16 @@ public class AccountController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly ISender _sender;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public AccountController(
         IMapper mapper,
-        ISender sender)
+        ISender sender,
+        ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
         _sender = sender;
+        _currentUserContext = currentUserContext;
     }
 
     // GET: api/accounts/confirm-email/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
@@ -81,7 +85,7 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> LoginAsync(
-        [FromBody] LoginAccountRequest request,
+        LoginAccountRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _mapper.Map<LoginAccountCommand>(request);
@@ -97,7 +101,7 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RegisterAsync(
-        [FromBody] RegisterAccountRequest request,
+        RegisterAccountRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _mapper.Map<RegisterAccountCommand>(request);
@@ -120,32 +124,34 @@ public class AccountController : ControllerBase
         return NoContent();
     }
 
-    // PUT: api/accounts
+    // PUT: api/accounts/current
     [Authorize]
-    [HttpPut]
+    [HttpPut("current")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> EditAsync(
-        [FromBody] EditAccountRequest request,
+        EditCurrentAccountRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _mapper.Map<EditAccountCommand>(request);
+        var currentUser = _currentUserContext.GetCurrentUser();
+        var commandRequest = _mapper.Map<EditCurrentAccountCommand>(request);
+        _mapper.Map(currentUser,  commandRequest);
         await _sender.Send(commandRequest, cancellationToken);
 
         return NoContent();
     }
 
-    // DELETE: api/accounts
+    // DELETE: api/accounts/current
     [Authorize]
-    [HttpDelete]
+    [HttpDelete("current")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteAsync(
-        DeleteAccountRequest request,
+    public async Task<IActionResult> DeleteCurrentAsync(
         CancellationToken cancellationToken)
     {
-        var commandRequest = _mapper.Map<DeleteAccountCommand>(request);
+        var currentUser = _currentUserContext.GetCurrentUser();
+        var commandRequest = _mapper.Map<DeleteCurrentAccountCommand>(currentUser);
         await _sender.Send(commandRequest, cancellationToken);
 
         return NoContent();
@@ -157,7 +163,7 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteByIdAsync(
-        [FromRoute] DeleteAccountByIdRequest request,
+        DeleteAccountByIdRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _mapper.Map<DeleteAccountByIdCommand>(request);

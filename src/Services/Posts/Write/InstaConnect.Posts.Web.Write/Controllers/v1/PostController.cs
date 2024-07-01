@@ -6,7 +6,7 @@ using InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
 using InstaConnect.Posts.Web.Models.Requests.Post;
 using InstaConnect.Posts.Web.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
-using InstaConnect.Shared.Web.Utils;
+using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -4,5 +4,5 @@ namespace InstaConnect.Identity.Business.Commands.Account.ResendAccountEmailConf
 
 public class ResendAccountEmailConfirmationCommand : ICommand
 {
-    public string Email { get; set; }
+    public string Email { get; set; } = string.Empty;
 }

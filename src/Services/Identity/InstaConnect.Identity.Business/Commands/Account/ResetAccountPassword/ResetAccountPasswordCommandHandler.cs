@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Identity.Data.Abstraction;
 using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Token;
 using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
@@ -39,6 +40,11 @@ public class ResetAccountPasswordCommandHandler : ICommandHandler<ResetAccountPa
         if (existingToken == null)
         {
             throw new TokenNotFoundException();
+        }
+
+        if (existingToken.UserId != request.UserId)
+        {
+            throw new AccountForbiddenException();
         }
 
         var passwordHashResultDTO = _passwordHasher.Hash(request.Password);

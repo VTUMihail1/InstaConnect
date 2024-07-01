@@ -40,7 +40,7 @@ internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeComm
             throw new PostLikeNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+        var currentUserDetails = _currentUserContext.GetCurrentUser();
 
         if (currentUserDetails.Id != existingPostLike.UserId)
         {

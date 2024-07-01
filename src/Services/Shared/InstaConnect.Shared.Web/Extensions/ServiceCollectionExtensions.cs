@@ -10,13 +10,14 @@ using System.Threading.Tasks;
 using Asp.Versioning;
 using IdentityModel;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.Models.Options;
 using InstaConnect.Shared.Data.Models.Options;
 using InstaConnect.Shared.Data.Utils;
+using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.ExceptionHandlers;
+using InstaConnect.Shared.Web.Helpers;
 using InstaConnect.Shared.Web.Models.Options;
-using InstaConnect.Shared.Web.Utils;
+using InstaConnect.Shared.Web.Utilities;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -201,6 +202,15 @@ public static class ServiceCollectionExtensions
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
             });
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddCurrentUserContext(this IServiceCollection serviceCollection)
+    {
+        serviceCollection
+            .AddHttpContextAccessor()
+            .AddScoped<ICurrentUserContext, CurrentUserContext>();
 
         return serviceCollection;
     }

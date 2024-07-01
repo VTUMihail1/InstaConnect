@@ -3,5 +3,5 @@
 namespace InstaConnect.Identity.Data.Models;
 public class TokenCreateModel
 {
-    public ICollection<Claim> Claims { get; set; }
+    public ICollection<Claim> Claims { get; set; } = new List<Claim>();
 }

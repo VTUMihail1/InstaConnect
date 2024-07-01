@@ -24,7 +24,7 @@ public class MessagesBusinessProfile : Profile
 
         CreateMap<AddMessageCommand, GetUserByIdRequest>();
 
-        CreateMap<CurrentUserDetails, Message>()
+        CreateMap<CurrentUserModel, Message>()
             .ForMember(dest => dest.SenderId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<GetUserByIdResponse, Message>()

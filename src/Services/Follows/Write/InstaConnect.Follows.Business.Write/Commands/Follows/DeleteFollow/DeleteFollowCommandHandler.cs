@@ -15,20 +15,17 @@ public class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommand>
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPublishEndpoint _publishEndpoint;
     private readonly IFollowRepository _followRepository;
-    private readonly ICurrentUserContext _currentUserContext;
 
     public DeleteFollowCommandHandler(
         IMapper mapper,
         IUnitOfWork unitOfWork,
         IPublishEndpoint publishEndpoint,
-        IFollowRepository followRepository,
-        ICurrentUserContext currentUserContext)
+        IFollowRepository followRepository)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _publishEndpoint = publishEndpoint;
         _followRepository = followRepository;
-        _currentUserContext = currentUserContext;
     }
 
     public async Task Handle(DeleteFollowCommand request, CancellationToken cancellationToken)
@@ -40,9 +37,7 @@ public class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommand>
             throw new FollowNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
-
-        if (currentUserDetails.Id != existingFollow.FollowerId)
+        if (request.CurrentUserId != existingFollow.FollowerId)
         {
             throw new AccountForbiddenException();
         }

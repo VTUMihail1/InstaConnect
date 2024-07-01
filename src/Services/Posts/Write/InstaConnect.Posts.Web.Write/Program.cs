@@ -2,7 +2,7 @@ using InstaConnect.Posts.Business.Extensions;
 using InstaConnect.Posts.Data.Extensions;
 using InstaConnect.Posts.Web.Extensions;
 using InstaConnect.Shared.Web.Extensions;
-using InstaConnect.Shared.Web.Utils;
+using InstaConnect.Shared.Web.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 var cancellationTokenSource = new CancellationTokenSource();

@@ -10,8 +10,9 @@ using InstaConnect.Identity.Business.Queries.User.GetUserDetailedById;
 using InstaConnect.Identity.Web.Models.Requests.User;
 using InstaConnect.Identity.Web.Models.Response;
 using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Models.Filters;
-using InstaConnect.Shared.Web.Utils;
+using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +43,7 @@ public class UserController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllAsync(
-        CollectionRequest request,
+        GetAllUsersRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _mapper.Map<GetAllUsersQuery>(request);
@@ -57,7 +58,7 @@ public class UserController : ControllerBase
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllFilteredAsync(
-        GetUserCollectionRequest request,
+        GetAllFilteredUsersRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _mapper.Map<GetAllFilteredUsersQuery>(request);
@@ -76,8 +77,8 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetCurrentDetailedAsync(CancellationToken cancellationToken)
     {
-        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
-        var queryRequest = _mapper.Map<GetCurrentUserDetailedQuery>(currentUserDetails);
+        var currentUser = _currentUserContext.GetCurrentUser();
+        var queryRequest = _mapper.Map<GetCurrentUserDetailedQuery>(currentUser);
         var queryResponse = await _sender.Send(queryRequest, cancellationToken);
 
         var response = _mapper.Map<UserDetailedResponse>(queryResponse);
@@ -109,8 +110,8 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetCurrentAsync(CancellationToken cancellationToken)
     {
-        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
-        var queryRequest = _mapper.Map<GetCurrentUserQuery>(currentUserDetails);
+        var currentUser = _currentUserContext.GetCurrentUser();
+        var queryRequest = _mapper.Map<GetCurrentUserQuery>(currentUser);
         var queryResponse = await _sender.Send(queryRequest, cancellationToken);
 
         var response = _mapper.Map<UserResponse>(queryResponse);

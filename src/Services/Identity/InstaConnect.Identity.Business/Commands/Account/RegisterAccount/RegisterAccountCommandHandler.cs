@@ -6,7 +6,6 @@ using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
-using MassTransit.Testing;
 
 namespace InstaConnect.Identity.Business.Commands.Account.RegisterAccount;
 

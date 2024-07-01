@@ -40,7 +40,7 @@ public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand>
             throw new PostNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+        var currentUserDetails = _currentUserContext.GetCurrentUser();
 
         if (currentUserDetails.Id != existingPost.UserId)
         {

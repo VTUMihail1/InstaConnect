@@ -1,6 +1,6 @@
 using InstaConnect.Gateway.Web.Extensions;
 using InstaConnect.Shared.Web.Extensions;
-using InstaConnect.Shared.Web.Utils;
+using InstaConnect.Shared.Web.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 

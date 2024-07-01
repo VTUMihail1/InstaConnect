@@ -44,7 +44,7 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
             throw new PostNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+        var currentUserDetails = _currentUserContext.GetCurrentUser();
         var postComment = _mapper.Map<PostComment>(request);
         _mapper.Map(currentUserDetails, postComment);
         _postCommentRepository.Add(postComment);

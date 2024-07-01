@@ -45,14 +45,14 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
     public async Task Handle(AddMessageCommand request, CancellationToken cancellationToken)
     {
         var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
-        var getUserByIdResponse = await _getUserByIdRequestClient.GetResponse<CurrentUserDetails>(getUserByIdRequest, cancellationToken);
+        var getUserByIdResponse = await _getUserByIdRequestClient.GetResponse<CurrentUserModel>(getUserByIdRequest, cancellationToken);
 
         if(getUserByIdResponse.Message == null)
         {
             throw new UserNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+        var currentUserDetails = _currentUserContext.GetCurrentUser();
 
         var message = _mapper.Map<Message>(request);
         _mapper.Map(currentUserDetails, message);

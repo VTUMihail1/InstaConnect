@@ -28,7 +28,9 @@ public class FollowsBusinessProfile : Profile
                  new FollowFilteredCollectionQuery
                  {
                      Expression = p => (src.FollowerId == string.Empty || p.FollowerId == src.FollowerId) &&
-                                       (src.FollowingId == string.Empty || p.FollowingId == src.FollowingId)
+                                       (src.FollowingName == string.Empty || p.Follower.UserName == src.FollowerName) &&
+                                       (src.FollowingId == string.Empty || p.FollowingId == src.FollowingId) &&
+                                       (src.FollowingName == string.Empty || p.Following.UserName == src.FollowingName)
                  });
 
         CreateMap<GetAllFollowsQuery, CollectionQuery>();

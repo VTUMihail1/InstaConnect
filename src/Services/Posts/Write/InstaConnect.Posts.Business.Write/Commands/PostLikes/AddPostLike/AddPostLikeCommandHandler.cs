@@ -47,7 +47,7 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
             throw new PostNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+        var currentUserDetails = _currentUserContext.GetCurrentUser();
 
         var existingPostLike = _postLikeRepository.GetByUserIdAndPostIdAsync(currentUserDetails.Id!, request.PostId, cancellationToken);
 

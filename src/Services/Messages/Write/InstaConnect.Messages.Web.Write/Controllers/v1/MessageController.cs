@@ -4,7 +4,7 @@ using InstaConnect.Messages.Business.Commands.Messages.AddMessage;
 using InstaConnect.Messages.Business.Commands.Messages.DeleteMessage;
 using InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
 using InstaConnect.Messages.Web.Models.Requests.Messages;
-using InstaConnect.Shared.Web.Utils;
+using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

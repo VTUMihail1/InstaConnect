@@ -6,7 +6,7 @@ using InstaConnect.Posts.Business.Read.Queries.PostCommentLikes.GetPostCommentLi
 using InstaConnect.Posts.Web.Read.Models.Requests.PostCommentLike;
 using InstaConnect.Posts.Web.Read.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
-using InstaConnect.Shared.Web.Utils;
+using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
