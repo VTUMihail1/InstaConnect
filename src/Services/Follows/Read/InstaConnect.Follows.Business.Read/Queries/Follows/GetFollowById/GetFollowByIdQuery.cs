@@ -5,5 +5,5 @@ namespace InstaConnect.Follows.Business.Read.Queries.Follows.GetFollowById;
 
 public class GetFollowByIdQuery : IQuery<FollowViewModel>
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 }

@@ -40,7 +40,7 @@ internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostComme
             throw new PostCommentNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+        var currentUserDetails = _currentUserContext.GetCurrentUser();
 
         if (currentUserDetails.Id != existingPostComment.UserId)
         {

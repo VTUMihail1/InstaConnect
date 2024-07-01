@@ -1,8 +1,10 @@
-﻿namespace InstaConnect.Identity.Web.Models.Requests.Account;
+﻿using InstaConnect.Identity.Web.Models.Binding.Account;
+using Microsoft.AspNetCore.Mvc;
+
+namespace InstaConnect.Identity.Web.Models.Requests.Account;
 
 public class LoginAccountRequest
 {
-    public string Email { get; set; }
-
-    public string Password { get; set; }
+    [FromBody]
+    public LoginAccountBindingModel LoginAccountBindingModel { get; set; } = new();
 }

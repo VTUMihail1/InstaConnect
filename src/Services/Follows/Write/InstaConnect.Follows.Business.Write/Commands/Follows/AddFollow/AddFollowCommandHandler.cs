@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InstaConnect.Follows.Business.Write.Models;
 using InstaConnect.Follows.Data.Write.Abstractions;
 using InstaConnect.Follows.Data.Write.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
@@ -11,7 +12,7 @@ using MassTransit;
 
 namespace InstaConnect.Follows.Business.Commands.Follows.AddFollow;
 
-internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
+public class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
 {
     private const string USER_ALREADY_FOLLOWED = "This user has already been followed";
 
@@ -19,7 +20,6 @@ internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPublishEndpoint _publishEndpoint;
     private readonly IFollowRepository _followRepository;
-    private readonly ICurrentUserContext _currentUserContext;
     private readonly IRequestClient<GetUserByIdRequest> _getUserByIdRequestClient;
 
     public AddFollowCommandHandler(
@@ -27,30 +27,41 @@ internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
         IUnitOfWork unitOfWork,
         IPublishEndpoint publishEndpoint,
         IFollowRepository followRepository,
-        ICurrentUserContext currentUserContext,
         IRequestClient<GetUserByIdRequest> getUserByIdRequestClient)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _publishEndpoint = publishEndpoint;
         _followRepository = followRepository;
-        _currentUserContext = currentUserContext;
         _getUserByIdRequestClient = getUserByIdRequestClient;
     }
 
     public async Task Handle(AddFollowCommand request, CancellationToken cancellationToken)
     {
-        var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
-        var getUserByIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(getUserByIdRequest, cancellationToken);
+        var followingGetUserByIdModel = _mapper.Map<FollowGetUserByIdModel>(request);
 
-        if (getUserByIdResponse == null)
+        var getUserByFollowerIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(
+            followingGetUserByIdModel.GetUserByFollowerIdRequest, 
+            cancellationToken);
+
+        if (getUserByFollowerIdResponse == null)
         {
             throw new UserNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+        var getUserByFollowingIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(
+            followingGetUserByIdModel.GetUserByFollowingIdRequest,
+            cancellationToken);
 
-        var existingFollow = await _followRepository.GetByFollowerIdAndFollowingIdAsync(currentUserDetails.Id!, request.FollowingId, cancellationToken);
+        if (getUserByFollowingIdResponse == null)
+        {
+            throw new UserNotFoundException();
+        }
+
+        var existingFollow = await _followRepository.GetByFollowerIdAndFollowingIdAsync(
+            request.CurrentUserId, 
+            request.FollowingId, 
+            cancellationToken);
 
         if (existingFollow != null)
         {
@@ -58,7 +69,6 @@ internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
         }
 
         var follow = _mapper.Map<Follow>(request);
-        _mapper.Map(currentUserDetails, follow);
         _followRepository.Add(follow);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

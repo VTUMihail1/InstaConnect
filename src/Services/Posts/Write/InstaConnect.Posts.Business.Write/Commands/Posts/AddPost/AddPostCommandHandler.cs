@@ -32,7 +32,7 @@ internal class AddPostCommandHandler : ICommandHandler<AddPostCommand>
 
     public async Task Handle(AddPostCommand request, CancellationToken cancellationToken)
     {
-        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+        var currentUserDetails = _currentUserContext.GetCurrentUser();
 
         var post = _mapper.Map<Post>(request);
         _mapper.Map(currentUserDetails, post);

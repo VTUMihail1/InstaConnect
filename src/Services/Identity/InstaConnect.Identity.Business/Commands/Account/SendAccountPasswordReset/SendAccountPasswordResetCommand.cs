@@ -4,5 +4,5 @@ namespace InstaConnect.Identity.Business.Commands.Account.SendAccountPasswordRes
 
 public class SendAccountPasswordResetCommand : ICommand
 {
-    public string Email { get; set; }
+    public string Email { get; set; } = string.Empty;
 }

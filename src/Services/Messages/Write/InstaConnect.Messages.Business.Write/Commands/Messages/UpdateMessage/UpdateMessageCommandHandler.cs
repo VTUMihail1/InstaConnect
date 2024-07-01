@@ -40,7 +40,7 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
             throw new MessageNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUserDetails();
+        var currentUserDetails = _currentUserContext.GetCurrentUser();
 
         if (currentUserDetails.Id != existingMessage.SenderId)
         {

@@ -15,7 +15,7 @@ public class PostsBusinessProfile : Profile
     public PostsBusinessProfile()
     {
         // Posts
-        CreateMap<CurrentUserDetails, Post>()
+        CreateMap<CurrentUserModel, Post>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<AddPostCommand, Post>();
@@ -24,7 +24,7 @@ public class PostsBusinessProfile : Profile
 
         // Post Comments
 
-        CreateMap<CurrentUserDetails, PostComment>()
+        CreateMap<CurrentUserModel, PostComment>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<AddPostCommentCommand, PostComment>();
@@ -33,14 +33,14 @@ public class PostsBusinessProfile : Profile
 
         // Post Likes
 
-        CreateMap<CurrentUserDetails, PostLike>()
+        CreateMap<CurrentUserModel, PostLike>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<AddPostLikeCommand, PostLike>();
 
         // Post Comment Likes
 
-        CreateMap<CurrentUserDetails, PostComment>()
+        CreateMap<CurrentUserModel, PostComment>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<AddPostCommentLikeCommand, PostCommentLike>();

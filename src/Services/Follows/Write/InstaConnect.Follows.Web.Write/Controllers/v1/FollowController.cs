@@ -2,14 +2,16 @@
 using AutoMapper;
 using InstaConnect.Follows.Business.Commands.Follows.AddFollow;
 using InstaConnect.Follows.Business.Commands.Follows.DeleteFollow;
-using InstaConnect.Follows.Web.Models.Requests.Follows;
-using InstaConnect.Shared.Web.Utils;
+using InstaConnect.Follows.Web.Write.Models.Requests.Follows;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Web.Abstractions;
+using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Follows.Web.Controllers.v1;
+namespace InstaConnect.Follows.Web.Write.Controllers.v1;
 
 [ApiController]
 [ApiVersion("1.0")]
@@ -19,13 +21,16 @@ public class FollowController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly ISender _sender;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public FollowController(
         IMapper mapper,
-        ISender sender)
+        ISender sender,
+        ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
         _sender = sender;
+        _currentUserContext = currentUserContext;
     }
 
     // POST: api/follows
@@ -36,13 +41,15 @@ public class FollowController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> AddAsync(AddFollowRequest request)
     {
+        var currentUserModel = _currentUserContext.GetCurrentUser();
         var commandRequest = _mapper.Map<AddFollowCommand>(request);
+        _mapper.Map(currentUserModel, commandRequest);
         await _sender.Send(commandRequest);
 
         return NoContent();
     }
 
-    //DELETE: api/posts-comment-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    //DELETE: api/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpDelete("{id}")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -50,7 +57,9 @@ public class FollowController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAsync(DeleteFollowRequest request)
     {
+        var currentUserModel = _currentUserContext.GetCurrentUser();
         var commandRequest = _mapper.Map<DeleteFollowCommand>(request);
+        _mapper.Map(currentUserModel, commandRequest);
         await _sender.Send(commandRequest);
 
         return NoContent();

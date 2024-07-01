@@ -5,8 +5,8 @@ namespace InstaConnect.Identity.Web.Models.Requests.Account;
 public class ConfirmAccountEmailTokenRequest
 {
     [FromRoute]
-    public string UserId { get; set; }
+    public string UserId { get; set; } = string.Empty;
 
     [FromRoute]
-    public string Token { get; set; }
+    public string Token { get; set; } = string.Empty;
 }

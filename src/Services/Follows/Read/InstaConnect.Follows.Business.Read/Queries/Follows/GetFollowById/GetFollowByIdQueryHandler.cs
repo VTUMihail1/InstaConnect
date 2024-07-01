@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Exceptions.Follow;
 
 namespace InstaConnect.Follows.Business.Read.Queries.Follows.GetFollowById;
 
-internal class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, FollowViewModel>
+public class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, FollowViewModel>
 {
     private readonly IMapper _mapper;
     private readonly IFollowRepository _followRepository;

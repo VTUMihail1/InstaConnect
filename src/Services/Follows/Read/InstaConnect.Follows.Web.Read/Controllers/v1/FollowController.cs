@@ -6,7 +6,7 @@ using InstaConnect.Follows.Business.Read.Queries.Follows.GetFollowById;
 using InstaConnect.Follows.Web.Read.Models.Requests.Follows;
 using InstaConnect.Follows.Web.Read.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
-using InstaConnect.Shared.Web.Utils;
+using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;

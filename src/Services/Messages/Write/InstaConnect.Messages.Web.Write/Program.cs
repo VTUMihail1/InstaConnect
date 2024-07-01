@@ -3,7 +3,7 @@ using InstaConnect.Messages.Business.Helpers.Hubs;
 using InstaConnect.Messages.Data.Extensions;
 using InstaConnect.Messages.Web.Extensions;
 using InstaConnect.Shared.Web.Extensions;
-using InstaConnect.Shared.Web.Utils;
+using InstaConnect.Shared.Web.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 var cancellationTokenSource = new CancellationTokenSource();

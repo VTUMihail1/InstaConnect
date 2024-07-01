@@ -5,5 +5,5 @@ namespace InstaConnect.Identity.Business.Queries.User.GetUserByName;
 
 public class GetUserByNameQuery : IQuery<UserViewModel>
 {
-    public string UserName { get; set; }
+    public string UserName { get; set; } = string.Empty;
 }

@@ -44,6 +44,11 @@ public class ConfirmAccountEmailCommandHandler : ICommandHandler<ConfirmAccountE
             throw new TokenNotFoundException();
         }
 
+        if (existingToken.UserId != request.UserId)
+        {
+            throw new AccountForbiddenException();
+        }
+
         _tokenRepository.Delete(existingToken);
 
         await _userRepository.ConfirmEmailAsync(existingUser.Id, cancellationToken);

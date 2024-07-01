@@ -6,11 +6,11 @@ namespace InstaConnect.Follows.Business.Read.Queries.Follows.GetAllFilteredFollo
 
 public class GetAllFilteredFollowsQuery : CollectionModel, IQuery<ICollection<FollowViewModel>>
 {
-    public string FollowerId { get; set; }
+    public string FollowerId { get; set; } = string.Empty;
 
-    public string FollowerName { get; set; }
+    public string FollowerName { get; set; } = string.Empty;
 
-    public string FollowingId { get; set; }
+    public string FollowingId { get; set; } = string.Empty;
 
-    public string FollowingName { get; set; }
+    public string FollowingName { get; set; } = string.Empty;
 }

@@ -4,7 +4,7 @@ namespace InstaConnect.Follows.Data.Write.Models.Entities;
 
 public class Follow : BaseEntity
 {
-    public string FollowingId { get; set; }
+    public string FollowerId { get; set; } = string.Empty;
 
-    public string FollowerId { get; set; }
+    public string FollowingId { get; set; } = string.Empty;
 }

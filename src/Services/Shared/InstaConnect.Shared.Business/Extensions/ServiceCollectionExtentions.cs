@@ -55,19 +55,10 @@ public static class ServiceCollectionExtentions
             {
                 cf.RegisterServicesFromAssembly(assembly);
 
-                cf.AddOpenBehavior(typeof(LoggingBehavior<,>));
-                cf.AddOpenBehavior(typeof(ValidationBehavior<,>));
+                cf.AddOpenBehavior(typeof(LoggingPipelineBehavior<,>));
+                cf.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
                 cf.AddOpenBehavior(typeof(CachingPipelineBehavior<,>));
             });
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddCurrentUserContext(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-            .AddHttpContextAccessor()
-            .AddScoped<ICurrentUserContext, CurrentUserContext>();
 
         return serviceCollection;
     }

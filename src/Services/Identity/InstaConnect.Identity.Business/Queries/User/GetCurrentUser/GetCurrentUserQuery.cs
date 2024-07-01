@@ -1,13 +1,17 @@
 ﻿using InstaConnect.Identity.Business.Models;
+using InstaConnect.Identity.Business.Queries.User.GetCurrentUserDetailed;
 using InstaConnect.Shared.Business.Abstractions;
 
 namespace InstaConnect.Identity.Business.Queries.User.GetCurrentUser;
 
 public class GetCurrentUserQuery : IQuery<UserViewModel>, ICachable
 {
-    public string CurrentUserId { get; set; }
+    private const int EXPIRATION_AMOUNT_MINUTES = 15;
 
-    public string Key { get; set; }
 
-    public DateTimeOffset Expiration { get; set; }
+    public string CurrentUserId { get; set; } = string.Empty;
+
+    public string Key => nameof(GetCurrentUserQuery) + CurrentUserId;
+
+    public DateTimeOffset Expiration => DateTimeOffset.UtcNow.AddMinutes(EXPIRATION_AMOUNT_MINUTES);
 }

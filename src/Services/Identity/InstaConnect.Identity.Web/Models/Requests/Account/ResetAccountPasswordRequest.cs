@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using InstaConnect.Identity.Web.Models.Binding.Account;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Identity.Web.Models.Requests.Account;
 
 public class ResetAccountPasswordRequest
 {
     [FromRoute]
-    public string UserId { get; set; }
+    public string UserId { get; set; } = string.Empty;
 
     [FromRoute]
-    public string Token { get; set; }
+    public string Token { get; set; } = string.Empty;
 
     [FromBody]
-    public PasswordBodyRequest PasswordBodyRequestModel { get; set; }
+    public ResetAccountPasswordBindingModel ResetAccountPasswordBindingModel { get; set; } = new();
 }

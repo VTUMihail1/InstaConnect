@@ -6,7 +6,7 @@ using InstaConnect.Messages.Business.Read.Queries.Messages.GetMessageById;
 using InstaConnect.Messages.Web.Read.Models.Requests.Messages;
 using InstaConnect.Messages.Web.Read.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
-using InstaConnect.Shared.Web.Utils;
+using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

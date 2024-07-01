@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Follows.Web.Models.Requests.Follows;
+namespace InstaConnect.Follows.Web.Write.Models.Requests.Follows;
 
 public class DeleteFollowRequest
 {

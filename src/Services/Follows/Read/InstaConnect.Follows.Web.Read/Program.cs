@@ -1,8 +1,8 @@
-using InstaConnect.Shared.Web.Utils;
 using InstaConnect.Follows.Data.Read.Extensions;
 using InstaConnect.Follows.Business.Read.Extensions;
 using InstaConnect.Follows.Web.Read.Extensions;
 using InstaConnect.Shared.Web.Extensions;
+using InstaConnect.Shared.Web.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 var cancellationTokenSource = new CancellationTokenSource();

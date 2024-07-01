@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace InstaConnect.Follows.Web.Extensions;
+namespace InstaConnect.Follows.Web.Write.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -23,7 +23,8 @@ public static class ServiceCollectionExtensions
             .AddSwagger()
             .AddRateLimiterPolicies()
             .AddVersioning()
-            .AddExceptionHandler();
+            .AddExceptionHandler()
+            .AddCurrentUserContext();
 
         serviceCollection.ConfigureApiBehaviorOptions();
 
