@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Security.Claims;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
-using System.Threading.Tasks;
 using Asp.Versioning;
 using IdentityModel;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Models.Options;
 using InstaConnect.Shared.Data.Models.Options;
 using InstaConnect.Shared.Data.Utils;
 using InstaConnect.Shared.Web.Abstractions;
@@ -18,7 +10,6 @@ using InstaConnect.Shared.Web.ExceptionHandlers;
 using InstaConnect.Shared.Web.Helpers;
 using InstaConnect.Shared.Web.Models.Options;
 using InstaConnect.Shared.Web.Utilities;
-using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -195,7 +186,7 @@ public static class ServiceCollectionExtensions
             {
                 options.DefaultApiVersion = new ApiVersion(1);
                 options.ReportApiVersions = true;
-            
+
             })
             .AddApiExplorer(options =>
             {

@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using InstaConnect.Identity.Business.Commands.Account.RegisterAccount;
 
-namespace InstaConnect.Identity.Business.Commands.Account.ConfirmAccountEmail;
+namespace InstaConnect.Identity.Business.Commands.Account.RegisterAccount;
 
 public class RegisterAccountCommandValidator : AbstractValidator<RegisterAccountCommand>
 {

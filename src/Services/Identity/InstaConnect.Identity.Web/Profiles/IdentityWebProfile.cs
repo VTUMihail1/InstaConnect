@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using InstaConnect.Identity.Business.Commands.Account.ConfirmAccountEmail;
-using InstaConnect.Identity.Business.Commands.Account.DeleteAccount;
 using InstaConnect.Identity.Business.Commands.Account.DeleteAccountById;
-using InstaConnect.Identity.Business.Commands.Account.EditAccount;
+using InstaConnect.Identity.Business.Commands.Account.DeleteCurrentAccount;
+using InstaConnect.Identity.Business.Commands.Account.EditCurrentAccount;
 using InstaConnect.Identity.Business.Commands.Account.LoginAccount;
 using InstaConnect.Identity.Business.Commands.Account.RegisterAccount;
 using InstaConnect.Identity.Business.Commands.Account.ResendAccountEmailConfirmation;

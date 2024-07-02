@@ -1,8 +1,8 @@
-﻿using InstaConnect.Messages.Data.Read.Models.Entities;
+﻿using InstaConnect.Posts.Data.Read.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InstaConnect.Messages.Data.Read.EntitiyConfigurations;
+namespace InstaConnect.Posts.Data.Read.EntityConfigurations;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {

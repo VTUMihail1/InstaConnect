@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Data.Abstract;
-using InstaConnect.Posts.Data.Models.Entities;
+using InstaConnect.Posts.Data.Write.Abstract;
+using InstaConnect.Posts.Data.Write.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.PostComments;
-using InstaConnect.Shared.Business.Contracts.Posts;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
+namespace InstaConnect.Posts.Business.Write.Commands.PostComments.AddPostComment;
 
 internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentCommand>
 {

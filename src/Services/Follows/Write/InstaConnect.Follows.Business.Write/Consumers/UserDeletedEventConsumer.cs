@@ -5,7 +5,7 @@ using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Follows.Business.Consumers;
+namespace InstaConnect.Follows.Business.Write.Consumers;
 internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
 {
     private readonly IMapper _mapper;

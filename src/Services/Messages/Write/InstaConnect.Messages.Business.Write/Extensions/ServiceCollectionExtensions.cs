@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
-using InstaConnect.Messages.Business.Abstract;
-using InstaConnect.Messages.Business.Consumers;
-using InstaConnect.Messages.Business.Helpers;
+using InstaConnect.Messages.Business.Write.Abstract;
+using InstaConnect.Messages.Business.Write.Consumers;
+using InstaConnect.Messages.Business.Write.Helpers;
 using InstaConnect.Shared.Business.Extensions;
-using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Business.Extensions;
+namespace InstaConnect.Messages.Business.Write.Extensions;
 
 public static class ServiceCollectionExtensions
 {

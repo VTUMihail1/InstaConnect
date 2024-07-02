@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Identity.Business.Commands.Account.DeleteAccount;
+namespace InstaConnect.Identity.Business.Commands.Account.DeleteCurrentAccount;
 
 public class DeleteCurrentAccountCommandHandler : ICommandHandler<DeleteCurrentAccountCommand>
 {

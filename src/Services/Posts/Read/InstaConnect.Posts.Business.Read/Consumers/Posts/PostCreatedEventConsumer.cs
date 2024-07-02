@@ -14,8 +14,8 @@ internal class PostCreatedEventConsumer : IConsumer<PostCreatedEvent>
     private readonly IPostRepository _postRepository;
 
     public PostCreatedEventConsumer(
-        IMapper mapper, 
-        IUnitOfWork unitOfWork, 
+        IMapper mapper,
+        IUnitOfWork unitOfWork,
         IPostRepository postRepository)
     {
         _mapper = mapper;

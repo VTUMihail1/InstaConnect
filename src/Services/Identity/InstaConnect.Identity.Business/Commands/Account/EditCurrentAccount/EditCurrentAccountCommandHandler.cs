@@ -7,7 +7,7 @@ using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Identity.Business.Commands.Account.EditAccount;
+namespace InstaConnect.Identity.Business.Commands.Account.EditCurrentAccount;
 
 public class EditCurrentAccountCommandHandler : ICommandHandler<EditCurrentAccountCommand>
 {

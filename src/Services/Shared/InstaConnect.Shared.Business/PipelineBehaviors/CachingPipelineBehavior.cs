@@ -1,12 +1,10 @@
-﻿using System;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Data.Models.Filters;
+﻿using InstaConnect.Shared.Business.Abstractions;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace InstaConnect.Shared.Business.Behaviors;
+namespace InstaConnect.Shared.Business.PipelineBehaviors;
 
 internal class CachingPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>

@@ -7,7 +7,7 @@ using InstaConnect.Shared.Business.Exceptions.Follow;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Follows.Business.Commands.Follows.DeleteFollow;
+namespace InstaConnect.Follows.Business.Write.Commands.Follows.DeleteFollow;
 
 public class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommand>
 {

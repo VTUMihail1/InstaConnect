@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Data.Read.Abstractions;
-using InstaConnect.Messages.Data.Read.Models.Entities;
+using InstaConnect.Posts.Data.Read.Abstract;
+using InstaConnect.Posts.Data.Read.Models.Entities;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;

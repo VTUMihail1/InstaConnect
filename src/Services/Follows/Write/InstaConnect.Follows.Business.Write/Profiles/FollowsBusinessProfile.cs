@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Business.Commands.Follows.AddFollow;
+using InstaConnect.Follows.Business.Write.Commands.Follows.AddFollow;
 using InstaConnect.Follows.Business.Write.Models;
 using InstaConnect.Follows.Data.Write.Models.Entities;
 using InstaConnect.Shared.Business.Contracts.Follows;
 using InstaConnect.Shared.Business.Contracts.Users;
 
-namespace InstaConnect.Follows.Business.Profiles;
+namespace InstaConnect.Follows.Business.Write.Profiles;
 
 public class FollowsBusinessProfile : Profile
 {

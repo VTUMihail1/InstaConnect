@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using InstaConnect.Identity.Business.Commands.Account.ResendAccountEmailConfirmation;
 
-namespace InstaConnect.Identity.Business.Commands.Account.ConfirmAccountEmail;
+namespace InstaConnect.Identity.Business.Commands.Account.ResendAccountEmailConfirmation;
 public class ResendAccountEmailConfirmationCommandValidator : AbstractValidator<ResendAccountEmailConfirmationCommand>
 {
     public ResendAccountEmailConfirmationCommandValidator()

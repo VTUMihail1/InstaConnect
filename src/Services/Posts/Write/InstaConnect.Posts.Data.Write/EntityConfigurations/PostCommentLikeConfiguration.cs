@@ -1,8 +1,8 @@
-﻿using InstaConnect.Posts.Data.Models.Entities;
+﻿using InstaConnect.Posts.Data.Write.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InstaConnect.Posts.Data.EntityConfigurations;
+namespace InstaConnect.Posts.Data.Write.EntityConfigurations;
 
 public class PostCommentLikeConfiguration : IEntityTypeConfiguration<PostCommentLike>
 {

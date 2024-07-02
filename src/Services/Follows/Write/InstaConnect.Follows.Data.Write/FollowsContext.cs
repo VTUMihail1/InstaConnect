@@ -1,5 +1,4 @@
-﻿using InstaConnect.Follows.Data.Write.EntitiyConfigurations;
-using InstaConnect.Follows.Data.Write.Models.Entities;
+﻿using InstaConnect.Follows.Data.Write.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Follows.Data.Write;

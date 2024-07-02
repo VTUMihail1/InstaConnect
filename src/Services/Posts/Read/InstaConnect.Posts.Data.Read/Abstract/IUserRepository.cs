@@ -1,7 +1,7 @@
-﻿using InstaConnect.Messages.Data.Read.Models.Entities;
+﻿using InstaConnect.Posts.Data.Read.Models.Entities;
 using InstaConnect.Shared.Data.Abstract;
 
-namespace InstaConnect.Messages.Data.Read.Abstractions;
+namespace InstaConnect.Posts.Data.Read.Abstract;
 
 public interface IUserRepository : IBaseRepository<User>
 {

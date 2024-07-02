@@ -1,9 +1,7 @@
-﻿using InstaConnect.Posts.Data.EntityConfigurations;
-using InstaConnect.Posts.Data.Models.Entities;
-using InstaConnect.Shared.Data;
+﻿using InstaConnect.Posts.Data.Write.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Posts.Data;
+namespace InstaConnect.Posts.Data.Write;
 
 public class PostsContext : DbContext
 {

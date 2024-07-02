@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Data.Abstractions;
-using InstaConnect.Messages.Data.Models.Filters;
+using InstaConnect.Messages.Data.Write.Abstractions;
+using InstaConnect.Messages.Data.Write.Models.Filters;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Messages.Business.Consumers;
+namespace InstaConnect.Messages.Business.Write.Consumers;
 
 internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
 {

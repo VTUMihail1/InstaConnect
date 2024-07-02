@@ -1,8 +1,6 @@
-﻿using InstaConnect.Posts.Data.Read.Models.Entities;
-using InstaConnect.Shared.Data.Models.Base;
-using Microsoft.EntityFrameworkCore;
+﻿using InstaConnect.Shared.Data.Models.Base;
 
-namespace InstaConnect.Messages.Data.Read.Models.Entities;
+namespace InstaConnect.Posts.Data.Read.Models.Entities;
 
 public class User : BaseEntity
 {

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Business.Commands.Messages.AddMessage;
-using InstaConnect.Messages.Business.Commands.Messages.DeleteMessage;
-using InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
-using InstaConnect.Messages.Web.Models.Requests.Messages;
+using InstaConnect.Messages.Business.Write.Commands.Messages.AddMessage;
+using InstaConnect.Messages.Business.Write.Commands.Messages.DeleteMessage;
+using InstaConnect.Messages.Business.Write.Commands.Messages.UpdateMessage;
+using InstaConnect.Messages.Web.Write.Models.Requests.Messages;
 using InstaConnect.Shared.Web.Models.Users;
 
-namespace InstaConnect.Messages.Web.Profiles;
+namespace InstaConnect.Messages.Web.Write.Profiles;
 
 public class MessagesWebProfile : Profile
 {

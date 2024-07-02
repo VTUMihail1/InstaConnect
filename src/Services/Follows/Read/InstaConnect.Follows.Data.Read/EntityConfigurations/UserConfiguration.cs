@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InstaConnect.Follows.Data.Read.EntitiyConfigurations;
+namespace InstaConnect.Follows.Data.Read.EntityConfigurations;
 
 internal class UserConfiguration : IEntityTypeConfiguration<User>
 {

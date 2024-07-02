@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Posts.Web.Models.Requests.PostCommentLike;
+namespace InstaConnect.Posts.Web.Write.Models.Requests.PostCommentLike;
 
 public class DeletePostCommentLikeRequest
 {

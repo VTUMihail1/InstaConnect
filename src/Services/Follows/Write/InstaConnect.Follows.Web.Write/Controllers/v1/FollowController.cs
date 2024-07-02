@@ -1,9 +1,8 @@
 ﻿using Asp.Versioning;
 using AutoMapper;
-using InstaConnect.Follows.Business.Commands.Follows.AddFollow;
-using InstaConnect.Follows.Business.Commands.Follows.DeleteFollow;
+using InstaConnect.Follows.Business.Write.Commands.Follows.AddFollow;
+using InstaConnect.Follows.Business.Write.Commands.Follows.DeleteFollow;
 using InstaConnect.Follows.Web.Write.Models.Requests.Follows;
-using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
 using MediatR;

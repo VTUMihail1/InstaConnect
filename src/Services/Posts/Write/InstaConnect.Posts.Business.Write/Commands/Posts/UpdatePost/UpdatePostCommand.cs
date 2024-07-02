@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
+namespace InstaConnect.Posts.Business.Write.Commands.Posts.UpdatePost;
 
 public class UpdatePostCommand : ICommand
 {

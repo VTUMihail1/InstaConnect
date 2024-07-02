@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InstaConnect.Follows.Data.Write.EntitiyConfigurations;
+namespace InstaConnect.Follows.Data.Write.EntityConfigurations;
 
 public class FollowConfiguration : IEntityTypeConfiguration<Follow>
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Messages.Web.Models.Requests.Messages;
+namespace InstaConnect.Messages.Web.Write.Models.Requests.Messages;
 
 public class DeleteMessageRequest
 {

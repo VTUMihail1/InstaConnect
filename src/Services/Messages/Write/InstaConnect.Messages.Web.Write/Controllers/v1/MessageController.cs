@@ -1,9 +1,9 @@
 ﻿using Asp.Versioning;
 using AutoMapper;
-using InstaConnect.Messages.Business.Commands.Messages.AddMessage;
-using InstaConnect.Messages.Business.Commands.Messages.DeleteMessage;
-using InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
-using InstaConnect.Messages.Web.Models.Requests.Messages;
+using InstaConnect.Messages.Business.Write.Commands.Messages.AddMessage;
+using InstaConnect.Messages.Business.Write.Commands.Messages.DeleteMessage;
+using InstaConnect.Messages.Business.Write.Commands.Messages.UpdateMessage;
+using InstaConnect.Messages.Web.Write.Models.Requests.Messages;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
 using MediatR;
@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Messages.Web.Controllers.v1;
+namespace InstaConnect.Messages.Web.Write.Controllers.v1;
 
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/messages")]

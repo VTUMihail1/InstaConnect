@@ -1,6 +1,6 @@
-using InstaConnect.Posts.Business.Extensions;
-using InstaConnect.Posts.Data.Extensions;
-using InstaConnect.Posts.Web.Extensions;
+using InstaConnect.Posts.Business.Write.Extensions;
+using InstaConnect.Posts.Data.Write.Extensions;
+using InstaConnect.Posts.Web.Write.Extensions;
 using InstaConnect.Shared.Web.Extensions;
 using InstaConnect.Shared.Web.Utilities;
 

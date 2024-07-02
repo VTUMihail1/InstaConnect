@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using InstaConnect.Identity.Business.Commands.Account.DeleteAccountById;
 
-namespace InstaConnect.Identity.Business.Commands.Account.ConfirmAccountEmail;
+namespace InstaConnect.Identity.Business.Commands.Account.DeleteAccountById;
 
 public class DeleteAccountByIdCommandValidator : AbstractValidator<DeleteAccountByIdCommand>
 {

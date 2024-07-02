@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
-using InstaConnect.Identity.Business.Commands.Account.DeleteAccount;
+﻿using FluentValidation;
 
-namespace InstaConnect.Identity.Business.Commands.Account.ConfirmAccountEmail;
+namespace InstaConnect.Identity.Business.Commands.Account.DeleteCurrentAccount;
 public class DeleteCurrentAccountCommandValidator : AbstractValidator<DeleteCurrentAccountCommand>
 {
     public DeleteCurrentAccountCommandValidator()

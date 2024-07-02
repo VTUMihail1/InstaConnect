@@ -1,22 +1,21 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLike;
-using InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommentLike;
-using InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
-using InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment;
-using InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment;
-using InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
-using InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
-using InstaConnect.Posts.Business.Commands.Posts.AddPost;
-using InstaConnect.Posts.Business.Commands.Posts.DeletePost;
-using InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
-using InstaConnect.Posts.Web.Models.Requests.Post;
-using InstaConnect.Posts.Web.Models.Requests.PostComment;
-using InstaConnect.Posts.Web.Models.Requests.PostCommentLike;
-using InstaConnect.Posts.Web.Models.Requests.PostLike;
-using InstaConnect.Shared.Web.Models.Filters;
+using InstaConnect.Posts.Business.Write.Commands.PostCommentLikes.AddPostCommentLike;
+using InstaConnect.Posts.Business.Write.Commands.PostCommentLikes.DeletePostCommentLike;
+using InstaConnect.Posts.Business.Write.Commands.PostComments.AddPostComment;
+using InstaConnect.Posts.Business.Write.Commands.PostComments.DeletePostComment;
+using InstaConnect.Posts.Business.Write.Commands.PostComments.UpdatePostComment;
+using InstaConnect.Posts.Business.Write.Commands.PostLikes.AddPostLike;
+using InstaConnect.Posts.Business.Write.Commands.PostLikes.DeletePostLike;
+using InstaConnect.Posts.Business.Write.Commands.Posts.AddPost;
+using InstaConnect.Posts.Business.Write.Commands.Posts.DeletePost;
+using InstaConnect.Posts.Business.Write.Commands.Posts.UpdatePost;
+using InstaConnect.Posts.Web.Write.Models.Requests.Post;
+using InstaConnect.Posts.Web.Write.Models.Requests.PostComment;
+using InstaConnect.Posts.Web.Write.Models.Requests.PostCommentLike;
+using InstaConnect.Posts.Web.Write.Models.Requests.PostLike;
 using InstaConnect.Shared.Web.Models.Users;
 
-namespace InstaConnect.Posts.Web.Profiles;
+namespace InstaConnect.Posts.Web.Write.Profiles;
 
 public class PostsWebProfile : Profile
 {

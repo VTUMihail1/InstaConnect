@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using InstaConnect.Identity.Business.Commands.Account.SendAccountPasswordReset;
 
-namespace InstaConnect.Identity.Business.Commands.Account.ConfirmAccountEmail;
+namespace InstaConnect.Identity.Business.Commands.Account.SendAccountPasswordReset;
 public class SendAccountPasswordResetCommandValidator : AbstractValidator<SendAccountPasswordResetCommand>
 {
     public SendAccountPasswordResetCommandValidator()

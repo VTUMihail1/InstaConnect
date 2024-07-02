@@ -17,7 +17,6 @@ using InstaConnect.Posts.Web.Read.Models.Requests.PostComment;
 using InstaConnect.Posts.Web.Read.Models.Requests.PostCommentLike;
 using InstaConnect.Posts.Web.Read.Models.Requests.PostLike;
 using InstaConnect.Posts.Web.Read.Models.Responses;
-using InstaConnect.Shared.Web.Models.Filters;
 
 namespace InstaConnect.Posts.Web.Read.Profiles;
 

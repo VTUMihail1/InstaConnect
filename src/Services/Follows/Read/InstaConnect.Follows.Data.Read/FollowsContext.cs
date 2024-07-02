@@ -1,5 +1,4 @@
-﻿using InstaConnect.Follows.Data.Read.EntitiyConfigurations;
-using InstaConnect.Follows.Data.Read.Models.Entities;
+﻿using InstaConnect.Follows.Data.Read.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Follows.Data.Read;

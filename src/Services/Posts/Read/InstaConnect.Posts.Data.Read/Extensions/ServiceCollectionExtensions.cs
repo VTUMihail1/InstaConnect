@@ -1,9 +1,6 @@
-﻿using InstaConnect.Messages.Data.Read.Abstractions;
-using InstaConnect.Messages.Data.Read.Repositories;
-using InstaConnect.Posts.Data.Read.Abstract;
+﻿using InstaConnect.Posts.Data.Read.Abstract;
 using InstaConnect.Posts.Data.Read.Helpers;
 using InstaConnect.Posts.Data.Read.Repositories;
-using InstaConnect.Shared.Data;
 using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Shared.Data.Extensions;
 using InstaConnect.Shared.Data.Models.Options;
@@ -24,7 +21,7 @@ public static class ServiceCollectionExtensions
                 var databaseOptions = configuration
                     .GetSection(nameof(DatabaseOptions))
                     .Get<DatabaseOptions>()!;
-           
+
                 options.UseSqlServer(
                     databaseOptions.ConnectionString,
                     sqlServerOptions => sqlServerOptions.EnableRetryOnFailure());

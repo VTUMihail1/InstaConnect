@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Data.Abstract;
+using InstaConnect.Posts.Data.Write.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.PostCommentLikes;
-using InstaConnect.Shared.Business.Contracts.PostComments;
-using InstaConnect.Shared.Business.Contracts.Posts;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.PostLike;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
-using MassTransit.Testing;
 
-namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommentLike;
+namespace InstaConnect.Posts.Business.Write.Commands.PostCommentLikes.DeletePostCommentLike;
 
 internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostCommentLikeCommand>
 {

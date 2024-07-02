@@ -1,4 +1,4 @@
-using InstaConnect.Follows.Business.Extensions;
+using InstaConnect.Follows.Business.Write.Extensions;
 using InstaConnect.Follows.Data.Write.Extensions;
 using InstaConnect.Follows.Web.Write.Extensions;
 using InstaConnect.Shared.Web.Extensions;

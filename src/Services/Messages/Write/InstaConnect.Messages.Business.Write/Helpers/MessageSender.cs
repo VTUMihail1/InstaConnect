@@ -1,9 +1,9 @@
-﻿using InstaConnect.Messages.Business.Abstract;
-using InstaConnect.Messages.Business.Helpers.Hubs;
-using InstaConnect.Messages.Business.Models;
+﻿using InstaConnect.Messages.Business.Write.Abstract;
+using InstaConnect.Messages.Business.Write.Helpers.Hubs;
+using InstaConnect.Messages.Business.Write.Models;
 using Microsoft.AspNetCore.SignalR;
 
-namespace InstaConnect.Messages.Business.Helpers;
+namespace InstaConnect.Messages.Business.Write.Helpers;
 
 public class MessageSender : IMessageSender
 {

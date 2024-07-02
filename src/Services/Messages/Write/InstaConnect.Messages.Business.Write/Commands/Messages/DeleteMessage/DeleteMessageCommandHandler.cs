@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Data.Abstractions;
+using InstaConnect.Messages.Data.Write.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Business.Exceptions.Account;
@@ -7,7 +7,7 @@ using InstaConnect.Shared.Business.Exceptions.Message;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Messages.Business.Commands.Messages.DeleteMessage;
+namespace InstaConnect.Messages.Business.Write.Commands.Messages.DeleteMessage;
 
 internal class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageCommand>
 {

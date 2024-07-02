@@ -1,13 +1,12 @@
-﻿using InstaConnect.Shared.Data.Abstract;
-using InstaConnect.Shared.Data;
+﻿using InstaConnect.Messages.Data.Read.Abstractions;
+using InstaConnect.Messages.Data.Read.Helpers;
+using InstaConnect.Messages.Data.Read.Repositories;
+using InstaConnect.Shared.Data.Abstract;
+using InstaConnect.Shared.Data.Extensions;
+using InstaConnect.Shared.Data.Models.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using InstaConnect.Shared.Data.Extensions;
-using InstaConnect.Messages.Data.Read.Repositories;
-using InstaConnect.Messages.Data.Read.Abstractions;
-using InstaConnect.Messages.Data.Read.Helpers;
-using InstaConnect.Shared.Data.Models.Options;
 
 namespace InstaConnect.Messages.Data.Read.Extensions;
 

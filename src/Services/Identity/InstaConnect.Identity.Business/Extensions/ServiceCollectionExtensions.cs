@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using InstaConnect.Identity.Business.Consumers;
 using InstaConnect.Shared.Business.Extensions;
-using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Posts.Business.Commands.Posts.DeletePost;
+namespace InstaConnect.Posts.Business.Write.Commands.Posts.DeletePost;
 
 public class DeletePostCommand : ICommand
 {

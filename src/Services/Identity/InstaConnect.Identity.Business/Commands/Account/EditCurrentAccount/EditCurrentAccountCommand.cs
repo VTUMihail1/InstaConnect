@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Identity.Business.Commands.Account.EditAccount;
+namespace InstaConnect.Identity.Business.Commands.Account.EditCurrentAccount;
 
 public class EditCurrentAccountCommand : ICommand
 {
