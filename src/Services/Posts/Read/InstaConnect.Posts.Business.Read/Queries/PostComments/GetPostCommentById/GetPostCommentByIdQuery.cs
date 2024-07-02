@@ -5,5 +5,5 @@ namespace InstaConnect.Posts.Business.Read.Queries.PostComments.GetPostCommentBy
 
 public class GetPostCommentByIdQuery : IQuery<PostCommentViewModel>
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 }

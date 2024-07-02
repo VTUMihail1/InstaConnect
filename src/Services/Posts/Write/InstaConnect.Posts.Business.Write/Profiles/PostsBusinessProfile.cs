@@ -6,7 +6,7 @@ using InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
 using InstaConnect.Posts.Business.Commands.Posts.AddPost;
 using InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
 using InstaConnect.Posts.Data.Models.Entities;
-using InstaConnect.Shared.Business.Models.Users;
+using InstaConnect.Shared.Business.Contracts.Users;
 
 namespace InstaConnect.Posts.Business.Profiles;
 
@@ -15,34 +15,38 @@ public class PostsBusinessProfile : Profile
     public PostsBusinessProfile()
     {
         // Posts
-        CreateMap<CurrentUserModel, Post>()
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+        CreateMap<AddPostCommand, GetUserByIdRequest>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CurrentUserId));
 
-        CreateMap<AddPostCommand, Post>();
+        CreateMap<AddPostCommand, Post>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CurrentUserId));
 
         CreateMap<UpdatePostCommand, Post>();
 
         // Post Comments
 
-        CreateMap<CurrentUserModel, PostComment>()
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+        CreateMap<AddPostCommentCommand, GetUserByIdRequest>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CurrentUserId));
 
-        CreateMap<AddPostCommentCommand, PostComment>();
+        CreateMap<AddPostCommentCommand, PostComment>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CurrentUserId));
 
         CreateMap<UpdatePostCommentCommand, PostComment>();
 
         // Post Likes
 
-        CreateMap<CurrentUserModel, PostLike>()
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+        CreateMap<AddPostLikeCommand, GetUserByIdRequest>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CurrentUserId));
 
-        CreateMap<AddPostLikeCommand, PostLike>();
+        CreateMap<AddPostLikeCommand, PostLike>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CurrentUserId));
 
         // Post Comment Likes
 
-        CreateMap<CurrentUserModel, PostComment>()
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+        CreateMap<AddPostCommentLikeCommand, GetUserByIdRequest>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CurrentUserId));
 
-        CreateMap<AddPostCommentLikeCommand, PostCommentLike>();
+        CreateMap<AddPostCommentLikeCommand, PostCommentLike>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.CurrentUserId));
     }
 }

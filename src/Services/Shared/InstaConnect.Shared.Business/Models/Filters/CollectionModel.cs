@@ -6,9 +6,9 @@ public class CollectionModel
 {
     public SortOrder SortOrder { get; set; }
 
-    public string SortPropertyName { get; set; }
+    public string SortPropertyName { get; set; } = string.Empty;
 
-    public int Offset { get; set; }
+    public int Offset { get; set; } = 0;
 
-    public int Limit { get; set; }
+    public int Limit { get; set; } = int.MaxValue;
 }

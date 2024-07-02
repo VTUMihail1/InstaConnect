@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
+using InstaConnect.Follows.Business.Write.Models;
 using InstaConnect.Messages.Business.Commands.Messages.AddMessage;
 using InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
 using InstaConnect.Messages.Data.Models.Entities;
 using InstaConnect.Messages.Data.Models.Filters;
 using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Business.Contracts.Users;
-using InstaConnect.Shared.Business.Models.Users;
 
 namespace InstaConnect.Messages.Business.Profiles;
 
@@ -24,13 +24,17 @@ public class MessagesBusinessProfile : Profile
 
         CreateMap<AddMessageCommand, GetUserByIdRequest>();
 
-        CreateMap<CurrentUserModel, Message>()
-            .ForMember(dest => dest.SenderId, opt => opt.MapFrom(src => src.Id));
+        CreateMap<AddMessageCommand, MessageGetUserByIdModel>()
+            .ForMember(dest => dest.GetUserBySenderIdRequest.Id, opt => opt.MapFrom(src => src.CurrentUserId))
+            .ForMember(dest => dest.GetUserByReceiverIdRequest.Id, opt => opt.MapFrom(src => src.ReceiverId));
+
+        CreateMap<AddMessageCommand, GetUserByIdRequest>();
 
         CreateMap<GetUserByIdResponse, Message>()
             .ForMember(dest => dest.ReceiverId, opt => opt.MapFrom(src => src.Id));
 
-        CreateMap<AddMessageCommand, Message>();
+        CreateMap<AddMessageCommand, Message>()
+            .ForMember(dest => dest.SenderId, opt => opt.MapFrom(src => src.CurrentUserId));
 
         CreateMap<UpdateMessageCommand, Message>();
 

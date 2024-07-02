@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Identity.Business.Models;
-using InstaConnect.Identity.Business.Queries.User.GetCurrentUserDetailed;
 using InstaConnect.Shared.Business.Abstractions;
 
 namespace InstaConnect.Identity.Business.Queries.User.GetCurrentUser;

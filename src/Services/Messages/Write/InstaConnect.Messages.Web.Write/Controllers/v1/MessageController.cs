@@ -4,6 +4,7 @@ using InstaConnect.Messages.Business.Commands.Messages.AddMessage;
 using InstaConnect.Messages.Business.Commands.Messages.DeleteMessage;
 using InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
 using InstaConnect.Messages.Web.Models.Requests.Messages;
+using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -20,13 +21,16 @@ public class MessageController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly ISender _sender;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public MessageController(
         IMapper mapper,
-        ISender sender)
+        ISender sender,
+        ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
         _sender = sender;
+        _currentUserContext = currentUserContext;
     }
 
     // POST: api/messages
@@ -36,7 +40,9 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> AddAsync(AddMessageRequest request)
     {
+        var currentUser = _currentUserContext.GetCurrentUser();
         var commandQuery = _mapper.Map<AddMessageCommand>(request);
+        _mapper.Map(currentUser, commandQuery);
         await _sender.Send(commandQuery);
 
         return NoContent();
@@ -49,7 +55,9 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateAsync(UpdateMessageRequest request)
     {
+        var currentUser = _currentUserContext.GetCurrentUser();
         var commandQuery = _mapper.Map<UpdateMessageCommand>(request);
+        _mapper.Map(currentUser, commandQuery);
         await _sender.Send(commandQuery);
 
         return NoContent();
@@ -62,7 +70,9 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAsync(DeleteMessageRequest request)
     {
+        var currentUser = _currentUserContext.GetCurrentUser();
         var commandQuery = _mapper.Map<DeleteMessageCommand>(request);
+        _mapper.Map(currentUser, commandQuery);
         await _sender.Send(commandQuery);
 
         return NoContent();

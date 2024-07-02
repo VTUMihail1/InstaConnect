@@ -2,7 +2,7 @@
 using InstaConnect.Follows.Business.Commands.Follows.AddFollow;
 using InstaConnect.Follows.Business.Commands.Follows.DeleteFollow;
 using InstaConnect.Follows.Web.Write.Models.Requests.Follows;
-using InstaConnect.Shared.Business.Models.Users;
+using InstaConnect.Shared.Web.Models.Users;
 
 namespace InstaConnect.Follows.Web.Write.Profiles;
 

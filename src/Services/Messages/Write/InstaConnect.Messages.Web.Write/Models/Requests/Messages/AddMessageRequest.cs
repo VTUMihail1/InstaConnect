@@ -1,8 +1,10 @@
-﻿namespace InstaConnect.Messages.Web.Models.Requests.Messages;
+﻿using InstaConnect.Messages.Web.Write.Models.Binding;
+using Microsoft.AspNetCore.Mvc;
+
+namespace InstaConnect.Messages.Web.Models.Requests.Messages;
 
 public class AddMessageRequest
 {
-    public string ReceiverId { get; set; }
-
-    public string Content { get; set; }
+    [FromBody]
+    public AddMessageBindingModel AddMessageBindingModel { get; set; } = new();
 }

@@ -2,9 +2,9 @@
 
 public class FollowCreatedEvent
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 
-    public string FollowerId { get; set; }
+    public string FollowerId { get; set; } = string.Empty;
 
-    public string FollowingId { get; set; }
+    public string FollowingId { get; set; } = string.Empty;
 }

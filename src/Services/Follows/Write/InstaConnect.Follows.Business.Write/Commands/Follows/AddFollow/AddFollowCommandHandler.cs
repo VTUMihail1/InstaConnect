@@ -38,10 +38,10 @@ public class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
 
     public async Task Handle(AddFollowCommand request, CancellationToken cancellationToken)
     {
-        var followingGetUserByIdModel = _mapper.Map<FollowGetUserByIdModel>(request);
+        var followGetUserByIdModel = _mapper.Map<FollowGetUserByIdModel>(request);
 
         var getUserByFollowerIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(
-            followingGetUserByIdModel.GetUserByFollowerIdRequest, 
+            followGetUserByIdModel.GetUserByFollowerIdRequest, 
             cancellationToken);
 
         if (getUserByFollowerIdResponse == null)
@@ -50,7 +50,7 @@ public class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
         }
 
         var getUserByFollowingIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(
-            followingGetUserByIdModel.GetUserByFollowingIdRequest,
+            followGetUserByIdModel.GetUserByFollowingIdRequest,
             cancellationToken);
 
         if (getUserByFollowingIdResponse == null)

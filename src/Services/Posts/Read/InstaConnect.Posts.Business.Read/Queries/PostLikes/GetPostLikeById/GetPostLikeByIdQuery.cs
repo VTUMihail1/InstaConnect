@@ -5,5 +5,5 @@ namespace InstaConnect.Posts.Business.Read.Queries.PostLikes.GetPostLikeById;
 
 public class GetPostLikeByIdQuery : IQuery<PostLikeViewModel>
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 }

@@ -4,7 +4,9 @@ namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment;
 
 public class UpdatePostCommentCommand : ICommand
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 
-    public string Content { get; set; }
+    public string CurrentUserId { get; set; } = string.Empty;
+
+    public string Content { get; set; } = string.Empty;
 }

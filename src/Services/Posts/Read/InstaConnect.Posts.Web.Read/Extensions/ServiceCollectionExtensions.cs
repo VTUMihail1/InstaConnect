@@ -17,6 +17,7 @@ public static class ServiceCollectionExtensions
             .AddSwagger()
             .AddRateLimiterPolicies()
             .AddVersioning()
+            .AddCurrentUserContext()
             .AddExceptionHandler();
 
         serviceCollection.ConfigureApiBehaviorOptions();

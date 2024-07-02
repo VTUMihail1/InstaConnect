@@ -5,5 +5,5 @@ namespace InstaConnect.Posts.Web.Models.Requests.PostCommentLike;
 public class DeletePostCommentLikeRequest
 {
     [FromRoute]
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 }

@@ -4,8 +4,7 @@ using InstaConnect.Posts.Business.Commands.Posts.AddPost;
 using InstaConnect.Posts.Business.Commands.Posts.DeletePost;
 using InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
 using InstaConnect.Posts.Web.Models.Requests.Post;
-using InstaConnect.Posts.Web.Models.Responses;
-using InstaConnect.Shared.Web.Models.Filters;
+using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -21,13 +20,16 @@ public class PostController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly ISender _sender;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public PostController(
         IMapper mapper,
-        ISender sender)
+        ISender sender,
+        ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
         _sender = sender;
+        _currentUserContext = currentUserContext;
     }
 
     // POST: api/posts
@@ -38,7 +40,9 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> AddAsync(AddPostRequest request)
     {
+        var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _mapper.Map<AddPostCommand>(request);
+        _mapper.Map(currentUser, commandRequest);
         await _sender.Send(commandRequest);
 
         return NoContent();
@@ -52,7 +56,9 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateAsync(UpdatePostRequest request)
     {
+        var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _mapper.Map<UpdatePostCommand>(request);
+        _mapper.Map(currentUser, commandRequest);
         await _sender.Send(commandRequest);
 
         return NoContent();
@@ -66,7 +72,9 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAsync(DeletePostRequest request)
     {
+        var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _mapper.Map<DeletePostCommand>(request);
+        _mapper.Map(currentUser, commandRequest);
         await _sender.Send(commandRequest);
 
         return NoContent();

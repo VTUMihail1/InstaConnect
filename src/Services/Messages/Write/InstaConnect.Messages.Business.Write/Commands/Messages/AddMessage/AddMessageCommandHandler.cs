@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InstaConnect.Follows.Business.Write.Models;
 using InstaConnect.Messages.Business.Abstract;
 using InstaConnect.Messages.Business.Models;
 using InstaConnect.Messages.Data.Abstractions;
@@ -7,8 +8,6 @@ using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Exceptions.User;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Business.Models.Users;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
@@ -21,7 +20,6 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
     private readonly IMessageSender _messageSender;
     private readonly IPublishEndpoint _publishEndpoint;
     private readonly IMessageRepository _messageRepository;
-    private readonly ICurrentUserContext _currentUserContext;
     private readonly IRequestClient<GetUserByIdRequest> _getUserByIdRequestClient;
 
     public AddMessageCommandHandler(
@@ -30,7 +28,6 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
         IMessageSender messageSender,
         IPublishEndpoint publishEndpoint,
         IMessageRepository messageRepository,
-        ICurrentUserContext currentUserContext,
         IRequestClient<GetUserByIdRequest> getUserByIdRequestClient)
     {
         _mapper = mapper;
@@ -38,24 +35,32 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
         _messageSender = messageSender;
         _publishEndpoint = publishEndpoint;
         _messageRepository = messageRepository;
-        _currentUserContext = currentUserContext;
         _getUserByIdRequestClient = getUserByIdRequestClient;
     }
 
     public async Task Handle(AddMessageCommand request, CancellationToken cancellationToken)
     {
-        var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
-        var getUserByIdResponse = await _getUserByIdRequestClient.GetResponse<CurrentUserModel>(getUserByIdRequest, cancellationToken);
+        var messageGetUserByIdModel = _mapper.Map<MessageGetUserByIdModel>(request);
 
-        if(getUserByIdResponse.Message == null)
+        var getUserBySenderIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(
+            messageGetUserByIdModel.GetUserBySenderIdRequest,
+            cancellationToken);
+
+        if (getUserBySenderIdResponse == null)
         {
             throw new UserNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUser();
+        var getUserByReceiverIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(
+            messageGetUserByIdModel.GetUserByReceiverIdRequest,
+            cancellationToken);
+
+        if (getUserByReceiverIdResponse == null)
+        {
+            throw new UserNotFoundException();
+        }
 
         var message = _mapper.Map<Message>(request);
-        _mapper.Map(currentUserDetails, message);
         _messageRepository.Add(message);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

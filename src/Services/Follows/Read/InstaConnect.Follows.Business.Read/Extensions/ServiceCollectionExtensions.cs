@@ -1,11 +1,7 @@
 ﻿using FluentValidation;
 using InstaConnect.Follows.Business.Read.Consumers.Follows;
 using InstaConnect.Follows.Business.Read.Consumers.Users;
-using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Extensions;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Business.Models.Options;
-using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -34,7 +34,7 @@ public class FollowController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllAsync(CollectionRequest request)
+    public async Task<IActionResult> GetAllAsync(GetAllFollowsRequest request)
     {
         var queryRequest = _mapper.Map<GetAllFollowsQuery>(request);
         var response = await _sender.Send(queryRequest);
@@ -47,7 +47,7 @@ public class FollowController : ControllerBase
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllFilteredAsync(GetFollowCollectionRequest request)
+    public async Task<IActionResult> GetAllFilteredAsync(GetAllFilteredFollowsRequest request)
     {
         var queryRequest = _mapper.Map<GetAllFilteredFollowsQuery>(request);
         var queryResponse = await _sender.Send(queryRequest);

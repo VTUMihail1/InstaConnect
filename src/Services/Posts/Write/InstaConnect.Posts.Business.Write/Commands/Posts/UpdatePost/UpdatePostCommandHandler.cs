@@ -15,20 +15,17 @@ public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand>
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPostRepository _postRepository;
     private readonly IPublishEndpoint _publishEndpoint;
-    private readonly ICurrentUserContext _currentUserContext;
 
     public UpdatePostCommandHandler(
         IMapper mapper,
         IUnitOfWork unitOfWork,
         IPostRepository postRepository,
-        IPublishEndpoint publishEndpoint,
-        ICurrentUserContext currentUserContext)
+        IPublishEndpoint publishEndpoint)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _postRepository = postRepository;
         _publishEndpoint = publishEndpoint;
-        _currentUserContext = currentUserContext;
     }
 
     public async Task Handle(UpdatePostCommand request, CancellationToken cancellationToken)
@@ -40,9 +37,7 @@ public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand>
             throw new PostNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUser();
-
-        if (currentUserDetails.Id != existingPost.UserId)
+        if (request.CurrentUserId != existingPost.UserId)
         {
             throw new AccountForbiddenException();
         }

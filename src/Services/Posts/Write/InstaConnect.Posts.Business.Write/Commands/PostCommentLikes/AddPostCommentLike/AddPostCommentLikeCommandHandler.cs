@@ -5,8 +5,10 @@ using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.PostCommentLikes;
 using InstaConnect.Shared.Business.Contracts.PostComments;
 using InstaConnect.Shared.Business.Contracts.Posts;
+using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
+using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
@@ -19,24 +21,24 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPublishEndpoint _publishEndpoint;
-    private readonly ICurrentUserContext _currentUserContext;
     private readonly IPostCommentRepository _postCommentRepository;
     private readonly IPostCommentLikeRepository _postCommentLikeRepository;
+    private readonly IRequestClient<GetUserByIdRequest> _getUserByIdRequestClient;
 
     public AddPostCommentLikeCommandHandler(
         IMapper mapper,
         IUnitOfWork unitOfWork,
         IPublishEndpoint publishEndpoint,
-        ICurrentUserContext currentUserContext,
         IPostCommentRepository postCommentRepository,
-        IPostCommentLikeRepository postCommentLikeRepository)
+        IPostCommentLikeRepository postCommentLikeRepository,
+        IRequestClient<GetUserByIdRequest> getUserByIdRequestClient)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _publishEndpoint = publishEndpoint;
-        _currentUserContext = currentUserContext;
         _postCommentRepository = postCommentRepository;
         _postCommentLikeRepository = postCommentLikeRepository;
+        _getUserByIdRequestClient = getUserByIdRequestClient;
     }
 
     public async Task Handle(AddPostCommentLikeCommand request, CancellationToken cancellationToken)
@@ -48,9 +50,15 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
             throw new PostCommentNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUser();
+        var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
+        var getUserByIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(getUserByIdRequest, cancellationToken);
 
-        var existingPostLike = await _postCommentLikeRepository.GetByUserIdAndPostCommentIdAsync(currentUserDetails.Id!, request.PostCommentId, cancellationToken);
+        if (getUserByIdResponse == null)
+        {
+            throw new UserNotFoundException();
+        }
+
+        var existingPostLike = await _postCommentLikeRepository.GetByUserIdAndPostCommentIdAsync(request.CurrentUserId, request.PostCommentId, cancellationToken);
 
         if (existingPostLike == null)
         {
@@ -58,7 +66,6 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
         }
 
         var postCommentLike = _mapper.Map<PostCommentLike>(request);
-        _mapper.Map(currentUserDetails, postCommentLike);
         _postCommentLikeRepository.Add(postCommentLike);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

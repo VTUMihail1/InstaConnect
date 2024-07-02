@@ -5,5 +5,5 @@ namespace InstaConnect.Posts.Web.Read.Models.Requests.PostComment;
 public class GetPostCommentByIdRequest
 {
     [FromRoute]
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 }

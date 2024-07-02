@@ -17,20 +17,17 @@ internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostC
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPublishEndpoint _publishEndpoint;
-    private readonly ICurrentUserContext _currentUserContext;
     private readonly IPostCommentLikeRepository _postCommentLikeRepository;
 
     public DeletePostCommentLikeCommandHandler(
         IMapper mapper,
         IUnitOfWork unitOfWork,
         IPublishEndpoint publishEndpoint,
-        ICurrentUserContext currentUserContext,
         IPostCommentLikeRepository postCommentLikeRepository)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _publishEndpoint = publishEndpoint;
-        _currentUserContext = currentUserContext;
         _postCommentLikeRepository = postCommentLikeRepository;
     }
 
@@ -43,9 +40,7 @@ internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostC
             throw new PostLikeNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUser();
-
-        if (currentUserDetails.Id != existingPostCommentLike.UserId)
+        if (request.CurrentUserId != existingPostCommentLike.UserId)
         {
             throw new AccountForbiddenException();
         }
@@ -54,7 +49,7 @@ internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostC
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var postCommentLikeDeletedEvent = _mapper.Map<PostCommentLikeDeletedEvent>(currentUserDetails);
+        var postCommentLikeDeletedEvent = _mapper.Map<PostCommentLikeDeletedEvent>(request);
         await _publishEndpoint.Publish(postCommentLikeDeletedEvent, cancellationToken);
     }
 }

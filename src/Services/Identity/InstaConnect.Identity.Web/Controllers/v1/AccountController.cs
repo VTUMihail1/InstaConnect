@@ -136,7 +136,7 @@ public class AccountController : ControllerBase
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _mapper.Map<EditCurrentAccountCommand>(request);
-        _mapper.Map(currentUser,  commandRequest);
+        _mapper.Map(currentUser, commandRequest);
         await _sender.Send(commandRequest, cancellationToken);
 
         return NoContent();

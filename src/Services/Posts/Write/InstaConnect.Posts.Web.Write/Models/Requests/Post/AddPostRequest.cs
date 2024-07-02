@@ -1,8 +1,10 @@
-﻿namespace InstaConnect.Posts.Web.Models.Requests.Post;
+﻿using InstaConnect.Posts.Web.Write.Models.Binding.Posts;
+using Microsoft.AspNetCore.Mvc;
+
+namespace InstaConnect.Posts.Web.Models.Requests.Post;
 
 public class AddPostRequest
 {
-    public string Title { get; set; }
-
-    public string Content { get; set; }
+    [FromBody]
+    public AddPostBindingModel AddPostBindingModel { get; set; } = new();
 }

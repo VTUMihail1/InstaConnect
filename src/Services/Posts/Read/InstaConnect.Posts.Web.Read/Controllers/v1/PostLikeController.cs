@@ -3,6 +3,7 @@ using AutoMapper;
 using InstaConnect.Posts.Business.Read.Queries.PostLikes.GetAllFilteredPostLikes;
 using InstaConnect.Posts.Business.Read.Queries.PostLikes.GetAllPostLikes;
 using InstaConnect.Posts.Business.Read.Queries.PostLikes.GetPostLikeById;
+using InstaConnect.Posts.Web.Read.Models.Requests.Post;
 using InstaConnect.Posts.Web.Read.Models.Requests.PostLike;
 using InstaConnect.Posts.Web.Read.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
@@ -33,7 +34,7 @@ public class PostLikeController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllAsync(CollectionRequest request)
+    public async Task<IActionResult> GetAllAsync(GetAllPostLikesRequest request)
     {
         var queryRequest = _mapper.Map<GetAllPostLikesQuery>(request);
         var queryResponse = await _sender.Send(queryRequest);
@@ -46,7 +47,7 @@ public class PostLikeController : ControllerBase
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllFilteredAsync(GetPostLikesCollectionRequest request)
+    public async Task<IActionResult> GetAllFilteredAsync(GetAllFilteredPostLikesRequest request)
     {
         var queryRequest = _mapper.Map<GetAllFilteredPostLikesQuery>(request);
         var queryResponse = await _sender.Send(queryRequest);

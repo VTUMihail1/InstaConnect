@@ -4,6 +4,7 @@ using InstaConnect.Posts.Business.Read.Queries.Posts.GetAllFilteredPosts;
 using InstaConnect.Posts.Business.Read.Queries.Posts.GetAllPosts;
 using InstaConnect.Posts.Business.Read.Queries.Posts.GetPostById;
 using InstaConnect.Posts.Web.Read.Models.Requests.Post;
+using InstaConnect.Posts.Web.Read.Models.Requests.PostComment;
 using InstaConnect.Posts.Web.Read.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
 using InstaConnect.Shared.Web.Utilities;
@@ -33,7 +34,7 @@ public class PostController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllAsync(CollectionRequest request)
+    public async Task<IActionResult> GetAllAsync(GetAllPostsQuery request)
     {
         var queryRequest = _mapper.Map<GetAllPostsQuery>(request);
         var queryResponse = await _sender.Send(queryRequest);
@@ -46,7 +47,7 @@ public class PostController : ControllerBase
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllFilteredAsync(GetPostsCollectionRequest request)
+    public async Task<IActionResult> GetAllFilteredAsync(GetAllFilteredPostsRequest request)
     {
         var queryRequest = _mapper.Map<GetAllFilteredPostsQuery>(request);
         var queryResponse = await _sender.Send(queryRequest);
