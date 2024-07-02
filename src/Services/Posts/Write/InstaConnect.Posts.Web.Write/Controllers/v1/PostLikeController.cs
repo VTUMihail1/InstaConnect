@@ -1,8 +1,8 @@
 ﻿using Asp.Versioning;
 using AutoMapper;
-using InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
-using InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
-using InstaConnect.Posts.Web.Models.Requests.PostLike;
+using InstaConnect.Posts.Business.Write.Commands.PostLikes.AddPostLike;
+using InstaConnect.Posts.Business.Write.Commands.PostLikes.DeletePostLike;
+using InstaConnect.Posts.Web.Write.Models.Requests.PostLike;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
 using MediatR;
@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Posts.Web.Controllers.v1;
+namespace InstaConnect.Posts.Web.Write.Controllers.v1;
 
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/post-likes")]

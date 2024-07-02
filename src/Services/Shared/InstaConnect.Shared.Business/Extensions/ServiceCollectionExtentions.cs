@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
-using InstaConnect.Shared.Business.Behaviors;
 using InstaConnect.Shared.Business.Models.Options;
+using InstaConnect.Shared.Business.PipelineBehaviors;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

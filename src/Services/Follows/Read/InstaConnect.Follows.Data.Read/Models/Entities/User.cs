@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Shared.Data.Models.Base;
-using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Follows.Data.Read.Models.Entities;
 

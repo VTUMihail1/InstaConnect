@@ -1,6 +1,6 @@
-﻿using InstaConnect.Messages.Business.Models;
+﻿using InstaConnect.Messages.Business.Write.Models;
 
-namespace InstaConnect.Messages.Business.Abstract;
+namespace InstaConnect.Messages.Business.Write.Abstract;
 
 public interface IMessageSender
 {

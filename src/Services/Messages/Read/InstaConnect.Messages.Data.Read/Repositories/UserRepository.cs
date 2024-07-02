@@ -1,8 +1,6 @@
-﻿using InstaConnect.Messages.Data.Read;
-using InstaConnect.Messages.Data.Read.Abstractions;
+﻿using InstaConnect.Messages.Data.Read.Abstractions;
 using InstaConnect.Messages.Data.Read.Models.Entities;
 using InstaConnect.Shared.Data.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Messages.Data.Read.Repositories;
 

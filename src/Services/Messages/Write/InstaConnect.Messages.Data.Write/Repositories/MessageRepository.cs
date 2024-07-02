@@ -1,8 +1,8 @@
-﻿using InstaConnect.Messages.Data.Abstractions;
-using InstaConnect.Messages.Data.Models.Entities;
+﻿using InstaConnect.Messages.Data.Write.Abstractions;
+using InstaConnect.Messages.Data.Write.Models.Entities;
 using InstaConnect.Shared.Data.Repositories;
 
-namespace InstaConnect.Messages.Data.Repositories;
+namespace InstaConnect.Messages.Data.Write.Repositories;
 
 public class MessageRepository : BaseRepository<Message>, IMessageRepository
 {

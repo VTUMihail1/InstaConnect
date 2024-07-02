@@ -1,5 +1,4 @@
-﻿using InstaConnect.Identity.Data;
-using InstaConnect.Identity.Data.Abstraction;
+﻿using InstaConnect.Identity.Data.Abstraction;
 using InstaConnect.Identity.Data.Models.Entities;
 using InstaConnect.Shared.Data.Repositories;
 using Microsoft.EntityFrameworkCore;

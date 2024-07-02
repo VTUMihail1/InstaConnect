@@ -1,8 +1,6 @@
 ﻿using FluentValidation;
-using InstaConnect.Messages.Business.Commands.Messages.AddMessage;
-using InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
 
-namespace InstaConnect.Follows.Business.Write.Commands.Follows.AddFollow;
+namespace InstaConnect.Messages.Business.Write.Commands.Messages.UpdateMessage;
 public class UpdateMessageCommandValidator : AbstractValidator<UpdateMessageCommand>
 {
     public UpdateMessageCommandValidator()

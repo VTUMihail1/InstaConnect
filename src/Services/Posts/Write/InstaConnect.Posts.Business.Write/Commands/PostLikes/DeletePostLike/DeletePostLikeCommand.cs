@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
+namespace InstaConnect.Posts.Business.Write.Commands.PostLikes.DeletePostLike;
 
 public class DeletePostLikeCommand : ICommand
 {

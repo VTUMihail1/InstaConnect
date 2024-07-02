@@ -1,7 +1,7 @@
-using InstaConnect.Messages.Business.Extensions;
-using InstaConnect.Messages.Business.Helpers.Hubs;
-using InstaConnect.Messages.Data.Extensions;
-using InstaConnect.Messages.Web.Extensions;
+using InstaConnect.Messages.Business.Write.Extensions;
+using InstaConnect.Messages.Business.Write.Helpers.Hubs;
+using InstaConnect.Messages.Data.Write.Extensions;
+using InstaConnect.Messages.Web.Write.Extensions;
 using InstaConnect.Shared.Web.Extensions;
 using InstaConnect.Shared.Web.Utilities;
 

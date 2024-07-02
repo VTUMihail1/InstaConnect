@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Follows.Business.Commands.Follows.AddFollow;
+namespace InstaConnect.Follows.Business.Write.Commands.Follows.AddFollow;
 
 public class AddFollowCommand : ICommand
 {

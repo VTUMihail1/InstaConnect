@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Business.Contracts.Users;
 
-namespace InstaConnect.Follows.Business.Write.Models;
+namespace InstaConnect.Messages.Business.Write.Models;
 
 public class MessageGetUserByIdModel
 {

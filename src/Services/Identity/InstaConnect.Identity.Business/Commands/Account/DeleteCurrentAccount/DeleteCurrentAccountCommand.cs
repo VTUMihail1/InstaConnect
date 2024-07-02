@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Identity.Business.Commands.Account.DeleteAccount;
+namespace InstaConnect.Identity.Business.Commands.Account.DeleteCurrentAccount;
 
 public class DeleteCurrentAccountCommand : ICommand
 {

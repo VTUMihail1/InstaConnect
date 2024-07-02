@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Follows.Business.Commands.Follows.DeleteFollow;
+namespace InstaConnect.Follows.Business.Write.Commands.Follows.DeleteFollow;
 
 public class DeleteFollowCommand : ICommand
 {

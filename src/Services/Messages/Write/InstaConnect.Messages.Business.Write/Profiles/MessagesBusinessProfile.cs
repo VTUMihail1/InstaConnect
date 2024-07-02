@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Business.Write.Models;
-using InstaConnect.Messages.Business.Commands.Messages.AddMessage;
-using InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
-using InstaConnect.Messages.Data.Models.Entities;
-using InstaConnect.Messages.Data.Models.Filters;
+using InstaConnect.Messages.Business.Write.Commands.Messages.AddMessage;
+using InstaConnect.Messages.Business.Write.Commands.Messages.UpdateMessage;
+using InstaConnect.Messages.Business.Write.Models;
+using InstaConnect.Messages.Data.Write.Models.Entities;
+using InstaConnect.Messages.Data.Write.Models.Filters;
 using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Business.Contracts.Users;
 
-namespace InstaConnect.Messages.Business.Profiles;
+namespace InstaConnect.Messages.Business.Write.Profiles;
 
 public class MessagesBusinessProfile : Profile
 {

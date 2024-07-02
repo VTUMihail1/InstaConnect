@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Business.Write.Models;
-using InstaConnect.Messages.Business.Abstract;
-using InstaConnect.Messages.Business.Models;
-using InstaConnect.Messages.Data.Abstractions;
-using InstaConnect.Messages.Data.Models.Entities;
+using InstaConnect.Messages.Business.Write.Abstract;
+using InstaConnect.Messages.Business.Write.Models;
+using InstaConnect.Messages.Data.Write.Abstractions;
+using InstaConnect.Messages.Data.Write.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Business.Contracts.Users;
@@ -11,7 +10,7 @@ using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Messages.Business.Commands.Messages.AddMessage;
+namespace InstaConnect.Messages.Business.Write.Commands.Messages.AddMessage;
 
 internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
 {

@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
 
-namespace InstaConnect.Follows.Business.Write.Commands.Follows.AddFollow;
+namespace InstaConnect.Posts.Business.Write.Commands.PostComments.AddPostComment;
 public class AddPostCommentCommandValidator : AbstractValidator<AddPostCommentCommand>
 {
     public AddPostCommentCommandValidator()

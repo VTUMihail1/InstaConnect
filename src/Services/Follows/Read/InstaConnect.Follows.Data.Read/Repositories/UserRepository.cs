@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Follows.Data.Read.Abstractions;
 using InstaConnect.Follows.Data.Read.Models.Entities;
 using InstaConnect.Shared.Data.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Follows.Data.Read.Repositories;
 

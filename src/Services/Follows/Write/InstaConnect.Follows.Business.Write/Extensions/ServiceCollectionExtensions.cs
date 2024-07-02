@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using InstaConnect.Follows.Business.Consumers;
+using InstaConnect.Follows.Business.Write.Consumers;
 using InstaConnect.Shared.Business.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Follows.Business.Extensions;
+namespace InstaConnect.Follows.Business.Write.Extensions;
 
 public static class ServiceCollectionExtensions
 {

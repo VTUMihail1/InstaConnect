@@ -2,7 +2,6 @@
 using InstaConnect.Follows.Data.Read.Abstractions;
 using InstaConnect.Follows.Data.Read.Models.Entities;
 using InstaConnect.Shared.Business.Contracts.Follows;
-using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 

@@ -1,8 +1,6 @@
 ﻿using FluentValidation;
-using InstaConnect.Follows.Business.Read.Queries.Follows.GetAllFollows;
-using InstaConnect.Follows.Business.Read.Queries.Follows.GetFollowById;
 
-namespace InstaConnect.Follows.Business.Read.Queries.Follows.GetAllFilteredFollows;
+namespace InstaConnect.Follows.Business.Read.Queries.Follows.GetFollowById;
 public class GetFollowByIdQueryValidator : AbstractValidator<GetFollowByIdQuery>
 {
     public GetFollowByIdQueryValidator()

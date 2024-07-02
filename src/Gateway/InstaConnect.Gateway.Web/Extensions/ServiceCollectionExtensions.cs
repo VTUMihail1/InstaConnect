@@ -1,8 +1,4 @@
-﻿using System.Text;
-using InstaConnect.Shared.Data.Models.Options;
-using InstaConnect.Shared.Web.Extensions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+﻿using InstaConnect.Shared.Web.Extensions;
 
 namespace InstaConnect.Gateway.Web.Extensions;
 

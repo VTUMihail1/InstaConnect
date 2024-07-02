@@ -1,13 +1,12 @@
-﻿using InstaConnect.Posts.Data.Abstract;
-using InstaConnect.Posts.Data.Helpers;
-using InstaConnect.Posts.Data.Repositories;
+﻿using InstaConnect.Posts.Data.Write.Abstract;
+using InstaConnect.Posts.Data.Write.Helpers;
+using InstaConnect.Posts.Data.Write.Repositories;
 using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Shared.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Posts.Data.Extensions;
+namespace InstaConnect.Posts.Data.Write.Extensions;
 
 public static class ServiceCollectionExtensions
 {

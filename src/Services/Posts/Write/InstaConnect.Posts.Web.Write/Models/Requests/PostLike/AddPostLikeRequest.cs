@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Posts.Web.Write.Models.Binding.PostLikes;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Posts.Web.Models.Requests.PostLike;
+namespace InstaConnect.Posts.Web.Write.Models.Requests.PostLike;
 
 public class AddPostLikeRequest
 {

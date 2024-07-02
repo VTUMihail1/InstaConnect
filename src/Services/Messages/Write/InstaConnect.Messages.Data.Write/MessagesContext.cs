@@ -1,9 +1,7 @@
-﻿using InstaConnect.Messages.Data.EntitiyConfigurations;
-using InstaConnect.Messages.Data.Models.Entities;
-using InstaConnect.Shared.Data;
+﻿using InstaConnect.Messages.Data.Write.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Messages.Data;
+namespace InstaConnect.Messages.Data.Write;
 
 public class MessagesContext : DbContext
 {

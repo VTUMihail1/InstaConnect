@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Messages.Business.Models;
+﻿namespace InstaConnect.Messages.Business.Write.Models;
 
 public class SendMessageModel
 {

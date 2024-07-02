@@ -1,6 +1,5 @@
-﻿using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Extensions;
-using InstaConnect.Shared.Web.Abstractions;
+﻿using InstaConnect.Shared.Web.Abstractions;
+using InstaConnect.Shared.Web.Extensions;
 using InstaConnect.Shared.Web.Models.Users;
 using Microsoft.AspNetCore.Http;
 

@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLike;
-using InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
-using InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment;
-using InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
-using InstaConnect.Posts.Business.Commands.Posts.AddPost;
-using InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
-using InstaConnect.Posts.Data.Models.Entities;
+using InstaConnect.Posts.Business.Write.Commands.PostCommentLikes.AddPostCommentLike;
+using InstaConnect.Posts.Business.Write.Commands.PostComments.AddPostComment;
+using InstaConnect.Posts.Business.Write.Commands.PostComments.UpdatePostComment;
+using InstaConnect.Posts.Business.Write.Commands.PostLikes.AddPostLike;
+using InstaConnect.Posts.Business.Write.Commands.Posts.AddPost;
+using InstaConnect.Posts.Business.Write.Commands.Posts.UpdatePost;
+using InstaConnect.Posts.Data.Write.Models.Entities;
 using InstaConnect.Shared.Business.Contracts.Users;
 
-namespace InstaConnect.Posts.Business.Profiles;
+namespace InstaConnect.Posts.Business.Write.Profiles;
 
 public class PostsBusinessProfile : Profile
 {

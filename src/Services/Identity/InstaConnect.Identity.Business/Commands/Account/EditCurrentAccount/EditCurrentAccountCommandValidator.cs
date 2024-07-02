@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using InstaConnect.Identity.Business.Commands.Account.EditAccount;
 
-namespace InstaConnect.Identity.Business.Commands.Account.ConfirmAccountEmail;
+namespace InstaConnect.Identity.Business.Commands.Account.EditCurrentAccount;
 public class EditCurrentAccountCommandValidator : AbstractValidator<EditCurrentAccountCommand>
 {
     public EditCurrentAccountCommandValidator()

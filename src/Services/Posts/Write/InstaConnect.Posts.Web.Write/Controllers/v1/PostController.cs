@@ -1,9 +1,9 @@
 ﻿using Asp.Versioning;
 using AutoMapper;
-using InstaConnect.Posts.Business.Commands.Posts.AddPost;
-using InstaConnect.Posts.Business.Commands.Posts.DeletePost;
-using InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
-using InstaConnect.Posts.Web.Models.Requests.Post;
+using InstaConnect.Posts.Business.Write.Commands.Posts.AddPost;
+using InstaConnect.Posts.Business.Write.Commands.Posts.DeletePost;
+using InstaConnect.Posts.Business.Write.Commands.Posts.UpdatePost;
+using InstaConnect.Posts.Web.Write.Models.Requests.Post;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
 using MediatR;
@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Posts.Web.Controllers.v1;
+namespace InstaConnect.Posts.Web.Write.Controllers.v1;
 
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/posts")]

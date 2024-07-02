@@ -10,7 +10,7 @@ using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Follows.Business.Commands.Follows.AddFollow;
+namespace InstaConnect.Follows.Business.Write.Commands.Follows.AddFollow;
 
 public class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
 {
@@ -41,7 +41,7 @@ public class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
         var followGetUserByIdModel = _mapper.Map<FollowGetUserByIdModel>(request);
 
         var getUserByFollowerIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(
-            followGetUserByIdModel.GetUserByFollowerIdRequest, 
+            followGetUserByIdModel.GetUserByFollowerIdRequest,
             cancellationToken);
 
         if (getUserByFollowerIdResponse == null)
@@ -59,8 +59,8 @@ public class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
         }
 
         var existingFollow = await _followRepository.GetByFollowerIdAndFollowingIdAsync(
-            request.CurrentUserId, 
-            request.FollowingId, 
+            request.CurrentUserId,
+            request.FollowingId,
             cancellationToken);
 
         if (existingFollow != null)

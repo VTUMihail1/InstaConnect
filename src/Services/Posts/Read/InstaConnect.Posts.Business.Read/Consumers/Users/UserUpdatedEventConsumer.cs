@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Data.Read.Abstractions;
+using InstaConnect.Posts.Data.Read.Abstract;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;

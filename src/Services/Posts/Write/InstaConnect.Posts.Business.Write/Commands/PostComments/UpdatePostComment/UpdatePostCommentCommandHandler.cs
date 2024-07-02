@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Data.Abstract;
+using InstaConnect.Posts.Data.Write.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.PostComments;
 using InstaConnect.Shared.Business.Exceptions.Account;
@@ -7,7 +7,7 @@ using InstaConnect.Shared.Business.Exceptions.PostComment;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment;
+namespace InstaConnect.Posts.Business.Write.Commands.PostComments.UpdatePostComment;
 
 internal class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommand>
 {

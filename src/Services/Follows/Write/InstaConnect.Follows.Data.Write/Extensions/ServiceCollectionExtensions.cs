@@ -1,14 +1,12 @@
-﻿using InstaConnect.Shared.Data.Abstract;
-using InstaConnect.Shared.Data;
+﻿using InstaConnect.Follows.Data.Write.Abstractions;
+using InstaConnect.Follows.Data.Write.Helpers;
+using InstaConnect.Follows.Data.Write.Repositories;
+using InstaConnect.Shared.Data.Abstract;
+using InstaConnect.Shared.Data.Extensions;
+using InstaConnect.Shared.Data.Models.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Azure.Messaging;
-using InstaConnect.Shared.Data.Extensions;
-using InstaConnect.Follows.Data.Write.Repositories;
-using InstaConnect.Follows.Data.Write.Helpers;
-using InstaConnect.Follows.Data.Write.Abstractions;
-using InstaConnect.Shared.Data.Models.Options;
 
 namespace InstaConnect.Follows.Data.Write.Extensions;
 

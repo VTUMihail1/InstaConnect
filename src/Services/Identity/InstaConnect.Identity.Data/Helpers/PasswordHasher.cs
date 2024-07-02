@@ -1,5 +1,4 @@
-﻿using BCrypt.Net;
-using InstaConnect.Identity.Data.Abstraction;
+﻿using InstaConnect.Identity.Data.Abstraction;
 using InstaConnect.Identity.Data.Models;
 
 namespace InstaConnect.Identity.Data.Helpers;

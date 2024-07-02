@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Data.Abstract;
-using InstaConnect.Posts.Data.Models.Filters;
+using InstaConnect.Posts.Data.Write.Abstract;
+using InstaConnect.Posts.Data.Write.Models.Filters;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Posts.Business.Consumers;
+namespace InstaConnect.Posts.Business.Write.Consumers;
 internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
 {
     private readonly IMapper _mapper;
@@ -16,11 +16,11 @@ internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
     private readonly IPostCommentLikeRepository _postCommentLikeRepository;
 
     public UserDeletedEventConsumer(
-        IMapper mapper, 
+        IMapper mapper,
         IUnitOfWork unitOfWork,
-        IPostRepository postRepository, 
-        IPostLikeRepository postLikeRepository, 
-        IPostCommentRepository postCommentRepository, 
+        IPostRepository postRepository,
+        IPostLikeRepository postLikeRepository,
+        IPostCommentRepository postCommentRepository,
         IPostCommentLikeRepository postCommentLikeRepository)
     {
         _mapper = mapper;

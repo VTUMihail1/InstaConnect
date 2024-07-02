@@ -1,5 +1,4 @@
-﻿using InstaConnect.Messages.Data.Read.Models.Entities;
-using InstaConnect.Shared.Data.Models.Base;
+﻿using InstaConnect.Shared.Data.Models.Base;
 
 namespace InstaConnect.Posts.Data.Read.Models.Entities;
 

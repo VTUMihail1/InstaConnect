@@ -1,13 +1,6 @@
-﻿using System.Text;
-using InstaConnect.Messages.Web.Profiles;
-using InstaConnect.Shared.Data.Models.Options;
-using InstaConnect.Shared.Web.Extensions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+﻿using InstaConnect.Shared.Web.Extensions;
 
-namespace InstaConnect.Messages.Web.Extensions;
+namespace InstaConnect.Messages.Web.Write.Extensions;
 
 public static class ServiceCollectionExtensions
 {

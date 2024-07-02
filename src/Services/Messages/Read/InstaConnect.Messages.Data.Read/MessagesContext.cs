@@ -1,5 +1,4 @@
-﻿using InstaConnect.Messages.Data.Read.EntitiyConfigurations;
-using InstaConnect.Messages.Data.Read.Models.Entities;
+﻿using InstaConnect.Messages.Data.Read.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Messages.Data.Read;

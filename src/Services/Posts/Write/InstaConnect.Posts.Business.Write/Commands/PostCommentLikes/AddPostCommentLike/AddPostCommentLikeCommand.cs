@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLike;
+namespace InstaConnect.Posts.Business.Write.Commands.PostCommentLikes.AddPostCommentLike;
 
 public class AddPostCommentLikeCommand : ICommand
 {

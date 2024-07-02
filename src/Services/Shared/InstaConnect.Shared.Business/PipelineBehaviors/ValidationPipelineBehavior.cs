@@ -4,7 +4,7 @@ using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using MediatR;
 
-namespace InstaConnect.Shared.Business.Behaviors;
+namespace InstaConnect.Shared.Business.PipelineBehaviors;
 
 internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>

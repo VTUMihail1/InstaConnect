@@ -1,9 +1,7 @@
-﻿using InstaConnect.Messages.Data.Abstractions;
-using InstaConnect.Shared.Data.Abstract;
+﻿using InstaConnect.Shared.Data.Abstract;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
-namespace InstaConnect.Messages.Data.Helpers;
+namespace InstaConnect.Messages.Data.Write.Helpers;
 
 internal class DatabaseSeeder : IDatabaseSeeder
 {

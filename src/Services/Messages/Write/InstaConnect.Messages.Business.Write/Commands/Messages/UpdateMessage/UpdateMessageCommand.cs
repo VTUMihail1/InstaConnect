@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
+namespace InstaConnect.Messages.Business.Write.Commands.Messages.UpdateMessage;
 
 public class UpdateMessageCommand : ICommand
 {

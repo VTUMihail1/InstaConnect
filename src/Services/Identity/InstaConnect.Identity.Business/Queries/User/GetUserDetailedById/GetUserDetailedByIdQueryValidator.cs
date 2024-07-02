@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using InstaConnect.Identity.Business.Queries.User.GetUserDetailedById;
 
-namespace InstaConnect.Identity.Business.Commands.Account.ConfirmAccountEmail;
+namespace InstaConnect.Identity.Business.Queries.User.GetUserDetailedById;
 
 public class GetUserDetailedByIdQueryValidator : AbstractValidator<GetUserDetailedByIdQuery>
 {

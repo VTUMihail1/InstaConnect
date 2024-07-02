@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Identity.Data.Abstraction;
-using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Users;
-using InstaConnect.Shared.Business.Exceptions.Account;
-using InstaConnect.Shared.Business.Exceptions.User;
 using MassTransit;
 
 namespace InstaConnect.Identity.Business.Consumers;

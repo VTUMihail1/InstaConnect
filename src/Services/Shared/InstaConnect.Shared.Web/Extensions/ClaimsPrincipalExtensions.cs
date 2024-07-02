@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace InstaConnect.Shared.Business.Extensions;
+namespace InstaConnect.Shared.Web.Extensions;
 
 internal static class ClaimsPrincipalExtensions
 {

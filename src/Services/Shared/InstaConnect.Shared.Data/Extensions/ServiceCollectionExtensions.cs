@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Shared.Data.Models.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Shared.Data.Extensions;
@@ -10,7 +9,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddUnitOfWork<TContext>(this IServiceCollection serviceCollection)
     where TContext : DbContext
     {
-        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>(sp => 
+        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>(sp =>
         new UnitOfWork(sp.GetRequiredService<TContext>()));
 
         return serviceCollection;

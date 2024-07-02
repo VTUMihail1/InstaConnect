@@ -26,7 +26,7 @@ internal class PostUpdatedEventConsumer : IConsumer<PostUpdatedEvent>
     {
         var existingPost = await _postRepository.GetByIdAsync(context.Message.Id, context.CancellationToken);
 
-        if(existingPost == null)
+        if (existingPost == null)
         {
             return;
         }
