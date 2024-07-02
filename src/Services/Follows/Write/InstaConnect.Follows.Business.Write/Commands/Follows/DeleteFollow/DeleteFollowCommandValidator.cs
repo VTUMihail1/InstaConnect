@@ -7,10 +7,10 @@ public class DeleteFollowCommandValidator : AbstractValidator<DeleteFollowComman
 {
     public DeleteFollowCommandValidator()
     {
-        RuleFor(afc => afc.Id)
+        RuleFor(c => c.Id)
             .NotEmpty();
 
-        RuleFor(afc => afc.CurrentUserId)
+        RuleFor(c => c.CurrentUserId)
             .NotEmpty();
     }
 }

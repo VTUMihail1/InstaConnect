@@ -15,20 +15,17 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPublishEndpoint _publishEndpoint;
     private readonly IMessageRepository _messageRepository;
-    private readonly ICurrentUserContext _currentUserContext;
 
     public UpdateMessageCommandHandler(
         IMapper mapper,
         IUnitOfWork unitOfWork,
         IPublishEndpoint publishEndpoint,
-        IMessageRepository messageRepository,
-        ICurrentUserContext currentUserContext)
+        IMessageRepository messageRepository)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _publishEndpoint = publishEndpoint;
         _messageRepository = messageRepository;
-        _currentUserContext = currentUserContext;
     }
 
     public async Task Handle(UpdateMessageCommand request, CancellationToken cancellationToken)
@@ -40,9 +37,7 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
             throw new MessageNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUser();
-
-        if (currentUserDetails.Id != existingMessage.SenderId)
+        if (request.CurrentUserId != existingMessage.SenderId)
         {
             throw new AccountForbiddenException();
         }

@@ -4,7 +4,6 @@ using InstaConnect.Follows.Business.Write.Models;
 using InstaConnect.Follows.Data.Write.Models.Entities;
 using InstaConnect.Shared.Business.Contracts.Follows;
 using InstaConnect.Shared.Business.Contracts.Users;
-using InstaConnect.Shared.Business.Models.Users;
 
 namespace InstaConnect.Follows.Business.Profiles;
 

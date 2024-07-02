@@ -5,5 +5,5 @@ namespace InstaConnect.Messages.Business.Read.Queries.Messages.GetMessageById;
 
 public class GetMessageByIdQuery : IQuery<MessageViewModel>
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 }

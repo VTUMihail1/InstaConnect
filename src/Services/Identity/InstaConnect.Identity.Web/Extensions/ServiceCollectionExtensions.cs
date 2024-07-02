@@ -27,6 +27,7 @@ public static class ServiceCollectionExtensions
             .AddSwagger()
             .AddRateLimiterPolicies()
             .AddVersioning()
+            .AddCurrentUserContext()
             .AddExceptionHandler();
 
         serviceCollection.Configure<IdentityOptions>(options =>

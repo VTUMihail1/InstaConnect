@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Abstractions;
 
 namespace InstaConnect.Messages.Business.Read.Queries.Messages.GetAllFilteredMessages;
 
-internal class GetAllFilteredMessagesQueryHandler : IQueryHandler<GetAllFilteredMessagesQuery, ICollection<MessageViewModel>>
+public class GetAllFilteredMessagesQueryHandler : IQueryHandler<GetAllFilteredMessagesQuery, ICollection<MessageViewModel>>
 {
     private readonly IMapper _mapper;
     private readonly IMessageRepository _messageRepository;

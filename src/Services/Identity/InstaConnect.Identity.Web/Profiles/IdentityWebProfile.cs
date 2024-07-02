@@ -18,8 +18,7 @@ using InstaConnect.Identity.Business.Queries.User.GetUserDetailedById;
 using InstaConnect.Identity.Web.Models.Requests.Account;
 using InstaConnect.Identity.Web.Models.Requests.User;
 using InstaConnect.Identity.Web.Models.Response;
-using InstaConnect.Shared.Business.Models.Users;
-using InstaConnect.Shared.Web.Models.Filters;
+using InstaConnect.Shared.Web.Models.Users;
 
 namespace InstaConnect.Identity.Web.Profiles;
 

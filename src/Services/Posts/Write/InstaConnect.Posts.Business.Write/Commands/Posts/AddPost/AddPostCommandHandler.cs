@@ -3,6 +3,8 @@ using InstaConnect.Posts.Data.Abstract;
 using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Posts;
+using InstaConnect.Shared.Business.Contracts.Users;
+using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
@@ -14,28 +16,33 @@ internal class AddPostCommandHandler : ICommandHandler<AddPostCommand>
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPostRepository _postRepository;
     private readonly IPublishEndpoint _publishEndpoint;
-    private readonly ICurrentUserContext _currentUserContext;
+    private readonly IRequestClient<GetUserByIdRequest> _getUserByIdRequestClient;
 
     public AddPostCommandHandler(
         IMapper mapper,
         IUnitOfWork unitOfWork,
         IPostRepository postRepository,
         IPublishEndpoint publishEndpoint,
-        ICurrentUserContext currentUserContext)
+        IRequestClient<GetUserByIdRequest> getUserByIdRequestClient)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _postRepository = postRepository;
         _publishEndpoint = publishEndpoint;
-        _currentUserContext = currentUserContext;
+        _getUserByIdRequestClient = getUserByIdRequestClient;
     }
 
     public async Task Handle(AddPostCommand request, CancellationToken cancellationToken)
     {
-        var currentUserDetails = _currentUserContext.GetCurrentUser();
+        var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
+        var getUserByIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(getUserByIdRequest, cancellationToken);
+
+        if (getUserByIdResponse == null)
+        {
+            throw new UserNotFoundException();
+        }
 
         var post = _mapper.Map<Post>(request);
-        _mapper.Map(currentUserDetails, post);
         _postRepository.Add(post);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

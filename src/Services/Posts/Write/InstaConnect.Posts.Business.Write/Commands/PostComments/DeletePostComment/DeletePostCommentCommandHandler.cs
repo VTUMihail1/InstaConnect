@@ -14,20 +14,17 @@ internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostComme
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPublishEndpoint _publishEndpoint;
-    private readonly ICurrentUserContext _currentUserContext;
     private readonly IPostCommentRepository _postCommentRepository;
 
     public DeletePostCommentCommandHandler(
         IMapper mapper,
         IUnitOfWork unitOfWork,
         IPublishEndpoint publishEndpoint,
-        ICurrentUserContext currentUserContext,
         IPostCommentRepository postCommentRepository)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _publishEndpoint = publishEndpoint;
-        _currentUserContext = currentUserContext;
         _postCommentRepository = postCommentRepository;
     }
 
@@ -40,9 +37,7 @@ internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostComme
             throw new PostCommentNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUser();
-
-        if (currentUserDetails.Id != existingPostComment.UserId)
+        if (request.CurrentUserId != existingPostComment.UserId)
         {
             throw new AccountForbiddenException();
         }

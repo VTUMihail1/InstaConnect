@@ -5,5 +5,5 @@ namespace InstaConnect.Posts.Business.Read.Queries.Posts.GetPostById;
 
 public class GetPostByIdQuery : IQuery<PostViewModel>
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 }

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Business.Models.Users;
+﻿using InstaConnect.Shared.Web.Models.Users;
 
 namespace InstaConnect.Shared.Web.Abstractions;
 

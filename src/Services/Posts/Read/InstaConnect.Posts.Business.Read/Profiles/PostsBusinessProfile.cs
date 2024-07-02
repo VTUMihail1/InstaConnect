@@ -11,7 +11,6 @@ using InstaConnect.Posts.Business.Read.Queries.Posts.GetAllPosts;
 using InstaConnect.Posts.Data.Read.Models.Entities;
 using InstaConnect.Posts.Data.Read.Models.Filters;
 using InstaConnect.Shared.Business.Contracts.Users;
-using InstaConnect.Shared.Business.Models.Users;
 using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Posts.Business.Read.Profiles;
@@ -40,9 +39,6 @@ public class PostsBusinessProfile : Profile
 
         CreateMap<GetAllPostsQuery, CollectionQuery>();
 
-        CreateMap<CurrentUserModel, Post>()
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
-
         CreateMap<Post, PostViewModel>();
 
         // Post Comments
@@ -59,13 +55,11 @@ public class PostsBusinessProfile : Profile
                  new PostCommentFilteredCollectionQuery
                  {
                      Expression = p => (src.UserId == string.Empty || p.UserId == src.UserId) &&
+                                       (src.UserName == string.Empty || p.User.UserName == src.UserName) &&
                                        (src.PostId == string.Empty || p.PostId == src.PostId)
                  });
 
         CreateMap<GetAllPostCommentsQuery, CollectionQuery>();
-
-        CreateMap<CurrentUserModel, PostComment>()
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<PostComment, PostCommentViewModel>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName));
@@ -84,13 +78,11 @@ public class PostsBusinessProfile : Profile
                  new PostLikeFilteredCollectionQuery
                  {
                      Expression = p => (src.UserId == string.Empty || p.UserId == src.UserId) &&
+                                       (src.UserName == string.Empty || p.User.UserName == src.UserName) &&
                                        (src.PostId == string.Empty || p.PostId == src.PostId)
                  });
 
         CreateMap<GetAllPostLikesQuery, CollectionQuery>();
-
-        CreateMap<CurrentUserModel, PostLike>()
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<PostLike, PostLikeViewModel>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName));
@@ -109,13 +101,11 @@ public class PostsBusinessProfile : Profile
                  new PostCommentLikeFilteredCollectionQuery
                  {
                      Expression = p => (src.UserId == string.Empty || p.UserId == src.UserId) &&
+                                       (src.UserName == string.Empty || p.User.UserName == src.UserName) &&
                                        (src.PostCommentId == string.Empty || p.PostCommentId == src.PostCommentId)
                  });
 
         CreateMap<GetAllPostCommentLikesQuery, CollectionQuery>();
-
-        CreateMap<CurrentUserModel, PostComment>()
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<PostCommentLike, PostCommentLikeViewModel>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName));

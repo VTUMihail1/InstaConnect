@@ -4,8 +4,7 @@ using InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
 using InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment;
 using InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment;
 using InstaConnect.Posts.Web.Models.Requests.PostComment;
-using InstaConnect.Posts.Web.Models.Responses;
-using InstaConnect.Shared.Web.Models.Filters;
+using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -21,13 +20,16 @@ public class PostCommentController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly ISender _sender;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public PostCommentController(
         IMapper mapper,
-        ISender sender)
+        ISender sender,
+        ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
         _sender = sender;
+        _currentUserContext = currentUserContext;
     }
 
     // POST: api/post-comments
@@ -38,7 +40,9 @@ public class PostCommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> AddAsync(AddPostCommentRequest request)
     {
+        var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _mapper.Map<AddPostCommentCommand>(request);
+        _mapper.Map(currentUser, commandRequest);
         await _sender.Send(commandRequest);
 
         return NoContent();
@@ -52,7 +56,9 @@ public class PostCommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateAsync(UpdatePostCommentRequest request)
     {
+        var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _mapper.Map<UpdatePostCommentCommand>(request);
+        _mapper.Map(currentUser, commandRequest);
         await _sender.Send(commandRequest);
 
         return NoContent();
@@ -66,7 +72,9 @@ public class PostCommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAsync(DeletePostCommentRequest request)
     {
+        var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _mapper.Map<DeletePostCommentCommand>(request);
+        _mapper.Map(currentUser, commandRequest);
         await _sender.Send(commandRequest);
 
         return NoContent();

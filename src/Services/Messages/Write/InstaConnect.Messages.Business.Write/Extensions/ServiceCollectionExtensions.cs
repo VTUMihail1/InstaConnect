@@ -2,10 +2,7 @@
 using InstaConnect.Messages.Business.Abstract;
 using InstaConnect.Messages.Business.Consumers;
 using InstaConnect.Messages.Business.Helpers;
-using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Extensions;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Business.Models.Options;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +20,6 @@ public static class ServiceCollectionExtensions
             .AddValidatorsFromAssembly(currentAssembly)
             .AddMediatR(currentAssembly)
             .AddAutoMapper(currentAssembly)
-            .AddCurrentUserContext()
             .AddMessageBroker(configuration, busConfigurator =>
              busConfigurator.AddConsumer<UserDeletedEventConsumer>());
 

@@ -3,8 +3,7 @@ using AutoMapper;
 using InstaConnect.Posts.Business.Commands.PostCommentLikes.AddPostCommentLike;
 using InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommentLike;
 using InstaConnect.Posts.Web.Models.Requests.PostCommentLike;
-using InstaConnect.Posts.Web.Models.Responses;
-using InstaConnect.Shared.Web.Models.Filters;
+using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -20,13 +19,16 @@ public class PostCommentLikeController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly ISender _sender;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public PostCommentLikeController(
         IMapper mapper,
-        ISender sender)
+        ISender sender,
+        ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
         _sender = sender;
+        _currentUserContext = currentUserContext;
     }
 
     // POST: api/post-comment-likes
@@ -37,7 +39,9 @@ public class PostCommentLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> AddAsync(AddPostCommentLikeRequest request)
     {
+        var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _mapper.Map<AddPostCommentLikeCommand>(request);
+        _mapper.Map(currentUser, commandRequest);
         await _sender.Send(commandRequest);
 
         return NoContent();
@@ -51,7 +55,9 @@ public class PostCommentLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAsync(DeletePostCommentLikeRequest request)
     {
+        var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _mapper.Map<DeletePostCommentLikeCommand>(request);
+        _mapper.Map(currentUser, commandRequest);
         await _sender.Send(commandRequest);
 
         return NoContent();

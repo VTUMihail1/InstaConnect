@@ -2,15 +2,15 @@
 
 public class MessageViewModel
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 
-    public string SenderId { get; set; }
+    public string SenderId { get; set; } = string.Empty;
 
-    public string SenderName { get; set; }
+    public string SenderName { get; set; } = string.Empty;
 
-    public string ReceiverId { get; set; }
+    public string ReceiverId { get; set; } = string.Empty;
 
-    public string ReceiverName { get; set; }
+    public string ReceiverName { get; set; } = string.Empty;
 
-    public string Content { get; set; }
+    public string Content { get; set; } = string.Empty;
 }

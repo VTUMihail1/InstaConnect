@@ -1,5 +1,5 @@
 ﻿namespace InstaConnect.Shared.Business.Contracts.Users;
 public class GetUserByIdRequest
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 }

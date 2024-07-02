@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using InstaConnect.Posts.Web.Write.Models.Binding.Posts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Posts.Web.Models.Requests.Post;
 
 public class UpdatePostRequest
 {
     [FromRoute]
-    public string PostId { get; set; }
+    public string PostId { get; set; } = string.Empty;
 
     [FromBody]
-    public UpdatePostBodyRequest UpdatePostBodyRequest { get; set; }
+    public UpdatePostBindingModel UpdatePostBindingModel { get; set; } = new();
 }

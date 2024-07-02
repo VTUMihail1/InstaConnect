@@ -4,8 +4,10 @@ using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.PostLikes;
 using InstaConnect.Shared.Business.Contracts.Posts;
+using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Posts;
+using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
@@ -20,7 +22,7 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
     private readonly IPostRepository _postRepository;
     private readonly IPublishEndpoint _publishEndpoint;
     private readonly IPostLikeRepository _postLikeRepository;
-    private readonly ICurrentUserContext _currentUserContext;
+    private readonly IRequestClient<GetUserByIdRequest> _getUserByIdRequestClient;
 
     public AddPostLikeCommandHandler(
         IMapper mapper,
@@ -28,14 +30,14 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
         IPostRepository postRepository,
         IPublishEndpoint publishEndpoint,
         IPostLikeRepository postLikeRepository,
-        ICurrentUserContext currentUserContext)
+        IRequestClient<GetUserByIdRequest> getUserByIdRequestClient)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _postRepository = postRepository;
         _publishEndpoint = publishEndpoint;
         _postLikeRepository = postLikeRepository;
-        _currentUserContext = currentUserContext;
+        _getUserByIdRequestClient = getUserByIdRequestClient;
     }
 
     public async Task Handle(AddPostLikeCommand request, CancellationToken cancellationToken)
@@ -47,9 +49,15 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
             throw new PostNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUser();
+        var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
+        var getUserByIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(getUserByIdRequest, cancellationToken);
 
-        var existingPostLike = _postLikeRepository.GetByUserIdAndPostIdAsync(currentUserDetails.Id!, request.PostId, cancellationToken);
+        if (getUserByIdResponse == null)
+        {
+            throw new UserNotFoundException();
+        }
+
+        var existingPostLike = _postLikeRepository.GetByUserIdAndPostIdAsync(request.CurrentUserId, request.PostId, cancellationToken);
 
         if (existingPostLike == null)
         {
@@ -57,7 +65,6 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
         }
 
         var postLike = _mapper.Map<PostLike>(request);
-        _mapper.Map(currentUserDetails, postLike);
         _postLikeRepository.Add(postLike);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

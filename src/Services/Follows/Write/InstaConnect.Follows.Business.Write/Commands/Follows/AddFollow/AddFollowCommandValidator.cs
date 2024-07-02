@@ -6,10 +6,10 @@ public class AddFollowCommandValidator : AbstractValidator<AddFollowCommand>
 {
     public AddFollowCommandValidator()
     {
-        RuleFor(afc => afc.CurrentUserId)
+        RuleFor(c => c.CurrentUserId)
             .NotEmpty();
 
-        RuleFor(afc => afc.FollowingId)
+        RuleFor(c => c.FollowingId)
             .NotEmpty();
     }
 }

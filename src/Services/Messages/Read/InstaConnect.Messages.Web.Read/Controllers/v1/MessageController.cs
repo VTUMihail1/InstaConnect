@@ -1,11 +1,10 @@
 ﻿using Asp.Versioning;
 using AutoMapper;
 using InstaConnect.Messages.Business.Read.Queries.Messages.GetAllFilteredMessages;
-using InstaConnect.Messages.Business.Read.Queries.Messages.GetAllMessages;
 using InstaConnect.Messages.Business.Read.Queries.Messages.GetMessageById;
 using InstaConnect.Messages.Web.Read.Models.Requests.Messages;
 using InstaConnect.Messages.Web.Read.Models.Responses;
-using InstaConnect.Shared.Web.Models.Filters;
+using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -22,35 +21,27 @@ public class MessageController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly ISender _sender;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public MessageController(
         IMapper mapper,
-        ISender sender)
+        ISender sender,
+        ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
         _sender = sender;
-    }
-
-    // GET: api/messages
-    [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllAsync(CollectionRequest request)
-    {
-        var queryRequest = _mapper.Map<GetAllMessagesQuery>(request);
-        var queryResponse = await _sender.Send(queryRequest);
-        var response = _mapper.Map<ICollection<MessageViewResponse>>(queryResponse);
-
-        return Ok(response);
+        _currentUserContext = currentUserContext;
     }
 
     // GET: api/messages/filtered
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllFilteredAsync(GetMessageCollectionRequest request)
+    public async Task<IActionResult> GetAllFilteredAsync(GetAllFilteredMessagesRequest request)
     {
+        var currentUser = _currentUserContext.GetCurrentUser();
         var queryRequest = _mapper.Map<GetAllFilteredMessagesQuery>(request);
+        _mapper.Map(currentUser, queryRequest);
         var queryResponse = await _sender.Send(queryRequest);
         var response = _mapper.Map<ICollection<MessageViewResponse>>(queryResponse);
 

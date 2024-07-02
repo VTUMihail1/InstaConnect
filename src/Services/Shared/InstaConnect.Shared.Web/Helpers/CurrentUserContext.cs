@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Extensions;
-using InstaConnect.Shared.Business.Models.Users;
 using InstaConnect.Shared.Web.Abstractions;
+using InstaConnect.Shared.Web.Models.Users;
 using Microsoft.AspNetCore.Http;
 
 namespace InstaConnect.Shared.Web.Helpers;
@@ -19,8 +19,8 @@ public class CurrentUserContext : ICurrentUserContext
     {
         return new CurrentUserModel
         {
-            Id = _httpContextAccessor.HttpContext.User.GetUserId(),
-            UserName = _httpContextAccessor.HttpContext.User.GetUserName()
+            Id = _httpContextAccessor?.HttpContext?.User.GetUserId() ?? string.Empty,
+            UserName = _httpContextAccessor?.HttpContext?.User.GetUserName() ?? string.Empty,
         };
     }
 }

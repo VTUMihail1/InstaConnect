@@ -15,9 +15,9 @@ public class FollowsWebProfile : Profile
     {
         // Follows
 
-        CreateMap<CollectionRequest, GetAllFollowsQuery>();
+        CreateMap<GetAllFollowsRequest, GetAllFollowsQuery>();
 
-        CreateMap<GetFollowCollectionRequest, GetAllFilteredFollowsQuery>();
+        CreateMap<GetAllFilteredFollowsRequest, GetAllFilteredFollowsQuery>();
 
         CreateMap<GetFollowByIdRequest, GetFollowByIdQuery>();
 

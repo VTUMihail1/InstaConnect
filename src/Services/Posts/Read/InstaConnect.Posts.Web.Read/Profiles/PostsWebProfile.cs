@@ -27,9 +27,9 @@ public class PostsWebProfile : Profile
     {
         // Posts
 
-        CreateMap<CollectionRequest, GetAllPostsQuery>();
+        CreateMap<GetAllPostsRequest, GetAllPostsQuery>();
 
-        CreateMap<GetPostsCollectionRequest, GetAllFilteredPostsQuery>();
+        CreateMap<GetAllFilteredPostsRequest, GetAllFilteredPostsQuery>();
 
         CreateMap<GetPostByIdRequest, GetPostByIdQuery>();
 
@@ -37,9 +37,9 @@ public class PostsWebProfile : Profile
 
         // Post Comments
 
-        CreateMap<CollectionRequest, GetAllPostCommentsQuery>();
+        CreateMap<GetAllPostCommentsRequest, GetAllPostCommentsQuery>();
 
-        CreateMap<GetPostCommentsCollectionRequest, GetAllFilteredPostCommentsQuery>();
+        CreateMap<GetAllFilteredPostCommentsRequest, GetAllFilteredPostCommentsQuery>();
 
         CreateMap<GetPostCommentByIdRequest, GetPostCommentByIdQuery>();
 
@@ -47,9 +47,9 @@ public class PostsWebProfile : Profile
 
         // Post Likes
 
-        CreateMap<CollectionRequest, GetAllPostLikesQuery>();
+        CreateMap<GetAllPostLikesRequest, GetAllPostLikesQuery>();
 
-        CreateMap<GetPostLikesCollectionRequest, GetAllFilteredPostLikesQuery>();
+        CreateMap<GetAllFilteredPostLikesRequest, GetAllFilteredPostLikesQuery>();
 
         CreateMap<GetPostLikeByIdRequest, GetPostLikeByIdQuery>();
 
@@ -57,9 +57,9 @@ public class PostsWebProfile : Profile
 
         // Post Comment Likes
 
-        CreateMap<CollectionRequest, GetAllPostCommentLikesQuery>();
+        CreateMap<GetAllPostCommentLikesRequest, GetAllPostCommentLikesQuery>();
 
-        CreateMap<GetPostCommentLikesCollectionRequest, GetAllFilteredPostCommentLikesQuery>();
+        CreateMap<GetAllFilteredPostCommentLikesRequest, GetAllFilteredPostCommentLikesQuery>();
 
         CreateMap<GetPostCommentLikeByIdRequest, GetPostCommentLikeByIdQuery>();
 

@@ -2,7 +2,7 @@
 
 public class MessageUpdatedEvent
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 
-    public string Content { get; set; }
+    public string Content { get; set; } = string.Empty;
 }

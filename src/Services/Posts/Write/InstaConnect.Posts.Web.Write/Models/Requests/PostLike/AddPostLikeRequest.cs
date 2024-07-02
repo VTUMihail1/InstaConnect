@@ -1,6 +1,10 @@
-﻿namespace InstaConnect.Posts.Web.Models.Requests.PostLike;
+﻿using InstaConnect.Posts.Web.Write.Models.Binding.PostLikes;
+using Microsoft.AspNetCore.Mvc;
+
+namespace InstaConnect.Posts.Web.Models.Requests.PostLike;
 
 public class AddPostLikeRequest
 {
-    public string PostId { get; set; }
+    [FromBody]
+    public AddPostLikeBindingModel AddPostLikeBindingModel { get; set; } = new();
 }

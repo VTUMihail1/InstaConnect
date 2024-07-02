@@ -3,8 +3,7 @@ using AutoMapper;
 using InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
 using InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
 using InstaConnect.Posts.Web.Models.Requests.PostLike;
-using InstaConnect.Posts.Web.Models.Responses;
-using InstaConnect.Shared.Web.Models.Filters;
+using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -20,13 +19,16 @@ public class PostLikeController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly ISender _sender;
+    private readonly ICurrentUserContext _currentUserContext;
 
     public PostLikeController(
         IMapper mapper,
-        ISender sender)
+        ISender sender,
+        ICurrentUserContext currentUserContext)
     {
         _mapper = mapper;
         _sender = sender;
+        _currentUserContext = currentUserContext;
     }
 
     // POST: api/post-likes
@@ -37,8 +39,10 @@ public class PostLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> AddAsync(AddPostLikeRequest request)
     {
-        var addPostLikeCommand = _mapper.Map<AddPostLikeCommand>(request);
-        await _sender.Send(addPostLikeCommand);
+        var currentUser = _currentUserContext.GetCurrentUser();
+        var commandRequest = _mapper.Map<AddPostLikeCommand>(request);
+        _mapper.Map(currentUser, commandRequest);
+        await _sender.Send(commandRequest);
 
         return NoContent();
     }
@@ -51,8 +55,10 @@ public class PostLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAsync(DeletePostLikeRequest request)
     {
-        var deletePostLikeCommand = _mapper.Map<DeletePostLikeCommand>(request);
-        await _sender.Send(deletePostLikeCommand);
+        var currentUser = _currentUserContext.GetCurrentUser();
+        var commandRequest = _mapper.Map<DeletePostLikeCommand>(request);
+        _mapper.Map(currentUser, commandRequest);
+        await _sender.Send(commandRequest);
 
         return NoContent();
     }

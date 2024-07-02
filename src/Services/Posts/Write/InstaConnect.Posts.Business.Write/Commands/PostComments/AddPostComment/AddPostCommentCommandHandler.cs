@@ -4,7 +4,9 @@ using InstaConnect.Posts.Data.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.PostComments;
 using InstaConnect.Shared.Business.Contracts.Posts;
+using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Exceptions.Posts;
+using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
@@ -16,23 +18,23 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPostRepository _postRepository;
     private readonly IPublishEndpoint _publishEndpoint;
-    private readonly ICurrentUserContext _currentUserContext;
     private readonly IPostCommentRepository _postCommentRepository;
+    private readonly IRequestClient<GetUserByIdRequest> _getUserByIdRequestClient;
 
     public AddPostCommentCommandHandler(
         IMapper mapper,
         IUnitOfWork unitOfWork,
         IPostRepository postRepository,
         IPublishEndpoint publishEndpoint,
-        ICurrentUserContext currentUserContext,
-        IPostCommentRepository postCommentRepository)
+        IPostCommentRepository postCommentRepository,
+        IRequestClient<GetUserByIdRequest> getUserByIdRequestClient)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _postRepository = postRepository;
         _publishEndpoint = publishEndpoint;
-        _currentUserContext = currentUserContext;
         _postCommentRepository = postCommentRepository;
+        _getUserByIdRequestClient = getUserByIdRequestClient;
     }
 
     public async Task Handle(AddPostCommentCommand request, CancellationToken cancellationToken)
@@ -44,9 +46,15 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
             throw new PostNotFoundException();
         }
 
-        var currentUserDetails = _currentUserContext.GetCurrentUser();
+        var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
+        var getUserByIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(getUserByIdRequest, cancellationToken);
+
+        if (getUserByIdResponse == null)
+        {
+            throw new UserNotFoundException();
+        }
+
         var postComment = _mapper.Map<PostComment>(request);
-        _mapper.Map(currentUserDetails, postComment);
         _postCommentRepository.Add(postComment);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

@@ -3,6 +3,7 @@ using AutoMapper;
 using InstaConnect.Posts.Business.Read.Queries.PostComments.GetAllFilteredPostComments;
 using InstaConnect.Posts.Business.Read.Queries.PostComments.GetAllPostComments;
 using InstaConnect.Posts.Business.Read.Queries.PostComments.GetPostCommentById;
+using InstaConnect.Posts.Web.Read.Models.Requests.Post;
 using InstaConnect.Posts.Web.Read.Models.Requests.PostComment;
 using InstaConnect.Posts.Web.Read.Models.Responses;
 using InstaConnect.Shared.Web.Models.Filters;
@@ -33,7 +34,7 @@ public class PostCommentController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllAsync(CollectionRequest request)
+    public async Task<IActionResult> GetAllAsync(GetAllPostsRequest request)
     {
         var queryRequest = _mapper.Map<GetAllPostCommentsQuery>(request);
         var queryResponse = await _sender.Send(queryRequest);
@@ -46,7 +47,7 @@ public class PostCommentController : ControllerBase
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllFilteredAsync(GetPostCommentsCollectionRequest request)
+    public async Task<IActionResult> GetAllFilteredAsync(GetAllFilteredPostCommentsRequest request)
     {
         var queryRequest = _mapper.Map<GetAllFilteredPostCommentsQuery>(request);
         var queryResponse = await _sender.Send(queryRequest);

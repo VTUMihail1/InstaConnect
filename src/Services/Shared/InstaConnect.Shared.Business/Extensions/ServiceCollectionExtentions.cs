@@ -1,8 +1,5 @@
 ﻿using System.Reflection;
-using IdentityModel;
-using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Behaviors;
-using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.Models.Options;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +9,7 @@ namespace InstaConnect.Shared.Business.Extensions;
 public static class ServiceCollectionExtentions
 {
     public static IServiceCollection AddMessageBroker(
-        this IServiceCollection serviceCollection, 
+        this IServiceCollection serviceCollection,
         IConfiguration configuration,
         Action<IBusRegistrationConfigurator>? configure = null
         )
