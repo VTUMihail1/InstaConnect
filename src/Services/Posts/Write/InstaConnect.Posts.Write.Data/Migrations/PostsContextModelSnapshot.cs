@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace InstaConnect.Posts.Data.Write.Migrations
+namespace InstaConnect.Posts.Write.Data.Migrations
 {
     [DbContext(typeof(PostsContext))]
     partial class PostsContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace InstaConnect.Posts.Data.Write.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.Post", b =>
+            modelBuilder.Entity("InstaConnect.Posts.Write.Data.Models.Entities.Post", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -58,7 +58,7 @@ namespace InstaConnect.Posts.Data.Write.Migrations
                     b.ToTable("post", (string)null);
                 });
 
-            modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.PostComment", b =>
+            modelBuilder.Entity("InstaConnect.Posts.Write.Data.Models.Entities.PostComment", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -95,7 +95,7 @@ namespace InstaConnect.Posts.Data.Write.Migrations
                     b.ToTable("post_comment", (string)null);
                 });
 
-            modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.PostCommentLike", b =>
+            modelBuilder.Entity("InstaConnect.Posts.Write.Data.Models.Entities.PostCommentLike", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -126,7 +126,7 @@ namespace InstaConnect.Posts.Data.Write.Migrations
                     b.ToTable("post_comment_like", (string)null);
                 });
 
-            modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.PostLike", b =>
+            modelBuilder.Entity("InstaConnect.Posts.Write.Data.Models.Entities.PostLike", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -157,9 +157,9 @@ namespace InstaConnect.Posts.Data.Write.Migrations
                     b.ToTable("post_like", (string)null);
                 });
 
-            modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.PostComment", b =>
+            modelBuilder.Entity("InstaConnect.Posts.Write.Data.Models.Entities.PostComment", b =>
                 {
-                    b.HasOne("InstaConnect.Posts.Data.Models.Entities.Post", "Post")
+                    b.HasOne("InstaConnect.Posts.Write.Data.Models.Entities.Post", "Post")
                         .WithMany("PostComments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -168,9 +168,9 @@ namespace InstaConnect.Posts.Data.Write.Migrations
                     b.Navigation("Post");
                 });
 
-            modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.PostCommentLike", b =>
+            modelBuilder.Entity("InstaConnect.Posts.Write.Data.Models.Entities.PostCommentLike", b =>
                 {
-                    b.HasOne("InstaConnect.Posts.Data.Models.Entities.PostComment", "PostComment")
+                    b.HasOne("InstaConnect.Posts.Write.Data.Models.Entities.PostComment", "PostComment")
                         .WithMany("CommentLikes")
                         .HasForeignKey("PostCommentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -179,9 +179,9 @@ namespace InstaConnect.Posts.Data.Write.Migrations
                     b.Navigation("PostComment");
                 });
 
-            modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.PostLike", b =>
+            modelBuilder.Entity("InstaConnect.Posts.Write.Data.Models.Entities.PostLike", b =>
                 {
-                    b.HasOne("InstaConnect.Posts.Data.Models.Entities.Post", "Post")
+                    b.HasOne("InstaConnect.Posts.Write.Data.Models.Entities.Post", "Post")
                         .WithMany("PostLikes")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -190,14 +190,14 @@ namespace InstaConnect.Posts.Data.Write.Migrations
                     b.Navigation("Post");
                 });
 
-            modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.Post", b =>
+            modelBuilder.Entity("InstaConnect.Posts.Write.Data.Models.Entities.Post", b =>
                 {
                     b.Navigation("PostComments");
 
                     b.Navigation("PostLikes");
                 });
 
-            modelBuilder.Entity("InstaConnect.Posts.Data.Models.Entities.PostComment", b =>
+            modelBuilder.Entity("InstaConnect.Posts.Write.Data.Models.Entities.PostComment", b =>
                 {
                     b.Navigation("CommentLikes");
                 });

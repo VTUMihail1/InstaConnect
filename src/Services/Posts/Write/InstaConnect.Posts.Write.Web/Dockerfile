@@ -3,21 +3,21 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 5400
+EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Posts/Write/InstaConnect.Posts.Write.Web/InstaConnect.Posts.Write.Web.csproj", "Services/Posts/Write/InstaConnect.Posts.Write.Web/"]
-COPY ["Services/Shared/InstaConnect.Shared.Web/InstaConnect.Shared.Web.csproj", "Services/Shared/InstaConnect.Shared.Web/"]
-COPY ["Services/Shared/InstaConnect.Shared.Business/InstaConnect.Shared.Business.csproj", "Services/Shared/InstaConnect.Shared.Business/"]
-COPY ["Services/Shared/InstaConnect.Shared.Data/InstaConnect.Shared.Data.csproj", "Services/Shared/InstaConnect.Shared.Data/"]
-COPY ["Services/Posts/Write/InstaConnect.Posts.Write.Business/InstaConnect.Posts.Write.Business.csproj", "Services/Posts/Write/InstaConnect.Posts.Write.Business/"]
-COPY ["Services/Posts/Write/InstaConnect.Posts.Write.Data/InstaConnect.Posts.Write.Data.csproj", "Services/Posts/Write/InstaConnect.Posts.Write.Data/"]
-RUN dotnet restore "./Services/Posts/Write/InstaConnect.Posts.Write.Web/InstaConnect.Posts.Write.Web.csproj"
+COPY ["src/Services/Posts/Write/InstaConnect.Posts.Write.Web/InstaConnect.Posts.Write.Web.csproj", "src/Services/Posts/Write/InstaConnect.Posts.Write.Web/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Web/InstaConnect.Shared.Web.csproj", "src/Services/Shared/InstaConnect.Shared.Web/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Business/InstaConnect.Shared.Business.csproj", "src/Services/Shared/InstaConnect.Shared.Business/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Data/InstaConnect.Shared.Data.csproj", "src/Services/Shared/InstaConnect.Shared.Data/"]
+COPY ["src/Services/Posts/Write/InstaConnect.Posts.Write.Business/InstaConnect.Posts.Write.Business.csproj", "src/Services/Posts/Write/InstaConnect.Posts.Write.Business/"]
+COPY ["src/Services/Posts/Write/InstaConnect.Posts.Write.Data/InstaConnect.Posts.Write.Data.csproj", "src/Services/Posts/Write/InstaConnect.Posts.Write.Data/"]
+RUN dotnet restore "./src/Services/Posts/Write/InstaConnect.Posts.Write.Web/InstaConnect.Posts.Write.Web.csproj"
 COPY . .
-WORKDIR "/src/Services/Posts/Write/InstaConnect.Posts.Write.Web"
+WORKDIR "/src/src/Services/Posts/Write/InstaConnect.Posts.Write.Web"
 RUN dotnet build "./InstaConnect.Posts.Write.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

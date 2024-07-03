@@ -47,11 +47,11 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
         builder.HasOne(u => u.Sender)
                     .WithMany(f => f.SenderMessages)
                     .HasForeignKey(f => f.SenderId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasOne(f => f.Receiver)
                     .WithMany(u => u.ReceiverMessages)
                     .HasForeignKey(f => f.ReceiverId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
     }
 }

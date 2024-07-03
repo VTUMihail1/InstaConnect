@@ -27,6 +27,8 @@ services:
       - "6379:6379"
     volumes:
       - ./.containers/redis/data/:/data
+    networks:
+      - instaconnect
 
   rabbitmq:
     image: rabbitmq:management
@@ -89,6 +91,7 @@ services:
     depends_on:
       - sqlserver
       - rabbitmq
+      - redis
     networks:
       - instaconnect
 
@@ -113,6 +116,7 @@ services:
     depends_on:
       - sqlserver
       - rabbitmq
+      - redis
     networks:
       - instaconnect
    
@@ -137,6 +141,7 @@ services:
     depends_on:
       - sqlserver
       - rabbitmq
+      - redis
     networks:
       - instaconnect
 
@@ -161,6 +166,7 @@ services:
     depends_on:
       - sqlserver
       - rabbitmq
+      - redis
     networks:
       - instaconnect
 
@@ -185,6 +191,7 @@ services:
     depends_on:
       - sqlserver
       - rabbitmq
+      - redis
     networks:
       - instaconnect
 
@@ -209,6 +216,7 @@ services:
     depends_on:
       - sqlserver
       - rabbitmq
+      - redis
     networks:
       - instaconnect
 
@@ -233,5 +241,6 @@ services:
     depends_on:
       - sqlserver
       - rabbitmq
+      - redis
     networks:
       - instaconnect

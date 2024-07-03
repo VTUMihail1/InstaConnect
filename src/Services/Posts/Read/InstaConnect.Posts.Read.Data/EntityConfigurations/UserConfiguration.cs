@@ -38,21 +38,21 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasMany(f => f.Posts)
                 .WithOne(u => u.User)
                 .HasForeignKey(f => f.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(f => f.PostLikes)
                 .WithOne(u => u.User)
                 .HasForeignKey(f => f.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(f => f.PostComments)
                 .WithOne(u => u.User)
                 .HasForeignKey(f => f.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(f => f.PostCommentLikes)
                 .WithOne(u => u.User)
                 .HasForeignKey(f => f.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
     }
 }

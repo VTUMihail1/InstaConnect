@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace InstaConnect.Messages.Data.Read.Migrations
+namespace InstaConnect.Messages.Read.Data.Migrations
 {
     [DbContext(typeof(MessagesContext))]
     partial class MessagesContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace InstaConnect.Messages.Data.Read.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("InstaConnect.Messages.Data.Read.Models.Entities.Message", b =>
+            modelBuilder.Entity("InstaConnect.Messages.Read.Data.Models.Entities.Message", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -61,7 +61,7 @@ namespace InstaConnect.Messages.Data.Read.Migrations
                     b.ToTable("message", (string)null);
                 });
 
-            modelBuilder.Entity("InstaConnect.Messages.Data.Read.Models.Entities.User", b =>
+            modelBuilder.Entity("InstaConnect.Messages.Read.Data.Models.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -100,15 +100,15 @@ namespace InstaConnect.Messages.Data.Read.Migrations
                     b.ToTable("user", (string)null);
                 });
 
-            modelBuilder.Entity("InstaConnect.Messages.Data.Read.Models.Entities.Message", b =>
+            modelBuilder.Entity("InstaConnect.Messages.Read.Data.Models.Entities.Message", b =>
                 {
-                    b.HasOne("InstaConnect.Messages.Data.Read.Models.Entities.User", "Receiver")
+                    b.HasOne("InstaConnect.Messages.Read.Data.Models.Entities.User", "Receiver")
                         .WithMany("ReceiverMessages")
                         .HasForeignKey("ReceiverId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("InstaConnect.Messages.Data.Read.Models.Entities.User", "Sender")
+                    b.HasOne("InstaConnect.Messages.Read.Data.Models.Entities.User", "Sender")
                         .WithMany("SenderMessages")
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -119,7 +119,7 @@ namespace InstaConnect.Messages.Data.Read.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("InstaConnect.Messages.Data.Read.Models.Entities.User", b =>
+            modelBuilder.Entity("InstaConnect.Messages.Read.Data.Models.Entities.User", b =>
                 {
                     b.Navigation("ReceiverMessages");
 

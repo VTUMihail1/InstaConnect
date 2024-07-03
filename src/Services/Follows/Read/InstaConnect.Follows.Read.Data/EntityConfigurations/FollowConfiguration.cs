@@ -32,11 +32,11 @@ internal class FollowConfiguration : IEntityTypeConfiguration<Follow>
         builder.HasOne(f => f.Following)
                 .WithMany(u => u.Followings)
                 .HasForeignKey(f => f.FollowingId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasOne(f => f.Follower)
             .WithMany(u => u.Followers)
             .HasForeignKey(f => f.FollowerId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

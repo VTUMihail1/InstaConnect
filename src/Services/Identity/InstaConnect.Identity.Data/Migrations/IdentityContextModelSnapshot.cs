@@ -156,7 +156,7 @@ namespace InstaConnect.Identity.Data.Migrations
                     b.HasOne("InstaConnect.Identity.Data.Models.Entities.User", "User")
                         .WithMany("Tokens")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -167,7 +167,7 @@ namespace InstaConnect.Identity.Data.Migrations
                     b.HasOne("InstaConnect.Identity.Data.Models.Entities.User", "User")
                         .WithMany("UserClaims")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
