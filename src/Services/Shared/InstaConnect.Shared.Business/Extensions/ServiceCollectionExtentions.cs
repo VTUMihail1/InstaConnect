@@ -13,6 +13,7 @@ public static class ServiceCollectionExtentions
     public static IServiceCollection AddMessageBroker(
         this IServiceCollection serviceCollection,
         IConfiguration configuration,
+        Assembly currentAssembly,
         Action<IBusRegistrationConfigurator>? configure = null
         )
     {
@@ -29,6 +30,8 @@ public static class ServiceCollectionExtentions
         serviceCollection.AddMassTransit(busConfigurator =>
         {
             busConfigurator.SetKebabCaseEndpointNameFormatter();
+
+            busConfigurator.AddConsumers(currentAssembly);
 
             busConfigurator.UsingRabbitMq((context, configurator) =>
             {
