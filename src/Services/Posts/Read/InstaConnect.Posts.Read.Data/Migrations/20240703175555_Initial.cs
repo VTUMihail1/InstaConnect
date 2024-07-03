@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace InstaConnect.Posts.Data.Read.Migrations;
+namespace InstaConnect.Posts.Read.Data.Migrations;
 
 /// <inheritdoc />
 public partial class Initial : Migration
@@ -44,7 +45,7 @@ public partial class Initial : Migration
                     column: x => x.user_id,
                     principalTable: "user",
                     principalColumn: "id",
-                    onDelete: ReferentialAction.Cascade);
+                    onDelete: ReferentialAction.Restrict);
             });
 
         migrationBuilder.CreateTable(
@@ -66,13 +67,13 @@ public partial class Initial : Migration
                     column: x => x.post_id,
                     principalTable: "post",
                     principalColumn: "id",
-                    onDelete: ReferentialAction.Cascade);
+                    onDelete: ReferentialAction.Restrict);
                 table.ForeignKey(
                     name: "FK_post_comment_user_user_id",
                     column: x => x.user_id,
                     principalTable: "user",
                     principalColumn: "id",
-                    onDelete: ReferentialAction.Cascade);
+                    onDelete: ReferentialAction.Restrict);
             });
 
         migrationBuilder.CreateTable(
@@ -99,7 +100,7 @@ public partial class Initial : Migration
                     column: x => x.user_id,
                     principalTable: "user",
                     principalColumn: "id",
-                    onDelete: ReferentialAction.Cascade);
+                    onDelete: ReferentialAction.Restrict);
             });
 
         migrationBuilder.CreateTable(
@@ -126,7 +127,7 @@ public partial class Initial : Migration
                     column: x => x.user_id,
                     principalTable: "user",
                     principalColumn: "id",
-                    onDelete: ReferentialAction.Cascade);
+                    onDelete: ReferentialAction.Restrict);
             });
 
         migrationBuilder.CreateIndex(

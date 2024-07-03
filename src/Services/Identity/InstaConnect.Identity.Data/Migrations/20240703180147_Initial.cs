@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -46,7 +47,7 @@ public partial class Initial : Migration
                     column: x => x.user_id,
                     principalTable: "user",
                     principalColumn: "id",
-                    onDelete: ReferentialAction.Cascade);
+                    onDelete: ReferentialAction.Restrict);
             });
 
         migrationBuilder.CreateTable(
@@ -68,7 +69,7 @@ public partial class Initial : Migration
                     column: x => x.user_id,
                     principalTable: "user",
                     principalColumn: "id",
-                    onDelete: ReferentialAction.Cascade);
+                    onDelete: ReferentialAction.Restrict);
             });
 
         migrationBuilder.CreateIndex(

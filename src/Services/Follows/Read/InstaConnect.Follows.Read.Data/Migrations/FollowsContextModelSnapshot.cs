@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace InstaConnect.Follows.Data.Read.Migrations
+namespace InstaConnect.Follows.Read.Data.Migrations
 {
     [DbContext(typeof(FollowsContext))]
     partial class FollowsContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace InstaConnect.Follows.Data.Read.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("InstaConnect.Follows.Data.Read.Models.Entities.Follow", b =>
+            modelBuilder.Entity("InstaConnect.Follows.Read.Data.Models.Entities.Follow", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -53,7 +53,7 @@ namespace InstaConnect.Follows.Data.Read.Migrations
                     b.ToTable("follow", (string)null);
                 });
 
-            modelBuilder.Entity("InstaConnect.Follows.Data.Read.Models.Entities.User", b =>
+            modelBuilder.Entity("InstaConnect.Follows.Read.Data.Models.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -92,15 +92,15 @@ namespace InstaConnect.Follows.Data.Read.Migrations
                     b.ToTable("user", (string)null);
                 });
 
-            modelBuilder.Entity("InstaConnect.Follows.Data.Read.Models.Entities.Follow", b =>
+            modelBuilder.Entity("InstaConnect.Follows.Read.Data.Models.Entities.Follow", b =>
                 {
-                    b.HasOne("InstaConnect.Follows.Data.Read.Models.Entities.User", "Follower")
+                    b.HasOne("InstaConnect.Follows.Read.Data.Models.Entities.User", "Follower")
                         .WithMany("Followers")
                         .HasForeignKey("FollowerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("InstaConnect.Follows.Data.Read.Models.Entities.User", "Following")
+                    b.HasOne("InstaConnect.Follows.Read.Data.Models.Entities.User", "Following")
                         .WithMany("Followings")
                         .HasForeignKey("FollowingId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -111,7 +111,7 @@ namespace InstaConnect.Follows.Data.Read.Migrations
                     b.Navigation("Following");
                 });
 
-            modelBuilder.Entity("InstaConnect.Follows.Data.Read.Models.Entities.User", b =>
+            modelBuilder.Entity("InstaConnect.Follows.Read.Data.Models.Entities.User", b =>
                 {
                     b.Navigation("Followers");
 

@@ -7,7 +7,7 @@ internal class CacheHandler : ICacheHandler
     private readonly IJsonConverter _jsonConverter;
     private readonly IDistributedCache _distributedCache;
 
-    internal CacheHandler(
+    public CacheHandler(
         IJsonConverter jsonConverter,
         IDistributedCache distributedCache)
     {

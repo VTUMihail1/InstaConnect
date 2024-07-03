@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace InstaConnect.Follows.Data.Read.Migrations;
+namespace InstaConnect.Follows.Read.Data.Migrations;
 
 /// <inheritdoc />
 public partial class Initial : Migration
