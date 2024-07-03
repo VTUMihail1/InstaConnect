@@ -35,6 +35,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IPostCommentLikeRepository, PostCommentLikeRepository>()
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
+            .AddCaching(configuration)
             .AddUnitOfWork<PostsContext>();
 
         return serviceCollection;
