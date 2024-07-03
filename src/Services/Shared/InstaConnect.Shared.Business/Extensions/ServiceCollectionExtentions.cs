@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.Models.Options;
 using InstaConnect.Shared.Business.PipelineBehaviors;
 using MassTransit;
@@ -45,27 +47,6 @@ public static class ServiceCollectionExtentions
         return serviceCollection;
     }
 
-    public static IServiceCollection AddCaching(
-        this IServiceCollection serviceCollection,
-        IConfiguration configuration
-        )
-    {
-        serviceCollection
-            .AddOptions<CacheOptions>()
-            .BindConfiguration(nameof(CacheOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        var cacheOptions = configuration
-            .GetSection(nameof(CacheOptions))
-            .Get<CacheOptions>()!;
-
-        serviceCollection.AddStackExchangeRedisCache(redisOptions => 
-            redisOptions.Configuration = cacheOptions.ConnectionString);
-
-        return serviceCollection;
-    }
-
     public static IServiceCollection AddMediatR(this IServiceCollection serviceCollection, Assembly assembly)
     {
         serviceCollection.AddMediatR(
@@ -77,6 +58,15 @@ public static class ServiceCollectionExtentions
                 cf.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
                 cf.AddOpenBehavior(typeof(CachingPipelineBehavior<,>));
             });
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddCachingHandler(this IServiceCollection serviceCollection)
+    {
+        serviceCollection
+            .AddScoped<IJsonConverter, JsonConverter>()
+            .AddScoped<ICacheHandler, CacheHandler>();
 
         return serviceCollection;
     }

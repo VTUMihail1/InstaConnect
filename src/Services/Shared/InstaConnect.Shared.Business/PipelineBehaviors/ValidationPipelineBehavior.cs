@@ -10,14 +10,10 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : ICommand<TResponse>, IQuery<TResponse>
 {
-    private readonly IMapper _mapper;
     private readonly ICollection<IValidator<TRequest>> _validators;
 
-    public ValidationPipelineBehavior(
-        IMapper mapper,
-        ICollection<IValidator<TRequest>> validators)
+    public ValidationPipelineBehavior(ICollection<IValidator<TRequest>> validators)
     {
-        _mapper = mapper;
         _validators = validators;
     }
 

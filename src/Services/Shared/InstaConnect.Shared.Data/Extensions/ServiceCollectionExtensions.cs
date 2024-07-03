@@ -1,6 +1,8 @@
-﻿using InstaConnect.Shared.Data.Abstract;
+﻿using InstaConnect.Shared.Business.Models.Options;
+using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Shared.Data.Models.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Shared.Data.Extensions;
@@ -32,6 +34,27 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddHealthChecks()
             .AddDbContextCheck<TContext>();
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddCaching(
+        this IServiceCollection serviceCollection,
+        IConfiguration configuration
+        )
+    {
+        serviceCollection
+            .AddOptions<CacheOptions>()
+            .BindConfiguration(nameof(CacheOptions))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        var cacheOptions = configuration
+            .GetSection(nameof(CacheOptions))
+            .Get<CacheOptions>()!;
+
+        serviceCollection.AddStackExchangeRedisCache(redisOptions =>
+            redisOptions.Configuration = cacheOptions.ConnectionString);
 
         return serviceCollection;
     }

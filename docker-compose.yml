@@ -15,6 +15,18 @@ services:
       - ./.containers/mysql:/var/opt/mssql/data
     networks:
       - instaconnect
+  
+  redis:
+    image: redis:latest
+    restart: always
+    environment:
+      REDIS_USER: guest
+      REDIS_PASSWORD: guest
+    command: ["redis-server", "--requirepass", "guest", "--masterauth", "guest"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./.containers/redis/data/:/data
 
   rabbitmq:
     image: rabbitmq:management
@@ -61,6 +73,7 @@ services:
       dockerfile: src/Services/Identity/InstaConnect.Identity.Web/Dockerfile
     environment:
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.users;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
       CorsOptions__AllowedOrigins: gateway-svc:5100
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
@@ -86,6 +99,7 @@ services:
       dockerfile: src/Services/Posts/Read/InstaConnect.Posts.Read.Web/Dockerfile
     environment:
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.posts.read;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
       CorsOptions__AllowedOrigins: gateway-svc:5100
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
@@ -109,6 +123,7 @@ services:
       dockerfile: src/Services/Posts/Write/InstaConnect.Posts.Write.Web/Dockerfile
     environment:
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.posts.write;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
       CorsOptions__AllowedOrigins: gateway-svc:5100
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
@@ -132,6 +147,7 @@ services:
       dockerfile: src/Services/Messages/Read/InstaConnect.Messages.Read.Web/Dockerfile
     environment:
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.messages.read;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest
@@ -155,6 +171,7 @@ services:
       dockerfile: src/Services/Messages/Write/InstaConnect.Messages.Write.Web/Dockerfile
     environment:
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.messages.write;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest
@@ -178,6 +195,7 @@ services:
       dockerfile: src/Services/Follows/Read/InstaConnect.Follows.Read.Web/Dockerfile
     environment:
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.follows.read;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest
@@ -201,6 +219,7 @@ services:
       dockerfile: src/Services/Follows/Write/InstaConnect.Follows.Write.Web/Dockerfile
     environment:
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.follows.write;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest

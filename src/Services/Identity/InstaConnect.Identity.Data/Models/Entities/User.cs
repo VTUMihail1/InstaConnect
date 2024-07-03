@@ -16,9 +16,9 @@ public class User : BaseEntity
 
     public bool IsEmailConfirmed { get; set; } = false;
 
-    public ICollection<Token> Tokens { get; set; } = new List<Token>();
+    public ICollection<Token> Tokens { get; set; } = [];
 
-    public ICollection<UserClaim> UserClaims { get; set; } = new List<UserClaim>();
+    public ICollection<UserClaim> UserClaims { get; set; } = [];
 }
 
 

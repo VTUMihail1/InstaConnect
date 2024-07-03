@@ -55,6 +55,6 @@ public class RegisterAccountCommandHandler : ICommandHandler<RegisterAccountComm
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var userCreatedEvent = _mapper.Map<UserCreatedEvent>(user);
-        await _publishEndpoint.Publish(userCreatedEvent);
+        await _publishEndpoint.Publish(userCreatedEvent, cancellationToken);
     }
 }
