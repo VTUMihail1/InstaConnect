@@ -41,6 +41,6 @@ public class DeleteAccountByIdCommandHandler : ICommandHandler<DeleteAccountById
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var userDeletedEvent = _mapper.Map<UserDeletedEvent>(existingUser);
-        await _publishEndpoint.Publish(userDeletedEvent);
+        await _publishEndpoint.Publish(userDeletedEvent, cancellationToken);
     }
 }

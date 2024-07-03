@@ -5,6 +5,7 @@ using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
+using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Business.Commands.Account.DeleteCurrentAccount;
 
@@ -41,6 +42,6 @@ public class DeleteCurrentAccountCommandHandler : ICommandHandler<DeleteCurrentA
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var userDeletedEvent = _mapper.Map<UserDeletedEvent>(existingUser);
-        await _publishEndpoint.Publish(userDeletedEvent);
+        await _publishEndpoint.Publish(userDeletedEvent, cancellationToken);
     }
 }

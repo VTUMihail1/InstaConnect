@@ -87,15 +87,12 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddAuthorizationPolicies(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddAuthorization(options =>
-        {
-            options.DefaultPolicy = new AuthorizationPolicyBuilder()
+        serviceCollection.AddAuthorizationBuilder()
+            .SetDefaultPolicy(new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .RequireClaim(JwtClaimTypes.Subject)
-                .Build();
-
-            options.AddPolicy(AppPolicies.AdminPolicy, policy => policy.RequireClaim(AppClaims.Admin));
-        });
+                .Build())
+            .AddPolicy(AppPolicies.AdminPolicy, policy => policy.RequireClaim(AppClaims.Admin));
 
         return serviceCollection;
     }

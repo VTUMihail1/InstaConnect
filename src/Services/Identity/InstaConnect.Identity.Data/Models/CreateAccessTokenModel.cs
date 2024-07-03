@@ -6,7 +6,7 @@ public class CreateAccessTokenModel
 {
     public string UserId { get; set; } = string.Empty;
 
-    public ICollection<Claim> Claims { get; set; } = new List<Claim>();
+    public ICollection<Claim> Claims { get; set; } = [];
 }
 
 

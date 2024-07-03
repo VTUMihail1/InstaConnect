@@ -50,6 +50,6 @@ public class EditCurrentAccountCommandHandler : ICommandHandler<EditCurrentAccou
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var userUpdatedEvent = _mapper.Map<UserUpdatedEvent>(existingUserById);
-        await _publishEndpoint.Publish(userUpdatedEvent);
+        await _publishEndpoint.Publish(userUpdatedEvent, cancellationToken);
     }
 }
