@@ -17,8 +17,7 @@ public static class ServiceCollectionExtensions
             .AddValidatorsFromAssembly(currentAssembly)
             .AddMediatR(currentAssembly)
             .AddAutoMapper(currentAssembly)
-            .AddMessageBroker(configuration, busConfigurator =>
-            busConfigurator.AddConsumer<GetUserByIdConsumer>());
+            .AddMessageBroker(configuration, currentAssembly);
 
         return serviceCollection;
     }
