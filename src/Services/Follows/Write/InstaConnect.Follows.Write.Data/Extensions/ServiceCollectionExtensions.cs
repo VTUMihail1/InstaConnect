@@ -30,6 +30,7 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddScoped<IFollowRepository, FollowRepository>()
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
+            .AddCaching(configuration)
             .AddUnitOfWork<FollowsContext>();
 
         return serviceCollection;

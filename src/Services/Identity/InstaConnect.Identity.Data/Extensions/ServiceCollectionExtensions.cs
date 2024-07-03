@@ -43,6 +43,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IUserClaimRepository, UserClaimRepository>()
             .AddScoped<IPasswordHasher, PasswordHasher>()
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
+            .AddCaching(configuration)
             .AddUnitOfWork<IdentityContext>();
 
         return serviceCollection;
