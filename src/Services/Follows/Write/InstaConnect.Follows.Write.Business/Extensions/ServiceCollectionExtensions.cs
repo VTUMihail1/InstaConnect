@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using InstaConnect.Follows.Write.Business.Consumers;
+using InstaConnect.Follows.Write.Data;
 using InstaConnect.Shared.Business.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +17,8 @@ public static class ServiceCollectionExtensions
             .AddValidatorsFromAssembly(currentAssembly)
             .AddMediatR(currentAssembly)
             .AddAutoMapper(currentAssembly)
-            .AddMessageBroker(configuration, currentAssembly);
+            .AddMessageBroker(configuration, currentAssembly, busConfigurator =>
+                busConfigurator.AddTransactionalOutbox<FollowsContext>());
 
         return serviceCollection;
     }

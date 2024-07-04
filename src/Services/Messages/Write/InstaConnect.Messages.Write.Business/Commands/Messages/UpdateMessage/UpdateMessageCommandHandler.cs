@@ -45,9 +45,9 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
         _mapper.Map(request, existingMessage);
         _messageRepository.Update(existingMessage);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         var messageUpdatedEvent = _mapper.Map<MessageCreatedEvent>(existingMessage);
         await _publishEndpoint.Publish(messageUpdatedEvent, cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

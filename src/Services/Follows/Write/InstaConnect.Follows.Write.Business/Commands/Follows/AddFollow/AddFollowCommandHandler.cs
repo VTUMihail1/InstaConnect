@@ -71,9 +71,9 @@ public class AddFollowCommandHandler : ICommandHandler<AddFollowCommand>
         var follow = _mapper.Map<Follow>(request);
         _followRepository.Add(follow);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         var followCreatedEvent = _mapper.Map<FollowCreatedEvent>(follow);
         await _publishEndpoint.Publish(followCreatedEvent, cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

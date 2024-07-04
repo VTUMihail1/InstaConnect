@@ -45,9 +45,9 @@ internal class AddPostCommandHandler : ICommandHandler<AddPostCommand>
         var post = _mapper.Map<Post>(request);
         _postRepository.Add(post);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         var postCreatedEvent = _mapper.Map<PostCreatedEvent>(post);
         await _publishEndpoint.Publish(postCreatedEvent, cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

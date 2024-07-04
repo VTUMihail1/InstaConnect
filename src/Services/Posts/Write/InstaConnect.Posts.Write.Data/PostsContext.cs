@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Posts.Write.Data.Models.Entities;
+using InstaConnect.Shared.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Posts.Write.Data;
@@ -24,5 +25,7 @@ public class PostsContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(currentAssembly);
+
+        modelBuilder.ApplyTransactionalOutboxEntityConfiguration();
     }
 }

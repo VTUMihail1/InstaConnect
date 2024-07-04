@@ -44,9 +44,9 @@ internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostComme
 
         _postCommentRepository.Delete(existingPostComment);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         var postCommentDeletedEvent = _mapper.Map<PostCommentDeletedEvent>(existingPostComment);
         await _publishEndpoint.Publish(postCommentDeletedEvent, cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

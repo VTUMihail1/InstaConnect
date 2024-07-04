@@ -62,10 +62,10 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
         var message = _mapper.Map<Message>(request);
         _messageRepository.Add(message);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         var messageCreatedEvent = _mapper.Map<MessageCreatedEvent>(message);
         await _publishEndpoint.Publish(messageCreatedEvent, cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var sendMessageDTO = _mapper.Map<SendMessageModel>(request);
         await _messageSender.SendMessageToUserAsync(sendMessageDTO);

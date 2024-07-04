@@ -39,9 +39,9 @@ public class DeleteCurrentAccountCommandHandler : ICommandHandler<DeleteCurrentA
 
         _userRepository.Delete(existingUser);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         var userDeletedEvent = _mapper.Map<UserDeletedEvent>(existingUser);
         await _publishEndpoint.Publish(userDeletedEvent, cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

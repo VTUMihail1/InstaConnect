@@ -1,9 +1,10 @@
 ﻿using InstaConnect.Identity.Data.Models.Entities;
+using InstaConnect.Shared.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Identity.Data;
 
-internal class IdentityContext : DbContext
+public class IdentityContext : DbContext
 {
     public IdentityContext(DbContextOptions options) : base(options)
     { }
@@ -21,5 +22,7 @@ internal class IdentityContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(currentAssembly);
+
+        modelBuilder.ApplyTransactionalOutboxEntityConfiguration();
     }
 }

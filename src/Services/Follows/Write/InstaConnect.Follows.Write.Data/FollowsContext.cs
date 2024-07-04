@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Follows.Write.Data.Models.Entities;
+using InstaConnect.Shared.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Follows.Write.Data;
@@ -17,5 +18,7 @@ public class FollowsContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(currentAssembly);
+
+        modelBuilder.ApplyTransactionalOutboxEntityConfiguration();
     }
 }

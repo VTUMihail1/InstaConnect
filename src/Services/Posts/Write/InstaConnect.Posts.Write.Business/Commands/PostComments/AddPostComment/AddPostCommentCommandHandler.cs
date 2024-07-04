@@ -56,9 +56,9 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
         var postComment = _mapper.Map<PostComment>(request);
         _postCommentRepository.Add(postComment);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         var postCommentCreatedEvent = _mapper.Map<PostCommentCreatedEvent>(postComment);
         await _publishEndpoint.Publish(postCommentCreatedEvent, cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }
