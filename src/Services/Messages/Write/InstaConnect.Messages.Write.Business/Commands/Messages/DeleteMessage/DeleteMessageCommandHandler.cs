@@ -44,9 +44,9 @@ internal class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageComman
 
         _messageRepository.Delete(existingMessage);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         var messageDeletedEvent = _mapper.Map<MessageDeletedEvent>(existingMessage);
         await _publishEndpoint.Publish(messageDeletedEvent, cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

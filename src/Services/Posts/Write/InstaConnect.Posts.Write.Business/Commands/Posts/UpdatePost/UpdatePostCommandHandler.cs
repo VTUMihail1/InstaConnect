@@ -45,9 +45,9 @@ public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand>
         _mapper.Map(request, existingPost);
         _postRepository.Update(existingPost);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         var postUpdatedEvent = _mapper.Map<PostUpdatedEvent>(existingPost);
         await _publishEndpoint.Publish(postUpdatedEvent, cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

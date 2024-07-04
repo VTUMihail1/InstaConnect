@@ -44,9 +44,9 @@ public class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommand>
 
         _followRepository.Delete(existingFollow);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         var followDeletedEvent = _mapper.Map<FollowDeletedEvent>(existingFollow);
         await _publishEndpoint.Publish(followDeletedEvent, cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

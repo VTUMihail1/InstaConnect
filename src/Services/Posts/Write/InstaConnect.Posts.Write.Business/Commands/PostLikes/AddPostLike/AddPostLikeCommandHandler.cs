@@ -66,9 +66,9 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand>
         var postLike = _mapper.Map<PostLike>(request);
         _postLikeRepository.Add(postLike);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         var postLikeCreatedEvent = _mapper.Map<PostLikeCreatedEvent>(postLike);
         await _publishEndpoint.Publish(postLikeCreatedEvent, cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

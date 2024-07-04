@@ -29,6 +29,7 @@ internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
         var existingMessages = await _messageRepository.GetAllAsync(filteredCollectionQuery, context.CancellationToken);
 
         _messageRepository.DeleteRange(existingMessages);
+
         await _unitOfWork.SaveChangesAsync(context.CancellationToken);
     }
 }
