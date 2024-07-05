@@ -94,7 +94,7 @@ services:
       TokenOptions__AccountTokenLifetimeSeconds: 3600
       ImageUploadOptions__CloudName: dk3thebdl
       ImageUploadOptions__ApiKey: 149997679976552
-      ImageUploadOptions__ApiSecret: secret
+      ImageUploadOptions__ApiSecret: R6zU5MPoyNMe7IoLanOfVp0YLjM
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
     ports:
@@ -302,7 +302,7 @@ services:
       EmailOptions__Port: 587
       EmailOptions__Sender: mihail.nikolov125@gmail.com
       EmailOptions__Username: apikey
-      EmailOptions__Password: sendgridkey
+      EmailOptions__Password: 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
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
     ports:
