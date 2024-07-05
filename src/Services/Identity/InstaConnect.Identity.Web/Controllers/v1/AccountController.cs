@@ -130,12 +130,30 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> EditAsync(
+    public async Task<IActionResult> EditCurrentAsync(
         EditCurrentAccountRequest request,
         CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _mapper.Map<EditCurrentAccountCommand>(request);
+        _mapper.Map(currentUser, commandRequest);
+        await _sender.Send(commandRequest, cancellationToken);
+
+        return NoContent();
+    }
+
+    // PUT: api/accounts/current
+    [Authorize]
+    [HttpPut("current/profile-image")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> EditCurrentProfileImageAsync(
+        EditCurrentAccountProfileImageRequest request,
+        CancellationToken cancellationToken)
+    {
+        var currentUser = _currentUserContext.GetCurrentUser();
+        var commandRequest = _mapper.Map<EditCurrentAccountProfileImageCommand>(request);
         _mapper.Map(currentUser, commandRequest);
         await _sender.Send(commandRequest, cancellationToken);
 

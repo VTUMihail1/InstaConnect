@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using CloudinaryDotNet;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.Models.Options;
@@ -71,6 +72,30 @@ public static class ServiceCollectionExtentions
         serviceCollection
             .AddScoped<IJsonConverter, JsonConverter>()
             .AddScoped<ICacheHandler, CacheHandler>();
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddImageHandler(this IServiceCollection serviceCollection, IConfiguration configuration)
+    {
+        serviceCollection
+            .AddOptions<ImageUploadOptions>()
+            .BindConfiguration(nameof(ImageUploadOptions))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        var imageUploadOptions = configuration
+            .GetSection(nameof(ImageUploadOptions))
+            .Get<ImageUploadOptions>()!;
+
+        serviceCollection.AddScoped(_ => new Cloudinary(new Account(
+            imageUploadOptions.CloudName,
+            imageUploadOptions.ApiKey,
+            imageUploadOptions.ApiSecret)));
+
+        serviceCollection
+            .AddScoped<IImageUploadFactory, ImageUploadFactory>()
+            .AddScoped<IImageHandler, ImageHandler>();
 
         return serviceCollection;
     }

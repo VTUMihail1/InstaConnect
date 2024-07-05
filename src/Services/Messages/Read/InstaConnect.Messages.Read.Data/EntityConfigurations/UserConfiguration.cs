@@ -35,6 +35,10 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .Property(p => p.UserName)
             .HasColumnName("user_name");
 
+        builder
+            .Property(p => p.ProfileImage)
+            .HasColumnName("profile_image");
+
         builder.HasMany(f => f.SenderMessages)
                 .WithOne(u => u.Sender)
                 .HasForeignKey(f => f.SenderId)

@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Identity.Web.Models.Requests.Account;
 
-public class RegisterAccountRequest
+public class EditCurrentAccountProfileImageRequest
 {
     [FromForm]
-    public RegisterAccountBindingModel RegisterAccountBindingModel { get; set; } = new();
+    public EditCurrentAccountProfileImageBindingModel EditCurrentAccountProfileImageBindingModel { get; set; } = new();
 }

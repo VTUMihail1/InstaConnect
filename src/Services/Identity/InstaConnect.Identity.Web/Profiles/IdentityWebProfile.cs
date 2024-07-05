@@ -51,9 +51,9 @@ public class IdentityWebProfile : Profile
             .ForMember(dest => dest.ConfirmPassword, opt => opt.MapFrom(src => src.ResetAccountPasswordBindingModel.ConfirmPassword));
 
         CreateMap<EditCurrentAccountRequest, EditCurrentAccountCommand>()
-            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.EditAccountBindingModel.UserName))
-            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.EditAccountBindingModel.FirstName))
-            .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.EditAccountBindingModel.LastName));
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.EditCurrentAccountBindingModel.UserName))
+            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.EditCurrentAccountBindingModel.FirstName))
+            .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.EditCurrentAccountBindingModel.LastName));
 
         CreateMap<CurrentUserModel, EditCurrentAccountCommand>()
             .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.Id));

@@ -4,6 +4,7 @@ using InstaConnect.Follows.Read.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstaConnect.Follows.Read.Data.Migrations
 {
     [DbContext(typeof(FollowsContext))]
-    partial class FollowsContextModelSnapshot : ModelSnapshot
+    [Migration("20240705095712_AddUserTableProfileImage")]
+    partial class AddUserTableProfileImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

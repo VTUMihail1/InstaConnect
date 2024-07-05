@@ -8,7 +8,11 @@ public class FollowResponse
 
     public string FollowerName { get; set; } = string.Empty;
 
+    public string? FollowerProfileImage { get; set; } = string.Empty;
+
     public string FollowingId { get; set; } = string.Empty;
 
     public string FollowingName { get; set; } = string.Empty;
+
+    public string? FollowingProfileImage { get; set; } = string.Empty;
 }

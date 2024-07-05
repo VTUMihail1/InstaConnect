@@ -44,6 +44,10 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("user_name");
 
         builder
+            .Property(p => p.ProfileImage)
+            .HasColumnName("profile_image");
+
+        builder
             .Property(t => t.CreatedAt)
             .HasColumnName("created_at");
 

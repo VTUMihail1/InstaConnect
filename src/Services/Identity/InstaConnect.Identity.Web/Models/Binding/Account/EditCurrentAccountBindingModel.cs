@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Identity.Web.Models.Binding.Account;
 
-public class EditAccountBindingModel
+public class EditCurrentAccountBindingModel
 {
     public string UserName { get; set; } = string.Empty;
 

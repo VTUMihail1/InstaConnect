@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
+using Microsoft.AspNetCore.Http;
 
 namespace InstaConnect.Identity.Business.Commands.Account.RegisterAccount;
 
@@ -15,4 +16,6 @@ public class RegisterAccountCommand : ICommand
     public string FirstName { get; set; } = string.Empty;
 
     public string LastName { get; set; } = string.Empty;
+
+    public IFormFile? ProfileImage { get; set; }
 }

@@ -35,6 +35,8 @@ public class MessagesBusinessProfile : Profile
 
         CreateMap<Message, MessageViewModel>()
             .ForMember(dest => dest.SenderName, opt => opt.MapFrom(src => src.Sender.UserName))
-            .ForMember(dest => dest.ReceiverName, opt => opt.MapFrom(src => src.Receiver.UserName));
+            .ForMember(dest => dest.ReceiverName, opt => opt.MapFrom(src => src.Receiver.UserName))
+            .ForMember(dest => dest.SenderProfileImage, opt => opt.MapFrom(src => src.Sender.ProfileImage))
+            .ForMember(dest => dest.ReceiverProfileImage, opt => opt.MapFrom(src => src.Receiver.ProfileImage));
     }
 }

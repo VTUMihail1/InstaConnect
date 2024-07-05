@@ -12,6 +12,8 @@ public class User : BaseEntity
 
     public string UserName { get; set; } = string.Empty;
 
+    public string? ProfileImage { get; set; } = string.Empty;
+
     public ICollection<Message> SenderMessages { get; set; } = new List<Message>();
 
     public ICollection<Message> ReceiverMessages { get; set; } = new List<Message>();
