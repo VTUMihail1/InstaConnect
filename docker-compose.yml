@@ -83,7 +83,9 @@ services:
       AdminOptions__Email: admin@instaconnect.com
       AdminOptions__Password: SecureAdminPass123!
       TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
+      ImageUploadOptions__CloudName: da8mhyxqa
+      ImageUploadOptions__ApiKey: 221462762173633
+      ImageUploadOptions__ApiSecret: kKwnpThCX-265RJe6OINzrECK1s
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
     ports:

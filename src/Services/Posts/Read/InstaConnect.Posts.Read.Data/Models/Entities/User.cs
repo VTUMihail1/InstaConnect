@@ -12,6 +12,8 @@ public class User : BaseEntity
 
     public string UserName { get; set; } = string.Empty;
 
+    public string? ProfileImage { get; set; } = string.Empty;
+
     public ICollection<Post> Posts { get; set; } = new List<Post>();
 
     public ICollection<PostLike> PostLikes { get; set; } = new List<PostLike>();

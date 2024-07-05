@@ -6,5 +6,5 @@ public class AccountResponse
 
     public string Value { get; set; } = string.Empty;
 
-    public DateTime ValidUntil { get; set; } = DateTime.Now;
+    public DateTime ValidUntil { get; set; } = DateTime.MinValue;
 }

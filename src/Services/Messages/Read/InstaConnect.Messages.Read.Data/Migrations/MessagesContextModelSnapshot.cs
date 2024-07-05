@@ -87,6 +87,10 @@ namespace InstaConnect.Messages.Read.Data.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("last_name");
 
+                    b.Property<string>("ProfileImage")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("profile_image");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 

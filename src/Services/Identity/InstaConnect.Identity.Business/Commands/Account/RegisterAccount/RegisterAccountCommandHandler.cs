@@ -4,6 +4,7 @@ using InstaConnect.Identity.Data.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Exceptions.Account;
+using InstaConnect.Shared.Business.Models;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
@@ -13,6 +14,7 @@ public class RegisterAccountCommandHandler : ICommandHandler<RegisterAccountComm
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IImageHandler _imageHandler;
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IPublishEndpoint _publishEndpoint;
@@ -20,12 +22,14 @@ public class RegisterAccountCommandHandler : ICommandHandler<RegisterAccountComm
     public RegisterAccountCommandHandler(
         IMapper mapper,
         IUnitOfWork unitOfWork,
+        IImageHandler imageHandler,
         IUserRepository userRepository,
         IPasswordHasher passwordHasher,
         IPublishEndpoint publishEndpoint)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
+        _imageHandler = imageHandler;
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
         _publishEndpoint = publishEndpoint;
@@ -50,6 +54,15 @@ public class RegisterAccountCommandHandler : ICommandHandler<RegisterAccountComm
         var user = _mapper.Map<User>(request);
         var passwordHash = _passwordHasher.Hash(request.Password);
         _mapper.Map(passwordHash, user);
+
+        if (request.ProfileImage != null)
+        {
+            var imageUploadModel = _mapper.Map<ImageUploadModel>(request);
+            var imageUploadResult = await _imageHandler.UploadAsync(imageUploadModel, cancellationToken);
+
+            _mapper.Map(imageUploadResult, user);
+        }
+
         _userRepository.Add(user);
 
         var userCreatedEvent = _mapper.Map<UserCreatedEvent>(user);

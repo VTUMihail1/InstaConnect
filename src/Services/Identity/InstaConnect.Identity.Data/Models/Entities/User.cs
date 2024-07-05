@@ -14,6 +14,8 @@ public class User : BaseEntity
 
     public string PasswordHash { get; set; } = string.Empty;
 
+    public string? ProfileImage { get; set; }
+
     public bool IsEmailConfirmed { get; set; } = false;
 
     public ICollection<Token> Tokens { get; set; } = [];

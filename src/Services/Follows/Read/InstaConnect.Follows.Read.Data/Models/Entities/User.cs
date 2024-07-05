@@ -12,9 +12,11 @@ public class User : BaseEntity
 
     public string UserName { get; set; } = string.Empty;
 
-    public ICollection<Follow> Followers { get; set; } = new List<Follow>();
+    public string? ProfileImage { get; set; } = string.Empty;
 
-    public ICollection<Follow> Followings { get; set; } = new List<Follow>();
+    public ICollection<Follow> Followers { get; set; } = [];
+
+    public ICollection<Follow> Followings { get; set; } = [];
 }
 
 

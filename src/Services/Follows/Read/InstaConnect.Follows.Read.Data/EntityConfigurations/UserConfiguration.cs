@@ -35,6 +35,10 @@ internal class UserConfiguration : IEntityTypeConfiguration<User>
             .Property(p => p.UserName)
             .HasColumnName("user_name");
 
+        builder
+            .Property(p => p.ProfileImage)
+            .HasColumnName("profile_image");
+
         builder.HasMany(f => f.Followings)
                 .WithOne(u => u.Following)
                 .HasForeignKey(f => f.FollowingId)

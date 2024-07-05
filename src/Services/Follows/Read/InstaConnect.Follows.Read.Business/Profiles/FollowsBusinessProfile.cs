@@ -43,6 +43,8 @@ public class FollowsBusinessProfile : Profile
 
         CreateMap<Follow, FollowViewModel>()
             .ForMember(dest => dest.FollowerName, opt => opt.MapFrom(src => src.Follower.UserName))
-            .ForMember(dest => dest.FollowingName, opt => opt.MapFrom(src => src.Following.UserName));
+            .ForMember(dest => dest.FollowingName, opt => opt.MapFrom(src => src.Following.UserName))
+            .ForMember(dest => dest.FollowerProfileImage, opt => opt.MapFrom(src => src.Follower.ProfileImage))
+            .ForMember(dest => dest.FollowingProfileImage, opt => opt.MapFrom(src => src.Following.ProfileImage));
     }
 }

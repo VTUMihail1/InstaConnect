@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
+using CloudinaryDotNet.Actions;
 using IdentityModel;
 using InstaConnect.Identity.Business.Commands.Account.EditCurrentAccount;
 using InstaConnect.Identity.Business.Commands.Account.RegisterAccount;
@@ -10,6 +11,7 @@ using InstaConnect.Identity.Data.Models;
 using InstaConnect.Identity.Data.Models.Entities;
 using InstaConnect.Identity.Data.Models.Filters;
 using InstaConnect.Shared.Business.Contracts.Users;
+using InstaConnect.Shared.Business.Models;
 using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Identity.Business.Profiles;
@@ -47,6 +49,15 @@ public class IdentityBusinessProfile : Profile
         CreateMap<User, GetUserByIdResponse>();
 
         CreateMap<User, UserDeletedEvent>();
+
+        CreateMap<EditCurrentAccountProfileImageCommand, ImageUploadModel>()
+            .ForMember(dest => dest.FormFile, opt => opt.MapFrom(src => src.ProfileImage));
+
+        CreateMap<RegisterAccountCommand, ImageUploadModel>()
+            .ForMember(dest => dest.FormFile, opt => opt.MapFrom(src => src.ProfileImage));
+
+        CreateMap<ImageUploadResult, User>()
+            .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => src.SecureUrl));
 
         // User claims
 
