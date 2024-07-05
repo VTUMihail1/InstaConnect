@@ -18,7 +18,6 @@ public static class ServiceCollectionExtensions
             .AddValidatorsFromAssembly(currentAssembly)
             .AddMediatR(currentAssembly)
             .AddAutoMapper(currentAssembly)
-            .AddImageHandler(configuration)
             .AddMessageBroker(configuration, currentAssembly);
 
         return serviceCollection;
