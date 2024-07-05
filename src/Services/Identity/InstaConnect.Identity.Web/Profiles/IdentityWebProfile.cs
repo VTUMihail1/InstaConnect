@@ -44,7 +44,8 @@ public class IdentityWebProfile : Profile
             .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.RegisterAccountBindingModel.FirstName))
             .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.RegisterAccountBindingModel.LastName))
             .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.RegisterAccountBindingModel.Password))
-            .ForMember(dest => dest.ConfirmPassword, opt => opt.MapFrom(src => src.RegisterAccountBindingModel.ConfirmPassword));
+            .ForMember(dest => dest.ConfirmPassword, opt => opt.MapFrom(src => src.RegisterAccountBindingModel.ConfirmPassword))
+            .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => src.RegisterAccountBindingModel.ProfileImage));
 
         CreateMap<ResetAccountPasswordRequest, ResetAccountPasswordCommand>()
             .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.ResetAccountPasswordBindingModel.Password))
@@ -55,7 +56,13 @@ public class IdentityWebProfile : Profile
             .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.EditCurrentAccountBindingModel.FirstName))
             .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.EditCurrentAccountBindingModel.LastName));
 
+        CreateMap<EditCurrentAccountProfileImageRequest, EditCurrentAccountProfileImageCommand>()
+            .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => src.EditCurrentAccountProfileImageBindingModel.ProfileImage));
+
         CreateMap<CurrentUserModel, EditCurrentAccountCommand>()
+            .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.Id));
+
+        CreateMap<CurrentUserModel, EditCurrentAccountProfileImageCommand>()
             .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<CurrentUserModel, DeleteCurrentAccountCommand>()

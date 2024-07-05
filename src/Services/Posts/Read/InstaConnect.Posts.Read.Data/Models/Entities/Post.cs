@@ -12,7 +12,7 @@ public class Post : BaseEntity
 
     public User User { get; set; } = new();
 
-    public ICollection<PostLike> PostLikes { get; set; } = new List<PostLike>();
+    public ICollection<PostLike> PostLikes { get; set; } = [];
 
-    public ICollection<PostComment> PostComments { get; set; } = new List<PostComment>();
+    public ICollection<PostComment> PostComments { get; set; } = [];
 }
