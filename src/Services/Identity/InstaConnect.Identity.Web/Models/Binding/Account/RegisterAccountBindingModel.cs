@@ -14,5 +14,5 @@ public class RegisterAccountBindingModel
 
     public string LastName { get; set; } = string.Empty;
 
-    public IFormFile? FormFile { get; set; }
+    public IFormFile? ProfileImage { get; set; }
 }

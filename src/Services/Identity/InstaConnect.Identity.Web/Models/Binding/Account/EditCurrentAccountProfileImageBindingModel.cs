@@ -2,5 +2,5 @@
 
 public class EditCurrentAccountProfileImageBindingModel
 {
-    public IFormFile FormFile { get; set; }
+    public IFormFile ProfileImage { get; set; }
 }

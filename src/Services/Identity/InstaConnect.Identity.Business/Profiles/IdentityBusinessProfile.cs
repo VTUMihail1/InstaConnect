@@ -10,6 +10,7 @@ using InstaConnect.Identity.Business.Queries.User.GetAllUsers;
 using InstaConnect.Identity.Data.Models;
 using InstaConnect.Identity.Data.Models.Entities;
 using InstaConnect.Identity.Data.Models.Filters;
+using InstaConnect.Shared.Business.Contracts.Emails;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Models;
 using InstaConnect.Shared.Data.Models.Filters;
@@ -39,6 +40,16 @@ public class IdentityBusinessProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CurrentUserId));
 
         CreateMap<Token, AccountViewModel>();
+
+        CreateMap<Token, UserConfirmEmailTokenCreatedEvent>()
+            .ForMember(dest => dest.Token, opt => opt.MapFrom(src => src.Value));
+
+        CreateMap<Token, UserForgotPasswordTokenCreatedEvent>()
+            .ForMember(dest => dest.Token, opt => opt.MapFrom(src => src.Value));
+
+        CreateMap<User, UserConfirmEmailTokenCreatedEvent>();
+
+        CreateMap<User, UserForgotPasswordTokenCreatedEvent>();
 
         CreateMap<PasswordHashResultModel, User>();
 

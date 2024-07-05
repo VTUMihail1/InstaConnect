@@ -14,13 +14,13 @@ public class User : BaseEntity
 
     public string? ProfileImage { get; set; } = string.Empty;
 
-    public ICollection<Post> Posts { get; set; } = new List<Post>();
+    public ICollection<Post> Posts { get; set; } = [];
 
-    public ICollection<PostLike> PostLikes { get; set; } = new List<PostLike>();
+    public ICollection<PostLike> PostLikes { get; set; } = [];
 
-    public ICollection<PostComment> PostComments { get; set; } = new List<PostComment>();
+    public ICollection<PostComment> PostComments { get; set; } = [];
 
-    public ICollection<PostCommentLike> PostCommentLikes { get; set; } = new List<PostCommentLike>();
+    public ICollection<PostCommentLike> PostCommentLikes { get; set; } = [];
 }
 
 
