@@ -4,7 +4,7 @@ namespace InstaConnect.Shared.Business.Exceptions.Message;
 
 public class MessageNotFoundException : NotFoundException
 {
-    private const string ERROR_MESSAGE = "Post comment not found";
+    private const string ERROR_MESSAGE = "Message not found";
 
     public MessageNotFoundException() : base(ERROR_MESSAGE)
     {

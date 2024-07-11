@@ -49,6 +49,10 @@ public static class ServiceCollectionExtentions
             configure?.Invoke(busConfigurator);
         });
 
+        serviceCollection
+            .AddScoped<IEventPublisher, EventPublisher>()
+            .AddScoped(typeof(IInstaConnectRequestClient<>), typeof(InstaConnectRequestClient<>));
+
         return serviceCollection;
     }
 
@@ -63,6 +67,17 @@ public static class ServiceCollectionExtentions
                 cf.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
                 cf.AddOpenBehavior(typeof(CachingPipelineBehavior<,>));
             });
+
+        serviceCollection.AddScoped<IInstaConnectSender, InstaConnectSender>();
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddMapper(this IServiceCollection serviceCollection, Assembly assembly)
+    {
+        serviceCollection.AddAutoMapper(assembly);
+
+        serviceCollection.AddScoped<IInstaConnectMapper, InstaConnectMapper>();
 
         return serviceCollection;
     }

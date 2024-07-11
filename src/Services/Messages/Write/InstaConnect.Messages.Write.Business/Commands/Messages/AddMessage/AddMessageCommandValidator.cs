@@ -1,4 +1,6 @@
 ﻿using FluentValidation;
+using InstaConnect.Messages.Write.Business.Abstract;
+using InstaConnect.Messages.Write.Business.Utilities;
 
 namespace InstaConnect.Messages.Write.Business.Commands.Messages.AddMessage;
 public class AddMessageCommandValidator : AbstractValidator<AddMessageCommand>
@@ -6,12 +8,18 @@ public class AddMessageCommandValidator : AbstractValidator<AddMessageCommand>
     public AddMessageCommandValidator()
     {
         RuleFor(c => c.CurrentUserId)
-            .NotEmpty();
+            .NotEmpty()
+            .MinimumLength(MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH)
+            .MaximumLength(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH);
 
         RuleFor(c => c.ReceiverId)
-            .NotEmpty();
+            .NotEmpty()
+            .MinimumLength(MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH)
+            .MaximumLength(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH);
 
         RuleFor(c => c.Content)
-            .NotEmpty();
+            .NotEmpty()
+            .MinimumLength(MessageBusinessConfigurations.CONTENT_MIN_LENGTH)
+            .MaximumLength(MessageBusinessConfigurations.CONTENT_MAX_LENGTH);
     }
 }

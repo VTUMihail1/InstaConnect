@@ -30,7 +30,7 @@ internal class TokenGenerator : ITokenGenerator
     public Token GenerateAccessToken(CreateAccessTokenModel createAccessTokenModel)
     {
         var value = GetToken(
-            _tokenOptions.AccessTokenSecurityKey,
+            _tokenOptions.AccessTokenSecurityKeyByteArray,
             _tokenOptions.AccessTokenLifetimeSeconds,
             createAccessTokenModel.Claims);
 
@@ -46,7 +46,7 @@ internal class TokenGenerator : ITokenGenerator
     public Token GenerateEmailConfirmationToken(CreateAccountTokenModel createAccountTokenModel)
     {
         var value = GetToken(
-            _tokenOptions.AccountTokenSecurityKey,
+            _tokenOptions.AccountTokenSecurityKeyByteArray,
             _tokenOptions.AccountTokenLifetimeSeconds);
 
         var token = _tokenFactory.GetTokenToken(
@@ -61,7 +61,7 @@ internal class TokenGenerator : ITokenGenerator
     public Token GeneratePasswordResetToken(CreateAccountTokenModel createAccountTokenModel)
     {
         var value = GetToken(
-            _tokenOptions.AccountTokenSecurityKey,
+            _tokenOptions.AccessTokenSecurityKeyByteArray,
             _tokenOptions.AccountTokenLifetimeSeconds);
 
         var token = _tokenFactory.GetTokenToken(
@@ -73,11 +73,9 @@ internal class TokenGenerator : ITokenGenerator
         return token;
     }
 
-    private string GetToken(string securityKey, int lifeTime, IEnumerable<Claim>? claims = null)
+    private string GetToken(byte[] securityKey, int lifeTime, IEnumerable<Claim>? claims = null)
     {
-        var securityKeyAsBytes = Encoding.UTF8.GetBytes(securityKey);
-        var signingKey = new SymmetricSecurityKey(securityKeyAsBytes);
-
+        var signingKey = new SymmetricSecurityKey(securityKey);
         var claimsIdentity = new ClaimsIdentity(claims);
 
         var tokenDescriptor = new SecurityTokenDescriptor

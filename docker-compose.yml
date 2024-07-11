@@ -207,8 +207,8 @@ services:
       CorsOptions__AllowedOrigins: gateway-svc:5100
       TokenOptions__Issuer: http://identity-svc:5200
       TokenOptions__Audience: http://gateway-svc:5100
-      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
+      TokenOptions__AccessTokenSecurityKey: _A3GhQMmfixjef5G9bFNKu7XhY7i1Tf5gyuWHrFIVTBk4t9APCX8Foq1SJWgCspLy3MuLgrI7js-0JS65M78dg
+      TokenOptions__AccountTokenSecurityKey: _A3GhQMmfixjef5G9bFNKu6XhY7i1Tf5gyuWHrFIVTBk4t9APCX8Foq1SJWgCspLy3MuLgrI7js-0JS65M78dg
       TokenOptions__AccessTokenLifetimeSeconds: 900
       TokenOptions__AccountTokenLifetimeSeconds: 3600
       ASPNETCORE_ENVIRONMENT: Development

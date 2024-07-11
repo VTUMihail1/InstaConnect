@@ -77,11 +77,11 @@ public class IdentityBusinessProfile : Profile
             .ForMember(dest => dest.Claims, opt => opt.MapFrom(src =>
             new List<Claim>()
             {
-                new(JwtClaimTypes.Subject, src.Id),
-                new(JwtClaimTypes.Email, src.Email),
-                new(JwtClaimTypes.GivenName, src.FirstName),
-                new(JwtClaimTypes.FamilyName, src.LastName),
-                new(JwtClaimTypes.Name, src.UserName)
+                new(ClaimTypes.NameIdentifier, src.Id),
+                new(ClaimTypes.Email, src.Email),
+                new(ClaimTypes.GivenName, src.FirstName),
+                new(ClaimTypes.Surname, src.LastName),
+                new(ClaimTypes.Name, src.UserName)
             }));
 
         CreateMap<ICollection<UserClaim>, CreateAccessTokenModel>()

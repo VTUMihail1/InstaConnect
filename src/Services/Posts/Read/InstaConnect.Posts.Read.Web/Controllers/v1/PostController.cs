@@ -32,10 +32,10 @@ public class PostController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllAsync(GetAllPostsQuery request)
+    public async Task<IActionResult> GetAllAsync(GetAllPostsRequest request, CancellationToken cancellationToken)
     {
         var queryRequest = _mapper.Map<GetAllPostsQuery>(request);
-        var queryResponse = await _sender.Send(queryRequest);
+        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
         var response = _mapper.Map<ICollection<PostResponse>>(queryResponse);
 
         return Ok(response);
@@ -45,10 +45,10 @@ public class PostController : ControllerBase
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllFilteredAsync(GetAllFilteredPostsRequest request)
+    public async Task<IActionResult> GetAllFilteredAsync(GetAllFilteredPostsRequest request, CancellationToken cancellationToken)
     {
         var queryRequest = _mapper.Map<GetAllFilteredPostsQuery>(request);
-        var queryResponse = await _sender.Send(queryRequest);
+        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
         var response = _mapper.Map<ICollection<PostResponse>>(queryResponse);
 
         return Ok(response);
@@ -58,10 +58,10 @@ public class PostController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetByIdAsync(GetPostByIdRequest request)
+    public async Task<IActionResult> GetByIdAsync(GetPostByIdRequest request, CancellationToken cancellationToken)
     {
         var queryRequest = _mapper.Map<GetPostByIdQuery>(request);
-        var queryResponse = await _sender.Send(queryRequest);
+        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
         var response = _mapper.Map<PostResponse>(queryResponse);
 
         return Ok(response);

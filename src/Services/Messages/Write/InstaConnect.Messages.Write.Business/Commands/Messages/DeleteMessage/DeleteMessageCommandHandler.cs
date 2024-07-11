@@ -1,31 +1,29 @@
-﻿using AutoMapper;
-using InstaConnect.Messages.Write.Data.Abstractions;
+﻿using InstaConnect.Messages.Write.Data.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
 using InstaConnect.Shared.Data.Abstract;
-using MassTransit;
 
 namespace InstaConnect.Messages.Write.Business.Commands.Messages.DeleteMessage;
 
 internal class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageCommand>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IEventPublisher _eventPublisher;
     private readonly IMessageRepository _messageRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
 
     public DeleteMessageCommandHandler(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
-        IPublishEndpoint publishEndpoint,
-        IMessageRepository messageRepository)
+        IEventPublisher eventPublisher,
+        IMessageRepository messageRepository,
+        IInstaConnectMapper instaConnectMapper)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
-        _publishEndpoint = publishEndpoint;
+        _eventPublisher = eventPublisher;
         _messageRepository = messageRepository;
+        _instaConnectMapper = instaConnectMapper;
     }
 
     public async Task Handle(DeleteMessageCommand request, CancellationToken cancellationToken)
@@ -44,8 +42,8 @@ internal class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageComman
 
         _messageRepository.Delete(existingMessage);
 
-        var messageDeletedEvent = _mapper.Map<MessageDeletedEvent>(existingMessage);
-        await _publishEndpoint.Publish(messageDeletedEvent, cancellationToken);
+        var messageDeletedEvent = _instaConnectMapper.Map<MessageDeletedEvent>(existingMessage);
+        await _eventPublisher.Publish(messageDeletedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

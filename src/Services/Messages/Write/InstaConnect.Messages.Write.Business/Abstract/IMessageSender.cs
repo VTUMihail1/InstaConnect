@@ -4,5 +4,5 @@ namespace InstaConnect.Messages.Write.Business.Abstract;
 
 public interface IMessageSender
 {
-    Task SendMessageToUserAsync(SendMessageModel sendMessageDTO);
+    Task SendMessageToUserAsync(MessageSendModel messageSendModel, CancellationToken cancellationToken);
 }

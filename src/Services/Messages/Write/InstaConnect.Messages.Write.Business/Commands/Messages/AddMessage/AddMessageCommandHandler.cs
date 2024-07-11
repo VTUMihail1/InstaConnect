@@ -12,36 +12,36 @@ using MassTransit;
 
 namespace InstaConnect.Messages.Write.Business.Commands.Messages.AddMessage;
 
-internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
+internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand, MessageViewModel>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMessageSender _messageSender;
-    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IEventPublisher _eventPublisher;
     private readonly IMessageRepository _messageRepository;
-    private readonly IRequestClient<GetUserByIdRequest> _getUserByIdRequestClient;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IInstaConnectRequestClient<GetUserByIdRequest> _getUserByIdRequestClient;
 
     public AddMessageCommandHandler(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
         IMessageSender messageSender,
-        IPublishEndpoint publishEndpoint,
+        IEventPublisher eventPublisher,
         IMessageRepository messageRepository,
-        IRequestClient<GetUserByIdRequest> getUserByIdRequestClient)
+        IInstaConnectMapper instaConnectMapper,
+        IInstaConnectRequestClient<GetUserByIdRequest> getUserByIdRequestClient)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
         _messageSender = messageSender;
-        _publishEndpoint = publishEndpoint;
+        _eventPublisher = eventPublisher;
         _messageRepository = messageRepository;
+        _instaConnectMapper = instaConnectMapper;
         _getUserByIdRequestClient = getUserByIdRequestClient;
     }
 
-    public async Task Handle(AddMessageCommand request, CancellationToken cancellationToken)
+    public async Task<MessageViewModel> Handle(AddMessageCommand request, CancellationToken cancellationToken)
     {
-        var messageGetUserByIdModel = _mapper.Map<MessageGetUserByIdModel>(request);
+        var messageGetUserByIdModel = _instaConnectMapper.Map<MessageGetUserByIdModel>(request);
 
-        var getUserBySenderIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(
+        var getUserBySenderIdResponse = await _getUserByIdRequestClient.GetResponseMessageAsync<GetUserByIdResponse>(
             messageGetUserByIdModel.GetUserBySenderIdRequest,
             cancellationToken);
 
@@ -50,7 +50,7 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
             throw new UserNotFoundException();
         }
 
-        var getUserByReceiverIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(
+        var getUserByReceiverIdResponse = await _getUserByIdRequestClient.GetResponseMessageAsync<GetUserByIdResponse>(
             messageGetUserByIdModel.GetUserByReceiverIdRequest,
             cancellationToken);
 
@@ -59,16 +59,19 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand>
             throw new UserNotFoundException();
         }
 
-        var message = _mapper.Map<Message>(request);
+        var message = _instaConnectMapper.Map<Message>(request);
         _messageRepository.Add(message);
 
-        var messageCreatedEvent = _mapper.Map<MessageCreatedEvent>(message);
-        await _publishEndpoint.Publish(messageCreatedEvent, cancellationToken);
+        var messageCreatedEvent = _instaConnectMapper.Map<MessageCreatedEvent>(message);
+        await _eventPublisher.Publish(messageCreatedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var sendMessageDTO = _mapper.Map<SendMessageModel>(request);
-        await _messageSender.SendMessageToUserAsync(sendMessageDTO);
+        var messageSendModel = _instaConnectMapper.Map<MessageSendModel>(message);
+        await _messageSender.SendMessageToUserAsync(messageSendModel, cancellationToken);
 
+        var messageViewModel = _instaConnectMapper.Map<MessageViewModel>(message);
+        
+        return messageViewModel;
     }
 }

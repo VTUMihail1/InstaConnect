@@ -25,8 +25,8 @@ public class MessagesBusinessProfile : Profile
         CreateMap<AddMessageCommand, GetUserByIdRequest>();
 
         CreateMap<AddMessageCommand, MessageGetUserByIdModel>()
-            .ForMember(dest => dest.GetUserBySenderIdRequest.Id, opt => opt.MapFrom(src => src.CurrentUserId))
-            .ForMember(dest => dest.GetUserByReceiverIdRequest.Id, opt => opt.MapFrom(src => src.ReceiverId));
+            .ForPath(dest => dest.GetUserBySenderIdRequest.Id, opt => opt.MapFrom(src => src.CurrentUserId))
+            .ForPath(dest => dest.GetUserByReceiverIdRequest.Id, opt => opt.MapFrom(src => src.ReceiverId));
 
         CreateMap<AddMessageCommand, GetUserByIdRequest>();
 
@@ -38,10 +38,14 @@ public class MessagesBusinessProfile : Profile
 
         CreateMap<UpdateMessageCommand, Message>();
 
+        CreateMap<Message, MessageSendModel>();
+
         CreateMap<Message, MessageCreatedEvent>();
 
         CreateMap<Message, MessageUpdatedEvent>();
 
         CreateMap<Message, MessageDeletedEvent>();
+
+        CreateMap<Message, MessageViewModel>();
     }
 }

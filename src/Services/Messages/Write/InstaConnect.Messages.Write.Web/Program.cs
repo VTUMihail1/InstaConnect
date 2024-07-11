@@ -25,17 +25,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseCors(AppPolicies.CorsPolicy);
 
 app.UseRateLimiter();
-
-app.UseAuthorization();
-app.UseAuthorization();
 
 app.MapHub<ChatHub>("/chat-hub");
 
 app.MapControllers();
 
-app.UseExceptionHandler();
+app.UseExceptionHandler(opt => { });
 
 app.Run();
+
+
+// Utils for testing
+public partial class Program { }

@@ -1,8 +1,9 @@
-﻿using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Messages.Write.Business.Models;
+using InstaConnect.Shared.Business.Abstractions;
 
 namespace InstaConnect.Messages.Write.Business.Commands.Messages.UpdateMessage;
 
-public class UpdateMessageCommand : ICommand
+public class UpdateMessageCommand : ICommand<MessageViewModel>
 {
     public string Id { get; set; } = string.Empty;
 

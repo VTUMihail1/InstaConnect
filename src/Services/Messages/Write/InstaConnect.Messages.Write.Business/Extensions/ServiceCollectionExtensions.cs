@@ -2,6 +2,7 @@
 using InstaConnect.Messages.Write.Business.Abstract;
 using InstaConnect.Messages.Write.Business.Consumers;
 using InstaConnect.Messages.Write.Business.Helpers;
+using InstaConnect.Messages.Write.Business.Utilities;
 using InstaConnect.Messages.Write.Data;
 using InstaConnect.Shared.Business.Extensions;
 using Microsoft.Extensions.Configuration;
@@ -19,11 +20,12 @@ public static class ServiceCollectionExtensions
             .AddCachingHandler()
             .AddValidatorsFromAssembly(currentAssembly)
             .AddMediatR(currentAssembly)
-            .AddAutoMapper(currentAssembly)
+            .AddMapper(currentAssembly)
             .AddMessageBroker(configuration, currentAssembly, busConfigurator => 
                 busConfigurator.AddTransactionalOutbox<MessagesContext>());
 
-        serviceCollection.AddScoped<IMessageSender, MessageSender>();
+        serviceCollection
+            .AddScoped<IMessageSender, MessageSender>();
 
         return serviceCollection;
     }
