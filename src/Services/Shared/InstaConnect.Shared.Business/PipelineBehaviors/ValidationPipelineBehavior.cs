@@ -8,11 +8,11 @@ namespace InstaConnect.Shared.Business.PipelineBehaviors;
 
 internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : ICommand<TResponse>, IQuery<TResponse>
+    where TRequest : notnull, new()
 {
-    private readonly ICollection<IValidator<TRequest>> _validators;
+    private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-    public ValidationPipelineBehavior(ICollection<IValidator<TRequest>> validators)
+    public ValidationPipelineBehavior(IEnumerable<IValidator<TRequest>> validators)
     {
         _validators = validators;
     }

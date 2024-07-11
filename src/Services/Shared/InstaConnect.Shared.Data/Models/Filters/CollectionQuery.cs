@@ -8,7 +8,7 @@ public class CollectionQuery
 
     public string SortPropertyName { get; set; } = "CreatedAt";
 
-    public int Offset { get; set; } = 0;
+    public int Offset { get; set; } = default;
 
     public int Limit { get; set; } = int.MaxValue;
 }

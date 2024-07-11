@@ -1,34 +1,33 @@
-﻿using AutoMapper;
+﻿using InstaConnect.Messages.Write.Business.Models;
 using InstaConnect.Messages.Write.Data.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
 using InstaConnect.Shared.Data.Abstract;
-using MassTransit;
 
 namespace InstaConnect.Messages.Write.Business.Commands.Messages.UpdateMessage;
 
-internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageCommand>
+internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageCommand, MessageViewModel>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IEventPublisher _eventPublisher;
     private readonly IMessageRepository _messageRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
 
     public UpdateMessageCommandHandler(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
-        IPublishEndpoint publishEndpoint,
-        IMessageRepository messageRepository)
+        IEventPublisher eventPublisher,
+        IMessageRepository messageRepository,
+        IInstaConnectMapper instaConnectMapper)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
-        _publishEndpoint = publishEndpoint;
+        _eventPublisher = eventPublisher;
         _messageRepository = messageRepository;
+        _instaConnectMapper = instaConnectMapper;
     }
 
-    public async Task Handle(UpdateMessageCommand request, CancellationToken cancellationToken)
+    public async Task<MessageViewModel> Handle(UpdateMessageCommand request, CancellationToken cancellationToken)
     {
         var existingMessage = await _messageRepository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -42,12 +41,16 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
             throw new AccountForbiddenException();
         }
 
-        _mapper.Map(request, existingMessage);
+        _instaConnectMapper.Map(request, existingMessage);
         _messageRepository.Update(existingMessage);
 
-        var messageUpdatedEvent = _mapper.Map<MessageCreatedEvent>(existingMessage);
-        await _publishEndpoint.Publish(messageUpdatedEvent, cancellationToken);
+        var messageUpdatedEvent = _instaConnectMapper.Map<MessageUpdatedEvent>(existingMessage);
+        await _eventPublisher.Publish(messageUpdatedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        var messageViewModel = _instaConnectMapper.Map<MessageViewModel>(existingMessage);
+
+        return messageViewModel;
     }
 }

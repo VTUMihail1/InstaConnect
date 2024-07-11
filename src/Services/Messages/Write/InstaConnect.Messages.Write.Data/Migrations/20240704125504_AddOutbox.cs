@@ -94,14 +94,14 @@ public partial class AddOutbox : Migration
         migrationBuilder.CreateIndex(
             name: "IX_OutboxMessage_InboxMessageId_InboxConsumerId_SequenceNumber",
             table: "OutboxMessage",
-            columns: new[] { "InboxMessageId", "InboxConsumerId", "SequenceNumber" },
+            columns: ["InboxMessageId", "InboxConsumerId", "SequenceNumber"],
             unique: true,
             filter: "[InboxMessageId] IS NOT NULL AND [InboxConsumerId] IS NOT NULL");
 
         migrationBuilder.CreateIndex(
             name: "IX_OutboxMessage_OutboxId_SequenceNumber",
             table: "OutboxMessage",
-            columns: new[] { "OutboxId", "SequenceNumber" },
+            columns: ["OutboxId", "SequenceNumber"],
             unique: true,
             filter: "[OutboxId] IS NOT NULL");
 

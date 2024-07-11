@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Shared.Business.Exceptions.Base;
+using InstaConnect.Shared.Business.Models.Enum;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,11 +7,11 @@ using Microsoft.Extensions.Logging;
 
 namespace InstaConnect.Shared.Web.ExceptionHandlers;
 
-public sealed class GlobalExceptionHandler : IExceptionHandler
+public sealed class AppExceptionHandler : IExceptionHandler
 {
-    private readonly ILogger<GlobalExceptionHandler> _logger;
+    private readonly ILogger<AppExceptionHandler> _logger;
 
-    public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
+    public AppExceptionHandler(ILogger<AppExceptionHandler> logger)
     {
         _logger = logger;
     }
@@ -39,16 +40,19 @@ public sealed class GlobalExceptionHandler : IExceptionHandler
         BaseException baseException,
         CancellationToken cancellationToken)
     {
+        var statusCode = (int)baseException.StatusCode;
+
         httpContext.Response.ContentType = "application/json";
 
         var validationProblemDetails = new ValidationProblemDetails()
         {
-            Title = nameof(baseException),
+            Title = Enum.GetName(baseException.StatusCode),
             Type = baseException.GetType().Name,
-            Status = httpContext.Response.StatusCode,
+            Status = statusCode,
             Detail = baseException.Message
         };
 
+        httpContext.Response.StatusCode = statusCode;
         await httpContext.Response.WriteAsJsonAsync(validationProblemDetails, cancellationToken);
     }
 
@@ -67,6 +71,7 @@ public sealed class GlobalExceptionHandler : IExceptionHandler
             Detail = exception.InnerException?.Message ?? exception.Message
         };
 
+        httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
         await httpContext.Response.WriteAsJsonAsync(validationProblemDetails, cancellationToken);
     }
 }

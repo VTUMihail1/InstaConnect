@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security.Claims;
+using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Asp.Versioning;
@@ -26,32 +27,44 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddJwtBearer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
-            .AddOptions<TokenOptions>()
-            .BindConfiguration(nameof(TokenOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
+        .AddOptions<TokenOptions>()
+        .BindConfiguration(nameof(TokenOptions))
+        .ValidateDataAnnotations()
+        .ValidateOnStart();
 
         var tokenOptions = configuration
             .GetSection(nameof(TokenOptions))
-            .Get<TokenOptions>();
+            .Get<TokenOptions>()!;
 
         serviceCollection
-            .AddAuthentication(options =>
+            .AddAuthentication(opt =>
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(configuration => configuration.TokenValidationParameters = new TokenValidationParameters
+            .AddJwtBearer(opt =>
             {
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions!.AccountTokenSecurityKey)),
-                ValidateAudience = true,
-                ValidAudience = tokenOptions.Audience,
-                ValidateIssuer = true,
-                ValidIssuer = tokenOptions.Issuer,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ClockSkew = TimeSpan.Zero
+                opt.RequireHttpsMetadata = false;
+                opt.SaveToken = true;
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(tokenOptions.AccessTokenSecurityKeyByteArray),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
             });
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddAuthorizationPolicies(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddAuthorizationBuilder()
+            .SetDefaultPolicy(new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .RequireClaim(ClaimTypes.NameIdentifier)
+                .Build())
+            .AddPolicy(AppPolicies.AdminPolicy, policy => policy.RequireClaim(AppClaims.Admin));
 
         return serviceCollection;
     }
@@ -79,20 +92,8 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddExceptionHandler(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddExceptionHandler<GlobalExceptionHandler>();
         serviceCollection.AddProblemDetails();
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddAuthorizationPolicies(this IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddAuthorizationBuilder()
-            .SetDefaultPolicy(new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .RequireClaim(JwtClaimTypes.Subject)
-                .Build())
-            .AddPolicy(AppPolicies.AdminPolicy, policy => policy.RequireClaim(AppClaims.Admin));
+        serviceCollection.AddExceptionHandler<AppExceptionHandler>();
 
         return serviceCollection;
     }
@@ -168,7 +169,7 @@ public static class ServiceCollectionExtensions
                     partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
                     factory: _ => new FixedWindowRateLimiterOptions
                     {
-                        PermitLimit = 10,
+                        PermitLimit = 100,
                         Window = TimeSpan.FromSeconds(10),
                     }));
         });

@@ -14,8 +14,11 @@ public class MessageSender : IMessageSender
         _hubContext = hubContext;
     }
 
-    public async Task SendMessageToUserAsync(SendMessageModel sendMessageDTO)
+    public async Task SendMessageToUserAsync(MessageSendModel messageSendModel, CancellationToken cancellationToken)
     {
-        await _hubContext.Clients.User(sendMessageDTO.ReceiverId).SendAsync("ReceiveMessage", sendMessageDTO.Content);
+        await _hubContext
+            .Clients
+            .User(messageSendModel.ReceiverId)
+            .SendAsync("ReceiveMessage", messageSendModel.Content, cancellationToken);
     }
 }

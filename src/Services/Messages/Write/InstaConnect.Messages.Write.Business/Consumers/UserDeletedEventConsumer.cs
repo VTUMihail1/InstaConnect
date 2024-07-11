@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Write.Data.Abstractions;
 using InstaConnect.Messages.Write.Data.Models.Filters;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Users;
+using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
@@ -9,24 +11,24 @@ namespace InstaConnect.Messages.Write.Business.Consumers;
 
 internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMessageRepository _messageRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
 
     public UserDeletedEventConsumer(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
-        IMessageRepository messageRepository)
+        IMessageRepository messageRepository,
+        IInstaConnectMapper instaConnectMapper)
     {
-        _mapper = mapper;
+        _instaConnectMapper = instaConnectMapper;
         _unitOfWork = unitOfWork;
         _messageRepository = messageRepository;
     }
 
     public async Task Consume(ConsumeContext<UserDeletedEvent> context)
     {
-        var filteredCollectionQuery = _mapper.Map<MessageFilteredCollectionQuery>(context.Message);
-        var existingMessages = await _messageRepository.GetAllAsync(filteredCollectionQuery, context.CancellationToken);
+        var filteredCollectionQuery = _instaConnectMapper.Map<MessageFilteredCollectionQuery>(context.Message);
+        var existingMessages = await _messageRepository.GetAllFilteredAsync(filteredCollectionQuery, context.CancellationToken);
 
         _messageRepository.DeleteRange(existingMessages);
 

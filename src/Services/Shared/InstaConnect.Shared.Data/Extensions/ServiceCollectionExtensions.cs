@@ -1,4 +1,5 @@
-﻿using InstaConnect.Shared.Business.Models.Options;
+﻿using System.Runtime.CompilerServices;
+using InstaConnect.Shared.Business.Models.Options;
 using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Shared.Data.Models.Options;
 using Microsoft.EntityFrameworkCore;

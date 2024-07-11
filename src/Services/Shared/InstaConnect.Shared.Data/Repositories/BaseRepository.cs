@@ -21,6 +21,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
             .OrderEntities(collectionQuery.SortOrder, collectionQuery.SortPropertyName)
             .Skip(collectionQuery.Offset)
             .Take(collectionQuery.Limit)
+            .AsNoTracking()
             .ToListAsync(cancellationToken);
 
         return entities;

@@ -7,7 +7,6 @@ public class GetAllPostsQueryValidator : AbstractValidator<GetAllPostsQuery>
     public GetAllPostsQueryValidator()
     {
         RuleFor(q => q.Offset)
-            .NotEmpty()
             .GreaterThanOrEqualTo(default(int));
 
         RuleFor(q => q.Limit)
