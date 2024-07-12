@@ -5,7 +5,7 @@ using InstaConnect.Messages.Write.Data.Models.Filters;
 using InstaConnect.Shared.Business.Contracts.Users;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Write.Business.UnitTests.Consumers;
+namespace InstaConnect.Messages.Write.Business.UnitTests.Tests.Consumers;
 
 public class UserDeletedEventConsumerUnitTests : BaseMessageUnitTest
 {
@@ -20,7 +20,7 @@ public class UserDeletedEventConsumerUnitTests : BaseMessageUnitTest
     }
 
     [Fact]
-    public async Task Consume_Should_When()
+    public async Task Consume_ShouldSearchFilteredMessages_WhenUserDeletedEventIsValid()
     {
         // Arrange
         var userDeletedEvent = new UserDeletedEvent()

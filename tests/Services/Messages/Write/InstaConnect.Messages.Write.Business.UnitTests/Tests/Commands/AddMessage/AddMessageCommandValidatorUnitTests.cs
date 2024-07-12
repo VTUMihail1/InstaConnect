@@ -3,7 +3,7 @@ using InstaConnect.Messages.Write.Business.Commands.Messages.AddMessage;
 using InstaConnect.Messages.Write.Business.UnitTests.Utilities;
 using InstaConnect.Messages.Write.Business.Utilities;
 
-namespace InstaConnect.Messages.Write.Business.UnitTests.Commands.AddMessage;
+namespace InstaConnect.Messages.Write.Business.UnitTests.Tests.Commands.AddMessage;
 
 public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
 {
@@ -18,8 +18,8 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var command = new AddMessageCommand 
-        { 
+        var command = new AddMessageCommand
+        {
             CurrentUserId = null!,
             ReceiverId = ValidReceiverId,
             Content = ValidContent

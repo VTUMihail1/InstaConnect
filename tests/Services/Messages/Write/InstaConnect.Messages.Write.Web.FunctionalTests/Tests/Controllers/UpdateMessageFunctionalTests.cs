@@ -12,11 +12,12 @@ using InstaConnect.Messages.Write.Data.Models.Entities;
 using InstaConnect.Messages.Write.Web.FunctionalTests.Utilities;
 using InstaConnect.Messages.Write.Web.Models.Binding;
 using InstaConnect.Messages.Write.Web.Models.Responses;
+using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Data.Models.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Write.Web.FunctionalTests.Commands;
+namespace InstaConnect.Messages.Write.Web.FunctionalTests.Tests.Commands;
 
 public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
 {
@@ -37,8 +38,8 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         var response = await HttpClient.PutAsJsonAsync(
-            $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}", 
-            request, 
+            $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
+            request,
             CancellationToken);
 
         // Assert
@@ -283,5 +284,32 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
                                  m.SenderId == MessageFunctionalTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
                                  m.ReceiverId == MessageFunctionalTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
                                  m.Content == ValidUpdateContent);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_ShouldPublishMessageUpdatedEvent_WhenRequestIsValid()
+    {
+        // Arrange
+        var existingMessageId = await CreateMessageAsync(CancellationToken);
+        var request = new UpdateMessageBindingModel()
+        {
+            Content = ValidUpdateContent
+        };
+
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = MessageFunctionalTestConfigurations.EXISTING_MESSAGE_SENDER_ID;
+
+        // Act
+        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        var response = await HttpClient.PutAsJsonAsync(
+            $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
+            request,
+            CancellationToken);
+
+        var result = await TestHarness.Published.Any<MessageUpdatedEvent>(m => m.Context.Message.Id == existingMessageId &&
+                                                                               m.Context.Message.Content == ValidUpdateContent, 
+                                                                          CancellationToken);
+
+        // Assert
+        result.Should().BeTrue();
     }
 }

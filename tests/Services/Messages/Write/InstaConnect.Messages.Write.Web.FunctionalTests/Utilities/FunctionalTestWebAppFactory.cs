@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Messages.Write.Business.Abstract;
+using InstaConnect.Messages.Write.Business.Consumers;
 using InstaConnect.Messages.Write.Data;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Users;
@@ -49,7 +50,7 @@ public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyn
 
             serviceCollection.AddScoped(_ => Substitute.For<IMessageSender>());
 
-            serviceCollection.AddMassTransitTestHarness();
+            serviceCollection.AddMassTransitTestHarness(cfg => cfg.AddConsumer<UserDeletedEventConsumer>());
         });
     }
 

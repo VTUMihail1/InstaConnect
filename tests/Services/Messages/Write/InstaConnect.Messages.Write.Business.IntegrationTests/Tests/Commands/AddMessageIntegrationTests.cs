@@ -3,13 +3,12 @@ using FluentAssertions;
 using InstaConnect.Messages.Write.Business.Commands.Messages.AddMessage;
 using InstaConnect.Messages.Write.Business.IntegrationTests.Utilities;
 using InstaConnect.Messages.Write.Business.Utilities;
-using InstaConnect.Messages.Write.Data.Abstractions;
 using InstaConnect.Messages.Write.Data.Models.Entities;
+using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.User;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Write.Business.IntegrationTests.Commands;
+namespace InstaConnect.Messages.Write.Business.IntegrationTests.Tests.Commands;
 public class AddMessageIntegrationTests : BaseMessageIntegrationTest
 {
     public AddMessageIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
@@ -193,5 +192,28 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
                                  m.SenderId == MessageIntegrationTestConfigurations.EXISTING_SENDER_ID &&
                                  m.ReceiverId == MessageIntegrationTestConfigurations.EXISTING_RECEIVER_ID &&
                                  m.Content == ValidAddContent);
+    }
+
+    [Fact]
+    public async Task Send_ShouldPublishMessageCreatedEvent_WhenMessageIsValid()
+    {
+        // Arrange
+        var command = new AddMessageCommand()
+        {
+            CurrentUserId = MessageIntegrationTestConfigurations.EXISTING_SENDER_ID,
+            ReceiverId = MessageIntegrationTestConfigurations.EXISTING_RECEIVER_ID,
+            Content = ValidAddContent
+        };
+
+        // Act
+        var response = await InstaConnectSender.Send(command, CancellationToken);
+        var result = await TestHarness.Published.Any<MessageCreatedEvent>(m => m.Context.Message.Id == response.Id &&
+                                                                  m.Context.Message.SenderId == MessageIntegrationTestConfigurations.EXISTING_SENDER_ID &&
+                                                                  m.Context.Message.ReceiverId == MessageIntegrationTestConfigurations.EXISTING_RECEIVER_ID &&
+                                                                  m.Context.Message.Content == ValidAddContent,
+                                                             CancellationToken);
+
+        // Assert
+        result.Should().BeTrue();
     }
 }

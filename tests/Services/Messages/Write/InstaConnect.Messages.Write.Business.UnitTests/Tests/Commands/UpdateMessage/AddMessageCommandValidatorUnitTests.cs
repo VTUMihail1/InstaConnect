@@ -5,7 +5,7 @@ using InstaConnect.Messages.Write.Business.Commands.Messages.UpdateMessage;
 using InstaConnect.Messages.Write.Business.UnitTests.Utilities;
 using InstaConnect.Messages.Write.Business.Utilities;
 
-namespace InstaConnect.Messages.Write.Business.UnitTests.Commands.AddMessage;
+namespace InstaConnect.Messages.Write.Business.UnitTests.Tests.Commands.UpdateMessage;
 
 public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
 {
