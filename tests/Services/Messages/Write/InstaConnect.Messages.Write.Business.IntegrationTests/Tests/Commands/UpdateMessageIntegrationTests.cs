@@ -1,22 +1,22 @@
 ﻿using Bogus;
 using FluentAssertions;
-using InstaConnect.Messages.Write.Business.Commands.Messages.DeleteMessage;
 using InstaConnect.Messages.Write.Business.Commands.Messages.UpdateMessage;
 using InstaConnect.Messages.Write.Business.IntegrationTests.Utilities;
 using InstaConnect.Messages.Write.Business.Utilities;
 using InstaConnect.Messages.Write.Data.Abstractions;
 using InstaConnect.Messages.Write.Data.Models.Entities;
+using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Message;
 using InstaConnect.Shared.Business.Exceptions.User;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Write.Business.IntegrationTests.Commands;
+namespace InstaConnect.Messages.Write.Business.IntegrationTests.Tests.Commands;
 
-public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
+public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
 {
-    public DeleteMessageIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public UpdateMessageIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
 
     }
@@ -25,10 +25,11 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task Send_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var command = new DeleteMessageCommand()
+        var command = new UpdateMessageCommand()
         {
             Id = null!,
             CurrentUserId = ValidCurrentUserId,
+            Content = ValidContent
         };
 
         // Act
@@ -45,10 +46,11 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task Send_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new DeleteMessageCommand()
+        var command = new UpdateMessageCommand()
         {
             Id = Faker.Random.AlphaNumeric(length),
             CurrentUserId = ValidCurrentUserId,
+            Content = ValidContent
         };
 
         // Act
@@ -62,10 +64,11 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task Send_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var command = new DeleteMessageCommand()
+        var command = new UpdateMessageCommand()
         {
             Id = ValidId,
             CurrentUserId = null!,
+            Content = ValidContent
         };
 
         // Act
@@ -82,10 +85,50 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task Send_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new DeleteMessageCommand()
+        var command = new UpdateMessageCommand()
         {
             Id = ValidId,
             CurrentUserId = Faker.Random.AlphaNumeric(length),
+            Content = ValidContent
+        };
+
+        // Act
+        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<BadRequestException>();
+    }
+
+    [Fact]
+    public async Task Send_ShouldThrowBadRequestException_WhenContentIsNull()
+    {
+        // Arrange
+        var command = new UpdateMessageCommand()
+        {
+            Id = ValidId,
+            CurrentUserId = ValidCurrentUserId,
+            Content = null!
+        };
+
+        // Act
+        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<BadRequestException>();
+    }
+
+    [Theory]
+    [InlineData(default(int))]
+    [InlineData(MessageBusinessConfigurations.CONTENT_MIN_LENGTH - 1)]
+    [InlineData(MessageBusinessConfigurations.CONTENT_MAX_LENGTH + 1)]
+    public async Task Send_ShouldThrowBadRequestException_WhenContentLengthIsInvalid(int length)
+    {
+        // Arrange
+        var command = new UpdateMessageCommand()
+        {
+            Id = MessageIntegrationTestConfigurations.NON_EXISTING_MESSAGE_ID,
+            CurrentUserId = ValidCurrentUserId,
+            Content = Faker.Random.AlphaNumeric(length)
         };
 
         // Act
@@ -99,10 +142,11 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task Send_ShouldThrowMessageNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var command = new DeleteMessageCommand()
+        var command = new UpdateMessageCommand()
         {
             Id = MessageIntegrationTestConfigurations.NON_EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageIntegrationTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+            CurrentUserId = MessageIntegrationTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
+            Content = ValidUpdateContent
         };
 
         // Act
@@ -117,10 +161,11 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     {
         // Arrange
         var existingMessageId = await CreateMessageAsync(CancellationToken);
-        var command = new DeleteMessageCommand()
+        var command = new UpdateMessageCommand()
         {
             Id = existingMessageId,
             CurrentUserId = MessageIntegrationTestConfigurations.EXISTING_SENDER_ID,
+            Content = ValidContent
         };
 
         // Act
@@ -131,24 +176,50 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldUpdateNewMessage_WhenMessageIsValid()
+    public async Task Send_ShouldUpdateMessage_WhenMessageIsValid()
     {
         // Arrange
         var existingMessageId = await CreateMessageAsync(CancellationToken);
-        var command = new DeleteMessageCommand()
+        var command = new UpdateMessageCommand()
         {
             Id = existingMessageId,
             CurrentUserId = MessageIntegrationTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
+            Content = ValidUpdateContent
         };
 
         // Act
-        await InstaConnectSender.Send(command, CancellationToken);
+        var response = await InstaConnectSender.Send(command, CancellationToken);
 
         // Assert
         var message = await MessageRepository.GetByIdAsync(existingMessageId, CancellationToken);
 
         message
             .Should()
-            .BeNull();
+            .Match<Message>(m => m.Id == existingMessageId &&
+                                 m.SenderId == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
+                                 m.ReceiverId == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
+                                 m.Content == ValidUpdateContent);
+    }
+
+    [Fact]
+    public async Task Send_ShouldPublishMessageUpdatedEvent_WhenMessageIsValid()
+    {
+        // Arrange
+        var existingMessageId = await CreateMessageAsync(CancellationToken);
+        var command = new UpdateMessageCommand()
+        {
+            Id = existingMessageId,
+            CurrentUserId = MessageIntegrationTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
+            Content = ValidUpdateContent
+        };
+
+        // Act
+        await InstaConnectSender.Send(command, CancellationToken);
+        var result = await TestHarness.Published.Any<MessageUpdatedEvent>(m => m.Context.Message.Id == existingMessageId &&
+                                                                               m.Context.Message.Content == ValidUpdateContent,
+                                                                          CancellationToken);
+
+        // Assert
+        result.Should().BeTrue();
     }
 }

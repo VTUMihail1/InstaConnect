@@ -12,16 +12,16 @@ using InstaConnect.Messages.Write.Web.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Write.Web.UnitTests.Controllers;
+namespace InstaConnect.Messages.Write.Web.UnitTests.Tests.Controllers;
 public class MessageControllerUnitTests : BaseMessageUnitTest
 {
     private readonly MessageController _messageController;
 
     public MessageControllerUnitTests()
     {
-        _messageController = new (
-            InstaConnectSender, 
-            InstaConnectMapper, 
+        _messageController = new(
+            InstaConnectSender,
+            InstaConnectMapper,
             CurrentUserContext);
     }
 
@@ -93,9 +93,9 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .Send(Arg.Is<AddMessageCommand>(m => m.CurrentUserId == MessageUnitTestConfigurations.EXISTING_SENDER_ID && 
+            .Send(Arg.Is<AddMessageCommand>(m => m.CurrentUserId == MessageUnitTestConfigurations.EXISTING_SENDER_ID &&
                                                  m.ReceiverId == MessageUnitTestConfigurations.EXISTING_RECEIVER_ID &&
-                                                 m.Content == AddContent), 
+                                                 m.Content == AddContent),
                                                  CancellationToken);
     }
 
@@ -189,7 +189,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
             .Received(1)
             .Send(Arg.Is<UpdateMessageCommand>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
                                                     m.CurrentUserId == MessageUnitTestConfigurations.EXISTING_SENDER_ID &&
-                                                    m.Content == UpdateContent), 
+                                                    m.Content == UpdateContent),
                                                     CancellationToken);
     }
 
@@ -248,7 +248,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         await InstaConnectSender
             .Received(1)
             .Send(Arg.Is<DeleteMessageCommand>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
-                                                    m.CurrentUserId == MessageUnitTestConfigurations.EXISTING_SENDER_ID), 
+                                                    m.CurrentUserId == MessageUnitTestConfigurations.EXISTING_SENDER_ID),
                                                     CancellationToken);
     }
 

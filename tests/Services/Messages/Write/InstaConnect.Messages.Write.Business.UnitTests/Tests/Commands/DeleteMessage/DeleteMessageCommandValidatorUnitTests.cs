@@ -4,7 +4,7 @@ using InstaConnect.Messages.Write.Business.Commands.Messages.DeleteMessage;
 using InstaConnect.Messages.Write.Business.UnitTests.Utilities;
 using InstaConnect.Messages.Write.Business.Utilities;
 
-namespace InstaConnect.Messages.Write.Business.UnitTests.Commands.AddMessage;
+namespace InstaConnect.Messages.Write.Business.UnitTests.Tests.Commands.DeleteMessage;
 
 public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
 {

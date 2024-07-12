@@ -12,6 +12,7 @@ using NSubstitute;
 using Testcontainers.MsSql;
 using InstaConnect.Shared.Business.IntegrationTests;
 using InstaConnect.Shared.Business.IntegrationTests.Extensions;
+using InstaConnect.Messages.Write.Business.Consumers;
 
 namespace InstaConnect.Messages.Write.Business.IntegrationTests.Utilities;
 
@@ -49,7 +50,7 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
 
             serviceCollection.AddScoped(_ => Substitute.For<IMessageSender>());
 
-            serviceCollection.AddMassTransitTestHarness();
+            serviceCollection.AddMassTransitTestHarness(cfg => cfg.AddConsumer<UserDeletedEventConsumer>());
         });
     }
 

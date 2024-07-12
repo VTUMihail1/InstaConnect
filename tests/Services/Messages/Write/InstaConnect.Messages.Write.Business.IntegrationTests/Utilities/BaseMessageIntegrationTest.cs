@@ -12,6 +12,7 @@ using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.UnitTests.Utilities;
 using InstaConnect.Shared.Data.Abstract;
+using MassTransit.Testing;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,7 +20,11 @@ namespace InstaConnect.Messages.Write.Business.IntegrationTests.Utilities;
 
 public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>
 {
+    protected ITestHarness TestHarness { get; }
+
     protected IServiceScope ServiceScope { get; }
+
+    protected IEventPublisher EventPublisher { get; }
 
     protected IMessageRepository MessageRepository
     {
@@ -49,7 +54,8 @@ public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFi
     protected BaseMessageIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
     {
         ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
-
+        TestHarness = integrationTestWebAppFactory.Services.GetTestHarness();
+        EventPublisher = ServiceScope.ServiceProvider.GetRequiredService<IEventPublisher>();
         InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
 
         ValidId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.ID_MAX_LENGTH + MessageBusinessConfigurations.ID_MIN_LENGTH) / 2);

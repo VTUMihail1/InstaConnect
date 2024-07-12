@@ -8,7 +8,7 @@ using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Business.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Write.Business.UnitTests.Commands.AddMessage;
+namespace InstaConnect.Messages.Write.Business.UnitTests.Tests.Commands.AddMessage;
 
 public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
 {

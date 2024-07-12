@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Messages.Write.Business.Commands.Messages.UpdateMessage;
-using InstaConnect.Messages.Write.Business.Models;
+using InstaConnect.Messages.Write.Business.Commands.Messages.DeleteMessage;
 using InstaConnect.Messages.Write.Business.UnitTests.Utilities;
 using InstaConnect.Messages.Write.Data.Models.Entities;
 using InstaConnect.Shared.Business.Contracts.Messages;
@@ -8,13 +7,13 @@ using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Write.Business.UnitTests.Commands.UpdateMessage;
+namespace InstaConnect.Messages.Write.Business.UnitTests.Tests.Commands.DeleteMessage;
 
-public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
+public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
 {
-    private readonly UpdateMessageCommandHandler _commandHandler;
+    private readonly DeleteMessageCommandHandler _commandHandler;
 
-    public UpdateMessageCommandHandlerUnitTests()
+    public DeleteMessageCommandHandlerUnitTests()
     {
         _commandHandler = new(
             UnitOfWork,
@@ -27,11 +26,10 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowMessageNotFoundException_WhenMessageIdIsInvalid()
     {
         // Arrange
-        var command = new UpdateMessageCommand()
+        var command = new DeleteMessageCommand()
         {
             Id = MessageUnitTestConfigurations.NON_EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            Content = ValidContent
+            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
         };
 
         // Act
@@ -45,11 +43,10 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowAccountForbiddenException_WhenSenderIdIsInvalid()
     {
         // Arrange
-        var command = new UpdateMessageCommand()
+        var command = new DeleteMessageCommand()
         {
             Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-            Content = ValidContent
+            CurrentUserId = MessageUnitTestConfigurations.EXISTING_SENDER_ID
         };
 
         // Act
@@ -60,34 +57,13 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     }
 
     [Fact]
-    public async Task Handle_ShouldReturnMessageViewModel_WhenMessageIdIsValid()
-    {
-        // Arrange
-        var command = new UpdateMessageCommand()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            Content = ValidContent
-        };
-
-        // Act
-        var response = await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<MessageViewModel>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID);
-    }
-
-    [Fact]
     public async Task Handle_ShouldGetMessageByIdFromRepository_WhenMessageIdIsValid()
     {
         // Arrange
-        var command = new UpdateMessageCommand()
+        var command = new DeleteMessageCommand()
         {
             Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            Content = ValidContent
+            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
         };
 
         // Act
@@ -103,11 +79,10 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldDeleteMessageFromRepository_WhenMessageIdIsValid()
     {
         // Arrange
-        var command = new UpdateMessageCommand()
+        var command = new DeleteMessageCommand()
         {
             Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            Content = ValidContent
+            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
         };
 
         // Act
@@ -116,21 +91,20 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         MessageRepository
             .Received(1)
-            .Update(Arg.Is<Message>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
+            .Delete(Arg.Is<Message>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
                                          m.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
                                          m.ReceiverId == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
-                                         m.Content == ValidContent));
+                                         m.Content == MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT));
     }
 
     [Fact]
     public async Task Handle_ShouldSendMessageDeletedEvent_WhenMessageIdIsValid()
     {
         // Arrange
-        var command = new UpdateMessageCommand()
+        var command = new DeleteMessageCommand()
         {
             Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            Content = ValidContent
+            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
         };
 
         // Act
@@ -139,8 +113,7 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await EventPublisher
             .Received(1)
-            .Publish(Arg.Is<MessageUpdatedEvent>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
-                                                      m.Content == ValidContent),
+            .Publish(Arg.Is<MessageDeletedEvent>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID),
                      CancellationToken);
     }
 
@@ -148,11 +121,10 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldCallSaveChangesAsync_WhenMessageIdIsValid()
     {
         // Arrange
-        var command = new UpdateMessageCommand()
+        var command = new DeleteMessageCommand()
         {
             Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            Content = ValidContent
+            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
         };
 
         // Act

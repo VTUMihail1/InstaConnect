@@ -5,6 +5,7 @@ using InstaConnect.Messages.Write.Data.Abstractions;
 using InstaConnect.Messages.Write.Data.Models.Entities;
 using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Shared.Web.FunctionalTests.Utilities;
+using MassTransit.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Messages.Write.Web.FunctionalTests.Utilities;
@@ -12,6 +13,8 @@ namespace InstaConnect.Messages.Write.Web.FunctionalTests.Utilities;
 public abstract class BaseMessageFunctionalTest : BaseFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>
 {
     protected HttpClient HttpClient { get; }
+
+    protected ITestHarness TestHarness { get; }
 
     protected IServiceScope ServiceScope { get; }
 
@@ -43,6 +46,7 @@ public abstract class BaseMessageFunctionalTest : BaseFunctionalTest, IClassFixt
     protected BaseMessageFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
     {
         HttpClient = functionalTestWebAppFactory.CreateClient();
+        TestHarness = functionalTestWebAppFactory.Services.GetTestHarness();
         ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
         ValidJwtConfig = new Dictionary<string, object>()
         {

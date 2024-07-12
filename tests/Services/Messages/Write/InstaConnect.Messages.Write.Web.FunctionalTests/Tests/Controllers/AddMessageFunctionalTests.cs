@@ -9,9 +9,10 @@ using InstaConnect.Messages.Write.Data.Models.Entities;
 using InstaConnect.Messages.Write.Web.FunctionalTests.Utilities;
 using InstaConnect.Messages.Write.Web.Models.Binding;
 using InstaConnect.Messages.Write.Web.Models.Responses;
+using InstaConnect.Shared.Business.Contracts.Messages;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Write.Web.FunctionalTests.Commands;
+namespace InstaConnect.Messages.Write.Web.FunctionalTests.Tests.Commands;
 
 public class AddMessageFunctionalTests : BaseMessageFunctionalTest
 {
@@ -245,9 +246,37 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
 
         message
             .Should()
-            .Match<Message>(m => m.Id == messageViewModel.Id && 
+            .Match<Message>(m => m.Id == messageViewModel.Id &&
                                  m.Content == ValidAddContent &&
                                  m.SenderId == MessageFunctionalTestConfigurations.EXISTING_SENDER_ID &&
                                  m.ReceiverId == MessageFunctionalTestConfigurations.EXISTING_RECEIVER_ID);
+    }
+
+    [Fact]
+    public async Task AddAsync_ShouldPublishMessageCreatedEvent_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new AddMessageBindingModel
+        {
+            ReceiverId = MessageFunctionalTestConfigurations.EXISTING_RECEIVER_ID,
+            Content = ValidAddContent
+        };
+
+        // Act
+        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
+
+        var messageViewModel = await response
+            .Content
+            .ReadFromJsonAsync<MessageViewResponse>();
+
+        var result = await TestHarness.Published.Any<MessageCreatedEvent>(m => m.Context.Message.Id == messageViewModel!.Id &&
+                                                                  m.Context.Message.SenderId == MessageFunctionalTestConfigurations.EXISTING_SENDER_ID &&
+                                                                  m.Context.Message.ReceiverId == MessageFunctionalTestConfigurations.EXISTING_RECEIVER_ID &&
+                                                                  m.Context.Message.Content == ValidAddContent,
+                                                             CancellationToken);
+
+        // Assert
+        result.Should().BeTrue();
     }
 }

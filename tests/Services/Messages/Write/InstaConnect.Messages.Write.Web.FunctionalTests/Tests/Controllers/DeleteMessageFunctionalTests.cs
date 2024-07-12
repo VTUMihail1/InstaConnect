@@ -7,9 +7,10 @@ using InstaConnect.Messages.Write.Business.Utilities;
 using InstaConnect.Messages.Write.Data.Abstractions;
 using InstaConnect.Messages.Write.Web.FunctionalTests.Utilities;
 using InstaConnect.Messages.Write.Web.Models.Responses;
+using InstaConnect.Shared.Business.Contracts.Messages;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Write.Web.FunctionalTests.Commands;
+namespace InstaConnect.Messages.Write.Web.FunctionalTests.Tests.Commands;
 
 public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 {
@@ -150,7 +151,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(
+         await HttpClient.DeleteAsync(
             $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
             CancellationToken);
 
@@ -160,5 +161,25 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
         message
             .Should()
             .BeNull();
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldPublishMessage_WhenRequestIsValid()
+    {
+        // Arrange
+        var existingMessageId = await CreateMessageAsync(CancellationToken);
+
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = MessageFunctionalTestConfigurations.EXISTING_MESSAGE_SENDER_ID;
+
+        // Act
+        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        await HttpClient.DeleteAsync(
+           $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
+           CancellationToken);
+
+        var result = await TestHarness.Published.Any<MessageDeletedEvent>(m => m.Context.Message.Id == existingMessageId, CancellationToken);
+
+        // Assert
+        result.Should().BeTrue();
     }
 }
