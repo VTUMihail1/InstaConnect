@@ -10,6 +10,7 @@ using InstaConnect.Messages.Write.Web.FunctionalTests.Utilities;
 using InstaConnect.Messages.Write.Web.Models.Binding;
 using InstaConnect.Messages.Write.Web.Models.Responses;
 using InstaConnect.Shared.Business.Contracts.Messages;
+using MassTransit.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Messages.Write.Web.FunctionalTests.Tests.Commands;
@@ -241,9 +242,9 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
             .Content
             .ReadFromJsonAsync<MessageViewResponse>();
 
-        // Assert
         var message = await MessageRepository.GetByIdAsync(messageViewModel!.Id, CancellationToken);
 
+        // Assert
         message
             .Should()
             .Match<Message>(m => m.Id == messageViewModel.Id &&
@@ -264,17 +265,21 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        await TestHarness.Start();
         var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
 
         var messageViewModel = await response
             .Content
             .ReadFromJsonAsync<MessageViewResponse>();
 
+        await TestHarness.InactivityTask;
+
         var result = await TestHarness.Published.Any<MessageCreatedEvent>(m => m.Context.Message.Id == messageViewModel!.Id &&
                                                                   m.Context.Message.SenderId == MessageFunctionalTestConfigurations.EXISTING_SENDER_ID &&
                                                                   m.Context.Message.ReceiverId == MessageFunctionalTestConfigurations.EXISTING_RECEIVER_ID &&
                                                                   m.Context.Message.Content == ValidAddContent,
                                                              CancellationToken);
+        await TestHarness.Stop();
 
         // Assert
         result.Should().BeTrue();

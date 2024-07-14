@@ -14,6 +14,7 @@ using InstaConnect.Messages.Write.Web.Models.Binding;
 using InstaConnect.Messages.Write.Web.Models.Responses;
 using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Data.Models.Filters;
+using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -300,14 +301,18 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        await TestHarness.Start();
         var response = await HttpClient.PutAsJsonAsync(
             $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
             request,
             CancellationToken);
 
+        await TestHarness.InactivityTask;
+
         var result = await TestHarness.Published.Any<MessageUpdatedEvent>(m => m.Context.Message.Id == existingMessageId &&
                                                                                m.Context.Message.Content == ValidUpdateContent, 
                                                                           CancellationToken);
+        await TestHarness.Stop();
 
         // Assert
         result.Should().BeTrue();

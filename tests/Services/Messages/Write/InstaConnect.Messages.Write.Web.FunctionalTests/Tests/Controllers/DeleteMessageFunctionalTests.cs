@@ -8,6 +8,7 @@ using InstaConnect.Messages.Write.Data.Abstractions;
 using InstaConnect.Messages.Write.Web.FunctionalTests.Utilities;
 using InstaConnect.Messages.Write.Web.Models.Responses;
 using InstaConnect.Shared.Business.Contracts.Messages;
+using MassTransit.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Messages.Write.Web.FunctionalTests.Tests.Commands;
@@ -155,9 +156,9 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
             $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
             CancellationToken);
 
-        // Assert
         var message = await MessageRepository.GetByIdAsync(existingMessageId, CancellationToken);
 
+        // Assert
         message
             .Should()
             .BeNull();
@@ -173,11 +174,15 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        await TestHarness.Start();
         await HttpClient.DeleteAsync(
            $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
            CancellationToken);
 
+        await TestHarness.InactivityTask;
+
         var result = await TestHarness.Published.Any<MessageDeletedEvent>(m => m.Context.Message.Id == existingMessageId, CancellationToken);
+        await TestHarness.Stop();
 
         // Assert
         result.Should().BeTrue();
