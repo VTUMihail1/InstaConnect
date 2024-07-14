@@ -9,22 +9,32 @@ using InstaConnect.Messages.Write.Business.Utilities;
 using InstaConnect.Messages.Write.Data.Abstractions;
 using InstaConnect.Messages.Write.Data.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.UnitTests.Utilities;
 using InstaConnect.Shared.Data.Abstract;
+using MassTransit;
 using MassTransit.Testing;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using NSubstitute;
 
 namespace InstaConnect.Messages.Write.Business.IntegrationTests.Utilities;
 
 public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>
 {
-    protected ITestHarness TestHarness { get; }
+    protected ITestHarness TestHarness
+    {
+        get
+        {
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var testHarness = serviceScope.ServiceProvider.GetTestHarness();
+
+            return testHarness;
+        }
+    }
 
     protected IServiceScope ServiceScope { get; }
-
-    protected IEventPublisher EventPublisher { get; }
 
     protected IMessageRepository MessageRepository
     {
@@ -38,6 +48,8 @@ public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFi
     }
 
     protected IInstaConnectSender InstaConnectSender { get; }
+
+    protected ConsumeContext<UserDeletedEvent> UserDeletedEventConsumeContext { get; }
 
     protected string ValidId { get; }
 
@@ -54,9 +66,8 @@ public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFi
     protected BaseMessageIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
     {
         ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
-        TestHarness = integrationTestWebAppFactory.Services.GetTestHarness();
-        EventPublisher = ServiceScope.ServiceProvider.GetRequiredService<IEventPublisher>();
         InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
+        UserDeletedEventConsumeContext = Substitute.For<ConsumeContext<UserDeletedEvent>>();
 
         ValidId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.ID_MAX_LENGTH + MessageBusinessConfigurations.ID_MIN_LENGTH) / 2);
         ValidContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);

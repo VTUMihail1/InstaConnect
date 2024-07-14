@@ -10,6 +10,7 @@ using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Message;
 using InstaConnect.Shared.Business.Exceptions.User;
+using MassTransit.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Messages.Write.Business.IntegrationTests.Tests.Commands;
@@ -189,10 +190,9 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
 
         // Act
         var response = await InstaConnectSender.Send(command, CancellationToken);
-
-        // Assert
         var message = await MessageRepository.GetByIdAsync(existingMessageId, CancellationToken);
 
+        // Assert
         message
             .Should()
             .Match<Message>(m => m.Id == existingMessageId &&
@@ -214,10 +214,12 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
+        await TestHarness.Start();
         await InstaConnectSender.Send(command, CancellationToken);
         var result = await TestHarness.Published.Any<MessageUpdatedEvent>(m => m.Context.Message.Id == existingMessageId &&
                                                                                m.Context.Message.Content == ValidUpdateContent,
                                                                           CancellationToken);
+        await TestHarness.Stop();
 
         // Assert
         result.Should().BeTrue();

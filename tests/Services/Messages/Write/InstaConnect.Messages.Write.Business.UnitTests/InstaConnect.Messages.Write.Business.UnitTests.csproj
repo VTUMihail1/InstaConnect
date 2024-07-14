@@ -31,4 +31,8 @@
     <ProjectReference Include="..\..\..\Shared\InstaConnect.Shared.Business.UnitTests\InstaConnect.Shared.Business.UnitTests.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tests\Helpers\" />
+  </ItemGroup>
+
 </Project>

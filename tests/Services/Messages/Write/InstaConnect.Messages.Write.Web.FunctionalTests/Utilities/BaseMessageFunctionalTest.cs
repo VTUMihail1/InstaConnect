@@ -14,7 +14,16 @@ public abstract class BaseMessageFunctionalTest : BaseFunctionalTest, IClassFixt
 {
     protected HttpClient HttpClient { get; }
 
-    protected ITestHarness TestHarness { get; }
+    protected ITestHarness TestHarness
+    {
+        get
+        {
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var testHarness = serviceScope.ServiceProvider.GetTestHarness();
+
+            return testHarness;
+        }
+    }
 
     protected IServiceScope ServiceScope { get; }
 
@@ -46,7 +55,6 @@ public abstract class BaseMessageFunctionalTest : BaseFunctionalTest, IClassFixt
     protected BaseMessageFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
     {
         HttpClient = functionalTestWebAppFactory.CreateClient();
-        TestHarness = functionalTestWebAppFactory.Services.GetTestHarness();
         ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
         ValidJwtConfig = new Dictionary<string, object>()
         {
