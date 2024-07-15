@@ -34,7 +34,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -55,7 +55,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -73,7 +73,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -94,7 +94,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -112,7 +112,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -133,7 +133,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -151,7 +151,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<MessageNotFoundException>();
@@ -170,7 +170,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AccountForbiddenException>();
@@ -189,7 +189,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var response = await InstaConnectSender.Send(command, CancellationToken);
+        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
         var message = await MessageRepository.GetByIdAsync(existingMessageId, CancellationToken);
 
         // Assert
@@ -215,7 +215,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
 
         // Act
         await TestHarness.Start();
-        await InstaConnectSender.Send(command, CancellationToken);
+        await InstaConnectSender.SendAsync(command, CancellationToken);
         var result = await TestHarness.Published.Any<MessageUpdatedEvent>(m => m.Context.Message.Id == existingMessageId &&
                                                                                m.Context.Message.Content == ValidUpdateContent,
                                                                           CancellationToken);

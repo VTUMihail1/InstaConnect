@@ -12,12 +12,12 @@ internal class InstaConnectSender : IInstaConnectSender
         _sender = sender;
     }
 
-    public async Task Send<TRequest>(TRequest request, CancellationToken cancellationToken) where TRequest : IRequest
+    public async Task SendAsync<TRequest>(TRequest request, CancellationToken cancellationToken) where TRequest : IRequest
     {
         await _sender.Send(request, cancellationToken);
     }
 
-    public async Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken)
+    public async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken)
     {
         var response = await _sender.Send(request, cancellationToken);
 

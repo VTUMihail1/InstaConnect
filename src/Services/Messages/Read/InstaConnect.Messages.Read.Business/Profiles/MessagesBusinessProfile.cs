@@ -5,10 +5,11 @@ using InstaConnect.Messages.Read.Data.Models.Entities;
 using InstaConnect.Messages.Read.Data.Models.Filters;
 using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Business.Contracts.Users;
+using InstaConnect.Shared.Data.Models.Enums;
 
 namespace InstaConnect.Messages.Read.Business.Profiles;
 
-public class MessagesBusinessProfile : Profile
+internal class MessagesBusinessProfile : Profile
 {
     public MessagesBusinessProfile()
     {
@@ -28,9 +29,10 @@ public class MessagesBusinessProfile : Profile
             .ConstructUsing(src =>
                  new MessageFilteredCollectionQuery
                  {
-                     Expression = p => (src.SenderId == string.Empty || p.SenderId == src.SenderId) &&
+                     Expression = p => (src.CurrentUserId == string.Empty || p.SenderId == src.CurrentUserId) &&
                                        (src.ReceiverId == string.Empty || p.ReceiverId == src.ReceiverId) &&
-                                       (src.Content == string.Empty || p.Content.Contains(src.Content))
+                                       (src.ReceiverName == string.Empty || p.Receiver.UserName == src.ReceiverName),
+                     SortOrder = Enum.Parse<SortOrder>(src.SortOrder)
                  });
 
         CreateMap<Message, MessageViewModel>()

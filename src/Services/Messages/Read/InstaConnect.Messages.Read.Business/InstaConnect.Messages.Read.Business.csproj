@@ -11,4 +11,19 @@
     <ProjectReference Include="..\InstaConnect.Messages.Read.Data\InstaConnect.Messages.Read.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Messages.Read.Business.UnitTests</_Parameter1>
+  	</AssemblyAttribute>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Messages.Read.Business.IntegrationTests</_Parameter1>
+  	</AssemblyAttribute>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Messages.Read.Web.UnitTests</_Parameter1>
+  	</AssemblyAttribute>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Messages.Read.Web.FunctionalTests</_Parameter1>
+  	</AssemblyAttribute>
+  </ItemGroup>
+
 </Project>

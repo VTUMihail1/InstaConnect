@@ -5,13 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Messages.Read.Data.Repositories;
 
-public class MessageRepository : BaseRepository<Message>, IMessageRepository
+internal class MessageRepository : BaseRepository<Message>, IMessageRepository
 {
-    private readonly MessagesContext _messageContext;
-
     public MessageRepository(MessagesContext messageContext) : base(messageContext)
     {
-        _messageContext = messageContext;
     }
 
     protected override IQueryable<Message> IncludeProperties(IQueryable<Message> queryable)

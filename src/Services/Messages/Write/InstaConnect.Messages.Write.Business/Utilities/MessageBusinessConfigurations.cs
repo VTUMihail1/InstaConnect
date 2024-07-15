@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Messages.Write.Business.Utilities;
 
-public static class MessageBusinessConfigurations
+internal class MessageBusinessConfigurations
 {
     public const int ID_MIN_LENGTH = 7;
     public const int ID_MAX_LENGTH = 100;

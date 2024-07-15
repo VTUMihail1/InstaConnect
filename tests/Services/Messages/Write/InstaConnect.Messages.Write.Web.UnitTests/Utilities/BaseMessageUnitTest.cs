@@ -48,12 +48,12 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
             UserName = MessageUnitTestConfigurations.EXISTING_SENDER_NAME,
         });
 
-        InstaConnectSender.Send(Arg.Any<AddMessageCommand>(), CancellationToken).Returns(new MessageViewModel
+        InstaConnectSender.SendAsync(Arg.Any<AddMessageCommand>(), CancellationToken).Returns(new MessageViewModel
         {
             Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
         });
 
-        InstaConnectSender.Send(Arg.Any<UpdateMessageCommand>(), CancellationToken).Returns(new MessageViewModel
+        InstaConnectSender.SendAsync(Arg.Any<UpdateMessageCommand>(), CancellationToken).Returns(new MessageViewModel
         {
             Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
         });

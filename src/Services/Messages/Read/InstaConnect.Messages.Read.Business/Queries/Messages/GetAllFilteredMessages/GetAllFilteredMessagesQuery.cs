@@ -6,13 +6,9 @@ namespace InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMes
 
 public class GetAllFilteredMessagesQuery : CollectionModel, IQuery<ICollection<MessageViewModel>>
 {
-    public string SenderId { get; set; } = string.Empty;
-
-    public string SenderName { get; set; } = string.Empty;
+    public string CurrentUserId { get; set; } = string.Empty;
 
     public string ReceiverId { get; set; } = string.Empty;
 
     public string ReceiverName { get; set; } = string.Empty;
-
-    public string Content { get; set; } = string.Empty;
 }

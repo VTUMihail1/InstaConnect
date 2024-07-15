@@ -46,7 +46,7 @@ public class MessageController : ControllerBase
         var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _instaConnectMapper.Map<AddMessageCommand>(request);
         _instaConnectMapper.Map(currentUser, commandRequest);
-        var commandResponse  = await _instaConnectSender.Send(commandRequest, cancellationToken);
+        var commandResponse  = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
         var response = _instaConnectMapper.Map<MessageViewResponse>(commandResponse);
 
         return Ok(response);
@@ -62,7 +62,7 @@ public class MessageController : ControllerBase
         var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _instaConnectMapper.Map<UpdateMessageCommand>(request);
         _instaConnectMapper.Map(currentUser, commandRequest);
-        var commandResponse = await _instaConnectSender.Send(commandRequest, cancellationToken);
+        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
         var response = _instaConnectMapper.Map<MessageViewResponse>(commandResponse);
 
         return Ok(response);
@@ -78,7 +78,7 @@ public class MessageController : ControllerBase
         var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _instaConnectMapper.Map<DeleteMessageCommand>(request);
         _instaConnectMapper.Map(currentUser, commandRequest);
-        await _instaConnectSender.Send(commandRequest, cancellationToken);
+        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

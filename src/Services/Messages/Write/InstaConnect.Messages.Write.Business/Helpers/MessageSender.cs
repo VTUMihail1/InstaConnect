@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace InstaConnect.Messages.Write.Business.Helpers;
 
-public class MessageSender : IMessageSender
+internal class MessageSender : IMessageSender
 {
     private readonly IHubContext<ChatHub> _hubContext;
 

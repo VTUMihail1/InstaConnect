@@ -139,7 +139,7 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await EventPublisher
             .Received(1)
-            .Publish(Arg.Is<MessageUpdatedEvent>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
+            .PublishAsync(Arg.Is<MessageUpdatedEvent>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
                                                       m.Content == ValidContent),
                      CancellationToken);
     }
