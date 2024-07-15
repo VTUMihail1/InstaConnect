@@ -63,7 +63,7 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand, Mes
         _messageRepository.Add(message);
 
         var messageCreatedEvent = _instaConnectMapper.Map<MessageCreatedEvent>(message);
-        await _eventPublisher.Publish(messageCreatedEvent, cancellationToken);
+        await _eventPublisher.PublishAsync(messageCreatedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

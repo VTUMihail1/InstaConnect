@@ -93,7 +93,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .Send(Arg.Is<AddMessageCommand>(m => m.CurrentUserId == MessageUnitTestConfigurations.EXISTING_SENDER_ID &&
+            .SendAsync(Arg.Is<AddMessageCommand>(m => m.CurrentUserId == MessageUnitTestConfigurations.EXISTING_SENDER_ID &&
                                                  m.ReceiverId == MessageUnitTestConfigurations.EXISTING_RECEIVER_ID &&
                                                  m.Content == AddContent),
                                                  CancellationToken);
@@ -187,7 +187,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .Send(Arg.Is<UpdateMessageCommand>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
+            .SendAsync(Arg.Is<UpdateMessageCommand>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
                                                     m.CurrentUserId == MessageUnitTestConfigurations.EXISTING_SENDER_ID &&
                                                     m.Content == UpdateContent),
                                                     CancellationToken);
@@ -247,7 +247,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .Send(Arg.Is<DeleteMessageCommand>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
+            .SendAsync(Arg.Is<DeleteMessageCommand>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
                                                     m.CurrentUserId == MessageUnitTestConfigurations.EXISTING_SENDER_ID),
                                                     CancellationToken);
     }

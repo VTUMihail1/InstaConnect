@@ -2,21 +2,22 @@
 using InstaConnect.Messages.Read.Business.Models;
 using InstaConnect.Messages.Read.Data.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
 
 namespace InstaConnect.Messages.Read.Business.Queries.Messages.GetMessageById;
 
 internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, MessageViewModel>
 {
-    private readonly IMapper _mapper;
     private readonly IMessageRepository _messageRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
 
     public GetMessageByIdQueryHandler(
-        IMapper mapper,
-        IMessageRepository messageRepository)
+        IMessageRepository messageRepository, 
+        IInstaConnectMapper instaConnectMapper)
     {
-        _mapper = mapper;
         _messageRepository = messageRepository;
+        _instaConnectMapper = instaConnectMapper;
     }
 
     public async Task<MessageViewModel> Handle(GetMessageByIdQuery request, CancellationToken cancellationToken)
@@ -28,7 +29,12 @@ internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, M
             throw new MessageNotFoundException();
         }
 
-        var response = _mapper.Map<MessageViewModel>(message);
+        if (message.SenderId != request.CurrentUserId)
+        {
+            throw new AccountForbiddenException();
+        }
+
+        var response = _instaConnectMapper.Map<MessageViewModel>(message);
 
         return response;
     }

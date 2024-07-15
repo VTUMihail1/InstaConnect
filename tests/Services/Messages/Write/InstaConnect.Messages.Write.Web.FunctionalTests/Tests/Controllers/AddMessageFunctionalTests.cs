@@ -275,10 +275,10 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         await TestHarness.InactivityTask;
 
         var result = await TestHarness.Published.Any<MessageCreatedEvent>(m => m.Context.Message.Id == messageViewModel!.Id &&
-                                                                  m.Context.Message.SenderId == MessageFunctionalTestConfigurations.EXISTING_SENDER_ID &&
-                                                                  m.Context.Message.ReceiverId == MessageFunctionalTestConfigurations.EXISTING_RECEIVER_ID &&
-                                                                  m.Context.Message.Content == ValidAddContent,
-                                                             CancellationToken);
+                                                                               m.Context.Message.SenderId == MessageFunctionalTestConfigurations.EXISTING_SENDER_ID &&
+                                                                               m.Context.Message.ReceiverId == MessageFunctionalTestConfigurations.EXISTING_RECEIVER_ID &&
+                                                                               m.Context.Message.Content == ValidAddContent,
+                                                                               CancellationToken);
         await TestHarness.Stop();
 
         // Assert

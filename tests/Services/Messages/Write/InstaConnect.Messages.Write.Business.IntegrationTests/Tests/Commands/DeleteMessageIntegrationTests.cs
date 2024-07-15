@@ -33,7 +33,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -53,7 +53,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -70,7 +70,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -90,7 +90,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -107,7 +107,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<MessageNotFoundException>();
@@ -125,7 +125,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AccountForbiddenException>();
@@ -143,7 +143,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        await InstaConnectSender.Send(command, CancellationToken);
+        await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         var message = await MessageRepository.GetByIdAsync(existingMessageId, CancellationToken);
@@ -165,7 +165,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        await InstaConnectSender.Send(command, CancellationToken);
+        await InstaConnectSender.SendAsync(command, CancellationToken);
         var result = await TestHarness.Published.Any<MessageDeletedEvent>(m => m.Context.Message.Id == existingMessageId, CancellationToken);
 
         // Assert

@@ -8,7 +8,7 @@ using InstaConnect.Shared.Web.Models.Users;
 
 namespace InstaConnect.Messages.Read.Web.Profiles;
 
-public class MessagesWebProfile : Profile
+internal class MessagesWebProfile : Profile
 {
     public MessagesWebProfile()
     {
@@ -17,8 +17,7 @@ public class MessagesWebProfile : Profile
         CreateMap<GetAllFilteredMessagesRequest, GetAllFilteredMessagesQuery>();
 
         CreateMap<CurrentUserModel, GetAllFilteredMessagesQuery>()
-            .ForMember(dest => dest.SenderId, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.SenderName, opt => opt.MapFrom(src => src.UserName));
+            .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<GetMessageByIdRequest, GetMessageByIdQuery>();
 

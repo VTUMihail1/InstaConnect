@@ -45,7 +45,7 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
         _messageRepository.Update(existingMessage);
 
         var messageUpdatedEvent = _instaConnectMapper.Map<MessageUpdatedEvent>(existingMessage);
-        await _eventPublisher.Publish(messageUpdatedEvent, cancellationToken);
+        await _eventPublisher.PublishAsync(messageUpdatedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

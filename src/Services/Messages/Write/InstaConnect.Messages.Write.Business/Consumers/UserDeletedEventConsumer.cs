@@ -9,7 +9,7 @@ using MassTransit;
 
 namespace InstaConnect.Messages.Write.Business.Consumers;
 
-public class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
+internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMessageRepository _messageRepository;

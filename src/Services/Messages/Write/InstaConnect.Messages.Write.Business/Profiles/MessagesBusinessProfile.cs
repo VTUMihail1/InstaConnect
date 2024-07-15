@@ -9,7 +9,7 @@ using InstaConnect.Shared.Business.Contracts.Users;
 
 namespace InstaConnect.Messages.Write.Business.Profiles;
 
-public class MessagesBusinessProfile : Profile
+internal class MessagesBusinessProfile : Profile
 {
     public MessagesBusinessProfile()
     {

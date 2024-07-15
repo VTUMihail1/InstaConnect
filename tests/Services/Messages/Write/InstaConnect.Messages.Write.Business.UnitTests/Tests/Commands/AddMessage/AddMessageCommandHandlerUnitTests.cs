@@ -141,7 +141,7 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await EventPublisher
             .Received(1)
-            .Publish(Arg.Is<MessageCreatedEvent>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
+            .PublishAsync(Arg.Is<MessageCreatedEvent>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
                                                       m.Content == ValidContent &&
                                                       m.ReceiverId == MessageUnitTestConfigurations.EXISTING_RECEIVER_ID &&
                                                       m.SenderId == MessageUnitTestConfigurations.EXISTING_SENDER_ID),

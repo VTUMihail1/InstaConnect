@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Messages.Write.Business.Models;
 
-public class MessageGetUserByIdModel
+internal class MessageGetUserByIdModel
 {
     public GetUserByIdRequest GetUserBySenderIdRequest { get; set; } = new();
 

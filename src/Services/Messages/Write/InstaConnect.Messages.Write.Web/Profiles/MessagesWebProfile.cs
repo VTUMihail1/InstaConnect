@@ -9,7 +9,7 @@ using InstaConnect.Shared.Web.Models.Users;
 
 namespace InstaConnect.Messages.Write.Web.Profiles;
 
-public class MessagesWebProfile : Profile
+internal class MessagesWebProfile : Profile
 {
     public MessagesWebProfile()
     {

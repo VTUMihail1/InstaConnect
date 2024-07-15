@@ -6,25 +6,25 @@ using InstaConnect.Shared.Business.Abstractions;
 
 namespace InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessages;
 
-public class GetAllFilteredMessagesQueryHandler : IQueryHandler<GetAllFilteredMessagesQuery, ICollection<MessageViewModel>>
+internal class GetAllFilteredMessagesQueryHandler : IQueryHandler<GetAllFilteredMessagesQuery, ICollection<MessageViewModel>>
 {
-    private readonly IMapper _mapper;
     private readonly IMessageRepository _messageRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
 
     public GetAllFilteredMessagesQueryHandler(
-        IMapper mapper,
-        IMessageRepository messageRepository)
+        IMessageRepository messageRepository, 
+        IInstaConnectMapper instaConnectMapper)
     {
-        _mapper = mapper;
         _messageRepository = messageRepository;
+        _instaConnectMapper = instaConnectMapper;
     }
 
     public async Task<ICollection<MessageViewModel>> Handle(GetAllFilteredMessagesQuery request, CancellationToken cancellationToken)
     {
-        var filteredCollectionQuery = _mapper.Map<MessageFilteredCollectionQuery>(request);
+        var filteredCollectionQuery = _instaConnectMapper.Map<MessageFilteredCollectionQuery>(request);
 
         var messages = await _messageRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
-        var response = _mapper.Map<ICollection<MessageViewModel>>(messages);
+        var response = _instaConnectMapper.Map<ICollection<MessageViewModel>>(messages);
 
         return response;
     }

@@ -43,7 +43,7 @@ internal class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageComman
         _messageRepository.Delete(existingMessage);
 
         var messageDeletedEvent = _instaConnectMapper.Map<MessageDeletedEvent>(existingMessage);
-        await _eventPublisher.Publish(messageDeletedEvent, cancellationToken);
+        await _eventPublisher.PublishAsync(messageDeletedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

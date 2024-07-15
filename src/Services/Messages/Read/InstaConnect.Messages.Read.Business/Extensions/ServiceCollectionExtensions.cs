@@ -14,10 +14,9 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
-            .AddCachingHandler()
-            .AddValidatorsFromAssembly(currentAssembly)
+            .AddValidators(currentAssembly)
             .AddMediatR(currentAssembly)
-            .AddAutoMapper(currentAssembly)
+            .AddMapper(currentAssembly)
             .AddMessageBroker(configuration, currentAssembly);
 
         return serviceCollection;

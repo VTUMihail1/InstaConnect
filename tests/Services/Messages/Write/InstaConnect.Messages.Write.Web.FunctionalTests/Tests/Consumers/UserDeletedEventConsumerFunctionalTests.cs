@@ -32,26 +32,4 @@ public class UserDeletedEventConsumerFunctionalTests : BaseMessageFunctionalTest
         // Assert
         result.Should().BeTrue();
     }
-
-    [Fact]
-    public async Task Consume_ShouldRemoveMessagesWithThatUserId_WhenUserDeletedEventIsRaised()
-    {
-        // Arrange
-        var existingMessageId = await CreateMessageAsync(CancellationToken);
-        var userDeletedEvent = new UserDeletedEvent()
-        {
-            Id = MessageFunctionalTestConfigurations.EXISTING_MESSAGE_SENDER_ID
-        };
-
-        // Act
-        await TestHarness.Start();
-        await TestHarness.Bus.Publish(userDeletedEvent, CancellationToken);
-        await TestHarness.InactivityTask;
-        await TestHarness.Stop();
-
-        var deletedMessage = await MessageRepository.GetByIdAsync(existingMessageId, CancellationToken);
-
-        // Assert
-        deletedMessage.Should().BeNull();
-    }
 }

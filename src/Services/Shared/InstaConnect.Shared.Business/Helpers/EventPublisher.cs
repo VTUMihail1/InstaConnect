@@ -12,7 +12,7 @@ public class EventPublisher : IEventPublisher
         _publishEndpoint = publishEndpoint;
     }
 
-    public async Task Publish(object message, CancellationToken cancellationToken)
+    public async Task PublishAsync(object message, CancellationToken cancellationToken)
     {
         await _publishEndpoint.Publish(message, cancellationToken);
     }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reflection;
 using CloudinaryDotNet;
+using FluentValidation;
+using InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessages;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.Models.Options;
@@ -78,6 +80,16 @@ public static class ServiceCollectionExtentions
         serviceCollection.AddAutoMapper(assembly);
 
         serviceCollection.AddScoped<IInstaConnectMapper, InstaConnectMapper>();
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddValidators(this IServiceCollection serviceCollection, Assembly assembly)
+    {
+        serviceCollection.AddValidatorsFromAssembly(assembly);
+
+        serviceCollection.AddScoped<IEntityPropertyValidator, EntityPropertyValidator>();
+        serviceCollection.AddScoped<IEnumValidator, EnumValidator>();
 
         return serviceCollection;
     }

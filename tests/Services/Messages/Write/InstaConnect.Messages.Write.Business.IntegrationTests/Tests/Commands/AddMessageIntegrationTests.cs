@@ -29,7 +29,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -50,7 +50,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -68,7 +68,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -89,7 +89,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -107,7 +107,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -128,7 +128,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<BadRequestException>();
@@ -146,7 +146,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserNotFoundException>();
@@ -164,7 +164,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var action = async () => await InstaConnectSender.Send(command, CancellationToken);
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserNotFoundException>();
@@ -182,7 +182,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         };
 
         // Act
-        var response = await InstaConnectSender.Send(command, CancellationToken);
+        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
         var message = await MessageRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
@@ -207,7 +207,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
 
         // Act
         await TestHarness.Start();
-        var response = await InstaConnectSender.Send(command, CancellationToken);
+        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
         var result = await TestHarness.Published.Any<MessageCreatedEvent>(m => m.Context.Message.Id == response.Id &&
                                                                   m.Context.Message.SenderId == MessageIntegrationTestConfigurations.EXISTING_SENDER_ID &&
                                                                   m.Context.Message.ReceiverId == MessageIntegrationTestConfigurations.EXISTING_RECEIVER_ID &&
