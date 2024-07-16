@@ -12,6 +12,13 @@ namespace InstaConnect.Messages.Write.Web.FunctionalTests.Utilities;
 
 public abstract class BaseMessageFunctionalTest : BaseFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>
 {
+    protected readonly string ValidId;
+    protected readonly string ValidContent;
+    protected readonly string ValidReceiverId;
+    protected readonly string ValidAddContent;
+    protected readonly string ValidUpdateContent;
+    protected readonly string ValidCurrentUserId;
+
     protected HttpClient HttpClient { get; }
 
     protected ITestHarness TestHarness
@@ -40,28 +47,8 @@ public abstract class BaseMessageFunctionalTest : BaseFunctionalTest, IClassFixt
 
     protected Dictionary<string, object> ValidJwtConfig { get; set; }
 
-    protected string ValidId { get; }
-
-    protected string ValidContent { get; }
-
-    protected string ValidReceiverId { get; }
-
-    protected string ValidAddContent { get; }
-
-    protected string ValidUpdateContent { get; }
-
-    protected string ValidCurrentUserId { get; }
-
     protected BaseMessageFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
     {
-        HttpClient = functionalTestWebAppFactory.CreateClient();
-        ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
-        ValidJwtConfig = new Dictionary<string, object>()
-        {
-            { ClaimTypes.NameIdentifier, MessageFunctionalTestConfigurations.EXISTING_SENDER_ID },
-            { ClaimTypes.Name, MessageFunctionalTestConfigurations.EXISTING_SENDER_NAME }
-        };
-
         ValidId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.ID_MAX_LENGTH + MessageBusinessConfigurations.ID_MIN_LENGTH) / 2);
         ValidContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
         ValidReceiverId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH) / 2);
@@ -69,6 +56,14 @@ public abstract class BaseMessageFunctionalTest : BaseFunctionalTest, IClassFixt
         ValidUpdateContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
         ValidCurrentUserId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH) / 2);
         ValidCurrentUserId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH) / 2);
+
+        HttpClient = functionalTestWebAppFactory.CreateClient();
+        ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
+        ValidJwtConfig = new Dictionary<string, object>()
+        {
+            { ClaimTypes.NameIdentifier, MessageFunctionalTestConfigurations.EXISTING_SENDER_ID },
+            { ClaimTypes.Name, MessageFunctionalTestConfigurations.EXISTING_SENDER_NAME }
+        };
     }
 
     protected async Task<string> CreateMessageAsync(CancellationToken cancellationToken)

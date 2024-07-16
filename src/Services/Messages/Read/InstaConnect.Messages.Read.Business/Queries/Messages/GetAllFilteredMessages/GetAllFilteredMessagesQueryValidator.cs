@@ -40,12 +40,10 @@ public class GetAllFilteredMessagesQueryValidator : AbstractValidator<GetAllFilt
             .Must(entityPropertyValidator.IsEntityPropertyValid<Message>);
 
         RuleFor(q => q.Limit)
-            .NotEmpty()
             .LessThanOrEqualTo(MessageBusinessConfigurations.LIMIT_MAX_VALUE)
             .GreaterThanOrEqualTo(MessageBusinessConfigurations.LIMIT_MIN_VALUE);
 
         RuleFor(q => q.Offset)
-            .NotEmpty()
             .LessThanOrEqualTo(MessageBusinessConfigurations.OFFSET_MAX_VALUE)
             .GreaterThanOrEqualTo(MessageBusinessConfigurations.OFFSET_MIN_VALUE);
     }

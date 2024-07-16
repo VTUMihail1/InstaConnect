@@ -23,6 +23,13 @@ namespace InstaConnect.Messages.Write.Business.IntegrationTests.Utilities;
 
 public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>
 {
+    protected readonly string ValidId;
+    protected readonly string ValidContent;
+    protected readonly string ValidReceiverId;
+    protected readonly string ValidAddContent;
+    protected readonly string ValidUpdateContent;
+    protected readonly string ValidCurrentUserId;
+
     protected ITestHarness TestHarness
     {
         get
@@ -49,32 +56,17 @@ public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFi
 
     protected IInstaConnectSender InstaConnectSender { get; }
 
-    protected ConsumeContext<UserDeletedEvent> UserDeletedEventConsumeContext { get; }
-
-    protected string ValidId { get; }
-
-    protected string ValidContent { get; }
-
-    protected string ValidReceiverId { get; }
-
-    protected string ValidAddContent { get; }
-
-    protected string ValidUpdateContent { get; }
-
-    protected string ValidCurrentUserId { get; }
-
     protected BaseMessageIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
     {
-        ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
-        InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
-        UserDeletedEventConsumeContext = Substitute.For<ConsumeContext<UserDeletedEvent>>();
-
         ValidId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.ID_MAX_LENGTH + MessageBusinessConfigurations.ID_MIN_LENGTH) / 2);
         ValidContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
         ValidReceiverId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH) / 2);
         ValidAddContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
         ValidUpdateContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
         ValidCurrentUserId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH) / 2);
+
+        ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
+        InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
     }
 
     protected async Task<string> CreateMessageAsync(CancellationToken cancellationToken)

@@ -6,6 +6,7 @@ using InstaConnect.Messages.Write.Business.Profiles;
 using InstaConnect.Messages.Write.Business.Utilities;
 using InstaConnect.Messages.Write.Data.Abstractions;
 using InstaConnect.Messages.Write.Data.Models.Entities;
+using InstaConnect.Messages.Write.Data.Models.Filters;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Helpers;
@@ -20,8 +21,8 @@ namespace InstaConnect.Messages.Write.Business.UnitTests.Utilities;
 public abstract class BaseMessageUnitTest : BaseUnitTest
 {
     protected readonly string ValidId;
-    protected readonly string ValidReceiverId;
     protected readonly string ValidContent;
+    protected readonly string ValidReceiverId;
     protected readonly string ValidCurrentUserId;
 
     protected IUnitOfWork UnitOfWork { get; }
@@ -34,14 +35,15 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
 
     protected IInstaConnectMapper InstaConnectMapper { get; }
 
-    protected ConsumeContext<UserDeletedEvent> UserDeletedEventConsumeContext { get; }
-
-    protected Expression<Func<Message, bool>> ExpectedUserDeletedEventExpression { get; }
-
     protected IInstaConnectRequestClient<GetUserByIdRequest> GetUserByIdRequestClient { get; }
 
     public BaseMessageUnitTest()
     {
+        ValidId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.ID_MAX_LENGTH + MessageBusinessConfigurations.ID_MIN_LENGTH) / 2);
+        ValidContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
+        ValidReceiverId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH) / 2);
+        ValidCurrentUserId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH) / 2);
+
         var getUserBySenderIdResponse = new GetUserByIdResponse
         {
             Id = MessageUnitTestConfigurations.EXISTING_SENDER_ID,
@@ -63,14 +65,7 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
                 new MapperConfiguration(cfg =>
                 cfg.AddProfile(new MessagesBusinessProfile()))));
 
-        UserDeletedEventConsumeContext = Substitute.For<ConsumeContext<UserDeletedEvent>>();
-        ExpectedUserDeletedEventExpression = p => p.SenderId == MessageUnitTestConfigurations.EXISTING_SENDER_ID;
         GetUserByIdRequestClient = CreateUserByIdRequestClient(getUserBySenderIdResponse, getUserByReceiverIdResponse);
-
-        ValidId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.ID_MAX_LENGTH + MessageBusinessConfigurations.ID_MIN_LENGTH) / 2);
-        ValidReceiverId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH) / 2);
-        ValidContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
-        ValidCurrentUserId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH) / 2);
 
         MessageRepository.When(x => x.Add(Arg.Is<Message>(m => m.SenderId == MessageUnitTestConfigurations.EXISTING_SENDER_ID &&
                                                                m.ReceiverId == MessageUnitTestConfigurations.EXISTING_RECEIVER_ID &&
@@ -81,15 +76,18 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
                                   message.Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID;
                               });
 
+        var existingMessage = new Message()
+        {
+            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+            SenderId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
+            ReceiverId = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
+            Content = ValidContent,
+        };
+
         MessageRepository.GetByIdAsync(
             MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
             CancellationToken)
-            .Returns(new Message()
-            {
-                Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-                SenderId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-                ReceiverId = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
-                Content = MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT,
-            });
+            .Returns(existingMessage);
+                       
     }
 }

@@ -8,9 +8,9 @@ public class Message : BaseEntity
 
     public string SenderId { get; set; } = string.Empty;
 
-    public User Sender { get; set; } = new();
+    public User Sender { get; set; }
 
     public string ReceiverId { get; set; } = string.Empty;
 
-    public User Receiver { get; set; } = new();
+    public User Receiver { get; set; }
 }

@@ -32,15 +32,15 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
 
     public BaseMessageUnitTest()
     {
+        AddContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
+        UpdateContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
+
         InstaConnectSender = Substitute.For<IInstaConnectSender>();
         CurrentUserContext = Substitute.For<ICurrentUserContext>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
                 new MapperConfiguration(cfg =>
                 cfg.AddProfile(new MessagesWebProfile()))));
-
-        AddContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
-        UpdateContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
 
         CurrentUserContext.GetCurrentUser().Returns(new CurrentUserModel
         {

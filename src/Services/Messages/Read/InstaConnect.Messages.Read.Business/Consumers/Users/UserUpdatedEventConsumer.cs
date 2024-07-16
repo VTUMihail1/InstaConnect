@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Read.Data.Abstractions;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
@@ -8,18 +9,18 @@ namespace InstaConnect.Messages.Read.Business.Consumers.Users;
 
 internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEvent>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
 
     public UserUpdatedEventConsumer(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
-        IUserRepository userRepository)
+        IUserRepository userRepository,
+        IInstaConnectMapper instaConnectMapper)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
         _userRepository = userRepository;
+        _instaConnectMapper = instaConnectMapper;
     }
 
     public async Task Consume(ConsumeContext<UserUpdatedEvent> context)
@@ -31,7 +32,7 @@ internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEvent>
             return;
         }
 
-        _mapper.Map(context.Message, existingUser);
+        _instaConnectMapper.Map(context.Message, existingUser);
         _userRepository.Update(existingUser);
 
         await _unitOfWork.SaveChangesAsync(context.CancellationToken);

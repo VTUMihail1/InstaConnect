@@ -23,7 +23,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldThrowBadRequestException_WhenIdIsNull()
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
         var command = new DeleteMessageCommand()
@@ -43,7 +43,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     [InlineData(default(int))]
     [InlineData(MessageBusinessConfigurations.ID_MIN_LENGTH - 1)]
     [InlineData(MessageBusinessConfigurations.ID_MAX_LENGTH + 1)]
-    public async Task Send_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var command = new DeleteMessageCommand()
@@ -60,7 +60,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
         var command = new DeleteMessageCommand()
@@ -80,7 +80,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     [InlineData(default(int))]
     [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
     [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
-    public async Task Send_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
         var command = new DeleteMessageCommand()
@@ -97,7 +97,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldThrowMessageNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldThrowMessageNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
         var command = new DeleteMessageCommand()
@@ -114,7 +114,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
+    public async Task SendAsync_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
         var existingMessageId = await CreateMessageAsync(CancellationToken);
@@ -132,7 +132,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldDeleteMessage_WhenMessageIsValid()
+    public async Task SendAsync_ShouldDeleteMessage_WhenMessageIsValid()
     {
         // Arrange
         var existingMessageId = await CreateMessageAsync(CancellationToken);
@@ -154,7 +154,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldPublishMessageDeletedEvent_WhenMessageIsValid()
+    public async Task SendAsync_ShouldPublishMessageDeletedEvent_WhenMessageIsValid()
     {
         // Arrange
         var existingMessageId = await CreateMessageAsync(CancellationToken);
