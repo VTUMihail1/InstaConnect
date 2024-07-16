@@ -238,16 +238,16 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
         var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
 
-        var messageViewModel = await response
+        var messageViewResponse = await response
             .Content
             .ReadFromJsonAsync<MessageViewResponse>();
 
-        var message = await MessageRepository.GetByIdAsync(messageViewModel!.Id, CancellationToken);
+        var message = await MessageRepository.GetByIdAsync(messageViewResponse!.Id, CancellationToken);
 
         // Assert
         message
             .Should()
-            .Match<Message>(m => m.Id == messageViewModel.Id &&
+            .Match<Message>(m => m.Id == messageViewResponse.Id &&
                                  m.Content == ValidAddContent &&
                                  m.SenderId == MessageFunctionalTestConfigurations.EXISTING_SENDER_ID &&
                                  m.ReceiverId == MessageFunctionalTestConfigurations.EXISTING_RECEIVER_ID);
@@ -268,13 +268,13 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         await TestHarness.Start();
         var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
 
-        var messageViewModel = await response
+        var messageViewResponse = await response
             .Content
             .ReadFromJsonAsync<MessageViewResponse>();
 
         await TestHarness.InactivityTask;
 
-        var result = await TestHarness.Published.Any<MessageCreatedEvent>(m => m.Context.Message.Id == messageViewModel!.Id &&
+        var result = await TestHarness.Published.Any<MessageCreatedEvent>(m => m.Context.Message.Id == messageViewResponse!.Id &&
                                                                                m.Context.Message.SenderId == MessageFunctionalTestConfigurations.EXISTING_SENDER_ID &&
                                                                                m.Context.Message.ReceiverId == MessageFunctionalTestConfigurations.EXISTING_RECEIVER_ID &&
                                                                                m.Context.Message.Content == ValidAddContent,

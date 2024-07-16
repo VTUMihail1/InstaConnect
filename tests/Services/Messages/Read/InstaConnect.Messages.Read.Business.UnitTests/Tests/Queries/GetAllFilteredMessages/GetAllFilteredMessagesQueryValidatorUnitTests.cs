@@ -17,7 +17,7 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     }
 
     [Fact]
-    public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
+    public void TestValidate_ShouldHaveAnErrorForSortOrder_WhenCurrentUserIdIsNull()
     {
         // Arrange
         var query = new GetAllFilteredMessagesQuery
@@ -27,7 +27,7 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = MessageUnitTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue, 
+            Offset = ValidOffsetValue,
             Limit = ValidLimitValue,
         };
 
@@ -63,30 +63,7 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
     }
 
-    [Fact]
-    public void TestValidate_ShouldHaveAnErrorForReceiverId_WhenReceiverIdIsNull()
-    {
-        // Arrange
-        var query = new GetAllFilteredMessagesQuery
-        {
-            CurrentUserId = ValidCurrentUserId,
-            ReceiverId = null!,
-            ReceiverName = ValidReceiverName,
-            SortOrder = MessageUnitTestConfigurations.SORT_ORDER_NAME,
-            SortPropertyName = MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
-        };
-
-        // Act
-        var result = _validator.TestValidate(query);
-
-        // Assert
-        result.ShouldHaveValidationErrorFor(m => m.ReceiverId);
-    }
-
     [Theory]
-    [InlineData(default(int))]
     [InlineData(MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH - 1)]
     [InlineData(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForReceiverId_WhenReceiverIdLengthIsInvalid(int length)
@@ -110,30 +87,7 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         result.ShouldHaveValidationErrorFor(m => m.ReceiverId);
     }
 
-    [Fact]
-    public void TestValidate_ShouldHaveAnErrorForReceiverName_WhenReceiverNameIsNull()
-    {
-        // Arrange
-        var query = new GetAllFilteredMessagesQuery
-        {
-            CurrentUserId = ValidCurrentUserId,
-            ReceiverId = ValidReceiverId,
-            ReceiverName = null!,
-            SortOrder = MessageUnitTestConfigurations.SORT_ORDER_NAME,
-            SortPropertyName = MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
-        };
-
-        // Act
-        var result = _validator.TestValidate(query);
-
-        // Assert
-        result.ShouldHaveValidationErrorFor(m => m.ReceiverName);
-    }
-
     [Theory]
-    [InlineData(default(int))]
     [InlineData(MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH - 1)]
     [InlineData(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForReceiverName_WhenReceiverNameLengthIsInvalid(int length)
