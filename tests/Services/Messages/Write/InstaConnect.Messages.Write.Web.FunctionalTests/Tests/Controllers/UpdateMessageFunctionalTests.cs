@@ -249,13 +249,13 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
             CancellationToken);
 
         // Assert
-        var messageViewModel = await response
+        var messageViewResponse = await response
             .Content
-            .ReadFromJsonAsync<MessageViewModel>();
+            .ReadFromJsonAsync<MessageViewResponse>();
 
-        messageViewModel
+        messageViewResponse
             .Should()
-            .Match<MessageViewModel>(m => m.Id == existingMessageId);
+            .Match<MessageViewResponse>(m => m.Id == existingMessageId);
     }
 
     [Fact]

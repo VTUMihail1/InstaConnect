@@ -6,6 +6,7 @@ using InstaConnect.Messages.Read.Data.Models.Filters;
 using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Data.Models.Enums;
+using Microsoft.IdentityModel.Tokens;
 
 namespace InstaConnect.Messages.Read.Business.Profiles;
 
@@ -29,9 +30,9 @@ internal class MessagesBusinessProfile : Profile
             .ConstructUsing(src =>
                  new MessageFilteredCollectionQuery
                  {
-                     Expression = p => (src.CurrentUserId == string.Empty || p.SenderId == src.CurrentUserId) &&
-                                       (src.ReceiverId == string.Empty || p.ReceiverId == src.ReceiverId) &&
-                                       (src.ReceiverName == string.Empty || p.Receiver.UserName == src.ReceiverName),
+                     Expression = p => (string.IsNullOrEmpty(src.CurrentUserId) || p.SenderId == src.CurrentUserId) &&
+                                       (string.IsNullOrEmpty(src.ReceiverId) || p.ReceiverId == src.ReceiverId) &&
+                                       (string.IsNullOrEmpty(src.ReceiverName) || p.Receiver.UserName == src.ReceiverName),
                      SortOrder = Enum.Parse<SortOrder>(src.SortOrder)
                  });
 

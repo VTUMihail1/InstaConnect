@@ -18,14 +18,14 @@ public class GetAllFilteredMessagesQueryValidator : AbstractValidator<GetAllFilt
             .MaximumLength(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH);
 
         RuleFor(q => q.ReceiverId)
-            .NotEmpty()
             .MinimumLength(MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH)
-            .MaximumLength(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH);
+            .MaximumLength(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH)
+            .When(q => !string.IsNullOrEmpty(q.ReceiverId));
 
         RuleFor(q => q.ReceiverName)
-            .NotEmpty()
             .MinimumLength(MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH)
-            .MaximumLength(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH);
+            .MaximumLength(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH)
+            .When(q => !string.IsNullOrEmpty(q.ReceiverName));
 
         RuleFor(q => q.SortOrder)
             .NotEmpty()

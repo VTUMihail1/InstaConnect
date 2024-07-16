@@ -19,6 +19,10 @@ internal class MessagesWebProfile : Profile
         CreateMap<CurrentUserModel, GetAllFilteredMessagesQuery>()
             .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.Id));
 
+        CreateMap<CurrentUserModel, GetMessageByIdQuery>()
+            .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Id, opt => opt.Ignore());
+
         CreateMap<GetMessageByIdRequest, GetMessageByIdQuery>();
 
         CreateMap<MessageViewModel, MessageViewResponse>();
