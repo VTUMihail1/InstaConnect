@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Read.Data.Abstractions;
 using InstaConnect.Messages.Read.Data.Models.Entities;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
@@ -9,23 +10,30 @@ namespace InstaConnect.Messages.Read.Business.Consumers.Messages;
 
 internal class MessageCreatedEventConsumer : IConsumer<MessageCreatedEvent>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMessageRepository _messageRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
 
     public MessageCreatedEventConsumer(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
-        IMessageRepository messageRepository)
+        IMessageRepository messageRepository,
+        IInstaConnectMapper instaConnectMapper)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
         _messageRepository = messageRepository;
+        _instaConnectMapper = instaConnectMapper;
     }
 
     public async Task Consume(ConsumeContext<MessageCreatedEvent> context)
     {
-        var message = _mapper.Map<Message>(context.Message);
+        var existingMessage = await _messageRepository.GetByIdAsync(context.Message.Id, context.CancellationToken);
+
+        if (existingMessage != null)
+        {
+            return;
+        }
+
+        var message = _instaConnectMapper.Map<Message>(context.Message);
         _messageRepository.Add(message);
 
         await _unitOfWork.SaveChangesAsync(context.CancellationToken);

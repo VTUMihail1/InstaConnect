@@ -18,7 +18,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
         var command = new AddMessageCommand()
@@ -39,7 +39,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     [InlineData(default(int))]
     [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
     [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
-    public async Task Send_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
         var command = new AddMessageCommand()
@@ -57,7 +57,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldThrowBadRequestException_WhenReceiverIdIsNull()
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverIdIsNull()
     {
         // Arrange
         var command = new AddMessageCommand()
@@ -78,7 +78,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     [InlineData(default(int))]
     [InlineData(MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH - 1)]
     [InlineData(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + 1)]
-    public async Task Send_ShouldThrowBadRequestException_WhenReceiverIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverIdLengthIsInvalid(int length)
     {
         // Arrange
         var command = new AddMessageCommand()
@@ -96,7 +96,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldThrowBadRequestException_WhenContentIsNull()
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenContentIsNull()
     {
         // Arrange
         var command = new AddMessageCommand()
@@ -117,7 +117,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     [InlineData(default(int))]
     [InlineData(MessageBusinessConfigurations.CONTENT_MIN_LENGTH - 1)]
     [InlineData(MessageBusinessConfigurations.CONTENT_MAX_LENGTH + 1)]
-    public async Task Send_ShouldThrowBadRequestException_WhenContentLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
         var command = new AddMessageCommand()
@@ -135,7 +135,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
         var command = new AddMessageCommand()
@@ -153,7 +153,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldThrowUserNotFoundException_WhenReceiverIdIsInvalid()
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenReceiverIdIsInvalid()
     {
         // Arrange
         var command = new AddMessageCommand()
@@ -171,7 +171,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldAddMessage_WhenMessageIsValid()
+    public async Task SendAsync_ShouldAddMessage_WhenMessageIsValid()
     {
         // Arrange
         var command = new AddMessageCommand()
@@ -195,7 +195,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task Send_ShouldPublishMessageCreatedEvent_WhenMessageIsValid()
+    public async Task SendAsync_ShouldPublishMessageCreatedEvent_WhenMessageIsValid()
     {
         // Arrange
         var command = new AddMessageCommand()

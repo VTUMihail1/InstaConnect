@@ -2,12 +2,12 @@
 
 namespace InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessages;
 
-internal class EntityPropertyValidator : IEntityPropertyValidator
+public class EntityPropertyValidator : IEntityPropertyValidator
 {
     public bool IsEntityPropertyValid<T>(string propertyName) where T : IBaseEntity
     {
-        var entityProperty = typeof(T).GetProperty(propertyName);
+        var isValidProperty = typeof(T).GetProperties().Any(e => e.Name == propertyName);
 
-        return entityProperty != null;
+        return isValidProperty;
     }
 }

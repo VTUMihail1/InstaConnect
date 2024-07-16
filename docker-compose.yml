@@ -79,7 +79,6 @@ services:
       dockerfile: src/Services/Identity/InstaConnect.Identity.Web/Dockerfile
     environment:
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.users;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
-      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
       CorsOptions__AllowedOrigins: gateway-svc:5100
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
@@ -92,9 +91,6 @@ services:
       TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
       TokenOptions__AccessTokenLifetimeSeconds: 900
       TokenOptions__AccountTokenLifetimeSeconds: 3600
-      ImageUploadOptions__CloudName: dk3thebdl
-      ImageUploadOptions__ApiKey: 149997679976552
-      ImageUploadOptions__ApiSecret: R6zU5MPoyNMe7IoLanOfVp0YLjM
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
     ports:

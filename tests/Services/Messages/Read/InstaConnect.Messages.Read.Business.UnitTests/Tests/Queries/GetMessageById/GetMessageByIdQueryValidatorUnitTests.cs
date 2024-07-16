@@ -1,32 +1,32 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Messages.Write.Business.Commands.Messages.AddMessage;
-using InstaConnect.Messages.Write.Business.Commands.Messages.DeleteMessage;
+using InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessages;
+using InstaConnect.Messages.Read.Business.Queries.Messages.GetMessageById;
+using InstaConnect.Messages.Read.Business.Utilities;
 using InstaConnect.Messages.Write.Business.UnitTests.Utilities;
-using InstaConnect.Messages.Write.Business.Utilities;
 
-namespace InstaConnect.Messages.Write.Business.UnitTests.Tests.Commands.DeleteMessage;
+namespace InstaConnect.Messages.Write.Business.UnitTests.Tests.Commands.AddMessage;
 
-public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
+public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
 {
-    private readonly DeleteMessageCommandValidator _validator;
+    private readonly GetMessageByIdQueryValidator _validator;
 
-    public DeleteMessageCommandValidatorUnitTests()
+    public GetMessageByIdQueryValidatorUnitTests()
     {
-        _validator = new DeleteMessageCommandValidator();
+        _validator = new();
     }
 
     [Fact]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var command = new DeleteMessageCommand
+        var query = new GetMessageByIdQuery
         {
             Id = null!,
             CurrentUserId = ValidCurrentUserId,
         };
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _validator.TestValidate(query);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.Id);
@@ -39,14 +39,14 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new DeleteMessageCommand
+        var query = new GetMessageByIdQuery
         {
             Id = Faker.Random.AlphaNumeric(length),
             CurrentUserId = ValidCurrentUserId,
         };
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _validator.TestValidate(query);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.Id);
@@ -56,14 +56,14 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var command = new DeleteMessageCommand
+        var query = new GetMessageByIdQuery
         {
             Id = ValidId,
             CurrentUserId = null!,
         };
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _validator.TestValidate(query);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
@@ -76,14 +76,14 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new DeleteMessageCommand
+        var query = new GetMessageByIdQuery
         {
             Id = ValidId,
             CurrentUserId = Faker.Random.AlphaNumeric(length),
         };
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _validator.TestValidate(query);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);

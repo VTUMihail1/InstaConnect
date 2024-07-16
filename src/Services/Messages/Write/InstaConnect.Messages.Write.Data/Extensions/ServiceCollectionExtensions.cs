@@ -30,7 +30,6 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddScoped<IMessageRepository, MessageRepository>()
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
-            .AddCaching(configuration)
             .AddUnitOfWork<MessagesContext>();
 
         return serviceCollection;

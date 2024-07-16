@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\src\Services\Messages\Read\InstaConnect.Messages.Read.Business\InstaConnect.Messages.Read.Business.csproj" />
+    <ProjectReference Include="..\..\..\..\..\src\Services\Messages\Read\InstaConnect.Messages.Read.Web\InstaConnect.Messages.Read.Web.csproj" />
     <ProjectReference Include="..\..\..\Shared\InstaConnect.Shared.Business.IntegrationTests\InstaConnect.Shared.Business.IntegrationTests.csproj" />
   </ItemGroup>
 

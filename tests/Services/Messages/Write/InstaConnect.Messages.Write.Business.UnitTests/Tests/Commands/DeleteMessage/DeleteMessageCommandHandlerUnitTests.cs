@@ -94,7 +94,7 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
             .Delete(Arg.Is<Message>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
                                          m.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
                                          m.ReceiverId == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
-                                         m.Content == MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT));
+                                         m.Content == ValidContent));
     }
 
     [Fact]

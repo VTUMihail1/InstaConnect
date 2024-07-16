@@ -1,8 +1,10 @@
-﻿using InstaConnect.Messages.Write.Business.Consumers;
+﻿using System.Linq.Expressions;
+using InstaConnect.Messages.Write.Business.Consumers;
 using InstaConnect.Messages.Write.Business.UnitTests.Utilities;
 using InstaConnect.Messages.Write.Data.Models.Entities;
 using InstaConnect.Messages.Write.Data.Models.Filters;
 using InstaConnect.Shared.Business.Contracts.Users;
+using MassTransit;
 using NSubstitute;
 
 namespace InstaConnect.Messages.Write.Business.UnitTests.Tests.Consumers;
@@ -10,6 +12,8 @@ namespace InstaConnect.Messages.Write.Business.UnitTests.Tests.Consumers;
 public class UserDeletedEventConsumerUnitTests : BaseMessageUnitTest
 {
     private readonly UserDeletedEventConsumer _userDeletedEventConsumer;
+    private readonly ConsumeContext<UserDeletedEvent> _userDeletedEventConsumeContext;
+    private readonly Expression<Func<Message, bool>> _expectedExpression;
 
     public UserDeletedEventConsumerUnitTests()
     {
@@ -17,6 +21,26 @@ public class UserDeletedEventConsumerUnitTests : BaseMessageUnitTest
             UnitOfWork,
             MessageRepository,
             InstaConnectMapper);
+
+        _userDeletedEventConsumeContext = Substitute.For<ConsumeContext<UserDeletedEvent>>();
+
+        _expectedExpression = p => p.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID;
+
+        var existingMessage = new Message()
+        {
+            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+            SenderId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
+            ReceiverId = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
+            Content = ValidContent,
+        };
+
+        MessageRepository.GetAllFilteredAsync(Arg.Is<MessageFilteredCollectionQuery>(m =>
+                                                                        m.Expression.Compile().ToString() == _expectedExpression.Compile().ToString() &&
+                                                                        m.Limit == MessageUnitTestConfigurations.LIMIT_VALUE &&
+                                                                        m.Offset == MessageUnitTestConfigurations.OFFSER_VALUE &&
+                                                                        m.SortOrder == MessageUnitTestConfigurations.SORT_ORDER_VALUE &&
+                                                                        m.SortPropertyName == MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE), CancellationToken)
+                         .Returns([existingMessage]);
     }
 
     [Fact]
@@ -25,19 +49,19 @@ public class UserDeletedEventConsumerUnitTests : BaseMessageUnitTest
         // Arrange
         var userDeletedEvent = new UserDeletedEvent()
         {
-            Id = MessageUnitTestConfigurations.EXISTING_SENDER_ID,
+            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
         };
 
-        UserDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
+        _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 
         // Act
-        await _userDeletedEventConsumer.Consume(UserDeletedEventConsumeContext);
+        await _userDeletedEventConsumer.Consume(_userDeletedEventConsumeContext);
 
         // Assert
         await MessageRepository
             .Received(1)
             .GetAllFilteredAsync(Arg.Is<MessageFilteredCollectionQuery>(m =>
-                                                                        m.Expression.Compile().ToString() == ExpectedUserDeletedEventExpression.Compile().ToString() &&
+                                                                        m.Expression.Compile().ToString() == _expectedExpression.Compile().ToString() &&
                                                                         m.Limit == MessageUnitTestConfigurations.LIMIT_VALUE &&
                                                                         m.Offset == MessageUnitTestConfigurations.OFFSER_VALUE &&
                                                                         m.SortOrder == MessageUnitTestConfigurations.SORT_ORDER_VALUE &&
@@ -49,51 +73,37 @@ public class UserDeletedEventConsumerUnitTests : BaseMessageUnitTest
     public async Task Consume_ShouldDeleteRangeOfMessages_WhenUserDeletedEventIsValid()
     {
         // Arrange
-
-        var existingMessage = new Message
+        var userDeletedEvent = new UserDeletedEvent()
         {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            SenderId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            ReceiverId = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
-            Content = MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT,
+            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
         };
 
-        var messages = new List<Message> { existingMessage };
-
-        UserDeletedEventConsumeContext.Message.Returns(new UserDeletedEvent()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-        });
-
-        MessageRepository.GetAllFilteredAsync(Arg.Is<MessageFilteredCollectionQuery>(m =>
-                                                                        m.Expression.Compile().ToString() == ExpectedUserDeletedEventExpression.Compile().ToString() &&
-                                                                        m.Limit == MessageUnitTestConfigurations.LIMIT_VALUE &&
-                                                                        m.Offset == MessageUnitTestConfigurations.OFFSER_VALUE &&
-                                                                        m.SortOrder == MessageUnitTestConfigurations.SORT_ORDER_VALUE &&
-                                                                        m.SortPropertyName == MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE),
-                                                                        CancellationToken)
-                          .Returns(messages);
+        _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 
         // Act
-        await _userDeletedEventConsumer.Consume(UserDeletedEventConsumeContext);
+        await _userDeletedEventConsumer.Consume(_userDeletedEventConsumeContext);
 
         // Assert
         MessageRepository
-            .Received(1)
-            .DeleteRange(messages);
+              .Received(1)
+              .DeleteRange(Arg.Is<ICollection<Message>>(mc =>
+                                                        mc.Any(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
+                                                                    m.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
+                                                                    m.ReceiverId == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID && 
+                                                                    m.Content == ValidContent)));
     }
 
     [Fact]
     public async Task Consume_ShouldCallSaveChangesAsync_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        UserDeletedEventConsumeContext.Message.Returns(new UserDeletedEvent()
+        _userDeletedEventConsumeContext.Message.Returns(new UserDeletedEvent()
         {
-            Id = MessageUnitTestConfigurations.EXISTING_SENDER_ID,
+            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
         });
 
         // Act
-        await _userDeletedEventConsumer.Consume(UserDeletedEventConsumeContext);
+        await _userDeletedEventConsumer.Consume(_userDeletedEventConsumeContext);
 
         // Assert
         await UnitOfWork
