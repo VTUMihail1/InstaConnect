@@ -91,14 +91,6 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
                                   message.Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID;
                               });
 
-        var existingMessage = new Message()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            SenderId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            ReceiverId = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
-            Content = MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT,
-        };
-
         var existingSender = new User()
         {
             Id = MessageUnitTestConfigurations.EXISTING_SENDER_ID,
@@ -107,6 +99,26 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
             LastName = MessageUnitTestConfigurations.EXISTING_SENDER_LAST_NAME,
             Email = MessageUnitTestConfigurations.EXISTING_SENDER_EMAIL,
             ProfileImage = MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE,
+        };
+
+        var existingMessage = new Message()
+        {
+            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+            SenderId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
+            ReceiverId = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
+            Content = MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT,
+            Sender = new User()
+            {
+                Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
+                UserName = MessageUnitTestConfigurations.EXISTING_SENDER_NAME,
+                ProfileImage = MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE
+            },
+            Receiver = new User()
+            {
+                Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
+                UserName = MessageUnitTestConfigurations.EXISTING_RECEIVER_NAME,
+                ProfileImage = MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE
+            },
         };
 
         MessageRepository.GetByIdAsync(

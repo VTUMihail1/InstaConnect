@@ -276,7 +276,11 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             .Should()
             .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
+                                                                    m.SenderName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.SenderProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.ReceiverId == existingReceiverId &&
+                                                                    m.ReceiverName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.ReceiverProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
                                                            mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
                                                            mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
@@ -311,7 +315,11 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             .Should()
             .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
+                                                                    m.SenderName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.SenderProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.ReceiverId == existingReceiverId &&
+                                                                    m.ReceiverName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.ReceiverProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
                                                            mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
                                                            mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
@@ -346,7 +354,11 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             .Should()
             .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
+                                                                    m.SenderName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.SenderProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.ReceiverId == existingReceiverId &&
+                                                                    m.ReceiverName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.ReceiverProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
                                                            mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
                                                            mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
@@ -381,7 +393,11 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             .Should()
             .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
+                                                                    m.SenderName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.SenderProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.ReceiverId == existingReceiverId &&
+                                                                    m.ReceiverName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.ReceiverProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
                                                            mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
                                                            mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
@@ -416,7 +432,11 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             .Should()
             .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
+                                                                    m.SenderName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.SenderProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.ReceiverId == existingReceiverId &&
+                                                                    m.ReceiverName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.ReceiverProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
                                                            mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
                                                            mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
@@ -451,7 +471,11 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             .Should()
             .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
+                                                                    m.SenderName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.SenderProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.ReceiverId == existingReceiverId &&
+                                                                    m.ReceiverName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.ReceiverProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
                                                            mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
                                                            mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
@@ -486,7 +510,11 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             .Should()
             .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
+                                                                    m.SenderName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.SenderProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.ReceiverId == existingReceiverId &&
+                                                                    m.ReceiverName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
+                                                                    m.ReceiverProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                                     m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
                                                            mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
                                                            mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&

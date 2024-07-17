@@ -32,6 +32,18 @@ public class GetAllFilteredMessagesQueryHandlerUnitTests : BaseMessageUnitTest
             SenderId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
             ReceiverId = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
             Content = MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT,
+            Sender = new User()
+            {
+                Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
+                UserName = MessageUnitTestConfigurations.EXISTING_SENDER_NAME,
+                ProfileImage = MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE
+            },
+            Receiver = new User()
+            {
+                Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
+                UserName = MessageUnitTestConfigurations.EXISTING_RECEIVER_NAME,
+                ProfileImage = MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE
+            },
         };
 
         MessageRepository
@@ -102,7 +114,11 @@ public class GetAllFilteredMessagesQueryHandlerUnitTests : BaseMessageUnitTest
             .Should()
             .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
                                                            m.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
+                                                           m.SenderName == MessageUnitTestConfigurations.EXISTING_SENDER_NAME &&
+                                                           m.SenderProfileImage == MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                            m.ReceiverId == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
+                                                           m.ReceiverName == MessageUnitTestConfigurations.EXISTING_RECEIVER_NAME &&
+                                                           m.ReceiverProfileImage == MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
                                                            m.Content == MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
                                                            mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
                                                            mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
