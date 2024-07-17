@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Posts.Read.Web.Models.Requests.Post;
 
-public class GetAllFilteredPostsRequest : CollectionRequest
+public class GetAllFilteredPostsRequest : CollectionReadRequest
 {
     [FromQuery(Name = "userId")]
     public string UserId { get; set; } = string.Empty;

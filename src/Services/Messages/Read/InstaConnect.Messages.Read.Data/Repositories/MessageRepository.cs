@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Messages.Read.Data.Repositories;
 
-internal class MessageRepository : BaseRepository<Message>, IMessageRepository
+internal class MessageRepository : BaseReadRepository<Message>, IMessageRepository
 {
     public MessageRepository(MessagesContext messageContext) : base(messageContext)
     {

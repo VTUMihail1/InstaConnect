@@ -21,7 +21,7 @@ public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, ICollecti
 
     public async Task<ICollection<UserViewModel>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
     {
-        var collectionQuery = _mapper.Map<CollectionQuery>(request);
+        var collectionQuery = _mapper.Map<CollectionReadQuery>(request);
         var users = await _userRepository.GetAllAsync(collectionQuery, cancellationToken);
 
         var response = _mapper.Map<ICollection<UserViewModel>>(users);

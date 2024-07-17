@@ -4,7 +4,7 @@ using InstaConnect.Shared.Data.Repositories;
 
 namespace InstaConnect.Identity.Data.Repositories;
 
-internal class UserClaimRepository : BaseRepository<UserClaim>, IUserClaimRepository
+internal class UserClaimRepository : BaseReadRepository<UserClaim>, IUserClaimRepository
 {
     public UserClaimRepository(IdentityContext identityContext) : base(identityContext)
     {

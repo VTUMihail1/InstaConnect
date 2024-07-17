@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Posts.Read.Web.Models.Requests.PostCommentLike;
 
-public class GetAllFilteredPostCommentLikesRequest : CollectionRequest
+public class GetAllFilteredPostCommentLikesRequest : CollectionReadRequest
 {
     [FromQuery(Name = "userId")]
     public string UserId { get; set; } = string.Empty;

@@ -4,7 +4,7 @@ using InstaConnect.Shared.Data.Repositories;
 
 namespace InstaConnect.Posts.Write.Data.Repositories;
 
-public class PostRepository : BaseRepository<Post>, IPostRepository
+public class PostRepository : BaseReadRepository<Post>, IPostRepository
 {
     private readonly PostsContext _postsContext;
 

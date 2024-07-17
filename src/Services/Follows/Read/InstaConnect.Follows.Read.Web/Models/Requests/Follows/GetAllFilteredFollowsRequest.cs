@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Follows.Read.Web.Models.Requests.Follows;
 
-public class GetAllFilteredFollowsRequest : CollectionRequest
+public class GetAllFilteredFollowsRequest : CollectionReadRequest
 {
     [FromQuery(Name = "followerName")]
     public string FollowerName { get; set; } = string.Empty;

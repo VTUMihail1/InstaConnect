@@ -46,14 +46,14 @@ internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
         var filteredCollectionQuery = _mapper.Map<PostFilteredCollectionQuery>(userDeletedEvent);
         var existingPosts = await _postRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
 
-        _postRepository.DeleteRange(existingPosts);
+        _postRepository.DeleteRange(existingPosts.Items);
     }
     private async Task DeletePostLikesByUserIdAsync(UserDeletedEvent userDeletedEvent, CancellationToken cancellationToken)
     {
         var filteredCollectionQuery = _mapper.Map<PostLikeFilteredCollectionQuery>(userDeletedEvent);
         var existingPostLikes = await _postLikeRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
 
-        _postLikeRepository.DeleteRange(existingPostLikes);
+        _postLikeRepository.DeleteRange(existingPostLikes.Items);
     }
 
     private async Task DeletePostCommentsByUserIdAsync(UserDeletedEvent userDeletedEvent, CancellationToken cancellationToken)
@@ -61,7 +61,7 @@ internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
         var filteredCollectionQuery = _mapper.Map<PostCommentFilteredCollectionQuery>(userDeletedEvent);
         var existingPostComments = await _postCommentRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
 
-        _postCommentRepository.DeleteRange(existingPostComments);
+        _postCommentRepository.DeleteRange(existingPostComments.Items);
     }
 
     private async Task DeletePostCommentLikesByUserIdAsync(UserDeletedEvent userDeletedEvent, CancellationToken cancellationToken)
@@ -69,6 +69,6 @@ internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
         var filteredCollectionQuery = _mapper.Map<PostCommentLikeFilteredCollectionQuery>(userDeletedEvent);
         var existingPostComments = await _postCommentLikeRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
 
-        _postCommentLikeRepository.DeleteRange(existingPostComments);
+        _postCommentLikeRepository.DeleteRange(existingPostComments.Items);
     }
 }

@@ -2,13 +2,13 @@
 
 namespace InstaConnect.Shared.Data.Models.Filters;
 
-public class CollectionQuery
+public class CollectionReadQuery
 {
     public SortOrder SortOrder { get; set; } = SortOrder.ASC;
 
     public string SortPropertyName { get; set; } = "CreatedAt";
 
-    public int Offset { get; set; } = default;
+    public int Page { get; set; } = 1;
 
-    public int Limit { get; set; } = int.MaxValue;
+    public int PageSize { get; set; } = 10000;
 }

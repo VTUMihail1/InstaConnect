@@ -3,7 +3,7 @@ using InstaConnect.Shared.Data.Abstract;
 
 namespace InstaConnect.Follows.Read.Data.Abstractions;
 
-public interface IFollowRepository : IBaseRepository<Follow>
+public interface IFollowRepository : IBaseReadRepository<Follow>
 {
     Task<Follow?> GetByFollowerIdAndFollowingIdAsync(string followerId, string followingId, CancellationToken cancellationToken);
 }

@@ -34,13 +34,9 @@ public class UserDeletedEventConsumerUnitTests : BaseMessageUnitTest
             Content = ValidContent,
         };
 
-        MessageRepository.GetAllFilteredAsync(Arg.Is<MessageFilteredCollectionQuery>(m =>
-                                                                        m.Expression.Compile().ToString() == _expectedExpression.Compile().ToString() &&
-                                                                        m.Limit == MessageUnitTestConfigurations.LIMIT_VALUE &&
-                                                                        m.Offset == MessageUnitTestConfigurations.OFFSER_VALUE &&
-                                                                        m.SortOrder == MessageUnitTestConfigurations.SORT_ORDER_VALUE &&
-                                                                        m.SortPropertyName == MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE), CancellationToken)
-                         .Returns([existingMessage]);
+        MessageRepository.GetAllFilteredAsync(Arg.Is<MessageFilteredCollectionQuery>(m => 
+                              m.Expression.Compile().ToString() == _expectedExpression.Compile().ToString()), CancellationToken)
+            .Returns([existingMessage]);
     }
 
     [Fact]
@@ -60,13 +56,8 @@ public class UserDeletedEventConsumerUnitTests : BaseMessageUnitTest
         // Assert
         await MessageRepository
             .Received(1)
-            .GetAllFilteredAsync(Arg.Is<MessageFilteredCollectionQuery>(m =>
-                                                                        m.Expression.Compile().ToString() == _expectedExpression.Compile().ToString() &&
-                                                                        m.Limit == MessageUnitTestConfigurations.LIMIT_VALUE &&
-                                                                        m.Offset == MessageUnitTestConfigurations.OFFSER_VALUE &&
-                                                                        m.SortOrder == MessageUnitTestConfigurations.SORT_ORDER_VALUE &&
-                                                                        m.SortPropertyName == MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE),
-                                 CancellationToken);
+            .GetAllFilteredAsync(Arg.Is<MessageFilteredCollectionQuery>(m => m.Expression.Compile().ToString() == _expectedExpression.Compile().ToString()), 
+                                                                             CancellationToken);
     }
 
     [Fact]

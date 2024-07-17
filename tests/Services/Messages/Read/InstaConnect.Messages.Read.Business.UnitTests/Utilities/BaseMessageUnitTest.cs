@@ -19,8 +19,8 @@ namespace InstaConnect.Messages.Write.Business.UnitTests.Utilities;
 
 public abstract class BaseMessageUnitTest : BaseUnitTest
 {
-    protected readonly int ValidLimitValue;
-    protected readonly int ValidOffsetValue;
+    protected readonly int ValidPageValue;
+    protected readonly int ValidPageSizeValue;
 
     protected readonly string ValidId;
     protected readonly string ValidReceiverId;
@@ -47,8 +47,8 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
 
     public BaseMessageUnitTest()
     {
-        ValidLimitValue = (MessageBusinessConfigurations.LIMIT_MAX_VALUE + MessageBusinessConfigurations.LIMIT_MIN_VALUE) / 2;
-        ValidOffsetValue = (MessageBusinessConfigurations.OFFSET_MAX_VALUE + MessageBusinessConfigurations.OFFSET_MIN_VALUE) / 2;
+        ValidPageValue = (MessageBusinessConfigurations.PAGE_MAX_VALUE + MessageBusinessConfigurations.PAGE_MIN_VALUE) / 2;
+        ValidPageSizeValue = (MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE + MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE) / 2;
 
         ValidId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.ID_MAX_LENGTH + MessageBusinessConfigurations.ID_MIN_LENGTH) / 2);
         ValidReceiverId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH) / 2);

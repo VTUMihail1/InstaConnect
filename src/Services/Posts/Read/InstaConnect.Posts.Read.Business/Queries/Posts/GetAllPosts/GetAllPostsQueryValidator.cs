@@ -6,10 +6,10 @@ public class GetAllPostsQueryValidator : AbstractValidator<GetAllPostsQuery>
 {
     public GetAllPostsQueryValidator()
     {
-        RuleFor(q => q.Offset)
+        RuleFor(q => q.Page)
             .GreaterThanOrEqualTo(default(int));
 
-        RuleFor(q => q.Limit)
+        RuleFor(q => q.PageSize)
             .NotEmpty()
             .GreaterThanOrEqualTo(default(int));
 

@@ -33,7 +33,7 @@ public class FollowsBusinessProfile : Profile
                                        (src.FollowingName == string.Empty || p.Following.UserName == src.FollowingName)
                  });
 
-        CreateMap<GetAllFollowsQuery, CollectionQuery>();
+        CreateMap<GetAllFollowsQuery, CollectionReadQuery>();
 
         CreateMap<UserCreatedEvent, User>();
 

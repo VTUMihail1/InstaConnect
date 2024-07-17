@@ -17,8 +17,8 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
         "receiverName={1}&" +
         "sortOrder={2}&" +
         "sortPropertyName={3}&" +
-        "offset={4}&" +
-        "limit={5}";
+        "page={4}&" +
+        "pageSize={5}";
 
     public GetAllFilteredFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
     {
@@ -35,8 +35,8 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
             ValidReceiverName,
             MessageFunctionalTestConfigurations.SORT_ORDER_NAME,
             MessageFunctionalTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            ValidOffsetValue,
-            ValidLimitValue);
+            ValidPageValue,
+            ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -55,8 +55,8 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
             ValidReceiverName,
             MessageFunctionalTestConfigurations.SORT_ORDER_NAME,
             MessageFunctionalTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            ValidOffsetValue,
-            ValidLimitValue);
+            ValidPageValue,
+            ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
 
@@ -80,8 +80,8 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
             ValidReceiverName,
             MessageFunctionalTestConfigurations.SORT_ORDER_NAME,
             MessageFunctionalTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            ValidOffsetValue,
-            ValidLimitValue);
+            ValidPageValue,
+            ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = ValidCurrentUserId;
 
@@ -105,8 +105,8 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
             Faker.Random.AlphaNumeric(length),
             MessageFunctionalTestConfigurations.SORT_ORDER_NAME,
             MessageFunctionalTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            ValidOffsetValue,
-            ValidLimitValue);
+            ValidPageValue,
+            ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = ValidCurrentUserId;
 
@@ -130,8 +130,8 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
             ValidReceiverName,
             Faker.Random.AlphaNumeric(length),
             MessageFunctionalTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            ValidOffsetValue,
-            ValidLimitValue);
+            ValidPageValue,
+            ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = ValidCurrentUserId;
 
@@ -155,8 +155,8 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
             ValidReceiverName,
             MessageFunctionalTestConfigurations.SORT_ORDER_NAME,
             Faker.Random.AlphaNumeric(length),
-            ValidOffsetValue,
-            ValidLimitValue);
+            ValidPageValue,
+            ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = ValidCurrentUserId;
 
@@ -169,9 +169,9 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
     }
 
     [Theory]
-    [InlineData(MessageBusinessConfigurations.OFFSET_MIN_VALUE - 1)]
-    [InlineData(MessageBusinessConfigurations.OFFSET_MAX_VALUE + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenOffsetValueIsInvalid(int value)
+    [InlineData(MessageBusinessConfigurations.PAGE_MIN_VALUE - 1)]
+    [InlineData(MessageBusinessConfigurations.PAGE_MAX_VALUE + 1)]
+    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenPageValueIsInvalid(int value)
     {
         // Arrange
         var route = string.Format(
@@ -181,7 +181,10 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
             MessageFunctionalTestConfigurations.SORT_ORDER_NAME,
             MessageFunctionalTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
             value,
-            ValidLimitValue);
+            ValidPageSizeValue
+            );
+
+        
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = ValidCurrentUserId;
 
@@ -193,10 +196,12 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
     }
 
+
+
     [Theory]
-    [InlineData(MessageBusinessConfigurations.LIMIT_MIN_VALUE - 1)]
-    [InlineData(MessageBusinessConfigurations.LIMIT_MAX_VALUE + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenLimitValueIsInvalid(int value)
+    [InlineData(MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE - 1)]
+    [InlineData(MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE + 1)]
+    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
         var route = string.Format(
@@ -205,7 +210,7 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
             ValidReceiverName,
             MessageFunctionalTestConfigurations.SORT_ORDER_NAME,
             MessageFunctionalTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            ValidOffsetValue,
+            ValidPageValue,
             value);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = ValidCurrentUserId;
@@ -231,8 +236,8 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
             MessageFunctionalTestConfigurations.EXISTING_SENDER_NAME,
             MessageFunctionalTestConfigurations.SORT_ORDER_NAME,
             MessageFunctionalTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            MessageBusinessConfigurations.OFFSET_MIN_VALUE,
-            MessageBusinessConfigurations.LIMIT_MAX_VALUE);
+            MessageBusinessConfigurations.PAGE_MIN_VALUE,
+            MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -245,7 +250,7 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnMessageViewResponse_WhenRequestIsValid()
+    public async Task GetAllFilteredAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValid()
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -257,8 +262,8 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
             MessageFunctionalTestConfigurations.EXISTING_SENDER_NAME,
             MessageFunctionalTestConfigurations.SORT_ORDER_NAME,
             MessageFunctionalTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            MessageBusinessConfigurations.OFFSET_MIN_VALUE,
-            MessageBusinessConfigurations.LIMIT_MAX_VALUE);
+            MessageBusinessConfigurations.PAGE_MIN_VALUE,
+            MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -266,22 +271,27 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
         var response = await HttpClient.GetAsync(route, CancellationToken);
 
-        var messageViewResponse = await response
+        var messagePaginationCollectionResponse = await response
             .Content
-            .ReadFromJsonAsync<List<MessageViewResponse>>();
+            .ReadFromJsonAsync<MessagePaginationCollectionResponse>();
 
         // Assert
-        messageViewResponse
+        messagePaginationCollectionResponse
             .Should()
-            .Match<ICollection<MessageViewResponse>>(mc => mc.Any(m => 
-                                 m.Id == existingMessageId &&
-                                 m.Content == MessageFunctionalTestConfigurations.EXISTING_MESSAGE_CONTENT &&
-                                 m.SenderId == existingSenderId &&
-                                 m.ReceiverId == existingReceiverId));
+            .Match<MessagePaginationCollectionResponse>(mc => mc.Items.Any(m => 
+                                                              m.Id == existingMessageId &&
+                                                              m.Content == MessageFunctionalTestConfigurations.EXISTING_MESSAGE_CONTENT &&
+                                                              m.SenderId == existingSenderId &&
+                                                              m.ReceiverId == existingReceiverId) &&
+                                                              mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
+                                                              mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
+                                                              mc.TotalCount == MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE &&
+                                                              !mc.HasPreviousPage &&
+                                                              !mc.HasNextPage);
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnMessageViewResponse_WhenRouteHasNoParameters()
+    public async Task GetAllFilteredAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRouteHasNoParameters()
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -294,17 +304,22 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
         var response = await HttpClient.GetAsync(route, CancellationToken);
 
-        var messageViewResponse = await response
+        var messagePaginationCollectionResponse = await response
             .Content
-            .ReadFromJsonAsync<List<MessageViewResponse>>();
+            .ReadFromJsonAsync<MessagePaginationCollectionResponse>();
 
         // Assert
-        messageViewResponse
+        messagePaginationCollectionResponse
             .Should()
-            .Match<ICollection<MessageViewResponse>>(mc => mc.Any(m =>
-                                 m.Id == existingMessageId &&
-                                 m.Content == MessageFunctionalTestConfigurations.EXISTING_MESSAGE_CONTENT &&
-                                 m.SenderId == existingSenderId &&
-                                 m.ReceiverId == existingReceiverId));
+            .Match<MessagePaginationCollectionResponse>(mc => mc.Items.Any(m =>
+                                                               m.Id == existingMessageId &&
+                                                               m.Content == MessageFunctionalTestConfigurations.EXISTING_MESSAGE_CONTENT &&
+                                                               m.SenderId == existingSenderId &&
+                                                               m.ReceiverId == existingReceiverId) &&
+                                                               mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
+                                                               mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
+                                                               mc.TotalCount == MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
     }
 }

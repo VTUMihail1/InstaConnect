@@ -21,7 +21,7 @@ internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQuery,
 
     public async Task<ICollection<PostLikeViewModel>> Handle(GetAllPostLikesQuery request, CancellationToken cancellationToken)
     {
-        var collectionQuery = _mapper.Map<CollectionQuery>(request);
+        var collectionQuery = _mapper.Map<CollectionReadQuery>(request);
 
         var postLikes = await _postLikeRepository.GetAllAsync(collectionQuery, cancellationToken);
         var response = _mapper.Map<ICollection<PostLikeViewModel>>(postLikes);

@@ -27,8 +27,8 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = MessageUnitTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -52,8 +52,8 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = MessageUnitTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -76,8 +76,8 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = MessageUnitTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -100,8 +100,8 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             ReceiverName = Faker.Random.AlphaNumeric(length),
             SortOrder = MessageUnitTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -122,8 +122,8 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = null!,
             SortPropertyName = MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -147,8 +147,8 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = Faker.Random.AlphaNumeric(length),
             SortPropertyName = MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -169,8 +169,8 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = MessageUnitTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = null!,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -194,8 +194,8 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = MessageUnitTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = Faker.Random.AlphaNumeric(length),
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -206,9 +206,9 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     }
 
     [Theory]
-    [InlineData(MessageBusinessConfigurations.LIMIT_MIN_VALUE - 1)]
-    [InlineData(MessageBusinessConfigurations.LIMIT_MAX_VALUE + 1)]
-    public void TestValidate_ShouldHaveAnErrorForOffset_WhenOffsetValueIsInvalid(int value)
+    [InlineData(MessageBusinessConfigurations.PAGE_MIN_VALUE - 1)]
+    [InlineData(MessageBusinessConfigurations.PAGE_MAX_VALUE + 1)]
+    public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
         var query = new GetAllFilteredMessagesQuery
@@ -218,21 +218,21 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = MessageUnitTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = value,
-            Limit = ValidLimitValue,
+            Page = value,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
         var result = _validator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Offset);
+        result.ShouldHaveValidationErrorFor(m => m.Page);
     }
 
     [Theory]
-    [InlineData(MessageBusinessConfigurations.LIMIT_MIN_VALUE - 1)]
-    [InlineData(MessageBusinessConfigurations.LIMIT_MAX_VALUE + 1)]
-    public void TestValidate_ShouldHaveAnErrorForLimit_WhenLimitValueIsInvalid(int value)
+    [InlineData(MessageBusinessConfigurations.PAGE_MIN_VALUE - 1)]
+    [InlineData(MessageBusinessConfigurations.PAGE_MAX_VALUE + 1)]
+    public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
         var query = new GetAllFilteredMessagesQuery
@@ -242,14 +242,14 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = MessageUnitTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageUnitTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = value,
+            Page = ValidPageValue,
+            PageSize = value,
         };
 
         // Act
         var result = _validator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Limit);
+        result.ShouldHaveValidationErrorFor(m => m.PageSize);
     }
 }

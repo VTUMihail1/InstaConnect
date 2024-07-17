@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Posts.Write.Data.Repositories;
 
-public class PostLikeRepository : BaseRepository<PostLike>, IPostLikeRepository
+public class PostLikeRepository : BaseReadRepository<PostLike>, IPostLikeRepository
 {
     private readonly PostsContext _postsContext;
 

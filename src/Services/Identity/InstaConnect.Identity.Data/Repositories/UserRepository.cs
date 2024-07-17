@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Identity.Data.Repositories;
 
-internal class UserRepository : BaseRepository<User>, IUserRepository
+internal class UserRepository : BaseReadRepository<User>, IUserRepository
 {
     private readonly IdentityContext _identityContext;
 

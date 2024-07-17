@@ -4,6 +4,7 @@ using InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessage
 using InstaConnect.Messages.Read.Business.Queries.Messages.GetMessageById;
 using InstaConnect.Messages.Read.Web.Models.Requests.Messages;
 using InstaConnect.Messages.Read.Web.Models.Responses;
+using InstaConnect.Shared.Business.Models;
 using InstaConnect.Shared.Web.Models.Users;
 
 namespace InstaConnect.Messages.Read.Web.Profiles;
@@ -24,6 +25,8 @@ internal class MessagesWebProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.Ignore());
 
         CreateMap<GetMessageByIdRequest, GetMessageByIdQuery>();
+
+        CreateMap<MessagePaginationCollectionModel, MessagePaginationCollectionResponse>();
 
         CreateMap<MessageViewModel, MessageViewResponse>();
     }

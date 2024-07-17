@@ -3,6 +3,6 @@ using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Posts.Read.Data.Models.Filters;
 
-public class PostCommentLikeFilteredCollectionQuery : FilteredCollectionQuery<PostCommentLike>
+public class PostCommentLikeFilteredCollectionQuery : FilteredCollectionReadQuery<PostCommentLike>
 {
 }

@@ -4,7 +4,7 @@ using InstaConnect.Shared.Data.Repositories;
 
 namespace InstaConnect.Follows.Read.Data.Repositories;
 
-internal class UserRepository : BaseRepository<User>, IUserRepository
+internal class UserRepository : BaseReadRepository<User>, IUserRepository
 {
     private readonly FollowsContext _followsContext;
 

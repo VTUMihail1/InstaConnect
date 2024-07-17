@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Shared.Web.Models.Filters;
 
-public class CollectionRequest
+public class CollectionReadRequest
 {
     [FromQuery(Name = "sortOrder")]
     public string SortOrder { get; set; } = "ASC";
@@ -11,9 +11,9 @@ public class CollectionRequest
     [FromQuery(Name = "sortPropertyName")]
     public string SortPropertyName { get; set; } = "CreatedAt";
 
-    [FromQuery(Name = "offset")]
-    public int Offset { get; set; } = 0;
+    [FromQuery(Name = "page")]
+    public int Page { get; set; } = 1;
 
-    [FromQuery(Name = "limit")]
-    public int Limit { get; set; } = 20;
+    [FromQuery(Name = "pageSize")]
+    public int PageSize { get; set; } = 10000;
 }

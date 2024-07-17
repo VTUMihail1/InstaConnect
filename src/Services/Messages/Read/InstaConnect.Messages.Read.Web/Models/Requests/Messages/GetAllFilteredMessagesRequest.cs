@@ -4,14 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Messages.Read.Web.Models.Requests.Messages;
 
-public class GetAllFilteredMessagesRequest : CollectionRequest
+public class GetAllFilteredMessagesRequest : CollectionReadRequest
 {
-    public GetAllFilteredMessagesRequest()
-    {
-        Offset = MessageBusinessConfigurations.OFFSET_MIN_VALUE;
-        Limit = MessageBusinessConfigurations.LIMIT_MAX_VALUE;
-    }
-
     [FromQuery(Name = "receiverId")]
     public string ReceiverId { get; set; } = string.Empty;
 

@@ -38,13 +38,15 @@ public class MessageController : ControllerBase
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ICollection<MessageViewResponse>>> GetAllFilteredAsync(GetAllFilteredMessagesRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<MessagePaginationCollectionResponse>> GetAllFilteredAsync(
+        GetAllFilteredMessagesRequest request, 
+        CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var queryRequest = _instaConnectMapper.Map<GetAllFilteredMessagesQuery>(request);
         _instaConnectMapper.Map(currentUser, queryRequest);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<ICollection<MessageViewResponse>>(queryResponse);
+        var response = _instaConnectMapper.Map<MessagePaginationCollectionResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -53,7 +55,9 @@ public class MessageController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<MessageViewResponse>> GetByIdAsync(GetMessageByIdRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<MessageViewResponse>> GetByIdAsync(
+        GetMessageByIdRequest request, 
+        CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var queryRequest = _instaConnectMapper.Map<GetMessageByIdQuery>(request);

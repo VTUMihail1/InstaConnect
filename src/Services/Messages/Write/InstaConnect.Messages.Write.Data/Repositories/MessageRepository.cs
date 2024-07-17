@@ -4,12 +4,9 @@ using InstaConnect.Shared.Data.Repositories;
 
 namespace InstaConnect.Messages.Write.Data.Repositories;
 
-public class MessageRepository : BaseRepository<Message>, IMessageRepository
+public class MessageRepository : BaseWriteRepository<Message>, IMessageRepository
 {
-    private readonly MessagesContext _messageContext;
-
     public MessageRepository(MessagesContext messageContext) : base(messageContext)
     {
-        _messageContext = messageContext;
     }
 }

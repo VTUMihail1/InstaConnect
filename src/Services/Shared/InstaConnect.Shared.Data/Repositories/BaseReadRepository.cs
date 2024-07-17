@@ -1,41 +1,37 @@
 ﻿using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Shared.Data.Extensions;
 using InstaConnect.Shared.Data.Models.Filters;
+using InstaConnect.Shared.Data.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Shared.Data.Repositories;
 
-public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IBaseEntity
+public abstract class BaseReadRepository<TEntity> : IBaseReadRepository<TEntity> where TEntity : class, IBaseEntity
 {
     private readonly DbContext _dbContext;
 
-    protected BaseRepository(DbContext dbContext)
+    protected BaseReadRepository(DbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public virtual async Task<ICollection<TEntity>> GetAllAsync(CollectionQuery collectionQuery, CancellationToken cancellationToken)
+    public virtual async Task<PaginationList<TEntity>> GetAllAsync(CollectionReadQuery collectionReadQuery, CancellationToken cancellationToken)
     {
         var entities = await IncludeProperties(
             _dbContext.Set<TEntity>())
-            .OrderEntities(collectionQuery.SortOrder, collectionQuery.SortPropertyName)
-            .Skip(collectionQuery.Offset)
-            .Take(collectionQuery.Limit)
-            .AsNoTracking()
-            .ToListAsync(cancellationToken);
+            .OrderEntities(collectionReadQuery.SortOrder, collectionReadQuery.SortPropertyName)
+            .ToPagedList(collectionReadQuery.Page, collectionReadQuery.PageSize, cancellationToken);
 
         return entities;
     }
 
-    public virtual async Task<ICollection<TEntity>> GetAllFilteredAsync(FilteredCollectionQuery<TEntity> filteredCollectionQuery, CancellationToken cancellationToken)
+    public virtual async Task<PaginationList<TEntity>> GetAllFilteredAsync(FilteredCollectionReadQuery<TEntity> filteredCollectionReadQuery, CancellationToken cancellationToken)
     {
         var entities = await IncludeProperties(
             _dbContext.Set<TEntity>())
-            .Where(filteredCollectionQuery.Expression)
-            .OrderEntities(filteredCollectionQuery.SortOrder, filteredCollectionQuery.SortPropertyName)
-            .Skip(filteredCollectionQuery.Offset)
-            .Take(filteredCollectionQuery.Limit)
-            .ToListAsync(cancellationToken);
+            .Where(filteredCollectionReadQuery.Expression)
+            .OrderEntities(filteredCollectionReadQuery.SortOrder, filteredCollectionReadQuery.SortPropertyName)
+            .ToPagedList(filteredCollectionReadQuery.Page, filteredCollectionReadQuery.PageSize, cancellationToken);
 
         return entities;
     }
