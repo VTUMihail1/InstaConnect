@@ -165,6 +165,10 @@ public class GetByIdFunctionalTests : BaseMessageFunctionalTest
             .Match<MessageViewResponse>(m => m.Id == existingMessageId &&
                                  m.Content == MessageFunctionalTestConfigurations.EXISTING_MESSAGE_CONTENT &&
                                  m.SenderId == existingSenderId &&
-                                 m.ReceiverId == existingReceiverId);
+                                 m.SenderName == MessageFunctionalTestConfigurations.EXISTING_SENDER_NAME &&
+                                 m.SenderProfileImage == MessageFunctionalTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
+                                 m.ReceiverId == existingReceiverId &&
+                                 m.ReceiverName == MessageFunctionalTestConfigurations.EXISTING_SENDER_NAME &&
+                                 m.ReceiverProfileImage == MessageFunctionalTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE);
     }
 }
