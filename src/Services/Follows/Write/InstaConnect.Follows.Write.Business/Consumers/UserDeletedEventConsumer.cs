@@ -27,7 +27,7 @@ internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
         var filteredCollectionQuery = _mapper.Map<FollowFilteredCollectionQuery>(context.Message);
         var existingFollows = await _followRepository.GetAllAsync(filteredCollectionQuery, context.CancellationToken);
 
-        _followRepository.DeleteRange(existingFollows);
+        _followRepository.DeleteRange(existingFollows.Items);
         await _unitOfWork.SaveChangesAsync(context.CancellationToken);
     }
 }

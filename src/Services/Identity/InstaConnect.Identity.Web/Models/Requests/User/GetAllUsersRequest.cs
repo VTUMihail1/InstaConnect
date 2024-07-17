@@ -2,6 +2,6 @@
 
 namespace InstaConnect.Identity.Web.Models.Requests.User;
 
-public class GetAllUsersRequest : CollectionRequest
+public class GetAllUsersRequest : CollectionReadRequest
 {
 }

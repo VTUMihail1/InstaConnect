@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Identity.Data.Repositories;
 
-internal class TokenRepository : BaseRepository<Token>, ITokenRepository
+internal class TokenRepository : BaseReadRepository<Token>, ITokenRepository
 {
     private readonly IdentityContext _identityContext;
 

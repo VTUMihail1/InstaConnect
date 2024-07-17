@@ -6,6 +6,7 @@ using InstaConnect.Messages.Read.Data.Models.Filters;
 using InstaConnect.Shared.Business.Contracts.Messages;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Data.Models.Enums;
+using InstaConnect.Shared.Data.Models.Pagination;
 using Microsoft.IdentityModel.Tokens;
 
 namespace InstaConnect.Messages.Read.Business.Profiles;
@@ -25,6 +26,8 @@ internal class MessagesBusinessProfile : Profile
         CreateMap<MessageUpdatedEvent, Message>();
 
         CreateMap<MessageDeletedEvent, Message>();
+
+        CreateMap<PaginationList<Message>, MessagePaginationCollectionModel>();
 
         CreateMap<GetAllFilteredMessagesQuery, MessageFilteredCollectionQuery>()
             .ConstructUsing(src =>

@@ -33,8 +33,8 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
 
     public BaseMessageUnitTest()
     {
-        ValidLimitValue = (MessageBusinessConfigurations.LIMIT_MAX_VALUE + MessageBusinessConfigurations.LIMIT_MIN_VALUE) / 2;
-        ValidOffsetValue = (MessageBusinessConfigurations.OFFSET_MAX_VALUE + MessageBusinessConfigurations.OFFSET_MIN_VALUE) / 2;
+        ValidLimitValue = (MessageBusinessConfigurations.PAGE_MAX_VALUE + MessageBusinessConfigurations.PAGE_MIN_VALUE) / 2;
+        ValidOffsetValue = (MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE + MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE) / 2;
 
         ValidId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.ID_MAX_LENGTH + MessageBusinessConfigurations.ID_MIN_LENGTH) / 2);
         ValidReceiverId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH) / 2);
@@ -68,7 +68,13 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
             UserName = MessageUnitTestConfigurations.EXISTING_SENDER_NAME,
         });
 
-        InstaConnectSender.SendAsync(Arg.Any<GetAllFilteredMessagesQuery>(), CancellationToken).Returns([existingMessage]);
+        InstaConnectSender.SendAsync(Arg.Any<GetAllFilteredMessagesQuery>(), CancellationToken).Returns(new MessagePaginationCollectionModel()
+        {
+            Items = [existingMessage],
+            Page = MessageBusinessConfigurations.PAGE_MIN_VALUE,
+            PageSize = MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE,
+            TotalCount = MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE,
+        });
 
         InstaConnectSender.SendAsync(Arg.Any<GetMessageByIdQuery>(), CancellationToken).Returns(existingMessage);
     }

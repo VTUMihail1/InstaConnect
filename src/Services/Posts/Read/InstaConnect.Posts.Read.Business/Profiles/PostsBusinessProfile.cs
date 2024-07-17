@@ -37,7 +37,7 @@ public class PostsBusinessProfile : Profile
                                        (src.Title == string.Empty || p.Title == src.Title)
                  });
 
-        CreateMap<GetAllPostsQuery, CollectionQuery>();
+        CreateMap<GetAllPostsQuery, CollectionReadQuery>();
 
         CreateMap<Post, PostViewModel>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))
@@ -61,7 +61,7 @@ public class PostsBusinessProfile : Profile
                                        (src.PostId == string.Empty || p.PostId == src.PostId)
                  });
 
-        CreateMap<GetAllPostCommentsQuery, CollectionQuery>();
+        CreateMap<GetAllPostCommentsQuery, CollectionReadQuery>();
 
         CreateMap<PostComment, PostCommentViewModel>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))
@@ -85,7 +85,7 @@ public class PostsBusinessProfile : Profile
                                        (src.PostId == string.Empty || p.PostId == src.PostId)
                  });
 
-        CreateMap<GetAllPostLikesQuery, CollectionQuery>();
+        CreateMap<GetAllPostLikesQuery, CollectionReadQuery>();
 
         CreateMap<PostLike, PostLikeViewModel>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))
@@ -109,7 +109,7 @@ public class PostsBusinessProfile : Profile
                                        (src.PostCommentId == string.Empty || p.PostCommentId == src.PostCommentId)
                  });
 
-        CreateMap<GetAllPostCommentLikesQuery, CollectionQuery>();
+        CreateMap<GetAllPostCommentLikesQuery, CollectionReadQuery>();
 
         CreateMap<PostCommentLike, PostCommentLikeViewModel>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))

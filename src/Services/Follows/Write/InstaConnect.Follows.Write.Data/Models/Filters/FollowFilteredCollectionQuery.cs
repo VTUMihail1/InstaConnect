@@ -3,6 +3,6 @@ using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Follows.Write.Data.Models.Filters;
 
-public class FollowFilteredCollectionQuery : FilteredCollectionQuery<Follow>
+public class FollowFilteredCollectionQuery : FilteredCollectionReadQuery<Follow>
 {
 }

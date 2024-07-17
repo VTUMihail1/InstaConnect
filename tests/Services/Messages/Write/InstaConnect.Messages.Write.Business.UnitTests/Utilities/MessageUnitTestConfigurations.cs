@@ -17,9 +17,4 @@ public class MessageUnitTestConfigurations
     public const string EXISTING_MESSAGE_RECEIVER_ID = nameof(EXISTING_MESSAGE_RECEIVER_ID);
 
     public const string NON_EXISTING_MESSAGE_ID = nameof(NON_EXISTING_MESSAGE_ID);
-
-    public const string SORT_PROPERTY_ORDER_VALUE = "CreatedAt";
-    public const SortOrder SORT_ORDER_VALUE = SortOrder.ASC;
-    public const int LIMIT_VALUE = int.MaxValue;
-    public const int OFFSER_VALUE = default;
 }

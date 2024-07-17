@@ -2,6 +2,6 @@
 
 namespace InstaConnect.Posts.Read.Web.Models.Requests.PostComment;
 
-public class GetAllPostCommentsRequest : CollectionRequest
+public class GetAllPostCommentsRequest : CollectionReadRequest
 {
 }

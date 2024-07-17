@@ -3,6 +3,6 @@ using InstaConnect.Shared.Data.Abstract;
 
 namespace InstaConnect.Posts.Read.Data.Abstract;
 
-public interface IUserRepository : IBaseRepository<User>
+public interface IUserRepository : IBaseReadRepository<User>
 {
 }

@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Abstractions;
 
 namespace InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessages;
 
-internal class GetAllFilteredMessagesQueryHandler : IQueryHandler<GetAllFilteredMessagesQuery, ICollection<MessageViewModel>>
+internal class GetAllFilteredMessagesQueryHandler : IQueryHandler<GetAllFilteredMessagesQuery, MessagePaginationCollectionModel>
 {
     private readonly IMessageRepository _messageRepository;
     private readonly IInstaConnectMapper _instaConnectMapper;
@@ -19,12 +19,12 @@ internal class GetAllFilteredMessagesQueryHandler : IQueryHandler<GetAllFiltered
         _instaConnectMapper = instaConnectMapper;
     }
 
-    public async Task<ICollection<MessageViewModel>> Handle(GetAllFilteredMessagesQuery request, CancellationToken cancellationToken)
+    public async Task<MessagePaginationCollectionModel> Handle(GetAllFilteredMessagesQuery request, CancellationToken cancellationToken)
     {
         var filteredCollectionQuery = _instaConnectMapper.Map<MessageFilteredCollectionQuery>(request);
 
         var messages = await _messageRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
-        var response = _instaConnectMapper.Map<ICollection<MessageViewModel>>(messages);
+        var response = _instaConnectMapper.Map<MessagePaginationCollectionModel>(messages);
 
         return response;
     }

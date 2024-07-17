@@ -32,7 +32,7 @@ public class IdentityBusinessProfile : Profile
                                        (src.LastName == string.Empty || p.LastName.Contains(src.UserName))
                  });
 
-        CreateMap<GetAllUsersQuery, CollectionQuery>();
+        CreateMap<GetAllUsersQuery, CollectionReadQuery>();
 
         CreateMap<RegisterAccountCommand, User>();
 

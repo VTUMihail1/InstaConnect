@@ -2,6 +2,6 @@
 
 namespace InstaConnect.Posts.Read.Web.Models.Requests.PostCommentLike;
 
-public class GetAllPostCommentLikesRequest : CollectionRequest
+public class GetAllPostCommentLikesRequest : CollectionReadRequest
 {
 }

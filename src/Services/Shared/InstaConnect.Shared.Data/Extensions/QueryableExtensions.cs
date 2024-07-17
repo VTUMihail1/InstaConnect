@@ -1,6 +1,8 @@
 ﻿using System.Linq.Expressions;
 using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Shared.Data.Models.Enums;
+using InstaConnect.Shared.Data.Models.Pagination;
+using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Shared.Data.Extensions;
 
@@ -19,5 +21,22 @@ public static class QueryableExtensions
         }
 
         return queryable.OrderBy(orderByClause);
+    }
+
+    public static async Task<PaginationList<T>> ToPagedList<T>(this IQueryable<T> queryable, int page, int pageSize, CancellationToken cancellationToken) where T : class, IBaseEntity
+    {
+        var totalCount = await queryable.CountAsync(cancellationToken);
+        var items = await queryable
+            .Skip((page - 1) * pageSize * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return new PaginationList<T>()
+        {
+            Items = items,
+            TotalCount = totalCount,
+            Page = page,
+            PageSize = pageSize
+        };
     }
 }

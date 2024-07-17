@@ -39,12 +39,12 @@ public class GetAllFilteredMessagesQueryValidator : AbstractValidator<GetAllFilt
             .MaximumLength(MessageBusinessConfigurations.SORT_PROPERTY_NAME_MAX_LENGTH)
             .Must(entityPropertyValidator.IsEntityPropertyValid<Message>);
 
-        RuleFor(q => q.Limit)
-            .LessThanOrEqualTo(MessageBusinessConfigurations.LIMIT_MAX_VALUE)
-            .GreaterThanOrEqualTo(MessageBusinessConfigurations.LIMIT_MIN_VALUE);
+        RuleFor(q => q.Page)
+            .LessThanOrEqualTo(MessageBusinessConfigurations.PAGE_MAX_VALUE)
+            .GreaterThanOrEqualTo(MessageBusinessConfigurations.PAGE_MIN_VALUE);
 
-        RuleFor(q => q.Offset)
-            .LessThanOrEqualTo(MessageBusinessConfigurations.OFFSET_MAX_VALUE)
-            .GreaterThanOrEqualTo(MessageBusinessConfigurations.OFFSET_MIN_VALUE);
+        RuleFor(q => q.PageSize)
+            .LessThanOrEqualTo(MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE)
+            .GreaterThanOrEqualTo(MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE);
     }
 }

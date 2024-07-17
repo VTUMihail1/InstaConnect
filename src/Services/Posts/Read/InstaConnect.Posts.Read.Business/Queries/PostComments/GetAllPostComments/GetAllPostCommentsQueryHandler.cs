@@ -21,7 +21,7 @@ internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostComments
 
     public async Task<ICollection<PostCommentViewModel>> Handle(GetAllPostCommentsQuery request, CancellationToken cancellationToken)
     {
-        var collectionQuery = _mapper.Map<CollectionQuery>(request);
+        var collectionQuery = _mapper.Map<CollectionReadQuery>(request);
 
         var postComments = await _postCommentRepository.GetAllAsync(collectionQuery, cancellationToken);
         var response = _mapper.Map<ICollection<PostCommentViewModel>>(postComments);

@@ -3,6 +3,6 @@ using InstaConnect.Shared.Data.Abstract;
 
 namespace InstaConnect.Messages.Read.Data.Abstractions;
 
-public interface IMessageRepository : IBaseRepository<Message>
+public interface IMessageRepository : IBaseReadRepository<Message>
 {
 }

@@ -4,7 +4,7 @@ using InstaConnect.Shared.Data.Repositories;
 
 namespace InstaConnect.Messages.Read.Data.Repositories;
 
-internal class UserRepository : BaseRepository<User>, IUserRepository
+internal class UserRepository : BaseReadRepository<User>, IUserRepository
 {
     public UserRepository(MessagesContext messagesContext) : base(messagesContext)
     {

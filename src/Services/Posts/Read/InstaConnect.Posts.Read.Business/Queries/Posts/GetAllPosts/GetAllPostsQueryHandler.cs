@@ -21,7 +21,7 @@ internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, ICollec
 
     public async Task<ICollection<PostViewModel>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
     {
-        var collectionQuery = _mapper.Map<CollectionQuery>(request);
+        var collectionQuery = _mapper.Map<CollectionReadQuery>(request);
 
         var posts = await _postRepository.GetAllAsync(collectionQuery, cancellationToken);
         var response = _mapper.Map<ICollection<PostViewModel>>(posts);

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Shared.Data.Models.Enums;
-
-namespace InstaConnect.Shared.Business.Models.Filters;
+﻿namespace InstaConnect.Shared.Business.Models.Filters;
 
 public class CollectionModel
 {
@@ -8,7 +6,7 @@ public class CollectionModel
 
     public string SortPropertyName { get; set; } = string.Empty;
 
-    public int Offset { get; set; } = 0;
+    public int Page { get; set; } = 1;
 
-    public int Limit { get; set; } = int.MaxValue;
+    public int PageSize { get; set; } = 10000;
 }

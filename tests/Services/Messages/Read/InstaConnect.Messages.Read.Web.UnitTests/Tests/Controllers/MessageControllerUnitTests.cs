@@ -1,7 +1,9 @@
-﻿using System.Net;
+﻿using System.Drawing.Printing;
+using System.Net;
 using FluentAssertions;
 using InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessages;
 using InstaConnect.Messages.Read.Business.Queries.Messages.GetMessageById;
+using InstaConnect.Messages.Read.Business.Utilities;
 using InstaConnect.Messages.Read.Web.Controllers.v1;
 using InstaConnect.Messages.Read.Web.Models.Requests.Messages;
 using InstaConnect.Messages.Read.Web.Models.Responses;
@@ -33,8 +35,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = ValidSortOrderName,
             SortPropertyName = ValidSortPropertyName,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidOffsetValue,
+            PageSize = ValidLimitValue,
         };
 
         // Act
@@ -57,8 +59,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = ValidSortOrderName,
             SortPropertyName = ValidSortPropertyName,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidOffsetValue,
+            PageSize = ValidLimitValue,
         };
 
         // Act
@@ -71,17 +73,20 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
             .Which
             .Value
             .Should()
-            .Match<ICollection<MessageViewResponse>>(mc => mc.Any(m =>
-                m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
-                m.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
-                m.SenderName == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_NAME &&
-                m.SenderProfileImage == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_PROFILE_IMAGE &&
-                m.ReceiverId == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
-                m.ReceiverName == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_NAME &&
-                m.ReceiverProfileImage == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_PROFILE_IMAGE &&
-                m.Content == MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT
-            ));
-        ;
+            .Match<MessagePaginationCollectionResponse>(mc => mc.Items.Any(m =>
+                                                                 m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
+                                                                 m.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
+                                                                 m.SenderName == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_NAME &&
+                                                                 m.SenderProfileImage == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_PROFILE_IMAGE &&
+                                                                 m.ReceiverId == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
+                                                                 m.ReceiverName == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_NAME &&
+                                                                 m.ReceiverProfileImage == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_PROFILE_IMAGE &&
+                                                                 m.Content == MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
+                                                              mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
+                                                              mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
+                                                              mc.TotalCount == MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE &&
+                                                              !mc.HasNextPage &&
+                                                              !mc.HasPreviousPage);
     }
 
     [Fact]
@@ -93,8 +98,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = ValidSortOrderName,
             SortPropertyName = ValidSortPropertyName,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidOffsetValue,
+            PageSize = ValidLimitValue,
         };
 
         // Act
@@ -109,8 +114,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
                   m.ReceiverName == ValidReceiverName &&
                   m.SortOrder == ValidSortOrderName &&
                   m.SortPropertyName == ValidSortPropertyName &&
-                  m.Offset == ValidOffsetValue &&
-                  m.Limit == ValidLimitValue), CancellationToken);
+                  m.Page == ValidOffsetValue &&
+                  m.PageSize == ValidLimitValue), CancellationToken);
     }
 
     [Fact]
@@ -122,8 +127,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
             ReceiverName = ValidReceiverName,
             SortOrder = ValidSortOrderName,
             SortPropertyName = ValidSortPropertyName,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidOffsetValue,
+            PageSize = ValidLimitValue,
         };
 
         // Act

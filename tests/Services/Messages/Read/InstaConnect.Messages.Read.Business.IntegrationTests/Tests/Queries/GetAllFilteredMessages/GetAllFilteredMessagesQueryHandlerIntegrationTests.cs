@@ -24,8 +24,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = ValidReceiverName,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -49,8 +49,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = ValidReceiverName,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -73,8 +73,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = ValidReceiverName,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -97,8 +97,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = Faker.Random.AlphaNumeric(length),
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -119,8 +119,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = ValidReceiverName,
             SortOrder = null!,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -144,8 +144,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = ValidReceiverName,
             SortOrder = Faker.Random.AlphaNumeric(length),
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -166,8 +166,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = ValidReceiverName,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = null!,
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -191,8 +191,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = ValidReceiverName,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = Faker.Random.AlphaNumeric(length),
-            Offset = ValidOffsetValue,
-            Limit = ValidLimitValue,
+            Page = ValidPageValue,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -203,9 +203,9 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
     }
 
     [Theory]
-    [InlineData(MessageBusinessConfigurations.OFFSET_MIN_VALUE - 1)]
-    [InlineData(MessageBusinessConfigurations.OFFSET_MAX_VALUE + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenOffsetValueIsInvalid(int value)
+    [InlineData(MessageBusinessConfigurations.PAGE_MIN_VALUE - 1)]
+    [InlineData(MessageBusinessConfigurations.PAGE_MAX_VALUE + 1)]
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenPageValueIsInvalid(int value)
     {
         // Arrange
         var query = new GetAllFilteredMessagesQuery
@@ -215,8 +215,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = ValidReceiverName,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = value,
-            Limit = ValidLimitValue,
+            Page = value,
+            PageSize = ValidPageSizeValue,
         };
 
         // Act
@@ -227,9 +227,9 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
     }
 
     [Theory]
-    [InlineData(MessageBusinessConfigurations.LIMIT_MIN_VALUE - 1)]
-    [InlineData(MessageBusinessConfigurations.LIMIT_MAX_VALUE + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenLimitValueIsInvalid(int value)
+    [InlineData(MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE - 1)]
+    [InlineData(MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE + 1)]
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
         var query = new GetAllFilteredMessagesQuery
@@ -239,8 +239,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = ValidReceiverName,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Offset = ValidOffsetValue,
-            Limit = value,
+            Page = ValidPageValue,
+            PageSize = value,
         };
 
         // Act
@@ -264,8 +264,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Limit = MessageBusinessConfigurations.LIMIT_MAX_VALUE,
-            Offset = MessageBusinessConfigurations.OFFSET_MIN_VALUE,
+            Page = MessageBusinessConfigurations.PAGE_MIN_VALUE,
+            PageSize = MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE,
         };
 
         // Act
@@ -274,10 +274,15 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Assert
         response
             .Should()
-            .Match<ICollection<MessageViewModel>>(mc => mc.Any(m => m.Id == existingMessageId &&
+            .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
                                                                     m.ReceiverId == existingReceiverId &&
-                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT));
+                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
+                                                           mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
+                                                           mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
+                                                           mc.TotalCount == MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
     }
 
     [Fact]
@@ -294,8 +299,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Limit = MessageBusinessConfigurations.LIMIT_MAX_VALUE,
-            Offset = MessageBusinessConfigurations.OFFSET_MIN_VALUE,
+            Page = MessageBusinessConfigurations.PAGE_MIN_VALUE,
+            PageSize = MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE,
         };
 
         // Act
@@ -304,10 +309,15 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Assert
         response
             .Should()
-            .Match<ICollection<MessageViewModel>>(mc => mc.Any(m => m.Id == existingMessageId &&
+            .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
                                                                     m.ReceiverId == existingReceiverId &&
-                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT));
+                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
+                                                           mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
+                                                           mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
+                                                           mc.TotalCount == MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
     }
 
     [Fact]
@@ -324,8 +334,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Limit = MessageBusinessConfigurations.LIMIT_MAX_VALUE,
-            Offset = MessageBusinessConfigurations.OFFSET_MIN_VALUE,
+            Page = MessageBusinessConfigurations.PAGE_MIN_VALUE,
+            PageSize = MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE,
         };
 
         // Act
@@ -334,10 +344,15 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Assert
         response
             .Should()
-            .Match<ICollection<MessageViewModel>>(mc => mc.Any(m => m.Id == existingMessageId &&
+            .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
                                                                     m.ReceiverId == existingReceiverId &&
-                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT));
+                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
+                                                           mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
+                                                           mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
+                                                           mc.TotalCount == MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
     }
 
     [Fact]
@@ -354,8 +369,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Limit = MessageBusinessConfigurations.LIMIT_MAX_VALUE,
-            Offset = MessageBusinessConfigurations.OFFSET_MIN_VALUE,
+            Page = MessageBusinessConfigurations.PAGE_MIN_VALUE,
+            PageSize = MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE,
         };
 
         // Act
@@ -364,10 +379,15 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Assert
         response
             .Should()
-            .Match<ICollection<MessageViewModel>>(mc => mc.Any(m => m.Id == existingMessageId &&
+            .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
                                                                     m.ReceiverId == existingReceiverId &&
-                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT));
+                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
+                                                           mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
+                                                           mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
+                                                           mc.TotalCount == MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
     }
 
     [Fact]
@@ -384,8 +404,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = null!,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Limit = MessageBusinessConfigurations.LIMIT_MAX_VALUE,
-            Offset = MessageBusinessConfigurations.OFFSET_MIN_VALUE,
+            Page = MessageBusinessConfigurations.PAGE_MIN_VALUE,
+            PageSize = MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE,
         };
 
         // Act
@@ -394,10 +414,15 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Assert
         response
             .Should()
-            .Match<ICollection<MessageViewModel>>(mc => mc.Any(m => m.Id == existingMessageId &&
+            .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
                                                                     m.ReceiverId == existingReceiverId &&
-                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT));
+                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
+                                                           mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
+                                                           mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
+                                                           mc.TotalCount == MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
     }
 
     [Fact]
@@ -414,8 +439,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = string.Empty,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Limit = MessageBusinessConfigurations.LIMIT_MAX_VALUE,
-            Offset = MessageBusinessConfigurations.OFFSET_MIN_VALUE,
+            Page = MessageBusinessConfigurations.PAGE_MIN_VALUE,
+            PageSize = MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE,
         };
 
         // Act
@@ -424,10 +449,15 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Assert
         response
             .Should()
-            .Match<ICollection<MessageViewModel>>(mc => mc.Any(m => m.Id == existingMessageId &&
+            .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
                                                                     m.ReceiverId == existingReceiverId &&
-                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT));
+                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
+                                                           mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
+                                                           mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
+                                                           mc.TotalCount == MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
     }
 
     [Fact]
@@ -444,8 +474,8 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             ReceiverName = MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME,
             SortOrder = MessageIntegrationTestConfigurations.SORT_ORDER_NAME,
             SortPropertyName = MessageIntegrationTestConfigurations.SORT_PROPERTY_ORDER_VALUE,
-            Limit = MessageBusinessConfigurations.LIMIT_MAX_VALUE,
-            Offset = MessageBusinessConfigurations.OFFSET_MIN_VALUE,
+            Page = MessageBusinessConfigurations.PAGE_MIN_VALUE,
+            PageSize = MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE,
         };
 
         // Act
@@ -454,9 +484,14 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Assert
         response
             .Should()
-            .Match<ICollection<MessageViewModel>>(mc => mc.Any(m => m.Id == existingMessageId &&
+            .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
                                                                     m.ReceiverId == existingReceiverId &&
-                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT));
+                                                                    m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT) &&
+                                                           mc.Page == MessageBusinessConfigurations.PAGE_MIN_VALUE &&
+                                                           mc.PageSize == MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE &&
+                                                           mc.TotalCount == MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
     }
 }

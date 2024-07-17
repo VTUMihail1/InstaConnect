@@ -21,7 +21,7 @@ public class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQuery, IColl
 
     public async Task<ICollection<FollowViewModel>> Handle(GetAllFollowsQuery request, CancellationToken cancellationToken)
     {
-        var collectionQuery = _mapper.Map<CollectionQuery>(request);
+        var collectionQuery = _mapper.Map<CollectionReadQuery>(request);
 
         var follows = await _followRepository.GetAllAsync(collectionQuery, cancellationToken);
         var response = _mapper.Map<ICollection<FollowViewModel>>(follows);

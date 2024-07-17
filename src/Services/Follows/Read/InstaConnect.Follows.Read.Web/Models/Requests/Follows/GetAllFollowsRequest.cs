@@ -2,6 +2,6 @@
 
 namespace InstaConnect.Follows.Read.Web.Models.Requests.Follows;
 
-public class GetAllFollowsRequest : CollectionRequest
+public class GetAllFollowsRequest : CollectionReadRequest
 {
 }

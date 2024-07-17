@@ -6,7 +6,7 @@ namespace InstaConnect.Posts.Write.Data.Abstract;
 /// <summary>
 /// Represents a repository interface specifically for managing post likes, inheriting from the generic repository for entities of type <see cref="PostLike"/>.
 /// </summary>
-public interface IPostLikeRepository : IBaseRepository<PostLike>
+public interface IPostLikeRepository : IBaseReadRepository<PostLike>
 {
     Task<PostLike?> GetByUserIdAndPostIdAsync(string userId, string postId, CancellationToken cancellationToken);
 }

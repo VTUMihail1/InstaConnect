@@ -6,11 +6,11 @@ public class GetAllFilteredPostLikesQueryValidator : AbstractValidator<GetAllFil
 {
     public GetAllFilteredPostLikesQueryValidator()
     {
-        RuleFor(q => q.Offset)
+        RuleFor(q => q.Page)
             .NotEmpty()
             .GreaterThanOrEqualTo(default(int));
 
-        RuleFor(q => q.Limit)
+        RuleFor(q => q.PageSize)
             .NotEmpty()
             .GreaterThanOrEqualTo(default(int));
 

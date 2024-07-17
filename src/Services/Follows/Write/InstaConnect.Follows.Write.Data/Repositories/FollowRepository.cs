@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Follows.Write.Data.Repositories;
 
-public class FollowRepository : BaseRepository<Follow>, IFollowRepository
+public class FollowRepository : BaseReadRepository<Follow>, IFollowRepository
 {
     private readonly FollowsContext _followsContext;
 
