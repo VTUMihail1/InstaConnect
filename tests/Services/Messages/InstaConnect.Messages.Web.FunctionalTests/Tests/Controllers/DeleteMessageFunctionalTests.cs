@@ -10,7 +10,7 @@ using InstaConnect.Messages.Web.Models.Responses;
 using MassTransit.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Write.Web.FunctionalTests.Tests.Commands;
+namespace InstaConnect.Messages.Web.FunctionalTests.Tests.Controllers;
 
 public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 {
@@ -174,9 +174,9 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-         await HttpClient.DeleteAsync(
-            $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
-            CancellationToken);
+        await HttpClient.DeleteAsync(
+           $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
+           CancellationToken);
 
         var message = await MessageWriteRepository.GetByIdAsync(existingMessageId, CancellationToken);
 
