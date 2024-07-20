@@ -9,7 +9,7 @@ using InstaConnect.Messages.Web.FunctionalTests.Utilities;
 using InstaConnect.Messages.Web.Models.Binding;
 using InstaConnect.Messages.Web.Models.Responses;
 
-namespace InstaConnect.Messages.Write.Web.FunctionalTests.Tests.Commands;
+namespace InstaConnect.Messages.Web.FunctionalTests.Tests.Controllers;
 
 public class AddMessageFunctionalTests : BaseMessageFunctionalTest
 {

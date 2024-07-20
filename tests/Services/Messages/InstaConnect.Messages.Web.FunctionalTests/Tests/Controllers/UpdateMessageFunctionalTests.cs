@@ -17,7 +17,7 @@ using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Write.Web.FunctionalTests.Tests.Commands;
+namespace InstaConnect.Messages.Web.FunctionalTests.Tests.Controllers;
 
 public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
 {
