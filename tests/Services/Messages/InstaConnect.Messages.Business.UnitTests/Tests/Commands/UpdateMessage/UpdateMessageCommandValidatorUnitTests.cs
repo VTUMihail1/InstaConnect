@@ -20,11 +20,11 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var command = new UpdateMessageCommand
-        {
-            Id = null!,
-            CurrentUserId = ValidCurrentUserId,
-        };
+        var command = new UpdateMessageCommand(
+            null!,
+            ValidContent,
+            ValidCurrentUserId
+        );
 
         // Act
         var result = _validator.TestValidate(command);
@@ -40,12 +40,11 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new UpdateMessageCommand
-        {
-            Id = Faker.Random.AlphaNumeric(length),
-            CurrentUserId = ValidCurrentUserId,
-            Content = ValidContent
-        };
+        var command = new UpdateMessageCommand(
+            Faker.Random.AlphaNumeric(length),
+            ValidContent,
+            ValidCurrentUserId
+        );
 
         // Act
         var result = _validator.TestValidate(command);
@@ -58,12 +57,11 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var command = new UpdateMessageCommand
-        {
-            Id = ValidId,
-            CurrentUserId = null!,
-            Content = ValidContent
-        };
+        var command = new UpdateMessageCommand(
+            ValidId,
+            ValidContent,
+            null!
+        );
 
         // Act
         var result = _validator.TestValidate(command);
@@ -79,12 +77,11 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new UpdateMessageCommand
-        {
-            Id = ValidId,
-            CurrentUserId = Faker.Random.AlphaNumeric(length),
-            Content = ValidContent
-        };
+        var command = new UpdateMessageCommand(
+            ValidId,
+            ValidContent,
+            Faker.Random.AlphaNumeric(length)
+        );
 
         // Act
         var result = _validator.TestValidate(command);
@@ -97,12 +94,11 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForContent_WhenContentIsNull()
     {
         // Arrange
-        var command = new UpdateMessageCommand
-        {
-            Id = ValidId,
-            CurrentUserId = ValidCurrentUserId,
-            Content = null!
-        };
+        var command = new UpdateMessageCommand(
+            ValidId,
+            null!,
+            ValidCurrentUserId
+        );
 
         // Act
         var result = _validator.TestValidate(command);
@@ -118,12 +114,11 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForContent_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new UpdateMessageCommand
-        {
-            Id = ValidId,
-            CurrentUserId = ValidCurrentUserId,
-            Content = Faker.Random.AlphaNumeric(length)
-        };
+        var command = new UpdateMessageCommand(
+            ValidId,
+            Faker.Random.AlphaNumeric(length),
+            ValidCurrentUserId
+        );
 
         // Act
         var result = _validator.TestValidate(command);

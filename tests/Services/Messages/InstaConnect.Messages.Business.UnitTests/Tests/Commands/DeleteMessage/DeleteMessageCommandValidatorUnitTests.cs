@@ -19,11 +19,10 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var command = new DeleteMessageCommand
-        {
-            Id = null!,
-            CurrentUserId = ValidCurrentUserId,
-        };
+        var command = new DeleteMessageCommand(
+            null!,
+            ValidCurrentUserId
+        );
 
         // Act
         var result = _validator.TestValidate(command);
@@ -39,11 +38,10 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new DeleteMessageCommand
-        {
-            Id = Faker.Random.AlphaNumeric(length),
-            CurrentUserId = ValidCurrentUserId,
-        };
+        var command = new DeleteMessageCommand(
+            Faker.Random.AlphaNumeric(length),
+            ValidCurrentUserId
+        );
 
         // Act
         var result = _validator.TestValidate(command);
@@ -56,11 +54,10 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var command = new DeleteMessageCommand
-        {
-            Id = ValidId,
-            CurrentUserId = null!,
-        };
+        var command = new DeleteMessageCommand(
+            ValidId,
+            null!
+        );
 
         // Act
         var result = _validator.TestValidate(command);
@@ -76,11 +73,10 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new DeleteMessageCommand
-        {
-            Id = ValidId,
-            CurrentUserId = Faker.Random.AlphaNumeric(length),
-        };
+        var command = new DeleteMessageCommand(
+            ValidId,
+            Faker.Random.AlphaNumeric(length)
+        );
 
         // Act
         var result = _validator.TestValidate(command);

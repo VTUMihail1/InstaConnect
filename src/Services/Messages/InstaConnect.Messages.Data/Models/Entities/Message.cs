@@ -4,13 +4,20 @@ namespace InstaConnect.Messages.Data.Models.Entities;
 
 public class Message : BaseEntity
 {
-    public string Content { get; set; } = string.Empty;
+    public Message(string content, string senderId, string receiverId)
+    {
+        Content = content;
+        SenderId = senderId;
+        ReceiverId = receiverId;
+    }
 
-    public string SenderId { get; set; } = string.Empty;
+    public string Content { get; set; }
 
-    public User Sender { get; set; }
+    public string SenderId { get; }
 
-    public string ReceiverId { get; set; } = string.Empty;
+    public User? Sender { get; set; }
 
-    public User Receiver { get; set; }
+    public string ReceiverId { get; }
+
+    public User? Receiver { get; set; }
 }

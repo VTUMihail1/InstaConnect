@@ -18,12 +18,11 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var command = new AddMessageCommand
-        {
-            CurrentUserId = null!,
-            ReceiverId = ValidReceiverId,
-            Content = ValidContent
-        };
+        var command = new AddMessageCommand(
+            null!,
+            ValidReceiverId,
+            ValidContent
+        );
 
         // Act
         var result = _validator.TestValidate(command);
@@ -39,12 +38,11 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new AddMessageCommand
-        {
-            CurrentUserId = Faker.Random.AlphaNumeric(length)!,
-            ReceiverId = ValidReceiverId,
-            Content = ValidContent
-        };
+        var command = new AddMessageCommand(
+            Faker.Random.AlphaNumeric(length)!,
+            ValidReceiverId,
+            ValidContent
+        );
 
         // Act
         var result = _validator.TestValidate(command);
@@ -57,12 +55,11 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForReceiverId_WhenReceiverIsNull()
     {
         // Arrange
-        var command = new AddMessageCommand
-        {
-            CurrentUserId = ValidCurrentUserId,
-            ReceiverId = null!,
-            Content = ValidContent
-        };
+        var command = new AddMessageCommand(
+            ValidCurrentUserId,
+            null!,
+            ValidContent
+        );
 
         // Act
         var result = _validator.TestValidate(command);
@@ -78,12 +75,11 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForReceiverId_WhenReceiverIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new AddMessageCommand
-        {
-            CurrentUserId = ValidCurrentUserId,
-            ReceiverId = Faker.Random.AlphaNumeric(length)!,
-            Content = ValidContent
-        };
+        var command = new AddMessageCommand(
+            ValidCurrentUserId,
+            Faker.Random.AlphaNumeric(length)!,
+            ValidContent
+        );
 
         // Act
         var result = _validator.TestValidate(command);
@@ -96,12 +92,11 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForContent_WhenContentIsNull()
     {
         // Arrange
-        var command = new AddMessageCommand
-        {
-            CurrentUserId = ValidCurrentUserId,
-            ReceiverId = ValidReceiverId,
-            Content = null!
-        };
+        var command = new AddMessageCommand(
+            ValidCurrentUserId,
+            ValidReceiverId,
+            null!
+        );
 
         // Act
         var result = _validator.TestValidate(command);
@@ -117,12 +112,11 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForContent_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new AddMessageCommand
-        {
-            CurrentUserId = ValidCurrentUserId,
-            ReceiverId = ValidReceiverId,
-            Content = Faker.Random.AlphaNumeric(length)!
-        };
+        var command = new AddMessageCommand(
+            ValidCurrentUserId,
+            ValidReceiverId,
+            Faker.Random.AlphaNumeric(length)!
+        );
 
         // Act
         var result = _validator.TestValidate(command);

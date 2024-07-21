@@ -1,6 +1,5 @@
 ﻿namespace InstaConnect.Messages.Business.Models;
 
-public class MessageWriteViewModel
+public record MessageWriteViewModel(string Id)
 {
-    public string Id { get; set; } = string.Empty;
 }

@@ -23,11 +23,10 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowMessageNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var query = new GetMessageByIdQuery()
-        {
-            Id = MessageUnitTestConfigurations.NON_EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-        };
+        var query = new GetMessageByIdQuery(
+            MessageUnitTestConfigurations.NON_EXISTING_MESSAGE_ID,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+        );
 
         // Act
         var action = async () => await _queryHandler.Handle(query, CancellationToken);
@@ -40,11 +39,10 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowAccountForbiddenException_WhenCurrentUserIdDoesNotOwnTheMessage()
     {
         // Arrange
-        var query = new GetMessageByIdQuery()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-        };
+        var query = new GetMessageByIdQuery(
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+            MessageUnitTestConfigurations.EXISTING_SENDER_ID
+        );
 
         // Act
         var action = async () => await _queryHandler.Handle(query, CancellationToken);
@@ -57,11 +55,10 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetByIdMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetMessageByIdQuery()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-        };
+        var query = new GetMessageByIdQuery(
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+        );
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -76,11 +73,10 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldReturnMessageViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetMessageByIdQuery()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-        };
+        var query = new GetMessageByIdQuery(
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+        );
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -90,10 +86,10 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
             .Should()
             .Match<MessageReadViewModel>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
                                           m.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
-                                                           m.SenderName == MessageUnitTestConfigurations.EXISTING_SENDER_NAME &&
-                                                           m.SenderProfileImage == MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
-                                                           m.ReceiverId == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
-                                                           m.ReceiverName == MessageUnitTestConfigurations.EXISTING_RECEIVER_NAME &&
-                                                           m.ReceiverProfileImage == MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE);
+                                          m.SenderName == MessageUnitTestConfigurations.EXISTING_SENDER_NAME &&
+                                          m.SenderProfileImage == MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
+                                          m.ReceiverId == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
+                                          m.ReceiverName == MessageUnitTestConfigurations.EXISTING_RECEIVER_NAME &&
+                                          m.ReceiverProfileImage == MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE);
     }
 }

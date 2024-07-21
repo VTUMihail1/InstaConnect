@@ -25,33 +25,6 @@ public static class ServiceCollectionExtensions
         return serviceCollection;
     }
 
-    public static IServiceCollection AddTestGetUserByIdRequestClient(this IServiceCollection serviceCollection, params GetUserByIdResponse[] getUserByIdResponses)
-    {
-        var descriptor = serviceCollection.SingleOrDefault(s => s.ServiceType == typeof(IRequestClient<GetUserByIdRequest>));
-
-        if (descriptor != null)
-        {
-            serviceCollection.Remove(descriptor);
-        }
-
-        serviceCollection.AddScoped(_ =>
-        {
-            var requestClient = Substitute.For<IInstaConnectRequestClient<GetUserByIdRequest>>();
-
-            foreach (var getUserByIdResponse in getUserByIdResponses)
-            {
-                requestClient.GetResponseMessageAsync<GetUserByIdResponse>(
-                Arg.Is<GetUserByIdRequest>(r => r.Id == getUserByIdResponse.Id),
-                Arg.Any<CancellationToken>())
-                .Returns(getUserByIdResponse);
-            }
-
-            return requestClient;
-        });
-
-        return serviceCollection;
-    }
-
     public static IServiceCollection AddTestJwtAuth(this IServiceCollection serviceCollection)
     {
         serviceCollection

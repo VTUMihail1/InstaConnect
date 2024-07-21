@@ -25,11 +25,10 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var command = new DeleteMessageCommand()
-        {
-            Id = null!,
-            CurrentUserId = ValidCurrentUserId,
-        };
+        var command = new DeleteMessageCommand(
+            null!,
+            ValidCurrentUserId
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -45,11 +44,10 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new DeleteMessageCommand()
-        {
-            Id = Faker.Random.AlphaNumeric(length),
-            CurrentUserId = ValidCurrentUserId,
-        };
+        var command = new DeleteMessageCommand(
+            Faker.Random.AlphaNumeric(length),
+            ValidCurrentUserId
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -62,11 +60,10 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var command = new DeleteMessageCommand()
-        {
-            Id = ValidId,
-            CurrentUserId = null!,
-        };
+        var command = new DeleteMessageCommand(
+            ValidId,
+            null!
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -82,11 +79,10 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new DeleteMessageCommand()
-        {
-            Id = ValidId,
-            CurrentUserId = Faker.Random.AlphaNumeric(length),
-        };
+        var command = new DeleteMessageCommand(
+            ValidId,
+            Faker.Random.AlphaNumeric(length)
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -102,11 +98,10 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var command = new DeleteMessageCommand()
-        {
-            Id = MessageIntegrationTestConfigurations.NON_EXISTING_MESSAGE_ID,
-            CurrentUserId = existingSenderId,
-        };
+        var command = new DeleteMessageCommand(
+            MessageIntegrationTestConfigurations.NON_EXISTING_MESSAGE_ID,
+            existingSenderId
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -123,11 +118,10 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         var existingMessageSenderId = await CreateUserAsync(CancellationToken);
         var existingMessageReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingMessageSenderId, existingMessageReceiverId, CancellationToken);
-        var command = new DeleteMessageCommand()
-        {
-            Id = existingMessageId,
-            CurrentUserId = existingSenderId,
-        };
+        var command = new DeleteMessageCommand(
+            existingMessageId,
+            existingSenderId
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -143,11 +137,10 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var command = new DeleteMessageCommand()
-        {
-            Id = existingMessageId,
-            CurrentUserId = existingSenderId,
-        };
+        var command = new DeleteMessageCommand(
+            existingMessageId,
+            existingSenderId
+        );
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);

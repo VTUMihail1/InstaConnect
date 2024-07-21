@@ -44,8 +44,7 @@ public class MessageController : ControllerBase
         CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var queryRequest = _instaConnectMapper.Map<GetAllFilteredMessagesQuery>(request);
-        _instaConnectMapper.Map(currentUser, queryRequest);
+        var queryRequest = _instaConnectMapper.Map<GetAllFilteredMessagesQuery>((currentUser, request));
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
         var response = _instaConnectMapper.Map<MessagePaginationCollectionResponse>(queryResponse);
 
@@ -61,8 +60,7 @@ public class MessageController : ControllerBase
         CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var queryRequest = _instaConnectMapper.Map<GetMessageByIdQuery>(request);
-        _instaConnectMapper.Map(currentUser, queryRequest);
+        var queryRequest = _instaConnectMapper.Map<GetMessageByIdQuery>((currentUser, request));
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
         var response = _instaConnectMapper.Map<MessageReadViewResponse>(queryResponse);
 
@@ -77,8 +75,7 @@ public class MessageController : ControllerBase
     public async Task<ActionResult<MessageWriteViewResponse>> AddAsync(AddMessageRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<AddMessageCommand>(request);
-        _instaConnectMapper.Map(currentUser, commandRequest);
+        var commandRequest = _instaConnectMapper.Map<AddMessageCommand>((currentUser, request));
         var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
         var response = _instaConnectMapper.Map<MessageWriteViewResponse>(commandResponse);
 
@@ -93,8 +90,7 @@ public class MessageController : ControllerBase
     public async Task<ActionResult<MessageWriteViewResponse>> UpdateAsync(UpdateMessageRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<UpdateMessageCommand>(request);
-        _instaConnectMapper.Map(currentUser, commandRequest);
+        var commandRequest = _instaConnectMapper.Map<UpdateMessageCommand>((currentUser, request));
         var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
         var response = _instaConnectMapper.Map<MessageWriteViewResponse>(commandResponse);
 
@@ -109,8 +105,7 @@ public class MessageController : ControllerBase
     public async Task<ActionResult<MessageWriteViewResponse>> DeleteAsync(DeleteMessageRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<DeleteMessageCommand>(request);
-        _instaConnectMapper.Map(currentUser, commandRequest);
+        var commandRequest = _instaConnectMapper.Map<DeleteMessageCommand>((currentUser, request));
         await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();

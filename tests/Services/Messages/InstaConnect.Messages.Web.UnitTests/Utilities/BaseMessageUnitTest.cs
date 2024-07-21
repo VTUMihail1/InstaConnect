@@ -49,17 +49,17 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
         ValidSortOrderName = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.SORT_ORDER_MAX_LENGTH + MessageBusinessConfigurations.SORT_ORDER_MIN_LENGTH) / 2);
         ValidSortPropertyName = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.SORT_PROPERTY_NAME_MAX_LENGTH + MessageBusinessConfigurations.SORT_PROPERTY_NAME_MIN_LENGTH) / 2);
 
-        var existingMessage = new MessageReadViewModel()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            SenderId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            SenderName = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_NAME,
-            SenderProfileImage = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_PROFILE_IMAGE,
-            ReceiverId = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
-            ReceiverName = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_NAME,
-            ReceiverProfileImage = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_PROFILE_IMAGE,
-            Content = MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT,
-        };
+        var existingMessage = new MessageReadViewModel(
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_NAME,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_PROFILE_IMAGE,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_NAME,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_PROFILE_IMAGE,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT);
+
+        var existingMessageWriteViewModel = new MessageWriteViewModel(MessageUnitTestConfigurations.EXISTING_MESSAGE_ID);
 
         InstaConnectSender = Substitute.For<IInstaConnectSender>();
         CurrentUserContext = Substitute.For<ICurrentUserContext>();
@@ -82,16 +82,16 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
             TotalCount = MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE,
         });
 
-        InstaConnectSender.SendAsync(Arg.Any<GetMessageByIdQuery>(), CancellationToken).Returns(existingMessage);
+        InstaConnectSender
+            .SendAsync(Arg.Any<GetMessageByIdQuery>(), CancellationToken)
+            .Returns(existingMessage);
 
-        InstaConnectSender.SendAsync(Arg.Any<AddMessageCommand>(), CancellationToken).Returns(new MessageWriteViewModel
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-        });
+        InstaConnectSender
+            .SendAsync(Arg.Any<AddMessageCommand>(), CancellationToken)
+            .Returns(existingMessageWriteViewModel);
 
-        InstaConnectSender.SendAsync(Arg.Any<UpdateMessageCommand>(), CancellationToken).Returns(new MessageWriteViewModel
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-        });
+        InstaConnectSender
+            .SendAsync(Arg.Any<UpdateMessageCommand>(), CancellationToken)
+            .Returns(existingMessageWriteViewModel);
     }
 }

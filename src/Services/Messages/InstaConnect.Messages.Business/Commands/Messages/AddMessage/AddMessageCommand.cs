@@ -3,11 +3,9 @@ using InstaConnect.Shared.Business.Abstractions;
 
 namespace InstaConnect.Messages.Business.Commands.Messages.AddMessage;
 
-public class AddMessageCommand : ICommand<MessageWriteViewModel>
+public record AddMessageCommand(
+    string CurrentUserId, 
+    string ReceiverId, 
+    string Content) : ICommand<MessageWriteViewModel>
 {
-    public string CurrentUserId { get; set; } = string.Empty;
-
-    public string ReceiverId { get; set; } = string.Empty;
-
-    public string Content { get; set; } = string.Empty;
 }

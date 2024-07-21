@@ -89,12 +89,7 @@ public abstract class BaseMessageFunctionalTest : BaseFunctionalTest, IClassFixt
 
     protected async Task<string> CreateMessageAsync(string senderId, string receiverId, CancellationToken cancellationToken)
     {
-        var message = new Message
-        {
-            SenderId = senderId,
-            ReceiverId = receiverId,
-            Content = ValidContent
-        };
+        var message = new Message(ValidContent, senderId, receiverId);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var messageReadRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageReadRepository>();
@@ -107,14 +102,12 @@ public abstract class BaseMessageFunctionalTest : BaseFunctionalTest, IClassFixt
 
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
     {
-        var user = new User
-        {
-            FirstName = MessageFunctionalTestConfigurations.EXISTING_SENDER_FIRST_NAME,
-            LastName = MessageFunctionalTestConfigurations.EXISTING_SENDER_LAST_NAME,
-            UserName = MessageFunctionalTestConfigurations.EXISTING_SENDER_NAME,
-            Email = MessageFunctionalTestConfigurations.EXISTING_SENDER_EMAIL,
-            ProfileImage = MessageFunctionalTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE,
-        };
+        var user = new User(
+            MessageFunctionalTestConfigurations.EXISTING_SENDER_FIRST_NAME,
+            MessageFunctionalTestConfigurations.EXISTING_SENDER_LAST_NAME,
+            MessageFunctionalTestConfigurations.EXISTING_SENDER_EMAIL,
+            MessageFunctionalTestConfigurations.EXISTING_SENDER_NAME,
+            MessageFunctionalTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();

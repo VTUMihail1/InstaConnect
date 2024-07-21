@@ -17,40 +17,40 @@ internal class MessagesWebProfile : Profile
     {
         // Write Messages
 
-        CreateMap<AddMessageRequest, AddMessageCommand>()
-            .ForMember(dest => dest.ReceiverId, opt => opt.MapFrom(src => src.AddMessageBindingModel.ReceiverId))
-            .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.AddMessageBindingModel.Content));
+        CreateMap<(CurrentUserModel, AddMessageRequest), AddMessageCommand>()
+            .ConstructUsing(src => new(
+                src.Item1.Id, 
+                src.Item2.AddMessageBindingModel.ReceiverId, 
+                src.Item2.AddMessageBindingModel.Content));
 
-        CreateMap<CurrentUserModel, AddMessageCommand>()
-            .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.Id));
+        CreateMap<(CurrentUserModel, UpdateMessageRequest), UpdateMessageCommand>()
+            .ConstructUsing(src => new(
+                src.Item2.Id,
+                src.Item2.UpdateMessageBindingModel.Content,
+                src.Item1.Id));
 
-        CreateMap<UpdateMessageRequest, UpdateMessageCommand>()
-            .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.UpdateMessageBindingModel.Content));
-
-        CreateMap<CurrentUserModel, UpdateMessageCommand>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore())
-            .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.Id));
-
-        CreateMap<DeleteMessageRequest, DeleteMessageCommand>();
-
-        CreateMap<CurrentUserModel, DeleteMessageCommand>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore())
-            .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.Id));
+        CreateMap<(CurrentUserModel, DeleteMessageRequest), DeleteMessageCommand>()
+            .ConstructUsing(src => new(
+                src.Item2.Id,
+                src.Item1.Id));
 
         CreateMap<MessageWriteViewModel, MessageWriteViewResponse>();
 
         // Read Messages
 
-        CreateMap<GetAllFilteredMessagesRequest, GetAllFilteredMessagesQuery>();
+        CreateMap<(CurrentUserModel, GetAllFilteredMessagesRequest), GetAllFilteredMessagesQuery>()
+            .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.Item1.Id))
+            .ForMember(dest => dest.ReceiverId, opt => opt.MapFrom(src => src.Item2.ReceiverId))
+            .ForMember(dest => dest.ReceiverName, opt => opt.MapFrom(src => src.Item2.ReceiverName))
+            .ForMember(dest => dest.Page, opt => opt.MapFrom(src => src.Item2.Page))
+            .ForMember(dest => dest.PageSize, opt => opt.MapFrom(src => src.Item2.PageSize))
+            .ForMember(dest => dest.SortOrder, opt => opt.MapFrom(src => src.Item2.SortOrder))
+            .ForMember(dest => dest.SortPropertyName, opt => opt.MapFrom(src => src.Item2.SortPropertyName));
 
-        CreateMap<CurrentUserModel, GetAllFilteredMessagesQuery>()
-            .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.Id));
-
-        CreateMap<CurrentUserModel, GetMessageByIdQuery>()
-            .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Id, opt => opt.Ignore());
-
-        CreateMap<GetMessageByIdRequest, GetMessageByIdQuery>();
+        CreateMap<(CurrentUserModel, GetMessageByIdRequest), GetMessageByIdQuery>()
+            .ConstructUsing(src => new(
+                src.Item2.Id,
+                src.Item1.Id));
 
         CreateMap<MessagePaginationCollectionModel, MessagePaginationCollectionResponse>();
 

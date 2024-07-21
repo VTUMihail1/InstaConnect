@@ -22,121 +22,115 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowMessageNotFoundException_WhenMessageIdIsInvalid()
-    {
-        // Arrange
-        var command = new UpdateMessageCommand()
-        {
-            Id = MessageUnitTestConfigurations.NON_EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            Content = ValidContent
-        };
+public async Task Handle_ShouldThrowMessageNotFoundException_WhenMessageIdIsInvalid()
+{
+    // Arrange
+    var command = new UpdateMessageCommand(
+        MessageUnitTestConfigurations.NON_EXISTING_MESSAGE_ID,
+        ValidContent,
+        MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+    );
 
-        // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+    // Act
+    var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
-        // Assert
-        await action.Should().ThrowAsync<MessageNotFoundException>();
-    }
+    // Assert
+    await action.Should().ThrowAsync<MessageNotFoundException>();
+}
 
-    [Fact]
-    public async Task Handle_ShouldThrowAccountForbiddenException_WhenSenderIdIsInvalid()
-    {
-        // Arrange
-        var command = new UpdateMessageCommand()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-            Content = ValidContent
-        };
+[Fact]
+public async Task Handle_ShouldThrowAccountForbiddenException_WhenSenderIdIsInvalid()
+{
+    // Arrange
+    var command = new UpdateMessageCommand(
+        MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+        ValidContent,
+        MessageUnitTestConfigurations.EXISTING_SENDER_ID
+    );
 
-        // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+    // Act
+    var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
-        // Assert
-        await action.Should().ThrowAsync<AccountForbiddenException>();
-    }
+    // Assert
+    await action.Should().ThrowAsync<AccountForbiddenException>();
+}
 
-    [Fact]
-    public async Task Handle_ShouldReturnMessageViewModel_WhenMessageIdIsValid()
-    {
-        // Arrange
-        var command = new UpdateMessageCommand()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            Content = ValidContent
-        };
+[Fact]
+public async Task Handle_ShouldReturnMessageViewModel_WhenMessageIdIsValid()
+{
+    // Arrange
+    var command = new UpdateMessageCommand(
+        MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+        ValidContent,
+        MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+    );
 
-        // Act
-        var response = await _commandHandler.Handle(command, CancellationToken);
+    // Act
+    var response = await _commandHandler.Handle(command, CancellationToken);
 
-        // Assert
-        response
-            .Should()
-            .Match<MessageWriteViewModel>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID);
-    }
+    // Assert
+    response
+        .Should()
+        .Match<MessageWriteViewModel>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID);
+}
 
-    [Fact]
-    public async Task Handle_ShouldGetMessageByIdFromRepository_WhenMessageIdIsValid()
-    {
-        // Arrange
-        var command = new UpdateMessageCommand()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            Content = ValidContent
-        };
+[Fact]
+public async Task Handle_ShouldGetMessageByIdFromRepository_WhenMessageIdIsValid()
+{
+    // Arrange
+    var command = new UpdateMessageCommand(
+        MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+        ValidContent,
+        MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+    );
 
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
+    // Act
+    await _commandHandler.Handle(command, CancellationToken);
 
-        // Assert
-        await MessageWriteRepository
-            .Received(1)
-            .GetByIdAsync(MessageUnitTestConfigurations.EXISTING_MESSAGE_ID, CancellationToken);
-    }
+    // Assert
+    await MessageWriteRepository
+        .Received(1)
+        .GetByIdAsync(MessageUnitTestConfigurations.EXISTING_MESSAGE_ID, CancellationToken);
+}
 
-    [Fact]
-    public async Task Handle_ShouldDeleteMessageFromRepository_WhenMessageIdIsValid()
-    {
-        // Arrange
-        var command = new UpdateMessageCommand()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            Content = ValidContent
-        };
+[Fact]
+public async Task Handle_ShouldUpdateMessageInRepository_WhenMessageIdIsValid()
+{
+    // Arrange
+    var command = new UpdateMessageCommand(
+        MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+        ValidContent,
+        MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+    );
 
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
+    // Act
+    await _commandHandler.Handle(command, CancellationToken);
 
-        // Assert
-        MessageWriteRepository
-            .Received(1)
-            .Update(Arg.Is<Message>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
-                                         m.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
-                                         m.ReceiverId == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
-                                         m.Content == ValidContent));
-    }
+    // Assert
+    MessageWriteRepository
+        .Received(1)
+        .Update(Arg.Is<Message>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
+                                     m.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
+                                     m.ReceiverId == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
+                                     m.Content == ValidContent));
+}
 
-    [Fact]
-    public async Task Handle_ShouldCallSaveChangesAsync_WhenMessageIdIsValid()
-    {
-        // Arrange
-        var command = new UpdateMessageCommand()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            Content = ValidContent
-        };
+[Fact]
+public async Task Handle_ShouldCallSaveChangesAsync_WhenMessageIdIsValid()
+{
+    // Arrange
+    var command = new UpdateMessageCommand(
+        MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+        ValidContent,
+        MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+    );
 
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
+    // Act
+    await _commandHandler.Handle(command, CancellationToken);
 
-        // Assert
-        await UnitOfWork
-            .Received(1)
-            .SaveChangesAsync(CancellationToken);
-    }
+    // Assert
+    await UnitOfWork
+        .Received(1)
+        .SaveChangesAsync(CancellationToken);
+}
 }

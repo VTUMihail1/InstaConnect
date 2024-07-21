@@ -52,8 +52,7 @@ public static class ServiceCollectionExtentions
         });
 
         serviceCollection
-            .AddScoped<IEventPublisher, EventPublisher>()
-            .AddScoped(typeof(IInstaConnectRequestClient<>), typeof(InstaConnectRequestClient<>));
+            .AddScoped<IEventPublisher, EventPublisher>();
 
         return serviceCollection;
     }

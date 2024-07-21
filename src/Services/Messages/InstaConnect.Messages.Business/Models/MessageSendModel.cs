@@ -1,8 +1,5 @@
 ﻿namespace InstaConnect.Messages.Business.Models;
 
-public class MessageSendModel
+public record MessageSendModel(string ReceiverId, string Content)
 {
-    public string ReceiverId { get; set; } = string.Empty;
-
-    public string Content { get; set; } = string.Empty;
 }
