@@ -23,11 +23,10 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowMessageNotFoundException_WhenMessageIdIsInvalid()
     {
         // Arrange
-        var command = new DeleteMessageCommand()
-        {
-            Id = MessageUnitTestConfigurations.NON_EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
-        };
+        var command = new DeleteMessageCommand(
+            MessageUnitTestConfigurations.NON_EXISTING_MESSAGE_ID,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+        );
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -40,11 +39,10 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowAccountForbiddenException_WhenSenderIdIsInvalid()
     {
         // Arrange
-        var command = new DeleteMessageCommand()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_SENDER_ID
-        };
+        var command = new DeleteMessageCommand(
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+            MessageUnitTestConfigurations.EXISTING_SENDER_ID
+        );
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -57,11 +55,10 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldGetMessageByIdFromRepository_WhenMessageIdIsValid()
     {
         // Arrange
-        var command = new DeleteMessageCommand()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
-        };
+        var command = new DeleteMessageCommand(
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+        );
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -76,11 +73,10 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldDeleteMessageFromRepository_WhenMessageIdIsValid()
     {
         // Arrange
-        var command = new DeleteMessageCommand()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
-        };
+        var command = new DeleteMessageCommand(
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+        );
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -98,11 +94,10 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldCallSaveChangesAsync_WhenMessageIdIsValid()
     {
         // Arrange
-        var command = new DeleteMessageCommand()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            CurrentUserId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
-        };
+        var command = new DeleteMessageCommand(
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+        );
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

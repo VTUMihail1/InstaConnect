@@ -24,23 +24,29 @@ public class GetAllFilteredMessagesQueryHandlerUnitTests : BaseMessageUnitTest
 
         _expectedExpression = p => p.Id == MessageUnitTestConfigurations.EXISTING_SENDER_ID;
 
-        var existingMessage = new Message()
+        var existingMessage = new Message(
+            ValidContent,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
+            MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID)
         {
             Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            SenderId = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            ReceiverId = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
-            Content = ValidContent,
-            Sender = new User()
+            Sender = new User(
+                MessageUnitTestConfigurations.EXISTING_SENDER_FIRST_NAME,
+                MessageUnitTestConfigurations.EXISTING_SENDER_LAST_NAME,
+                MessageUnitTestConfigurations.EXISTING_SENDER_EMAIL,
+                MessageUnitTestConfigurations.EXISTING_SENDER_NAME,
+                MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE)
             {
-                Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-                UserName = MessageUnitTestConfigurations.EXISTING_SENDER_NAME,
-                ProfileImage = MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE
+                Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
             },
-            Receiver = new User()
+            Receiver = new User(
+                MessageUnitTestConfigurations.EXISTING_SENDER_FIRST_NAME,
+                MessageUnitTestConfigurations.EXISTING_SENDER_LAST_NAME,
+                MessageUnitTestConfigurations.EXISTING_SENDER_EMAIL,
+                MessageUnitTestConfigurations.EXISTING_RECEIVER_NAME,
+                MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE)
             {
-                Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
-                UserName = MessageUnitTestConfigurations.EXISTING_RECEIVER_NAME,
-                ProfileImage = MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE
+                Id = MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID
             },
         };
 

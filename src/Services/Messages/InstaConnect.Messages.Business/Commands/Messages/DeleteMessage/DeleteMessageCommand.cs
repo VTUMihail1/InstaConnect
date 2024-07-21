@@ -2,9 +2,6 @@
 
 namespace InstaConnect.Messages.Business.Commands.Messages.DeleteMessage;
 
-public class DeleteMessageCommand : ICommand
+public record DeleteMessageCommand(string Id, string CurrentUserId) : ICommand
 {
-    public string Id { get; set; } = string.Empty;
-
-    public string CurrentUserId { get; set; } = string.Empty;
 }

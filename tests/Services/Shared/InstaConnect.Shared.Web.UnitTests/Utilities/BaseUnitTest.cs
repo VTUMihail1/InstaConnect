@@ -18,19 +18,4 @@ public class BaseUnitTest
         Faker = new Faker();
         CancellationToken = new CancellationToken();
     }
-
-    protected IInstaConnectRequestClient<GetUserByIdRequest> CreateUserByIdRequestClient(params GetUserByIdResponse[] getUserByIdResponses)
-    {
-        var requestClient = Substitute.For<IInstaConnectRequestClient<GetUserByIdRequest>>();
-
-        foreach (var getUserByIdResponse in getUserByIdResponses)
-        {
-            requestClient.GetResponseMessageAsync<GetUserByIdResponse>(
-            Arg.Is<GetUserByIdRequest>(r => r.Id == getUserByIdResponse.Id),
-            Arg.Any<CancellationToken>())
-            .Returns(getUserByIdResponse);
-        }
-
-        return requestClient;
-    }
 }

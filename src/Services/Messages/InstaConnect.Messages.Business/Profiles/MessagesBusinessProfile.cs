@@ -34,29 +34,23 @@ internal class MessagesBusinessProfile : Profile
                  });
 
         CreateMap<Message, MessageReadViewModel>()
-            .ForMember(dest => dest.SenderName, opt => opt.MapFrom(src => src.Sender.UserName))
-            .ForMember(dest => dest.ReceiverName, opt => opt.MapFrom(src => src.Receiver.UserName))
-            .ForMember(dest => dest.SenderProfileImage, opt => opt.MapFrom(src => src.Sender.ProfileImage))
-            .ForMember(dest => dest.ReceiverProfileImage, opt => opt.MapFrom(src => src.Receiver.ProfileImage));
+            .ConstructUsing(src => new(
+                src.Id,
+                src.SenderId,
+                src.Sender!.UserName,
+                src.Sender.ProfileImage,
+                src.ReceiverId,
+                src.Receiver!.UserName,
+                src.Receiver.ProfileImage,
+                src.Content));
 
         // Write Messages
 
-        CreateMap<UserDeletedEvent, MessageFilteredCollectionWriteQuery>()
-            .ConstructUsing(src =>
-                 new MessageFilteredCollectionWriteQuery
-                 {
-                     Expression = p => p.SenderId == src.Id
-                 });
-
-        CreateMap<AddMessageCommand, GetUserByIdRequest>();
-
-        CreateMap<AddMessageCommand, GetUserByIdRequest>();
-
-        CreateMap<GetUserByIdResponse, Message>()
-            .ForMember(dest => dest.ReceiverId, opt => opt.MapFrom(src => src.Id));
-
         CreateMap<AddMessageCommand, Message>()
-            .ForMember(dest => dest.SenderId, opt => opt.MapFrom(src => src.CurrentUserId));
+            .ConstructUsing(src => new(
+                src.Content,
+                src.CurrentUserId,
+                src.ReceiverId));
 
         CreateMap<UpdateMessageCommand, Message>();
 

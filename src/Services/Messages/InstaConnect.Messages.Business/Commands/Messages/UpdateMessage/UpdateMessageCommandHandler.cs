@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Messages.Business.Models;
 using InstaConnect.Messages.Data.Abstractions;
+using InstaConnect.Messages.Data.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;

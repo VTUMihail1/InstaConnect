@@ -20,11 +20,10 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var query = new GetMessageByIdQuery
-        {
-            Id = null!,
-            CurrentUserId = ValidCurrentUserId,
-        };
+        var query = new GetMessageByIdQuery(
+            null!,
+            ValidCurrentUserId
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -40,11 +39,10 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetMessageByIdQuery
-        {
-            Id = Faker.Random.AlphaNumeric(length),
-            CurrentUserId = ValidCurrentUserId,
-        };
+        var query = new GetMessageByIdQuery(
+            Faker.Random.AlphaNumeric(length),
+            ValidCurrentUserId
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -57,11 +55,10 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var query = new GetMessageByIdQuery
-        {
-            Id = ValidId,
-            CurrentUserId = null!,
-        };
+        var query = new GetMessageByIdQuery(
+            ValidId,
+            null!
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -77,11 +74,10 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetMessageByIdQuery
-        {
-            Id = ValidId,
-            CurrentUserId = Faker.Random.AlphaNumeric(length),
-        };
+        var query = new GetMessageByIdQuery(
+            ValidId,
+            Faker.Random.AlphaNumeric(length)
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -97,11 +93,10 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var query = new GetMessageByIdQuery
-        {
-            Id = MessageIntegrationTestConfigurations.NON_EXISTING_MESSAGE_ID,
-            CurrentUserId = existingSenderId,
-        };
+        var query = new GetMessageByIdQuery(
+            MessageIntegrationTestConfigurations.NON_EXISTING_MESSAGE_ID,
+            existingSenderId
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -118,11 +113,10 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingMessageSenderId = await CreateUserAsync(CancellationToken);
         var existingMessageReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingMessageSenderId, existingMessageReceiverId, CancellationToken);
-        var query = new GetMessageByIdQuery
-        {
-            Id = existingMessageId,
-            CurrentUserId = existingSenderId,
-        };
+        var query = new GetMessageByIdQuery(
+            existingMessageId,
+            existingSenderId
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -138,11 +132,10 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var query = new GetMessageByIdQuery
-        {
-            Id = existingMessageId,
-            CurrentUserId = existingSenderId,
-        };
+        var query = new GetMessageByIdQuery(
+            existingMessageId,
+            existingSenderId
+        );
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);

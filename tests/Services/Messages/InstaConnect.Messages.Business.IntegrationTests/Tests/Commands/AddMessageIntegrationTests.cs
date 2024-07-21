@@ -19,12 +19,11 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var command = new AddMessageCommand()
-        {
-            CurrentUserId = null!,
-            ReceiverId = ValidReceiverId,
-            Content = ValidAddContent
-        };
+        var command = new AddMessageCommand(
+            null!,
+            ValidReceiverId,
+            ValidAddContent
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -40,12 +39,11 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new AddMessageCommand()
-        {
-            CurrentUserId = Faker.Random.AlphaNumeric(length),
-            ReceiverId = ValidReceiverId,
-            Content = ValidReceiverId
-        };
+        var command = new AddMessageCommand(
+            Faker.Random.AlphaNumeric(length),
+            ValidReceiverId,
+            ValidAddContent
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -58,12 +56,11 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverIdIsNull()
     {
         // Arrange
-        var command = new AddMessageCommand()
-        {
-            CurrentUserId = ValidCurrentUserId,
-            ReceiverId = null!,
-            Content = ValidAddContent
-        };
+        var command = new AddMessageCommand(
+            ValidCurrentUserId,
+            null!,
+            ValidAddContent
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -79,12 +76,11 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new AddMessageCommand()
-        {
-            CurrentUserId = ValidCurrentUserId,
-            ReceiverId = Faker.Random.AlphaNumeric(length),
-            Content = ValidAddContent
-        };
+        var command = new AddMessageCommand(
+            ValidCurrentUserId,
+            Faker.Random.AlphaNumeric(length),
+            ValidAddContent
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -97,12 +93,11 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenContentIsNull()
     {
         // Arrange
-        var command = new AddMessageCommand()
-        {
-            CurrentUserId = ValidCurrentUserId,
-            ReceiverId = ValidReceiverId,
-            Content = null!
-        };
+        var command = new AddMessageCommand(
+            ValidCurrentUserId,
+            ValidReceiverId,
+            null!
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -118,12 +113,11 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new AddMessageCommand()
-        {
-            CurrentUserId = ValidCurrentUserId,
-            ReceiverId = ValidReceiverId,
-            Content = Faker.Random.AlphaNumeric(length)
-        };
+        var command = new AddMessageCommand(
+            ValidCurrentUserId,
+            ValidReceiverId,
+            Faker.Random.AlphaNumeric(length)
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -137,12 +131,11 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     {
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var command = new AddMessageCommand()
-        {
-            CurrentUserId = MessageIntegrationTestConfigurations.NON_EXISTING_USER_ID,
-            ReceiverId = existingReceiverId,
-            Content = ValidAddContent
-        };
+        var command = new AddMessageCommand(
+            MessageIntegrationTestConfigurations.NON_EXISTING_USER_ID,
+            existingReceiverId,
+            ValidAddContent
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -156,12 +149,11 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
-        var command = new AddMessageCommand()
-        {
-            CurrentUserId = existingSenderId,
-            ReceiverId = MessageIntegrationTestConfigurations.NON_EXISTING_USER_ID,
-            Content = ValidAddContent
-        };
+        var command = new AddMessageCommand(
+            existingSenderId,
+            MessageIntegrationTestConfigurations.NON_EXISTING_USER_ID,
+            ValidAddContent
+        );
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -176,12 +168,11 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var command = new AddMessageCommand()
-        {
-            CurrentUserId = existingSenderId,
-            ReceiverId = existingReceiverId,
-            Content = ValidAddContent
-        };
+        var command = new AddMessageCommand(
+            existingSenderId,
+            existingReceiverId,
+            ValidAddContent
+        );
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);

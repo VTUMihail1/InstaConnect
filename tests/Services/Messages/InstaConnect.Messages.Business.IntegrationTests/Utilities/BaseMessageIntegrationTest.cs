@@ -84,12 +84,10 @@ public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFi
 
     protected async Task<string> CreateMessageAsync(string senderId, string receiverId, CancellationToken cancellationToken)
     {
-        var message = new Message
-        {
-            SenderId = senderId,
-            ReceiverId = receiverId,
-            Content = MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT
-        };
+        var message = new Message(
+            MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT, 
+            senderId, 
+            receiverId);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var messageReadRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageReadRepository>();
@@ -102,14 +100,12 @@ public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFi
 
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
     {
-        var user = new User
-        {
-            FirstName = MessageIntegrationTestConfigurations.EXISTING_SENDER_FIRST_NAME,
-            LastName = MessageIntegrationTestConfigurations.EXISTING_SENDER_LAST_NAME,
-            UserName = MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME,
-            Email = MessageIntegrationTestConfigurations.EXISTING_SENDER_EMAIL,
-            ProfileImage = MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE,
-        };
+        var user = new User(
+            MessageIntegrationTestConfigurations.EXISTING_SENDER_FIRST_NAME,
+            MessageIntegrationTestConfigurations.EXISTING_SENDER_LAST_NAME,
+            MessageIntegrationTestConfigurations.EXISTING_SENDER_EMAIL,
+            MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME,
+            MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userReadRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserReadRepository>();

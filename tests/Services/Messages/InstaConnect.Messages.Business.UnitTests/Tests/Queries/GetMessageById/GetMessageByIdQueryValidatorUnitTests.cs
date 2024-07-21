@@ -19,11 +19,10 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var query = new GetMessageByIdQuery
-        {
-            Id = null!,
-            CurrentUserId = ValidCurrentUserId,
-        };
+        var query = new GetMessageByIdQuery(
+            null!,
+            ValidCurrentUserId
+        );
 
         // Act
         var result = _validator.TestValidate(query);
@@ -39,11 +38,10 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetMessageByIdQuery
-        {
-            Id = Faker.Random.AlphaNumeric(length),
-            CurrentUserId = ValidCurrentUserId,
-        };
+        var query = new GetMessageByIdQuery(
+            Faker.Random.AlphaNumeric(length),
+            ValidCurrentUserId
+        );
 
         // Act
         var result = _validator.TestValidate(query);
@@ -56,11 +54,10 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var query = new GetMessageByIdQuery
-        {
-            Id = ValidId,
-            CurrentUserId = null!,
-        };
+        var query = new GetMessageByIdQuery(
+            ValidId,
+            null!
+        );
 
         // Act
         var result = _validator.TestValidate(query);
@@ -76,11 +73,10 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetMessageByIdQuery
-        {
-            Id = ValidId,
-            CurrentUserId = Faker.Random.AlphaNumeric(length),
-        };
+        var query = new GetMessageByIdQuery(
+            ValidId,
+            Faker.Random.AlphaNumeric(length)
+        );
 
         // Act
         var result = _validator.TestValidate(query);
