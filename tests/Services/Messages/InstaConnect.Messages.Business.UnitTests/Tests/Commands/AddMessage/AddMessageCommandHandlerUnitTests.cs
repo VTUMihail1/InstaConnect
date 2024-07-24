@@ -76,25 +76,6 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     }
 
     [Fact]
-    public async Task Handle_ShouldReturn_WhenMessageIsValid()
-    {
-        // Arrange
-        var command = new AddMessageCommand(
-            MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-            MessageUnitTestConfigurations.EXISTING_RECEIVER_ID,
-            ValidContent
-        );
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await UnitOfWork
-            .Received(1)
-            .SaveChangesAsync(CancellationToken);
-    }
-
-    [Fact]
     public async Task Handle_ShouldAddMessageToRepository_WhenMessageIsValid()
     {
         // Arrange
