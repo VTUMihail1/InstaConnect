@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Follows.Data.Repositories;
 
-public class FollowWriteRepository : BaseWriteRepository<Follow>, IFollowWriteRepository
+internal class FollowWriteRepository : BaseWriteRepository<Follow>, IFollowWriteRepository
 {
     private readonly FollowsContext _followsContext;
 
@@ -22,5 +22,13 @@ public class FollowWriteRepository : BaseWriteRepository<Follow>, IFollowWriteRe
             .FirstOrDefaultAsync(f => f.FollowerId == followerId && f.FollowingId == followingId, cancellationToken);
 
         return follow;
+    }
+
+    protected override IQueryable<Follow> IncludeProperties(IQueryable<Follow> queryable)
+    {
+        return queryable
+            .Include(f => f.Follower)
+            .Include(f => f.Following)
+            .AsSplitQuery();
     }
 }

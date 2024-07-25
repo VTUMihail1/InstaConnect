@@ -2,7 +2,4 @@
 
 namespace InstaConnect.Shared.Data.Models.Filters;
 
-public abstract class FilteredCollectionWriteQuery<T>
-{
-    public Expression<Func<T, bool>> Expression { get; set; } = x => true;
-}
+public abstract record FilteredCollectionWriteQuery<T>(Expression<Func<T, bool>> Expression);

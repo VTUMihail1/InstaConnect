@@ -9,7 +9,6 @@ namespace InstaConnect.Messages.Business.Queries.Messages.GetAllFilteredMessages
 public class GetAllFilteredMessagesQueryValidator : AbstractValidator<GetAllFilteredMessagesQuery>
 {
     public GetAllFilteredMessagesQueryValidator(
-        IEnumValidator enumValidator,
         IEntityPropertyValidator entityPropertyValidator)
     {
         RuleFor(q => q.CurrentUserId)
@@ -28,10 +27,7 @@ public class GetAllFilteredMessagesQueryValidator : AbstractValidator<GetAllFilt
             .When(q => !string.IsNullOrEmpty(q.ReceiverName));
 
         RuleFor(q => q.SortOrder)
-            .NotEmpty()
-            .MinimumLength(MessageBusinessConfigurations.SORT_ORDER_MIN_LENGTH)
-            .MaximumLength(MessageBusinessConfigurations.SORT_ORDER_MAX_LENGTH)
-            .Must(enumValidator.IsEnumValid<SortOrder>);
+            .NotEmpty();
 
         RuleFor(q => q.SortPropertyName)
             .NotEmpty()

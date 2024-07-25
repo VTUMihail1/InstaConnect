@@ -17,6 +17,5 @@ internal class EmailFactory : IEmailFactory
     public MailMessage GetEmail(string receiver, string subject, string template)
     {
         return new MailMessage(_emailOptions.Sender, receiver, subject, template);
-        ;
     }
 }

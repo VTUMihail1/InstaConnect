@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Follows.Data.Abstractions;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
@@ -8,17 +9,17 @@ namespace InstaConnect.Follows.Read.Business.Consumers.Users;
 
 internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEvent>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
 
     public UserUpdatedEventConsumer(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
+        IInstaConnectMapper instaConnectMapper,
         IUserWriteRepository userWriteRepository)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
+        _instaConnectMapper = instaConnectMapper;
         _userWriteRepository = userWriteRepository;
     }
 

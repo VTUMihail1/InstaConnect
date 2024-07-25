@@ -42,7 +42,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IEmailSender, EmailSender>()
             .AddScoped<IEmailFactory, EmailFactory>()
             .AddScoped<IEmailHandler, EmailHandler>()
-            .AddAutoMapper(typeof(EmailsBusinessProfile));
+            .AddAutoMapper(typeof(EmailsProfile));
 
         serviceCollection.AddScoped(_ => new SmtpClient()
         {

@@ -2,6 +2,6 @@
 
 namespace InstaConnect.Messages.Business.Models;
 
-public class MessagePaginationCollectionModel : PaginationCollectionModel<MessageReadViewModel>
+public class MessagePaginationCollectionModel : PaginationQueryViewModel<MessageReadViewModel>
 {
 }

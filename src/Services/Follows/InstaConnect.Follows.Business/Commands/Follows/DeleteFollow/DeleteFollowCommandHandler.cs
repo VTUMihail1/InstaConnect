@@ -19,7 +19,9 @@ internal class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommand>
         _followWriteRepository = followWriteRepository;
     }
 
-    public async Task Handle(DeleteFollowCommand request, CancellationToken cancellationToken)
+    public async Task Handle(
+        DeleteFollowCommand request, 
+        CancellationToken cancellationToken)
     {
         var existingFollow = await _followWriteRepository.GetByIdAsync(request.Id, cancellationToken);
 

@@ -57,6 +57,10 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddStackExchangeRedisCache(redisOptions =>
             redisOptions.Configuration = cacheOptions.ConnectionString);
 
+        serviceCollection
+            .AddHealthChecks()
+            .AddRedis(cacheOptions.ConnectionString);
+
         return serviceCollection;
     }
 

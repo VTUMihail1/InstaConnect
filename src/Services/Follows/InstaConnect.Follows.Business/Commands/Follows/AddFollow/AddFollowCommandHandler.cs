@@ -1,6 +1,6 @@
-﻿using InstaConnect.Follows.Data.Abstractions;
+﻿using InstaConnect.Follows.Business.Models.Follows;
+using InstaConnect.Follows.Data.Abstractions;
 using InstaConnect.Follows.Data.Models.Entities;
-using InstaConnect.Follows.Read.Business.Models;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.User;
@@ -29,7 +29,9 @@ internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand, Follo
         _followWriteRepository = followWriteRepository;
     }
 
-    public async Task<FollowCommandViewModel> Handle(AddFollowCommand request, CancellationToken cancellationToken)
+    public async Task<FollowCommandViewModel> Handle(
+        AddFollowCommand request, 
+        CancellationToken cancellationToken)
     {
         var existingFollower = await _userWriteRepository.GetByIdAsync(request.CurrentUserId, cancellationToken);
 

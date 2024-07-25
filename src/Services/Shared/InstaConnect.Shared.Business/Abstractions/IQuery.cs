@@ -2,6 +2,4 @@
 
 namespace InstaConnect.Shared.Business.Abstractions;
 
-public interface IQuery<TResponse> : IRequest<TResponse>
-{
-}
+public interface IQuery<TResponse> : IRequest<TResponse>;
