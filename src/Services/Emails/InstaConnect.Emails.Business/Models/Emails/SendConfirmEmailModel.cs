@@ -2,16 +2,9 @@
 
 namespace InstaConnect.Emails.Business.Models.Emails;
 
-public class SendConfirmEmailModel
+public record SendConfirmEmailModel(string UserId, string Email, string Token)
 {
     private const string TITLE = "Confirm Email";
-
-
-    public string UserId { get; set; } = string.Empty;
-
-    public string Email { get; set; } = string.Empty;
-
-    public string Token { get; set; } = string.Empty;
 
     public string Title => TITLE;
 }

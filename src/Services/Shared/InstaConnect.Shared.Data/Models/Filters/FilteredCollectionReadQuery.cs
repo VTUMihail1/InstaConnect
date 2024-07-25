@@ -1,8 +1,12 @@
 ﻿using System.Linq.Expressions;
+using InstaConnect.Shared.Data.Models.Enums;
 
 namespace InstaConnect.Shared.Data.Models.Filters;
 
-public class FilteredCollectionReadQuery<T> : CollectionReadQuery
-{
-    public Expression<Func<T, bool>> Expression { get; set; } = x => true;
-}
+public abstract record FilteredCollectionReadQuery<T>(
+    Expression<Func<T, bool>> Expression, 
+    SortOrder SortOrder, 
+    string SortPropertyName, 
+    int Page, 
+    int PageSize)
+    : CollectionReadQuery(SortOrder, SortPropertyName, Page, PageSize);

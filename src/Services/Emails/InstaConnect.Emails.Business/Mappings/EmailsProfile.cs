@@ -4,9 +4,9 @@ using InstaConnect.Shared.Business.Contracts.Emails;
 
 namespace InstaConnect.Emails.Business.Profiles;
 
-public class EmailsBusinessProfile : Profile
+internal class EmailsProfile : Profile
 {
-    public EmailsBusinessProfile()
+    public EmailsProfile()
     {
         CreateMap<UserConfirmEmailTokenCreatedEvent, SendConfirmEmailModel>();
 

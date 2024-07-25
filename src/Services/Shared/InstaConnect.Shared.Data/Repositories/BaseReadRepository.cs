@@ -46,45 +46,6 @@ public abstract class BaseReadRepository<TEntity> : IBaseReadRepository<TEntity>
         return entity;
     }
 
-    public virtual Task<bool> AnyAsync(CancellationToken cancellationToken)
-    {
-        var any = _dbContext
-            .Set<TEntity>()
-            .AnyAsync(cancellationToken);
-
-        return any;
-    }
-
-    public virtual void Add(TEntity entity)
-    {
-        _dbContext.Set<TEntity>().Add(entity);
-    }
-
-    public virtual void AddRange(ICollection<TEntity> entities)
-    {
-        _dbContext.Set<TEntity>().AddRange(entities);
-    }
-
-    public virtual void Update(TEntity entity)
-    {
-        _dbContext.Set<TEntity>().Update(entity);
-    }
-
-    public virtual void UpdateRange(ICollection<TEntity> entities)
-    {
-        _dbContext.Set<TEntity>().UpdateRange(entities);
-    }
-
-    public virtual void Delete(TEntity entity)
-    {
-        _dbContext.Set<TEntity>().Remove(entity);
-    }
-
-    public virtual void DeleteRange(ICollection<TEntity> entities)
-    {
-        _dbContext.Set<TEntity>().RemoveRange(entities);
-    }
-
     protected virtual IQueryable<TEntity> IncludeProperties(IQueryable<TEntity> queryable)
     {
         return queryable;

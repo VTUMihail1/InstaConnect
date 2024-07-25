@@ -1,30 +1,33 @@
 ﻿using AutoMapper;
+using InstaConnect.Follows.Business.Models.Follows;
 using InstaConnect.Follows.Data.Abstractions;
-using InstaConnect.Follows.Read.Business.Models;
+using InstaConnect.Messages.Business.Models;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Follows.Read.Business.Queries.Follows.GetAllFollows;
 
-public class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQuery, ICollection<FollowQueryViewModel>>
+internal class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQuery, FollowPaginationQueryViewModel>
 {
-    private readonly IMapper _mapper;
-    private readonly IFollowReadRepository _followRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IFollowReadRepository _followReadRepository;
 
     public GetAllFollowsQueryHandler(
-        IMapper mapper,
-        IFollowReadRepository followRepository)
+        IInstaConnectMapper instaConnectMapper, 
+        IFollowReadRepository followReadRepository)
     {
-        _mapper = mapper;
-        _followRepository = followRepository;
+        _instaConnectMapper = instaConnectMapper;
+        _followReadRepository = followReadRepository;
     }
 
-    public async Task<ICollection<FollowQueryViewModel>> Handle(GetAllFollowsQuery request, CancellationToken cancellationToken)
+    public async Task<FollowPaginationQueryViewModel> Handle(
+        GetAllFollowsQuery request, 
+        CancellationToken cancellationToken)
     {
-        var collectionQuery = _mapper.Map<CollectionReadQuery>(request);
+        var collectionQuery = _instaConnectMapper.Map<CollectionReadQuery>(request);
 
-        var follows = await _followRepository.GetAllAsync(collectionQuery, cancellationToken);
-        var response = _mapper.Map<ICollection<FollowQueryViewModel>>(follows);
+        var follows = await _followReadRepository.GetAllAsync(collectionQuery, cancellationToken);
+        var response = _instaConnectMapper.Map<FollowPaginationQueryViewModel>(follows);
 
         return response;
     }

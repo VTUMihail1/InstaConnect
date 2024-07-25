@@ -2,5 +2,10 @@
 
 public class AddFollowBindingModel
 {
-    public string FollowingId { get; set; } = string.Empty;
+    public AddFollowBindingModel(string followingId)
+    {
+        FollowingId = followingId;
+    }
+
+    public string FollowingId { get; set; }
 }

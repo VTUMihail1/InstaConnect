@@ -8,7 +8,10 @@ namespace InstaConnect.Shared.Data.Extensions;
 
 public static class QueryableExtensions
 {
-    public static IOrderedQueryable<T> OrderEntities<T>(this IQueryable<T> queryable, SortOrder sortOrder, string orderByPropertyName) where T : class, IBaseEntity
+    public static IOrderedQueryable<T> OrderEntities<T>(
+        this IQueryable<T> queryable, 
+        SortOrder sortOrder, 
+        string orderByPropertyName) where T : class, IBaseEntity
     {
         var orderByProperty = typeof(T).GetProperty(orderByPropertyName);
         var parameter = Expression.Parameter(typeof(T));
@@ -23,7 +26,11 @@ public static class QueryableExtensions
         return queryable.OrderBy(orderByClause);
     }
 
-    public static async Task<PaginationList<T>> ToPagedList<T>(this IQueryable<T> queryable, int page, int pageSize, CancellationToken cancellationToken) where T : class, IBaseEntity
+    public static async Task<PaginationList<T>> ToPagedList<T>(
+        this IQueryable<T> queryable, 
+        int page, 
+        int pageSize, 
+        CancellationToken cancellationToken) where T : class, IBaseEntity
     {
         var totalCount = await queryable.CountAsync(cancellationToken);
         var items = await queryable
@@ -31,12 +38,6 @@ public static class QueryableExtensions
             .Take(pageSize)
             .ToListAsync();
 
-        return new PaginationList<T>()
-        {
-            Items = items,
-            TotalCount = totalCount,
-            Page = page,
-            PageSize = pageSize
-        };
+        return new PaginationList<T>(items, totalCount, page, pageSize);
     }
 }

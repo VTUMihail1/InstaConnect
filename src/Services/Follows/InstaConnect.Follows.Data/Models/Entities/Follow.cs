@@ -4,11 +4,17 @@ namespace InstaConnect.Follows.Data.Models.Entities;
 
 public class Follow : BaseEntity
 {
-    public string FollowingId { get; set; } = string.Empty;
+    public Follow(string followerId, string followingId)
+    {
+        FollowerId = followerId;
+        FollowingId = followingId;
+    }
 
-    public User Following { get; set; } = new();
+    public string FollowingId { get; }
 
-    public string FollowerId { get; set; } = string.Empty;
+    public User? Following { get; set; }
 
-    public User Follower { get; set; } = new();
+    public string FollowerId { get; }
+
+    public User? Follower { get; set; } = new();
 }

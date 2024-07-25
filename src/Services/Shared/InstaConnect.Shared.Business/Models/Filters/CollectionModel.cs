@@ -1,12 +1,5 @@
-﻿namespace InstaConnect.Shared.Business.Models.Filters;
+﻿using InstaConnect.Shared.Data.Models.Enums;
 
-public class CollectionModel
-{
-    public string SortOrder { get; set; } = string.Empty;
+namespace InstaConnect.Shared.Business.Models.Filters;
 
-    public string SortPropertyName { get; set; } = string.Empty;
-
-    public int Page { get; set; } = 1;
-
-    public int PageSize { get; set; } = 10000;
-}
+public abstract record CollectionModel(SortOrder SortOrder, string SortPropertyName, int Page, int PageSize);

@@ -6,10 +6,7 @@ namespace InstaConnect.Follows.Data.Repositories;
 
 internal class UserWriteRepository : BaseWriteRepository<User>, IUserWriteRepository
 {
-    private readonly FollowsContext _followsContext;
-
     public UserWriteRepository(FollowsContext followsContext) : base(followsContext)
     {
-        _followsContext = followsContext;
     }
 }

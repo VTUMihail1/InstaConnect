@@ -4,6 +4,20 @@ namespace InstaConnect.Follows.Data.Models.Entities;
 
 public class User : BaseEntity
 {
+    public User(
+        string firstName, 
+        string lastName, 
+        string email, 
+        string userName, 
+        string? profileImage = null)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        UserName = userName;
+        ProfileImage = profileImage;
+    }
+
     public string FirstName { get; set; } = string.Empty;
 
     public string LastName { get; set; } = string.Empty;
