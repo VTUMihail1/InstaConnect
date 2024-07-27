@@ -11,45 +11,42 @@ namespace InstaConnect.Identity.Business.Commands.Account.SendAccountPasswordRes
 
 public class SendAccountPasswordResetCommandHandler : ICommandHandler<SendAccountPasswordResetCommand>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserRepository _userRepository;
+    private readonly IEventPublisher _eventPublisher;
     private readonly ITokenGenerator _tokenGenerator;
-    private readonly ITokenRepository _tokenRepository;
-    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IUserWriteRepository _userWriteRepository;
 
     public SendAccountPasswordResetCommandHandler(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
-        IUserRepository userRepository,
+        IEventPublisher eventPublisher,
         ITokenGenerator tokenGenerator,
-        ITokenRepository tokenRepository,
-        IPublishEndpoint publishEndpoint)
+        IInstaConnectMapper instaConnectMapper,
+        IUserWriteRepository userWriteRepository)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
-        _userRepository = userRepository;
+        _eventPublisher = eventPublisher;
         _tokenGenerator = tokenGenerator;
-        _tokenRepository = tokenRepository;
-        _publishEndpoint = publishEndpoint;
+        _instaConnectMapper = instaConnectMapper;
+        _userWriteRepository = userWriteRepository;
     }
 
-    public async Task Handle(SendAccountPasswordResetCommand request, CancellationToken cancellationToken)
+    public async Task Handle(
+        SendAccountPasswordResetCommand request, 
+        CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
+        var existingUser = await _userWriteRepository.GetByEmailAsync(request.Email, cancellationToken);
 
         if (existingUser == null)
         {
             throw new UserNotFoundException();
         }
 
-        var createAccountTokenModel = _mapper.Map<CreateAccountTokenModel>(existingUser);
+        var createAccountTokenModel = _instaConnectMapper.Map<CreateAccountTokenModel>(existingUser);
         var token = _tokenGenerator.GeneratePasswordResetToken(createAccountTokenModel);
-        _tokenRepository.Add(token);
 
-        var userForgotPasswordTokenCreatedEvent = _mapper.Map<UserForgotPasswordTokenCreatedEvent>(token);
-        _mapper.Map(existingUser, userForgotPasswordTokenCreatedEvent);
-        await _publishEndpoint.Publish(userForgotPasswordTokenCreatedEvent, cancellationToken);
+        var userForgotPasswordTokenCreatedEvent = _instaConnectMapper.Map<UserForgotPasswordTokenCreatedEvent>((token, existingUser));
+        await _eventPublisher.PublishAsync(userForgotPasswordTokenCreatedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

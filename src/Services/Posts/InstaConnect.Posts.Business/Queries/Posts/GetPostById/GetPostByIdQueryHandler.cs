@@ -1,34 +1,36 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Read.Business.Models;
+using InstaConnect.Posts.Business.Models.Post;
 using InstaConnect.Posts.Read.Data.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Posts;
 
-namespace InstaConnect.Posts.Read.Business.Queries.Posts.GetPostById;
+namespace InstaConnect.Posts.Business.Queries.Posts.GetPostById;
 
 internal class GetPostByIdQueryHandler : IQueryHandler<GetPostByIdQuery, PostQueryViewModel>
 {
-    private readonly IMapper _mapper;
-    private readonly IPostReadRepository _postRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IPostReadRepository _postReadRepository;
 
     public GetPostByIdQueryHandler(
-        IMapper mapper,
-        IPostReadRepository postRepository)
+        IInstaConnectMapper instaConnectMapper,
+        IPostReadRepository postReadRepository)
     {
-        _mapper = mapper;
-        _postRepository = postRepository;
+        _instaConnectMapper = instaConnectMapper;
+        _postReadRepository = postReadRepository;
     }
 
-    public async Task<PostQueryViewModel> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
+    public async Task<PostQueryViewModel> Handle(
+        GetPostByIdQuery request,
+        CancellationToken cancellationToken)
     {
-        var post = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
+        var post = await _postReadRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (post == null)
         {
             throw new PostNotFoundException();
         }
 
-        var response = _mapper.Map<PostQueryViewModel>(post);
+        var response = _instaConnectMapper.Map<PostQueryViewModel>(post);
 
         return response;
     }

@@ -1,30 +1,34 @@
 ﻿using AutoMapper;
 using InstaConnect.Identity.Business.Models;
 using InstaConnect.Identity.Data.Abstraction;
+using InstaConnect.Identity.Data.Models.Filters;
+using InstaConnect.Messages.Business.Models;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Identity.Business.Queries.User.GetAllUsers;
 
-public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, ICollection<UserViewModel>>
+public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, UserPaginationQueryViewModel>
 {
-    private readonly IMapper _mapper;
-    private readonly IUserRepository _userRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IUserReadRepository _userReadRepository;
 
     public GetAllUsersQueryHandler(
-        IMapper mapper,
-        IUserRepository userRepository)
+        IInstaConnectMapper instaConnectMapper,
+        IUserReadRepository userReadRepository)
     {
-        _mapper = mapper;
-        _userRepository = userRepository;
+        _instaConnectMapper = instaConnectMapper;
+        _userReadRepository = userReadRepository;
     }
 
-    public async Task<ICollection<UserViewModel>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+    public async Task<UserPaginationQueryViewModel> Handle(
+        GetAllUsersQuery request, 
+        CancellationToken cancellationToken)
     {
-        var collectionQuery = _mapper.Map<CollectionReadQuery>(request);
-        var users = await _userRepository.GetAllAsync(collectionQuery, cancellationToken);
+        var collectionQuery = _instaConnectMapper.Map<UserCollectionReadQuery>(request);
+        var users = await _userReadRepository.GetAllAsync(collectionQuery, cancellationToken);
 
-        var response = _mapper.Map<ICollection<UserViewModel>>(users);
+        var response = _instaConnectMapper.Map<UserPaginationQueryViewModel>(users);
 
         return response;
     }

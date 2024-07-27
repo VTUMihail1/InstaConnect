@@ -8,7 +8,7 @@ using InstaConnect.Shared.Data.Abstract;
 
 namespace InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
 
-internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageCommand, MessageWriteViewModel>
+internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageCommand, MessageCommandViewModel>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMessageWriteRepository _messageRepository;
@@ -24,7 +24,7 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
         _instaConnectMapper = instaConnectMapper;
     }
 
-    public async Task<MessageWriteViewModel> Handle(UpdateMessageCommand request, CancellationToken cancellationToken)
+    public async Task<MessageCommandViewModel> Handle(UpdateMessageCommand request, CancellationToken cancellationToken)
     {
         var existingMessage = await _messageRepository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -43,7 +43,7 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var messageViewModel = _instaConnectMapper.Map<MessageWriteViewModel>(existingMessage);
+        var messageViewModel = _instaConnectMapper.Map<MessageCommandViewModel>(existingMessage);
 
         return messageViewModel;
     }

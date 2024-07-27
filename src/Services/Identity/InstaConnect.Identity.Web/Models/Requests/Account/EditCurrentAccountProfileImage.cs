@@ -6,5 +6,5 @@ namespace InstaConnect.Identity.Web.Models.Requests.Account;
 public class EditCurrentAccountProfileImageRequest
 {
     [FromForm]
-    public EditCurrentAccountProfileImageBindingModel EditCurrentAccountProfileImageBindingModel { get; set; } = new();
+    public EditCurrentAccountProfileImageBindingModel EditCurrentAccountProfileImageBindingModel { get; set; } = new(null!);
 }

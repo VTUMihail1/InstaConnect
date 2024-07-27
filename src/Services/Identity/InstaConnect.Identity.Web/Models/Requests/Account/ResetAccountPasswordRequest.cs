@@ -12,5 +12,5 @@ public class ResetAccountPasswordRequest
     public string Token { get; set; } = string.Empty;
 
     [FromBody]
-    public ResetAccountPasswordBindingModel ResetAccountPasswordBindingModel { get; set; } = new();
+    public ResetAccountPasswordBindingModel ResetAccountPasswordBindingModel { get; set; } = new(string.Empty, string.Empty);
 }

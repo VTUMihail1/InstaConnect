@@ -7,12 +7,6 @@ internal class TokenFactory : ITokenFactory
 {
     public Token GetTokenToken(string userId, string value, string type, int validUntil)
     {
-        return new Token()
-        {
-            UserId = userId,
-            Value = value,
-            Type = type,
-            ValidUntil = DateTime.Now.AddSeconds(validUntil)
-        };
+        return new Token(value, type, DateTime.Now.AddSeconds(validUntil), userId);
     }
 }

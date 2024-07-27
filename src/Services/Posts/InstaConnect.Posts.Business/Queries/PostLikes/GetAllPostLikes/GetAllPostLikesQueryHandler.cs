@@ -1,30 +1,33 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Read.Business.Models;
+using InstaConnect.Posts.Business.Models.PostLike;
+using InstaConnect.Posts.Data.Models.Filters.PostLikes;
 using InstaConnect.Posts.Read.Data.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Data.Models.Filters;
 
-namespace InstaConnect.Posts.Read.Business.Queries.PostLikes.GetAllPostLikes;
+namespace InstaConnect.Posts.Business.Queries.PostLikes.GetAllPostLikes;
 
-internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQuery, ICollection<PostLikeQueryViewModel>>
+internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQuery, PostLikePaginationQueryViewModel>
 {
-    private readonly IMapper _mapper;
-    private readonly IPostLikeReadRepository _postLikeRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IPostLikeReadRepository _postLikeReadRepository;
 
     public GetAllPostLikesQueryHandler(
-        IMapper mapper,
-        IPostLikeReadRepository postLikeRepository)
+        IInstaConnectMapper instaConnectMapper,
+        IPostLikeReadRepository postLikeReadRepository)
     {
-        _mapper = mapper;
-        _postLikeRepository = postLikeRepository;
+        _instaConnectMapper = instaConnectMapper;
+        _postLikeReadRepository = postLikeReadRepository;
     }
 
-    public async Task<ICollection<PostLikeQueryViewModel>> Handle(GetAllPostLikesQuery request, CancellationToken cancellationToken)
+    public async Task<PostLikePaginationQueryViewModel> Handle(
+        GetAllPostLikesQuery request,
+        CancellationToken cancellationToken)
     {
-        var collectionQuery = _mapper.Map<CollectionReadQuery>(request);
+        var collectionQuery = _instaConnectMapper.Map<PostLikeCollectionReadQuery>(request);
 
-        var postLikes = await _postLikeRepository.GetAllAsync(collectionQuery, cancellationToken);
-        var response = _mapper.Map<ICollection<PostLikeQueryViewModel>>(postLikes);
+        var postLikes = await _postLikeReadRepository.GetAllAsync(collectionQuery, cancellationToken);
+        var response = _instaConnectMapper.Map<PostLikePaginationQueryViewModel>(postLikes);
 
         return response;
     }

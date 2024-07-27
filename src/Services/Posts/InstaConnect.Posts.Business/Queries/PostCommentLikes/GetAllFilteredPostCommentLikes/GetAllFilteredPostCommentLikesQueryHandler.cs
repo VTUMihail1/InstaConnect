@@ -1,29 +1,31 @@
-﻿using InstaConnect.Posts.Data.Models.Filters.PostCommentLikes;
-using InstaConnect.Posts.Read.Business.Models;
+﻿using InstaConnect.Posts.Business.Models.PostCommentLike;
+using InstaConnect.Posts.Data.Models.Filters.PostCommentLikes;
 using InstaConnect.Posts.Read.Data.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Posts.Read.Business.Queries.PostCommentLikes.GetAllFilteredPostCommentLikes;
+namespace InstaConnect.Posts.Business.Queries.PostCommentLikes.GetAllFilteredPostCommentLikes;
 
-internal class GetAllFilteredPostCommentLikesQueryHandler : IQueryHandler<GetAllFilteredPostCommentLikesQuery, ICollection<PostCommentLikeQueryViewModel>>
+internal class GetAllFilteredPostCommentLikesQueryHandler : IQueryHandler<GetAllFilteredPostCommentLikesQuery, PostCommentLikePaginationQueryViewModel>
 {
     private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostCommentLikeReadRepository _postCommentLikeRepository;
+    private readonly IPostCommentLikeReadRepository _postCommentLikeReadRepository;
 
     public GetAllFilteredPostCommentLikesQueryHandler(
         IInstaConnectMapper instaConnectMapper,
-        IPostCommentLikeReadRepository postCommentLikeRepository)
+        IPostCommentLikeReadRepository postCommentLikeReadRepository)
     {
         _instaConnectMapper = instaConnectMapper;
-        _postCommentLikeRepository = postCommentLikeRepository;
+        _postCommentLikeReadRepository = postCommentLikeReadRepository;
     }
 
-    public async Task<ICollection<PostCommentLikeQueryViewModel>> Handle(GetAllFilteredPostCommentLikesQuery request, CancellationToken cancellationToken)
+    public async Task<PostCommentLikePaginationQueryViewModel> Handle(
+        GetAllFilteredPostCommentLikesQuery request,
+        CancellationToken cancellationToken)
     {
         var filteredCollectionQuery = _instaConnectMapper.Map<PostCommentLikeFilteredCollectionReadQuery>(request);
 
-        var postCommentLikes = await _postCommentLikeRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
-        var response = _instaConnectMapper.Map<ICollection<PostCommentLikeQueryViewModel>>(postCommentLikes);
+        var postCommentLikes = await _postCommentLikeReadRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
+        var response = _instaConnectMapper.Map<PostCommentLikePaginationQueryViewModel>(postCommentLikes);
 
         return response;
     }

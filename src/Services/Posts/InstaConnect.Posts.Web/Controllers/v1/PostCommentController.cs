@@ -1,21 +1,17 @@
-﻿using System.Threading;
-using Asp.Versioning;
-using AutoMapper;
-using InstaConnect.Posts.Read.Business.Models;
-using InstaConnect.Posts.Read.Business.Queries.PostComments.GetAllFilteredPostComments;
-using InstaConnect.Posts.Read.Business.Queries.PostComments.GetAllPostComments;
-using InstaConnect.Posts.Read.Business.Queries.PostComments.GetPostCommentById;
+﻿using Asp.Versioning;
+using InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
+using InstaConnect.Posts.Business.Commands.PostComments.DeletePostComment;
+using InstaConnect.Posts.Business.Commands.PostComments.UpdatePostComment;
+using InstaConnect.Posts.Business.Queries.PostComments.GetAllFilteredPostComments;
+using InstaConnect.Posts.Business.Queries.PostComments.GetAllPostComments;
+using InstaConnect.Posts.Business.Queries.PostComments.GetPostCommentById;
 using InstaConnect.Posts.Read.Web.Models.Requests.Post;
 using InstaConnect.Posts.Read.Web.Models.Requests.PostComment;
-using InstaConnect.Posts.Read.Web.Models.Responses;
-using InstaConnect.Posts.Write.Business.Commands.PostComments.AddPostComment;
-using InstaConnect.Posts.Write.Business.Commands.PostComments.DeletePostComment;
-using InstaConnect.Posts.Write.Business.Commands.PostComments.UpdatePostComment;
+using InstaConnect.Posts.Web.Models.Responses.PostComments;
 using InstaConnect.Posts.Write.Web.Models.Requests.PostComment;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -89,8 +85,7 @@ public class PostCommentController : ControllerBase
     public async Task<IActionResult> AddAsync(AddPostCommentRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<AddPostCommentCommand>(request);
-        _instaConnectMapper.Map(currentUser, commandRequest);
+        var commandRequest = _instaConnectMapper.Map<AddPostCommentCommand>((currentUser, request));
         var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
         var response = _instaConnectMapper.Map<PostCommentCommandResponse>(commandResponse);
 
@@ -106,8 +101,7 @@ public class PostCommentController : ControllerBase
     public async Task<IActionResult> UpdateAsync(UpdatePostCommentRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<UpdatePostCommentCommand>(request);
-        _instaConnectMapper.Map(currentUser, commandRequest);
+        var commandRequest = _instaConnectMapper.Map<UpdatePostCommentCommand>((currentUser, request));
         var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
         var response = _instaConnectMapper.Map<PostCommentCommandResponse>(commandResponse);
 
@@ -123,8 +117,7 @@ public class PostCommentController : ControllerBase
     public async Task<IActionResult> DeleteAsync(DeletePostCommentRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<DeletePostCommentCommand>(request);
-        _instaConnectMapper.Map(currentUser, commandRequest);
+        var commandRequest = _instaConnectMapper.Map<DeletePostCommentCommand>((currentUser, request));
         await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();

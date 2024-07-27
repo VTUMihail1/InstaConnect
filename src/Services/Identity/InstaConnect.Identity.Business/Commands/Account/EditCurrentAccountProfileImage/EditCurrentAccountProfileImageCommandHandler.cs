@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InstaConnect.Identity.Business.Models;
 using InstaConnect.Identity.Data.Abstraction;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Users;
@@ -10,46 +11,52 @@ using MassTransit;
 
 namespace InstaConnect.Identity.Business.Commands.Account.EditCurrentAccount;
 
-public class EditCurrentAccountProfileImageCommandHandler : ICommandHandler<EditCurrentAccountProfileImageCommand>
+public class EditCurrentAccountProfileImageCommandHandler : ICommandHandler<EditCurrentAccountProfileImageCommand, AccountCommandViewModel>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IImageHandler _imageHandler;
-    private readonly IUserRepository _userRepository;
-    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IEventPublisher _eventPublisher;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IUserWriteRepository _userWriteRepository;
 
     public EditCurrentAccountProfileImageCommandHandler(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
         IImageHandler imageHandler,
-        IUserRepository userRepository,
-        IPublishEndpoint publishEndpoint)
+        IEventPublisher eventPublisher,
+        IInstaConnectMapper instaConnectMapper,
+        IUserWriteRepository userWriteRepository)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
         _imageHandler = imageHandler;
-        _userRepository = userRepository;
-        _publishEndpoint = publishEndpoint;
+        _eventPublisher = eventPublisher;
+        _instaConnectMapper = instaConnectMapper;
+        _userWriteRepository = userWriteRepository;
     }
 
-    public async Task Handle(EditCurrentAccountProfileImageCommand request, CancellationToken cancellationToken)
+    public async Task<AccountCommandViewModel> Handle(
+        EditCurrentAccountProfileImageCommand request, 
+        CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByIdAsync(request.CurrentUserId, cancellationToken);
+        var existingUser = await _userWriteRepository.GetByIdAsync(request.CurrentUserId, cancellationToken);
 
         if (existingUser == null)
         {
             throw new UserNotFoundException();
         }
 
-        var imageUploadModel = _mapper.Map<ImageUploadModel>(request);
+        var imageUploadModel = _instaConnectMapper.Map<ImageUploadModel>(request);
         var imageUploadResult = await _imageHandler.UploadAsync(imageUploadModel, cancellationToken);
 
-        _mapper.Map(imageUploadResult, existingUser);
-        _userRepository.Update(existingUser);
+        _instaConnectMapper.Map(imageUploadResult, existingUser);
+        _userWriteRepository.Update(existingUser);
 
-        var userUpdatedEvent = _mapper.Map<UserUpdatedEvent>(existingUser);
-        await _publishEndpoint.Publish(userUpdatedEvent, cancellationToken);
+        var userUpdatedEvent = _instaConnectMapper.Map<UserUpdatedEvent>(existingUser);
+        await _eventPublisher.PublishAsync(userUpdatedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        var accountCommandViewModel = _instaConnectMapper.Map<AccountCommandViewModel>(existingUser);
+
+        return accountCommandViewModel;
     }
 }

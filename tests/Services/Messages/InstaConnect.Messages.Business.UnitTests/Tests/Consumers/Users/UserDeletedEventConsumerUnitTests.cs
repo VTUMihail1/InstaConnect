@@ -41,7 +41,7 @@ public class UserDeletedEventConsumerUnitTests : BaseMessageUnitTest
         await _userDeletedEventConsumer.Consume(_userDeletedEventConsumeContext);
 
         // Assert
-        await UserReadRepository
+        await UserWriteRepository
             .Received(1)
             .GetByIdAsync(MessageUnitTestConfigurations.NON_EXISTING_USER_ID, CancellationToken);
     }
@@ -61,7 +61,7 @@ public class UserDeletedEventConsumerUnitTests : BaseMessageUnitTest
         await _userDeletedEventConsumer.Consume(_userDeletedEventConsumeContext);
 
         // Assert
-        UserReadRepository
+        UserWriteRepository
             .Received(0)
             .Delete(Arg.Any<User>());
     }
@@ -121,7 +121,7 @@ public class UserDeletedEventConsumerUnitTests : BaseMessageUnitTest
         await _userDeletedEventConsumer.Consume(_userDeletedEventConsumeContext);
 
         // Assert
-        UserReadRepository
+        UserWriteRepository
             .Received(1)
             .Delete(Arg.Is<User>(m => m.Id == MessageUnitTestConfigurations.EXISTING_SENDER_ID &&
                                    m.UserName == MessageUnitTestConfigurations.EXISTING_SENDER_NAME &&

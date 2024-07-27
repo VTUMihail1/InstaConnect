@@ -1,30 +1,33 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Read.Business.Models;
+using InstaConnect.Posts.Business.Models.Post;
+using InstaConnect.Posts.Data.Models.Filters.Posts;
 using InstaConnect.Posts.Read.Data.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Data.Models.Filters;
 
-namespace InstaConnect.Posts.Read.Business.Queries.Posts.GetAllPosts;
+namespace InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
 
-internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, ICollection<PostQueryViewModel>>
+internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, PostPaginationQueryViewModel>
 {
-    private readonly IMapper _mapper;
-    private readonly IPostReadRepository _postRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IPostReadRepository _postReadRepository;
 
     public GetAllPostsQueryHandler(
-        IMapper mapper,
-        IPostReadRepository postRepository)
+        IInstaConnectMapper instaConnectMapper,
+        IPostReadRepository postReadRepository)
     {
-        _mapper = mapper;
-        _postRepository = postRepository;
+        _instaConnectMapper = instaConnectMapper;
+        _postReadRepository = postReadRepository;
     }
 
-    public async Task<ICollection<PostQueryViewModel>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
+    public async Task<PostPaginationQueryViewModel> Handle(
+        GetAllPostsQuery request,
+        CancellationToken cancellationToken)
     {
-        var collectionQuery = _mapper.Map<CollectionReadQuery>(request);
+        var collectionQuery = _instaConnectMapper.Map<PostCollectionReadQuery>(request);
 
-        var posts = await _postRepository.GetAllAsync(collectionQuery, cancellationToken);
-        var response = _mapper.Map<ICollection<PostQueryViewModel>>(posts);
+        var posts = await _postReadRepository.GetAllAsync(collectionQuery, cancellationToken);
+        var response = _instaConnectMapper.Map<PostPaginationQueryViewModel>(posts);
 
         return response;
     }

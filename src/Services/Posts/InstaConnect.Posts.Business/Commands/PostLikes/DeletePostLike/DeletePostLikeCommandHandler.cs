@@ -1,33 +1,27 @@
-﻿using AutoMapper;
-using InstaConnect.Posts.Write.Data.Abstract;
+﻿using InstaConnect.Posts.Write.Data.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Contracts.PostLikes;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.PostLike;
 using InstaConnect.Shared.Data.Abstract;
-using MassTransit;
 
-namespace InstaConnect.Posts.Write.Business.Commands.PostLikes.DeletePostLike;
+namespace InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
 
 internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeCommand>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPostLikeWriteRepository _postLikeRepository;
+    private readonly IPostLikeWriteRepository _postLikeWriteRepository;
 
     public DeletePostLikeCommandHandler(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
-        IPostLikeWriteRepository postLikeRepository)
+        IPostLikeWriteRepository postLikeWriteRepository)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
-        _postLikeRepository = postLikeRepository;
+        _postLikeWriteRepository = postLikeWriteRepository;
     }
 
     public async Task Handle(DeletePostLikeCommand request, CancellationToken cancellationToken)
     {
-        var existingPostLike = await _postLikeRepository.GetByIdAsync(request.Id, cancellationToken);
+        var existingPostLike = await _postLikeWriteRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (existingPostLike == null)
         {
@@ -39,7 +33,7 @@ internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeComm
             throw new AccountForbiddenException();
         }
 
-        _postLikeRepository.Delete(existingPostLike);
+        _postLikeWriteRepository.Delete(existingPostLike);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace InstaConnect.Posts.Read.Business.Queries.Posts.GetPostById;
+namespace InstaConnect.Posts.Business.Queries.Posts.GetPostById;
 
 public class GetPostByIdQueryValidator : AbstractValidator<GetPostByIdQuery>
 {

@@ -1,9 +1,14 @@
-﻿using InstaConnect.Posts.Read.Business.Models;
+﻿using InstaConnect.Posts.Business.Models.PostComment;
+using InstaConnect.Posts.Business.Models.PostCommentLike;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Models.Filters;
+using InstaConnect.Shared.Data.Models.Enums;
 
-namespace InstaConnect.Posts.Read.Business.Queries.PostComments.GetAllPostComments;
+namespace InstaConnect.Posts.Business.Queries.PostComments.GetAllPostComments;
 
-public class GetAllPostCommentsQuery : CollectionModel, IQuery<ICollection<PostCommentQueryViewModel>>
-{
-}
+public record GetAllPostCommentsQuery(
+    SortOrder SortOrder,
+    string SortPropertyName,
+    int Page,
+    int PageSize)
+    : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQuery<PostCommentPaginationQueryViewModel>;

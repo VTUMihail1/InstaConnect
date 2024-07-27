@@ -4,11 +4,19 @@ namespace InstaConnect.Posts.Read.Data.Models.Entities;
 
 public class PostCommentLike : BaseEntity
 {
-    public string PostCommentId { get; set; } = string.Empty;
+    public PostCommentLike(
+        string postCommentId, 
+        string userId)
+    {
+        PostCommentId = postCommentId;
+        UserId = userId;
+    }
 
-    public string UserId { get; set; } = string.Empty;
+    public string PostCommentId { get; }
 
-    public PostComment PostComment { get; set; } = new();
+    public string UserId { get; }
 
-    public User User { get; set; } = new();
+    public PostComment? PostComment { get; set; }
+
+    public User? User { get; set; }
 }

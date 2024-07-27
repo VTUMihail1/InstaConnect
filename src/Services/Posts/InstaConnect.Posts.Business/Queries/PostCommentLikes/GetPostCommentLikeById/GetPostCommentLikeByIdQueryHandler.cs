@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Read.Business.Models;
+using InstaConnect.Posts.Business.Models.PostCommentLike;
 using InstaConnect.Posts.Read.Data.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.PostCommentLike;
 
-namespace InstaConnect.Posts.Read.Business.Queries.PostCommentLikes.GetPostCommentLikeById;
+namespace InstaConnect.Posts.Business.Queries.PostCommentLikes.GetPostCommentLikeById;
 
 internal class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostCommentLikeByIdQuery, PostCommentLikeQueryViewModel>
 {

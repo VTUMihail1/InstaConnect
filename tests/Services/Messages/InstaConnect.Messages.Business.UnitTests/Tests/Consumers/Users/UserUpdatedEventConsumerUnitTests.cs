@@ -67,7 +67,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseMessageUnitTest
         await _userUpdatedEventConsumer.Consume(_userUpdatedEventConsumeContext);
 
         // Assert
-        UserReadRepository
+        UserWriteRepository
             .Received(0)
             .Add(Arg.Any<User>());
     }
@@ -142,7 +142,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseMessageUnitTest
         await _userUpdatedEventConsumer.Consume(_userUpdatedEventConsumeContext);
 
         // Assert
-        UserReadRepository
+        UserWriteRepository
             .Received(1)
             .Update(Arg.Is<User>(m => m.Id == MessageUnitTestConfigurations.EXISTING_SENDER_ID &&
                                    m.FirstName == MessageUnitTestConfigurations.EXISTING_SENDER_FIRST_NAME &&

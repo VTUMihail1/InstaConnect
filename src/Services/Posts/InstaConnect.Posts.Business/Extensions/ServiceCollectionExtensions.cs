@@ -3,7 +3,7 @@ using InstaConnect.Shared.Business.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Posts.Read.Business.Extensions;
+namespace InstaConnect.Posts.Business.Extensions;
 
 public static class ServiceCollectionExtensions
 {

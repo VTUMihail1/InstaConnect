@@ -8,8 +8,10 @@ using InstaConnect.Identity.Business.Commands.Account.LoginAccount;
 using InstaConnect.Identity.Business.Commands.Account.RegisterAccount;
 using InstaConnect.Identity.Business.Commands.Account.ResendAccountEmailConfirmation;
 using InstaConnect.Identity.Business.Commands.Account.ResetAccountPassword;
+using InstaConnect.Identity.Business.Commands.Account.SendAccountPasswordReset;
 using InstaConnect.Identity.Web.Models.Requests.Account;
 using InstaConnect.Identity.Web.Models.Response;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
 using MediatR;
@@ -24,17 +26,17 @@ namespace InstaConnect.Identity.Web.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class AccountController : ControllerBase
 {
-    private readonly IMapper _mapper;
-    private readonly ISender _sender;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IInstaConnectSender _instaConnectSender;
     private readonly ICurrentUserContext _currentUserContext;
 
     public AccountController(
-        IMapper mapper,
-        ISender sender,
+        IInstaConnectMapper instaConnectMapper,
+        IInstaConnectSender instaConnectSender,
         ICurrentUserContext currentUserContext)
     {
-        _mapper = mapper;
-        _sender = sender;
+        _instaConnectMapper = instaConnectMapper;
+        _instaConnectSender = instaConnectSender;
         _currentUserContext = currentUserContext;
     }
 
@@ -46,8 +48,8 @@ public class AccountController : ControllerBase
         ConfirmAccountEmailTokenRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _mapper.Map<ConfirmAccountEmailCommand>(request);
-        await _sender.Send(commandRequest, cancellationToken);
+        var commandRequest = _instaConnectMapper.Map<ConfirmAccountEmailCommand>(request);
+        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -60,8 +62,8 @@ public class AccountController : ControllerBase
         ResendAccountConfirmEmailRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _mapper.Map<ResendAccountEmailConfirmationCommand>(request);
-        await _sender.Send(commandRequest, cancellationToken);
+        var commandRequest = _instaConnectMapper.Map<ResendAccountEmailConfirmationCommand>(request);
+        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -74,8 +76,8 @@ public class AccountController : ControllerBase
         SendAccountPasswordResetRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _mapper.Map<SendAccountPasswordResetRequest>(request);
-        await _sender.Send(commandRequest, cancellationToken);
+        var commandRequest = _instaConnectMapper.Map<SendAccountPasswordResetCommand>(request);
+        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -88,10 +90,10 @@ public class AccountController : ControllerBase
         LoginAccountRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _mapper.Map<LoginAccountCommand>(request);
-        var commandResponse = await _sender.Send(commandRequest, cancellationToken);
+        var commandRequest = _instaConnectMapper.Map<LoginAccountCommand>(request);
+        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
 
-        var response = _mapper.Map<AccountResponse>(commandResponse);
+        var response = _instaConnectMapper.Map<AccountTokenCommandResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -104,10 +106,11 @@ public class AccountController : ControllerBase
         RegisterAccountRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _mapper.Map<RegisterAccountCommand>(request);
-        await _sender.Send(commandRequest, cancellationToken);
+        var commandRequest = _instaConnectMapper.Map<RegisterAccountCommand>(request);
+        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var response = _instaConnectMapper.Map<AccountCommandResponse>(commandResponse);
 
-        return NoContent();
+        return Ok(response);
     }
 
     // POST: api/accounts/reset-password/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
@@ -118,8 +121,8 @@ public class AccountController : ControllerBase
         ResetAccountPasswordRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _mapper.Map<ResetAccountPasswordCommand>(request);
-        await _sender.Send(commandRequest, cancellationToken);
+        var commandRequest = _instaConnectMapper.Map<ResetAccountPasswordCommand>(request);
+        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -135,11 +138,11 @@ public class AccountController : ControllerBase
         CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _mapper.Map<EditCurrentAccountCommand>(request);
-        _mapper.Map(currentUser, commandRequest);
-        await _sender.Send(commandRequest, cancellationToken);
+        var commandRequest = _instaConnectMapper.Map<EditCurrentAccountCommand>((currentUser, request));
+        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var response = _instaConnectMapper.Map<AccountCommandResponse>(commandResponse);
 
-        return NoContent();
+        return Ok(response);
     }
 
     // PUT: api/accounts/current
@@ -153,11 +156,11 @@ public class AccountController : ControllerBase
         CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _mapper.Map<EditCurrentAccountProfileImageCommand>(request);
-        _mapper.Map(currentUser, commandRequest);
-        await _sender.Send(commandRequest, cancellationToken);
+        var commandRequest = _instaConnectMapper.Map<EditCurrentAccountProfileImageCommand>((currentUser, request));
+        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var response = _instaConnectMapper.Map<AccountCommandResponse>(commandResponse);
 
-        return NoContent();
+        return Ok(response);
     }
 
     // DELETE: api/accounts/current
@@ -169,8 +172,8 @@ public class AccountController : ControllerBase
         CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _mapper.Map<DeleteCurrentAccountCommand>(currentUser);
-        await _sender.Send(commandRequest, cancellationToken);
+        var commandRequest = _instaConnectMapper.Map<DeleteCurrentAccountCommand>(currentUser);
+        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -184,8 +187,8 @@ public class AccountController : ControllerBase
         DeleteAccountByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _mapper.Map<DeleteAccountByIdCommand>(request);
-        await _sender.Send(commandRequest, cancellationToken);
+        var commandRequest = _instaConnectMapper.Map<DeleteAccountByIdCommand>(request);
+        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

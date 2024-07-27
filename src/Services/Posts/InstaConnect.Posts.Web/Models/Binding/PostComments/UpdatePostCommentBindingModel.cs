@@ -2,5 +2,10 @@
 
 public class UpdatePostCommentBindingModel
 {
-    public string Content { get; set; } = string.Empty;
+    public UpdatePostCommentBindingModel(string content)
+    {
+        Content = content;
+    }
+
+    public string Content { get; set; }
 }

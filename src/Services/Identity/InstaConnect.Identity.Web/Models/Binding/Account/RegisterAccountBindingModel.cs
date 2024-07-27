@@ -2,17 +2,35 @@
 
 public class RegisterAccountBindingModel
 {
-    public string UserName { get; set; } = string.Empty;
+    public RegisterAccountBindingModel(
+        string userName, 
+        string email, 
+        string password, 
+        string confirmPassword, 
+        string firstName, 
+        string lastName, 
+        IFormFile? profileImage)
+    {
+        UserName = userName;
+        Email = email;
+        Password = password;
+        ConfirmPassword = confirmPassword;
+        FirstName = firstName;
+        LastName = lastName;
+        ProfileImage = profileImage;
+    }
 
-    public string Email { get; set; } = string.Empty;
+    public string UserName { get; set; }
 
-    public string Password { get; set; } = string.Empty;
+    public string Email { get; set; }
 
-    public string ConfirmPassword { get; set; } = string.Empty;
+    public string Password { get; set; }
 
-    public string FirstName { get; set; } = string.Empty;
+    public string ConfirmPassword { get; set; }
 
-    public string LastName { get; set; } = string.Empty;
+    public string FirstName { get; set; }
+
+    public string LastName { get; set; }
 
     public IFormFile? ProfileImage { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using InstaConnect.Shared.Web.Extensions;
+﻿using InstaConnect.Shared.Business.Extensions;
+using InstaConnect.Shared.Web.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using TokenOptions = InstaConnect.Shared.Data.Models.Options.TokenOptions;
@@ -15,7 +16,7 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddJwtBearer(configuration)
             .AddApiControllers()
-            .AddAutoMapper(currentAssembly)
+            .AddMapper(currentAssembly)
             .AddAuthorizationPolicies()
             .AddCorsPolicies(configuration)
             .AddSwagger()

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Read.Business.Models;
+using InstaConnect.Posts.Business.Models.PostComment;
 using InstaConnect.Posts.Read.Data.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
 
-namespace InstaConnect.Posts.Read.Business.Queries.PostComments.GetPostCommentById;
+namespace InstaConnect.Posts.Business.Queries.PostComments.GetPostCommentById;
 
 internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentByIdQuery, PostCommentQueryViewModel>
 {

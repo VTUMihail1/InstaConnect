@@ -6,8 +6,8 @@ namespace InstaConnect.Posts.Write.Web.Models.Requests.Post;
 public class UpdatePostRequest
 {
     [FromRoute]
-    public string PostId { get; set; } = string.Empty;
+    public string Id { get; set; } = string.Empty;
 
     [FromBody]
-    public UpdatePostBindingModel UpdatePostBindingModel { get; set; } = new();
+    public UpdatePostBindingModel UpdatePostBindingModel { get; set; } = new(string.Empty, string.Empty);
 }

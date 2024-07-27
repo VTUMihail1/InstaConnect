@@ -6,6 +6,6 @@ namespace InstaConnect.Messages.Business.Commands.Messages.AddMessage;
 public record AddMessageCommand(
     string CurrentUserId, 
     string ReceiverId, 
-    string Content) : ICommand<MessageWriteViewModel>
+    string Content) : ICommand<MessageCommandViewModel>
 {
 }

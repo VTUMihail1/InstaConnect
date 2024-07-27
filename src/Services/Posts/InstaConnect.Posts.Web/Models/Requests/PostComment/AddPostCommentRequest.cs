@@ -6,5 +6,5 @@ namespace InstaConnect.Posts.Write.Web.Models.Requests.PostComment;
 public class AddPostCommentRequest
 {
     [FromBody]
-    public AddPostCommentBindingModel AddPostCommentBindingModel { get; set; } = new();
+    public AddPostCommentBindingModel AddPostCommentBindingModel { get; set; } = new(string.Empty, string.Empty);
 }

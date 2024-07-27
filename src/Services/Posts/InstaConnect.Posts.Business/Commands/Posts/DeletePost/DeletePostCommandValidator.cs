@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace InstaConnect.Posts.Write.Business.Commands.Posts.DeletePost;
+namespace InstaConnect.Posts.Business.Commands.Posts.DeletePost;
 public class DeletePostCommandValidator : AbstractValidator<DeletePostCommand>
 {
     public DeletePostCommandValidator()

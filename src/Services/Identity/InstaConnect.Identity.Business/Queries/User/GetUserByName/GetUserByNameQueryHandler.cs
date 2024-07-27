@@ -6,29 +6,31 @@ using InstaConnect.Shared.Business.Exceptions.User;
 
 namespace InstaConnect.Identity.Business.Queries.User.GetUserByName;
 
-public class GetUserByNameQueryHandler : IQueryHandler<GetUserByNameQuery, UserViewModel>
+public class GetUserByNameQueryHandler : IQueryHandler<GetUserByNameQuery, UserQueryViewModel>
 {
-    private readonly IMapper _mapper;
-    private readonly IUserRepository _userRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IUserReadRepository _userReadRepository;
 
     public GetUserByNameQueryHandler(
-        IMapper mapper,
-        IUserRepository userRepository)
+        IInstaConnectMapper instaConnectMapper,
+        IUserReadRepository userReadRepository)
     {
-        _mapper = mapper;
-        _userRepository = userRepository;
+        _instaConnectMapper = instaConnectMapper;
+        _userReadRepository = userReadRepository;
     }
 
-    public async Task<UserViewModel> Handle(GetUserByNameQuery request, CancellationToken cancellationToken)
+    public async Task<UserQueryViewModel> Handle(
+        GetUserByNameQuery request,
+        CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByNameAsync(request.UserName, cancellationToken);
+        var existingUser = await _userReadRepository.GetByNameAsync(request.UserName, cancellationToken);
 
         if (existingUser == null)
         {
             throw new UserNotFoundException();
         }
 
-        var response = _mapper.Map<UserViewModel>(existingUser);
+        var response = _instaConnectMapper.Map<UserQueryViewModel>(existingUser);
 
         return response;
     }

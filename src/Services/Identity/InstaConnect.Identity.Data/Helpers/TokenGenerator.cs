@@ -18,13 +18,16 @@ internal class TokenGenerator : ITokenGenerator
 
     private readonly TokenOptions _tokenOptions;
     private readonly ITokenFactory _tokenFactory;
+    private readonly ITokenWriteRepository _tokenWriteRepository;
 
     public TokenGenerator(
         IOptions<TokenOptions> options,
-        ITokenFactory tokenFactory)
+        ITokenFactory tokenFactory,
+        ITokenWriteRepository tokenWriteRepository)
     {
         _tokenOptions = options.Value;
         _tokenFactory = tokenFactory;
+        _tokenWriteRepository = tokenWriteRepository;
     }
 
     public Token GenerateAccessToken(CreateAccessTokenModel createAccessTokenModel)
@@ -39,6 +42,8 @@ internal class TokenGenerator : ITokenGenerator
             value,
             ACCESS_TOKEN_TYPE,
             _tokenOptions.AccessTokenLifetimeSeconds);
+
+        _tokenWriteRepository.Add(token);
 
         return token;
     }
@@ -55,6 +60,8 @@ internal class TokenGenerator : ITokenGenerator
             EMAIL_CONFIRMATION_TOKEN_TYPE,
             _tokenOptions.AccountTokenLifetimeSeconds);
 
+        _tokenWriteRepository.Add(token);
+
         return token;
     }
 
@@ -69,6 +76,8 @@ internal class TokenGenerator : ITokenGenerator
             value,
             PASSWORD_RESET_TOKEN_TYPE,
             _tokenOptions.AccountTokenLifetimeSeconds);
+
+        _tokenWriteRepository.Add(token);
 
         return token;
     }

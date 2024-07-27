@@ -2,7 +2,15 @@
 
 public class ResetAccountPasswordBindingModel
 {
-    public string Password { get; set; } = string.Empty;
+    public ResetAccountPasswordBindingModel(
+        string password, 
+        string confirmPassword)
+    {
+        Password = password;
+        ConfirmPassword = confirmPassword;
+    }
 
-    public string ConfirmPassword { get; set; } = string.Empty;
+    public string Password { get; set; }
+
+    public string ConfirmPassword { get; set; }
 }

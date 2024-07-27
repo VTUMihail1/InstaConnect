@@ -49,7 +49,7 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
         ValidSortOrderName = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.SORT_ORDER_MAX_LENGTH + MessageBusinessConfigurations.SORT_ORDER_MIN_LENGTH) / 2);
         ValidSortPropertyName = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.SORT_PROPERTY_NAME_MAX_LENGTH + MessageBusinessConfigurations.SORT_PROPERTY_NAME_MIN_LENGTH) / 2);
 
-        var existingMessage = new MessageReadViewModel(
+        var existingMessage = new MessageQueryViewModel(
             MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
             MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
             MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_NAME,
@@ -59,14 +59,14 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
             MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_PROFILE_IMAGE,
             MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT);
 
-        var existingMessageWriteViewModel = new MessageWriteViewModel(MessageUnitTestConfigurations.EXISTING_MESSAGE_ID);
+        var existingMessageWriteViewModel = new MessageCommandViewModel(MessageUnitTestConfigurations.EXISTING_MESSAGE_ID);
 
         InstaConnectSender = Substitute.For<IInstaConnectSender>();
         CurrentUserContext = Substitute.For<ICurrentUserContext>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
                 new MapperConfiguration(cfg =>
-                cfg.AddProfile(new MessagesWebProfile()))));
+                cfg.AddProfile(new MessagesCommandProfile()))));
 
         CurrentUserContext.GetCurrentUser().Returns(new CurrentUserModel
         {

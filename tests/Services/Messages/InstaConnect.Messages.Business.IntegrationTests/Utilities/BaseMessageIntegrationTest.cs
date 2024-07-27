@@ -90,9 +90,9 @@ public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFi
             receiverId);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var messageReadRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageReadRepository>();
+        var messageWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();
 
-        messageReadRepository.Add(message);
+        messageWriteRepository.Add(message);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return message.Id;
@@ -108,9 +108,9 @@ public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFi
             MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var userReadRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserReadRepository>();
+        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
-        userReadRepository.Add(user);
+        userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user.Id;

@@ -92,9 +92,9 @@ public abstract class BaseMessageFunctionalTest : BaseFunctionalTest, IClassFixt
         var message = new Message(ValidContent, senderId, receiverId);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var messageReadRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageReadRepository>();
+        var messageWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();
 
-        messageReadRepository.Add(message);
+        messageWriteRepository.Add(message);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return message.Id;

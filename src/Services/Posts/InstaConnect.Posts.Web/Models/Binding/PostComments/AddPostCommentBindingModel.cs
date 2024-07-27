@@ -2,7 +2,13 @@
 
 public class AddPostCommentBindingModel
 {
-    public string PostId { get; set; } = string.Empty;
+    public AddPostCommentBindingModel(string postId, string content)
+    {
+        PostId = postId;
+        Content = content;
+    }
 
-    public string Content { get; set; } = string.Empty;
+    public string PostId { get; set; }
+
+    public string Content { get; set; }
 }

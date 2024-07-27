@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace InstaConnect.Posts.Read.Business.Queries.PostLikes.GetAllFilteredPostLikes;
+namespace InstaConnect.Posts.Business.Queries.PostLikes.GetAllFilteredPostLikes;
 
 public class GetAllFilteredPostLikesQueryValidator : AbstractValidator<GetAllFilteredPostLikesQuery>
 {

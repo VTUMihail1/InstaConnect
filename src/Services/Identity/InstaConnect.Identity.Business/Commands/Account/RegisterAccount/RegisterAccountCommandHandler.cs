@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InstaConnect.Identity.Business.Models;
 using InstaConnect.Identity.Data.Abstraction;
 using InstaConnect.Identity.Data.Models;
 using InstaConnect.Identity.Data.Models.Entities;
@@ -6,84 +7,86 @@ using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Emails;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Exceptions.Account;
+using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.Models;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
 namespace InstaConnect.Identity.Business.Commands.Account.RegisterAccount;
 
-public class RegisterAccountCommandHandler : ICommandHandler<RegisterAccountCommand>
+public class RegisterAccountCommandHandler : ICommandHandler<RegisterAccountCommand, AccountCommandViewModel>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IImageHandler _imageHandler;
-    private readonly IUserRepository _userRepository;
-    private readonly IPasswordHasher _passwordHasher;
     private readonly ITokenGenerator _tokenGenerator;
-    private readonly ITokenRepository _tokenRepository;
-    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IPasswordHasher _passwordHasher;
+    private readonly IEventPublisher _eventPublisher;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IUserWriteRepository _userWriteRepository;
 
     public RegisterAccountCommandHandler(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
         IImageHandler imageHandler,
-        IUserRepository userRepository,
-        IPasswordHasher passwordHasher,
         ITokenGenerator tokenGenerator,
-        ITokenRepository tokenRepository,
-        IPublishEndpoint publishEndpoint)
+        IPasswordHasher passwordHasher,
+        IEventPublisher eventPublisher,
+        IInstaConnectMapper instaConnectMapper,
+        IUserWriteRepository userWriteRepository)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
         _imageHandler = imageHandler;
-        _userRepository = userRepository;
-        _passwordHasher = passwordHasher;
         _tokenGenerator = tokenGenerator;
-        _tokenRepository = tokenRepository;
-        _publishEndpoint = publishEndpoint;
+        _passwordHasher = passwordHasher;
+        _eventPublisher = eventPublisher;
+        _instaConnectMapper = instaConnectMapper;
+        _userWriteRepository = userWriteRepository;
     }
 
-    public async Task Handle(RegisterAccountCommand request, CancellationToken cancellationToken)
+    public async Task<AccountCommandViewModel> Handle(
+        RegisterAccountCommand request, 
+        CancellationToken cancellationToken)
     {
-        var existingEmailUser = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
+        var existingEmailUser = await _userWriteRepository.GetByEmailAsync(request.Email, cancellationToken);
 
         if (existingEmailUser != null)
         {
             throw new AccountEmailAlreadyTakenException();
         }
 
-        var existingNameUser = await _userRepository.GetByNameAsync(request.UserName, cancellationToken);
+        var existingNameUser = await _userWriteRepository.GetByNameAsync(request.UserName, cancellationToken);
 
         if (existingNameUser != null)
         {
             throw new AccountUsernameAlreadyTakenException();
         }
 
-        var user = _mapper.Map<User>(request);
         var passwordHash = _passwordHasher.Hash(request.Password);
-        _mapper.Map(passwordHash, user);
+        var user = _instaConnectMapper.Map<User>((passwordHash, request));
 
         if (request.ProfileImage != null)
         {
-            var imageUploadModel = _mapper.Map<ImageUploadModel>(request);
+            var imageUploadModel = _instaConnectMapper.Map<ImageUploadModel>(request);
             var imageUploadResult = await _imageHandler.UploadAsync(imageUploadModel, cancellationToken);
 
-            _mapper.Map(imageUploadResult, user);
+            _instaConnectMapper.Map(imageUploadResult, user);
         }
 
-        _userRepository.Add(user);
+        _userWriteRepository.Add(user);
 
-        var userCreatedEvent = _mapper.Map<UserCreatedEvent>(user);
-        await _publishEndpoint.Publish(userCreatedEvent, cancellationToken);
+        var userCreatedEvent = _instaConnectMapper.Map<UserCreatedEvent>(user);
+        await _eventPublisher.PublishAsync(userCreatedEvent, cancellationToken);
 
-        var createAccountTokenModel = _mapper.Map<CreateAccountTokenModel>(user);
+        var createAccountTokenModel = _instaConnectMapper.Map<CreateAccountTokenModel>(user);
         var token = _tokenGenerator.GenerateEmailConfirmationToken(createAccountTokenModel);
-        _tokenRepository.Add(token);
+        var userConfirmEmailTokenCreatedEvent = _instaConnectMapper.Map<UserConfirmEmailTokenCreatedEvent>((token, user));
 
-        var userConfirmEmailTokenCreatedEvent = _mapper.Map<UserConfirmEmailTokenCreatedEvent>(token);
-        _mapper.Map(user, userConfirmEmailTokenCreatedEvent);
-        await _publishEndpoint.Publish(userConfirmEmailTokenCreatedEvent, cancellationToken);
+        _instaConnectMapper.Map(user, userConfirmEmailTokenCreatedEvent);
+        await _eventPublisher.PublishAsync(userConfirmEmailTokenCreatedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        var accountCommandViewModel = _instaConnectMapper.Map<AccountCommandViewModel>(user);
+
+        return accountCommandViewModel;
     }
 }

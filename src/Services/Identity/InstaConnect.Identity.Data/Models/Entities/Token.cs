@@ -4,13 +4,21 @@ namespace InstaConnect.Identity.Data.Models.Entities;
 
 public class Token : BaseEntity
 {
-    public string Value { get; set; } = string.Empty;
+    public Token(string value, string type, DateTime validUntil, string userId)
+    {
+        Value = value;
+        Type = type;
+        ValidUntil = validUntil;
+        UserId = userId;
+    }
 
-    public string Type { get; set; } = string.Empty;
+    public string Value { get; }
 
-    public DateTime ValidUntil { get; set; } = DateTime.Now;
+    public string Type { get; }
 
-    public string UserId { get; set; } = string.Empty;
+    public DateTime ValidUntil { get; }
 
-    public User User { get; set; } = new();
+    public string UserId { get; }
+
+    public User? User { get; set; }
 }

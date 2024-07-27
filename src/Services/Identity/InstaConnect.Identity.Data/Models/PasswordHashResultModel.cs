@@ -1,6 +1,3 @@
 ﻿namespace InstaConnect.Identity.Data.Models;
 
-public class PasswordHashResultModel
-{
-    public string PasswordHash { get; set; } = string.Empty;
-}
+public record PasswordHashResultModel(string PasswordHash);
