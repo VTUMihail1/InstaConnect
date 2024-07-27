@@ -85,7 +85,7 @@ public abstract class BaseMessageUnitTest : BaseUnitTest
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
                 new MapperConfiguration(cfg =>
-                cfg.AddProfile(new MessagesBusinessProfile()))));
+                cfg.AddProfile(new MessagesQueryProfile()))));
 
         EntityPropertyValidator = new EntityPropertyValidator();
 

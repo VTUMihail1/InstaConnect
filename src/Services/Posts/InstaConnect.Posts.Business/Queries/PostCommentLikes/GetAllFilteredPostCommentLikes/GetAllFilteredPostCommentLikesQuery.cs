@@ -1,14 +1,16 @@
-﻿using InstaConnect.Posts.Read.Business.Models;
+﻿using InstaConnect.Posts.Business.Models.PostCommentLike;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Models.Filters;
+using InstaConnect.Shared.Data.Models.Enums;
 
-namespace InstaConnect.Posts.Read.Business.Queries.PostCommentLikes.GetAllFilteredPostCommentLikes;
+namespace InstaConnect.Posts.Business.Queries.PostCommentLikes.GetAllFilteredPostCommentLikes;
 
-public class GetAllFilteredPostCommentLikesQuery : CollectionModel, IQuery<ICollection<PostCommentLikeQueryViewModel>>
-{
-    public string UserId { get; set; } = string.Empty;
-
-    public string UserName { get; set; } = string.Empty;
-
-    public string PostCommentId { get; set; } = string.Empty;
-}
+public record GetAllFilteredPostCommentLikesQuery(
+    string UserId,
+    string UserName,
+    string PostCommentId,
+    SortOrder SortOrder,
+    string SortPropertyName,
+    int Page,
+    int PageSize)
+    : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQuery<PostCommentLikePaginationQueryViewModel>;

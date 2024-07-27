@@ -1,9 +1,6 @@
-﻿using InstaConnect.Posts.Read.Business.Models;
+﻿using InstaConnect.Posts.Business.Models.Post;
 using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Posts.Read.Business.Queries.Posts.GetPostById;
+namespace InstaConnect.Posts.Business.Queries.Posts.GetPostById;
 
-public class GetPostByIdQuery : IQuery<PostQueryViewModel>
-{
-    public string Id { get; set; } = string.Empty;
-}
+public record GetPostByIdQuery(string Id) : IQuery<PostQueryViewModel>;

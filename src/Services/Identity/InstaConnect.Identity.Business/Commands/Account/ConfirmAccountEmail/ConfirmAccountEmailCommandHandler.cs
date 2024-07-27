@@ -10,22 +10,24 @@ namespace InstaConnect.Identity.Business.Commands.Account.ConfirmAccountEmail;
 public class ConfirmAccountEmailCommandHandler : ICommandHandler<ConfirmAccountEmailCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserRepository _userRepository;
-    private readonly ITokenRepository _tokenRepository;
+    private readonly IUserWriteRepository _userWriteRepository;
+    private readonly ITokenWriteRepository _tokenWriteRepository;
 
     public ConfirmAccountEmailCommandHandler(
         IUnitOfWork unitOfWork,
-        IUserRepository userRepository,
-        ITokenRepository tokenRepository)
+        IUserWriteRepository userWriteRepository,
+        ITokenWriteRepository tokenWriteRepository)
     {
         _unitOfWork = unitOfWork;
-        _userRepository = userRepository;
-        _tokenRepository = tokenRepository;
+        _userWriteRepository = userWriteRepository;
+        _tokenWriteRepository = tokenWriteRepository;
     }
 
-    public async Task Handle(ConfirmAccountEmailCommand request, CancellationToken cancellationToken)
+    public async Task Handle(
+        ConfirmAccountEmailCommand request, 
+        CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
+        var existingUser = await _userWriteRepository.GetByIdAsync(request.UserId, cancellationToken);
 
         if (existingUser == null)
         {
@@ -37,7 +39,7 @@ public class ConfirmAccountEmailCommandHandler : ICommandHandler<ConfirmAccountE
             throw new AccountEmailAlreadyConfirmedException();
         }
 
-        var existingToken = await _tokenRepository.GetByValueAsync(request.Token, cancellationToken);
+        var existingToken = await _tokenWriteRepository.GetByValueAsync(request.Token, cancellationToken);
 
         if (existingToken == null)
         {
@@ -49,9 +51,9 @@ public class ConfirmAccountEmailCommandHandler : ICommandHandler<ConfirmAccountE
             throw new AccountForbiddenException();
         }
 
-        _tokenRepository.Delete(existingToken);
+        _tokenWriteRepository.Delete(existingToken);
 
-        await _userRepository.ConfirmEmailAsync(existingUser.Id, cancellationToken);
+        await _userWriteRepository.ConfirmEmailAsync(existingUser.Id, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

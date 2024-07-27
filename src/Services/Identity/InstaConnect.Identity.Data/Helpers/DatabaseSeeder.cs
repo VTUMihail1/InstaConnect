@@ -13,21 +13,21 @@ internal class DatabaseSeeder : IDatabaseSeeder
     private readonly IUnitOfWork _unitOfWork;
     private readonly AdminOptions _adminOptions;
     private readonly IPasswordHasher _passwordHasher;
-    private readonly IUserRepository _userRepository;
-    private readonly IUserClaimRepository _userClaimRepository;
+    private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IUserClaimWriteRepository _userClaimWriteRepository;
 
     public DatabaseSeeder(
         IUnitOfWork unitOfWork,
         IOptions<AdminOptions> options,
         IPasswordHasher passwordHasher,
-        IUserRepository userRepository,
-        IUserClaimRepository userClaimRepository)
+        IUserWriteRepository userWriteRepository,
+        IUserClaimWriteRepository userClaimWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _adminOptions = options.Value;
         _passwordHasher = passwordHasher;
-        _userRepository = userRepository;
-        _userClaimRepository = userClaimRepository;
+        _userWriteRepository = userWriteRepository;
+        _userClaimWriteRepository = userClaimWriteRepository;
     }
 
     public async Task SeedAsync(CancellationToken cancellationToken)
@@ -47,30 +47,24 @@ internal class DatabaseSeeder : IDatabaseSeeder
 
     private async Task SeedAdminAsync(CancellationToken cancellationToken)
     {
-        if (await _userRepository.AnyAsync(cancellationToken))
+        if (await _userWriteRepository.AnyAsync(cancellationToken))
         {
             return;
         }
 
-        var adminUser = new User
-        {
-            FirstName = "Admin",
-            LastName = "Admin",
-            Email = _adminOptions.Email,
-            UserName = "InstaConnectAdmin",
-            IsEmailConfirmed = true,
-            PasswordHash = _passwordHasher.Hash(_adminOptions.Password).PasswordHash,
-        };
+        var adminUser = new User(
+            "Admin", 
+            "Admin",
+            _adminOptions.Email, 
+            "InstaConnectAdmin", 
+            _passwordHasher.Hash(_adminOptions.Password).PasswordHash,
+            null);
+        await _userWriteRepository.ConfirmEmailAsync(adminUser.Id, cancellationToken);
 
-        var adminClaim = new UserClaim
-        {
-            UserId = adminUser.Id,
-            Claim = AppClaims.Admin,
-            Value = AppClaims.Admin,
-        };
+        var adminClaim = new UserClaim(AppClaims.Admin, AppClaims.Admin, adminUser.Id);
 
-        _userRepository.Add(adminUser);
-        _userClaimRepository.Add(adminClaim);
+        _userWriteRepository.Add(adminUser);
+        _userClaimWriteRepository.Add(adminClaim);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

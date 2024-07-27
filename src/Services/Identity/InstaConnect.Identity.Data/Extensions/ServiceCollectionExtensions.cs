@@ -36,11 +36,12 @@ public static class ServiceCollectionExtensions
             });
 
         serviceCollection
-            .AddScoped<ITokenRepository, TokenRepository>()
+            .AddScoped<ITokenWriteRepository, TokenWriteRepository>()
             .AddScoped<ITokenFactory, TokenFactory>()
-            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IUserWriteRepository, UserWriteRepository>()
+            .AddScoped<IUserReadRepository, UserReadRepository>()
             .AddScoped<ITokenGenerator, TokenGenerator>()
-            .AddScoped<IUserClaimRepository, UserClaimRepository>()
+            .AddScoped<IUserClaimWriteRepository, UserClaimWriteRepository>()
             .AddScoped<IPasswordHasher, PasswordHasher>()
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
             .AddCaching(configuration)

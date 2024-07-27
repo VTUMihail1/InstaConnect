@@ -3,12 +3,9 @@ using InstaConnect.Shared.Business.Abstractions;
 
 namespace InstaConnect.Identity.Business.Queries.User.GetCurrentUserDetailed;
 
-public class GetCurrentUserDetailedQuery : IQuery<UserDetailedViewModel>, ICachable
+public record GetCurrentUserDetailedQuery(string CurrentUserId) : IQuery<UserDetailedQueryViewModel>, ICachable
 {
     private const int CACHE_EXPIRATION_AMOUNT = 15;
-
-
-    public string CurrentUserId { get; set; } = string.Empty;
 
     public string Key => $"{nameof(GetCurrentUserDetailedQuery)}-{CurrentUserId}";
 

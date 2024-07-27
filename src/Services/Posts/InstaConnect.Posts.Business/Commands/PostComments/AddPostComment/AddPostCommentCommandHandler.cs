@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Read.Business.Models;
+using InstaConnect.Posts.Business.Models.PostComment;
+using InstaConnect.Posts.Read.Data.Abstract;
 using InstaConnect.Posts.Read.Data.Models.Entities;
 using InstaConnect.Posts.Write.Data.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
@@ -9,53 +10,54 @@ using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Posts.Write.Business.Commands.PostComments.AddPostComment;
+namespace InstaConnect.Posts.Business.Commands.PostComments.AddPostComment;
 
 internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentCommand, PostCommentCommandViewModel>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPostWriteRepository _postRepository;
-    private readonly IPostCommentWriteRepository _postCommentRepository;
-    private readonly IRequestClient<GetUserByIdRequest> _getUserByIdRequestClient;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IPostWriteRepository _postWriteRepository;
+    private readonly IPostCommentWriteRepository _postCommentWriteRepository;
 
     public AddPostCommentCommandHandler(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
-        IPostWriteRepository postRepository,
-        IPostCommentWriteRepository postCommentRepository,
-        IRequestClient<GetUserByIdRequest> getUserByIdRequestClient)
+        IInstaConnectMapper instaConnectMapper,
+        IUserWriteRepository userWriteRepository,
+        IPostWriteRepository postWriteRepository,
+        IPostCommentWriteRepository postCommentWriteRepository)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
-        _postRepository = postRepository;
-        _postCommentRepository = postCommentRepository;
-        _getUserByIdRequestClient = getUserByIdRequestClient;
+        _instaConnectMapper = instaConnectMapper;
+        _userWriteRepository = userWriteRepository;
+        _postWriteRepository = postWriteRepository;
+        _postCommentWriteRepository = postCommentWriteRepository;
     }
 
-    public async Task<PostCommentCommandViewModel> Handle(AddPostCommentCommand request, CancellationToken cancellationToken)
+    public async Task<PostCommentCommandViewModel> Handle(
+        AddPostCommentCommand request,
+        CancellationToken cancellationToken)
     {
-        var existingPost = await _postRepository.GetByIdAsync(request.PostId, cancellationToken);
+        var existingPost = await _postWriteRepository.GetByIdAsync(request.PostId, cancellationToken);
 
         if (existingPost == null)
         {
             throw new PostNotFoundException();
         }
 
-        var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
-        var getUserByIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(getUserByIdRequest, cancellationToken);
+        var existingUser = await _userWriteRepository.GetByIdAsync(request.CurrentUserId, cancellationToken);
 
-        if (getUserByIdResponse == null)
+        if (existingUser == null)
         {
             throw new UserNotFoundException();
         }
 
-        var postComment = _mapper.Map<PostComment>(request);
-        _postCommentRepository.Add(postComment);
+        var postComment = _instaConnectMapper.Map<PostComment>(request);
+        _postCommentWriteRepository.Add(postComment);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var postCommentCommandViewModel = _mapper.Map<PostCommentCommandViewModel>(request);
+        var postCommentCommandViewModel = _instaConnectMapper.Map<PostCommentCommandViewModel>(request);
 
         return postCommentCommandViewModel;
     }

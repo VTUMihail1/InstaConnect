@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace InstaConnect.Posts.Read.Business.Queries.PostComments.GetAllPostComments;
+namespace InstaConnect.Posts.Business.Queries.PostComments.GetAllPostComments;
 
 public class GetAllPostCommentsQueryValidator : AbstractValidator<GetAllPostCommentsQuery>
 {

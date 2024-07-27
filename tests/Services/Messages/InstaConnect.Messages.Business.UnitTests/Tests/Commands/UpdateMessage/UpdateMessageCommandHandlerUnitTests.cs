@@ -71,7 +71,7 @@ public async Task Handle_ShouldReturnMessageViewModel_WhenMessageIdIsValid()
     // Assert
     response
         .Should()
-        .Match<MessageWriteViewModel>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID);
+        .Match<MessageCommandViewModel>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID);
 }
 
 [Fact]

@@ -1,14 +1,14 @@
 ﻿using System.Threading;
 using Asp.Versioning;
 using AutoMapper;
-using InstaConnect.Posts.Read.Business.Queries.Posts.GetAllFilteredPosts;
-using InstaConnect.Posts.Read.Business.Queries.Posts.GetAllPosts;
-using InstaConnect.Posts.Read.Business.Queries.Posts.GetPostById;
+using InstaConnect.Posts.Business.Commands.Posts.AddPost;
+using InstaConnect.Posts.Business.Commands.Posts.DeletePost;
+using InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
+using InstaConnect.Posts.Business.Queries.Posts.GetAllFilteredPosts;
+using InstaConnect.Posts.Business.Queries.Posts.GetAllPosts;
+using InstaConnect.Posts.Business.Queries.Posts.GetPostById;
 using InstaConnect.Posts.Read.Web.Models.Requests.Post;
-using InstaConnect.Posts.Read.Web.Models.Responses;
-using InstaConnect.Posts.Write.Business.Commands.Posts.AddPost;
-using InstaConnect.Posts.Write.Business.Commands.Posts.DeletePost;
-using InstaConnect.Posts.Write.Business.Commands.Posts.UpdatePost;
+using InstaConnect.Posts.Web.Models.Responses.Posts;
 using InstaConnect.Posts.Write.Web.Models.Requests.Post;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Web.Abstractions;
@@ -87,8 +87,7 @@ public class PostController : ControllerBase
     public async Task<IActionResult> AddAsync(AddPostRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<AddPostCommand>(request);
-        _instaConnectMapper.Map(currentUser, commandRequest);
+        var commandRequest = _instaConnectMapper.Map<AddPostCommand>((currentUser, request));
         var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
         var response = _instaConnectMapper.Map<PostCommandResponse>(commandResponse);
 
@@ -104,8 +103,7 @@ public class PostController : ControllerBase
     public async Task<IActionResult> UpdateAsync(UpdatePostRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<UpdatePostCommand>(request);
-        _instaConnectMapper.Map(currentUser, commandRequest);
+        var commandRequest = _instaConnectMapper.Map<UpdatePostCommand>((currentUser, request));
         var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
         var response = _instaConnectMapper.Map<PostCommandResponse>(commandResponse);
 
@@ -121,8 +119,7 @@ public class PostController : ControllerBase
     public async Task<IActionResult> DeleteAsync(DeletePostRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<DeletePostCommand>(request);
-        _instaConnectMapper.Map(currentUser, commandRequest);
+        var commandRequest = _instaConnectMapper.Map<DeletePostCommand>((currentUser, request));
         await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();

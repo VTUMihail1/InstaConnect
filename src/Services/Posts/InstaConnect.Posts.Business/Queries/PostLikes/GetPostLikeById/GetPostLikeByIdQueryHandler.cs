@@ -1,34 +1,36 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Read.Business.Models;
+using InstaConnect.Posts.Business.Models.PostLike;
 using InstaConnect.Posts.Read.Data.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.PostLike;
 
-namespace InstaConnect.Posts.Read.Business.Queries.PostLikes.GetPostLikeById;
+namespace InstaConnect.Posts.Business.Queries.PostLikes.GetPostLikeById;
 
 internal class GetPostLikeByIdQueryHandler : IQueryHandler<GetPostLikeByIdQuery, PostLikeQueryViewModel>
 {
-    private readonly IMapper _mapper;
-    private readonly IPostLikeReadRepository _postLikeRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IPostLikeReadRepository _postLikeReadRepository;
 
     public GetPostLikeByIdQueryHandler(
-        IMapper mapper,
-        IPostLikeReadRepository postLikeRepository)
+        IInstaConnectMapper instaConnectMapper,
+        IPostLikeReadRepository postLikeReadRepository)
     {
-        _mapper = mapper;
-        _postLikeRepository = postLikeRepository;
+        _instaConnectMapper = instaConnectMapper;
+        _postLikeReadRepository = postLikeReadRepository;
     }
 
-    public async Task<PostLikeQueryViewModel> Handle(GetPostLikeByIdQuery request, CancellationToken cancellationToken)
+    public async Task<PostLikeQueryViewModel> Handle(
+        GetPostLikeByIdQuery request,
+        CancellationToken cancellationToken)
     {
-        var postLike = await _postLikeRepository.GetByIdAsync(request.Id, cancellationToken);
+        var postLike = await _postLikeReadRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (postLike == null)
         {
             throw new PostLikeNotFoundException();
         }
 
-        var response = _mapper.Map<PostLikeQueryViewModel>(postLike);
+        var response = _instaConnectMapper.Map<PostLikeQueryViewModel>(postLike);
 
         return response;
     }

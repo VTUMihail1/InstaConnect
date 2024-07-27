@@ -6,7 +6,7 @@ using InstaConnect.Shared.Business.Exceptions.Message;
 
 namespace InstaConnect.Messages.Business.Queries.Messages.GetMessageById;
 
-internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, MessageReadViewModel>
+internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, MessageQueryViewModel>
 {
     private readonly IMessageReadRepository _messageRepository;
     private readonly IInstaConnectMapper _instaConnectMapper;
@@ -19,7 +19,7 @@ internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, M
         _instaConnectMapper = instaConnectMapper;
     }
 
-    public async Task<MessageReadViewModel> Handle(GetMessageByIdQuery request, CancellationToken cancellationToken)
+    public async Task<MessageQueryViewModel> Handle(GetMessageByIdQuery request, CancellationToken cancellationToken)
     {
         var message = await _messageRepository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -33,7 +33,7 @@ internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, M
             throw new AccountForbiddenException();
         }
 
-        var response = _instaConnectMapper.Map<MessageReadViewModel>(message);
+        var response = _instaConnectMapper.Map<MessageQueryViewModel>(message);
 
         return response;
     }

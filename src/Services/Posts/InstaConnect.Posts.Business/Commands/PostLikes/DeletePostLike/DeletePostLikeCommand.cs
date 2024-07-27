@@ -1,10 +1,5 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Posts.Write.Business.Commands.PostLikes.DeletePostLike;
+namespace InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
 
-public class DeletePostLikeCommand : ICommand
-{
-    public string Id { get; set; } = string.Empty;
-
-    public string CurrentUserId { get; set; } = string.Empty;
-}
+public record DeletePostLikeCommand(string Id, string CurrentUserId) : ICommand;

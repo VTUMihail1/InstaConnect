@@ -143,7 +143,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         // Assert
         response
             .Should()
-            .Match<MessageReadViewModel>(m => m.Id == existingMessageId &&
+            .Match<MessageQueryViewModel>(m => m.Id == existingMessageId &&
                                           m.SenderId == existingSenderId &&
                                           m.SenderName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
                                           m.SenderProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&

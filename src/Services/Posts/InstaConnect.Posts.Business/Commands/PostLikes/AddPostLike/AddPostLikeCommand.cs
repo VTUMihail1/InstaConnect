@@ -1,11 +1,6 @@
-﻿using InstaConnect.Posts.Read.Business.Models;
+﻿using InstaConnect.Posts.Business.Models.PostLike;
 using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Posts.Write.Business.Commands.PostLikes.AddPostLike;
+namespace InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
 
-public class AddPostLikeCommand : ICommand<PostLikeCommandViewModel>
-{
-    public string CurrentUserId { get; set; } = string.Empty;
-
-    public string PostId { get; set; } = string.Empty;
-}
+public record AddPostLikeCommand(string CurrentUserId, string PostId) : ICommand<PostLikeCommandViewModel>;

@@ -1,13 +1,13 @@
 ﻿using System.Threading;
 using Asp.Versioning;
 using AutoMapper;
-using InstaConnect.Posts.Read.Business.Queries.PostLikes.GetAllFilteredPostLikes;
-using InstaConnect.Posts.Read.Business.Queries.PostLikes.GetAllPostLikes;
-using InstaConnect.Posts.Read.Business.Queries.PostLikes.GetPostLikeById;
+using InstaConnect.Posts.Business.Commands.PostLikes.AddPostLike;
+using InstaConnect.Posts.Business.Commands.PostLikes.DeletePostLike;
+using InstaConnect.Posts.Business.Queries.PostLikes.GetAllFilteredPostLikes;
+using InstaConnect.Posts.Business.Queries.PostLikes.GetAllPostLikes;
+using InstaConnect.Posts.Business.Queries.PostLikes.GetPostLikeById;
 using InstaConnect.Posts.Read.Web.Models.Requests.PostLike;
 using InstaConnect.Posts.Read.Web.Models.Responses;
-using InstaConnect.Posts.Write.Business.Commands.PostLikes.AddPostLike;
-using InstaConnect.Posts.Write.Business.Commands.PostLikes.DeletePostLike;
 using InstaConnect.Posts.Write.Web.Models.Requests.PostLike;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Web.Abstractions;
@@ -86,8 +86,7 @@ public class PostLikeController : ControllerBase
     public async Task<IActionResult> AddAsync(AddPostLikeRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<AddPostLikeCommand>(request);
-        _instaConnectMapper.Map(currentUser, commandRequest);
+        var commandRequest = _instaConnectMapper.Map<AddPostLikeCommand>((currentUser, request));
         var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
         var response = _instaConnectMapper.Map<PostLikeCommandResponse>(commandResponse);
 
@@ -103,8 +102,7 @@ public class PostLikeController : ControllerBase
     public async Task<IActionResult> DeleteAsync(DeletePostLikeRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<DeletePostLikeCommand>(request);
-        _instaConnectMapper.Map(currentUser, commandRequest);
+        var commandRequest = _instaConnectMapper.Map<DeletePostLikeCommand>((currentUser, request));
         await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();

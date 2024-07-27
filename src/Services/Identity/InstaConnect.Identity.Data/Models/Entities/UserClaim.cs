@@ -4,11 +4,18 @@ namespace InstaConnect.Identity.Data.Models.Entities;
 
 public class UserClaim : BaseEntity
 {
-    public string Claim { get; set; } = string.Empty;
+    public UserClaim(string claim, string value, string userId)
+    {
+        Claim = claim;
+        Value = value;
+        UserId = userId;
+    }
 
-    public string Value { get; set; } = string.Empty;
+    public string Claim { get; }
 
-    public string UserId { get; set; } = string.Empty;
+    public string Value { get; }
 
-    public User User { get; set; } = new();
+    public string UserId { get; }
+
+    public User? User { get; set; }
 }

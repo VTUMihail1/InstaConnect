@@ -1,9 +1,6 @@
-﻿using InstaConnect.Posts.Read.Business.Models;
+﻿using InstaConnect.Posts.Business.Models.PostComment;
 using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Posts.Read.Business.Queries.PostComments.GetPostCommentById;
+namespace InstaConnect.Posts.Business.Queries.PostComments.GetPostCommentById;
 
-public class GetPostCommentByIdQuery : IQuery<PostCommentQueryViewModel>
-{
-    public string Id { get; set; } = string.Empty;
-}
+public record GetPostCommentByIdQuery(string Id) : IQuery<PostCommentQueryViewModel>;

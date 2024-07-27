@@ -1,15 +1,6 @@
-﻿using InstaConnect.Posts.Read.Business.Models;
+﻿using InstaConnect.Posts.Business.Models.Post;
 using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Posts.Write.Business.Commands.Posts.UpdatePost;
+namespace InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
 
-public class UpdatePostCommand : ICommand<PostCommandViewModel>
-{
-    public string Id { get; set; } = string.Empty;
-
-    public string CurrentUserId { get; set; } = string.Empty;
-
-    public string Title { get; set; } = string.Empty;
-
-    public string Content { get; set; } = string.Empty;
-}
+public record UpdatePostCommand(string Id, string CurrentUserId, string Title, string Content) : ICommand<PostCommandViewModel>;

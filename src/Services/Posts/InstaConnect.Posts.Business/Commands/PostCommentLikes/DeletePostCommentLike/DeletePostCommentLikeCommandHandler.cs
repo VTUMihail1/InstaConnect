@@ -7,30 +7,26 @@ using InstaConnect.Shared.Business.Exceptions.PostLike;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Posts.Write.Business.Commands.PostCommentLikes.DeletePostCommentLike;
+namespace InstaConnect.Posts.Business.Commands.PostCommentLikes.DeletePostCommentLike;
 
 internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostCommentLikeCommand>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPublishEndpoint _publishEndpoint;
-    private readonly IPostCommentLikeWriteRepository _postCommentLikeRepository;
+    private readonly IPostCommentLikeWriteRepository _postCommentLikeWriteRepository;
 
     public DeletePostCommentLikeCommandHandler(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
-        IPublishEndpoint publishEndpoint,
-        IPostCommentLikeWriteRepository postCommentLikeRepository)
+        IPostCommentLikeWriteRepository postCommentLikeWriteRepository)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
-        _publishEndpoint = publishEndpoint;
-        _postCommentLikeRepository = postCommentLikeRepository;
+        _postCommentLikeWriteRepository = postCommentLikeWriteRepository;
     }
 
-    public async Task Handle(DeletePostCommentLikeCommand request, CancellationToken cancellationToken)
+    public async Task Handle(
+        DeletePostCommentLikeCommand request,
+        CancellationToken cancellationToken)
     {
-        var existingPostCommentLike = await _postCommentLikeRepository.GetByIdAsync(request.Id, cancellationToken);
+        var existingPostCommentLike = await _postCommentLikeWriteRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (existingPostCommentLike == null)
         {
@@ -42,10 +38,7 @@ internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostC
             throw new AccountForbiddenException();
         }
 
-        _postCommentLikeRepository.Delete(existingPostCommentLike);
-
-        var postCommentLikeDeletedEvent = _mapper.Map<PostCommentLikeDeletedEvent>(request);
-        await _publishEndpoint.Publish(postCommentLikeDeletedEvent, cancellationToken);
+        _postCommentLikeWriteRepository.Delete(existingPostCommentLike);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

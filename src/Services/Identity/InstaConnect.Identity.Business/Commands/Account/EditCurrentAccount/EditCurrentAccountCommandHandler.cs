@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InstaConnect.Identity.Business.Models;
 using InstaConnect.Identity.Data.Abstraction;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Users;
@@ -9,47 +10,53 @@ using MassTransit;
 
 namespace InstaConnect.Identity.Business.Commands.Account.EditCurrentAccount;
 
-public class EditCurrentAccountCommandHandler : ICommandHandler<EditCurrentAccountCommand>
+public class EditCurrentAccountCommandHandler : ICommandHandler<EditCurrentAccountCommand, AccountCommandViewModel>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserRepository _userRepository;
-    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IEventPublisher _eventPublisher;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IUserWriteRepository _userWriteRepository;
 
     public EditCurrentAccountCommandHandler(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
-        IUserRepository userRepository,
-        IPublishEndpoint publishEndpoint)
+        IEventPublisher eventPublisher,
+        IInstaConnectMapper instaConnectMapper,
+        IUserWriteRepository userWriteRepository)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
-        _userRepository = userRepository;
-        _publishEndpoint = publishEndpoint;
+        _eventPublisher = eventPublisher;
+        _instaConnectMapper = instaConnectMapper;
+        _userWriteRepository = userWriteRepository;
     }
 
-    public async Task Handle(EditCurrentAccountCommand request, CancellationToken cancellationToken)
+    public async Task<AccountCommandViewModel> Handle(
+        EditCurrentAccountCommand request, 
+        CancellationToken cancellationToken)
     {
-        var existingUserById = await _userRepository.GetByIdAsync(request.CurrentUserId, cancellationToken);
+        var existingUserById = await _userWriteRepository.GetByIdAsync(request.CurrentUserId, cancellationToken);
 
         if (existingUserById == null)
         {
             throw new UserNotFoundException();
         }
 
-        var existingUserByName = await _userRepository.GetByNameAsync(request.UserName, cancellationToken);
+        var existingUserByName = await _userWriteRepository.GetByNameAsync(request.UserName, cancellationToken);
 
         if (existingUserById.UserName != request.UserName && existingUserByName != null)
         {
             throw new AccountUsernameAlreadyTakenException();
         }
 
-        _mapper.Map(request, existingUserById);
-        _userRepository.Update(existingUserById);
+        _instaConnectMapper.Map(request, existingUserById);
+        _userWriteRepository.Update(existingUserById);
 
-        var userUpdatedEvent = _mapper.Map<UserUpdatedEvent>(existingUserById);
-        await _publishEndpoint.Publish(userUpdatedEvent, cancellationToken);
+        var userUpdatedEvent = _instaConnectMapper.Map<UserUpdatedEvent>(existingUserById);
+        await _eventPublisher.PublishAsync(userUpdatedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        var accountCommandViewModel = _instaConnectMapper.Map<AccountCommandViewModel>(existingUserById);
+
+        return accountCommandViewModel;
     }
 }

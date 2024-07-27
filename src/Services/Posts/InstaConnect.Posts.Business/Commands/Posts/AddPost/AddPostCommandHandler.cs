@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Read.Business.Models;
+using InstaConnect.Posts.Business.Models.Post;
+using InstaConnect.Posts.Read.Data.Abstract;
 using InstaConnect.Posts.Read.Data.Models.Entities;
 using InstaConnect.Posts.Write.Data.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
@@ -8,43 +9,42 @@ using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstract;
 using MassTransit;
 
-namespace InstaConnect.Posts.Write.Business.Commands.Posts.AddPost;
+namespace InstaConnect.Posts.Business.Commands.Posts.AddPost;
 
 internal class AddPostCommandHandler : ICommandHandler<AddPostCommand, PostCommandViewModel>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPostWriteRepository _postRepository;
-    private readonly IRequestClient<GetUserByIdRequest> _getUserByIdRequestClient;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IPostWriteRepository _postWriteRepository;
+    private readonly IUserWriteRepository _userWriteRepository;
 
     public AddPostCommandHandler(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
-        IPostWriteRepository postRepository,
-        IRequestClient<GetUserByIdRequest> getUserByIdRequestClient)
+        IInstaConnectMapper instaConnectMapper,
+        IPostWriteRepository postWriteRepository,
+        IUserWriteRepository userWriteRepository)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
-        _postRepository = postRepository;
-        _getUserByIdRequestClient = getUserByIdRequestClient;
+        _instaConnectMapper = instaConnectMapper;
+        _postWriteRepository = postWriteRepository;
+        _userWriteRepository = userWriteRepository;
     }
 
     public async Task<PostCommandViewModel> Handle(AddPostCommand request, CancellationToken cancellationToken)
     {
-        var getUserByIdRequest = _mapper.Map<GetUserByIdRequest>(request);
-        var getUserByIdResponse = await _getUserByIdRequestClient.GetResponse<GetUserByIdResponse>(getUserByIdRequest, cancellationToken);
+        var existingUser = await _userWriteRepository.GetByIdAsync(request.CurrentUserId, cancellationToken);
 
-        if (getUserByIdResponse == null)
+        if (existingUser == null)
         {
             throw new UserNotFoundException();
         }
 
-        var post = _mapper.Map<Post>(request);
-        _postRepository.Add(post);
+        var post = _instaConnectMapper.Map<Post>(request);
+        _postWriteRepository.Add(post);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var postCommentViewModel = _mapper.Map<PostCommandViewModel>(post);
+        var postCommentViewModel = _instaConnectMapper.Map<PostCommandViewModel>(post);
 
         return postCommentViewModel;
     }

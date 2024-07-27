@@ -10,36 +10,38 @@ namespace InstaConnect.Identity.Business.Commands.Account.DeleteAccountById;
 
 public class DeleteAccountByIdCommandHandler : ICommandHandler<DeleteAccountByIdCommand>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserRepository _userRepository;
-    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IEventPublisher _eventPublisher;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IUserWriteRepository _userWriteRepository;
 
     public DeleteAccountByIdCommandHandler(
-        IMapper mapper,
-        IUnitOfWork unitOfWork,
-        IUserRepository userRepository,
-        IPublishEndpoint publishEndpoint)
+        IUnitOfWork unitOfWork, 
+        IEventPublisher eventPublisher, 
+        IInstaConnectMapper instaConnectMapper, 
+        IUserWriteRepository userWriteRepository)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
-        _userRepository = userRepository;
-        _publishEndpoint = publishEndpoint;
+        _eventPublisher = eventPublisher;
+        _instaConnectMapper = instaConnectMapper;
+        _userWriteRepository = userWriteRepository;
     }
 
-    public async Task Handle(DeleteAccountByIdCommand request, CancellationToken cancellationToken)
+    public async Task Handle(
+        DeleteAccountByIdCommand request, 
+        CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByIdAsync(request.Id, cancellationToken);
+        var existingUser = await _userWriteRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (existingUser == null)
         {
             throw new UserNotFoundException();
         }
 
-        _userRepository.Delete(existingUser);
+        _userWriteRepository.Delete(existingUser);
 
-        var userDeletedEvent = _mapper.Map<UserDeletedEvent>(existingUser);
-        await _publishEndpoint.Publish(userDeletedEvent, cancellationToken);
+        var userDeletedEvent = _instaConnectMapper.Map<UserDeletedEvent>(existingUser);
+        await _eventPublisher.PublishAsync(userDeletedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

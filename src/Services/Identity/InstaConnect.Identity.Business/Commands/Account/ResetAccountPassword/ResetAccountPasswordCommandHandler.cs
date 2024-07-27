@@ -11,31 +11,33 @@ public class ResetAccountPasswordCommandHandler : ICommandHandler<ResetAccountPa
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPasswordHasher _passwordHasher;
-    private readonly IUserRepository _userRepository;
-    private readonly ITokenRepository _tokenRepository;
+    private readonly IUserWriteRepository _userWriteRepository;
+    private readonly ITokenWriteRepository _tokenWriteRepository;
 
     public ResetAccountPasswordCommandHandler(
         IUnitOfWork unitOfWork,
         IPasswordHasher passwordHasher,
-        IUserRepository userRepository,
-        ITokenRepository tokenRepository)
+        IUserWriteRepository userWriteRepository,
+        ITokenWriteRepository tokenWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _passwordHasher = passwordHasher;
-        _userRepository = userRepository;
-        _tokenRepository = tokenRepository;
+        _userWriteRepository = userWriteRepository;
+        _tokenWriteRepository = tokenWriteRepository;
     }
 
-    public async Task Handle(ResetAccountPasswordCommand request, CancellationToken cancellationToken)
+    public async Task Handle(
+        ResetAccountPasswordCommand request, 
+        CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
+        var existingUser = await _userWriteRepository.GetByIdAsync(request.UserId, cancellationToken);
 
         if (existingUser == null)
         {
             throw new UserNotFoundException();
         }
 
-        var existingToken = await _tokenRepository.GetByValueAsync(request.Token, cancellationToken);
+        var existingToken = await _tokenWriteRepository.GetByValueAsync(request.Token, cancellationToken);
 
         if (existingToken == null)
         {
@@ -48,9 +50,9 @@ public class ResetAccountPasswordCommandHandler : ICommandHandler<ResetAccountPa
         }
 
         var passwordHashResultDTO = _passwordHasher.Hash(request.Password);
-        await _userRepository.ResetPasswordAsync(existingUser.Id, passwordHashResultDTO.PasswordHash, cancellationToken);
+        await _userWriteRepository.ResetPasswordAsync(existingUser.Id, passwordHashResultDTO.PasswordHash, cancellationToken);
 
-        _tokenRepository.Delete(existingToken);
+        _tokenWriteRepository.Delete(existingToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

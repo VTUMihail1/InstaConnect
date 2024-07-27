@@ -2,28 +2,32 @@
 using InstaConnect.Identity.Business.Models;
 using InstaConnect.Identity.Data.Abstraction;
 using InstaConnect.Identity.Data.Models.Filters;
+using InstaConnect.Messages.Business.Models;
 using InstaConnect.Shared.Business.Abstractions;
 
 namespace InstaConnect.Identity.Business.Queries.User.GetAllFilteredUsers;
 
-public class GetAllFilteredUsersQueryHandler : IQueryHandler<GetAllFilteredUsersQuery, ICollection<UserViewModel>>
+public class GetAllFilteredUsersQueryHandler : IQueryHandler<GetAllFilteredUsersQuery, UserPaginationQueryViewModel>
 {
-    private readonly IMapper _mapper;
-    private readonly IUserRepository _userRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IUserReadRepository _userReadRepository;
 
     public GetAllFilteredUsersQueryHandler(
-        IMapper mapper,
-        IUserRepository userRepository)
+        IInstaConnectMapper instaConnectMapper,
+        IUserReadRepository userReadRepository)
     {
-        _mapper = mapper;
-        _userRepository = userRepository;
+        _instaConnectMapper = instaConnectMapper;
+        _userReadRepository = userReadRepository;
     }
-    public async Task<ICollection<UserViewModel>> Handle(GetAllFilteredUsersQuery request, CancellationToken cancellationToken)
-    {
-        var filteredCollectionQuery = _mapper.Map<UserFilteredCollectionQuery>(request);
-        var users = await _userRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
 
-        var response = _mapper.Map<ICollection<UserViewModel>>(users);
+    public async Task<UserPaginationQueryViewModel> Handle(
+        GetAllFilteredUsersQuery request, 
+        CancellationToken cancellationToken)
+    {
+        var filteredCollectionQuery = _instaConnectMapper.Map<UserFilteredCollectionReadQuery>(request);
+        var users = await _userReadRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
+
+        var response = _instaConnectMapper.Map<UserPaginationQueryViewModel>(users);
 
         return response;
     }

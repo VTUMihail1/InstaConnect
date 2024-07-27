@@ -84,7 +84,7 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
         // Assert
         response
             .Should()
-            .Match<MessageReadViewModel>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
+            .Match<MessageQueryViewModel>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
                                           m.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
                                           m.SenderName == MessageUnitTestConfigurations.EXISTING_SENDER_NAME &&
                                           m.SenderProfileImage == MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&

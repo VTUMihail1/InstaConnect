@@ -9,6 +9,7 @@ using InstaConnect.Identity.Business.Queries.User.GetUserByName;
 using InstaConnect.Identity.Business.Queries.User.GetUserDetailedById;
 using InstaConnect.Identity.Web.Models.Requests.User;
 using InstaConnect.Identity.Web.Models.Response;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
 using MediatR;
@@ -23,17 +24,17 @@ namespace InstaConnect.Identity.Web.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class UserController : ControllerBase
 {
-    private readonly IMapper _mapper;
-    private readonly ISender _sender;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IInstaConnectSender _instaConnectSender;
     private readonly ICurrentUserContext _currentUserContext;
 
     public UserController(
-        IMapper mapper,
-        ISender sender,
+        IInstaConnectMapper instaConnectMapper,
+        IInstaConnectSender instaConnectSender,
         ICurrentUserContext currentUserContext)
     {
-        _mapper = mapper;
-        _sender = sender;
+        _instaConnectMapper = instaConnectMapper;
+        _instaConnectSender = instaConnectSender;
         _currentUserContext = currentUserContext;
     }
 
@@ -44,10 +45,10 @@ public class UserController : ControllerBase
         GetAllUsersRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _mapper.Map<GetAllUsersQuery>(request);
-        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
+        var queryRequest = _instaConnectMapper.Map<GetAllUsersQuery>(request);
+        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _mapper.Map<ICollection<UserResponse>>(queryResponse);
+        var response = _instaConnectMapper.Map<ICollection<UserQueryResponse>>(queryResponse);
 
         return Ok(response);
     }
@@ -59,10 +60,10 @@ public class UserController : ControllerBase
         GetAllFilteredUsersRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _mapper.Map<GetAllFilteredUsersQuery>(request);
-        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
+        var queryRequest = _instaConnectMapper.Map<GetAllFilteredUsersQuery>(request);
+        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _mapper.Map<ICollection<UserResponse>>(queryResponse);
+        var response = _instaConnectMapper.Map<ICollection<UserQueryResponse>>(queryResponse);
 
         return Ok(response);
     }
@@ -76,10 +77,10 @@ public class UserController : ControllerBase
     public async Task<IActionResult> GetCurrentDetailedAsync(CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var queryRequest = _mapper.Map<GetCurrentUserDetailedQuery>(currentUser);
-        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
+        var queryRequest = _instaConnectMapper.Map<GetCurrentUserDetailedQuery>(currentUser);
+        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _mapper.Map<UserDetailedResponse>(queryResponse);
+        var response = _instaConnectMapper.Map<UserDetailedQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -93,10 +94,10 @@ public class UserController : ControllerBase
         GetUserDetailedByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _mapper.Map<GetUserDetailedByIdQuery>(request);
-        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
+        var queryRequest = _instaConnectMapper.Map<GetUserDetailedByIdQuery>(request);
+        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _mapper.Map<UserDetailedResponse>(queryResponse);
+        var response = _instaConnectMapper.Map<UserDetailedQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -109,10 +110,10 @@ public class UserController : ControllerBase
     public async Task<IActionResult> GetCurrentAsync(CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var queryRequest = _mapper.Map<GetCurrentUserQuery>(currentUser);
-        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
+        var queryRequest = _instaConnectMapper.Map<GetCurrentUserQuery>(currentUser);
+        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _mapper.Map<UserResponse>(queryResponse);
+        var response = _instaConnectMapper.Map<UserQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -125,10 +126,10 @@ public class UserController : ControllerBase
         GetUserByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _mapper.Map<GetUserByIdQuery>(request);
-        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
+        var queryRequest = _instaConnectMapper.Map<GetUserByIdQuery>(request);
+        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _mapper.Map<UserResponse>(queryResponse);
+        var response = _instaConnectMapper.Map<UserQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -141,10 +142,10 @@ public class UserController : ControllerBase
         GetUserByNameRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _mapper.Map<GetUserByNameQuery>(request);
-        var queryResponse = await _sender.Send(queryRequest, cancellationToken);
+        var queryRequest = _instaConnectMapper.Map<GetUserByNameQuery>(request);
+        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _mapper.Map<UserResponse>(queryResponse);
+        var response = _instaConnectMapper.Map<UserQueryResponse>(queryResponse);
 
         return Ok(response);
     }

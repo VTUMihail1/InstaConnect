@@ -1,5 +1,2 @@
 ﻿namespace InstaConnect.Identity.Data.Models;
-public class CreateAccountTokenModel
-{
-    public string UserId { get; set; } = string.Empty;
-}
+public record CreateAccountTokenModel(string UserId);

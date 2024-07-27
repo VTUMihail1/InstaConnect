@@ -1,34 +1,31 @@
-﻿using AutoMapper;
-using InstaConnect.Posts.Read.Business.Models;
+﻿using InstaConnect.Posts.Business.Models.Post;
 using InstaConnect.Posts.Write.Data.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Contracts.Posts;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Data.Abstract;
-using MassTransit;
 
-namespace InstaConnect.Posts.Write.Business.Commands.Posts.UpdatePost;
+namespace InstaConnect.Posts.Business.Commands.Posts.UpdatePost;
 
 public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, PostCommandViewModel>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPostWriteRepository _postRepository;
+    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IPostWriteRepository _postWriteRepository;
 
     public UpdatePostCommandHandler(
-        IMapper mapper,
         IUnitOfWork unitOfWork,
-        IPostWriteRepository postRepository)
+        IInstaConnectMapper instaConnectMapper,
+        IPostWriteRepository postWriteRepository)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
-        _postRepository = postRepository;
+        _instaConnectMapper = instaConnectMapper;
+        _postWriteRepository = postWriteRepository;
     }
 
     public async Task<PostCommandViewModel> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
     {
-        var existingPost = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
+        var existingPost = await _postWriteRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (existingPost == null)
         {
@@ -40,12 +37,12 @@ public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, PostC
             throw new AccountForbiddenException();
         }
 
-        _mapper.Map(request, existingPost);
-        _postRepository.Update(existingPost);
+        _instaConnectMapper.Map(request, existingPost);
+        _postWriteRepository.Update(existingPost);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var postCommentViewModel = _mapper.Map<PostCommandViewModel>(existingPost);
+        var postCommentViewModel = _instaConnectMapper.Map<PostCommandViewModel>(existingPost);
 
         return postCommentViewModel;
     }

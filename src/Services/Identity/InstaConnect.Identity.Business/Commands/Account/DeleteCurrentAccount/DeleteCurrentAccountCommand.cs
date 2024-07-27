@@ -2,7 +2,4 @@
 
 namespace InstaConnect.Identity.Business.Commands.Account.DeleteCurrentAccount;
 
-public class DeleteCurrentAccountCommand : ICommand
-{
-    public string CurrentUserId { get; set; } = string.Empty;
-}
+public record DeleteCurrentAccountCommand(string CurrentUserId) : ICommand;

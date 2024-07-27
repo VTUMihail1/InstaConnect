@@ -2,5 +2,10 @@
 
 public class AddPostCommentLikeBindingModel
 {
-    public string PostId { get; set; } = string.Empty;
+    public AddPostCommentLikeBindingModel(string postId)
+    {
+        PostId = postId;
+    }
+
+    public string PostId { get; set; }
 }
