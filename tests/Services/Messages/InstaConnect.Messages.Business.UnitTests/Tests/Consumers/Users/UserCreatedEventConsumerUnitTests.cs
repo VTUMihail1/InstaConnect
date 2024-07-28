@@ -16,8 +16,8 @@ public class UserCreatedEventConsumerUnitTests : BaseMessageUnitTest
     {
         _userCreatedEventConsumer = new(
             UnitOfWork,
-            UserReadRepository,
-            InstaConnectMapper);
+            InstaConnectMapper,
+            UserWriteRepository);
 
         _userCreatedEventConsumeContext = Substitute.For<ConsumeContext<UserCreatedEvent>>();
     }
@@ -26,15 +26,13 @@ public class UserCreatedEventConsumerUnitTests : BaseMessageUnitTest
     public async Task Consume_ShouldCallGetByIdAsyncMethod_WhenUserIdIsInvalid()
     {
         // Arrange
-        var userCreatedEvent = new UserCreatedEvent()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-            FirstName = MessageUnitTestConfigurations.EXISTING_SENDER_FIRST_NAME,
-            LastName = MessageUnitTestConfigurations.EXISTING_SENDER_LAST_NAME,
-            UserName = MessageUnitTestConfigurations.EXISTING_SENDER_NAME,
-            Email = MessageUnitTestConfigurations.EXISTING_SENDER_EMAIL,
-            ProfileImage = MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE,
-        };
+        var userCreatedEvent = new UserCreatedEvent(
+            ValidCurrentUserId, 
+            ValidUserName, 
+            ValidUserEmail, 
+            ValidUserFirstName, 
+            ValidUserLastName, 
+            ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -42,24 +40,22 @@ public class UserCreatedEventConsumerUnitTests : BaseMessageUnitTest
         await _userCreatedEventConsumer.Consume(_userCreatedEventConsumeContext);
 
         // Assert
-        await UserReadRepository
+        await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(MessageUnitTestConfigurations.EXISTING_SENDER_ID, CancellationToken);
+            .GetByIdAsync(ValidCurrentUserId, CancellationToken);
     }
 
     [Fact]
     public async Task Consume_ShouldNotAddMethod_WhenUserIdIsInvalid()
     {
         // Arrange
-        var userCreatedEvent = new UserCreatedEvent()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-            FirstName = MessageUnitTestConfigurations.EXISTING_SENDER_FIRST_NAME,
-            LastName = MessageUnitTestConfigurations.EXISTING_SENDER_LAST_NAME,
-            UserName = MessageUnitTestConfigurations.EXISTING_SENDER_NAME,
-            Email = MessageUnitTestConfigurations.EXISTING_SENDER_EMAIL,
-            ProfileImage = MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE,
-        };
+        var userCreatedEvent = new UserCreatedEvent(
+            ValidCurrentUserId,
+            ValidUserName,
+            ValidUserEmail,
+            ValidUserFirstName,
+            ValidUserLastName,
+            ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -76,15 +72,13 @@ public class UserCreatedEventConsumerUnitTests : BaseMessageUnitTest
     public async Task Consume_ShouldNotCallSaveChangesAsync_WhenUserIdIsInvalid()
     {
         // Arrange
-        var userCreatedEvent = new UserCreatedEvent()
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-            FirstName = MessageUnitTestConfigurations.EXISTING_SENDER_FIRST_NAME,
-            LastName = MessageUnitTestConfigurations.EXISTING_SENDER_LAST_NAME,
-            UserName = MessageUnitTestConfigurations.EXISTING_SENDER_NAME,
-            Email = MessageUnitTestConfigurations.EXISTING_SENDER_EMAIL,
-            ProfileImage = MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE,
-        };
+        var userCreatedEvent = new UserCreatedEvent(
+            ValidCurrentUserId,
+            ValidUserName,
+            ValidUserEmail,
+            ValidUserFirstName,
+            ValidUserLastName,
+            ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -101,15 +95,13 @@ public class UserCreatedEventConsumerUnitTests : BaseMessageUnitTest
     public async Task Consume_ShouldGetById_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var userCreatedEvent = new UserCreatedEvent()
-        {
-            Id = MessageUnitTestConfigurations.NON_EXISTING_USER_ID,
-            FirstName = MessageUnitTestConfigurations.EXISTING_SENDER_FIRST_NAME,
-            LastName = MessageUnitTestConfigurations.EXISTING_SENDER_LAST_NAME,
-            UserName = MessageUnitTestConfigurations.EXISTING_SENDER_NAME,
-            Email = MessageUnitTestConfigurations.EXISTING_SENDER_EMAIL,
-            ProfileImage = MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE,
-        };
+        var userCreatedEvent = new UserCreatedEvent(
+            InvalidUserId,
+            ValidUserName,
+            ValidUserEmail,
+            ValidUserFirstName,
+            ValidUserLastName,
+            ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -119,22 +111,20 @@ public class UserCreatedEventConsumerUnitTests : BaseMessageUnitTest
         // Assert
         await UserReadRepository
             .Received(1)
-            .GetByIdAsync(MessageUnitTestConfigurations.NON_EXISTING_USER_ID, CancellationToken);
+            .GetByIdAsync(InvalidUserId, CancellationToken);
     }
 
     [Fact]
     public async Task Consume_ShouldAddUserToRepository_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var userCreatedEvent = new UserCreatedEvent()
-        {
-            Id = MessageUnitTestConfigurations.NON_EXISTING_USER_ID,
-            FirstName = MessageUnitTestConfigurations.EXISTING_SENDER_FIRST_NAME,
-            LastName = MessageUnitTestConfigurations.EXISTING_SENDER_LAST_NAME,
-            UserName = MessageUnitTestConfigurations.EXISTING_SENDER_NAME,
-            Email = MessageUnitTestConfigurations.EXISTING_SENDER_EMAIL,
-            ProfileImage = MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE,
-        };
+        var userCreatedEvent = new UserCreatedEvent(
+            InvalidUserId,
+            ValidUserName,
+            ValidUserEmail,
+            ValidUserFirstName,
+            ValidUserLastName,
+            ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -144,27 +134,25 @@ public class UserCreatedEventConsumerUnitTests : BaseMessageUnitTest
         // Assert
         UserWriteRepository
             .Received(1)
-            .Add(Arg.Is<User>(m => m.Id == MessageUnitTestConfigurations.NON_EXISTING_USER_ID &&
-                                   m.UserName == MessageUnitTestConfigurations.EXISTING_SENDER_NAME &&
-                                   m.FirstName == MessageUnitTestConfigurations.EXISTING_SENDER_FIRST_NAME &&
-                                   m.LastName == MessageUnitTestConfigurations.EXISTING_SENDER_LAST_NAME &&
-                                   m.Email == MessageUnitTestConfigurations.EXISTING_SENDER_EMAIL &&
-                                   m.ProfileImage == MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE));
+            .Add(Arg.Is<User>(m => m.Id == InvalidUserId &&
+                                   m.UserName == ValidUserName &&
+                                   m.FirstName == ValidUserFirstName &&
+                                   m.LastName == ValidUserLastName &&
+                                   m.Email == ValidUserEmail &&
+                                   m.ProfileImage == ValidUserProfileImage));
     }
 
     [Fact]
     public async Task Consume_ShouldCallSaveChangesAsync_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var userCreatedEvent = new UserCreatedEvent()
-        {
-            Id = MessageUnitTestConfigurations.NON_EXISTING_USER_ID,
-            FirstName = MessageUnitTestConfigurations.EXISTING_SENDER_FIRST_NAME,
-            LastName = MessageUnitTestConfigurations.EXISTING_SENDER_LAST_NAME,
-            UserName = MessageUnitTestConfigurations.EXISTING_SENDER_NAME,
-            Email = MessageUnitTestConfigurations.EXISTING_SENDER_EMAIL,
-            ProfileImage = MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE,
-        };
+        var userCreatedEvent = new UserCreatedEvent(
+            InvalidUserId,
+            ValidUserName,
+            ValidUserEmail,
+            ValidUserFirstName,
+            ValidUserLastName,
+            ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 

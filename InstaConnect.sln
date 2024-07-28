@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1299849E-069E-4D1C-9180-72B9C9C3BAC7}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Gateway.Web", "src\Gateway\InstaConnect.Gateway.Web\InstaConnect.Gateway.Web.csproj", "{0E108931-0C4C-4FBD-AFC6-447CDAF5595C}"
 EndProject

@@ -24,8 +24,8 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetMessageByIdQuery(
-            MessageUnitTestConfigurations.NON_EXISTING_MESSAGE_ID,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+            InvalidId,
+            ValidMessageCurrentUserId
         );
 
         // Act
@@ -40,8 +40,8 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetMessageByIdQuery(
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            MessageUnitTestConfigurations.EXISTING_SENDER_ID
+            ValidId,
+            ValidCurrentUserId
         );
 
         // Act
@@ -56,8 +56,8 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetMessageByIdQuery(
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+            ValidId,
+            ValidMessageCurrentUserId
         );
 
         // Act
@@ -66,7 +66,7 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await MessageReadRepository
             .Received(1)
-            .GetByIdAsync(MessageUnitTestConfigurations.EXISTING_MESSAGE_ID, CancellationToken);
+            .GetByIdAsync(ValidId, CancellationToken);
     }
 
     [Fact]
@@ -74,8 +74,8 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetMessageByIdQuery(
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+            ValidId,
+            ValidMessageCurrentUserId
         );
 
         // Act
@@ -84,12 +84,12 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
         // Assert
         response
             .Should()
-            .Match<MessageQueryViewModel>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
-                                          m.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
-                                          m.SenderName == MessageUnitTestConfigurations.EXISTING_SENDER_NAME &&
-                                          m.SenderProfileImage == MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
-                                          m.ReceiverId == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
-                                          m.ReceiverName == MessageUnitTestConfigurations.EXISTING_RECEIVER_NAME &&
-                                          m.ReceiverProfileImage == MessageUnitTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE);
+            .Match<MessageQueryViewModel>(m => m.Id == ValidId &&
+                                          m.SenderId == ValidCurrentUserId &&
+                                          m.SenderName == ValidUserName &&
+                                          m.SenderProfileImage == ValidUserProfileImage &&
+                                          m.ReceiverId == ValidReceiverId &&
+                                          m.ReceiverName == ValidUserName &&
+                                          m.ReceiverProfileImage == ValidUserProfileImage);
     }
 }

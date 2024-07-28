@@ -17,8 +17,8 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         _commandHandler = new(
             UnitOfWork,
-            MessageWriteRepository,
-            InstaConnectMapper);
+            InstaConnectMapper,
+            MessageWriteRepository);
     }
 
     [Fact]
@@ -26,9 +26,9 @@ public async Task Handle_ShouldThrowMessageNotFoundException_WhenMessageIdIsInva
 {
     // Arrange
     var command = new UpdateMessageCommand(
-        MessageUnitTestConfigurations.NON_EXISTING_MESSAGE_ID,
+        InvalidId,
         ValidContent,
-        MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+        ValidMessageCurrentUserId
     );
 
     // Act
@@ -43,9 +43,9 @@ public async Task Handle_ShouldThrowAccountForbiddenException_WhenSenderIdIsInva
 {
     // Arrange
     var command = new UpdateMessageCommand(
-        MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+        ValidId,
         ValidContent,
-        MessageUnitTestConfigurations.EXISTING_SENDER_ID
+        ValidCurrentUserId
     );
 
     // Act
@@ -60,9 +60,9 @@ public async Task Handle_ShouldReturnMessageViewModel_WhenMessageIdIsValid()
 {
     // Arrange
     var command = new UpdateMessageCommand(
-        MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+        ValidId,
         ValidContent,
-        MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+        ValidMessageCurrentUserId
     );
 
     // Act
@@ -71,7 +71,7 @@ public async Task Handle_ShouldReturnMessageViewModel_WhenMessageIdIsValid()
     // Assert
     response
         .Should()
-        .Match<MessageCommandViewModel>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID);
+        .Match<MessageCommandViewModel>(m => m.Id == ValidId);
 }
 
 [Fact]
@@ -79,9 +79,9 @@ public async Task Handle_ShouldGetMessageByIdFromRepository_WhenMessageIdIsValid
 {
     // Arrange
     var command = new UpdateMessageCommand(
-        MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+        ValidId,
         ValidContent,
-        MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+        ValidMessageCurrentUserId
     );
 
     // Act
@@ -90,7 +90,7 @@ public async Task Handle_ShouldGetMessageByIdFromRepository_WhenMessageIdIsValid
     // Assert
     await MessageWriteRepository
         .Received(1)
-        .GetByIdAsync(MessageUnitTestConfigurations.EXISTING_MESSAGE_ID, CancellationToken);
+        .GetByIdAsync(ValidId, CancellationToken);
 }
 
 [Fact]
@@ -98,9 +98,9 @@ public async Task Handle_ShouldUpdateMessageInRepository_WhenMessageIdIsValid()
 {
     // Arrange
     var command = new UpdateMessageCommand(
-        MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+        ValidId,
         ValidContent,
-        MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+        ValidMessageCurrentUserId
     );
 
     // Act
@@ -109,9 +109,9 @@ public async Task Handle_ShouldUpdateMessageInRepository_WhenMessageIdIsValid()
     // Assert
     MessageWriteRepository
         .Received(1)
-        .Update(Arg.Is<Message>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
-                                     m.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
-                                     m.ReceiverId == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
+        .Update(Arg.Is<Message>(m => m.Id == ValidId &&
+                                     m.SenderId == ValidMessageCurrentUserId &&
+                                     m.ReceiverId == ValidMessageReceiverId &&
                                      m.Content == ValidContent));
 }
 
@@ -120,9 +120,9 @@ public async Task Handle_ShouldCallSaveChangesAsync_WhenMessageIdIsValid()
 {
     // Arrange
     var command = new UpdateMessageCommand(
-        MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
+        ValidId,
         ValidContent,
-        MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+        ValidMessageCurrentUserId
     );
 
     // Act

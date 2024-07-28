@@ -5,93 +5,83 @@ using InstaConnect.Messages.Business.Models;
 using InstaConnect.Messages.Business.Queries.Messages.GetAllFilteredMessages;
 using InstaConnect.Messages.Business.Queries.Messages.GetMessageById;
 using InstaConnect.Messages.Business.Utilities;
-using InstaConnect.Messages.Web.Profiles;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Models.Users;
 using InstaConnect.Shared.Web.UnitTests.Utilities;
 using NSubstitute;
+using MessagesCommandProfile = InstaConnect.Messages.Business.Profiles.MessagesCommandProfile;
+using MessagesQueryProfile = InstaConnect.Messages.Business.Profiles.MessagesQueryProfile;
 
 namespace InstaConnect.Messages.Web.UnitTests.Utilities;
 
-public abstract class BaseMessageUnitTest : BaseUnitTest
+public abstract class BaseMessageUnitTest : BaseSharedUnitTest
 {
-    protected readonly int ValidLimitValue;
-    protected readonly int ValidOffsetValue;
-
     protected readonly string ValidId;
-    protected readonly string AddContent;
-    protected readonly string UpdateContent;
+    protected readonly string ValidContent;
     protected readonly string ValidReceiverId;
-    protected readonly string ValidReceiverName;
-    protected readonly string ValidSortOrderName;
     protected readonly string ValidCurrentUserId;
-    protected readonly string ValidSortPropertyName;
+    protected readonly string ValidUserName;
+    protected readonly string ValidUserProfileImage;
 
-    protected IInstaConnectSender InstaConnectSender { get; }
-
-    protected ICurrentUserContext CurrentUserContext { get; }
-
-    protected IInstaConnectMapper InstaConnectMapper { get; }
-
-    public BaseMessageUnitTest()
-    {
-        ValidLimitValue = (MessageBusinessConfigurations.PAGE_MAX_VALUE + MessageBusinessConfigurations.PAGE_MIN_VALUE) / 2;
-        ValidOffsetValue = (MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE + MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE) / 2;
-
-        ValidId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.ID_MAX_LENGTH + MessageBusinessConfigurations.ID_MIN_LENGTH) / 2);
-        AddContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
-        UpdateContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
-        ValidReceiverId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH) / 2);
-        ValidReceiverName = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH + MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH) / 2);
-        ValidCurrentUserId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH) / 2);
-        ValidSortOrderName = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.SORT_ORDER_MAX_LENGTH + MessageBusinessConfigurations.SORT_ORDER_MIN_LENGTH) / 2);
-        ValidSortPropertyName = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.SORT_PROPERTY_NAME_MAX_LENGTH + MessageBusinessConfigurations.SORT_PROPERTY_NAME_MIN_LENGTH) / 2);
-
-        var existingMessage = new MessageQueryViewModel(
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_NAME,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_PROFILE_IMAGE,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_NAME,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_PROFILE_IMAGE,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_CONTENT);
-
-        var existingMessageWriteViewModel = new MessageCommandViewModel(MessageUnitTestConfigurations.EXISTING_MESSAGE_ID);
-
-        InstaConnectSender = Substitute.For<IInstaConnectSender>();
-        CurrentUserContext = Substitute.For<ICurrentUserContext>();
-        InstaConnectMapper = new InstaConnectMapper(
+    public BaseMessageUnitTest() : base(
+        Substitute.For<IInstaConnectSender>(),
+        Substitute.For<ICurrentUserContext>(),
+        new InstaConnectMapper(
             new Mapper(
                 new MapperConfiguration(cfg =>
-                cfg.AddProfile(new MessagesCommandProfile()))));
+                {
+                    cfg.AddProfile<MessagesCommandProfile>();
+                    cfg.AddProfile<MessagesQueryProfile>();
+                }))))
+    {
+        ValidId = GetAverageString(MessageBusinessConfigurations.ID_MAX_LENGTH, MessageBusinessConfigurations.ID_MIN_LENGTH);
+        ValidContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
+        ValidReceiverId = GetAverageString(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH);
+        ValidCurrentUserId = GetAverageString(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
+        ValidUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
+        ValidUserProfileImage = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
 
-        CurrentUserContext.GetCurrentUser().Returns(new CurrentUserModel
-        {
-            Id = MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-            UserName = MessageUnitTestConfigurations.EXISTING_SENDER_NAME,
-        });
+        var existingMessageQueryViewModel = new MessageQueryViewModel(
+            ValidId,
+            ValidCurrentUserId,
+            ValidUserName,
+            ValidUserProfileImage,
+            ValidReceiverId,
+            ValidUserName,
+            ValidUserProfileImage,
+            ValidContent);
 
-        InstaConnectSender.SendAsync(Arg.Any<GetAllFilteredMessagesQuery>(), CancellationToken).Returns(new MessagePaginationCollectionModel()
-        {
-            Items = [existingMessage],
-            Page = MessageBusinessConfigurations.PAGE_MIN_VALUE,
-            PageSize = MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE,
-            TotalCount = MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE,
-        });
+        var existingMessageCommandViewModel = new MessageCommandViewModel(ValidId);
+        var existingCurrentUserModel = new CurrentUserModel(ValidCurrentUserId, ValidUserName);
+        var existingMessagePaginationCollectionModel = new MessagePaginationCollectionModel(
+            [existingMessageQueryViewModel],
+            SharedBusinessConfigurations.PAGE_MIN_VALUE,
+            SharedBusinessConfigurations.PAGE_SIZE_MAX_VALUE,
+            SharedBusinessConfigurations.PAGE_SIZE_MIN_VALUE,
+            false,
+            false);
+
+
+        CurrentUserContext
+            .GetCurrentUser()
+            .Returns(existingCurrentUserModel);
+
+        InstaConnectSender
+            .SendAsync(Arg.Any<GetAllFilteredMessagesQuery>(), CancellationToken)
+            .Returns(existingMessagePaginationCollectionModel);
 
         InstaConnectSender
             .SendAsync(Arg.Any<GetMessageByIdQuery>(), CancellationToken)
-            .Returns(existingMessage);
+            .Returns(existingMessageQueryViewModel);
 
         InstaConnectSender
             .SendAsync(Arg.Any<AddMessageCommand>(), CancellationToken)
-            .Returns(existingMessageWriteViewModel);
+            .Returns(existingMessageCommandViewModel);
 
         InstaConnectSender
             .SendAsync(Arg.Any<UpdateMessageCommand>(), CancellationToken)
-            .Returns(existingMessageWriteViewModel);
+            .Returns(existingMessageCommandViewModel);
     }
 }

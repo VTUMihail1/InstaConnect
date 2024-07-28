@@ -25,9 +25,12 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new DeleteMessageCommand(
             null!,
-            ValidCurrentUserId
+            existingSenderId
         );
 
         // Act
@@ -44,9 +47,12 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new DeleteMessageCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidCurrentUserId
+            existingSenderId
         );
 
         // Act
@@ -60,8 +66,11 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new DeleteMessageCommand(
-            ValidId,
+            existingMessageId,
             null!
         );
 
@@ -79,8 +88,11 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new DeleteMessageCommand(
-            ValidId,
+            existingMessageId,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -99,7 +111,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new DeleteMessageCommand(
-            MessageIntegrationTestConfigurations.NON_EXISTING_MESSAGE_ID,
+            InvalidId,
             existingSenderId
         );
 

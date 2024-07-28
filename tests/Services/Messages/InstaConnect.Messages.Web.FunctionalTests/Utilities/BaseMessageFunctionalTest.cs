@@ -10,36 +10,23 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Messages.Web.FunctionalTests.Utilities;
 
-public abstract class BaseMessageFunctionalTest : BaseFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>
+public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>
 {
-    protected readonly int ValidPageValue;
-    protected readonly int ValidPageSizeValue;
+    private const string API_ROUTE = "api/v1/messages";
 
-    protected readonly string ValidId;
+    protected readonly string InvalidId;
     protected readonly string ValidContent;
     protected readonly string ValidAddContent;
-    protected readonly string ValidReceiverId;
-    protected readonly string ValidReceiverName;
     protected readonly string ValidUpdateContent;
-    protected readonly string ValidCurrentUserId;
-    protected readonly string ValidSortPropertyName;
+    protected readonly string InvalidUserId;
+    protected readonly string ValidUserName;
+    protected readonly string ValidAddUserName;
+    protected readonly string ValidUpdateUserName;
+    protected readonly string ValidUserFirstName;
+    protected readonly string ValidUserEmail;
+    protected readonly string ValidUserLastName;
+    protected readonly string ValidUserProfileImage;
 
-    
-
-    protected HttpClient HttpClient { get; }
-
-    protected ITestHarness TestHarness
-    {
-        get
-        {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var testHarness = serviceScope.ServiceProvider.GetTestHarness();
-
-            return testHarness;
-        }
-    }
-
-    protected IServiceScope ServiceScope { get; }
 
     protected IMessageWriteRepository MessageWriteRepository
     {
@@ -63,33 +50,31 @@ public abstract class BaseMessageFunctionalTest : BaseFunctionalTest, IClassFixt
         }
     }
 
-    protected Dictionary<string, object> ValidJwtConfig { get; set; }
-
-    protected BaseMessageFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
+    protected BaseMessageFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(
+        functionalTestWebAppFactory.CreateClient(),
+        functionalTestWebAppFactory.Services.CreateScope(),
+        API_ROUTE)
     {
-        ValidPageValue = (MessageBusinessConfigurations.PAGE_MAX_VALUE + MessageBusinessConfigurations.PAGE_MIN_VALUE) / 2;
-        ValidPageSizeValue = (MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE + MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE) / 2;
-
-        ValidId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.ID_MAX_LENGTH + MessageBusinessConfigurations.ID_MIN_LENGTH) / 2);
-        ValidContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
-        ValidAddContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
-        ValidReceiverId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH) / 2);
-        ValidReceiverName = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH + MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH) / 2);
-        ValidUpdateContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
-        ValidCurrentUserId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH) / 2);
-        ValidSortPropertyName = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.SORT_PROPERTY_NAME_MAX_LENGTH + MessageBusinessConfigurations.SORT_PROPERTY_NAME_MIN_LENGTH) / 2);
-
-        HttpClient = functionalTestWebAppFactory.CreateClient();
-        ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
-        ValidJwtConfig = new Dictionary<string, object>()
-        {
-            { ClaimTypes.NameIdentifier, string.Empty }
-        };
+        InvalidId = GetAverageString(MessageBusinessConfigurations.ID_MAX_LENGTH, MessageBusinessConfigurations.ID_MIN_LENGTH);
+        ValidContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
+        ValidAddContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
+        ValidUpdateContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
+        InvalidUserId = GetAverageString(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH);
+        ValidUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
+        ValidAddUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
+        ValidUpdateUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
+        ValidUserFirstName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
+        ValidUserLastName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
+        ValidUserEmail = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
+        ValidUserProfileImage = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
     }
 
     protected async Task<string> CreateMessageAsync(string senderId, string receiverId, CancellationToken cancellationToken)
     {
-        var message = new Message(ValidContent, senderId, receiverId);
+        var message = new Message(
+            ValidContent,
+            senderId,
+            receiverId);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var messageWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();
@@ -103,11 +88,11 @@ public abstract class BaseMessageFunctionalTest : BaseFunctionalTest, IClassFixt
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            MessageFunctionalTestConfigurations.EXISTING_SENDER_FIRST_NAME,
-            MessageFunctionalTestConfigurations.EXISTING_SENDER_LAST_NAME,
-            MessageFunctionalTestConfigurations.EXISTING_SENDER_EMAIL,
-            MessageFunctionalTestConfigurations.EXISTING_SENDER_NAME,
-            MessageFunctionalTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE);
+            ValidUserFirstName,
+            ValidUserLastName,
+            ValidUserEmail,
+            ValidUserName,
+            ValidUserProfileImage);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();

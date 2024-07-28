@@ -7,11 +7,11 @@ namespace InstaConnect.Messages.Business.UnitTests.Tests.Commands.AddMessage;
 
 public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
 {
-    private readonly AddMessageCommandValidator _validator;
+    private readonly AddMessageCommandValidator _commandValidator;
 
     public AddMessageCommandValidatorUnitTests()
     {
-        _validator = new AddMessageCommandValidator();
+        _commandValidator = new AddMessageCommandValidator();
     }
 
     [Fact]
@@ -25,7 +25,7 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         );
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _commandValidator.TestValidate(command);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
@@ -45,7 +45,7 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         );
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _commandValidator.TestValidate(command);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
@@ -62,7 +62,7 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         );
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _commandValidator.TestValidate(command);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.ReceiverId);
@@ -82,7 +82,7 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         );
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _commandValidator.TestValidate(command);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.ReceiverId);
@@ -99,7 +99,7 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         );
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _commandValidator.TestValidate(command);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.Content);
@@ -119,7 +119,7 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         );
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _commandValidator.TestValidate(command);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.Content);

@@ -7,22 +7,22 @@ namespace InstaConnect.Messages.Business.Queries.Messages.GetAllFilteredMessages
 
 internal class GetAllFilteredMessagesQueryHandler : IQueryHandler<GetAllFilteredMessagesQuery, MessagePaginationCollectionModel>
 {
-    private readonly IMessageReadRepository _messageRepository;
     private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IMessageReadRepository _messageReadRepository;
 
     public GetAllFilteredMessagesQueryHandler(
-        IMessageReadRepository messageRepository,
-        IInstaConnectMapper instaConnectMapper)
+        IInstaConnectMapper instaConnectMapper,
+        IMessageReadRepository messageReadRepository)
     {
-        _messageRepository = messageRepository;
         _instaConnectMapper = instaConnectMapper;
+        _messageReadRepository = messageReadRepository;
     }
 
     public async Task<MessagePaginationCollectionModel> Handle(GetAllFilteredMessagesQuery request, CancellationToken cancellationToken)
     {
         var filteredCollectionQuery = _instaConnectMapper.Map<MessageFilteredCollectionReadQuery>(request);
 
-        var messages = await _messageRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
+        var messages = await _messageReadRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
         var response = _instaConnectMapper.Map<MessagePaginationCollectionModel>(messages);
 
         return response;

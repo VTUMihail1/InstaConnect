@@ -10,22 +10,20 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Utilities;
 
-public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>
+public abstract class BaseMessageIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>
 {
-    protected readonly int ValidPageSizeValue;
-    protected readonly int ValidPageValue;
-
-    protected readonly string ValidId;
+    protected readonly string InvalidId;
     protected readonly string ValidContent;
-    protected readonly string ValidReceiverId;
     protected readonly string ValidAddContent;
-    protected readonly string ValidReceiverName;
     protected readonly string ValidUpdateContent;
-    protected readonly string ValidSortOrderName;
-    protected readonly string ValidCurrentUserId;
-    protected readonly string ValidSortPropertyName;
-
-    protected IServiceScope ServiceScope { get; }
+    protected readonly string InvalidUserId;
+    protected readonly string ValidUserName;
+    protected readonly string ValidAddUserName;
+    protected readonly string ValidUpdateUserName;
+    protected readonly string ValidUserFirstName;
+    protected readonly string ValidUserEmail;
+    protected readonly string ValidUserLastName;
+    protected readonly string ValidUserProfileImage;
 
     protected IUserReadRepository UserReadRepository
     {
@@ -60,32 +58,27 @@ public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFi
         }
     }
 
-    protected IInstaConnectSender InstaConnectSender { get; }
-
     protected BaseMessageIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
+        : base(integrationTestWebAppFactory.Services.CreateScope())
     {
-        ValidPageSizeValue = (MessageBusinessConfigurations.PAGE_MAX_VALUE + MessageBusinessConfigurations.PAGE_MIN_VALUE) / 2;
-        ValidPageValue = (MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE + MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE) / 2;
-
-        ValidId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.ID_MAX_LENGTH + MessageBusinessConfigurations.ID_MIN_LENGTH) / 2);
-        ValidContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
-        ValidAddContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
-        ValidReceiverId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH) / 2);
-        ValidReceiverName = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH + MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH) / 2);
-        ValidUpdateContent = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CONTENT_MAX_LENGTH + MessageBusinessConfigurations.CONTENT_MIN_LENGTH) / 2);
-        ValidCurrentUserId = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH) / 2);
-        ValidSortOrderName = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.SORT_ORDER_MAX_LENGTH + MessageBusinessConfigurations.SORT_ORDER_MIN_LENGTH) / 2);
-        ValidSortPropertyName = Faker.Random.AlphaNumeric((MessageBusinessConfigurations.SORT_PROPERTY_NAME_MAX_LENGTH + MessageBusinessConfigurations.SORT_PROPERTY_NAME_MIN_LENGTH) / 2);
-
-
-        ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
-        InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
+        InvalidId = GetAverageString(MessageBusinessConfigurations.ID_MAX_LENGTH, MessageBusinessConfigurations.ID_MIN_LENGTH);
+        ValidContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
+        ValidAddContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
+        ValidUpdateContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
+        InvalidUserId = GetAverageString(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH);
+        ValidUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
+        ValidAddUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
+        ValidUpdateUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
+        ValidUserFirstName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
+        ValidUserLastName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
+        ValidUserEmail = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
+        ValidUserProfileImage = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
     }
 
     protected async Task<string> CreateMessageAsync(string senderId, string receiverId, CancellationToken cancellationToken)
     {
         var message = new Message(
-            MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT, 
+            ValidContent, 
             senderId, 
             receiverId);
 
@@ -101,11 +94,11 @@ public abstract class BaseMessageIntegrationTest : BaseIntegrationTest, IClassFi
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            MessageIntegrationTestConfigurations.EXISTING_SENDER_FIRST_NAME,
-            MessageIntegrationTestConfigurations.EXISTING_SENDER_LAST_NAME,
-            MessageIntegrationTestConfigurations.EXISTING_SENDER_EMAIL,
-            MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME,
-            MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE);
+            ValidUserFirstName,
+            ValidUserLastName,
+            ValidUserEmail,
+            ValidUserName,
+            ValidUserProfileImage);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();

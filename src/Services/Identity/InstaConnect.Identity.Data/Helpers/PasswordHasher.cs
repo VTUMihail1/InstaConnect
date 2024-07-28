@@ -7,10 +7,7 @@ internal class PasswordHasher : IPasswordHasher
 {
     public PasswordHashResultModel Hash(string password)
     {
-        return new PasswordHashResultModel
-        {
-            PasswordHash = BCrypt.Net.BCrypt.EnhancedHashPassword(password)
-        };
+        return new PasswordHashResultModel(BCrypt.Net.BCrypt.EnhancedHashPassword(password));
     }
 
     public bool Verify(string password, string passwordHash)

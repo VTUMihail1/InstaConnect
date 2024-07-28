@@ -8,11 +8,11 @@ namespace InstaConnect.Messages.Business.UnitTests.Tests.Commands.DeleteMessage;
 
 public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
 {
-    private readonly DeleteMessageCommandValidator _validator;
+    private readonly DeleteMessageCommandValidator _commandValidator;
 
     public DeleteMessageCommandValidatorUnitTests()
     {
-        _validator = new DeleteMessageCommandValidator();
+        _commandValidator = new DeleteMessageCommandValidator();
     }
 
     [Fact]
@@ -25,7 +25,7 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
         );
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _commandValidator.TestValidate(command);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.Id);
@@ -44,7 +44,7 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
         );
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _commandValidator.TestValidate(command);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.Id);
@@ -60,7 +60,7 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
         );
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _commandValidator.TestValidate(command);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
@@ -79,7 +79,7 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
         );
 
         // Act
-        var result = _validator.TestValidate(command);
+        var result = _commandValidator.TestValidate(command);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);

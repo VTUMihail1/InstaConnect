@@ -20,9 +20,12 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var query = new GetMessageByIdQuery(
             null!,
-            ValidCurrentUserId
+            existingSenderId
         );
 
         // Act
@@ -39,9 +42,12 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var query = new GetMessageByIdQuery(
             Faker.Random.AlphaNumeric(length),
-            ValidCurrentUserId
+            existingSenderId
         );
 
         // Act
@@ -55,8 +61,11 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var query = new GetMessageByIdQuery(
-            ValidId,
+            existingMessageId,
             null!
         );
 
@@ -74,8 +83,11 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var query = new GetMessageByIdQuery(
-            ValidId,
+            existingMessageId,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -94,7 +106,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var query = new GetMessageByIdQuery(
-            MessageIntegrationTestConfigurations.NON_EXISTING_MESSAGE_ID,
+            InvalidId,
             existingSenderId
         );
 
@@ -145,11 +157,11 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
             .Should()
             .Match<MessageQueryViewModel>(m => m.Id == existingMessageId &&
                                           m.SenderId == existingSenderId &&
-                                          m.SenderName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
-                                          m.SenderProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
+                                          m.SenderName == ValidUserName &&
+                                          m.SenderProfileImage == ValidUserProfileImage &&
                                           m.ReceiverId == existingReceiverId &&
-                                          m.ReceiverName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
-                                          m.ReceiverProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
-                                          m.Content == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_CONTENT);
+                                          m.ReceiverName == ValidUserName &&
+                                          m.ReceiverProfileImage == ValidUserProfileImage &&
+                                          m.Content == ValidContent);
     }
 }

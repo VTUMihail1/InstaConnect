@@ -1,17 +1,18 @@
-﻿using System.Security.Claims;
-using Bogus;
+﻿using Bogus;
 using InstaConnect.Messages.Business.Utilities;
+using InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessages;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Contracts.Users;
+using InstaConnect.Shared.Data.Abstract;
 using InstaConnect.Shared.Data.Models.Enums;
-using MassTransit.Testing;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using NSubstitute.Routing;
+using NSubstitute;
 
-namespace InstaConnect.Shared.Web.FunctionalTests.Utilities;
+namespace InstaConnect.Shared.Business.UnitTests.Utilities;
 
-public class BaseSharedFunctionalTest
+public class BaseSharedIntegrationTest
 {
-    protected readonly string ApiRoute;
-
     protected readonly int ValidPageValue;
     protected readonly int ValidPageSizeValue;
     protected readonly int ValidTotalCountValue;
@@ -23,35 +24,21 @@ public class BaseSharedFunctionalTest
 
     protected Faker Faker { get; }
 
-    protected HttpClient HttpClient { get; }
-
-    protected ITestHarness TestHarness
-    {
-        get
-        {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var testHarness = serviceScope.ServiceProvider.GetTestHarness();
-
-            return testHarness;
-        }
-    }
-
     protected IServiceScope ServiceScope { get; }
 
     protected CancellationToken CancellationToken { get; }
 
-    protected Dictionary<string, object> ValidJwtConfig { get; set; }
+    protected IInstaConnectSender InstaConnectSender { get; }
 
-    public BaseSharedFunctionalTest(
-        HttpClient httpClient,
-        IServiceScope serviceScope,
-        string apiRoute)
+    public BaseSharedIntegrationTest(
+        IServiceScope serviceScope)
     {
-        ApiRoute = apiRoute;
-
         ValidPageValue = 1;
         ValidPageSizeValue = 20;
         ValidTotalCountValue = 1;
+
+        ValidPageValue = GetAverageNumber(SharedBusinessConfigurations.PAGE_MAX_VALUE, SharedBusinessConfigurations.PAGE_MIN_VALUE);
+        ValidPageSizeValue = GetAverageNumber(SharedBusinessConfigurations.PAGE_SIZE_MAX_VALUE, SharedBusinessConfigurations.PAGE_SIZE_MIN_VALUE);
 
         ValidSortPropertyName = "CreatedAt";
         InvalidSortPropertyName = "CreatedAtt";
@@ -59,13 +46,9 @@ public class BaseSharedFunctionalTest
         ValidSortOrderProperty = SortOrder.ASC;
 
         Faker = new Faker();
-        HttpClient = httpClient;
-        ServiceScope = serviceScope;
+        ServiceScope = serviceScope; 
         CancellationToken = new CancellationToken();
-        ValidJwtConfig = new Dictionary<string, object>()
-        {
-            { ClaimTypes.NameIdentifier, string.Empty }
-        };
+        InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
     }
 
     protected string GetAverageString(int maxLength, int minLength)
@@ -80,12 +63,5 @@ public class BaseSharedFunctionalTest
         var result = (maxLength + minLength) / 2;
 
         return result;
-    }
-
-    protected string GetIdRoute(string id)
-    {
-        var route = $"{ApiRoute}/{id}";
-
-        return route;
     }
 }

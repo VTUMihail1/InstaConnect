@@ -16,10 +16,7 @@ public class UserDeletedEventConsumerFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var userDeletedEvent = new UserDeletedEvent()
-        {
-            Id = existingUserId
-        };
+        var userDeletedEvent = new UserDeletedEvent(existingUserId);
 
         // Act
         await TestHarness.Start();

@@ -9,19 +9,21 @@ namespace InstaConnect.Messages.Business.Commands.Messages.DeleteMessage;
 internal class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMessageWriteRepository _messageRepository;
+    private readonly IMessageWriteRepository _messageWriteRepository;
 
     public DeleteMessageCommandHandler(
         IUnitOfWork unitOfWork,
-        IMessageWriteRepository messageRepository)
+        IMessageWriteRepository messageWriteRepository)
     {
         _unitOfWork = unitOfWork;
-        _messageRepository = messageRepository;
+        _messageWriteRepository = messageWriteRepository;
     }
 
-    public async Task Handle(DeleteMessageCommand request, CancellationToken cancellationToken)
+    public async Task Handle(
+        DeleteMessageCommand request, 
+        CancellationToken cancellationToken)
     {
-        var existingMessage = await _messageRepository.GetByIdAsync(request.Id, cancellationToken);
+        var existingMessage = await _messageWriteRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (existingMessage == null)
         {
@@ -33,7 +35,7 @@ internal class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageComman
             throw new AccountForbiddenException();
         }
 
-        _messageRepository.Delete(existingMessage);
+        _messageWriteRepository.Delete(existingMessage);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

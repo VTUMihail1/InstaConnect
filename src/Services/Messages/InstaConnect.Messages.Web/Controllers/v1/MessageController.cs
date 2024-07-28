@@ -39,14 +39,14 @@ public class MessageController : ControllerBase
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<MessagePaginationCollectionResponse>> GetAllFilteredAsync(
+    public async Task<ActionResult<MessagePaginationCollectionQueryResponse>> GetAllFilteredAsync(
         GetAllFilteredMessagesRequest request,
         CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var queryRequest = _instaConnectMapper.Map<GetAllFilteredMessagesQuery>((currentUser, request));
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<MessagePaginationCollectionResponse>(queryResponse);
+        var response = _instaConnectMapper.Map<MessagePaginationCollectionQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -55,14 +55,14 @@ public class MessageController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<MessageReadViewResponse>> GetByIdAsync(
+    public async Task<ActionResult<MessageQueryViewResponse>> GetByIdAsync(
         GetMessageByIdRequest request,
         CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var queryRequest = _instaConnectMapper.Map<GetMessageByIdQuery>((currentUser, request));
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<MessageReadViewResponse>(queryResponse);
+        var response = _instaConnectMapper.Map<MessageQueryViewResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -72,12 +72,12 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<MessageWriteViewResponse>> AddAsync(AddMessageRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<MessageCommandViewResponse>> AddAsync(AddMessageRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _instaConnectMapper.Map<AddMessageCommand>((currentUser, request));
         var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<MessageWriteViewResponse>(commandResponse);
+        var response = _instaConnectMapper.Map<MessageCommandViewResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -87,12 +87,12 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<MessageWriteViewResponse>> UpdateAsync(UpdateMessageRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<MessageCommandViewResponse>> UpdateAsync(UpdateMessageRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _instaConnectMapper.Map<UpdateMessageCommand>((currentUser, request));
         var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<MessageWriteViewResponse>(commandResponse);
+        var response = _instaConnectMapper.Map<MessageCommandViewResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -102,7 +102,7 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<MessageWriteViewResponse>> DeleteAsync(DeleteMessageRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult> DeleteAsync(DeleteMessageRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _instaConnectMapper.Map<DeleteMessageCommand>((currentUser, request));

@@ -11,8 +11,6 @@ namespace InstaConnect.Messages.Web.FunctionalTests.Tests.Controllers;
 
 public class GetByIdFunctionalTests : BaseMessageFunctionalTest
 {
-    private static readonly string RouteTemplate = $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}" + "/{0}";
-
     public GetByIdFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
     {
 
@@ -25,10 +23,9 @@ public class GetByIdFunctionalTests : BaseMessageFunctionalTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = string.Format(RouteTemplate, existingMessageId);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(existingMessageId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Unauthorized);
@@ -43,13 +40,12 @@ public class GetByIdFunctionalTests : BaseMessageFunctionalTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = string.Format(RouteTemplate, Faker.Random.AlphaNumeric(length));
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(Faker.Random.AlphaNumeric(length)), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -62,13 +58,12 @@ public class GetByIdFunctionalTests : BaseMessageFunctionalTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = string.Format(RouteTemplate, existingMessageId);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await HttpClient.GetAsync(existingMessageId, CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -84,13 +79,12 @@ public class GetByIdFunctionalTests : BaseMessageFunctionalTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = string.Format(RouteTemplate, existingMessageId);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(Faker.Random.AlphaNumeric(length)), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -104,13 +98,12 @@ public class GetByIdFunctionalTests : BaseMessageFunctionalTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = string.Format(RouteTemplate, MessageFunctionalTestConfigurations.NON_EXISTING_MESSAGE_ID);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(InvalidId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
@@ -124,13 +117,12 @@ public class GetByIdFunctionalTests : BaseMessageFunctionalTest
         var existingMessageSenderId = await CreateUserAsync(CancellationToken);
         var existingMessageReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingMessageSenderId, existingMessageReceiverId, CancellationToken);
-        var route = string.Format(RouteTemplate, existingMessageId);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(existingMessageId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Forbidden);
@@ -143,13 +135,12 @@ public class GetByIdFunctionalTests : BaseMessageFunctionalTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}";
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(existingMessageId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
@@ -162,28 +153,27 @@ public class GetByIdFunctionalTests : BaseMessageFunctionalTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = string.Format(RouteTemplate, existingMessageId);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(existingMessageId), CancellationToken);
 
         var messageViewResponse = await response
             .Content
-            .ReadFromJsonAsync<MessageReadViewResponse>();
+            .ReadFromJsonAsync<MessageQueryViewResponse>();
 
         // Assert
         messageViewResponse
             .Should()
-            .Match<MessageReadViewResponse>(m => m.Id == existingMessageId &&
+            .Match<MessageQueryViewResponse>(m => m.Id == existingMessageId &&
                                  m.Content == ValidContent &&
                                  m.SenderId == existingSenderId &&
-                                 m.SenderName == MessageFunctionalTestConfigurations.EXISTING_SENDER_NAME &&
-                                 m.SenderProfileImage == MessageFunctionalTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE &&
+                                 m.SenderName == ValidUserName &&
+                                 m.SenderProfileImage == ValidUserProfileImage &&
                                  m.ReceiverId == existingReceiverId &&
-                                 m.ReceiverName == MessageFunctionalTestConfigurations.EXISTING_SENDER_NAME &&
-                                 m.ReceiverProfileImage == MessageFunctionalTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE);
+                                 m.ReceiverName == ValidUserName &&
+                                 m.ReceiverProfileImage == ValidUserProfileImage);
     }
 }

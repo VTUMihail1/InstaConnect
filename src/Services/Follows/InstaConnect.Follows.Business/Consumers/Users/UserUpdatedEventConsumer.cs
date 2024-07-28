@@ -32,7 +32,7 @@ internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEvent>
             return;
         }
 
-        _mapper.Map(context.Message, existingUser);
+        _instaConnectMapper.Map(context.Message, existingUser);
         _userWriteRepository.Update(existingUser);
 
         await _unitOfWork.SaveChangesAsync(context.CancellationToken);
