@@ -19,9 +19,10 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
             null!,
-            ValidReceiverId,
+            existingReceiverId,
             ValidAddContent
         );
 
@@ -39,9 +40,10 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidReceiverId,
+            existingReceiverId,
             ValidAddContent
         );
 
@@ -56,8 +58,9 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverIdIsNull()
     {
         // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
+            existingSenderId,
             null!,
             ValidAddContent
         );
@@ -76,8 +79,9 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
+            existingSenderId,
             Faker.Random.AlphaNumeric(length),
             ValidAddContent
         );
@@ -93,9 +97,11 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenContentIsNull()
     {
         // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
-            ValidReceiverId,
+            existingSenderId,
+            existingReceiverId,
             null!
         );
 
@@ -113,9 +119,11 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
-            ValidReceiverId,
+            existingSenderId,
+            existingReceiverId,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -132,7 +140,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
-            MessageIntegrationTestConfigurations.NON_EXISTING_USER_ID,
+            InvalidUserId,
             existingReceiverId,
             ValidAddContent
         );
@@ -151,7 +159,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
             existingSenderId,
-            MessageIntegrationTestConfigurations.NON_EXISTING_USER_ID,
+            InvalidUserId,
             ValidAddContent
         );
 

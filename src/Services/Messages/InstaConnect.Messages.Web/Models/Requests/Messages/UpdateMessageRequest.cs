@@ -9,5 +9,5 @@ public class UpdateMessageRequest
     public string Id { get; set; } = string.Empty;
 
     [FromBody]
-    public UpdateMessageBindingModel UpdateMessageBindingModel { get; set; } = new();
+    public UpdateMessageBindingModel UpdateMessageBindingModel { get; set; } = new(string.Empty);
 }

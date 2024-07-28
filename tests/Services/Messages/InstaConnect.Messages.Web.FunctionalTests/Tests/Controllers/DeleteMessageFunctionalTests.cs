@@ -28,9 +28,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
 
         // Act
-        var response = await HttpClient.DeleteAsync(
-            $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
-            CancellationToken);
+        var response = await HttpClient.DeleteAsync(GetIdRoute(existingMessageId) ,CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Unauthorized);
@@ -46,13 +44,11 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = ValidCurrentUserId;
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(
-            $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{Faker.Random.AlphaNumeric(length)}",
-            CancellationToken);
+        var response = await HttpClient.DeleteAsync(GetIdRoute(Faker.Random.AlphaNumeric(length)), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -70,9 +66,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(
-            $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
-            CancellationToken);
+        var response = await HttpClient.DeleteAsync(GetIdRoute(existingMessageId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -93,9 +87,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(
-            $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
-            CancellationToken);
+        var response = await HttpClient.DeleteAsync(GetIdRoute(existingMessageId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -113,9 +105,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(
-            $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{MessageFunctionalTestConfigurations.NON_EXISTING_MESSAGE_ID}",
-            CancellationToken);
+        var response = await HttpClient.DeleteAsync(GetIdRoute(InvalidId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
@@ -134,9 +124,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(
-            $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
-            CancellationToken);
+        var response = await HttpClient.DeleteAsync(GetIdRoute(existingMessageId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Forbidden);
@@ -154,9 +142,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(
-            $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
-            CancellationToken);
+        var response = await HttpClient.DeleteAsync(GetIdRoute(existingMessageId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NoContent);
@@ -174,9 +160,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        await HttpClient.DeleteAsync(
-           $"{MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE}/{existingMessageId}",
-           CancellationToken);
+        await HttpClient.DeleteAsync(GetIdRoute(existingMessageId), CancellationToken);
 
         var message = await MessageWriteRepository.GetByIdAsync(existingMessageId, CancellationToken);
 

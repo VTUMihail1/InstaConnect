@@ -6,7 +6,7 @@ namespace InstaConnect.Shared.Web.Models.Filters;
 public class CollectionReadRequest
 {
     [FromQuery(Name = "sortOrder")]
-    public string SortOrder { get; set; } = "ASC";
+    public SortOrder SortOrder { get; set; } = SortOrder.ASC;
 
     [FromQuery(Name = "sortPropertyName")]
     public string SortPropertyName { get; set; } = "CreatedAt";

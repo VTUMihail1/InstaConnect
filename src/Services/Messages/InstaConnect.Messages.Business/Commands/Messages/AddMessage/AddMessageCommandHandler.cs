@@ -12,25 +12,27 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand, Mes
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMessageSender _messageSender;
-    private readonly IMessageWriteRepository _messageRepository;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IMessageWriteRepository _messageWriteRepository;
 
     public AddMessageCommandHandler(
         IUnitOfWork unitOfWork,
         IMessageSender messageSender,
-        IMessageWriteRepository messageRepository,
         IInstaConnectMapper instaConnectMapper,
-        IUserWriteRepository userWriteRepository)
+        IUserWriteRepository userWriteRepository,
+        IMessageWriteRepository messageWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _messageSender = messageSender;
-        _messageRepository = messageRepository;
         _instaConnectMapper = instaConnectMapper;
         _userWriteRepository = userWriteRepository;
+        _messageWriteRepository = messageWriteRepository;
     }
 
-    public async Task<MessageCommandViewModel> Handle(AddMessageCommand request, CancellationToken cancellationToken)
+    public async Task<MessageCommandViewModel> Handle(
+        AddMessageCommand request, 
+        CancellationToken cancellationToken)
     {
         var existingSender = await _userWriteRepository.GetByIdAsync(request.CurrentUserId, cancellationToken);
 
@@ -47,7 +49,7 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand, Mes
         }
 
         var message = _instaConnectMapper.Map<Message>(request);
-        _messageRepository.Add(message);
+        _messageWriteRepository.Add(message);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

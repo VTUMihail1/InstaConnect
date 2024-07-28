@@ -16,5 +16,5 @@ public class Follow : BaseEntity
 
     public string FollowerId { get; }
 
-    public User? Follower { get; set; } = new();
+    public User? Follower { get; set; }
 }

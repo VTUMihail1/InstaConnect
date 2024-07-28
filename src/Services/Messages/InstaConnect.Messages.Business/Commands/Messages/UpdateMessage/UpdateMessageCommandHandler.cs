@@ -11,22 +11,22 @@ namespace InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
 internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageCommand, MessageCommandViewModel>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMessageWriteRepository _messageRepository;
     private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IMessageWriteRepository _messageWriteRepository;
 
     public UpdateMessageCommandHandler(
         IUnitOfWork unitOfWork,
-        IMessageWriteRepository messageRepository,
-        IInstaConnectMapper instaConnectMapper)
+        IInstaConnectMapper instaConnectMapper,
+        IMessageWriteRepository messageWriteRepository)
     {
         _unitOfWork = unitOfWork;
-        _messageRepository = messageRepository;
+        _messageWriteRepository = messageWriteRepository;
         _instaConnectMapper = instaConnectMapper;
     }
 
     public async Task<MessageCommandViewModel> Handle(UpdateMessageCommand request, CancellationToken cancellationToken)
     {
-        var existingMessage = await _messageRepository.GetByIdAsync(request.Id, cancellationToken);
+        var existingMessage = await _messageWriteRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (existingMessage == null)
         {
@@ -39,7 +39,7 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
         }
 
         _instaConnectMapper.Map(request, existingMessage);
-        _messageRepository.Update(existingMessage);
+        _messageWriteRepository.Update(existingMessage);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

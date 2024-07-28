@@ -30,6 +30,6 @@ internal class MessagesCommandProfile : Profile
                 src.Item2.Id,
                 src.Item1.Id));
 
-        CreateMap<MessageCommandViewModel, MessageWriteViewResponse>();
+        CreateMap<MessageCommandViewModel, MessageCommandViewResponse>();
     }
 }

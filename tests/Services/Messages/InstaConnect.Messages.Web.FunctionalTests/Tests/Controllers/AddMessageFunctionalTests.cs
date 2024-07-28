@@ -23,14 +23,11 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel
-        {
-            ReceiverId = existingReceiverId,
-            Content = ValidAddContent
-        };
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var request = new AddMessageBindingModel(existingReceiverId, ValidAddContent);
 
         // Act
-        var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
+        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Unauthorized);
@@ -40,18 +37,15 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenReceiverIdIsNull()
     {
         // Arrange
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingSenderId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel()
-        {
-            ReceiverId = null!,
-            Content = ValidAddContent
-        };
+        var request = new AddMessageBindingModel(null!, ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
+        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -66,17 +60,13 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel()
-        {
-            ReceiverId = Faker.Random.AlphaNumeric(length),
-            Content = ValidAddContent
-        };
+        var request = new AddMessageBindingModel(Faker.Random.AlphaNumeric(length), ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
+        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -88,17 +78,13 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel()
-        {
-            ReceiverId = ValidReceiverId,
-            Content = null!
-        };
+        var request = new AddMessageBindingModel(existingReceiverId, null!);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
+        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -113,17 +99,13 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel()
-        {
-            ReceiverId = existingReceiverId,
-            Content = Faker.Random.AlphaNumeric(length)
-        };
+        var request = new AddMessageBindingModel(existingReceiverId, Faker.Random.AlphaNumeric(length));
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
+        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -134,17 +116,14 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel()
-        {
-            ReceiverId = existingReceiverId,
-            Content = ValidAddContent,
-        };
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var request = new AddMessageBindingModel(existingReceiverId, ValidContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
+        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -158,17 +137,14 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel()
-        {
-            ReceiverId = existingReceiverId,
-            Content = ValidAddContent
-        };
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var request = new AddMessageBindingModel(existingReceiverId, ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
+        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -179,17 +155,14 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel()
-        {
-            ReceiverId = existingReceiverId,
-            Content = ValidAddContent
-        };
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var request = new AddMessageBindingModel(existingReceiverId, ValidAddContent);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = MessageFunctionalTestConfigurations.NON_EXISTING_USER_ID;
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = InvalidUserId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
+        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
@@ -199,18 +172,15 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenReceiverIsInvalid()
     {
         // Arrange
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingSenderId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel()
-        {
-            ReceiverId = MessageFunctionalTestConfigurations.NON_EXISTING_USER_ID,
-            Content = ValidAddContent
-        };
+        var request = new AddMessageBindingModel(InvalidUserId, ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
+        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
@@ -222,17 +192,14 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel
-        {
-            ReceiverId = existingReceiverId,
-            Content = ValidAddContent
-        };
+        var request = new AddMessageBindingModel(existingReceiverId, ValidAddContent);
+
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
+        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
@@ -244,21 +211,17 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel
-        {
-            ReceiverId = existingReceiverId,
-            Content = ValidAddContent
-        };
+        var request = new AddMessageBindingModel(existingReceiverId, ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(MessageFunctionalTestConfigurations.MESSAGES_API_ROUTE, request, CancellationToken);
+        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
 
         var messageViewResponse = await response
             .Content
-            .ReadFromJsonAsync<MessageWriteViewResponse>();
+            .ReadFromJsonAsync<MessageCommandViewResponse>();
 
         var message = await MessageWriteRepository.GetByIdAsync(messageViewResponse!.Id, CancellationToken);
 

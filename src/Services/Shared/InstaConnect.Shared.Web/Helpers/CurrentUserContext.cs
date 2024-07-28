@@ -16,10 +16,8 @@ public class CurrentUserContext : ICurrentUserContext
 
     public CurrentUserModel GetCurrentUser()
     {
-        return new CurrentUserModel
-        {
-            Id = _httpContextAccessor?.HttpContext?.User.GetUserId() ?? string.Empty,
-            UserName = _httpContextAccessor?.HttpContext?.User.GetUserName() ?? string.Empty,
-        };
+        return new CurrentUserModel(
+            _httpContextAccessor?.HttpContext?.User.GetUserId() ?? string.Empty,
+            _httpContextAccessor?.HttpContext?.User.GetUserName() ?? string.Empty);
     }
 }

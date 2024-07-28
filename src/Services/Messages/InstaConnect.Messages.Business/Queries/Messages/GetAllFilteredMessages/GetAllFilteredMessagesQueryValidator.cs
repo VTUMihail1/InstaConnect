@@ -8,9 +8,10 @@ namespace InstaConnect.Messages.Business.Queries.Messages.GetAllFilteredMessages
 
 public class GetAllFilteredMessagesQueryValidator : AbstractValidator<GetAllFilteredMessagesQuery>
 {
-    public GetAllFilteredMessagesQueryValidator(
-        IEntityPropertyValidator entityPropertyValidator)
+    public GetAllFilteredMessagesQueryValidator(IEntityPropertyValidator entityPropertyValidator)
     {
+        Include(new CollectionModelValidator());
+
         RuleFor(q => q.CurrentUserId)
             .NotEmpty()
             .MinimumLength(MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH)
@@ -26,21 +27,7 @@ public class GetAllFilteredMessagesQueryValidator : AbstractValidator<GetAllFilt
             .MaximumLength(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH)
             .When(q => !string.IsNullOrEmpty(q.ReceiverName));
 
-        RuleFor(q => q.SortOrder)
-            .NotEmpty();
-
         RuleFor(q => q.SortPropertyName)
-            .NotEmpty()
-            .MinimumLength(MessageBusinessConfigurations.SORT_PROPERTY_NAME_MIN_LENGTH)
-            .MaximumLength(MessageBusinessConfigurations.SORT_PROPERTY_NAME_MAX_LENGTH)
             .Must(entityPropertyValidator.IsEntityPropertyValid<Message>);
-
-        RuleFor(q => q.Page)
-            .LessThanOrEqualTo(MessageBusinessConfigurations.PAGE_MAX_VALUE)
-            .GreaterThanOrEqualTo(MessageBusinessConfigurations.PAGE_MIN_VALUE);
-
-        RuleFor(q => q.PageSize)
-            .LessThanOrEqualTo(MessageBusinessConfigurations.PAGE_SIZE_MAX_VALUE)
-            .GreaterThanOrEqualTo(MessageBusinessConfigurations.PAGE_SIZE_MIN_VALUE);
     }
 }

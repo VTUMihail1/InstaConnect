@@ -17,9 +17,9 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
         _commandHandler = new(
             UnitOfWork,
             MessageSender,
-            MessageWriteRepository,
             InstaConnectMapper,
-            UserWriteRepository);
+            UserWriteRepository,
+            MessageWriteRepository);
     }
 
     [Fact]
@@ -27,8 +27,8 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            MessageUnitTestConfigurations.NON_EXISTING_USER_ID,
-            MessageUnitTestConfigurations.EXISTING_SENDER_ID,
+            InvalidUserId,
+            ValidCurrentUserId,
             ValidContent
         );
 
@@ -44,8 +44,8 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-            MessageUnitTestConfigurations.NON_EXISTING_USER_ID,
+            ValidCurrentUserId,
+            InvalidUserId,
             ValidContent
         );
 
@@ -61,8 +61,8 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-            MessageUnitTestConfigurations.EXISTING_RECEIVER_ID,
+            ValidCurrentUserId,
+            ValidReceiverId,
             ValidContent
         );
 
@@ -72,7 +72,7 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         response
             .Should()
-            .Match<MessageCommandViewModel>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID);
+            .Match<MessageCommandViewModel>(m => m.Id == ValidId);
     }
 
     [Fact]
@@ -80,8 +80,8 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-            MessageUnitTestConfigurations.EXISTING_RECEIVER_ID,
+            ValidCurrentUserId,
+            ValidReceiverId,
             ValidContent
         );
 
@@ -92,9 +92,8 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
         MessageWriteRepository
             .Received(1)
             .Add(Arg.Is<Message>(m =>
-                // m.Id == string.Empty &&
-                m.SenderId == MessageUnitTestConfigurations.EXISTING_SENDER_ID &&
-                m.ReceiverId == MessageUnitTestConfigurations.EXISTING_RECEIVER_ID &&
+                m.SenderId == ValidCurrentUserId &&
+                m.ReceiverId == ValidReceiverId &&
                 m.Content == ValidContent));
     }
 
@@ -103,8 +102,8 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-            MessageUnitTestConfigurations.EXISTING_RECEIVER_ID,
+            ValidCurrentUserId,
+            ValidReceiverId,
             ValidContent
         );
 
@@ -116,7 +115,7 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
             .Received(1)
             .SendMessageToUserAsync(Arg.Is<MessageSendModel>(m =>
                 m.Content == ValidContent &&
-                m.ReceiverId == MessageUnitTestConfigurations.EXISTING_RECEIVER_ID),
+                m.ReceiverId == ValidReceiverId),
                 CancellationToken);
     }
 
@@ -125,8 +124,8 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            MessageUnitTestConfigurations.EXISTING_SENDER_ID,
-            MessageUnitTestConfigurations.EXISTING_RECEIVER_ID,
+            ValidCurrentUserId,
+            ValidReceiverId,
             ValidContent
         );
 

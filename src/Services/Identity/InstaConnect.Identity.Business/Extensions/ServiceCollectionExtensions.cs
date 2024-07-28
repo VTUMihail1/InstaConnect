@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using InstaConnect.Identity.Business.Consumers;
 using InstaConnect.Identity.Data;
 using InstaConnect.Shared.Business.Extensions;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +18,7 @@ public static class ServiceCollectionExtensions
             .AddMediatR(currentAssembly)
             .AddAutoMapper(currentAssembly)
             .AddImageHandler(configuration)
-            .AddMessageBroker(configuration, currentAssembly, busConfigurator => 
+            .AddMessageBroker(configuration, currentAssembly, busConfigurator =>
                 busConfigurator.AddTransactionalOutbox<IdentityContext>());
 
         return serviceCollection;

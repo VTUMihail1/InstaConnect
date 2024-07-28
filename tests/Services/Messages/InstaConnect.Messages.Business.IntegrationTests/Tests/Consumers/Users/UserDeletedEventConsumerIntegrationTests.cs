@@ -22,47 +22,41 @@ public class UserDeletedEventConsumerIntegrationTests : BaseMessageIntegrationTe
     }
 
     [Fact]
-    public async Task Consume_ShouldNotCreateUser_WhenUserDeletedEventIsInvalid()
+    public async Task Consume_ShouldNotDeleteUser_WhenUserDeletedEventIsInvalid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var userDeletedEvent = new UserDeletedEvent()
-        {
-            Id = MessageIntegrationTestConfigurations.NON_EXISTING_MESSAGE_ID
-        };
+        var existingUserId = await CreateUserAsync(CancellationToken);
+        var userDeletedEvent = new UserDeletedEvent(InvalidUserId);
 
         _userDeletedEventConsumerContext.Message.Returns(userDeletedEvent);
 
         // Act
         await _userDeletedEventConsumer.Consume(_userDeletedEventConsumerContext);
-        var existingUser = await UserReadRepository.GetByIdAsync(existingSenderId, CancellationToken);
+        var existingUser = await UserReadRepository.GetByIdAsync(existingUserId, CancellationToken);
 
         // Assert
         existingUser
             .Should()
-            .Match<User>(m => m.Id == existingSenderId &&
-                              m.FirstName == MessageIntegrationTestConfigurations.EXISTING_SENDER_FIRST_NAME &&
-                              m.LastName == MessageIntegrationTestConfigurations.EXISTING_SENDER_LAST_NAME &&
-                              m.UserName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
-                              m.Email == MessageIntegrationTestConfigurations.EXISTING_SENDER_EMAIL &&
-                              m.ProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE);
+            .Match<User>(m => m.Id == InvalidUserId &&
+                              m.FirstName == ValidUserFirstName &&
+                              m.LastName == ValidUserLastName &&
+                              m.UserName == ValidUserName &&
+                              m.Email == ValidUserEmail &&
+                              m.ProfileImage == ValidUserProfileImage);
     }
 
     [Fact]
-    public async Task Consume_ShouldCreateUser_WhenUserDeletedEventIsValid()
+    public async Task Consume_ShouldDeleteUser_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var userDeletedEvent = new UserDeletedEvent()
-        {
-            Id = existingSenderId,
-        };
+        var existingUserId = await CreateUserAsync(CancellationToken);
+        var userDeletedEvent = new UserDeletedEvent(existingUserId);
 
         _userDeletedEventConsumerContext.Message.Returns(userDeletedEvent);
 
         // Act
         await _userDeletedEventConsumer.Consume(_userDeletedEventConsumerContext);
-        var existingUser = await UserReadRepository.GetByIdAsync(existingSenderId, CancellationToken);
+        var existingUser = await UserReadRepository.GetByIdAsync(existingUserId, CancellationToken);
 
         // Assert
         existingUser

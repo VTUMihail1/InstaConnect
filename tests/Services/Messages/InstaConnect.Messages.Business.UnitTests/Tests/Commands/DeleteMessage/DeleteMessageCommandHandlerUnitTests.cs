@@ -24,8 +24,8 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new DeleteMessageCommand(
-            MessageUnitTestConfigurations.NON_EXISTING_MESSAGE_ID,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+            InvalidId,
+            ValidMessageCurrentUserId
         );
 
         // Act
@@ -40,8 +40,8 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new DeleteMessageCommand(
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            MessageUnitTestConfigurations.EXISTING_SENDER_ID
+            ValidId,
+            ValidCurrentUserId
         );
 
         // Act
@@ -56,8 +56,8 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new DeleteMessageCommand(
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+            ValidId,
+            ValidMessageCurrentUserId
         );
 
         // Act
@@ -66,7 +66,7 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await MessageWriteRepository
             .Received(1)
-            .GetByIdAsync(MessageUnitTestConfigurations.EXISTING_MESSAGE_ID, CancellationToken);
+            .GetByIdAsync(ValidId, CancellationToken);
     }
 
     [Fact]
@@ -74,8 +74,8 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new DeleteMessageCommand(
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+            ValidId,
+            ValidMessageCurrentUserId
         );
 
         // Act
@@ -84,9 +84,9 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         MessageWriteRepository
             .Received(1)
-            .Delete(Arg.Is<Message>(m => m.Id == MessageUnitTestConfigurations.EXISTING_MESSAGE_ID &&
-                                         m.SenderId == MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID &&
-                                         m.ReceiverId == MessageUnitTestConfigurations.EXISTING_MESSAGE_RECEIVER_ID &&
+            .Delete(Arg.Is<Message>(m => m.Id == ValidId &&
+                                         m.SenderId == ValidMessageCurrentUserId &&
+                                         m.ReceiverId == ValidMessageReceiverId &&
                                          m.Content == ValidContent));
     }
 
@@ -95,8 +95,8 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new DeleteMessageCommand(
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_ID,
-            MessageUnitTestConfigurations.EXISTING_MESSAGE_SENDER_ID
+            ValidId,
+            ValidMessageCurrentUserId
         );
 
         // Act

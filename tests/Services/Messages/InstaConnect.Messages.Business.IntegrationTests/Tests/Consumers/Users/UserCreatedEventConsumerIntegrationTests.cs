@@ -25,63 +25,59 @@ public class UserCreatedEventConsumerIntegrationTests : BaseMessageIntegrationTe
     public async Task Consume_ShouldNotCreateUser_WhenUserCreatedEventIsInvalid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var userCreatedEvent = new UserCreatedEvent()
-        {
-            Id = existingSenderId,
-            FirstName = MessageIntegrationTestConfigurations.EXISTING_SENDER_FIRST_NAME,
-            LastName = MessageIntegrationTestConfigurations.EXISTING_SENDER_LAST_NAME,
-            UserName = MessageIntegrationTestConfigurations.EXISTING_MESSAGE_ADD_NAME,
-            Email = MessageIntegrationTestConfigurations.EXISTING_SENDER_EMAIL,
-            ProfileImage = MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE,
-        };
+        var existingUserId = await CreateUserAsync(CancellationToken);
+        var userCreatedEvent = new UserCreatedEvent(
+            existingUserId, 
+            ValidAddUserName, 
+            ValidUserEmail, 
+            ValidUserFirstName, 
+            ValidUserLastName, 
+            ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
         // Act
         await _userCreatedEventConsumer.Consume(_userCreatedEventConsumeContext);
-        var existingUser = await UserReadRepository.GetByIdAsync(existingSenderId, CancellationToken);
+        var existingUser = await UserReadRepository.GetByIdAsync(existingUserId, CancellationToken);
 
         // Assert
         existingUser
             .Should()
-            .Match<User>(m => m.Id == existingSenderId &&
-                              m.FirstName == MessageIntegrationTestConfigurations.EXISTING_SENDER_FIRST_NAME &&
-                              m.LastName == MessageIntegrationTestConfigurations.EXISTING_SENDER_LAST_NAME &&
-                              m.UserName == MessageIntegrationTestConfigurations.EXISTING_SENDER_NAME &&
-                              m.Email == MessageIntegrationTestConfigurations.EXISTING_SENDER_EMAIL &&
-                              m.ProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE);
+            .Match<User>(m => m.Id == existingUserId &&
+                              m.FirstName == ValidUserFirstName &&
+                              m.LastName == ValidUserFirstName &&
+                              m.UserName == ValidUserFirstName &&
+                              m.Email == ValidUserFirstName &&
+                              m.ProfileImage == ValidUserFirstName);
     }
 
     [Fact]
     public async Task Consume_ShouldCreateUser_WhenUserCreatedEventIsValid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var userCreatedEvent = new UserCreatedEvent()
-        {
-            Id = MessageIntegrationTestConfigurations.NON_EXISTING_USER_ID,
-            FirstName = MessageIntegrationTestConfigurations.EXISTING_SENDER_FIRST_NAME,
-            LastName = MessageIntegrationTestConfigurations.EXISTING_SENDER_LAST_NAME,
-            UserName = MessageIntegrationTestConfigurations.EXISTING_MESSAGE_ADD_NAME,
-            Email = MessageIntegrationTestConfigurations.EXISTING_SENDER_EMAIL,
-            ProfileImage = MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE,
-        };
+        var existingUserId = await CreateUserAsync(CancellationToken);
+        var userCreatedEvent = new UserCreatedEvent(
+            InvalidUserId,
+            ValidAddUserName,
+            ValidUserEmail,
+            ValidUserFirstName,
+            ValidUserLastName,
+            ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
         // Act
         await _userCreatedEventConsumer.Consume(_userCreatedEventConsumeContext);
-        var existingUser = await UserReadRepository.GetByIdAsync(MessageIntegrationTestConfigurations.NON_EXISTING_USER_ID, CancellationToken);
+        var existingUser = await UserReadRepository.GetByIdAsync(InvalidId, CancellationToken);
 
         // Assert
         existingUser
             .Should()
-            .Match<User>(m => m.Id == MessageIntegrationTestConfigurations.NON_EXISTING_USER_ID &&
-                              m.FirstName == MessageIntegrationTestConfigurations.EXISTING_SENDER_FIRST_NAME &&
-                              m.LastName == MessageIntegrationTestConfigurations.EXISTING_SENDER_LAST_NAME &&
-                              m.UserName == MessageIntegrationTestConfigurations.EXISTING_MESSAGE_ADD_NAME &&
-                              m.Email == MessageIntegrationTestConfigurations.EXISTING_SENDER_EMAIL &&
-                              m.ProfileImage == MessageIntegrationTestConfigurations.EXISTING_SENDER_PROFILE_IMAGE);
+            .Match<User>(m => m.Id == InvalidUserId &&
+                              m.FirstName == ValidUserFirstName &&
+                              m.LastName == ValidUserLastName &&
+                              m.UserName == ValidAddUserName &&
+                              m.Email == ValidUserEmail &&
+                              m.ProfileImage == ValidUserProfileImage);
     }
 }
