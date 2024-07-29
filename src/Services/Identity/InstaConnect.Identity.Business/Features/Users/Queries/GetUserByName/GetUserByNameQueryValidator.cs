@@ -1,0 +1,12 @@
+﻿using FluentValidation;
+
+namespace InstaConnect.Identity.Business.Features.Users.Queries.GetUserByName;
+
+public class GetUserByNameQueryValidator : AbstractValidator<GetUserByNameQuery>
+{
+    public GetUserByNameQueryValidator()
+    {
+        RuleFor(q => q.UserName)
+            .NotEmpty();
+    }
+}

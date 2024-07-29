@@ -4,7 +4,7 @@ using InstaConnect.Shared.Web.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddWebLayer(builder.Configuration);
+builder.Services.AddWebServices(builder.Configuration);
 
 builder.Host.AddSerilog();
 

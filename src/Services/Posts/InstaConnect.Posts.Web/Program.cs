@@ -1,6 +1,6 @@
 using InstaConnect.Posts.Business.Extensions;
-using InstaConnect.Posts.Read.Data.Extensions;
-using InstaConnect.Posts.Write.Web.Extensions;
+using InstaConnect.Posts.Data.Extensions;
+using InstaConnect.Posts.Web.Extensions;
 using InstaConnect.Shared.Web.Extensions;
 using InstaConnect.Shared.Web.Utilities;
 
@@ -8,9 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 var cancellationTokenSource = new CancellationTokenSource();
 
 builder.Services
-    .AddDataLayer(builder.Configuration)
-    .AddBusinessLayer(builder.Configuration)
-    .AddWebLayer(builder.Configuration);
+    .AddDataServices(builder.Configuration)
+    .AddBusinessServices(builder.Configuration)
+    .AddWebServices(builder.Configuration);
 
 builder.Host.AddSerilog();
 

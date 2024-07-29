@@ -1,13 +1,13 @@
 using InstaConnect.Emails.Business.Extensions;
 using InstaConnect.Emails.Web.Extensions;
-using InstaConnect.Shared.Web.Utilities;
 using InstaConnect.Shared.Web.Extensions;
+using InstaConnect.Shared.Web.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddBusinessLayer(builder.Configuration)
-    .AddWebLayer(builder.Configuration);
+    .AddBusinessServices(builder.Configuration)
+    .AddWebServices(builder.Configuration);
 
 builder.Host.AddSerilog();
 

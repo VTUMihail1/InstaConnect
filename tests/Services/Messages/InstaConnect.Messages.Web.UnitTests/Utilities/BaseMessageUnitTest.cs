@@ -1,18 +1,19 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Business.Commands.Messages.AddMessage;
-using InstaConnect.Messages.Business.Commands.Messages.UpdateMessage;
-using InstaConnect.Messages.Business.Models;
-using InstaConnect.Messages.Business.Queries.Messages.GetAllFilteredMessages;
-using InstaConnect.Messages.Business.Queries.Messages.GetMessageById;
-using InstaConnect.Messages.Business.Utilities;
+using InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
+using InstaConnect.Messages.Business.Features.Messages.Commands.UpdateMessage;
+using InstaConnect.Messages.Business.Features.Messages.Models;
+using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllFilteredMessages;
+using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
+using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
+using InstaConnect.Shared.Business.Utilities;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Models.Users;
 using InstaConnect.Shared.Web.UnitTests.Utilities;
 using NSubstitute;
-using MessagesCommandProfile = InstaConnect.Messages.Business.Profiles.MessagesCommandProfile;
-using MessagesQueryProfile = InstaConnect.Messages.Business.Profiles.MessagesQueryProfile;
+using MessagesCommandProfile = InstaConnect.Messages.Business.Features.Messages.Mappings.MessagesCommandProfile;
+using MessagesQueryProfile = InstaConnect.Messages.Business.Features.Messages.Mappings.MessagesQueryProfile;
 
 namespace InstaConnect.Messages.Web.UnitTests.Utilities;
 

@@ -1,15 +1,15 @@
+using InstaConnect.Follows.Business.Extensions;
 using InstaConnect.Follows.Data.Extensions;
-using InstaConnect.Follows.Read.Business.Extensions;
-using InstaConnect.Follows.Read.Web.Extensions;
+using InstaConnect.Follows.Web.Extensions;
 using InstaConnect.Shared.Web.Extensions;
 using InstaConnect.Shared.Web.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddDataLayer(builder.Configuration)
-    .AddBusinessLayer(builder.Configuration)
-    .AddWebLayer(builder.Configuration);
+    .AddDataServices(builder.Configuration)
+    .AddBusinessServices(builder.Configuration)
+    .AddWebServices(builder.Configuration);
 
 builder.Host.AddSerilog();
 

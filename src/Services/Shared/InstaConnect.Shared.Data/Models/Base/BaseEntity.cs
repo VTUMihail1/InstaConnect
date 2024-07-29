@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Data.Abstract;
+﻿using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Shared.Data.Models.Base;
 

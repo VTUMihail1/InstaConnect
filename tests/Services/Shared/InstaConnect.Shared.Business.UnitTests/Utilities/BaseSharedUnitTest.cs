@@ -1,8 +1,6 @@
 ﻿using Bogus;
-using InstaConnect.Messages.Business.Utilities;
-using InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessages;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Data.Abstract;
+using InstaConnect.Shared.Data.Abstractions;
 using InstaConnect.Shared.Data.Models.Enums;
 
 namespace InstaConnect.Shared.Business.UnitTests.Utilities;

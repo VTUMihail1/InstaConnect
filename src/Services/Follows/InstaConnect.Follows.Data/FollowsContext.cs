@@ -1,4 +1,5 @@
-﻿using InstaConnect.Follows.Data.Models.Entities;
+﻿using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
+using InstaConnect.Follows.Data.Features.Users.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Follows.Data;

@@ -1,11 +1,10 @@
-﻿using System.Security.Claims;
-using Bogus;
-using InstaConnect.Messages.Business.Utilities;
-using InstaConnect.Messages.Data.Abstractions;
-using InstaConnect.Messages.Data.Models.Entities;
-using InstaConnect.Shared.Data.Abstract;
+﻿using InstaConnect.Messages.Business.Features.Messages.Utilities;
+using InstaConnect.Messages.Data.Features.Messages.Abstractions;
+using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
+using InstaConnect.Messages.Data.Features.Users.Abstract;
+using InstaConnect.Messages.Data.Features.Users.Models.Entities;
+using InstaConnect.Shared.Data.Abstractions;
 using InstaConnect.Shared.Web.FunctionalTests.Utilities;
-using MassTransit.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Messages.Web.FunctionalTests.Utilities;

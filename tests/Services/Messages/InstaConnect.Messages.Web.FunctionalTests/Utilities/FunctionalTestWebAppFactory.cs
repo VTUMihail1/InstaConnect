@@ -1,4 +1,4 @@
-﻿using InstaConnect.Messages.Business.Consumers.Users;
+﻿using InstaConnect.Messages.Business.Features.Users.Consumers;
 using InstaConnect.Messages.Data;
 using InstaConnect.Shared.Web.FunctionalTests.Extensions;
 using MassTransit;

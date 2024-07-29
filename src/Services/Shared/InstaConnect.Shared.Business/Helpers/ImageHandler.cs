@@ -1,12 +1,9 @@
-﻿using System.Data.Entity.Validation;
-using System.Net;
+﻿using System.Net;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace InstaConnect.Shared.Business.Helpers;
 
@@ -16,7 +13,7 @@ internal class ImageHandler : IImageHandler
     private readonly IImageUploadFactory _imageUploadFactory;
 
     public ImageHandler(
-        Cloudinary cloudinary, 
+        Cloudinary cloudinary,
         IImageUploadFactory imageUploadFactory)
     {
         _cloudinary = cloudinary;

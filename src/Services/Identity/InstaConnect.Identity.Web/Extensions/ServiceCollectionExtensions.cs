@@ -1,17 +1,21 @@
-﻿using InstaConnect.Shared.Business.Extensions;
+﻿using InstaConnect.Identity.Business.Features.Accounts.Extensions;
+using InstaConnect.Identity.Business.Features.Users.Extensions;
+using InstaConnect.Identity.Web.Features.Accounts.Extensions;
+using InstaConnect.Identity.Web.Features.Users.Extensions;
+using InstaConnect.Shared.Business.Extensions;
 using InstaConnect.Shared.Web.Extensions;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
-using TokenOptions = InstaConnect.Shared.Data.Models.Options.TokenOptions;
 
 namespace InstaConnect.Identity.Web.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static IServiceCollection AddWebServices(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
-        var tokenOptions = configuration.GetSection(nameof(TokenOptions)).Get<TokenOptions>()!;
+
+        serviceCollection
+            .AddAccountServices(configuration)
+            .AddUserServices();
 
         serviceCollection
             .AddJwtBearer(configuration)
@@ -25,20 +29,7 @@ public static class ServiceCollectionExtensions
             .AddCurrentUserContext()
             .AddExceptionHandler();
 
-        serviceCollection.Configure<IdentityOptions>(options =>
-        {
-            options.User.RequireUniqueEmail = true;
-            options.Password.RequireDigit = true;
-            options.Password.RequireLowercase = true;
-            options.Password.RequireNonAlphanumeric = true;
-            options.Password.RequireUppercase = true;
-            options.Password.RequiredLength = 8;
-        });
-
         serviceCollection.AddEndpointsApiExplorer();
-
-        serviceCollection
-            .Configure<CookieAuthenticationOptions>(options => options.ExpireTimeSpan = TimeSpan.FromSeconds(tokenOptions.AccountTokenLifetimeSeconds));
 
         serviceCollection.ConfigureApiBehaviorOptions();
 

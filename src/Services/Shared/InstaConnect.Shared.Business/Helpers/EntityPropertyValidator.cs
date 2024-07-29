@@ -1,6 +1,7 @@
-﻿using InstaConnect.Shared.Data.Abstract;
+﻿using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Data.Abstractions;
 
-namespace InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessages;
+namespace InstaConnect.Shared.Business.Helpers;
 
 public class EntityPropertyValidator : IEntityPropertyValidator
 {

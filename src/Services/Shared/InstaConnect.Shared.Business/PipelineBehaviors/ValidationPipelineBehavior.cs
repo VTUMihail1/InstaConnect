@@ -1,6 +1,4 @@
-using AutoMapper;
 using FluentValidation;
-using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using MediatR;
 

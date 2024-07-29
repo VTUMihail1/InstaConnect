@@ -1,15 +1,10 @@
 ﻿using Bogus;
-using InstaConnect.Messages.Business.Utilities;
-using InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessages;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Contracts.Users;
-using InstaConnect.Shared.Data.Abstract;
+using InstaConnect.Shared.Business.Utilities;
 using InstaConnect.Shared.Data.Models.Enums;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using NSubstitute;
 
-namespace InstaConnect.Shared.Business.UnitTests.Utilities;
+namespace InstaConnect.Shared.Business.IntegrationTests.Utilities;
 
 public class BaseSharedIntegrationTest
 {
@@ -46,7 +41,7 @@ public class BaseSharedIntegrationTest
         ValidSortOrderProperty = SortOrder.ASC;
 
         Faker = new Faker();
-        ServiceScope = serviceScope; 
+        ServiceScope = serviceScope;
         CancellationToken = new CancellationToken();
         InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
     }

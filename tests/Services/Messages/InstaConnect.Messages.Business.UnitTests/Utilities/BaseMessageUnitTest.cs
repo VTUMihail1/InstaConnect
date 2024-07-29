@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Business.Abstract;
-using InstaConnect.Messages.Business.Profiles;
-using InstaConnect.Messages.Business.Utilities;
-using InstaConnect.Messages.Data.Abstractions;
-using InstaConnect.Messages.Data.Models.Entities;
-using InstaConnect.Messages.Data.Models.Filters;
-using InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessages;
+using InstaConnect.Messages.Business.Features.Messages.Abstractions;
+using InstaConnect.Messages.Business.Features.Messages.Mappings;
+using InstaConnect.Messages.Business.Features.Messages.Utilities;
+using InstaConnect.Messages.Data.Features.Messages.Abstractions;
+using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
+using InstaConnect.Messages.Data.Features.Messages.Models.Filters;
+using InstaConnect.Messages.Data.Features.Users.Abstract;
+using InstaConnect.Messages.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.UnitTests.Utilities;
-using InstaConnect.Shared.Data.Abstract;
+using InstaConnect.Shared.Data.Abstractions;
 using InstaConnect.Shared.Data.Models.Pagination;
 using NSubstitute;
 

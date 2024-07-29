@@ -1,5 +1,5 @@
 using InstaConnect.Messages.Business.Extensions;
-using InstaConnect.Messages.Business.Helpers.Hubs;
+using InstaConnect.Messages.Business.Features.Messages.Helpers.Hubs;
 using InstaConnect.Messages.Data.Extensions;
 using InstaConnect.Messages.Web.Extensions;
 using InstaConnect.Shared.Web.Extensions;
@@ -10,7 +10,7 @@ var cancellationTokenSource = new CancellationTokenSource();
 
 builder.Services
     .AddDataLayer(builder.Configuration)
-    .AddBusinessLayer(builder.Configuration)
+    .AddBusinessServices(builder.Configuration)
     .AddWebLayer(builder.Configuration);
 
 builder.Host.AddSerilog();

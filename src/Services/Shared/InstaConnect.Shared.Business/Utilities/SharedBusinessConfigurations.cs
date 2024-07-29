@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Messages.Business.Utilities;
+﻿namespace InstaConnect.Shared.Business.Utilities;
 
 public class SharedBusinessConfigurations
 {

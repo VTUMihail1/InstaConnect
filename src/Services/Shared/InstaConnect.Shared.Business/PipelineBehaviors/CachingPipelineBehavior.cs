@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Data.Abstractions;
 using MediatR;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
 namespace InstaConnect.Shared.Business.PipelineBehaviors;

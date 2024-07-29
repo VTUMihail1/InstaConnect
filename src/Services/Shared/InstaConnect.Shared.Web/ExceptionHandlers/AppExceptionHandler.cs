@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Models.Enum;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
