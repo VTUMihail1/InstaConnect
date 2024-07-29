@@ -1,7 +1,11 @@
-﻿using InstaConnect.Posts.Read.Data.Models.Entities;
+﻿using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
+using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
+using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
+using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
+using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Posts.Read.Data;
+namespace InstaConnect.Posts.Data;
 
 public class PostsContext : DbContext
 {

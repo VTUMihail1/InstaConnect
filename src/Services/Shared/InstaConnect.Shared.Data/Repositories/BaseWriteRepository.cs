@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Data.Abstract;
+﻿using InstaConnect.Shared.Data.Abstractions;
 using InstaConnect.Shared.Data.Models.Filters;
 using Microsoft.EntityFrameworkCore;
 

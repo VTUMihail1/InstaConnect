@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using InstaConnect.Messages.Business.Utilities;
 using InstaConnect.Shared.Business.Models.Filters;
+using InstaConnect.Shared.Business.Utilities;
 
-namespace InstaConnect.Messages.Business.Queries.Messages.GetAllFilteredMessages;
+namespace InstaConnect.Shared.Business.Validators;
 
 public class CollectionModelValidator : AbstractValidator<CollectionModel>
 {

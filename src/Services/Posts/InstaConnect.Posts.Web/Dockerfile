@@ -3,13 +3,18 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 5300
+EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Services/Posts/InstaConnect.Posts.Web/InstaConnect.Posts.Web.csproj", "src/Services/Posts/InstaConnect.Posts.Web/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Web/InstaConnect.Shared.Web.csproj", "src/Services/Shared/InstaConnect.Shared.Web/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Business/InstaConnect.Shared.Business.csproj", "src/Services/Shared/InstaConnect.Shared.Business/"]
+COPY ["src/Services/Shared/InstaConnect.Shared.Data/InstaConnect.Shared.Data.csproj", "src/Services/Shared/InstaConnect.Shared.Data/"]
+COPY ["src/Services/Posts/InstaConnect.Posts.Business/InstaConnect.Posts.Business.csproj", "src/Services/Posts/InstaConnect.Posts.Business/"]
+COPY ["src/Services/Posts/InstaConnect.Posts.Data/InstaConnect.Posts.Data.csproj", "src/Services/Posts/InstaConnect.Posts.Data/"]
 RUN dotnet restore "./src/Services/Posts/InstaConnect.Posts.Web/InstaConnect.Posts.Web.csproj"
 COPY . .
 WORKDIR "/src/src/Services/Posts/InstaConnect.Posts.Web"

@@ -61,12 +61,9 @@ services:
       TokenOptions__AccountTokenLifetimeSeconds: 3600
       CorsOptions__AllowedOrigins: gateway-svc:5100
       ReverseProxy__Clusters__identity-cluster__Destinations__destination1__Address: http://identity-svc
-      ReverseProxy__Clusters__posts-read-cluster__Destinations__destination1__Address: http://posts-read-svc
-      ReverseProxy__Clusters__posts-write-cluster__Destinations__destination1__Address: http://posts-write-svc
-      ReverseProxy__Clusters__messages-read-cluster__Destinations__destination1__Address: http://messages-read-svc
-      ReverseProxy__Clusters__messages-write-cluster__Destinations__destination1__Address: http://messages-write-svc
-      ReverseProxy__Clusters__follows-read-cluster__Destinations__destination1__Address: http://follows-read-svc
-      ReverseProxy__Clusters__follows-write-cluster__Destinations__destination1__Address: http://follows-write-svc
+      ReverseProxy__Clusters__posts-cluster__Destinations__destination1__Address: http://posts-svc
+      ReverseProxy__Clusters__messages-cluster__Destinations__destination1__Address: http://messages-svc
+      ReverseProxy__Clusters__follows-cluster__Destinations__destination1__Address: http://follows-svc
     ports:
       - "5100:80"
     networks:
@@ -102,13 +99,13 @@ services:
     networks:
       - instaconnect
 
-  posts-read-svc:
+  posts-svc:
     image: ${DOCKER_REGISTRY-}posts-read-svc
     build:
       context: .
-      dockerfile: src/Services/Posts/Read/InstaConnect.Posts.Read.Web/Dockerfile
+      dockerfile: src/Services/Posts/InstaConnect.Posts.Web/Dockerfile
     environment:
-      DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.posts.read;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.posts;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
       CacheOptions__ConnectionString: redis://guest:guest@redis:6379
       CorsOptions__AllowedOrigins: gateway-svc:5100
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
@@ -130,19 +127,18 @@ services:
       - redis
     networks:
       - instaconnect
-   
-  posts-write-svc:
-    image: ${DOCKER_REGISTRY-}posts-write-svc
+
+  messages-svc:
+    image: ${DOCKER_REGISTRY-}messages-svc
     build:
       context: .
-      dockerfile: src/Services/Posts/Write/InstaConnect.Posts.Write.Web/Dockerfile
+      dockerfile: src/Services/Messages/InstaConnect.Messages.Web/Dockerfile
     environment:
-      DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.posts.write;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
-      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
-      CorsOptions__AllowedOrigins: gateway-svc:5100
+      DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.messages;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest
+      CorsOptions__AllowedOrigins: gateway-svc:5100
       TokenOptions__Issuer: http://identity-svc:5200
       TokenOptions__Audience: http://gateway-svc:5100
       TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
@@ -160,13 +156,14 @@ services:
     networks:
       - instaconnect
 
-  messages-read-svc:
-    image: ${DOCKER_REGISTRY-}messages-read-svc
+  follows-svc:
+    image: ${DOCKER_REGISTRY-}follows-read-svc
     build:
       context: .
-      dockerfile: src/Services/Messages/Read/InstaConnect.Messages.Read.Web/Dockerfile
+      dockerfile: src/Services/Follows/InstaConnect.Follows.Web/Dockerfile
     environment:
-      DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.messages.read;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.follows;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
+      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest
@@ -181,92 +178,6 @@ services:
       ASPNETCORE_URLS: http://+:80
     ports:
       - "5500:80"
-    depends_on:
-      - sqlserver
-      - rabbitmq
-      - redis
-    networks:
-      - instaconnect
-
-  messages-write-svc:
-    image: ${DOCKER_REGISTRY-}messages-write-svc
-    build:
-      context: .
-      dockerfile: src/Services/Messages/Write/InstaConnect.Messages.Write.Web/Dockerfile
-    environment:
-      DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.messages.write;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
-      MessageBrokerOptions__Host: amqp://rabbitmq:5672
-      MessageBrokerOptions__Username: guest
-      MessageBrokerOptions__Password: guest
-      CorsOptions__AllowedOrigins: gateway-svc:5100
-      TokenOptions__Issuer: http://identity-svc:5200
-      TokenOptions__Audience: http://gateway-svc:5100
-      TokenOptions__AccessTokenSecurityKey: _A3GhQMmfixjef5G9bFNKu7XhY7i1Tf5gyuWHrFIVTBk4t9APCX8Foq1SJWgCspLy3MuLgrI7js-0JS65M78dg
-      TokenOptions__AccountTokenSecurityKey: _A3GhQMmfixjef5G9bFNKu6XhY7i1Tf5gyuWHrFIVTBk4t9APCX8Foq1SJWgCspLy3MuLgrI7js-0JS65M78dg
-      TokenOptions__AccessTokenLifetimeSeconds: 900
-      TokenOptions__AccountTokenLifetimeSeconds: 3600
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:80
-    ports:
-      - "5600:80"
-    depends_on:
-      - sqlserver
-      - rabbitmq
-      - redis
-    networks:
-      - instaconnect
-
-  follows-read-svc:
-    image: ${DOCKER_REGISTRY-}follows-read-svc
-    build:
-      context: .
-      dockerfile: src/Services/Follows/Read/InstaConnect.Follows.Read.Web/Dockerfile
-    environment:
-      DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.follows.read;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
-      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
-      MessageBrokerOptions__Host: amqp://rabbitmq:5672
-      MessageBrokerOptions__Username: guest
-      MessageBrokerOptions__Password: guest
-      CorsOptions__AllowedOrigins: gateway-svc:5100
-      TokenOptions__Issuer: http://identity-svc:5200
-      TokenOptions__Audience: http://gateway-svc:5100
-      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
-      TokenOptions__AccessTokenLifetimeSeconds: 900
-      TokenOptions__AccountTokenLifetimeSeconds: 3600
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:80
-    ports:
-      - "5700:80"
-    depends_on:
-      - sqlserver
-      - rabbitmq
-      - redis
-    networks:
-      - instaconnect
-
-  follows-write-svc:
-    image: ${DOCKER_REGISTRY-}follows-write-svc
-    build:
-      context: .
-      dockerfile: src/Services/Follows/Write/InstaConnect.Follows.Write.Web/Dockerfile
-    environment:
-      DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.follows.write;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
-      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
-      MessageBrokerOptions__Host: amqp://rabbitmq:5672
-      MessageBrokerOptions__Username: guest
-      MessageBrokerOptions__Password: guest
-      CorsOptions__AllowedOrigins: gateway-svc:5100
-      TokenOptions__Issuer: http://identity-svc:5200
-      TokenOptions__Audience: http://gateway-svc:5100
-      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
-      TokenOptions__AccessTokenLifetimeSeconds: 900
-      TokenOptions__AccountTokenLifetimeSeconds: 3600
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:80
-    ports:
-      - "5800:80"
     depends_on:
       - sqlserver
       - rabbitmq
@@ -300,7 +211,7 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
     ports:
-      - "5900:80"
+      - "5600:80"
     depends_on:
       - rabbitmq
     networks:

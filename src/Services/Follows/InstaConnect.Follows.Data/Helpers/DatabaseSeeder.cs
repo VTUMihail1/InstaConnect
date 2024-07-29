@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Data.Abstract;
+﻿using InstaConnect.Shared.Data.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Follows.Data.Helpers;

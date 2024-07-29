@@ -1,8 +1,6 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using CloudinaryDotNet;
 using FluentValidation;
-using InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessages;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.Models.Options;
@@ -89,15 +87,6 @@ public static class ServiceCollectionExtentions
 
         serviceCollection.AddScoped<IEntityPropertyValidator, EntityPropertyValidator>();
         serviceCollection.AddScoped<IEnumValidator, EnumValidator>();
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddCachingHandler(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-            .AddScoped<IJsonConverter, JsonConverter>()
-            .AddScoped<ICacheHandler, CacheHandler>();
 
         return serviceCollection;
     }

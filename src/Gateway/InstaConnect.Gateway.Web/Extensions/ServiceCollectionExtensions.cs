@@ -4,7 +4,7 @@ namespace InstaConnect.Gateway.Web.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static IServiceCollection AddWebServices(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
             .AddJwtBearer(configuration)

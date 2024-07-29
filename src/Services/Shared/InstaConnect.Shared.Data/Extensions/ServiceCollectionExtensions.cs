@@ -1,6 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-using InstaConnect.Shared.Business.Models.Options;
-using InstaConnect.Shared.Data.Abstract;
+﻿using InstaConnect.Shared.Data.Abstractions;
+using InstaConnect.Shared.Data.Helpers;
 using InstaConnect.Shared.Data.Models.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,14 +19,29 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddDatabaseContext<TContext>(
         this IServiceCollection serviceCollection,
+        IConfiguration configuration,
         Action<DbContextOptionsBuilder>? optionsAction = null)
     where TContext : DbContext
     {
+        serviceCollection
+            .AddOptions<DatabaseOptions>()
+            .BindConfiguration(nameof(DatabaseOptions))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        var databaseOptions = configuration
+                    .GetSection(nameof(DatabaseOptions))
+                    .Get<DatabaseOptions>()!;
+
         serviceCollection.AddDbContext<TContext>(options =>
         {
             options.AddInterceptors(new AuditableEntityInterceptor());
 
             options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+
+            options.UseSqlServer(
+                    databaseOptions.ConnectionString,
+                    sqlServerOptions => sqlServerOptions.EnableRetryOnFailure());
 
             optionsAction?.Invoke(options);
         });
@@ -54,23 +68,16 @@ public static class ServiceCollectionExtensions
             .GetSection(nameof(CacheOptions))
             .Get<CacheOptions>()!;
 
+        serviceCollection
+            .AddScoped<IJsonConverter, JsonConverter>()
+            .AddScoped<ICacheHandler, CacheHandler>();
+
         serviceCollection.AddStackExchangeRedisCache(redisOptions =>
             redisOptions.Configuration = cacheOptions.ConnectionString);
 
         serviceCollection
             .AddHealthChecks()
             .AddRedis(cacheOptions.ConnectionString);
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddDatabaseOptions(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-            .AddOptions<DatabaseOptions>()
-            .BindConfiguration(nameof(DatabaseOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
 
         return serviceCollection;
     }

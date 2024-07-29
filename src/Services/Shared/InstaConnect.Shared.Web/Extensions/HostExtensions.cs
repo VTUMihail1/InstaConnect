@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Data.Abstract;
+﻿using InstaConnect.Shared.Data.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

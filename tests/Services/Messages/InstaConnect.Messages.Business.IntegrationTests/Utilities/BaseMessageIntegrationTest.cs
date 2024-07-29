@@ -1,11 +1,10 @@
-﻿using Bogus;
-using InstaConnect.Messages.Business.Utilities;
-using InstaConnect.Messages.Data.Abstractions;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.UnitTests.Utilities;
-using InstaConnect.Shared.Data.Abstract;
-using InstaConnect.Messages.Data.Models.Entities;
-using MassTransit.Testing;
+﻿using InstaConnect.Messages.Business.Features.Messages.Utilities;
+using InstaConnect.Messages.Data.Features.Messages.Abstractions;
+using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
+using InstaConnect.Messages.Data.Features.Users.Abstract;
+using InstaConnect.Messages.Data.Features.Users.Models.Entities;
+using InstaConnect.Shared.Business.IntegrationTests.Utilities;
+using InstaConnect.Shared.Data.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Utilities;
@@ -78,8 +77,8 @@ public abstract class BaseMessageIntegrationTest : BaseSharedIntegrationTest, IC
     protected async Task<string> CreateMessageAsync(string senderId, string receiverId, CancellationToken cancellationToken)
     {
         var message = new Message(
-            ValidContent, 
-            senderId, 
+            ValidContent,
+            senderId,
             receiverId);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();

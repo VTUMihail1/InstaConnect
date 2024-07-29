@@ -1,10 +1,8 @@
 ﻿using System.Security.Claims;
 using Bogus;
-using InstaConnect.Messages.Business.Utilities;
 using InstaConnect.Shared.Data.Models.Enums;
 using MassTransit.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using NSubstitute.Routing;
 
 namespace InstaConnect.Shared.Web.FunctionalTests.Utilities;
 

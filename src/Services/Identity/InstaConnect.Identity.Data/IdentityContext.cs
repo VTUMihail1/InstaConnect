@@ -1,4 +1,6 @@
-﻿using InstaConnect.Identity.Data.Models.Entities;
+﻿using InstaConnect.Identity.Data.Features.Tokens.Models.Entitites;
+using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
+using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 

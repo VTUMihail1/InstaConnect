@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Shared.Data.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Shared.Web.Models.Filters;
+namespace InstaConnect.Shared.Web.Models.Requests;
 
 public class CollectionReadRequest
 {

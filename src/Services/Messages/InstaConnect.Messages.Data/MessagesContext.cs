@@ -1,4 +1,5 @@
-﻿using InstaConnect.Messages.Data.Models.Entities;
+﻿using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
+using InstaConnect.Messages.Data.Features.Users.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Messages.Data;

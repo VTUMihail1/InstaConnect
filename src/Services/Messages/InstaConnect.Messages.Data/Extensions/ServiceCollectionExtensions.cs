@@ -1,10 +1,8 @@
-﻿using InstaConnect.Messages.Data.Abstractions;
+﻿using InstaConnect.Messages.Data.Features.Messages.Extensions;
+using InstaConnect.Messages.Data.Features.Users.Extensions;
 using InstaConnect.Messages.Data.Helpers;
-using InstaConnect.Messages.Data.Repositories;
-using InstaConnect.Shared.Data.Abstract;
+using InstaConnect.Shared.Data.Abstractions;
 using InstaConnect.Shared.Data.Extensions;
-using InstaConnect.Shared.Data.Models.Options;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,24 +13,14 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
-            .AddDatabaseOptions()
-            .AddDatabaseContext<MessagesContext>(options =>
-            {
-                var databaseOptions = configuration
-                    .GetSection(nameof(DatabaseOptions))
-                    .Get<DatabaseOptions>()!;
+            .AddMessageServices()
+            .AddUserServices();
 
-                options.UseSqlServer(
-                    databaseOptions.ConnectionString,
-                    sqlServerOptions => sqlServerOptions.EnableRetryOnFailure());
-            });
+        serviceCollection
+            .AddDatabaseContext<MessagesContext>(configuration);
 
         serviceCollection
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
-            .AddScoped<IUserWriteRepository, UserWriteRepository>()
-            .AddScoped<IUserReadRepository, UserReadRepository>()
-            .AddScoped<IMessageWriteRepository, MessageWriteRepository>()
-            .AddScoped<IMessageReadRepository, MessageReadRepository>()
             .AddUnitOfWork<MessagesContext>();
 
         return serviceCollection;

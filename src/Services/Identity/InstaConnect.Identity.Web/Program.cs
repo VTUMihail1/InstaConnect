@@ -8,9 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 var cancellationTokenSource = new CancellationTokenSource();
 
 builder.Services
-    .AddDataLayer(builder.Configuration)
-    .AddBusinessLayer(builder.Configuration)
-    .AddWebLayer(builder.Configuration);
+    .AddDataServices(builder.Configuration)
+    .AddBusinessServices(builder.Configuration)
+    .AddWebServices(builder.Configuration);
 
 builder.Host.AddSerilog();
 

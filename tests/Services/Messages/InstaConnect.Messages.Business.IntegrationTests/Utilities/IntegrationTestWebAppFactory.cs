@@ -1,5 +1,5 @@
-﻿using InstaConnect.Messages.Business.Abstract;
-using InstaConnect.Messages.Business.Consumers.Users;
+﻿using InstaConnect.Messages.Business.Features.Messages.Abstractions;
+using InstaConnect.Messages.Business.Features.Users.Consumers;
 using InstaConnect.Messages.Data;
 using InstaConnect.Shared.Business.IntegrationTests.Extensions;
 using MassTransit;

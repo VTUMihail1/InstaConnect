@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using InstaConnect.Shared.Data.Abstract;
+using InstaConnect.Shared.Data.Abstractions;
 using InstaConnect.Shared.Data.Models.Enums;
 using InstaConnect.Shared.Data.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +9,8 @@ namespace InstaConnect.Shared.Data.Extensions;
 public static class QueryableExtensions
 {
     public static IOrderedQueryable<T> OrderEntities<T>(
-        this IQueryable<T> queryable, 
-        SortOrder sortOrder, 
+        this IQueryable<T> queryable,
+        SortOrder sortOrder,
         string orderByPropertyName) where T : class, IBaseEntity
     {
         var orderByProperty = typeof(T).GetProperty(orderByPropertyName);
@@ -27,9 +27,9 @@ public static class QueryableExtensions
     }
 
     public static async Task<PaginationList<T>> ToPagedList<T>(
-        this IQueryable<T> queryable, 
-        int page, 
-        int pageSize, 
+        this IQueryable<T> queryable,
+        int page,
+        int pageSize,
         CancellationToken cancellationToken) where T : class, IBaseEntity
     {
         var totalCount = await queryable.CountAsync(cancellationToken);

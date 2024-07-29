@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Messages.Read.Business.Queries.Messages.GetAllFilteredMessages;
+﻿namespace InstaConnect.Shared.Business.Abstractions;
 
 public interface IEnumValidator
 {

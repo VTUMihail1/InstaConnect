@@ -1,8 +1,10 @@
-﻿using InstaConnect.Identity.Data.Abstraction;
-using InstaConnect.Identity.Data.Models.Entities;
-using InstaConnect.Identity.Data.Models.Options;
-using InstaConnect.Shared.Data.Abstract;
-using InstaConnect.Shared.Data.Utils;
+﻿using InstaConnect.Identity.Data.Features.UserClaims.Abstractions;
+using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
+using InstaConnect.Identity.Data.Features.Users.Abstractions;
+using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
+using InstaConnect.Identity.Data.Features.Users.Models.Options;
+using InstaConnect.Shared.Data.Abstractions;
+using InstaConnect.Shared.Data.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -53,10 +55,10 @@ internal class DatabaseSeeder : IDatabaseSeeder
         }
 
         var adminUser = new User(
-            "Admin", 
             "Admin",
-            _adminOptions.Email, 
-            "InstaConnectAdmin", 
+            "Admin",
+            _adminOptions.Email,
+            "InstaConnectAdmin",
             _passwordHasher.Hash(_adminOptions.Password).PasswordHash,
             null);
         await _userWriteRepository.ConfirmEmailAsync(adminUser.Id, cancellationToken);

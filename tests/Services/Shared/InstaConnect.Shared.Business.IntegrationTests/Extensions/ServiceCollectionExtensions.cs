@@ -1,9 +1,5 @@
-﻿using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Contracts.Users;
-using MassTransit;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using NSubstitute;
 
 namespace InstaConnect.Shared.Business.IntegrationTests.Extensions;
 
