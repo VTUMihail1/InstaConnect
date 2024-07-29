@@ -6,7 +6,7 @@ namespace InstaConnect.Messages.Web.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWebLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static IServiceCollection AddWebServices(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 

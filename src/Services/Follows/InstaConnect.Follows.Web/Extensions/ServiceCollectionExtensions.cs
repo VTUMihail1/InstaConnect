@@ -10,7 +10,8 @@ public static class ServiceCollectionExtensions
     {
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
-        serviceCollection.AddFollowServices();
+        serviceCollection
+            .AddFollowServices();
 
         serviceCollection
             .AddJwtBearer(configuration)
