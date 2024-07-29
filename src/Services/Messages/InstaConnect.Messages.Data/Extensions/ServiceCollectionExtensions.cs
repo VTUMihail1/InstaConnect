@@ -10,7 +10,7 @@ namespace InstaConnect.Messages.Data.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddDataLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static IServiceCollection AddDataServices(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
             .AddMessageServices()

@@ -5,7 +5,6 @@ using InstaConnect.Shared.Web.Extensions;
 using InstaConnect.Shared.Web.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
-var cancellationTokenSource = new CancellationTokenSource();
 
 builder.Services
     .AddDataServices(builder.Configuration)
@@ -16,7 +15,7 @@ builder.Host.AddSerilog();
 
 var app = builder.Build();
 
-await app.SetUpDatabaseAsync(cancellationTokenSource.Token);
+await app.SetUpDatabaseAsync(CancellationToken.None);
 
 if (app.Environment.IsDevelopment())
 {
