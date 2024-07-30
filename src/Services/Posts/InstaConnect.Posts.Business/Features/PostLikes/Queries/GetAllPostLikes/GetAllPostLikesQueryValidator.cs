@@ -1,24 +1,17 @@
 ﻿using FluentValidation;
+using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Validators;
 
 namespace InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
 
 public class GetAllPostLikesQueryValidator : AbstractValidator<GetAllPostLikesQuery>
 {
-    public GetAllPostLikesQueryValidator()
+    public GetAllPostLikesQueryValidator(IEntityPropertyValidator entityPropertyValidator)
     {
-        RuleFor(q => q.Page)
-            .NotEmpty()
-            .GreaterThanOrEqualTo(default(int));
+        Include(new CollectionModelValidator());
 
-        RuleFor(q => q.PageSize)
-            .NotEmpty()
-            .GreaterThanOrEqualTo(default(int));
-
-        RuleFor(q => q.SortOrder)
-            .NotEmpty()
-            .IsInEnum();
-
-        RuleFor(q => q.SortPropertyName)
-            .NotEmpty();
+        RuleFor(c => c.SortPropertyName)
+            .Must(entityPropertyValidator.IsEntityPropertyValid<PostCommentLike>);
     }
 }

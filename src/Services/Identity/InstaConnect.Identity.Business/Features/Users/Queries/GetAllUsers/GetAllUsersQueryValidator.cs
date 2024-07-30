@@ -1,23 +1,17 @@
 ﻿using FluentValidation;
+using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Validators;
 
 namespace InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
 
 public class GetAllUsersQueryValidator : AbstractValidator<GetAllUsersQuery>
 {
-    public GetAllUsersQueryValidator()
+    public GetAllUsersQueryValidator(IEntityPropertyValidator entityPropertyValidator)
     {
-        RuleFor(q => q.Page)
-            .NotEmpty()
-            .GreaterThanOrEqualTo(default(int));
+        Include(new CollectionModelValidator());
 
-        RuleFor(q => q.PageSize)
-            .NotEmpty()
-            .GreaterThanOrEqualTo(default(int));
-
-        RuleFor(q => q.SortOrder)
-            .NotEmpty();
-
-        RuleFor(q => q.SortPropertyName)
-            .NotEmpty();
+        RuleFor(c => c.SortPropertyName)
+            .Must(entityPropertyValidator.IsEntityPropertyValid<User>);
     }
 }

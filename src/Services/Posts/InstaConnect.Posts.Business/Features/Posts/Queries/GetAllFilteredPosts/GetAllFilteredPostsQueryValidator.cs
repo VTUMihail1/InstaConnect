@@ -1,24 +1,33 @@
 ﻿using FluentValidation;
+using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Validators;
 
 namespace InstaConnect.Posts.Business.Features.Posts.Queries.GetAllFilteredPosts;
 
 public class GetAllFilteredPostsQueryValidator : AbstractValidator<GetAllFilteredPostsQuery>
 {
-    public GetAllFilteredPostsQueryValidator()
+    public GetAllFilteredPostsQueryValidator(IEntityPropertyValidator entityPropertyValidator)
     {
-        RuleFor(q => q.Page)
-            .NotEmpty()
-            .GreaterThanOrEqualTo(default(int));
+        Include(new CollectionModelValidator());
 
-        RuleFor(q => q.PageSize)
-            .NotEmpty()
-            .GreaterThanOrEqualTo(default(int));
+        RuleFor(c => c.UserId)
+            .MinimumLength(PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH)
+            .MaximumLength(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH)
+            .When(q => !string.IsNullOrEmpty(q.UserId));
 
-        RuleFor(q => q.SortOrder)
-            .NotEmpty()
-            .IsInEnum();
+        RuleFor(c => c.UserName)
+            .MinimumLength(PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH)
+            .MaximumLength(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH)
+            .When(q => !string.IsNullOrEmpty(q.UserName));
 
-        RuleFor(q => q.SortPropertyName)
-            .NotEmpty();
+        RuleFor(c => c.Title)
+            .MinimumLength(PostBusinessConfigurations.TITLE_MIN_LENGTH)
+            .MaximumLength(PostBusinessConfigurations.TITLE_MAX_LENGTH)
+            .When(q => !string.IsNullOrEmpty(q.Title));
+
+        RuleFor(c => c.SortPropertyName)
+            .Must(entityPropertyValidator.IsEntityPropertyValid<PostCommentLike>);
     }
 }
