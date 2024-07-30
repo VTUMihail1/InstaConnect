@@ -34,10 +34,10 @@ public static class QueryableExtensions
     {
         var totalCount = await queryable.CountAsync(cancellationToken);
         var items = await queryable
-            .Skip((page - 1) * pageSize * pageSize)
+            .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
-        return new PaginationList<T>(items, totalCount, page, pageSize);
+        return new PaginationList<T>(items, page, pageSize, totalCount);
     }
 }

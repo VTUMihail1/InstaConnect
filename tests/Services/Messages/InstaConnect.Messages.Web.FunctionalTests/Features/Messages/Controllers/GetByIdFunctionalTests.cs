@@ -63,7 +63,7 @@ public class GetByIdFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(existingMessageId, CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(existingMessageId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -84,7 +84,7 @@ public class GetByIdFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetIdRoute(Faker.Random.AlphaNumeric(length)), CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(existingMessageId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);

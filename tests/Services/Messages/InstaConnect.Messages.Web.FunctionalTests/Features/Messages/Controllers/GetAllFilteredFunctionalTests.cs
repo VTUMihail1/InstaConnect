@@ -281,7 +281,7 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
         // Assert
         messagePaginationCollectionResponse
             .Should()
-            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.Any(m =>
+            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
                                                                m.Content == ValidContent &&
                                                                m.SenderId == existingSenderId &&
@@ -325,7 +325,7 @@ public class GetAllFilteredFunctionalTests : BaseMessageFunctionalTest
         // Assert
         messagePaginationCollectionResponse
             .Should()
-            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.Any(m =>
+            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
                                                                m.Content == ValidContent &&
                                                                m.SenderId == existingSenderId &&

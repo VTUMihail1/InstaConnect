@@ -109,7 +109,7 @@ public class UserCreatedEventConsumerUnitTests : BaseMessageUnitTest
         await _userCreatedEventConsumer.Consume(_userCreatedEventConsumeContext);
 
         // Assert
-        await UserReadRepository
+        await UserWriteRepository
             .Received(1)
             .GetByIdAsync(InvalidUserId, CancellationToken);
     }

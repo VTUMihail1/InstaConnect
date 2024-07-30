@@ -35,6 +35,17 @@ public abstract class BaseMessageIntegrationTest : BaseSharedIntegrationTest, IC
         }
     }
 
+    protected IUserWriteRepository UserWriteRepository
+    {
+        get
+        {
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var userWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+
+            return userWriteRepository;
+        }
+    }
+
     protected IMessageWriteRepository MessageWriteRepository
     {
         get

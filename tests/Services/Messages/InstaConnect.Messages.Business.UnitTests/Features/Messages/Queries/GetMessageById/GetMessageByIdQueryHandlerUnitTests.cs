@@ -85,10 +85,10 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
         response
             .Should()
             .Match<MessageQueryViewModel>(m => m.Id == ValidId &&
-                                          m.SenderId == ValidCurrentUserId &&
+                                          m.SenderId == ValidMessageCurrentUserId &&
                                           m.SenderName == ValidUserName &&
                                           m.SenderProfileImage == ValidUserProfileImage &&
-                                          m.ReceiverId == ValidReceiverId &&
+                                          m.ReceiverId == ValidMessageReceiverId &&
                                           m.ReceiverName == ValidUserName &&
                                           m.ReceiverProfileImage == ValidUserProfileImage);
     }

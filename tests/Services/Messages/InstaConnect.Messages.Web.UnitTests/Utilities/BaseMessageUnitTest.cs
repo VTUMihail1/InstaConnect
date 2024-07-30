@@ -12,8 +12,8 @@ using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Models.Users;
 using InstaConnect.Shared.Web.UnitTests.Utilities;
 using NSubstitute;
-using MessagesCommandProfile = InstaConnect.Messages.Business.Features.Messages.Mappings.MessagesCommandProfile;
-using MessagesQueryProfile = InstaConnect.Messages.Business.Features.Messages.Mappings.MessagesQueryProfile;
+using MessagesCommandProfile = InstaConnect.Messages.Web.Features.Messages.Mappings.MessagesCommandProfile;
+using MessagesQueryProfile = InstaConnect.Messages.Web.Features.Messages.Mappings.MessagesQueryProfile;
 
 namespace InstaConnect.Messages.Web.UnitTests.Utilities;
 
@@ -58,9 +58,9 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
         var existingCurrentUserModel = new CurrentUserModel(ValidCurrentUserId, ValidUserName);
         var existingMessagePaginationCollectionModel = new MessagePaginationCollectionModel(
             [existingMessageQueryViewModel],
-            SharedBusinessConfigurations.PAGE_MIN_VALUE,
-            SharedBusinessConfigurations.PAGE_SIZE_MAX_VALUE,
-            SharedBusinessConfigurations.PAGE_SIZE_MIN_VALUE,
+            ValidPageValue,
+            ValidPageSizeValue,
+            ValidTotalCountValue,
             false,
             false);
 

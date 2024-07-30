@@ -2,6 +2,7 @@
 using InstaConnect.Messages.Business.Features.Messages.Abstractions;
 using InstaConnect.Messages.Business.Features.Messages.Mappings;
 using InstaConnect.Messages.Business.Features.Messages.Utilities;
+using InstaConnect.Messages.Business.Features.Users.Mappings;
 using InstaConnect.Messages.Data.Features.Messages.Abstractions;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Filters;
@@ -49,6 +50,7 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
                 {
                     cfg.AddProfile<MessagesQueryProfile>();
                     cfg.AddProfile<MessagesCommandProfile>();
+                    cfg.AddProfile<UserConsumerProfile>();
                 }))),
         new EntityPropertyValidator())
     {
@@ -123,8 +125,8 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
 
         var existingMessage = new Message(
             ValidContent,
-            ValidCurrentUserId,
-            ValidReceiverId)
+            ValidMessageCurrentUserId,
+            ValidMessageReceiverId)
         {
             Id = ValidId,
             Sender = existingMessageSender,
@@ -142,21 +144,31 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
             CancellationToken)
             .Returns(existingMessage);
 
-        UserReadRepository.GetByIdAsync(
-            ValidCurrentUserId,
-            CancellationToken)
-            .Returns(existingSender);
-
-        UserReadRepository.GetByIdAsync(
-            ValidReceiverId,
-            CancellationToken)
-            .Returns(existingReceiver);
-
         MessageWriteRepository.GetByIdAsync(
             ValidId,
             CancellationToken)
             .Returns(existingMessage);
 
+        UserReadRepository.GetByIdAsync(
+            ValidCurrentUserId,
+            CancellationToken)
+            .Returns(existingSender);
+
+        UserReadRepository.GetByIdAsync(
+            ValidReceiverId,
+            CancellationToken)
+            .Returns(existingReceiver);
+
+        UserReadRepository.GetByIdAsync(
+            ValidMessageCurrentUserId,
+            CancellationToken)
+            .Returns(existingMessageSender);
+
+        UserReadRepository.GetByIdAsync(
+            ValidMessageReceiverId,
+            CancellationToken)
+            .Returns(existingMessageReceiver);
+
         UserWriteRepository.GetByIdAsync(
             ValidCurrentUserId,
             CancellationToken)
@@ -166,6 +178,16 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
             ValidReceiverId,
             CancellationToken)
             .Returns(existingReceiver);
+
+        UserWriteRepository.GetByIdAsync(
+            ValidMessageCurrentUserId,
+            CancellationToken)
+            .Returns(existingMessageSender);
+
+        UserWriteRepository.GetByIdAsync(
+            ValidMessageReceiverId,
+            CancellationToken)
+            .Returns(existingMessageReceiver);
 
         MessageReadRepository
             .GetAllFilteredAsync(Arg.Is<MessageFilteredCollectionReadQuery>(m =>
