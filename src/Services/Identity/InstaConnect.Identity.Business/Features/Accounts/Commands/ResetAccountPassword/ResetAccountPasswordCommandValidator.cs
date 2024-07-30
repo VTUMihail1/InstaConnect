@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using InstaConnect.Follows.Business.Features.Follows.Utilities;
 
 namespace InstaConnect.Identity.Business.Features.Accounts.Commands.ResetAccountPassword;
 public class ResetAccountPasswordCommandValidator : AbstractValidator<ResetAccountPasswordCommand>
@@ -6,13 +7,19 @@ public class ResetAccountPasswordCommandValidator : AbstractValidator<ResetAccou
     public ResetAccountPasswordCommandValidator()
     {
         RuleFor(c => c.UserId)
-            .NotEmpty();
+            .NotEmpty()
+            .MinimumLength(AccountBusinessConfigurations.ID_MIN_LENGTH)
+            .MaximumLength(AccountBusinessConfigurations.ID_MAX_LENGTH);
 
         RuleFor(c => c.Token)
-            .NotEmpty();
+            .NotEmpty()
+            .MinimumLength(AccountBusinessConfigurations.TOKEN_MIN_LENGTH)
+            .MaximumLength(AccountBusinessConfigurations.TOKEN_MAX_LENGTH);
 
         RuleFor(c => c.Password)
-            .NotEmpty();
+            .NotEmpty()
+            .MinimumLength(AccountBusinessConfigurations.PASSWORD_MIN_LENGTH)
+            .MaximumLength(AccountBusinessConfigurations.PASSWORD_MAX_LENGTH);
 
         RuleFor(c => c.ConfirmPassword)
             .NotEmpty()

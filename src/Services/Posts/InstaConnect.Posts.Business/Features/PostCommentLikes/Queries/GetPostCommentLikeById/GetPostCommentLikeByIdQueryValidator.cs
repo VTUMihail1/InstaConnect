@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using InstaConnect.Follows.Business.Features.Follows.Utilities;
 
 namespace InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
 
@@ -7,6 +8,9 @@ public class GetPostCommentLikeByIdQueryValidator : AbstractValidator<GetPostCom
     public GetPostCommentLikeByIdQueryValidator()
     {
         RuleFor(q => q.Id)
-            .NotEmpty();
+            .NotEmpty()
+            .MinimumLength(PostCommentLikeBusinessConfigurations.ID_MIN_LENGTH)
+            .MaximumLength(PostCommentLikeBusinessConfigurations.ID_MAX_LENGTH);
+        ;
     }
 }

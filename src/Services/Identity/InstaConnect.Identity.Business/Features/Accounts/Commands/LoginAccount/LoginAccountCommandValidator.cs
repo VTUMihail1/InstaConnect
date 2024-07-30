@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using InstaConnect.Follows.Business.Features.Follows.Utilities;
 
 namespace InstaConnect.Identity.Business.Features.Accounts.Commands.LoginAccount;
 public class LoginAccountCommandValidator : AbstractValidator<LoginAccountCommand>
@@ -6,9 +7,13 @@ public class LoginAccountCommandValidator : AbstractValidator<LoginAccountComman
     public LoginAccountCommandValidator()
     {
         RuleFor(c => c.Email)
-            .NotEmpty();
+            .NotEmpty()
+            .MinimumLength(AccountBusinessConfigurations.EMAIL_MIN_LENGTH)
+            .MaximumLength(AccountBusinessConfigurations.EMAIL_MAX_LENGTH);
 
         RuleFor(c => c.Password)
-            .NotEmpty();
+            .NotEmpty()
+            .MinimumLength(AccountBusinessConfigurations.PASSWORD_MIN_LENGTH)
+            .MaximumLength(AccountBusinessConfigurations.PASSWORD_MAX_LENGTH);
     }
 }

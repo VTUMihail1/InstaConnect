@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using InstaConnect.Follows.Business.Features.Follows.Utilities;
 
 namespace InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.AddPostCommentLike;
 public class AddPostCommentLikeCommandValidator : AbstractValidator<AddPostCommentLikeCommand>
@@ -6,9 +7,13 @@ public class AddPostCommentLikeCommandValidator : AbstractValidator<AddPostComme
     public AddPostCommentLikeCommandValidator()
     {
         RuleFor(c => c.CurrentUserId)
-            .NotEmpty();
+            .NotEmpty()
+            .MinimumLength(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH)
+            .MaximumLength(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH);
 
         RuleFor(c => c.PostCommentId)
-            .NotEmpty();
+            .NotEmpty()
+            .MinimumLength(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MIN_LENGTH)
+            .MaximumLength(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MAX_LENGTH);
     }
 }

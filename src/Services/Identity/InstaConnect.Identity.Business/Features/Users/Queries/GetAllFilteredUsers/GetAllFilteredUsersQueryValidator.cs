@@ -1,24 +1,36 @@
 ﻿using FluentValidation;
+using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
+using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Business.Validators;
 
 namespace InstaConnect.Identity.Business.Features.Users.Queries.GetAllFilteredUsers;
 
 public class GetAllFilteredUsersQueryValidator : AbstractValidator<GetAllFilteredUsersQuery>
 {
-    public GetAllFilteredUsersQueryValidator()
+    public GetAllFilteredUsersQueryValidator(IEntityPropertyValidator entityPropertyValidator)
     {
-        RuleFor(q => q.Page)
-            .NotEmpty()
-            .GreaterThanOrEqualTo(default(int));
+        Include(new CollectionModelValidator());
 
-        RuleFor(q => q.PageSize)
+        RuleFor(c => c.UserName)
             .NotEmpty()
-            .GreaterThanOrEqualTo(default(int));
+            .MinimumLength(AccountBusinessConfigurations.USER_NAME_MIN_LENGTH)
+            .MaximumLength(AccountBusinessConfigurations.USER_NAME_MAX_LENGTH)
+            .When(q => !string.IsNullOrEmpty(q.UserName));
 
-        RuleFor(q => q.SortOrder)
+        RuleFor(c => c.FirstName)
             .NotEmpty()
-            .IsInEnum();
+            .MinimumLength(AccountBusinessConfigurations.FIRST_NAME_MIN_LENGTH)
+            .MaximumLength(AccountBusinessConfigurations.FIRST_NAME_MAX_LENGTH)
+            .When(q => !string.IsNullOrEmpty(q.FirstName));
+
+        RuleFor(c => c.LastName)
+            .NotEmpty()
+            .MinimumLength(AccountBusinessConfigurations.LAST_NAME_MIN_LENGTH)
+            .MaximumLength(AccountBusinessConfigurations.LAST_NAME_MAX_LENGTH)
+            .When(q => !string.IsNullOrEmpty(q.LastName));
 
         RuleFor(q => q.SortPropertyName)
-            .NotEmpty();
+            .Must(entityPropertyValidator.IsEntityPropertyValid<User>);
     }
 }
