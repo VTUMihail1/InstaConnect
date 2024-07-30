@@ -21,7 +21,6 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
-            .AddCaching(configuration)
             .AddUnitOfWork<FollowsContext>();
 
         return serviceCollection;

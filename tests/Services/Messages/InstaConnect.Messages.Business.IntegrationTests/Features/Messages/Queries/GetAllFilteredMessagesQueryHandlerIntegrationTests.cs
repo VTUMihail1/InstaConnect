@@ -245,7 +245,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Assert
         response
             .Should()
-            .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
+            .Match<MessagePaginationCollectionModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
                                                                     m.SenderName == ValidUserName &&
                                                                     m.SenderProfileImage == ValidUserProfileImage &&
@@ -282,7 +282,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Assert
         response
             .Should()
-            .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
+            .Match<MessagePaginationCollectionModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
                                                                     m.SenderName == ValidUserName &&
                                                                     m.SenderProfileImage == ValidUserProfileImage &&
@@ -319,7 +319,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Assert
         response
             .Should()
-            .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
+            .Match<MessagePaginationCollectionModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
                                                                     m.SenderName == ValidUserName &&
                                                                     m.SenderProfileImage == ValidUserProfileImage &&
@@ -356,7 +356,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Assert
         response
             .Should()
-            .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
+            .Match<MessagePaginationCollectionModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
                                                                     m.SenderName == ValidUserName &&
                                                                     m.SenderProfileImage == ValidUserProfileImage &&
@@ -393,7 +393,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Assert
         response
             .Should()
-            .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == existingMessageId &&
+            .Match<MessagePaginationCollectionModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
                                                                     m.SenderId == existingSenderId &&
                                                                     m.SenderName == ValidUserName &&
                                                                     m.SenderProfileImage == ValidUserProfileImage &&

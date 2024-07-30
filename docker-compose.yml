@@ -77,6 +77,7 @@ services:
     environment:
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.users;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
       CorsOptions__AllowedOrigins: gateway-svc:5100
+      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest
@@ -106,7 +107,6 @@ services:
       dockerfile: src/Services/Posts/InstaConnect.Posts.Web/Dockerfile
     environment:
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.posts;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
-      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
       CorsOptions__AllowedOrigins: gateway-svc:5100
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
@@ -163,7 +163,6 @@ services:
       dockerfile: src/Services/Follows/InstaConnect.Follows.Web/Dockerfile
     environment:
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.follows;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
-      CacheOptions__ConnectionString: redis://guest:guest@redis:6379
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest

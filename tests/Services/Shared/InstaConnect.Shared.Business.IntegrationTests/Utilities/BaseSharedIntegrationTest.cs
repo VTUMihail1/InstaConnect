@@ -32,9 +32,6 @@ public class BaseSharedIntegrationTest
         ValidPageSizeValue = 20;
         ValidTotalCountValue = 1;
 
-        ValidPageValue = GetAverageNumber(SharedBusinessConfigurations.PAGE_MAX_VALUE, SharedBusinessConfigurations.PAGE_MIN_VALUE);
-        ValidPageSizeValue = GetAverageNumber(SharedBusinessConfigurations.PAGE_SIZE_MAX_VALUE, SharedBusinessConfigurations.PAGE_SIZE_MIN_VALUE);
-
         ValidSortPropertyName = "CreatedAt";
         InvalidSortPropertyName = "CreatedAtt";
 

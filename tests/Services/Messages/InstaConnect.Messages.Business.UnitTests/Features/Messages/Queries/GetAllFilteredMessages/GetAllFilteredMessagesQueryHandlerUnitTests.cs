@@ -1,7 +1,9 @@
-﻿using FluentAssertions;
+﻿using System.Linq.Expressions;
+using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllFilteredMessages;
 using InstaConnect.Messages.Business.UnitTests.Utilities;
+using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Filters;
 using NSubstitute;
 
@@ -23,13 +25,18 @@ public class GetAllFilteredMessagesQueryHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetAllFilteredMessagesQuery(
-            ValidCurrentUserId,
-            ValidReceiverId,
+            ValidMessageCurrentUserId,
+            ValidMessageReceiverId,
             ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
             ValidPageSizeValue);
+
+        Expression<Func<Message, bool>> expectedExpression = m =>
+                                       (string.IsNullOrEmpty(ValidMessageCurrentUserId) || m.SenderId == ValidMessageCurrentUserId) &&
+                                       (string.IsNullOrEmpty(ValidMessageReceiverId) || m.ReceiverId == ValidMessageReceiverId) &&
+                                       (string.IsNullOrEmpty(ValidUserName) || m.Receiver!.UserName == ValidUserName);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -38,6 +45,7 @@ public class GetAllFilteredMessagesQueryHandlerUnitTests : BaseMessageUnitTest
         await MessageReadRepository
             .Received(1)
             .GetAllFilteredAsync(Arg.Is<MessageFilteredCollectionReadQuery>(m =>
+                                                                        m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&
@@ -49,8 +57,8 @@ public class GetAllFilteredMessagesQueryHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetAllFilteredMessagesQuery(
-            ValidCurrentUserId,
-            ValidReceiverId,
+            ValidMessageCurrentUserId,
+            ValidMessageReceiverId,
             ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -63,11 +71,11 @@ public class GetAllFilteredMessagesQueryHandlerUnitTests : BaseMessageUnitTest
         // Assert
         response
             .Should()
-            .Match<MessagePaginationCollectionModel>(mc => mc.Items.Any(m => m.Id == ValidId &&
-                                                           m.SenderId == ValidCurrentUserId &&
+            .Match<MessagePaginationCollectionModel>(mc => mc.Items.All(m => m.Id == ValidId &&
+                                                           m.SenderId == ValidMessageCurrentUserId &&
                                                            m.SenderName == ValidUserName &&
                                                            m.SenderProfileImage == ValidUserProfileImage &&
-                                                           m.ReceiverId == ValidReceiverId &&
+                                                           m.ReceiverId == ValidMessageReceiverId &&
                                                            m.ReceiverName == ValidUserName &&
                                                            m.ReceiverProfileImage == ValidUserProfileImage &&
                                                            m.Content == ValidContent) &&

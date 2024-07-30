@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Reflection;
+using System.Security.Claims;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Asp.Versioning;
@@ -151,6 +152,10 @@ public static class ServiceCollectionExtensions
                             Array.Empty<string>()
                         }
                     });
+
+                    //var xmlfile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                    //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlfile);
+                    //c.IncludeXmlComments(xmlPath);
                 });
 
         return serviceCollection;

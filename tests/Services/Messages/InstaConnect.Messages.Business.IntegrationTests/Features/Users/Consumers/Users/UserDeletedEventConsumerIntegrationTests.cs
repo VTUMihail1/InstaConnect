@@ -12,13 +12,13 @@ namespace InstaConnect.Messages.Business.IntegrationTests.Features.Users.Consume
 public class UserDeletedEventConsumerIntegrationTests : BaseMessageIntegrationTest
 {
     private readonly UserDeletedEventConsumer _userDeletedEventConsumer;
-    private readonly ConsumeContext<UserDeletedEvent> _userDeletedEventConsumerContext;
+    private readonly ConsumeContext<UserDeletedEvent> _userDeletedEventConsumeContext;
 
     public UserDeletedEventConsumerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
         _userDeletedEventConsumer = ServiceScope.ServiceProvider.GetRequiredService<UserDeletedEventConsumer>();
 
-        _userDeletedEventConsumerContext = Substitute.For<ConsumeContext<UserDeletedEvent>>();
+        _userDeletedEventConsumeContext = Substitute.For<ConsumeContext<UserDeletedEvent>>();
     }
 
     [Fact]
@@ -28,16 +28,16 @@ public class UserDeletedEventConsumerIntegrationTests : BaseMessageIntegrationTe
         var existingUserId = await CreateUserAsync(CancellationToken);
         var userDeletedEvent = new UserDeletedEvent(InvalidUserId);
 
-        _userDeletedEventConsumerContext.Message.Returns(userDeletedEvent);
+        _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 
         // Act
-        await _userDeletedEventConsumer.Consume(_userDeletedEventConsumerContext);
-        var existingUser = await UserReadRepository.GetByIdAsync(existingUserId, CancellationToken);
+        await _userDeletedEventConsumer.Consume(_userDeletedEventConsumeContext);
+        var existingUser = await UserWriteRepository.GetByIdAsync(existingUserId, CancellationToken);
 
         // Assert
         existingUser
             .Should()
-            .Match<User>(m => m.Id == InvalidUserId &&
+            .Match<User>(m => m.Id == existingUserId &&
                               m.FirstName == ValidUserFirstName &&
                               m.LastName == ValidUserLastName &&
                               m.UserName == ValidUserName &&
@@ -52,11 +52,11 @@ public class UserDeletedEventConsumerIntegrationTests : BaseMessageIntegrationTe
         var existingUserId = await CreateUserAsync(CancellationToken);
         var userDeletedEvent = new UserDeletedEvent(existingUserId);
 
-        _userDeletedEventConsumerContext.Message.Returns(userDeletedEvent);
+        _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 
         // Act
-        await _userDeletedEventConsumer.Consume(_userDeletedEventConsumerContext);
-        var existingUser = await UserReadRepository.GetByIdAsync(existingUserId, CancellationToken);
+        await _userDeletedEventConsumer.Consume(_userDeletedEventConsumeContext);
+        var existingUser = await UserWriteRepository.GetByIdAsync(existingUserId, CancellationToken);
 
         // Assert
         existingUser

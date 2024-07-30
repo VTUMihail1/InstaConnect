@@ -134,7 +134,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseMessageUnitTest
         // Assert
         UserWriteRepository
             .Received(1)
-            .Update(Arg.Is<User>(m => m.Id == ValidId &&
+            .Update(Arg.Is<User>(m => m.Id == ValidCurrentUserId &&
                                    m.FirstName == ValidUserFirstName &&
                                    m.LastName == ValidUserLastName &&
                                    m.UserName == ValidUserName &&

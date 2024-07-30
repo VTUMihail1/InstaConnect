@@ -13,13 +13,14 @@ internal class MessagesQueryProfile : Profile
     public MessagesQueryProfile()
     {
         CreateMap<(CurrentUserModel, GetAllFilteredMessagesRequest), GetAllFilteredMessagesQuery>()
-            .ForMember(dest => dest.CurrentUserId, opt => opt.MapFrom(src => src.Item1.Id))
-            .ForMember(dest => dest.ReceiverId, opt => opt.MapFrom(src => src.Item2.ReceiverId))
-            .ForMember(dest => dest.ReceiverName, opt => opt.MapFrom(src => src.Item2.ReceiverName))
-            .ForMember(dest => dest.Page, opt => opt.MapFrom(src => src.Item2.Page))
-            .ForMember(dest => dest.PageSize, opt => opt.MapFrom(src => src.Item2.PageSize))
-            .ForMember(dest => dest.SortOrder, opt => opt.MapFrom(src => src.Item2.SortOrder))
-            .ForMember(dest => dest.SortPropertyName, opt => opt.MapFrom(src => src.Item2.SortPropertyName));
+            .ConstructUsing(src => new(
+                src.Item1.Id,
+                src.Item2.ReceiverId,
+                src.Item2.ReceiverName,
+                src.Item2.SortOrder,
+                src.Item2.SortPropertyName,
+                src.Item2.Page,
+                src.Item2.PageSize));
 
         CreateMap<(CurrentUserModel, GetMessageByIdRequest), GetMessageByIdQuery>()
             .ConstructUsing(src => new(

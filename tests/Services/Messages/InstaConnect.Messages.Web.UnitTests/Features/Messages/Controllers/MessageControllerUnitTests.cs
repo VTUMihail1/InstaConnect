@@ -74,7 +74,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
             .Which
             .Value
             .Should()
-            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.Any(m =>
+            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
                                                                  m.Id == ValidId &&
                                                                  m.SenderId == ValidCurrentUserId &&
                                                                  m.SenderName == ValidUserName &&

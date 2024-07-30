@@ -38,17 +38,17 @@ public class UserCreatedEventConsumerIntegrationTests : BaseMessageIntegrationTe
 
         // Act
         await _userCreatedEventConsumer.Consume(_userCreatedEventConsumeContext);
-        var existingUser = await UserReadRepository.GetByIdAsync(existingUserId, CancellationToken);
+        var existingUser = await UserWriteRepository.GetByIdAsync(existingUserId, CancellationToken);
 
         // Assert
         existingUser
             .Should()
             .Match<User>(m => m.Id == existingUserId &&
                               m.FirstName == ValidUserFirstName &&
-                              m.LastName == ValidUserFirstName &&
-                              m.UserName == ValidUserFirstName &&
-                              m.Email == ValidUserFirstName &&
-                              m.ProfileImage == ValidUserFirstName);
+                              m.LastName == ValidUserLastName &&
+                              m.UserName == ValidUserName &&
+                              m.Email == ValidUserEmail &&
+                              m.ProfileImage == ValidUserProfileImage);
     }
 
     [Fact]
@@ -68,7 +68,7 @@ public class UserCreatedEventConsumerIntegrationTests : BaseMessageIntegrationTe
 
         // Act
         await _userCreatedEventConsumer.Consume(_userCreatedEventConsumeContext);
-        var existingUser = await UserReadRepository.GetByIdAsync(InvalidId, CancellationToken);
+        var existingUser = await UserWriteRepository.GetByIdAsync(InvalidUserId, CancellationToken);
 
         // Assert
         existingUser
