@@ -11,4 +11,19 @@
     <ProjectReference Include="..\InstaConnect.Posts.Data\InstaConnect.Posts.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Posts.Business.UnitTests</_Parameter1>
+  	</AssemblyAttribute>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Posts.Business.IntegrationTests</_Parameter1>
+  	</AssemblyAttribute>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Posts.Web.UnitTests</_Parameter1>
+  	</AssemblyAttribute>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+	  <_Parameter1>InstaConnect.Posts.Web.FunctionalTests</_Parameter1>
+  	</AssemblyAttribute>
+  </ItemGroup>
+
 </Project>
