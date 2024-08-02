@@ -39,7 +39,7 @@ public class FollowController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllAsync(
+    public async Task<ActionResult<FollowPaginationQueryResponse>> GetAllAsync(
         GetAllFollowsRequest request,
         CancellationToken cancellationToken)
     {
@@ -54,7 +54,7 @@ public class FollowController : ControllerBase
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllFilteredAsync(
+    public async Task<ActionResult<FollowPaginationQueryResponse>> GetAllFilteredAsync(
         GetAllFilteredFollowsRequest request,
         CancellationToken cancellationToken)
     {
@@ -69,7 +69,7 @@ public class FollowController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetByIdAsync(
+    public async Task<ActionResult<FollowQueryResponse>> GetByIdAsync(
         GetFollowByIdRequest request,
         CancellationToken cancellationToken)
     {
@@ -86,7 +86,7 @@ public class FollowController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddAsync(
+    public async Task<ActionResult<FollowCommandResponse>> AddAsync(
         AddFollowRequest request,
         CancellationToken cancellationToken)
     {
@@ -104,7 +104,7 @@ public class FollowController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteAsync(DeleteFollowRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult> DeleteAsync(DeleteFollowRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _instaConnectMapper.Map<DeleteFollowCommand>((currentUser, request));

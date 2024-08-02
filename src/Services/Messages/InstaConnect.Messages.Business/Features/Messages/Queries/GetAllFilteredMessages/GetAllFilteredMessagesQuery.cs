@@ -12,4 +12,4 @@ public record GetAllFilteredMessagesQuery(
     SortOrder SortOrder,
     string SortPropertyName,
     int Page,
-    int PageSize) : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQuery<MessagePaginationCollectionModel>;
+    int PageSize) : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQuery<MessagePaginationQueryViewModel>;

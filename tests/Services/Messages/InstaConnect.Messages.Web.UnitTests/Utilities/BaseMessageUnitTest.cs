@@ -56,7 +56,7 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
 
         var existingMessageCommandViewModel = new MessageCommandViewModel(ValidId);
         var existingCurrentUserModel = new CurrentUserModel(ValidCurrentUserId, ValidUserName);
-        var existingMessagePaginationCollectionModel = new MessagePaginationCollectionModel(
+        var existingMessagePaginationCollectionModel = new MessagePaginationQueryViewModel(
             [existingMessageQueryViewModel],
             ValidPageValue,
             ValidPageSizeValue,

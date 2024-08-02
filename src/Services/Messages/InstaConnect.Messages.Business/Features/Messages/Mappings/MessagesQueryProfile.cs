@@ -11,7 +11,7 @@ internal class MessagesQueryProfile : Profile
 {
     public MessagesQueryProfile()
     {
-        CreateMap<PaginationList<Message>, MessagePaginationCollectionModel>();
+        CreateMap<PaginationList<Message>, MessagePaginationQueryViewModel>();
 
         CreateMap<GetAllFilteredMessagesQuery, MessageFilteredCollectionReadQuery>();
 

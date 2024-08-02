@@ -25,6 +25,13 @@ internal class UserCreatedEventConsumer : IConsumer<UserCreatedEvent>
 
     public async Task Consume(ConsumeContext<UserCreatedEvent> context)
     {
+        var existingUser = await _userWriteRepository.GetByIdAsync(context.Message.Id, context.CancellationToken);
+
+        if (existingUser != null)
+        {
+            return;
+        }
+
         var user = _instaConnectMapper.Map<User>(context.Message);
         _userWriteRepository.Add(user);
 

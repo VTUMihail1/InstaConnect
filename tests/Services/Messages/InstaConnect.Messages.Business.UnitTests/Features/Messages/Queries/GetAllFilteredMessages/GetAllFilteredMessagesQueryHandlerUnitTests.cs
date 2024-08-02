@@ -71,7 +71,7 @@ public class GetAllFilteredMessagesQueryHandlerUnitTests : BaseMessageUnitTest
         // Assert
         response
             .Should()
-            .Match<MessagePaginationCollectionModel>(mc => mc.Items.All(m => m.Id == ValidId &&
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
                                                            m.SenderId == ValidMessageCurrentUserId &&
                                                            m.SenderName == ValidUserName &&
                                                            m.SenderProfileImage == ValidUserProfileImage &&
