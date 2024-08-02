@@ -2,6 +2,7 @@
 using InstaConnect.Follows.Data.Features.Follows.Abstractions;
 using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
 using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 
@@ -22,7 +23,7 @@ internal class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQuery, Fol
         GetAllFollowsQuery request,
         CancellationToken cancellationToken)
     {
-        var collectionQuery = _instaConnectMapper.Map<FollowCollectionReadQuery>(request);
+        var collectionQuery = _instaConnectMapper.Map<CollectionReadQuery>(request);
 
         var follows = await _followReadRepository.GetAllAsync(collectionQuery, cancellationToken);
         var response = _instaConnectMapper.Map<FollowPaginationQueryViewModel>(follows);

@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Follows.Business.Features.Follows.Extensions;
-using InstaConnect.Follows.Web.Features.Extensions;
+using InstaConnect.Follows.Web.Features.Follows.Extensions;
 using InstaConnect.Shared.Web.Extensions;
 
 namespace InstaConnect.Follows.Web.Extensions;

@@ -35,3 +35,7 @@ app.MapControllers();
 app.UseExceptionHandler();
 
 app.Run();
+
+
+// Utils for testing
+public partial class Program { }
