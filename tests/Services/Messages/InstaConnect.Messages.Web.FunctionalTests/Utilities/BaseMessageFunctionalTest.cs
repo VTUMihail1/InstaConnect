@@ -1,15 +1,17 @@
 ﻿using InstaConnect.Messages.Business.Features.Messages.Utilities;
+using InstaConnect.Messages.Data;
 using InstaConnect.Messages.Data.Features.Messages.Abstractions;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Data.Features.Users.Abstract;
 using InstaConnect.Messages.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Data.Abstractions;
 using InstaConnect.Shared.Web.FunctionalTests.Utilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Messages.Web.FunctionalTests.Utilities;
 
-public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>
+public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {
     private const string API_ROUTE = "api/v1/messages";
 
@@ -100,5 +102,30 @@ public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, ICla
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user.Id;
+    }
+
+    public async Task InitializeAsync()
+    {
+        await EnsureDatabaseIsEmpty();
+    }
+
+    public async Task DisposeAsync()
+    {
+        await EnsureDatabaseIsEmpty();
+    }
+
+    private async Task EnsureDatabaseIsEmpty()
+    {
+        var dbContext = ServiceScope.ServiceProvider.GetRequiredService<MessagesContext>();
+
+        if (dbContext.Messages.Any())
+        {
+            await dbContext.Messages.ExecuteDeleteAsync(CancellationToken);
+        }
+
+        if (dbContext.Users.Any())
+        {
+            await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
+        }
     }
 }

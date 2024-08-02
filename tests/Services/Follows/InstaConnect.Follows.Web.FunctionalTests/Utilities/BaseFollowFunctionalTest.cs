@@ -1,15 +1,17 @@
 ﻿using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Follows.Data;
 using InstaConnect.Follows.Data.Features.Follows.Abstractions;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Data.Features.Users.Abstractions;
 using InstaConnect.Follows.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Data.Abstractions;
 using InstaConnect.Shared.Web.FunctionalTests.Utilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Follows.Web.FunctionalTests.Utilities;
 
-public abstract class BaseFollowFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>
+public abstract class BaseFollowFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {
     private const string API_ROUTE = "api/v1/follows";
 
@@ -93,5 +95,30 @@ public abstract class BaseFollowFunctionalTest : BaseSharedFunctionalTest, IClas
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user.Id;
+    }
+
+    public async Task InitializeAsync()
+    {
+        await EnsureDatabaseIsEmpty();
+    }
+
+    public async Task DisposeAsync()
+    {
+        await EnsureDatabaseIsEmpty();
+    }
+
+    private async Task EnsureDatabaseIsEmpty()
+    {
+        var dbContext = ServiceScope.ServiceProvider.GetRequiredService<FollowsContext>();
+
+        if (dbContext.Follows.Any())
+        {
+            await dbContext.Follows.ExecuteDeleteAsync(CancellationToken);
+        }
+
+        if (dbContext.Users.Any())
+        {
+            await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
+        }
     }
 }

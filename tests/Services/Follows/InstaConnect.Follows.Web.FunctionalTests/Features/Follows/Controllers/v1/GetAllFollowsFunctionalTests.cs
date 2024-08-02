@@ -2,10 +2,13 @@
 using System.Net.Http.Json;
 using Bogus;
 using FluentAssertions;
+using InstaConnect.Follows.Data;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Web.FunctionalTests.Utilities;
 using InstaConnect.Shared.Business.Utilities;
 using InstaConnect.Shared.Data.Models.Enums;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Controllers.v1;
 
@@ -147,7 +150,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         // Assert
         followPaginationQueryResponse
             .Should()
-            .Match<FollowPaginationQueryResponse>(mc => mc.Items.Any(m =>
+            .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
                                                                m.FollowerName == ValidUserName &&
@@ -157,7 +160,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
                                                                m.FollowingProfileImage == ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
-                                                               !mc.HasPreviousPage);
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
     }
 
     [Fact]
@@ -178,7 +183,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         // Assert
         followPaginationQueryResponse
             .Should()
-            .Match<FollowPaginationQueryResponse>(mc => mc.Items.Any(m =>
+            .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
                                                                m.FollowerName == ValidUserName &&
@@ -188,7 +193,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
                                                                m.FollowingProfileImage == ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
-                                                               !mc.HasPreviousPage);
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
     }
 
     private string GetApiRoute(SortOrder sortOrder, string sortPropertyName, int page, int pageSize)
