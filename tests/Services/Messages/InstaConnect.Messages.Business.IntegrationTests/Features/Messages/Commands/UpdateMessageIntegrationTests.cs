@@ -212,4 +212,30 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
                                  m.ReceiverId == existingReceiverId &&
                                  m.Content == ValidUpdateContent);
     }
+
+    [Fact]
+    public async Task SendAsync_ShouldUpdateMessage_WhenMessageIsValidAndIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var command = new UpdateMessageCommand(
+            GetNonCaseMatchingString(existingMessageId),
+            ValidUpdateContent,
+            existingSenderId
+        );
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var message = await MessageWriteRepository.GetByIdAsync(existingMessageId, CancellationToken);
+
+        // Assert
+        message
+            .Should()
+            .Match<Message>(m => m.Id == existingMessageId &&
+                                 m.SenderId == existingSenderId &&
+                                 m.ReceiverId == existingReceiverId &&
+                                 m.Content == ValidUpdateContent);
+    }
 }

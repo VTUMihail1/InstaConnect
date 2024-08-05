@@ -80,4 +80,34 @@ public class UserCreatedEventConsumerIntegrationTests : BaseMessageIntegrationTe
                               m.Email == ValidUserEmail &&
                               m.ProfileImage == ValidUserProfileImage);
     }
+
+    [Fact]
+    public async Task Consume_ShouldCreateUser_WhenUserCreatedEventIsValidAndIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingUserId = await CreateUserAsync(CancellationToken);
+        var userCreatedEvent = new UserCreatedEvent(
+            InvalidUserId,
+            ValidAddUserName,
+            ValidUserEmail,
+            ValidUserFirstName,
+            ValidUserLastName,
+            ValidUserProfileImage);
+
+        _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
+
+        // Act
+        await _userCreatedEventConsumer.Consume(_userCreatedEventConsumeContext);
+        var existingUser = await UserWriteRepository.GetByIdAsync(InvalidUserId, CancellationToken);
+
+        // Assert
+        existingUser
+            .Should()
+            .Match<User>(m => m.Id == InvalidUserId &&
+                              m.FirstName == ValidUserFirstName &&
+                              m.LastName == ValidUserLastName &&
+                              m.UserName == ValidAddUserName &&
+                              m.Email == ValidUserEmail &&
+                              m.ProfileImage == ValidUserProfileImage);
+    }
 }

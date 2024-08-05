@@ -312,6 +312,43 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
     }
 
     [Fact]
+    public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenCurrentUserIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var query = new GetAllFilteredFollowsQuery(
+            GetNonCaseMatchingString(existingFollowerId),
+            ValidUserName,
+            existingFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
+                                                                    m.FollowerId == existingFollowerId &&
+                                                                    m.FollowerName == ValidUserName &&
+                                                                    m.FollowerProfileImage == ValidUserProfileImage &&
+                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingName == ValidUserName &&
+                                                                    m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                           mc.Page == ValidPageValue &&
+                                                           mc.PageSize == ValidPageSizeValue &&
+                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
+    }
+
+    [Fact]
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenCurrentUserNameIsNull()
     {
         // Arrange
@@ -358,6 +395,80 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var query = new GetAllFilteredFollowsQuery(
             existingFollowerId,
             string.Empty,
+            existingFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
+                                                                    m.FollowerId == existingFollowerId &&
+                                                                    m.FollowerName == ValidUserName &&
+                                                                    m.FollowerProfileImage == ValidUserProfileImage &&
+                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingName == ValidUserName &&
+                                                                    m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                           mc.Page == ValidPageValue &&
+                                                           mc.PageSize == ValidPageSizeValue &&
+                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenCurrentUserNameCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var query = new GetAllFilteredFollowsQuery(
+            existingFollowerId,
+            GetNonCaseMatchingString(ValidUserName),
+            existingFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
+                                                                    m.FollowerId == existingFollowerId &&
+                                                                    m.FollowerName == ValidUserName &&
+                                                                    m.FollowerProfileImage == ValidUserProfileImage &&
+                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingName == ValidUserName &&
+                                                                    m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                           mc.Page == ValidPageValue &&
+                                                           mc.PageSize == ValidPageSizeValue &&
+                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenCurrentUserIsNotFull()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var query = new GetAllFilteredFollowsQuery(
+            existingFollowerId,
+            GetHalfStartString(ValidUserName),
             existingFollowingId,
             ValidUserName,
             ValidSortOrderProperty,
@@ -460,6 +571,43 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
     }
 
     [Fact]
+    public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenFollowingIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var query = new GetAllFilteredFollowsQuery(
+            existingFollowerId,
+            ValidUserName,
+            GetNonCaseMatchingString(existingFollowingId),
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
+                                                                    m.FollowerId == existingFollowerId &&
+                                                                    m.FollowerName == ValidUserName &&
+                                                                    m.FollowerProfileImage == ValidUserProfileImage &&
+                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingName == ValidUserName &&
+                                                                    m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                           mc.Page == ValidPageValue &&
+                                                           mc.PageSize == ValidPageSizeValue &&
+                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
+    }
+
+    [Fact]
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenFollowingNameIsNull()
     {
         // Arrange
@@ -508,6 +656,80 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
             ValidUserName,
             existingFollowingId,
             string.Empty,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
+                                                                    m.FollowerId == existingFollowerId &&
+                                                                    m.FollowerName == ValidUserName &&
+                                                                    m.FollowerProfileImage == ValidUserProfileImage &&
+                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingName == ValidUserName &&
+                                                                    m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                           mc.Page == ValidPageValue &&
+                                                           mc.PageSize == ValidPageSizeValue &&
+                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenFollowingNameCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var query = new GetAllFilteredFollowsQuery(
+            existingFollowerId,
+            ValidUserName,
+            existingFollowingId,
+            GetNonCaseMatchingString(ValidUserName),
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
+                                                                    m.FollowerId == existingFollowerId &&
+                                                                    m.FollowerName == ValidUserName &&
+                                                                    m.FollowerProfileImage == ValidUserProfileImage &&
+                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingName == ValidUserName &&
+                                                                    m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                           mc.Page == ValidPageValue &&
+                                                           mc.PageSize == ValidPageSizeValue &&
+                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenFollowingNameIsNotFull()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var query = new GetAllFilteredFollowsQuery(
+            existingFollowerId,
+            ValidUserName,
+            existingFollowingId,
+            GetHalfStartString(ValidUserName),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

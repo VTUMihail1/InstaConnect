@@ -13,7 +13,8 @@ public class PostCommentCommandProfile : Profile
         CreateMap<AddPostCommentCommand, PostComment>()
             .ConstructUsing(src => new(src.CurrentUserId, src.PostId, src.Content));
 
-        CreateMap<UpdatePostCommentCommand, PostComment>();
+        CreateMap<UpdatePostCommentCommand, PostComment>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore());
 
         CreateMap<PostComment, PostCommentCommandViewModel>();
     }

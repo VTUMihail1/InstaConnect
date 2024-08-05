@@ -63,4 +63,23 @@ public class UserDeletedEventConsumerIntegrationTests : BaseMessageIntegrationTe
             .Should()
             .BeNull();
     }
+
+    [Fact]
+    public async Task Consume_ShouldDeleteUser_WhenUserDeletedEventIsValidAndIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingUserId = await CreateUserAsync(CancellationToken);
+        var userDeletedEvent = new UserDeletedEvent(GetNonCaseMatchingString(existingUserId));
+
+        _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
+
+        // Act
+        await _userDeletedEventConsumer.Consume(_userDeletedEventConsumeContext);
+        var existingUser = await UserWriteRepository.GetByIdAsync(existingUserId, CancellationToken);
+
+        // Assert
+        existingUser
+            .Should()
+            .BeNull();
+    }
 }

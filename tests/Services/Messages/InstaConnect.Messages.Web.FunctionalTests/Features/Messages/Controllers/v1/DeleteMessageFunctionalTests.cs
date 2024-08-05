@@ -164,4 +164,26 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
             .Should()
             .BeNull();
     }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldDeleteMessage_WhenRequestIsValidAndIdDoesNotMatchCase()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+
+        // Act
+        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        await HttpClient.DeleteAsync(GetIdRoute(GetNonCaseMatchingString(existingMessageId)), CancellationToken);
+
+        var message = await MessageWriteRepository.GetByIdAsync(existingMessageId, CancellationToken);
+
+        // Assert
+        message
+            .Should()
+            .BeNull();
+    }
 }

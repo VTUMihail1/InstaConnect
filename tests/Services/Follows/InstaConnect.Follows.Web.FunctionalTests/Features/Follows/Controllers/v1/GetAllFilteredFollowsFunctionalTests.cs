@@ -251,7 +251,175 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValid()
+    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowerIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var route = GetApiRoute(
+            GetNonCaseMatchingString(existingFollowerId),
+            ValidUserName,
+            existingFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await HttpClient.GetAsync(route, CancellationToken);
+
+        var followPaginationQueryResponse = await response
+            .Content
+            .ReadFromJsonAsync<FollowPaginationQueryResponse>();
+
+        // Assert
+        followPaginationQueryResponse
+            .Should()
+            .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
+                                                               m.Id == existingFollowId &&
+                                                               m.FollowerId == existingFollowerId &&
+                                                               m.FollowerName == ValidUserName &&
+                                                               m.FollowerProfileImage == ValidUserProfileImage &&
+                                                               m.FollowingId == existingFollowingId &&
+                                                               m.FollowingName == ValidUserName &&
+                                                               m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                               mc.Page == ValidPageValue &&
+                                                               mc.PageSize == ValidPageSizeValue &&
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowerNameCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var route = GetApiRoute(
+            existingFollowerId,
+            GetNonCaseMatchingString(ValidUserName),
+            existingFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await HttpClient.GetAsync(route, CancellationToken);
+
+        var followPaginationQueryResponse = await response
+            .Content
+            .ReadFromJsonAsync<FollowPaginationQueryResponse>();
+
+        // Assert
+        followPaginationQueryResponse
+            .Should()
+            .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
+                                                               m.Id == existingFollowId &&
+                                                               m.FollowerId == existingFollowerId &&
+                                                               m.FollowerName == ValidUserName &&
+                                                               m.FollowerProfileImage == ValidUserProfileImage &&
+                                                               m.FollowingId == existingFollowingId &&
+                                                               m.FollowingName == ValidUserName &&
+                                                               m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                               mc.Page == ValidPageValue &&
+                                                               mc.PageSize == ValidPageSizeValue &&
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowerNameIsNotFull()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var route = GetApiRoute(
+            existingFollowerId,
+            GetHalfStartString(ValidUserName),
+            existingFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await HttpClient.GetAsync(route, CancellationToken);
+
+        var followPaginationQueryResponse = await response
+            .Content
+            .ReadFromJsonAsync<FollowPaginationQueryResponse>();
+
+        // Assert
+        followPaginationQueryResponse
+            .Should()
+            .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
+                                                               m.Id == existingFollowId &&
+                                                               m.FollowerId == existingFollowerId &&
+                                                               m.FollowerName == ValidUserName &&
+                                                               m.FollowerProfileImage == ValidUserProfileImage &&
+                                                               m.FollowingId == existingFollowingId &&
+                                                               m.FollowingName == ValidUserName &&
+                                                               m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                               mc.Page == ValidPageValue &&
+                                                               mc.PageSize == ValidPageSizeValue &&
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowingIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var route = GetApiRoute(
+            existingFollowerId,
+            ValidUserName,
+            GetNonCaseMatchingString(existingFollowingId),
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await HttpClient.GetAsync(route, CancellationToken);
+
+        var followPaginationQueryResponse = await response
+            .Content
+            .ReadFromJsonAsync<FollowPaginationQueryResponse>();
+
+        // Assert
+        followPaginationQueryResponse
+            .Should()
+            .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
+                                                               m.Id == existingFollowId &&
+                                                               m.FollowerId == existingFollowerId &&
+                                                               m.FollowerName == ValidUserName &&
+                                                               m.FollowerProfileImage == ValidUserProfileImage &&
+                                                               m.FollowingId == existingFollowingId &&
+                                                               m.FollowingName == ValidUserName &&
+                                                               m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                               mc.Page == ValidPageValue &&
+                                                               mc.PageSize == ValidPageSizeValue &&
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowingNameCaseDoesNotMatch()
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -261,7 +429,49 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
             existingFollowerId,
             ValidUserName,
             existingFollowingId,
+            GetNonCaseMatchingString(ValidUserName),
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await HttpClient.GetAsync(route, CancellationToken);
+
+        var followPaginationQueryResponse = await response
+            .Content
+            .ReadFromJsonAsync<FollowPaginationQueryResponse>();
+
+        // Assert
+        followPaginationQueryResponse
+            .Should()
+            .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
+                                                               m.Id == existingFollowId &&
+                                                               m.FollowerId == existingFollowerId &&
+                                                               m.FollowerName == ValidUserName &&
+                                                               m.FollowerProfileImage == ValidUserProfileImage &&
+                                                               m.FollowingId == existingFollowingId &&
+                                                               m.FollowingName == ValidUserName &&
+                                                               m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                               mc.Page == ValidPageValue &&
+                                                               mc.PageSize == ValidPageSizeValue &&
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowingNameIsNotFull()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var route = GetApiRoute(
+            existingFollowerId,
             ValidUserName,
+            existingFollowingId,
+            GetHalfStartString(ValidUserName),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

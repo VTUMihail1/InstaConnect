@@ -16,7 +16,8 @@ internal class MessagesCommandProfile : Profile
                 src.CurrentUserId,
                 src.ReceiverId));
 
-        CreateMap<UpdateMessageCommand, Message>();
+        CreateMap<UpdateMessageCommand, Message>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore());
 
         CreateMap<Message, MessageSendModel>();
 

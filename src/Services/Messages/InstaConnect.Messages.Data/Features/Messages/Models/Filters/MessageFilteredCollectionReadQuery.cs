@@ -12,7 +12,7 @@ public record MessageFilteredCollectionReadQuery(
     string SortPropertyName,
     int Page,
     int PageSize)
-    : FilteredCollectionReadQuery<Message>(m => (string.IsNullOrEmpty(CurrentUserId) || m.SenderId == CurrentUserId) &&
-                                                (string.IsNullOrEmpty(ReceiverId) || m.ReceiverId == ReceiverId) &&
-                                                (string.IsNullOrEmpty(ReceiverName) || m.Receiver!.UserName == ReceiverName),
+    : FilteredCollectionReadQuery<Message>(m => (string.IsNullOrEmpty(CurrentUserId) || m.SenderId.Equals(CurrentUserId)) &&
+                                                (string.IsNullOrEmpty(ReceiverId) || m.ReceiverId.Equals(ReceiverId)) &&
+                                                (string.IsNullOrEmpty(ReceiverName) || m.Receiver!.UserName.StartsWith(ReceiverName)),
         SortOrder, SortPropertyName, Page, PageSize);

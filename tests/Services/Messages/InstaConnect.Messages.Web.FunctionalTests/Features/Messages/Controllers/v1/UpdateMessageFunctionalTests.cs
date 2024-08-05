@@ -275,4 +275,32 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
                                  m.ReceiverId == existingReceiverId &&
                                  m.Content == ValidUpdateContent);
     }
+
+    [Fact]
+    public async Task UpdateAsync_ShouldUpdateMessage_WhenRequestIsValidAndIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var request = new UpdateMessageBindingModel(ValidUpdateContent);
+
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+
+        // Act
+        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        var response = await HttpClient.PutAsJsonAsync(
+            GetIdRoute(GetNonCaseMatchingString(existingMessageId)),
+            request,
+            CancellationToken);
+
+        var message = await MessageWriteRepository.GetByIdAsync(existingMessageId, CancellationToken);
+
+        message
+            .Should()
+            .Match<Message>(m => m.Id == existingMessageId &&
+                                 m.SenderId == existingSenderId &&
+                                 m.ReceiverId == existingReceiverId &&
+                                 m.Content == ValidUpdateContent);
+    }
 }

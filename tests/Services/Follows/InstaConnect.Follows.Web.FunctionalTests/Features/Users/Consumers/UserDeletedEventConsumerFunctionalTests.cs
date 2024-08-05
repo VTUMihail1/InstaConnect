@@ -5,7 +5,7 @@ using MassTransit.Testing;
 
 namespace InstaConnect.Follows.Web.FunctionalTests.Features.Users.Consumers;
 
-public class UserDeletedEventConsumerFunctionalTests : BaseFollowFunctionalTest, IAsyncLifetime
+public class UserDeletedEventConsumerFunctionalTests : BaseFollowFunctionalTest
 {
     public UserDeletedEventConsumerFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
     {

@@ -176,4 +176,35 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
                                  m.ReceiverName == ValidUserName &&
                                  m.ReceiverProfileImage == ValidUserProfileImage);
     }
+
+    [Fact]
+    public async Task GetByIdAsync_ShouldReturnMessageViewResponse_WhenRequestIsValidAndIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+
+        // Act
+        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        var response = await HttpClient.GetAsync(GetIdRoute(GetNonCaseMatchingString(existingMessageId)), CancellationToken);
+
+        var messageViewResponse = await response
+            .Content
+            .ReadFromJsonAsync<MessageQueryViewResponse>();
+
+        // Assert
+        messageViewResponse
+            .Should()
+            .Match<MessageQueryViewResponse>(m => m.Id == existingMessageId &&
+                                 m.Content == ValidContent &&
+                                 m.SenderId == existingSenderId &&
+                                 m.SenderName == ValidUserName &&
+                                 m.SenderProfileImage == ValidUserProfileImage &&
+                                 m.ReceiverId == existingReceiverId &&
+                                 m.ReceiverName == ValidUserName &&
+                                 m.ReceiverProfileImage == ValidUserProfileImage);
+    }
 }

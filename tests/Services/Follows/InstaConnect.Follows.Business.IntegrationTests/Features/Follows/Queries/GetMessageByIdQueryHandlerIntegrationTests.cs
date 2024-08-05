@@ -89,4 +89,28 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseFollowIntegrationT
                                           m.FollowingName == ValidUserName &&
                                           m.FollowingProfileImage == ValidUserProfileImage);
     }
+
+    [Fact]
+    public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenQueryIsValidAndCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var query = new GetFollowByIdQuery(GetNonCaseMatchingString(existingFollowId));
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<FollowQueryViewModel>(m => m.Id == existingFollowId &&
+                                          m.FollowerId == existingFollowerId &&
+                                          m.FollowerName == ValidUserName &&
+                                          m.FollowerProfileImage == ValidUserProfileImage &&
+                                          m.FollowingId == existingFollowingId &&
+                                          m.FollowingName == ValidUserName &&
+                                          m.FollowingProfileImage == ValidUserProfileImage);
+    }
 }

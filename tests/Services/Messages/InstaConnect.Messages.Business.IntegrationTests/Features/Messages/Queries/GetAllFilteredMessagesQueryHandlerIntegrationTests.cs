@@ -224,6 +224,43 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
     }
 
     [Fact]
+    public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenCurrentUserIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var query = new GetAllFilteredMessagesQuery(
+            GetNonCaseMatchingString(existingSenderId),
+            existingReceiverId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
+                                                                    m.SenderId == existingSenderId &&
+                                                                    m.SenderName == ValidUserName &&
+                                                                    m.SenderProfileImage == ValidUserProfileImage &&
+                                                                    m.ReceiverId == existingReceiverId &&
+                                                                    m.ReceiverName == ValidUserName &&
+                                                                    m.ReceiverProfileImage == ValidUserProfileImage &&
+                                                                    m.Content == ValidContent) &&
+                                                           mc.Page == ValidPageValue &&
+                                                           mc.PageSize == ValidPageSizeValue &&
+                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
+    }
+
+    [Fact]
     public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenReceiverIdIsNull()
     {
         // Arrange
@@ -270,6 +307,43 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         var query = new GetAllFilteredMessagesQuery(
             existingSenderId,
             string.Empty,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
+                                                                    m.SenderId == existingSenderId &&
+                                                                    m.SenderName == ValidUserName &&
+                                                                    m.SenderProfileImage == ValidUserProfileImage &&
+                                                                    m.ReceiverId == existingReceiverId &&
+                                                                    m.ReceiverName == ValidUserName &&
+                                                                    m.ReceiverProfileImage == ValidUserProfileImage &&
+                                                                    m.Content == ValidContent) &&
+                                                           mc.Page == ValidPageValue &&
+                                                           mc.PageSize == ValidPageSizeValue &&
+                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenReceiverIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var query = new GetAllFilteredMessagesQuery(
+            existingSenderId,
+            GetNonCaseMatchingString(existingReceiverId),
             ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -345,6 +419,80 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
             existingSenderId,
             existingReceiverId,
             string.Empty,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
+                                                                    m.SenderId == existingSenderId &&
+                                                                    m.SenderName == ValidUserName &&
+                                                                    m.SenderProfileImage == ValidUserProfileImage &&
+                                                                    m.ReceiverId == existingReceiverId &&
+                                                                    m.ReceiverName == ValidUserName &&
+                                                                    m.ReceiverProfileImage == ValidUserProfileImage &&
+                                                                    m.Content == ValidContent) &&
+                                                           mc.Page == ValidPageValue &&
+                                                           mc.PageSize == ValidPageSizeValue &&
+                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenReceiverNameCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var query = new GetAllFilteredMessagesQuery(
+            existingSenderId,
+            existingReceiverId,
+            GetNonCaseMatchingString(ValidUserName),
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
+                                                                    m.SenderId == existingSenderId &&
+                                                                    m.SenderName == ValidUserName &&
+                                                                    m.SenderProfileImage == ValidUserProfileImage &&
+                                                                    m.ReceiverId == existingReceiverId &&
+                                                                    m.ReceiverName == ValidUserName &&
+                                                                    m.ReceiverProfileImage == ValidUserProfileImage &&
+                                                                    m.Content == ValidContent) &&
+                                                           mc.Page == ValidPageValue &&
+                                                           mc.PageSize == ValidPageSizeValue &&
+                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           !mc.HasPreviousPage &&
+                                                           !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenReceiverNameIsNotFull()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var query = new GetAllFilteredMessagesQuery(
+            existingSenderId,
+            existingReceiverId,
+            GetHalfStartString(ValidUserName),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
