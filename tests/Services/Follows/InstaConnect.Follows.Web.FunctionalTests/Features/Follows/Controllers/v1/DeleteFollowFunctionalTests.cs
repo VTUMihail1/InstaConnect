@@ -164,4 +164,26 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
             .Should()
             .BeNull();
     }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldDeleteFollow_WhenRequestIsValidAndIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
+
+        // Act
+        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        await HttpClient.DeleteAsync(GetIdRoute(GetNonCaseMatchingString(existingFollowId)), CancellationToken);
+
+        var follow = await FollowWriteRepository.GetByIdAsync(existingFollowId, CancellationToken);
+
+        // Assert
+        follow
+            .Should()
+            .BeNull();
+    }
 }

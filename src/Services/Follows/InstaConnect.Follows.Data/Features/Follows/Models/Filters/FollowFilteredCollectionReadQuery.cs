@@ -14,10 +14,10 @@ public record FollowFilteredCollectionReadQuery(
     int Page,
     int PageSize)
     : FilteredCollectionReadQuery<Follow>(
-        f => (string.IsNullOrEmpty(FollowerId) || f.FollowerId == FollowerId) &&
-             (string.IsNullOrEmpty(FollowerName) || f.Follower!.UserName == FollowerName) &&
-             (string.IsNullOrEmpty(FollowingId) || f.FollowingId == FollowingId) &&
-             (string.IsNullOrEmpty(FollowingName) || f.Following!.UserName == FollowingName),
+        f => (string.IsNullOrEmpty(FollowerId) || f.FollowerId.Equals(FollowerId)) &&
+             (string.IsNullOrEmpty(FollowerName) || f.Follower!.UserName.StartsWith(FollowerName)) &&
+             (string.IsNullOrEmpty(FollowingId) || f.FollowingId.Equals(FollowingId)) &&
+             (string.IsNullOrEmpty(FollowingName) || f.Following!.UserName.StartsWith(FollowingName)),
         SortOrder,
         SortPropertyName,
         Page,

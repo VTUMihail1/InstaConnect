@@ -15,7 +15,7 @@ internal class FollowsQueryProfile : Profile
     {
         CreateMap<GetAllFilteredFollowsQuery, FollowFilteredCollectionReadQuery>();
 
-        CreateMap<GetAllFollowsQuery, CollectionReadQuery>();
+        CreateMap<GetAllFollowsQuery, FollowCollectionReadQuery>();
 
         CreateMap<Follow, FollowQueryViewModel>()
             .ConstructUsing(src => new(

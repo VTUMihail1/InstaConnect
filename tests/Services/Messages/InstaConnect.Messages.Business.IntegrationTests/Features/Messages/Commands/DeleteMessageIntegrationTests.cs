@@ -159,4 +159,27 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
             .Should()
             .BeNull();
     }
+
+    [Fact]
+    public async Task SendAsync_ShouldDeleteMessage_WhenMessageIsValidAndIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var command = new DeleteMessageCommand(
+            GetNonCaseMatchingString(existingMessageId),
+            existingSenderId
+        );
+
+        // Act
+        await InstaConnectSender.SendAsync(command, CancellationToken);
+
+        // Assert
+        var message = await MessageWriteRepository.GetByIdAsync(existingMessageId, CancellationToken);
+
+        message
+            .Should()
+            .BeNull();
+    }
 }

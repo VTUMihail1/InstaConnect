@@ -160,4 +160,27 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
             .Should()
             .BeNull();
     }
+
+    [Fact]
+    public async Task SendAsync_ShouldDeleteMessage_WhenMessageIsValidAndIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var command = new DeleteFollowCommand(
+            GetNonCaseMatchingString(existingFollowId),
+            existingFollowerId
+        );
+
+        // Act
+        await InstaConnectSender.SendAsync(command, CancellationToken);
+
+        // Assert
+        var follow = await FollowWriteRepository.GetByIdAsync(existingFollowId, CancellationToken);
+
+        follow
+            .Should()
+            .BeNull();
+    }
 }

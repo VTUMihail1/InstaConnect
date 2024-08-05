@@ -298,6 +298,182 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     }
 
     [Fact]
+    public async Task GetAllFilteredAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndCurrentUserIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var route = GetApiRoute(
+            existingReceiverId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = GetNonCaseMatchingString(existingSenderId);
+
+        // Act
+        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        var response = await HttpClient.GetAsync(route, CancellationToken);
+
+        var messagePaginationCollectionResponse = await response
+            .Content
+            .ReadFromJsonAsync<MessagePaginationCollectionQueryResponse>();
+
+        // Assert
+        messagePaginationCollectionResponse
+            .Should()
+            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
+                                                               m.Id == existingMessageId &&
+                                                               m.Content == ValidContent &&
+                                                               m.SenderId == existingSenderId &&
+                                                               m.SenderName == ValidUserName &&
+                                                               m.SenderProfileImage == ValidUserProfileImage &&
+                                                               m.ReceiverId == existingReceiverId &&
+                                                               m.ReceiverName == ValidUserName &&
+                                                               m.ReceiverProfileImage == ValidUserProfileImage) &&
+                                                               mc.Page == ValidPageValue &&
+                                                               mc.PageSize == ValidPageSizeValue &&
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task GetAllFilteredAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndReceiverIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var route = GetApiRoute(
+            GetNonCaseMatchingString(existingReceiverId),
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+
+        // Act
+        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        var response = await HttpClient.GetAsync(route, CancellationToken);
+
+        var messagePaginationCollectionResponse = await response
+            .Content
+            .ReadFromJsonAsync<MessagePaginationCollectionQueryResponse>();
+
+        // Assert
+        messagePaginationCollectionResponse
+            .Should()
+            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
+                                                               m.Id == existingMessageId &&
+                                                               m.Content == ValidContent &&
+                                                               m.SenderId == existingSenderId &&
+                                                               m.SenderName == ValidUserName &&
+                                                               m.SenderProfileImage == ValidUserProfileImage &&
+                                                               m.ReceiverId == existingReceiverId &&
+                                                               m.ReceiverName == ValidUserName &&
+                                                               m.ReceiverProfileImage == ValidUserProfileImage) &&
+                                                               mc.Page == ValidPageValue &&
+                                                               mc.PageSize == ValidPageSizeValue &&
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task GetAllFilteredAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndReceiverNameCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var route = GetApiRoute(
+            existingReceiverId,
+            GetNonCaseMatchingString(ValidUserName),
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+
+        // Act
+        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        var response = await HttpClient.GetAsync(route, CancellationToken);
+
+        var messagePaginationCollectionResponse = await response
+            .Content
+            .ReadFromJsonAsync<MessagePaginationCollectionQueryResponse>();
+
+        // Assert
+        messagePaginationCollectionResponse
+            .Should()
+            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
+                                                               m.Id == existingMessageId &&
+                                                               m.Content == ValidContent &&
+                                                               m.SenderId == existingSenderId &&
+                                                               m.SenderName == ValidUserName &&
+                                                               m.SenderProfileImage == ValidUserProfileImage &&
+                                                               m.ReceiverId == existingReceiverId &&
+                                                               m.ReceiverName == ValidUserName &&
+                                                               m.ReceiverProfileImage == ValidUserProfileImage) &&
+                                                               mc.Page == ValidPageValue &&
+                                                               mc.PageSize == ValidPageSizeValue &&
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task GetAllFilteredAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndReceiverNameIsNotFull()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var route = GetApiRoute(
+            existingReceiverId,
+            GetHalfStartString(ValidUserName),
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+
+        // Act
+        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
+        var response = await HttpClient.GetAsync(route, CancellationToken);
+
+        var messagePaginationCollectionResponse = await response
+            .Content
+            .ReadFromJsonAsync<MessagePaginationCollectionQueryResponse>();
+
+        // Assert
+        messagePaginationCollectionResponse
+            .Should()
+            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
+                                                               m.Id == existingMessageId &&
+                                                               m.Content == ValidContent &&
+                                                               m.SenderId == existingSenderId &&
+                                                               m.SenderName == ValidUserName &&
+                                                               m.SenderProfileImage == ValidUserProfileImage &&
+                                                               m.ReceiverId == existingReceiverId &&
+                                                               m.ReceiverName == ValidUserName &&
+                                                               m.ReceiverProfileImage == ValidUserProfileImage) &&
+                                                               mc.Page == ValidPageValue &&
+                                                               mc.PageSize == ValidPageSizeValue &&
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
+    }
+
+    [Fact]
     public async Task GetAllFilteredAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRouteHasNoParameters()
     {
         // Arrange

@@ -12,7 +12,7 @@ public record PostCommentFilteredCollectionReadQuery(
     string SortPropertyName,
     int Page,
     int PageSize)
-: FilteredCollectionReadQuery<PostComment>(pc => (string.IsNullOrEmpty(UserId) || pc.UserId == UserId) &&
-                                                  (string.IsNullOrEmpty(UserName) || pc.User!.UserName == UserName) &&
-                                                  (string.IsNullOrEmpty(PostId) || pc.PostId == PostId),
+: FilteredCollectionReadQuery<PostComment>(pc => (string.IsNullOrEmpty(UserId) || pc.UserId.Equals(UserId)) &&
+                                                  (string.IsNullOrEmpty(UserName) || pc.User!.UserName.Equals(UserName)) &&
+                                                  (string.IsNullOrEmpty(PostId) || pc.PostId.Equals(PostId)),
     SortOrder, SortPropertyName, Page, PageSize);

@@ -37,7 +37,7 @@ public abstract class BaseWriteRepository<TEntity> : IBaseWriteRepository<TEntit
         var entity =
             await IncludeProperties(
             _dbContext.Set<TEntity>())
-            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
 
         return entity;
     }

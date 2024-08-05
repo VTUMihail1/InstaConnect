@@ -163,4 +163,32 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
                                           m.ReceiverProfileImage == ValidUserProfileImage &&
                                           m.Content == ValidContent);
     }
+
+    [Fact]
+    public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenQueryIsValidAndIdCaseDoesntMatch()
+    {
+        // Arrange
+        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var query = new GetMessageByIdQuery(
+            GetNonCaseMatchingString(existingMessageId),
+            existingSenderId
+        );
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<MessageQueryViewModel>(m => m.Id == existingMessageId &&
+                                          m.SenderId == existingSenderId &&
+                                          m.SenderName == ValidUserName &&
+                                          m.SenderProfileImage == ValidUserProfileImage &&
+                                          m.ReceiverId == existingReceiverId &&
+                                          m.ReceiverName == ValidUserName &&
+                                          m.ReceiverProfileImage == ValidUserProfileImage &&
+                                          m.Content == ValidContent);
+    }
 }

@@ -86,4 +86,18 @@ public class BaseSharedFunctionalTest
 
         return route;
     }
+
+    protected string GetHalfStartString(string value)
+    {
+        var result = value.Substring(0, value.Length / 2);
+
+        return result;
+    }
+
+    protected string GetNonCaseMatchingString(string value)
+    {
+        var result = value.ToUpper();
+
+        return result;
+    }
 }

@@ -12,7 +12,7 @@ public record UserFilteredCollectionReadQuery(
     string SortPropertyName,
     int Page,
     int PageSize)
-    : FilteredCollectionReadQuery<User>(u => (string.IsNullOrEmpty(UserName) || u.UserName.StartsWith(UserName, StringComparison.InvariantCultureIgnoreCase)) &&
-                                             (string.IsNullOrEmpty(FirstName) || u.FirstName.StartsWith(FirstName, StringComparison.InvariantCultureIgnoreCase)) &&
-                                             (string.IsNullOrEmpty(LastName) || u.LastName.StartsWith(LastName, StringComparison.InvariantCultureIgnoreCase)),
+    : FilteredCollectionReadQuery<User>(u => (string.IsNullOrEmpty(UserName) || u.UserName.StartsWith(UserName)) &&
+                                             (string.IsNullOrEmpty(FirstName) || u.FirstName.StartsWith(FirstName)) &&
+                                             (string.IsNullOrEmpty(LastName) || u.LastName.StartsWith(LastName)),
                                         SortOrder, SortPropertyName, Page, PageSize);

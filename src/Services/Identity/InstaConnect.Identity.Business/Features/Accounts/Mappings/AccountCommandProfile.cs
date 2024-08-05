@@ -27,7 +27,7 @@ internal class AccountCommandProfile : Profile
                 null!));
 
         CreateMap<EditCurrentAccountCommand, User>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CurrentUserId));
+            .ForMember(dest => dest.Id, opt => opt.Ignore());
 
         CreateMap<Token, AccountTokenCommandViewModel>();
 
@@ -36,8 +36,6 @@ internal class AccountCommandProfile : Profile
 
         CreateMap<(Token, User), UserForgotPasswordTokenCreatedEvent>()
             .ConstructUsing(src => new(src.Item2.Id, src.Item2.Email, src.Item1.Value));
-
-        CreateMap<User, UserDeletedEvent>();
 
         CreateMap<EditCurrentAccountProfileImageCommand, ImageUploadModel>()
             .ForMember(dest => dest.FormFile, opt => opt.MapFrom(src => src.ProfileImage));

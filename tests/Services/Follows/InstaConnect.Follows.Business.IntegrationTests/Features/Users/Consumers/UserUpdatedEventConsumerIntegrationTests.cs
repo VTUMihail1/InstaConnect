@@ -80,4 +80,34 @@ public class UserUpdatedEventConsumerIntegrationTests : BaseFollowIntegrationTes
                               m.Email == ValidUserEmail &&
                               m.ProfileImage == ValidUserProfileImage);
     }
+
+    [Fact]
+    public async Task Consume_ShouldUpdateUser_WhenUserUpdatedEventIsValidAndIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingUserId = await CreateUserAsync(CancellationToken);
+        var userUpdatedEvent = new UserUpdatedEvent(
+            GetNonCaseMatchingString(existingUserId),
+            ValidUpdateUserName,
+            ValidUserEmail,
+            ValidUserFirstName,
+            ValidUserLastName,
+            ValidUserProfileImage);
+
+        _userUpdatedEventConsumeContext.Message.Returns(userUpdatedEvent);
+
+        // Act
+        await _userUpdatedEventConsumer.Consume(_userUpdatedEventConsumeContext);
+        var existingUser = await UserWriteRepository.GetByIdAsync(existingUserId, CancellationToken);
+
+        // Assert
+        existingUser
+            .Should()
+            .Match<User>(m => m.Id == existingUserId &&
+                              m.FirstName == ValidUserFirstName &&
+                              m.LastName == ValidUserLastName &&
+                              m.UserName == ValidUpdateUserName &&
+                              m.Email == ValidUserEmail &&
+                              m.ProfileImage == ValidUserProfileImage);
+    }
 }
