@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Commands.DeleteMessage;
-using InstaConnect.Messages.Business.UnitTests.Utilities;
+using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;

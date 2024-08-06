@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Users.Consumers;
+using InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Utilities;
+using InstaConnect.Follows.Business.IntegrationTests.Features.Utilities;
 using InstaConnect.Follows.Business.IntegrationTests.Utilities;
 using InstaConnect.Follows.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Business.Contracts.Users;
@@ -9,7 +11,7 @@ using NSubstitute;
 
 namespace InstaConnect.Follows.Business.IntegrationTests.Features.Users.Consumers;
 
-public class UserDeletedEventConsumerIntegrationTests : BaseFollowIntegrationTest
+public class UserDeletedEventConsumerIntegrationTests : BaseUserIntegrationTest
 {
     private readonly UserDeletedEventConsumer _userDeletedEventConsumer;
     private readonly ConsumeContext<UserDeletedEvent> _userDeletedEventConsumeContext;

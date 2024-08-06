@@ -9,7 +9,7 @@ using InstaConnect.Messages.Web.Features.Messages.Controllers.v1;
 using InstaConnect.Messages.Web.Features.Messages.Models.Binding;
 using InstaConnect.Messages.Web.Features.Messages.Models.Requests;
 using InstaConnect.Messages.Web.Features.Messages.Models.Responses;
-using InstaConnect.Messages.Web.UnitTests.Utilities;
+using InstaConnect.Messages.Web.UnitTests.Features.Messages.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 

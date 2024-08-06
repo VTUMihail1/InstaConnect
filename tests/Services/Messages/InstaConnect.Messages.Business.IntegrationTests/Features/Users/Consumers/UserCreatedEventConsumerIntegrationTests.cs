@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Users.Consumers;
+using InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Business.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Utilities;
 using InstaConnect.Messages.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Business.Contracts.Users;
@@ -9,7 +11,7 @@ using NSubstitute;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Features.Users.Consumers;
 
-public class UserCreatedEventConsumerIntegrationTests : BaseMessageIntegrationTest
+public class UserCreatedEventConsumerIntegrationTests : BaseUserIntegrationTest
 {
     private readonly UserCreatedEventConsumer _userCreatedEventConsumer;
     private readonly ConsumeContext<UserCreatedEvent> _userCreatedEventConsumeContext;

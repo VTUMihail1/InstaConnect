@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
-using InstaConnect.Messages.Business.UnitTests.Utilities;
+using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
 using NSubstitute;

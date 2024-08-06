@@ -10,7 +10,7 @@ using InstaConnect.Follows.Web.Features.Follows.Controllers.v1;
 using InstaConnect.Follows.Web.Features.Follows.Models.Binding;
 using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
-using InstaConnect.Messages.Web.UnitTests.Utilities;
+using InstaConnect.Follows.Web.UnitTests.Features.Follows.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 

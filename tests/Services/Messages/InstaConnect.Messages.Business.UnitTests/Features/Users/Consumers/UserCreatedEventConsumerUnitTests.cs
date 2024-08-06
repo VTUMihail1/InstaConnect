@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Messages.Business.Features.Users.Consumers;
-using InstaConnect.Messages.Business.UnitTests.Utilities;
+using InstaConnect.Messages.Business.UnitTests.Features.Users.Utilities;
 using InstaConnect.Messages.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Business.Contracts.Users;
 using MassTransit;
@@ -7,7 +7,7 @@ using NSubstitute;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Users.Consumers;
 
-public class UserCreatedEventConsumerUnitTests : BaseMessageUnitTest
+public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
 {
     private readonly UserCreatedEventConsumer _userCreatedEventConsumer;
     private readonly ConsumeContext<UserCreatedEvent> _userCreatedEventConsumeContext;

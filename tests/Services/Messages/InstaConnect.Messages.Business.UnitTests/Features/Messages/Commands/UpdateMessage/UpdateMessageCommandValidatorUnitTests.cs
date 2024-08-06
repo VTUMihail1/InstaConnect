@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Messages.Business.Features.Messages.Commands.UpdateMessage;
 using InstaConnect.Messages.Business.Features.Messages.Utilities;
-using InstaConnect.Messages.Business.UnitTests.Utilities;
+using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Commands.UpdateMessage;
 

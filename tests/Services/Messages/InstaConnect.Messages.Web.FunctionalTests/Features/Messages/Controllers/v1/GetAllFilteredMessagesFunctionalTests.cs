@@ -5,6 +5,7 @@ using Bogus;
 using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.Features.Messages.Models.Responses;
+using InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.FunctionalTests.Utilities;
 using InstaConnect.Shared.Business.Utilities;
 using InstaConnect.Shared.Data.Models.Enums;

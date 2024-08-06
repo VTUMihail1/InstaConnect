@@ -7,6 +7,7 @@ using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Web.Features.Follows.Models.Binding;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
+using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.FunctionalTests.Utilities;
 
 namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Controllers.v1;

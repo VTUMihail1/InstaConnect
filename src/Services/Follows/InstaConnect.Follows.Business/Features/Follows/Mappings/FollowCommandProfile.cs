@@ -5,9 +5,9 @@ using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 
 namespace InstaConnect.Follows.Business.Features.Follows.Mappings;
 
-internal class FollowsCommandProfile : Profile
+internal class FollowCommandProfile : Profile
 {
-    public FollowsCommandProfile()
+    public FollowCommandProfile()
     {
         CreateMap<AddFollowCommand, Follow>()
             .ConstructUsing(src => new(src.CurrentUserId, src.FollowingId));

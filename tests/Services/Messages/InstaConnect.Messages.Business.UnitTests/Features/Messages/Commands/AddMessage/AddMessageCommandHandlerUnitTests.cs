@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
 using InstaConnect.Messages.Business.Features.Messages.Models;
-using InstaConnect.Messages.Business.UnitTests.Utilities;
+using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Shared.Business.Exceptions.User;
 using NSubstitute;

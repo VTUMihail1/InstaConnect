@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.FunctionalTests.Utilities;
 
 namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Controllers.v1;

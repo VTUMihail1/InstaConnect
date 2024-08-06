@@ -13,7 +13,7 @@ using InstaConnect.Shared.Web.Models.Users;
 using InstaConnect.Shared.Web.UnitTests.Utilities;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Web.UnitTests.Utilities;
+namespace InstaConnect.Follows.Web.UnitTests.Features.Follows.Utilities;
 
 public abstract class BaseFollowUnitTest : BaseSharedUnitTest
 {
@@ -30,8 +30,8 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
             new Mapper(
                 new MapperConfiguration(cfg =>
                 {
-                    cfg.AddProfile<FollowsCommandProfile>();
-                    cfg.AddProfile<FollowsQueryProfile>();
+                    cfg.AddProfile<FollowCommandProfile>();
+                    cfg.AddProfile<FollowQueryProfile>();
                 }))))
     {
         ValidId = GetAverageString(FollowBusinessConfigurations.ID_MAX_LENGTH, FollowBusinessConfigurations.ID_MIN_LENGTH);
