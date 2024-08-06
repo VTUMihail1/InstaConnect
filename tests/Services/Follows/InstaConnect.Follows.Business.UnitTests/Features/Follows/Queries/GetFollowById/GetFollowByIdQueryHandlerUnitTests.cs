@@ -47,7 +47,7 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
     }
 
     [Fact]
-    public async Task Handle_ShouldReturnMessageViewModelCollection_WhenQueryIsValid()
+    public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
         var query = new GetFollowByIdQuery(ValidId);

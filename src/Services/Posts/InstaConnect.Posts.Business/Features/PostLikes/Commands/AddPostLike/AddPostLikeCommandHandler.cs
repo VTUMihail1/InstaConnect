@@ -55,7 +55,7 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand, P
 
         var existingPostLike = await _postLikeWriteRepository.GetByUserIdAndPostIdAsync(request.CurrentUserId, request.PostId, cancellationToken);
 
-        if (existingPostLike == null)
+        if (existingPostLike != null)
         {
             throw new BadRequestException(POST_ALREADY_LIKED);
         }

@@ -1,46 +1,46 @@
 ﻿using FluentAssertions;
-using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
+using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
+using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Follow;
-using InstaConnect.Shared.Business.Exceptions.Message;
+using InstaConnect.Shared.Business.Exceptions.Posts;
 using NSubstitute;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.DeleteFollow;
 
-public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
+public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
 {
-    private readonly DeleteFollowCommandHandler _commandHandler;
+    private readonly DeletePostCommandHandler _commandHandler;
 
-    public DeleteFollowCommandHandlerUnitTests()
+    public DeletePostCommandHandlerUnitTests()
     {
         _commandHandler = new(
             UnitOfWork,
-            FollowWriteRepository);
+            PostWriteRepository);
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowFollowNotFoundException_WhenFollowIdIsInvalid()
+    public async Task Handle_ShouldThrowPostNotFoundException_WhenPostIdIsInvalid()
     {
         // Arrange
-        var command = new DeleteFollowCommand(
+        var command = new DeletePostCommand(
             InvalidId,
-            ValidFollowCurrentUserId
+            ValidPostCurrentUserId
         );
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<FollowNotFoundException>();
+        await action.Should().ThrowAsync<PostNotFoundException>();
     }
 
     [Fact]
     public async Task Handle_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var command = new DeleteFollowCommand(
+        var command = new DeletePostCommand(
             ValidId,
             ValidCurrentUserId
         );
@@ -53,50 +53,51 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
     }
 
     [Fact]
-    public async Task Handle_ShouldGetFollowByIdFromRepository_WhenFollowIdIsValid()
+    public async Task Handle_ShouldGetPostByIdFromRepository_WhenPostIdIsValid()
     {
         // Arrange
-        var command = new DeleteFollowCommand(
+        var command = new DeletePostCommand(
             ValidId,
-            ValidFollowCurrentUserId
+            ValidPostCurrentUserId
         );
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await FollowWriteRepository
+        await PostWriteRepository
             .Received(1)
             .GetByIdAsync(ValidId, CancellationToken);
     }
 
     [Fact]
-    public async Task Handle_ShouldDeleteFollowFromRepository_WhenFollowIdIsValid()
+    public async Task Handle_ShouldDeletePostFromRepository_WhenPostIdIsValid()
     {
         // Arrange
-        var command = new DeleteFollowCommand(
+        var command = new DeletePostCommand(
             ValidId,
-            ValidFollowCurrentUserId
+            ValidPostCurrentUserId
         );
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        FollowWriteRepository
+        PostWriteRepository
             .Received(1)
-            .Delete(Arg.Is<Follow>(m => m.Id == ValidId &&
-                                         m.FollowerId == ValidFollowCurrentUserId &&
-                                         m.FollowingId == ValidFollowFollowingId));
+            .Delete(Arg.Is<Post>(m => m.Id == ValidId &&
+                                      m.UserId == ValidPostCurrentUserId &&
+                                      m.Title == ValidTitle &&
+                                      m.Content == ValidContent));
     }
 
     [Fact]
-    public async Task Handle_ShouldCallSaveChangesAsync_WhenFollowIdIsValid()
+    public async Task Handle_ShouldCallSaveChangesAsync_WhenPostIdIsValid()
     {
         // Arrange
-        var command = new DeleteFollowCommand(
+        var command = new DeletePostCommand(
             ValidId,
-            ValidFollowCurrentUserId
+            ValidPostCurrentUserId
         );
 
         // Act

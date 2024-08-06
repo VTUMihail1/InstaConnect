@@ -1,52 +1,54 @@
 ﻿using System.Linq.Expressions;
 using FluentAssertions;
-using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFilteredFollows;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
+using InstaConnect.Posts.Business.Features.PostLikes.Models;
+using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllFilteredPostLikes;
+using InstaConnect.Posts.Business.Features.Posts.Models;
+using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllFilteredPosts;
+using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
+using InstaConnect.Posts.Data.Features.PostLikes.Models.Filters;
+using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
+using InstaConnect.Posts.Data.Features.Posts.Models.Filters;
 using NSubstitute;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFilteredFollows;
 
-public class GetAllFilteredFollowsQueryHandlerUnitTests : BaseFollowUnitTest
+public class GetAllFilteredPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
 {
-    private readonly GetAllFilteredFollowsQueryHandler _queryHandler;
+    private readonly GetAllFilteredPostLikesQueryHandler _queryHandler;
 
-    public GetAllFilteredFollowsQueryHandlerUnitTests()
+    public GetAllFilteredPostLikesQueryHandlerUnitTests()
     {
         _queryHandler = new(
             InstaConnectMapper,
-            FollowReadRepository);
+            PostLikeReadRepository);
     }
 
     [Fact]
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
-            ValidFollowCurrentUserId,
-            ValidUserName,
-            ValidFollowFollowingId,
-            ValidUserName,
+        var query = new GetAllFilteredPostLikesQuery(
+            ValidPostLikeCurrentUserId,
+            ValidTitle,
+            ValidPostLikePostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
             ValidPageSizeValue);
 
-        Expression<Func<Follow, bool>> expectedExpression = f =>
-             (string.IsNullOrEmpty(ValidFollowCurrentUserId) || f.FollowerId.Equals(ValidFollowCurrentUserId)) &&
-             (string.IsNullOrEmpty(ValidUserName) || f.Follower!.UserName.Equals(ValidUserName)) &&
-             (string.IsNullOrEmpty(ValidFollowFollowingId) || f.FollowingId.Equals(ValidFollowFollowingId)) &&
-             (string.IsNullOrEmpty(ValidUserName) || f.Following!.UserName.Equals(ValidUserName));
+        Expression<Func<PostLike, bool>> expectedExpression = p =>
+             (string.IsNullOrEmpty(ValidPostLikeCurrentUserId) || p.UserId.Equals(ValidPostLikeCurrentUserId)) &&
+             (string.IsNullOrEmpty(ValidUserName) || p.User!.UserName.Equals(ValidUserName)) &&
+             (string.IsNullOrEmpty(ValidPostLikePostId) || p.PostId.Equals(ValidPostLikePostId));
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        await FollowReadRepository
+        await PostLikeReadRepository
             .Received(1)
-            .GetAllFilteredAsync(Arg.Is<FollowFilteredCollectionReadQuery>(m =>
+            .GetAllFilteredAsync(Arg.Is<PostLikeFilteredCollectionReadQuery>(m =>
                                                                         m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
@@ -58,11 +60,10 @@ public class GetAllFilteredFollowsQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
-            ValidFollowCurrentUserId,
+        var query = new GetAllFilteredPostLikesQuery(
+            ValidPostLikeCurrentUserId,
             ValidUserName,
-            ValidFollowFollowingId,
-            ValidUserName,
+            ValidPostLikePostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -74,13 +75,11 @@ public class GetAllFilteredFollowsQueryHandlerUnitTests : BaseFollowUnitTest
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
-                                                           m.FollowerId == ValidFollowCurrentUserId &&
-                                                           m.FollowerName == ValidUserName &&
-                                                           m.FollowerProfileImage == ValidUserProfileImage &&
-                                                           m.FollowingId == ValidFollowFollowingId &&
-                                                           m.FollowingName == ValidUserName &&
-                                                           m.FollowingProfileImage == ValidUserProfileImage) &&
+            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
+                                                           m.UserId == ValidPostLikeCurrentUserId &&
+                                                           m.UserName == ValidUserName &&
+                                                           m.UserProfileImage == ValidUserProfileImage &&
+                                                           m.PostId == ValidPostLikePostId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
                                                            mc.TotalCount == ValidTotalCountValue &&

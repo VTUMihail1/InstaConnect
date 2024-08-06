@@ -1,32 +1,29 @@
-﻿using System.Linq.Expressions;
-using FluentAssertions;
-using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFilteredFollows;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
+﻿using FluentAssertions;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
+using InstaConnect.Posts.Business.Features.Posts.Models;
+using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
+using InstaConnect.Posts.Data.Features.Posts.Models.Filters;
 using InstaConnect.Shared.Data.Models.Filters;
 using NSubstitute;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFollows;
 
-public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
+public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
 {
-    private readonly GetAllFollowsQueryHandler _queryHandler;
+    private readonly GetAllPostsQueryHandler _queryHandler;
 
-    public GetAllFollowsQueryHandlerUnitTests()
+    public GetAllPostsQueryHandlerUnitTests()
     {
         _queryHandler = new(
             InstaConnectMapper,
-            FollowReadRepository);
+            PostReadRepository);
     }
 
     [Fact]
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFollowsQuery(
+        var query = new GetAllPostsQuery(
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -36,19 +33,19 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
         await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        await FollowReadRepository
+        await PostReadRepository
             .Received(1)
-            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m => m.Page == ValidPageValue &&
+            .GetAllAsync(Arg.Is<PostCollectionReadQuery>(m => m.Page == ValidPageValue &&
                                                                  m.PageSize == ValidPageSizeValue &&
                                                                  m.SortOrder == ValidSortOrderProperty &&
                                                                  m.SortPropertyName == ValidSortPropertyName), CancellationToken);
     }
 
     [Fact]
-    public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
+    public async Task Handle_ShouldReturnPostViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFollowsQuery(
+        var query = new GetAllPostsQuery(
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -60,13 +57,12 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
-                                                           m.FollowerId == ValidFollowCurrentUserId &&
-                                                           m.FollowerName == ValidUserName &&
-                                                           m.FollowerProfileImage == ValidUserProfileImage &&
-                                                           m.FollowingId == ValidFollowFollowingId &&
-                                                           m.FollowingName == ValidUserName &&
-                                                           m.FollowingProfileImage == ValidUserProfileImage) &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
+                                                           m.UserId == ValidPostCurrentUserId &&
+                                                           m.UserName == ValidUserName &&
+                                                           m.UserProfileImage == ValidUserProfileImage &&
+                                                           m.Title == ValidTitle &&
+                                                           m.Content == ValidContent) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
                                                            mc.TotalCount == ValidTotalCountValue &&
