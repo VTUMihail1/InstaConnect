@@ -14,7 +14,7 @@ using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Utilities;
+namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 
 public abstract class BaseFollowUnitTest : BaseSharedUnitTest
 {
@@ -45,9 +45,8 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
             new Mapper(
                 new MapperConfiguration(cfg =>
                 {
-                    cfg.AddProfile<FollowsQueryProfile>();
-                    cfg.AddProfile<FollowsCommandProfile>();
-                    cfg.AddProfile<UserConsumerProfile>();
+                    cfg.AddProfile<FollowQueryProfile>();
+                    cfg.AddProfile<FollowCommandProfile>();
                 }))),
         new EntityPropertyValidator())
     {

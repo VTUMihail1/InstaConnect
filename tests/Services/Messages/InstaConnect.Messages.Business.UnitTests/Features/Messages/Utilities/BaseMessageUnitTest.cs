@@ -14,7 +14,7 @@ using InstaConnect.Shared.Data.Abstractions;
 using InstaConnect.Shared.Data.Models.Pagination;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Business.UnitTests.Utilities;
+namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
 
 public abstract class BaseMessageUnitTest : BaseSharedUnitTest
 {
@@ -48,8 +48,8 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
             new Mapper(
                 new MapperConfiguration(cfg =>
                 {
-                    cfg.AddProfile<MessagesQueryProfile>();
-                    cfg.AddProfile<MessagesCommandProfile>();
+                    cfg.AddProfile<MessageQueryProfile>();
+                    cfg.AddProfile<MessageCommandProfile>();
                     cfg.AddProfile<UserConsumerProfile>();
                 }))),
         new EntityPropertyValidator())

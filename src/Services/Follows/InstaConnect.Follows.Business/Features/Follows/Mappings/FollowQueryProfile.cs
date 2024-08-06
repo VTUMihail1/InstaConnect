@@ -9,9 +9,9 @@ using InstaConnect.Shared.Data.Models.Pagination;
 
 namespace InstaConnect.Follows.Business.Features.Follows.Mappings;
 
-internal class FollowsQueryProfile : Profile
+internal class FollowQueryProfile : Profile
 {
-    public FollowsQueryProfile()
+    public FollowQueryProfile()
     {
         CreateMap<GetAllFilteredFollowsQuery, FollowFilteredCollectionReadQuery>();
 

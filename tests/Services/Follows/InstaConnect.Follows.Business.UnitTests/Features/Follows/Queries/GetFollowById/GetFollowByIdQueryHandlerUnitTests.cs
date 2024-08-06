@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Follows.Models;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
-using InstaConnect.Follows.Business.UnitTests.Utilities;
+using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Shared.Business.Exceptions.Follow;
 using NSubstitute;
 

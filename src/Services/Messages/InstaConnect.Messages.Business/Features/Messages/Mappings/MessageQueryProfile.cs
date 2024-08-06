@@ -7,9 +7,9 @@ using InstaConnect.Shared.Data.Models.Pagination;
 
 namespace InstaConnect.Messages.Business.Features.Messages.Mappings;
 
-internal class MessagesQueryProfile : Profile
+internal class MessageQueryProfile : Profile
 {
-    public MessagesQueryProfile()
+    public MessageQueryProfile()
     {
         CreateMap<PaginationList<Message>, MessagePaginationQueryViewModel>();
 

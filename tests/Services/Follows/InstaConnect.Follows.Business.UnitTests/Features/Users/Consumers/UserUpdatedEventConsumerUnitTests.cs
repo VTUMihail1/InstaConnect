@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Follows.Business.Features.Users.Consumers;
+using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.UnitTests.Utilities;
 using InstaConnect.Follows.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Business.Contracts.Users;
@@ -7,7 +8,7 @@ using NSubstitute;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Users.Consumers;
 
-public class UserUpdatedEventConsumerUnitTests : BaseFollowUnitTest
+public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
 {
     private readonly UserUpdatedEventConsumer _userUpdatedEventConsumer;
     private readonly ConsumeContext<UserUpdatedEvent> _userUpdatedEventConsumeContext;

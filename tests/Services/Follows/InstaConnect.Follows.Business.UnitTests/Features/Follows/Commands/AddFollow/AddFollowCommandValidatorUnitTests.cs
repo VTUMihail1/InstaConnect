@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
 using InstaConnect.Follows.Business.Features.Follows.Utilities;
-using InstaConnect.Follows.Business.UnitTests.Utilities;
+using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.AddFollow;
 

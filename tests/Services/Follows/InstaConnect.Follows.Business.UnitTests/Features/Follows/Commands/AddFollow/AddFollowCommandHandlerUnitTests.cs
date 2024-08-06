@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
 using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Follows.Business.UnitTests.Utilities;
+using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.User;

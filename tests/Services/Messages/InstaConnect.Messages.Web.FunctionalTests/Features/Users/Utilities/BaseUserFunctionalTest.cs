@@ -4,21 +4,16 @@ using InstaConnect.Messages.Data.Features.Messages.Abstractions;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Data.Features.Users.Abstract;
 using InstaConnect.Messages.Data.Features.Users.Models.Entities;
+using InstaConnect.Messages.Web.FunctionalTests.Utilities;
 using InstaConnect.Shared.Data.Abstractions;
 using InstaConnect.Shared.Web.FunctionalTests.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Web.FunctionalTests.Utilities;
+namespace InstaConnect.Messages.Web.FunctionalTests.Features.Users.Utilities;
 
-public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
+public abstract class BaseUserFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {
-    private const string API_ROUTE = "api/v1/messages";
-
-    protected readonly string InvalidId;
-    protected readonly string ValidContent;
-    protected readonly string ValidAddContent;
-    protected readonly string ValidUpdateContent;
     protected readonly string InvalidUserId;
     protected readonly string ValidUserName;
     protected readonly string ValidAddUserName;
@@ -28,38 +23,11 @@ public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, ICla
     protected readonly string ValidUserLastName;
     protected readonly string ValidUserProfileImage;
 
-
-    protected IMessageWriteRepository MessageWriteRepository
-    {
-        get
-        {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var messageRepository = serviceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();
-
-            return messageRepository;
-        }
-    }
-
-    protected IMessageReadRepository MessageReadRepository
-    {
-        get
-        {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var messageReadRepository = serviceScope.ServiceProvider.GetRequiredService<IMessageReadRepository>();
-
-            return messageReadRepository;
-        }
-    }
-
-    protected BaseMessageFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(
+    protected BaseUserFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(
         functionalTestWebAppFactory.CreateClient(),
         functionalTestWebAppFactory.Services.CreateScope(),
-        API_ROUTE)
+        string.Empty)
     {
-        InvalidId = GetAverageString(MessageBusinessConfigurations.ID_MAX_LENGTH, MessageBusinessConfigurations.ID_MIN_LENGTH);
-        ValidContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
-        ValidAddContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
-        ValidUpdateContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
         InvalidUserId = GetAverageString(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH);
         ValidUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
         ValidAddUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
@@ -68,22 +36,6 @@ public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, ICla
         ValidUserLastName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
         ValidUserEmail = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
         ValidUserProfileImage = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-    }
-
-    protected async Task<string> CreateMessageAsync(string senderId, string receiverId, CancellationToken cancellationToken)
-    {
-        var message = new Message(
-            ValidContent,
-            senderId,
-            receiverId);
-
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var messageWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();
-
-        messageWriteRepository.Add(message);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return message.Id;
     }
 
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
@@ -117,11 +69,6 @@ public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, ICla
     private async Task EnsureDatabaseIsEmpty()
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<MessagesContext>();
-
-        if (dbContext.Messages.Any())
-        {
-            await dbContext.Messages.ExecuteDeleteAsync(CancellationToken);
-        }
 
         if (dbContext.Users.Any())
         {

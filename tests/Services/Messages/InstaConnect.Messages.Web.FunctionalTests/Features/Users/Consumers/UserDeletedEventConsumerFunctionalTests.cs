@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
+using InstaConnect.Messages.Web.FunctionalTests.Features.Users.Utilities;
 using InstaConnect.Messages.Web.FunctionalTests.Utilities;
 using InstaConnect.Shared.Business.Contracts.Users;
 using MassTransit.Testing;
 
 namespace InstaConnect.Messages.Web.FunctionalTests.Features.Users.Consumers;
 
-public class UserDeletedEventConsumerFunctionalTests : BaseMessageFunctionalTest
+public class UserDeletedEventConsumerFunctionalTests : BaseUserFunctionalTest
 {
     public UserDeletedEventConsumerFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
     {

@@ -8,9 +8,9 @@ using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
 
 namespace InstaConnect.Follows.Web.Features.Follows.Mappings;
 
-internal class FollowsQueryProfile : Profile
+internal class FollowQueryProfile : Profile
 {
-    public FollowsQueryProfile()
+    public FollowQueryProfile()
     {
         CreateMap<GetAllFollowsRequest, GetAllFollowsQuery>();
 

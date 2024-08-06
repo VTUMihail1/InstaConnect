@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
-using InstaConnect.Follows.Business.UnitTests.Utilities;
+using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Follow;

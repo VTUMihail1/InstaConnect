@@ -12,10 +12,10 @@ using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Models.Users;
 using InstaConnect.Shared.Web.UnitTests.Utilities;
 using NSubstitute;
-using MessagesCommandProfile = InstaConnect.Messages.Web.Features.Messages.Mappings.MessagesCommandProfile;
-using MessagesQueryProfile = InstaConnect.Messages.Web.Features.Messages.Mappings.MessagesQueryProfile;
+using MessageCommandProfile = InstaConnect.Messages.Web.Features.Messages.Mappings.MessagesCommandProfile;
+using MessageQueryProfile = InstaConnect.Messages.Web.Features.Messages.Mappings.MessagesQueryProfile;
 
-namespace InstaConnect.Messages.Web.UnitTests.Utilities;
+namespace InstaConnect.Messages.Web.UnitTests.Features.Messages.Utilities;
 
 public abstract class BaseMessageUnitTest : BaseSharedUnitTest
 {
@@ -33,8 +33,8 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
             new Mapper(
                 new MapperConfiguration(cfg =>
                 {
-                    cfg.AddProfile<MessagesCommandProfile>();
-                    cfg.AddProfile<MessagesQueryProfile>();
+                    cfg.AddProfile<MessageCommandProfile>();
+                    cfg.AddProfile<MessageQueryProfile>();
                 }))))
     {
         ValidId = GetAverageString(MessageBusinessConfigurations.ID_MAX_LENGTH, MessageBusinessConfigurations.ID_MIN_LENGTH);

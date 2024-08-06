@@ -4,6 +4,7 @@ using Bogus;
 using FluentAssertions;
 using InstaConnect.Follows.Data;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
+using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.FunctionalTests.Utilities;
 using InstaConnect.Shared.Business.Utilities;
 using InstaConnect.Shared.Data.Models.Enums;

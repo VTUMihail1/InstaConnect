@@ -8,9 +8,9 @@ using InstaConnect.Shared.Web.Models.Users;
 
 namespace InstaConnect.Follows.Web.Features.Follows.Mappings;
 
-internal class FollowsCommandProfile : Profile
+internal class FollowCommandProfile : Profile
 {
-    public FollowsCommandProfile()
+    public FollowCommandProfile()
     {
         CreateMap<(CurrentUserModel, AddFollowRequest), AddFollowCommand>()
             .ConstructUsing(src => new(

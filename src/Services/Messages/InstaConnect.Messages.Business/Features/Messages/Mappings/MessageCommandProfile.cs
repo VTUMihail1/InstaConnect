@@ -6,9 +6,9 @@ using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 
 namespace InstaConnect.Messages.Business.Features.Messages.Mappings;
 
-internal class MessagesCommandProfile : Profile
+internal class MessageCommandProfile : Profile
 {
-    public MessagesCommandProfile()
+    public MessageCommandProfile()
     {
         CreateMap<AddMessageCommand, Message>()
             .ConstructUsing(src => new(
