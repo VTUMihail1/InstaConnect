@@ -1,52 +1,50 @@
 ﻿using System.Linq.Expressions;
 using FluentAssertions;
-using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFilteredFollows;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
+using InstaConnect.Posts.Business.Features.Posts.Models;
+using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllFilteredPosts;
+using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
+using InstaConnect.Posts.Data.Features.Posts.Models.Filters;
 using NSubstitute;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFilteredFollows;
 
-public class GetAllFilteredFollowsQueryHandlerUnitTests : BaseFollowUnitTest
+public class GetAllFilteredPostsQueryHandlerUnitTests : BasePostUnitTest
 {
-    private readonly GetAllFilteredFollowsQueryHandler _queryHandler;
+    private readonly GetAllFilteredPostsQueryHandler _queryHandler;
 
-    public GetAllFilteredFollowsQueryHandlerUnitTests()
+    public GetAllFilteredPostsQueryHandlerUnitTests()
     {
         _queryHandler = new(
             InstaConnectMapper,
-            FollowReadRepository);
+            PostReadRepository);
     }
 
     [Fact]
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
-            ValidFollowCurrentUserId,
-            ValidUserName,
-            ValidFollowFollowingId,
+        var query = new GetAllFilteredPostsQuery(
+            ValidPostCurrentUserId,
+            ValidTitle,
             ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
             ValidPageSizeValue);
 
-        Expression<Func<Follow, bool>> expectedExpression = f =>
-             (string.IsNullOrEmpty(ValidFollowCurrentUserId) || f.FollowerId.Equals(ValidFollowCurrentUserId)) &&
-             (string.IsNullOrEmpty(ValidUserName) || f.Follower!.UserName.Equals(ValidUserName)) &&
-             (string.IsNullOrEmpty(ValidFollowFollowingId) || f.FollowingId.Equals(ValidFollowFollowingId)) &&
-             (string.IsNullOrEmpty(ValidUserName) || f.Following!.UserName.Equals(ValidUserName));
+        Expression<Func<Post, bool>> expectedExpression = p =>
+             (string.IsNullOrEmpty(ValidPostCurrentUserId) || p.UserId.Equals(ValidPostCurrentUserId)) &&
+             (string.IsNullOrEmpty(ValidUserName) || p.User!.UserName.Equals(ValidUserName)) &&
+             (string.IsNullOrEmpty(ValidTitle) || p.Title.Equals(ValidTitle));
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        await FollowReadRepository
+        await PostReadRepository
             .Received(1)
-            .GetAllFilteredAsync(Arg.Is<FollowFilteredCollectionReadQuery>(m =>
+            .GetAllFilteredAsync(Arg.Is<PostFilteredCollectionReadQuery>(m =>
                                                                         m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
@@ -58,10 +56,9 @@ public class GetAllFilteredFollowsQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
-            ValidFollowCurrentUserId,
-            ValidUserName,
-            ValidFollowFollowingId,
+        var query = new GetAllFilteredPostsQuery(
+            ValidPostCurrentUserId,
+            ValidTitle,
             ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -74,13 +71,12 @@ public class GetAllFilteredFollowsQueryHandlerUnitTests : BaseFollowUnitTest
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
-                                                           m.FollowerId == ValidFollowCurrentUserId &&
-                                                           m.FollowerName == ValidUserName &&
-                                                           m.FollowerProfileImage == ValidUserProfileImage &&
-                                                           m.FollowingId == ValidFollowFollowingId &&
-                                                           m.FollowingName == ValidUserName &&
-                                                           m.FollowingProfileImage == ValidUserProfileImage) &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
+                                                           m.UserId == ValidPostCurrentUserId &&
+                                                           m.UserName == ValidUserName &&
+                                                           m.UserProfileImage == ValidUserProfileImage &&
+                                                           m.Title == ValidTitle &&
+                                                           m.Content == ValidContent) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
                                                            mc.TotalCount == ValidTotalCountValue &&

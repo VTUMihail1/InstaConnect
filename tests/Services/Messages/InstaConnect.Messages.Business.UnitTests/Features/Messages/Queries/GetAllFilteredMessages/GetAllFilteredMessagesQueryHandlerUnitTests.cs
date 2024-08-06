@@ -34,9 +34,9 @@ public class GetAllFilteredMessagesQueryHandlerUnitTests : BaseMessageUnitTest
             ValidPageSizeValue);
 
         Expression<Func<Message, bool>> expectedExpression = m =>
-                                       (string.IsNullOrEmpty(ValidMessageCurrentUserId) || m.SenderId == ValidMessageCurrentUserId) &&
-                                       (string.IsNullOrEmpty(ValidMessageReceiverId) || m.ReceiverId == ValidMessageReceiverId) &&
-                                       (string.IsNullOrEmpty(ValidUserName) || m.Receiver!.UserName == ValidUserName);
+                                       (string.IsNullOrEmpty(ValidMessageCurrentUserId) || m.SenderId.Equals(ValidMessageCurrentUserId)) &&
+                                       (string.IsNullOrEmpty(ValidMessageReceiverId) || m.ReceiverId.Equals(ValidMessageReceiverId)) &&
+                                       (string.IsNullOrEmpty(ValidUserName) || m.Receiver!.UserName.Equals(ValidUserName));
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);

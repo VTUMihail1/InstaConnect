@@ -202,7 +202,7 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
             .Returns(existingFollowPaginationList);
 
         FollowReadRepository
-            .GetAllAsync(Arg.Is<CollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m =>
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&
