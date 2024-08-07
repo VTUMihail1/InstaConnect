@@ -8,7 +8,7 @@ using InstaConnect.Shared.Web.FunctionalTests.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Web.FunctionalTests.Utilities;
+namespace InstaConnect.Follows.Web.FunctionalTests.Features.Users.Utilities;
 
 public abstract class BaseUserFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {

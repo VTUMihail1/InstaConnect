@@ -7,7 +7,6 @@ using InstaConnect.Follows.Business.IntegrationTests.Utilities;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Follow;
-using InstaConnect.Shared.Business.Exceptions.Message;
 
 namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Commands;
 

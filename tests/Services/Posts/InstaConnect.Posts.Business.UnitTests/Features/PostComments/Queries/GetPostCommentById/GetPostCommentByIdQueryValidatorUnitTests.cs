@@ -1,10 +1,9 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
+using InstaConnect.Posts.Business.Features.PostComments.Utilities;
+using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetFollowById;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Queries.GetPostCommentById;
 
 public class GetPostCommentByIdQueryValidatorUnitTests : BasePostCommentUnitTest
 {

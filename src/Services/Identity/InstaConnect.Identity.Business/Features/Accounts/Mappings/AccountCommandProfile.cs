@@ -8,7 +8,6 @@ using InstaConnect.Identity.Data.Features.Tokens.Models.Entitites;
 using InstaConnect.Identity.Data.Features.Users.Models;
 using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Contracts.Emails;
-using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Models;
 
 namespace InstaConnect.Identity.Business.Features.Accounts.Mappings;

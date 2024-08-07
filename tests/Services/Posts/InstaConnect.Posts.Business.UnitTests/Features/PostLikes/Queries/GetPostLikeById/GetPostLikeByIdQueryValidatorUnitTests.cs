@@ -1,10 +1,9 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetPostLikeById;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
+using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetFollowById;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Queries.GetPostLikeById;
 
 public class GetPostLikeByIdQueryValidatorUnitTests : BasePostLikeUnitTest
 {

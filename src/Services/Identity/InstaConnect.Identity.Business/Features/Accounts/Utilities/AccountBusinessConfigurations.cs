@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Follows.Business.Features.Follows.Utilities;
+﻿namespace InstaConnect.Identity.Business.Features.Accounts.Utilities;
 
 public class AccountBusinessConfigurations
 {

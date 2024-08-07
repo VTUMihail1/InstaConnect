@@ -1,15 +1,11 @@
 ﻿using FluentAssertions;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
-using InstaConnect.Posts.Business.Features.Posts.Models;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
-using InstaConnect.Shared.Business.Exceptions.Follow;
+using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
-using InstaConnect.Shared.Business.Exceptions.Posts;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetFollowById;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Queries.GetPostCommentById;
 
 public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentUnitTest
 {

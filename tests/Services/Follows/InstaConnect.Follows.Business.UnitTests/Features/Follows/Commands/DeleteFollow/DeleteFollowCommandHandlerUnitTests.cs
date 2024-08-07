@@ -4,7 +4,6 @@ using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Follow;
-using InstaConnect.Shared.Business.Exceptions.Message;
 using NSubstitute;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.DeleteFollow;

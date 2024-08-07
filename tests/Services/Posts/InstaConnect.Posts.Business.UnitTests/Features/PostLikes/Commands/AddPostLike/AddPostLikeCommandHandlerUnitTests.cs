@@ -1,14 +1,14 @@
 ﻿using FluentAssertions;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.AddPostLike;
 using InstaConnect.Posts.Business.Features.PostLikes.Models;
+using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.AddFollow;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Commands.AddPostLike;
 
 public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
 {

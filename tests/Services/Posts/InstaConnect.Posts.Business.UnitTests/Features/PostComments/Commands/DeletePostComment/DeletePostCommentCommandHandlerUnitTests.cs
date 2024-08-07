@@ -1,16 +1,12 @@
 ﻿using FluentAssertions;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.DeletePostComment;
-using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
+using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Shared.Business.Exceptions.Account;
-using InstaConnect.Shared.Business.Exceptions.Follow;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
-using InstaConnect.Shared.Business.Exceptions.Posts;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.DeleteFollow;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Commands.DeletePostComment;
 
 public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
 {

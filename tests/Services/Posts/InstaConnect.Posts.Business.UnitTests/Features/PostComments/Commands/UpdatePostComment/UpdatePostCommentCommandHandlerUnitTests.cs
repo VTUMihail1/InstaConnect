@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
+using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.DeleteFollow;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Commands.UpdatePostComment;
 
 public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
 {

@@ -4,7 +4,6 @@ using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllFilteredPostL
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Filters;
-using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
 
 namespace InstaConnect.Posts.Business.Features.PostLikes.Mappings;

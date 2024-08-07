@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Posts.Business.Features.PostComments.Utilities;
 
 namespace InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
 public class UpdatePostCommentCommandValidator : AbstractValidator<UpdatePostCommentCommand>

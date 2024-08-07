@@ -55,7 +55,7 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
 
         var existingPostLike = await _postCommentLikeWriteRepository.GetByUserIdAndPostCommentIdAsync(request.CurrentUserId, request.PostCommentId, cancellationToken);
 
-        if (existingPostLike == null)
+        if (existingPostLike != null)
         {
             throw new BadRequestException(POST_COMMENT_ALREADY_LIKED);
         }
@@ -65,8 +65,8 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var postCommentLikeCommand = _instaConnectMapper.Map<PostCommentLikeCommandViewModel>(postCommentLike);
+        var postCommentLikeCommandViewModel = _instaConnectMapper.Map<PostCommentLikeCommandViewModel>(postCommentLike);
 
-        return postCommentLikeCommand;
+        return postCommentLikeCommandViewModel;
     }
 }

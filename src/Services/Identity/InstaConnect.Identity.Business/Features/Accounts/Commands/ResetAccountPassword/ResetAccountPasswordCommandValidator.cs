@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Identity.Business.Features.Accounts.Utilities;
 
 namespace InstaConnect.Identity.Business.Features.Accounts.Commands.ResetAccountPassword;
 public class ResetAccountPasswordCommandValidator : AbstractValidator<ResetAccountPasswordCommand>

@@ -1,14 +1,13 @@
 ﻿using System.Linq.Expressions;
 using FluentAssertions;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllFilteredPostComments;
+using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Filters;
-using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFilteredFollows;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Queries.GetAllFilteredPostComments;
 
 public class GetAllFilteredPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
 {

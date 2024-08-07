@@ -1,11 +1,11 @@
-﻿using InstaConnect.Follows.Business.UnitTests.Utilities;
-using InstaConnect.Posts.Business.Features.Users.Consumers;
+﻿using InstaConnect.Posts.Business.Features.Users.Consumers;
+using InstaConnect.Posts.Business.UnitTests.Features.Users.Utilities;
 using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Contracts.Users;
 using MassTransit;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Users.Consumers;
+namespace InstaConnect.Posts.Business.UnitTests.Features.Users.Consumers;
 
 public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
 {

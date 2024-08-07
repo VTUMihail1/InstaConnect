@@ -1,13 +1,13 @@
 ﻿using System.Linq.Expressions;
 using FluentAssertions;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.Posts.Models;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllFilteredPosts;
+using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Data.Features.Posts.Models.Filters;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFilteredFollows;
+namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Queries.GetAllFilteredPosts;
 
 public class GetAllFilteredPostsQueryHandlerUnitTests : BasePostUnitTest
 {

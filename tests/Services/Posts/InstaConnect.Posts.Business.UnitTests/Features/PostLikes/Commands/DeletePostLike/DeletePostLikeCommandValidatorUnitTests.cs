@@ -1,10 +1,9 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.DeletePostLike;
-using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
+using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.DeleteFollow;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Commands.DeletePostLike;
 
 public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
 {
@@ -33,8 +32,8 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(PostLikeBusinessConfigurations.ID_MIN_LENGTH - 1)]
+    [InlineData(PostLikeBusinessConfigurations.ID_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -68,8 +67,8 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
+    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange

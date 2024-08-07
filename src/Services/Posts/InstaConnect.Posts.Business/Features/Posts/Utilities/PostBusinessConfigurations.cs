@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Follows.Business.Features.Follows.Utilities;
+﻿namespace InstaConnect.Posts.Business.Features.Posts.Utilities;
 
 public class PostBusinessConfigurations
 {

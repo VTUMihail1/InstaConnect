@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Posts.Data.Features.PostCommentLikes.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
-using InstaConnect.Shared.Business.Exceptions.PostLike;
+using InstaConnect.Shared.Business.Exceptions.PostCommentLike;
 using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.DeletePostCommentLike;
@@ -27,7 +27,7 @@ internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostC
 
         if (existingPostCommentLike == null)
         {
-            throw new PostLikeNotFoundException();
+            throw new PostCommentLikeNotFoundException();
         }
 
         if (request.CurrentUserId != existingPostCommentLike.UserId)

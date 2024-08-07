@@ -1,10 +1,9 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
-using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
 using InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;
+using InstaConnect.Posts.Business.Features.Posts.Utilities;
+using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.DeleteFollow;
+namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Commands.UpdatePost;
 
 public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
 {

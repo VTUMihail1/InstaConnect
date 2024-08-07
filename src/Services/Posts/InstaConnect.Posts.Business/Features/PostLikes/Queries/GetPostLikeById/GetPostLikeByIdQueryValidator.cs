@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Business.Features.PostLikes.Queries.GetPostLikeById;
 

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.Features.Users.Mappings;
 using InstaConnect.Posts.Data.Features.Users.Abstract;
 using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
@@ -8,7 +8,7 @@ using InstaConnect.Shared.Business.UnitTests.Utilities;
 using InstaConnect.Shared.Data.Abstractions;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Utilities;
+namespace InstaConnect.Posts.Business.UnitTests.Features.Users.Utilities;
 
 public abstract class BaseUserUnitTest : BaseSharedUnitTest
 {

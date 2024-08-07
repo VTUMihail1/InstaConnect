@@ -9,7 +9,6 @@ using InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.FunctionalTests.Utilities;
 using InstaConnect.Shared.Business.Utilities;
 using InstaConnect.Shared.Data.Models.Enums;
-using MassTransit.Testing;
 
 namespace InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Controllers.v1;
 

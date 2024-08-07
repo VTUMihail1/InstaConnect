@@ -1,12 +1,11 @@
 ﻿using FluentAssertions;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.Posts.Models;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
+using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Data.Features.Posts.Models.Filters;
-using InstaConnect.Shared.Data.Models.Filters;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFollows;
+namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Queries.GetAllPosts;
 
 public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
 {

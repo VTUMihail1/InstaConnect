@@ -1,23 +1,21 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.PostLikes.Mappings;
-using InstaConnect.Posts.Business.Features.Posts.Mappings;
+using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Data.Features.PostLikes.Abstract;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Filters;
 using InstaConnect.Posts.Data.Features.Posts.Abstract;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Data.Features.Posts.Models.Filters;
 using InstaConnect.Posts.Data.Features.Users.Abstract;
 using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.UnitTests.Utilities;
 using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
 
 public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
 {

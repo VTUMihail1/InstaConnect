@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Users.Consumers;
-using InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Utilities;
 using InstaConnect.Messages.Data.Features.Users.Models.Entities;

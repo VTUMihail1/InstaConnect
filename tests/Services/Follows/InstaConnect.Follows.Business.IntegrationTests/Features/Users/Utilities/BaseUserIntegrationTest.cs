@@ -1,8 +1,6 @@
 ﻿using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.IntegrationTests.Utilities;
 using InstaConnect.Follows.Data;
-using InstaConnect.Follows.Data.Features.Follows.Abstractions;
-using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Data.Features.Users.Abstractions;
 using InstaConnect.Follows.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Business.IntegrationTests.Utilities;
@@ -10,7 +8,7 @@ using InstaConnect.Shared.Data.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Follows.Business.IntegrationTests.Features.Utilities;
+namespace InstaConnect.Follows.Business.IntegrationTests.Features.Users.Utilities;
 
 public abstract class BaseUserIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
