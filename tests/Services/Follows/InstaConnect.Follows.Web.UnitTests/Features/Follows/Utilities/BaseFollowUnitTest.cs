@@ -2,7 +2,6 @@
 using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
 using InstaConnect.Follows.Business.Features.Follows.Models;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFilteredFollows;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
 using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.Features.Follows.Mappings;
@@ -66,10 +65,6 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
 
         InstaConnectSender
             .SendAsync(Arg.Any<GetAllFollowsQuery>(), CancellationToken)
-            .Returns(existingMessagePaginationCollectionModel);
-
-        InstaConnectSender
-            .SendAsync(Arg.Any<GetAllFilteredFollowsQuery>(), CancellationToken)
             .Returns(existingMessagePaginationCollectionModel);
 
         InstaConnectSender

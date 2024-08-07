@@ -11,7 +11,7 @@ namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAl
 
 public class GetAllFilteredFollowsQueryHandlerUnitTests : BaseFollowUnitTest
 {
-    private readonly GetAllFilteredFollowsQueryHandler _queryHandler;
+    private readonly GetAllFollowsQueryHandler _queryHandler;
 
     public GetAllFilteredFollowsQueryHandlerUnitTests()
     {
@@ -24,7 +24,7 @@ public class GetAllFilteredFollowsQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             ValidFollowCurrentUserId,
             ValidUserName,
             ValidFollowFollowingId,
@@ -58,7 +58,7 @@ public class GetAllFilteredFollowsQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             ValidFollowCurrentUserId,
             ValidUserName,
             ValidFollowFollowingId,

@@ -8,7 +8,7 @@ namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAl
 
 public class GetAllFilteredFollowsQueryValidatorUnitTests : BaseFollowUnitTest
 {
-    private readonly GetAllFilteredFollowsQueryValidator _queryValidator;
+    private readonly GetAllFollowsQueryValidator _queryValidator;
 
     public GetAllFilteredFollowsQueryValidatorUnitTests()
     {
@@ -21,7 +21,7 @@ public class GetAllFilteredFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForFollowerId_WhenFollowerIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             Faker.Random.AlphaNumeric(length),
             ValidUserName,
             ValidFollowingId,
@@ -44,7 +44,7 @@ public class GetAllFilteredFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForFollowerName_WhenFollowerNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length),
             ValidFollowingId,
@@ -67,7 +67,7 @@ public class GetAllFilteredFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForFollowingId_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             ValidCurrentUserId,
             ValidUserName,
             Faker.Random.AlphaNumeric(length),
@@ -90,7 +90,7 @@ public class GetAllFilteredFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForFollowingName_WhenFollowingNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidFollowingId,
@@ -111,7 +111,7 @@ public class GetAllFilteredFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidFollowingId,
@@ -132,7 +132,7 @@ public class GetAllFilteredFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidFollowingId,
@@ -156,7 +156,7 @@ public class GetAllFilteredFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidFollowingId,
@@ -179,7 +179,7 @@ public class GetAllFilteredFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidFollowingId,
@@ -202,7 +202,7 @@ public class GetAllFilteredFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidFollowingId,

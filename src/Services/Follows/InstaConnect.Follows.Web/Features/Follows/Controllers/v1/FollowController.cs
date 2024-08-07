@@ -2,7 +2,6 @@
 using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
 using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFilteredFollows;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
 using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
@@ -44,21 +43,6 @@ public class FollowController : ControllerBase
         CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllFollowsQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<FollowPaginationQueryResponse>(queryResponse);
-
-        return Ok(response);
-    }
-
-    // GET: api/follows/filtered
-    [HttpGet("filtered")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<FollowPaginationQueryResponse>> GetAllFilteredAsync(
-        GetAllFilteredFollowsRequest request,
-        CancellationToken cancellationToken)
-    {
-        var queryRequest = _instaConnectMapper.Map<GetAllFilteredFollowsQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
         var response = _instaConnectMapper.Map<FollowPaginationQueryResponse>(queryResponse);
 

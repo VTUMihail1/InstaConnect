@@ -3,7 +3,7 @@ using InstaConnect.Follows.Data.Features.Follows.Abstractions;
 using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
 using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
+namespace InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFilteredFollows;
 
 internal class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQuery, FollowPaginationQueryViewModel>
 {
@@ -22,9 +22,9 @@ internal class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQuery, Fol
         GetAllFollowsQuery request,
         CancellationToken cancellationToken)
     {
-        var collectionQuery = _instaConnectMapper.Map<FollowCollectionReadQuery>(request);
+        var filteredQuery = _instaConnectMapper.Map<FollowFilteredCollectionReadQuery>(request);
 
-        var follows = await _followReadRepository.GetAllAsync(collectionQuery, cancellationToken);
+        var follows = await _followReadRepository.GetAllFilteredAsync(filteredQuery, cancellationToken);
         var response = _instaConnectMapper.Map<FollowPaginationQueryViewModel>(follows);
 
         return response;

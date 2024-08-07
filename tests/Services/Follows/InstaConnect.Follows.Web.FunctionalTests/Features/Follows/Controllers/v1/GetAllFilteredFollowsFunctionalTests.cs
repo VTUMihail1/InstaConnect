@@ -537,7 +537,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
 
     private string GetApiRoute(string followerId, string followerName, string followingId, string followingName, SortOrder sortOrder, string sortPropertyName, int page, int pageSize)
     {
-        var routeTemplate = "{0}/filtered?followerId={1}&followerName={2}&followingId={3}&followingName={4}&sortOrder={5}&sortPropertyName={6}&page={7}&pageSize={8}";
+        var routeTemplate = "{0}?followerId={1}&followerName={2}&followingId={3}&followingName={4}&sortOrder={5}&sortPropertyName={6}&page={7}&pageSize={8}";
 
         var route = string.Format(
             routeTemplate,

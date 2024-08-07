@@ -9,9 +9,9 @@ using InstaConnect.Shared.Business.Exceptions.Follow;
 
 namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Queries;
 
-public class GetMessageByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTest
+public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTest
 {
-    public GetMessageByIdQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetFollowByIdQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
     }
 

@@ -3,7 +3,15 @@ using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Models.Filters;
 using InstaConnect.Shared.Data.Models.Enums;
 
-namespace InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
+namespace InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFilteredFollows;
 
-public record GetAllFollowsQuery(SortOrder SortOrder, string SortPropertyName, int Page, int PageSize)
+public record GetAllFollowsQuery(
+    string FollowerId,
+    string FollowerName,
+    string FollowingId,
+    string FollowingName,
+    SortOrder SortOrder,
+    string SortPropertyName,
+    int Page,
+    int PageSize)
     : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQuery<FollowPaginationQueryViewModel>;
