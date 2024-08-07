@@ -6,6 +6,7 @@ using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCo
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Requests;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Responses;
+using InstaConnect.Posts.Web.Features.PostComments.Models.Responses;
 using InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Web.Abstractions;
@@ -39,11 +40,11 @@ public class PostCommentLikeController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllAsync(GetAllPostCommentLikesRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<PostCommentLikePaginationQueryResponse>> GetAllAsync(GetAllPostCommentLikesRequest request, CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllPostCommentLikesQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<ICollection<PostCommentLikeQueryResponse>>(queryResponse);
+        var response = _instaConnectMapper.Map<PostCommentLikePaginationQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -52,11 +53,11 @@ public class PostCommentLikeController : ControllerBase
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllFilteredAsync(GetAllFilteredPostCommentLikesRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<PostCommentLikePaginationQueryResponse>> GetAllFilteredAsync(GetAllFilteredPostCommentLikesRequest request, CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllFilteredPostCommentLikesQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<ICollection<PostLikeQueryResponse>>(queryResponse);
+        var response = _instaConnectMapper.Map<PostCommentLikePaginationQueryResponse> (queryResponse);
 
         return Ok(response);
     }
@@ -65,7 +66,7 @@ public class PostCommentLikeController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetByIdAsync(GetPostCommentLikeByIdRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<PostCommentQueryResponse>> GetByIdAsync(GetPostCommentLikeByIdRequest request, CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetPostCommentLikeByIdQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
@@ -80,7 +81,7 @@ public class PostCommentLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddAsync(AddPostCommentLikeRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<PostCommentLikeCommandResponse>> AddAsync(AddPostCommentLikeRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _instaConnectMapper.Map<AddPostCommentLikeCommand>((currentUser, request));
@@ -96,7 +97,7 @@ public class PostCommentLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteAsync(DeletePostCommentLikeRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult> DeleteAsync(DeletePostCommentLikeRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _instaConnectMapper.Map<DeletePostCommentLikeCommand>((currentUser, request));

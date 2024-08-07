@@ -38,11 +38,11 @@ public class PostLikeController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllAsync(GetAllPostLikesRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<PostLikePaginationQueryResponse>> GetAllAsync(GetAllPostLikesRequest request, CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllPostLikesQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<ICollection<PostLikeQueryResponse>>(queryResponse);
+        var response = _instaConnectMapper.Map<PostLikePaginationQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -51,11 +51,11 @@ public class PostLikeController : ControllerBase
     [HttpGet("filtered")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAllFilteredAsync(GetAllFilteredPostLikesRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<PostLikePaginationQueryResponse>> GetAllFilteredAsync(GetAllFilteredPostLikesRequest request, CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllFilteredPostLikesQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<ICollection<PostLikeQueryResponse>>(queryResponse);
+        var response = _instaConnectMapper.Map<PostLikePaginationQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -64,7 +64,7 @@ public class PostLikeController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetByIdAsync(GetPostLikeByIdRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<PostLikeQueryResponse>> GetByIdAsync(GetPostLikeByIdRequest request, CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetPostLikeByIdQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
@@ -79,7 +79,7 @@ public class PostLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddAsync(AddPostLikeRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<PostLikeCommandResponse>> AddAsync(AddPostLikeRequest request, CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _instaConnectMapper.Map<AddPostLikeCommand>((currentUser, request));
