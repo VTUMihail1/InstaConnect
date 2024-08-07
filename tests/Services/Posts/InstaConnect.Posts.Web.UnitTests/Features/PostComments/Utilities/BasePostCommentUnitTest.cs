@@ -17,7 +17,7 @@ using NSubstitute;
 
 namespace InstaConnect.Posts.Web.UnitTests.Features.PostComments.Utilities;
 
-public abstract class BasePostUnitTest : BaseSharedUnitTest
+public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
 {
     protected readonly string ValidId;
     protected readonly string ValidContent;
@@ -26,7 +26,7 @@ public abstract class BasePostUnitTest : BaseSharedUnitTest
     protected readonly string ValidUserName;
     protected readonly string ValidUserProfileImage;
 
-    public BasePostUnitTest() : base(
+    public BasePostCommentUnitTest() : base(
         Substitute.For<IInstaConnectSender>(),
         Substitute.For<ICurrentUserContext>(),
         new InstaConnectMapper(
