@@ -23,8 +23,8 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
     protected readonly string InvalidId;
     protected readonly string ValidPostId;
     protected readonly string InvalidPostId;
-    protected readonly string ValidTitle;
-    protected readonly string ValidContent;
+    protected readonly string ValidPostTitle;
+    protected readonly string ValidPostContent;
     protected readonly string ValidCurrentUserId;
     protected readonly string InvalidUserId;
     protected readonly string ValidUserName;
@@ -62,8 +62,8 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
         InvalidId = GetAverageString(PostLikeBusinessConfigurations.ID_MAX_LENGTH, PostLikeBusinessConfigurations.ID_MIN_LENGTH);
         ValidPostId = GetAverageString(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH, PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH);
         InvalidPostId = GetAverageString(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH, PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH);
-        ValidTitle = GetAverageString(PostBusinessConfigurations.TITLE_MAX_LENGTH, PostBusinessConfigurations.TITLE_MIN_LENGTH);
-        ValidContent = GetAverageString(PostBusinessConfigurations.CONTENT_MAX_LENGTH, PostBusinessConfigurations.CONTENT_MIN_LENGTH);
+        ValidPostTitle = GetAverageString(PostBusinessConfigurations.TITLE_MAX_LENGTH, PostBusinessConfigurations.TITLE_MIN_LENGTH);
+        ValidPostContent = GetAverageString(PostBusinessConfigurations.CONTENT_MAX_LENGTH, PostBusinessConfigurations.CONTENT_MIN_LENGTH);
         InvalidUserId = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
         ValidUserName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
         ValidUserFirstName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
@@ -110,8 +110,8 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
         };
 
         var existingPost = new Post(
-            ValidTitle,
-            ValidContent,
+            ValidPostTitle,
+            ValidPostContent,
             ValidPostLikeCurrentUserId)
         {
             Id = ValidPostId,
@@ -119,8 +119,8 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
         };
 
         var existingPostLikePost = new Post(
-            ValidTitle,
-            ValidContent,
+            ValidPostTitle,
+            ValidPostContent,
             ValidPostLikeCurrentUserId)
         {
             Id = ValidPostLikePostId,
