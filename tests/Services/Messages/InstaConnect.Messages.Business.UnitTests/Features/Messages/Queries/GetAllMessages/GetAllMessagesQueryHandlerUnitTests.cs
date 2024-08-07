@@ -9,11 +9,11 @@ using NSubstitute;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Queries.GetAllFilteredMessages;
 
-public class GetAllFilteredMessagesQueryHandlerUnitTests : BaseMessageUnitTest
+public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
 {
-    private readonly GetAllFilteredMessagesQueryHandler _queryHandler;
+    private readonly GetAllMessagesQueryHandler _queryHandler;
 
-    public GetAllFilteredMessagesQueryHandlerUnitTests()
+    public GetAllMessagesQueryHandlerUnitTests()
     {
         _queryHandler = new(
             InstaConnectMapper,
@@ -24,7 +24,7 @@ public class GetAllFilteredMessagesQueryHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             ValidMessageCurrentUserId,
             ValidMessageReceiverId,
             ValidUserName,
@@ -56,7 +56,7 @@ public class GetAllFilteredMessagesQueryHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldReturnMessageViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             ValidMessageCurrentUserId,
             ValidMessageReceiverId,
             ValidUserName,

@@ -13,7 +13,7 @@ internal class MessageQueryProfile : Profile
     {
         CreateMap<PaginationList<Message>, MessagePaginationQueryViewModel>();
 
-        CreateMap<GetAllFilteredMessagesQuery, MessageFilteredCollectionReadQuery>();
+        CreateMap<GetAllMessagesQuery, MessageFilteredCollectionReadQuery>();
 
         CreateMap<Message, MessageQueryViewModel>()
             .ConstructUsing(src => new(

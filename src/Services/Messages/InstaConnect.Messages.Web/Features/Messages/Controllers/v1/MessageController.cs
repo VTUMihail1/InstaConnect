@@ -35,16 +35,16 @@ public class MessageController : ControllerBase
         _currentUserContext = currentUserContext;
     }
 
-    // GET: api/messages/filtered
-    [HttpGet("filtered")]
+    // GET: api/messages
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<MessagePaginationCollectionQueryResponse>> GetAllFilteredAsync(
-        GetAllFilteredMessagesRequest request,
+    public async Task<ActionResult<MessagePaginationCollectionQueryResponse>> GetAllAsync(
+        GetAllMessagesRequest request,
         CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
-        var queryRequest = _instaConnectMapper.Map<GetAllFilteredMessagesQuery>((currentUser, request));
+        var queryRequest = _instaConnectMapper.Map<GetAllMessagesQuery>((currentUser, request));
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
         var response = _instaConnectMapper.Map<MessagePaginationCollectionQueryResponse>(queryResponse);
 

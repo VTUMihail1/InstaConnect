@@ -12,7 +12,7 @@ internal class MessagesQueryProfile : Profile
 {
     public MessagesQueryProfile()
     {
-        CreateMap<(CurrentUserModel, GetAllFilteredMessagesRequest), GetAllFilteredMessagesQuery>()
+        CreateMap<(CurrentUserModel, GetAllMessagesRequest), GetAllMessagesQuery>()
             .ConstructUsing(src => new(
                 src.Item1.Id,
                 src.Item2.ReceiverId,

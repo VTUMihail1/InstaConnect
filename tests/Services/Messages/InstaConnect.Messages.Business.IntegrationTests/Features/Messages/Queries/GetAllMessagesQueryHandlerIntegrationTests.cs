@@ -9,9 +9,9 @@ using InstaConnect.Shared.Business.Utilities;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Queries;
 
-public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageIntegrationTest
+public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegrationTest
 {
-    public GetAllFilteredMessagesQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetAllMessagesQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
     }
 
@@ -20,7 +20,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
     {
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             null!,
             existingReceiverId,
             ValidUserName,
@@ -44,7 +44,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
     {
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             Faker.Random.AlphaNumeric(length),
             existingReceiverId,
             ValidUserName,
@@ -67,7 +67,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             Faker.Random.AlphaNumeric(length),
             ValidUserName,
@@ -91,7 +91,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
             Faker.Random.AlphaNumeric(length),
@@ -113,7 +113,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
             ValidUserName,
@@ -135,7 +135,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
             ValidUserName,
@@ -160,7 +160,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
             ValidUserName,
@@ -184,7 +184,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
             ValidUserName,
@@ -208,7 +208,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
             ValidUserName,
@@ -231,7 +231,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             GetNonCaseMatchingString(existingSenderId),
             existingReceiverId,
             ValidUserName,
@@ -268,7 +268,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             null!,
             ValidUserName,
@@ -305,7 +305,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             string.Empty,
             ValidUserName,
@@ -342,7 +342,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             GetNonCaseMatchingString(existingReceiverId),
             ValidUserName,
@@ -379,7 +379,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
             null!,
@@ -416,7 +416,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
             string.Empty,
@@ -453,7 +453,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
             GetNonCaseMatchingString(ValidUserName),
@@ -490,7 +490,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
             GetHalfStartString(ValidUserName),
@@ -527,7 +527,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseMessageInt
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
             ValidUserName,

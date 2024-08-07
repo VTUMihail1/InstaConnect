@@ -6,11 +6,11 @@ using InstaConnect.Shared.Business.Utilities;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Queries.GetAllFilteredMessages;
 
-public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
+public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
 {
-    private readonly GetAllFilteredMessagesQueryValidator _queryValidator;
+    private readonly GetAllMessagesQueryValidator _queryValidator;
 
-    public GetAllFilteredMessagesQueryValidatorUnitTests()
+    public GetAllMessagesQueryValidatorUnitTests()
     {
         _queryValidator = new(EntityPropertyValidator);
     }
@@ -19,7 +19,7 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortOrder_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             null!,
             ValidReceiverId,
             ValidUserName,
@@ -42,7 +42,7 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             Faker.Random.AlphaNumeric(length),
             ValidReceiverId,
             ValidUserName,
@@ -64,7 +64,7 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForReceiverId_WhenReceiverIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length),
             ValidUserName,
@@ -86,7 +86,7 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForReceiverName_WhenReceiverNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             ValidCurrentUserId,
             ValidReceiverId,
             Faker.Random.AlphaNumeric(length),
@@ -106,7 +106,7 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
     {
         // Arrange
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             ValidCurrentUserId,
             ValidReceiverId,
             ValidUserName,
@@ -126,7 +126,7 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
     {
         // Arrange
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             ValidCurrentUserId,
             ValidReceiverId,
             ValidUserName,
@@ -149,7 +149,7 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             ValidCurrentUserId,
             ValidReceiverId,
             ValidUserName,
@@ -171,7 +171,7 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             ValidCurrentUserId,
             ValidReceiverId,
             ValidUserName,
@@ -193,7 +193,7 @@ public class GetAllFilteredMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllFilteredMessagesQuery(
+        var query = new GetAllMessagesQuery(
             ValidCurrentUserId,
             ValidReceiverId,
             ValidUserName,
