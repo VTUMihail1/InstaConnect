@@ -198,13 +198,5 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
                                                                         m.SortOrder == ValidSortOrderProperty &&
                                                                         m.SortPropertyName == ValidSortPropertyName), CancellationToken)
             .Returns(existingFollowPaginationList);
-
-        FollowReadRepository
-            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m =>
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken)
-            .Returns(existingFollowPaginationList);
     }
 }

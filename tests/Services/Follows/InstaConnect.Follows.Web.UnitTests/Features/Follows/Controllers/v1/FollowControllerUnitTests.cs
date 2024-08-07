@@ -3,7 +3,6 @@ using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
 using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFilteredFollows;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
 using InstaConnect.Follows.Web.Features.Follows.Controllers.v1;
 using InstaConnect.Follows.Web.Features.Follows.Models.Binding;
@@ -27,113 +26,10 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllFollowsRequest()
-        {
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        var response = await _followController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Result
-            .Should()
-            .Match<OkObjectResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.OK));
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnFollowPaginationQueryResponse_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllFollowsRequest()
-        {
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        var response = await _followController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response.Result
-            .Should()
-            .BeOfType<OkObjectResult>()
-            .Which
-            .Value
-            .Should()
-            .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                                 m.Id == ValidId &&
-                                                                 m.FollowerId == ValidCurrentUserId &&
-                                                                 m.FollowerName == ValidUserName &&
-                                                                 m.FollowerProfileImage == ValidUserProfileImage &&
-                                                                 m.FollowingId == ValidFollowingId &&
-                                                                 m.FollowingName == ValidUserName &&
-                                                                 m.FollowingProfileImage == ValidUserProfileImage) &&
-                                                              mc.Page == ValidPageValue &&
-                                                              mc.PageSize == ValidPageSizeValue &&
-                                                              mc.TotalCount == ValidTotalCountValue &&
-                                                              !mc.HasNextPage &&
-                                                              !mc.HasPreviousPage);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldCallTheSender_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllFollowsRequest()
-        {
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        var response = await _followController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        await InstaConnectSender
-              .Received(1)
-              .SendAsync(Arg.Is<GetAllFollowsQuery>(m =>
-                  m.SortOrder == ValidSortOrderProperty &&
-                  m.SortPropertyName == ValidSortPropertyName &&
-                  m.Page == ValidPageValue &&
-                  m.PageSize == ValidPageSizeValue), CancellationToken);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllFollowsRequest()
-        {
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        await _followController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        CurrentUserContext.Received(1);
-    }
-
-    [Fact]
     public async Task GetAllFilteredAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredFollowsRequest()
+        var request = new GetAllFollowsRequest()
         {
             FollowerId = ValidCurrentUserId,
             FollowerName = ValidUserName,
@@ -146,7 +42,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         };
 
         // Act
-        var response = await _followController.GetAllFilteredAsync(request, CancellationToken);
+        var response = await _followController.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -159,7 +55,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
     public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationQueryResponse_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredFollowsRequest()
+        var request = new GetAllFollowsRequest()
         {
             FollowerId = ValidCurrentUserId,
             FollowerName = ValidUserName,
@@ -172,7 +68,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         };
 
         // Act
-        var response = await _followController.GetAllFilteredAsync(request, CancellationToken);
+        var response = await _followController.GetAllAsync(request, CancellationToken);
 
         // Assert
         response.Result
@@ -200,7 +96,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
     public async Task GetAllFilteredAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredFollowsRequest()
+        var request = new GetAllFollowsRequest()
         {
             FollowerId = ValidCurrentUserId,
             FollowerName = ValidUserName,
@@ -213,12 +109,12 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         };
 
         // Act
-        var response = await _followController.GetAllFilteredAsync(request, CancellationToken);
+        var response = await _followController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetAllFilteredFollowsQuery>(m =>
+              .SendAsync(Arg.Is<GetAllFollowsQuery>(m =>
                   m.FollowerId == ValidCurrentUserId &&
                   m.FollowerName == ValidUserName &&
                   m.FollowingId == ValidFollowingId &&
@@ -233,7 +129,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
     public async Task GetAllFilteredAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredFollowsRequest()
+        var request = new GetAllFollowsRequest()
         {
             FollowerId = ValidCurrentUserId,
             FollowerName = ValidUserName,
@@ -246,7 +142,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         };
 
         // Act
-        await _followController.GetAllFilteredAsync(request, CancellationToken);
+        await _followController.GetAllAsync(request, CancellationToken);
 
         // Assert
         CurrentUserContext.Received(1);

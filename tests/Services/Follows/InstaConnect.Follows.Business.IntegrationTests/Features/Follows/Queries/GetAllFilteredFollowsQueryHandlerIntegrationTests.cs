@@ -9,9 +9,9 @@ using InstaConnect.Shared.Business.Utilities;
 
 namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Queries;
 
-public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowIntegrationTest
+public class GetAllFilteredFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTest
 {
-    public GetAllFilteredMessagesQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetAllFilteredFollowsQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
     }
 
@@ -23,7 +23,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             Faker.Random.AlphaNumeric(length),
             ValidUserName,
             existingFollowingId,
@@ -48,7 +48,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             Faker.Random.AlphaNumeric(length),
             existingFollowingId,
@@ -73,7 +73,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             Faker.Random.AlphaNumeric(length),
@@ -98,7 +98,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             existingFollowingId,
@@ -122,7 +122,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             existingFollowingId,
@@ -145,7 +145,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             existingFollowingId,
@@ -171,7 +171,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             existingFollowingId,
@@ -196,7 +196,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             existingFollowingId,
@@ -221,7 +221,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             existingFollowingId,
@@ -245,7 +245,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             null!,
             ValidUserName,
             existingFollowingId,
@@ -282,7 +282,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             string.Empty,
             ValidUserName,
             existingFollowingId,
@@ -319,7 +319,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             GetNonCaseMatchingString(existingFollowerId),
             ValidUserName,
             existingFollowingId,
@@ -356,7 +356,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             null!,
             existingFollowingId,
@@ -393,7 +393,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             string.Empty,
             existingFollowingId,
@@ -430,7 +430,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             GetNonCaseMatchingString(ValidUserName),
             existingFollowingId,
@@ -467,7 +467,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             GetHalfStartString(ValidUserName),
             existingFollowingId,
@@ -504,7 +504,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             null!,
@@ -541,7 +541,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             string.Empty,
@@ -578,7 +578,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             GetNonCaseMatchingString(existingFollowingId),
@@ -615,7 +615,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             existingFollowingId,
@@ -652,7 +652,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             existingFollowingId,
@@ -689,7 +689,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             existingFollowingId,
@@ -726,7 +726,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             existingFollowingId,
@@ -763,7 +763,7 @@ public class GetAllFilteredMessagesQueryHandlerIntegrationTests : BaseFollowInte
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetAllFilteredFollowsQuery(
+        var query = new GetAllFollowsQuery(
             existingFollowerId,
             ValidUserName,
             existingFollowingId,

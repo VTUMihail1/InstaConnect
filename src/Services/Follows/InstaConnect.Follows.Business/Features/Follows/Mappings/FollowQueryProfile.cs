@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Follows.Business.Features.Follows.Models;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFilteredFollows;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
@@ -12,9 +11,7 @@ internal class FollowQueryProfile : Profile
 {
     public FollowQueryProfile()
     {
-        CreateMap<GetAllFilteredFollowsQuery, FollowFilteredCollectionReadQuery>();
-
-        CreateMap<GetAllFollowsQuery, FollowCollectionReadQuery>();
+        CreateMap<GetAllFollowsQuery, FollowFilteredCollectionReadQuery>();
 
         CreateMap<Follow, FollowQueryViewModel>()
             .ConstructUsing(src => new(
