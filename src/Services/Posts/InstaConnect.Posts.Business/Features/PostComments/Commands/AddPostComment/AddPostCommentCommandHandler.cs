@@ -55,7 +55,7 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var postCommentCommandViewModel = _instaConnectMapper.Map<PostCommentCommandViewModel>(request);
+        var postCommentCommandViewModel = _instaConnectMapper.Map<PostCommentCommandViewModel>(postComment);
 
         return postCommentCommandViewModel;
     }

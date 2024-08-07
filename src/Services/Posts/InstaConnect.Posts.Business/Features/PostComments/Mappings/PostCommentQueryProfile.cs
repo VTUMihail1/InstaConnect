@@ -15,7 +15,7 @@ public class PostCommentQueryProfile : Profile
     {
         CreateMap<GetAllFilteredPostCommentsQuery, PostCommentFilteredCollectionReadQuery>();
 
-        CreateMap<GetAllPostCommentsQuery, CollectionReadQuery>();
+        CreateMap<GetAllPostCommentsQuery, PostCommentCollectionReadQuery>();
 
         CreateMap<PostComment, PostCommentQueryViewModel>()
             .ConstructUsing(src => new(
