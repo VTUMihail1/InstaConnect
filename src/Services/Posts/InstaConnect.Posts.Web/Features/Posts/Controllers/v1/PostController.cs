@@ -3,7 +3,6 @@ using InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
 using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
 using InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllFilteredPosts;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
 using InstaConnect.Posts.Web.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
@@ -42,19 +41,6 @@ public class PostController : ControllerBase
     public async Task<ActionResult<PostPaginationQueryResponse>> GetAllAsync(GetAllPostsRequest request, CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllPostsQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostPaginationQueryResponse>(queryResponse);
-
-        return Ok(response);
-    }
-
-    // GET: api/posts/filtered
-    [HttpGet("filtered")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PostPaginationQueryResponse>> GetAllFilteredAsync(GetAllFilteredPostsRequest request, CancellationToken cancellationToken)
-    {
-        var queryRequest = _instaConnectMapper.Map<GetAllFilteredPostsQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
         var response = _instaConnectMapper.Map<PostPaginationQueryResponse>(queryResponse);
 

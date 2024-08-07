@@ -11,7 +11,7 @@ namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Querie
 
 public class GetAllFilteredPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUnitTest
 {
-    private readonly GetAllFilteredPostCommentLikesQueryHandler _queryHandler;
+    private readonly GetAllPostCommentLikesQueryHandler _queryHandler;
 
     public GetAllFilteredPostCommentLikesQueryHandlerUnitTests()
     {
@@ -24,7 +24,7 @@ public class GetAllFilteredPostCommentLikesQueryHandlerUnitTests : BasePostComme
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredPostCommentLikesQuery(
+        var query = new GetAllPostCommentLikesQuery(
             ValidPostCommentLikeCurrentUserId,
             ValidUserName,
             ValidPostCommentLikePostCommentId,
@@ -44,7 +44,7 @@ public class GetAllFilteredPostCommentLikesQueryHandlerUnitTests : BasePostComme
         // Assert
         await PostCommentLikeReadRepository
             .Received(1)
-            .GetAllFilteredAsync(Arg.Is<PostCommentLikeFilteredCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<PostCommentLikeFilteredCollectionReadQuery>(m =>
                                                                         m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
@@ -56,7 +56,7 @@ public class GetAllFilteredPostCommentLikesQueryHandlerUnitTests : BasePostComme
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredPostCommentLikesQuery(
+        var query = new GetAllPostCommentLikesQuery(
             ValidPostCommentLikeCurrentUserId,
             ValidUserName,
             ValidPostCommentLikePostCommentId,

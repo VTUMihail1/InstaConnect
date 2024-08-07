@@ -54,7 +54,7 @@ public class LoginAccountCommandHandler : ICommandHandler<LoginAccountCommand, A
         }
 
         var filteredCollectionQuery = _instaConnectMapper.Map<UserClaimFilteredCollectionWriteQuery>(existingUser);
-        var userClaims = await _userClaimWriteRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
+        var userClaims = await _userClaimWriteRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
 
         var createAccessModel = _instaConnectMapper.Map<CreateAccessTokenModel>((userClaims, existingUser));
         var token = _tokenGenerator.GenerateAccessToken(createAccessModel);

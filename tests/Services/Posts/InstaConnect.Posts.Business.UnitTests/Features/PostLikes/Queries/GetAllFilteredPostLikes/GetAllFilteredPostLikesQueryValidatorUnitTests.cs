@@ -8,7 +8,7 @@ namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Queries.GetAl
 
 public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
 {
-    private readonly GetAllFilteredPostLikesQueryValidator _queryValidator;
+    private readonly GetAllPostLikesQueryValidator _queryValidator;
 
     public GetAllFilteredPostLikesQueryValidatorUnitTests()
     {
@@ -21,7 +21,7 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     public void TestValidate_ShouldHaveAnErrorForUserId_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredPostLikesQuery(
+        var query = new GetAllPostLikesQuery(
             Faker.Random.AlphaNumeric(length),
             ValidUserName,
             ValidPostId,
@@ -43,7 +43,7 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     public void TestValidate_ShouldHaveAnErrorForUserName_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredPostLikesQuery(
+        var query = new GetAllPostLikesQuery(
             ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length),
             ValidPostId,
@@ -65,7 +65,7 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredPostLikesQuery(
+        var query = new GetAllPostLikesQuery(
             ValidCurrentUserId,
             ValidUserName,
             Faker.Random.AlphaNumeric(length),
@@ -85,7 +85,7 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
     {
         // Arrange
-        var query = new GetAllFilteredPostLikesQuery(
+        var query = new GetAllPostLikesQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidPostId,
@@ -105,7 +105,7 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
     {
         // Arrange
-        var query = new GetAllFilteredPostLikesQuery(
+        var query = new GetAllPostLikesQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidPostId,
@@ -128,7 +128,7 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredPostLikesQuery(
+        var query = new GetAllPostLikesQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidPostId,
@@ -150,7 +150,7 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllFilteredPostLikesQuery(
+        var query = new GetAllPostLikesQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidPostId,
@@ -172,7 +172,7 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllFilteredPostLikesQuery(
+        var query = new GetAllPostLikesQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidPostId,

@@ -11,7 +11,7 @@ namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Queries.GetAllFil
 
 public class GetAllFilteredPostsQueryHandlerUnitTests : BasePostUnitTest
 {
-    private readonly GetAllFilteredPostsQueryHandler _queryHandler;
+    private readonly GetAllPostsQueryHandler _queryHandler;
 
     public GetAllFilteredPostsQueryHandlerUnitTests()
     {
@@ -24,7 +24,7 @@ public class GetAllFilteredPostsQueryHandlerUnitTests : BasePostUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredPostsQuery(
+        var query = new GetAllPostsQuery(
             ValidPostCurrentUserId,
             ValidTitle,
             ValidUserName,
@@ -44,7 +44,7 @@ public class GetAllFilteredPostsQueryHandlerUnitTests : BasePostUnitTest
         // Assert
         await PostReadRepository
             .Received(1)
-            .GetAllFilteredAsync(Arg.Is<PostFilteredCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<PostFilteredCollectionReadQuery>(m =>
                                                                         m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
@@ -56,7 +56,7 @@ public class GetAllFilteredPostsQueryHandlerUnitTests : BasePostUnitTest
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredPostsQuery(
+        var query = new GetAllPostsQuery(
             ValidPostCurrentUserId,
             ValidTitle,
             ValidUserName,

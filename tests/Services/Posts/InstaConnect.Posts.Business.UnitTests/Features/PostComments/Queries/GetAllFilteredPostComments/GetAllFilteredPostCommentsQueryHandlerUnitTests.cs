@@ -11,7 +11,7 @@ namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Queries.Ge
 
 public class GetAllFilteredPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
 {
-    private readonly GetAllFilteredPostCommentsQueryHandler _queryHandler;
+    private readonly GetAllPostCommentsQueryHandler _queryHandler;
 
     public GetAllFilteredPostCommentsQueryHandlerUnitTests()
     {
@@ -24,7 +24,7 @@ public class GetAllFilteredPostCommentsQueryHandlerUnitTests : BasePostCommentUn
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredPostCommentsQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidPostCommentCurrentUserId,
             ValidUserName,
             ValidPostCommentPostId,
@@ -44,7 +44,7 @@ public class GetAllFilteredPostCommentsQueryHandlerUnitTests : BasePostCommentUn
         // Assert
         await PostCommentReadRepository
             .Received(1)
-            .GetAllFilteredAsync(Arg.Is<PostCommentFilteredCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<PostCommentFilteredCollectionReadQuery>(m =>
                                                                         m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
@@ -56,7 +56,7 @@ public class GetAllFilteredPostCommentsQueryHandlerUnitTests : BasePostCommentUn
     public async Task Handle_ShouldReturnPostCommentViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredPostCommentsQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidPostCommentCurrentUserId,
             ValidUserName,
             ValidPostCommentPostId,

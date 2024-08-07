@@ -8,7 +8,7 @@ namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Queries.GetAllFil
 
 public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
 {
-    private readonly GetAllFilteredPostsQueryValidator _queryValidator;
+    private readonly GetAllPostsQueryValidator _queryValidator;
 
     public GetAllFilteredPostsQueryValidatorUnitTests()
     {
@@ -21,7 +21,7 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForUserId_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredPostsQuery(
+        var query = new GetAllPostsQuery(
             Faker.Random.AlphaNumeric(length),
             ValidUserName,
             ValidTitle,
@@ -43,7 +43,7 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForUserName_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredPostsQuery(
+        var query = new GetAllPostsQuery(
             ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length),
             ValidTitle,
@@ -65,7 +65,7 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForTitle_WhenTitleLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredPostsQuery(
+        var query = new GetAllPostsQuery(
             ValidCurrentUserId,
             ValidUserName,
             Faker.Random.AlphaNumeric(length),
@@ -85,7 +85,7 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
     {
         // Arrange
-        var query = new GetAllFilteredPostsQuery(
+        var query = new GetAllPostsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidTitle,
@@ -105,7 +105,7 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
     {
         // Arrange
-        var query = new GetAllFilteredPostsQuery(
+        var query = new GetAllPostsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidTitle,
@@ -128,7 +128,7 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredPostsQuery(
+        var query = new GetAllPostsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidTitle,
@@ -150,7 +150,7 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllFilteredPostsQuery(
+        var query = new GetAllPostsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidTitle,
@@ -172,7 +172,7 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllFilteredPostsQuery(
+        var query = new GetAllPostsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidTitle,

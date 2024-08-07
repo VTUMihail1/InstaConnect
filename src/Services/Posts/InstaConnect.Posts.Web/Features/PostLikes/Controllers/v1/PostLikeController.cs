@@ -2,7 +2,6 @@
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.AddPostLike;
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.DeletePostLike;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllFilteredPostLikes;
-using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetPostLikeById;
 using InstaConnect.Posts.Web.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
@@ -41,19 +40,6 @@ public class PostLikeController : ControllerBase
     public async Task<ActionResult<PostLikePaginationQueryResponse>> GetAllAsync(GetAllPostLikesRequest request, CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllPostLikesQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostLikePaginationQueryResponse>(queryResponse);
-
-        return Ok(response);
-    }
-
-    // GET: api/post-likes/filtered
-    [HttpGet("filtered")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PostLikePaginationQueryResponse>> GetAllFilteredAsync(GetAllFilteredPostLikesRequest request, CancellationToken cancellationToken)
-    {
-        var queryRequest = _instaConnectMapper.Map<GetAllFilteredPostLikesQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
         var response = _instaConnectMapper.Map<PostLikePaginationQueryResponse>(queryResponse);
 

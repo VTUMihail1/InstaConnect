@@ -3,11 +3,9 @@ using InstaConnect.Posts.Business.Features.PostComments.Commands.AddPostComment;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.DeletePostComment;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllFilteredPostComments;
-using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
 using InstaConnect.Posts.Web.Features.PostComments.Models.Requests;
 using InstaConnect.Posts.Web.Features.PostComments.Models.Responses;
-using InstaConnect.Posts.Web.Features.Posts.Models.Requests;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
@@ -43,19 +41,6 @@ public class PostCommentController : ControllerBase
     public async Task<ActionResult<PostCommentPaginationQueryResponse>> GetAllAsync(GetAllPostCommentsRequest request, CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllPostCommentsQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentPaginationQueryResponse>(queryResponse);
-
-        return Ok(response);
-    }
-
-    // GET: api/post-comments/filtered
-    [HttpGet("filtered")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PostCommentPaginationQueryResponse>> GetAllFilteredAsync(GetAllFilteredPostCommentsRequest request, CancellationToken cancellationToken)
-    {
-        var queryRequest = _instaConnectMapper.Map<GetAllFilteredPostCommentsQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
         var response = _instaConnectMapper.Map<PostCommentPaginationQueryResponse>(queryResponse);
 

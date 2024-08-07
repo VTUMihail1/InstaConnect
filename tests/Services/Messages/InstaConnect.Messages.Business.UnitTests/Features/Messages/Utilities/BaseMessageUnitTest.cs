@@ -190,7 +190,7 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
             .Returns(existingMessageReceiver);
 
         MessageReadRepository
-            .GetAllFilteredAsync(Arg.Is<MessageFilteredCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<MessageFilteredCollectionReadQuery>(m =>
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

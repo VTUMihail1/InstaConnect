@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllFilteredPostComments;
-using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
@@ -12,9 +11,7 @@ public class PostCommentQueryProfile : Profile
 {
     public PostCommentQueryProfile()
     {
-        CreateMap<GetAllFilteredPostCommentsQuery, PostCommentFilteredCollectionReadQuery>();
-
-        CreateMap<GetAllPostCommentsQuery, PostCommentCollectionReadQuery>();
+        CreateMap<GetAllPostCommentsQuery, PostCommentFilteredCollectionReadQuery>();
 
         CreateMap<PostComment, PostCommentQueryViewModel>()
             .ConstructUsing(src => new(

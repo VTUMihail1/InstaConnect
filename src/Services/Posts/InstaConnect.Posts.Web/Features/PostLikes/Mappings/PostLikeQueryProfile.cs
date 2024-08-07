@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Features.PostLikes.Models;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllFilteredPostLikes;
-using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetPostLikeById;
 using InstaConnect.Posts.Web.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
@@ -13,8 +12,6 @@ internal class PostLikeQueryProfile : Profile
     public PostLikeQueryProfile()
     {
         CreateMap<GetAllPostLikesRequest, GetAllPostLikesQuery>();
-
-        CreateMap<GetAllFilteredPostLikesRequest, GetAllFilteredPostLikesQuery>();
 
         CreateMap<GetPostLikeByIdRequest, GetPostLikeByIdQuery>();
 

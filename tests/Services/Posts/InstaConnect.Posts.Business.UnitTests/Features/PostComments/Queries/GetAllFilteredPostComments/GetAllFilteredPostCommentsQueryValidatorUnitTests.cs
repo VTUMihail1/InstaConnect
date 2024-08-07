@@ -8,7 +8,7 @@ namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Queries.Ge
 
 public class GetAllFilteredPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
 {
-    private readonly GetAllFilteredPostCommentsQueryValidator _queryValidator;
+    private readonly GetAllPostCommentsQueryValidator _queryValidator;
 
     public GetAllFilteredPostCommentsQueryValidatorUnitTests()
     {
@@ -21,7 +21,7 @@ public class GetAllFilteredPostCommentsQueryValidatorUnitTests : BasePostComment
     public void TestValidate_ShouldHaveAnErrorForUserId_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredPostCommentsQuery(
+        var query = new GetAllPostCommentsQuery(
             Faker.Random.AlphaNumeric(length),
             ValidUserName,
             ValidPostCommentPostId,
@@ -43,7 +43,7 @@ public class GetAllFilteredPostCommentsQueryValidatorUnitTests : BasePostComment
     public void TestValidate_ShouldHaveAnErrorForUserName_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredPostCommentsQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length),
             ValidPostCommentPostId,
@@ -65,7 +65,7 @@ public class GetAllFilteredPostCommentsQueryValidatorUnitTests : BasePostComment
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredPostCommentsQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             ValidUserName,
             Faker.Random.AlphaNumeric(length),
@@ -85,7 +85,7 @@ public class GetAllFilteredPostCommentsQueryValidatorUnitTests : BasePostComment
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
     {
         // Arrange
-        var query = new GetAllFilteredPostCommentsQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidPostCommentPostId,
@@ -105,7 +105,7 @@ public class GetAllFilteredPostCommentsQueryValidatorUnitTests : BasePostComment
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
     {
         // Arrange
-        var query = new GetAllFilteredPostCommentsQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidPostCommentPostId,
@@ -128,7 +128,7 @@ public class GetAllFilteredPostCommentsQueryValidatorUnitTests : BasePostComment
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllFilteredPostCommentsQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidPostCommentPostId,
@@ -150,7 +150,7 @@ public class GetAllFilteredPostCommentsQueryValidatorUnitTests : BasePostComment
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllFilteredPostCommentsQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidPostCommentPostId,
@@ -172,7 +172,7 @@ public class GetAllFilteredPostCommentsQueryValidatorUnitTests : BasePostComment
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllFilteredPostCommentsQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             ValidUserName,
             ValidPostCommentPostId,

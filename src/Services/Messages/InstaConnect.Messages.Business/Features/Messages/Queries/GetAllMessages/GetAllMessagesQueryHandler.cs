@@ -22,7 +22,7 @@ internal class GetAllMessagesQueryHandler : IQueryHandler<GetAllMessagesQuery, M
     {
         var filteredCollectionQuery = _instaConnectMapper.Map<MessageFilteredCollectionReadQuery>(request);
 
-        var messages = await _messageReadRepository.GetAllFilteredAsync(filteredCollectionQuery, cancellationToken);
+        var messages = await _messageReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
         var response = _instaConnectMapper.Map<MessagePaginationQueryViewModel>(messages);
 
         return response;

@@ -1,6 +1,5 @@
 ﻿using Asp.Versioning;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetAllFilteredUsers;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUser;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUserDetailed;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserById;
@@ -44,21 +43,6 @@ public class UserController : ControllerBase
         CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllUsersQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-
-        var response = _instaConnectMapper.Map<ICollection<UserQueryResponse>>(queryResponse);
-
-        return Ok(response);
-    }
-
-    // GET: api/users/filtered
-    [HttpGet("filtered")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAllFilteredAsync(
-        GetAllFilteredUsersRequest request,
-        CancellationToken cancellationToken)
-    {
-        var queryRequest = _instaConnectMapper.Map<GetAllFilteredUsersQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
 
         var response = _instaConnectMapper.Map<ICollection<UserQueryResponse>>(queryResponse);

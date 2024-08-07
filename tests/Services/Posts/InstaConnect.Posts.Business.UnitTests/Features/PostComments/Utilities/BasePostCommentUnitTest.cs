@@ -195,15 +195,7 @@ public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
             .Returns(existingPostCommentPost);
 
         PostCommentReadRepository
-            .GetAllFilteredAsync(Arg.Is<PostCommentFilteredCollectionReadQuery>(m =>
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken)
-            .Returns(existingPostCommentPaginationList);
-
-        PostCommentReadRepository
-            .GetAllAsync(Arg.Is<PostCommentCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<PostCommentFilteredCollectionReadQuery>(m =>
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

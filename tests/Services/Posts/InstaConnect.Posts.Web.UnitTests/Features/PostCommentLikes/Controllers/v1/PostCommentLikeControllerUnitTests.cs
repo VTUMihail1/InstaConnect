@@ -3,7 +3,6 @@ using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.AddPostCommentLike;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.DeletePostCommentLike;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllFilteredPostCommentLikes;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Controllers.v1;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Requests;
@@ -27,111 +26,10 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllPostCommentLikesRequest()
-        {
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        var response = await _postCommentLikeController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Result
-            .Should()
-            .Match<OkObjectResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.OK));
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnPostCommentLikePaginationQueryResponse_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllPostCommentLikesRequest()
-        {
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        var response = await _postCommentLikeController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response.Result
-            .Should()
-            .BeOfType<OkObjectResult>()
-            .Which
-            .Value
-            .Should()
-            .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                                 m.Id == ValidId &&
-                                                                 m.PostCommentId == ValidPostCommentId &&
-                                                                 m.UserId == ValidCurrentUserId &&
-                                                                 m.UserName == ValidUserName &&
-                                                                 m.UserProfileImage == ValidUserProfileImage) &&
-                                                              mc.Page == ValidPageValue &&
-                                                              mc.PageSize == ValidPageSizeValue &&
-                                                              mc.TotalCount == ValidTotalCountValue &&
-                                                              !mc.HasNextPage &&
-                                                              !mc.HasPreviousPage);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldCallTheSender_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllPostCommentLikesRequest()
-        {
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        var response = await _postCommentLikeController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        await InstaConnectSender
-              .Received(1)
-              .SendAsync(Arg.Is<GetAllPostCommentLikesQuery>(m =>
-                  m.SortOrder == ValidSortOrderProperty &&
-                  m.SortPropertyName == ValidSortPropertyName &&
-                  m.Page == ValidPageValue &&
-                  m.PageSize == ValidPageSizeValue), CancellationToken);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllPostCommentLikesRequest()
-        {
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        await _postCommentLikeController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        CurrentUserContext.Received(1);
-    }
-
-    [Fact]
     public async Task GetAllFilteredAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredPostCommentLikesRequest()
+        var request = new GetAllPostCommentLikesRequest()
         {
             UserId = ValidCurrentUserId,
             UserName = ValidUserName,
@@ -143,7 +41,7 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
         };
 
         // Act
-        var response = await _postCommentLikeController.GetAllFilteredAsync(request, CancellationToken);
+        var response = await _postCommentLikeController.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -156,7 +54,7 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
     public async Task GetAllFilteredAsync_ShouldReturnPostCommentLikePaginationQueryResponse_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredPostCommentLikesRequest()
+        var request = new GetAllPostCommentLikesRequest()
         {
             UserId = ValidCurrentUserId,
             UserName = ValidUserName,
@@ -168,7 +66,7 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
         };
 
         // Act
-        var response = await _postCommentLikeController.GetAllFilteredAsync(request, CancellationToken);
+        var response = await _postCommentLikeController.GetAllAsync(request, CancellationToken);
 
         // Assert
         response.Result
@@ -194,7 +92,7 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
     public async Task GetAllFilteredAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredPostCommentLikesRequest()
+        var request = new GetAllPostCommentLikesRequest()
         {
             UserId = ValidCurrentUserId,
             UserName = ValidUserName,
@@ -206,12 +104,12 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
         };
 
         // Act
-        var response = await _postCommentLikeController.GetAllFilteredAsync(request, CancellationToken);
+        var response = await _postCommentLikeController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetAllFilteredPostCommentLikesQuery>(m =>
+              .SendAsync(Arg.Is<GetAllPostCommentLikesQuery>(m =>
                   m.UserId == ValidCurrentUserId &&
                   m.UserName == ValidUserName &&
                   m.PostCommentId == ValidPostCommentId &&
@@ -225,7 +123,7 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
     public async Task GetAllFilteredAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredPostCommentLikesRequest()
+        var request = new GetAllPostCommentLikesRequest()
         {
             UserId = ValidCurrentUserId,
             UserName = ValidUserName,
@@ -237,7 +135,7 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
         };
 
         // Act
-        await _postCommentLikeController.GetAllFilteredAsync(request, CancellationToken);
+        await _postCommentLikeController.GetAllAsync(request, CancellationToken);
 
         // Assert
         CurrentUserContext.Received(1);
