@@ -205,15 +205,7 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
             .Returns(existingPostLike);
 
         PostLikeReadRepository
-            .GetAllFilteredAsync(Arg.Is<PostLikeFilteredCollectionReadQuery>(m =>
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken)
-            .Returns(existingPostLikePaginationList);
-
-        PostLikeReadRepository
-            .GetAllAsync(Arg.Is<PostLikeCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<PostLikeFilteredCollectionReadQuery>(m =>
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

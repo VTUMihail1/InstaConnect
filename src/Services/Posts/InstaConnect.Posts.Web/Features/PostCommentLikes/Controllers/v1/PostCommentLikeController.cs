@@ -2,12 +2,10 @@
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.AddPostCommentLike;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.DeletePostCommentLike;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllFilteredPostCommentLikes;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Requests;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Responses;
 using InstaConnect.Posts.Web.Features.PostComments.Models.Responses;
-using InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
@@ -45,19 +43,6 @@ public class PostCommentLikeController : ControllerBase
         var queryRequest = _instaConnectMapper.Map<GetAllPostCommentLikesQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
         var response = _instaConnectMapper.Map<PostCommentLikePaginationQueryResponse>(queryResponse);
-
-        return Ok(response);
-    }
-
-    // GET: api/post-comment-likes/filtered
-    [HttpGet("filtered")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PostCommentLikePaginationQueryResponse>> GetAllFilteredAsync(GetAllFilteredPostCommentLikesRequest request, CancellationToken cancellationToken)
-    {
-        var queryRequest = _instaConnectMapper.Map<GetAllFilteredPostCommentLikesQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentLikePaginationQueryResponse> (queryResponse);
 
         return Ok(response);
     }

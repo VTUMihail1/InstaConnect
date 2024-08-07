@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Features.PostLikes.Models;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllFilteredPostLikes;
-using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
@@ -12,9 +11,7 @@ public class PostLikeQueryProfile : Profile
 {
     public PostLikeQueryProfile()
     {
-        CreateMap<GetAllFilteredPostLikesQuery, PostLikeFilteredCollectionReadQuery>();
-
-        CreateMap<GetAllPostLikesQuery, PostLikeCollectionReadQuery>();
+        CreateMap<GetAllPostLikesQuery, PostLikeFilteredCollectionReadQuery>();
 
         CreateMap<PostLike, PostLikeQueryViewModel>()
             .ConstructUsing(src => new(

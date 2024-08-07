@@ -2,7 +2,6 @@
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.AddPostLike;
 using InstaConnect.Posts.Business.Features.PostLikes.Models;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllFilteredPostLikes;
-using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetPostLikeById;
 using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Web.Features.PostLikes.Mappings;
@@ -64,10 +63,6 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
 
         InstaConnectSender
             .SendAsync(Arg.Any<GetAllPostLikesQuery>(), CancellationToken)
-            .Returns(existingPostLikePaginationCollectionModel);
-
-        InstaConnectSender
-            .SendAsync(Arg.Any<GetAllFilteredPostLikesQuery>(), CancellationToken)
             .Returns(existingPostLikePaginationCollectionModel);
 
         InstaConnectSender

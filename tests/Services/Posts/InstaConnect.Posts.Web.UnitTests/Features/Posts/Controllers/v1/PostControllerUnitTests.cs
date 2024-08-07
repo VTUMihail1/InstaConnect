@@ -4,10 +4,8 @@ using InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
 using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
 using InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllFilteredPosts;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
 using InstaConnect.Posts.Web.Features.Posts.Controllers.v1;
-using InstaConnect.Posts.Web.Features.Posts.Models.Binding;
 using InstaConnect.Posts.Web.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Web.UnitTests.Features.Posts.Utilities;
@@ -28,112 +26,10 @@ public class PostControllerUnitTests : BasePostUnitTest
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllPostsRequest()
-        {
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        var response = await _postController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Result
-            .Should()
-            .Match<OkObjectResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.OK));
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnPostPaginationQueryResponse_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllPostsRequest()
-        {
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        var response = await _postController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response.Result
-            .Should()
-            .BeOfType<OkObjectResult>()
-            .Which
-            .Value
-            .Should()
-            .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                                 m.Id == ValidId &&
-                                                                 m.Title == ValidTitle &&
-                                                                 m.Content == ValidContent &&
-                                                                 m.UserId == ValidCurrentUserId &&
-                                                                 m.UserName == ValidUserName &&
-                                                                 m.UserProfileImage == ValidUserProfileImage) &&
-                                                              mc.Page == ValidPageValue &&
-                                                              mc.PageSize == ValidPageSizeValue &&
-                                                              mc.TotalCount == ValidTotalCountValue &&
-                                                              !mc.HasNextPage &&
-                                                              !mc.HasPreviousPage);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldCallTheSender_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllPostsRequest()
-        {
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        var response = await _postController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        await InstaConnectSender
-              .Received(1)
-              .SendAsync(Arg.Is<GetAllPostsQuery>(m =>
-                  m.SortOrder == ValidSortOrderProperty &&
-                  m.SortPropertyName == ValidSortPropertyName &&
-                  m.Page == ValidPageValue &&
-                  m.PageSize == ValidPageSizeValue), CancellationToken);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllPostsRequest()
-        {
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        await _postController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        CurrentUserContext.Received(1);
-    }
-
-    [Fact]
     public async Task GetAllFilteredAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredPostsRequest()
+        var request = new GetAllPostsRequest()
         {
             UserId = ValidCurrentUserId,
             UserName = ValidUserName,
@@ -145,7 +41,7 @@ public class PostControllerUnitTests : BasePostUnitTest
         };
 
         // Act
-        var response = await _postController.GetAllFilteredAsync(request, CancellationToken);
+        var response = await _postController.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -158,7 +54,7 @@ public class PostControllerUnitTests : BasePostUnitTest
     public async Task GetAllFilteredAsync_ShouldReturnPostPaginationQueryResponse_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredPostsRequest()
+        var request = new GetAllPostsRequest()
         {
             UserId = ValidCurrentUserId,
             UserName = ValidUserName,
@@ -170,7 +66,7 @@ public class PostControllerUnitTests : BasePostUnitTest
         };
 
         // Act
-        var response = await _postController.GetAllFilteredAsync(request, CancellationToken);
+        var response = await _postController.GetAllAsync(request, CancellationToken);
 
         // Assert
         response.Result
@@ -197,7 +93,7 @@ public class PostControllerUnitTests : BasePostUnitTest
     public async Task GetAllFilteredAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredPostsRequest()
+        var request = new GetAllPostsRequest()
         {
             UserId = ValidCurrentUserId,
             UserName = ValidUserName,
@@ -209,12 +105,12 @@ public class PostControllerUnitTests : BasePostUnitTest
         };
 
         // Act
-        var response = await _postController.GetAllFilteredAsync(request, CancellationToken);
+        var response = await _postController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetAllFilteredPostsQuery>(m =>
+              .SendAsync(Arg.Is<GetAllPostsQuery>(m =>
                   m.UserId == ValidCurrentUserId &&
                   m.UserName == ValidUserName &&
                   m.Title == ValidTitle &&
@@ -228,7 +124,7 @@ public class PostControllerUnitTests : BasePostUnitTest
     public async Task GetAllFilteredAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredPostsRequest()
+        var request = new GetAllPostsRequest()
         {
             UserId = ValidCurrentUserId,
             UserName = ValidUserName,
@@ -240,7 +136,7 @@ public class PostControllerUnitTests : BasePostUnitTest
         };
 
         // Act
-        await _postController.GetAllFilteredAsync(request, CancellationToken);
+        await _postController.GetAllAsync(request, CancellationToken);
 
         // Assert
         CurrentUserContext.Received(1);

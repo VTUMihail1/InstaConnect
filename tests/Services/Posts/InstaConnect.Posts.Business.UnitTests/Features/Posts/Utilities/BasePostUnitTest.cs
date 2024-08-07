@@ -142,15 +142,7 @@ public abstract class BasePostUnitTest : BaseSharedUnitTest
             .Returns(existingPostUser);
 
         PostReadRepository
-            .GetAllFilteredAsync(Arg.Is<PostFilteredCollectionReadQuery>(m =>
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken)
-            .Returns(existingPostPaginationList);
-
-        PostReadRepository
-            .GetAllAsync(Arg.Is<CollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<PostFilteredCollectionReadQuery>(m =>
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

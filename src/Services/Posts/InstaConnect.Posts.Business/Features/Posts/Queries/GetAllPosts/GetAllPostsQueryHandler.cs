@@ -3,7 +3,7 @@ using InstaConnect.Posts.Data.Features.Posts.Abstract;
 using InstaConnect.Posts.Data.Features.Posts.Models.Filters;
 using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
+namespace InstaConnect.Posts.Business.Features.Posts.Queries.GetAllFilteredPosts;
 
 internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, PostPaginationQueryViewModel>
 {
@@ -12,19 +12,19 @@ internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, PostPag
 
     public GetAllPostsQueryHandler(
         IInstaConnectMapper instaConnectMapper,
-        IPostReadRepository postReadRepository)
+        IPostReadRepository postRepository)
     {
         _instaConnectMapper = instaConnectMapper;
-        _postReadRepository = postReadRepository;
+        _postReadRepository = postRepository;
     }
 
     public async Task<PostPaginationQueryViewModel> Handle(
         GetAllPostsQuery request,
         CancellationToken cancellationToken)
     {
-        var collectionQuery = _instaConnectMapper.Map<PostCollectionReadQuery>(request);
+        var filteredCollectionQuery = _instaConnectMapper.Map<PostFilteredCollectionReadQuery>(request);
 
-        var posts = await _postReadRepository.GetAllAsync(collectionQuery, cancellationToken);
+        var posts = await _postReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
         var response = _instaConnectMapper.Map<PostPaginationQueryViewModel>(posts);
 
         return response;

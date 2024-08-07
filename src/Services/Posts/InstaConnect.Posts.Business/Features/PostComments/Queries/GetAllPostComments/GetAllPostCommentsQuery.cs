@@ -3,9 +3,12 @@ using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Models.Filters;
 using InstaConnect.Shared.Data.Models.Enums;
 
-namespace InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
+namespace InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllFilteredPostComments;
 
 public record GetAllPostCommentsQuery(
+    string UserId,
+    string UserName,
+    string PostId,
     SortOrder SortOrder,
     string SortPropertyName,
     int Page,

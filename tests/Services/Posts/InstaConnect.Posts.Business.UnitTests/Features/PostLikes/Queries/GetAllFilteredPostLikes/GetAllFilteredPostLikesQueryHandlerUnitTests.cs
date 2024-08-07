@@ -11,7 +11,7 @@ namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Queries.GetAl
 
 public class GetAllFilteredPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
 {
-    private readonly GetAllFilteredPostLikesQueryHandler _queryHandler;
+    private readonly GetAllPostLikesQueryHandler _queryHandler;
 
     public GetAllFilteredPostLikesQueryHandlerUnitTests()
     {
@@ -24,7 +24,7 @@ public class GetAllFilteredPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredPostLikesQuery(
+        var query = new GetAllPostLikesQuery(
             ValidPostLikeCurrentUserId,
             ValidPostTitle,
             ValidPostLikePostId,
@@ -44,7 +44,7 @@ public class GetAllFilteredPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         // Assert
         await PostLikeReadRepository
             .Received(1)
-            .GetAllFilteredAsync(Arg.Is<PostLikeFilteredCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<PostLikeFilteredCollectionReadQuery>(m =>
                                                                         m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
@@ -56,7 +56,7 @@ public class GetAllFilteredPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllFilteredPostLikesQuery(
+        var query = new GetAllPostLikesQuery(
             ValidPostLikeCurrentUserId,
             ValidUserName,
             ValidPostLikePostId,

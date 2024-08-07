@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Features.Posts.Models;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllFilteredPosts;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
 using InstaConnect.Posts.Web.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
@@ -13,8 +12,6 @@ internal class PostQueryProfile : Profile
     public PostQueryProfile()
     {
         CreateMap<GetAllPostsRequest, GetAllPostsQuery>();
-
-        CreateMap<GetAllFilteredPostsRequest, GetAllFilteredPostsQuery>();
 
         CreateMap<GetPostByIdRequest, GetPostByIdQuery>();
 

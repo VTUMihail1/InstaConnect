@@ -44,7 +44,7 @@ public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await MessageReadRepository
             .Received(1)
-            .GetAllFilteredAsync(Arg.Is<MessageFilteredCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<MessageFilteredCollectionReadQuery>(m =>
                                                                         m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&

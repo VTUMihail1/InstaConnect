@@ -46,7 +46,7 @@ public class GetAllFilteredFollowsQueryHandlerUnitTests : BaseFollowUnitTest
         // Assert
         await FollowReadRepository
             .Received(1)
-            .GetAllFilteredAsync(Arg.Is<FollowFilteredCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<FollowFilteredCollectionReadQuery>(m =>
                                                                         m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&

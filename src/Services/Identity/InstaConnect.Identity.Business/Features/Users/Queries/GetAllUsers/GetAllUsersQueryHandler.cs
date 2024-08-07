@@ -3,7 +3,7 @@ using InstaConnect.Identity.Data.Features.Users.Abstractions;
 using InstaConnect.Identity.Data.Features.Users.Models.Filters;
 using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
+namespace InstaConnect.Identity.Business.Features.Users.Queries.GetAllFilteredUsers;
 
 public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, UserPaginationQueryViewModel>
 {
@@ -22,8 +22,8 @@ public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, UserPagin
         GetAllUsersQuery request,
         CancellationToken cancellationToken)
     {
-        var collectionQuery = _instaConnectMapper.Map<UserCollectionReadQuery>(request);
-        var users = await _userReadRepository.GetAllAsync(collectionQuery, cancellationToken);
+        var filteredCollectionQuery = _instaConnectMapper.Map<UserFilteredCollectionReadQuery>(request);
+        var users = await _userReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
 
         var response = _instaConnectMapper.Map<UserPaginationQueryViewModel>(users);
 

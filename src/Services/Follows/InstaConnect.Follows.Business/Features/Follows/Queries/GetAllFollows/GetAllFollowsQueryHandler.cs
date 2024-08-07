@@ -24,7 +24,7 @@ internal class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQuery, Fol
     {
         var filteredQuery = _instaConnectMapper.Map<FollowFilteredCollectionReadQuery>(request);
 
-        var follows = await _followReadRepository.GetAllFilteredAsync(filteredQuery, cancellationToken);
+        var follows = await _followReadRepository.GetAllAsync(filteredQuery, cancellationToken);
         var response = _instaConnectMapper.Map<FollowPaginationQueryViewModel>(follows);
 
         return response;

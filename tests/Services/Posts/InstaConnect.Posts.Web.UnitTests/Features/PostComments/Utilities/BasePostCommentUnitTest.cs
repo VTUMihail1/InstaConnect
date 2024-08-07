@@ -3,7 +3,6 @@ using InstaConnect.Posts.Business.Features.PostComments.Commands.AddPostComment;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
 using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllFilteredPostComments;
-using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
 using InstaConnect.Posts.Business.Features.PostComments.Utilities;
 using InstaConnect.Posts.Business.Features.Posts.Utilities;
@@ -69,10 +68,6 @@ public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
 
         InstaConnectSender
             .SendAsync(Arg.Any<GetAllPostCommentsQuery>(), CancellationToken)
-            .Returns(existingPostCommentPaginationCollectionModel);
-
-        InstaConnectSender
-            .SendAsync(Arg.Any<GetAllFilteredPostCommentsQuery>(), CancellationToken)
             .Returns(existingPostCommentPaginationCollectionModel);
 
         InstaConnectSender
