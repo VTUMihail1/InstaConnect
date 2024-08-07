@@ -27,10 +27,10 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredMessagesRequest()
+        var request = new GetAllMessagesRequest()
         {
             ReceiverId = ValidReceiverId,
             ReceiverName = ValidUserName,
@@ -41,7 +41,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         };
 
         // Act
-        var response = await _messageController.GetAllFilteredAsync(request, CancellationToken);
+        var response = await _messageController.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -51,10 +51,10 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnMessageViewModel_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnMessageViewModel_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetAllFilteredMessagesRequest()
+        var request = new GetAllMessagesRequest()
         {
             ReceiverId = ValidReceiverId,
             ReceiverName = ValidUserName,
@@ -65,7 +65,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         };
 
         // Act
-        var response = await _messageController.GetAllFilteredAsync(request, CancellationToken);
+        var response = await _messageController.GetAllAsync(request, CancellationToken);
 
         // Assert
         response.Result
@@ -91,9 +91,9 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldCallTheSender_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
-        var request = new GetAllFilteredMessagesRequest()
+        var request = new GetAllMessagesRequest()
         {
             ReceiverId = ValidReceiverId,
             ReceiverName = ValidUserName,
@@ -104,12 +104,12 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         };
 
         // Act
-        var response = await _messageController.GetAllFilteredAsync(request, CancellationToken);
+        var response = await _messageController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetAllFilteredMessagesQuery>(m =>
+              .SendAsync(Arg.Is<GetAllMessagesQuery>(m =>
                   m.CurrentUserId == ValidCurrentUserId &&
                   m.ReceiverId == ValidReceiverId &&
                   m.ReceiverName == ValidUserName &&
@@ -120,9 +120,9 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
     {
-        var request = new GetAllFilteredMessagesRequest()
+        var request = new GetAllMessagesRequest()
         {
             ReceiverId = ValidReceiverId,
             ReceiverName = ValidUserName,
@@ -133,7 +133,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         };
 
         // Act
-        await _messageController.GetAllFilteredAsync(request, CancellationToken);
+        await _messageController.GetAllAsync(request, CancellationToken);
 
         // Assert
         CurrentUserContext.Received(1);

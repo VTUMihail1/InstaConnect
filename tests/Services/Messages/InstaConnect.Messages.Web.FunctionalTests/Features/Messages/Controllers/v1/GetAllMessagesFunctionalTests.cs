@@ -12,15 +12,15 @@ using InstaConnect.Shared.Data.Models.Enums;
 
 namespace InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Controllers.v1;
 
-public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
+public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
 {
-    public GetAllFilteredMessagesFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetAllMessagesFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
     {
 
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
+    public async Task GetAllAsync_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -42,7 +42,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIsNull()
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIsNull()
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -69,7 +69,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     [Theory]
     [InlineData(MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH - 1)]
     [InlineData(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenReceiverIdLengthIsInvalid(int length)
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenReceiverIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -96,7 +96,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     [Theory]
     [InlineData(MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH - 1)]
     [InlineData(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenReceiverNameLengthIsInvalid(int length)
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenReceiverNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -121,7 +121,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenMessageDoesNotContainProperty()
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenMessageDoesNotContainProperty()
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -148,7 +148,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     [Theory]
     [InlineData(SharedBusinessConfigurations.SORT_PROPERTY_NAME_MIN_LENGTH - 1)]
     [InlineData(SharedBusinessConfigurations.SORT_PROPERTY_NAME_MAX_LENGTH + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenSortPropertyNameLengthIsInvalid(int length)
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -175,7 +175,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     [Theory]
     [InlineData(SharedBusinessConfigurations.PAGE_MIN_VALUE - 1)]
     [InlineData(SharedBusinessConfigurations.PAGE_MAX_VALUE + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenPageValueIsInvalid(int value)
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageValueIsInvalid(int value)
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -204,7 +204,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     [Theory]
     [InlineData(SharedBusinessConfigurations.PAGE_SIZE_MIN_VALUE - 1)]
     [InlineData(SharedBusinessConfigurations.PAGE_SIZE_MAX_VALUE + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenPageSizeValueIsInvalid(int value)
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -229,7 +229,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnOkResponse_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -254,7 +254,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValid()
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -298,7 +298,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndCurrentUserIdCaseDoesNotMatch()
+    public async Task GetAllAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndCurrentUserIdCaseDoesNotMatch()
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -342,7 +342,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndReceiverIdCaseDoesNotMatch()
+    public async Task GetAllAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndReceiverIdCaseDoesNotMatch()
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -386,7 +386,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndReceiverNameCaseDoesNotMatch()
+    public async Task GetAllAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndReceiverNameCaseDoesNotMatch()
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -430,7 +430,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndReceiverNameIsNotFull()
+    public async Task GetAllAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndReceiverNameIsNotFull()
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -474,7 +474,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRouteHasNoParameters()
+    public async Task GetAllAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRouteHasNoParameters()
     {
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
@@ -485,7 +485,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync($"{ApiRoute}/filtered", CancellationToken);
+        var response = await HttpClient.GetAsync(ApiRoute, CancellationToken);
 
         var messagePaginationCollectionResponse = await response
             .Content
@@ -512,7 +512,7 @@ public class GetAllFilteredMessagesFunctionalTests : BaseMessageFunctionalTest
 
     private string GetApiRoute(string receiverId, string receiverName, SortOrder sortOrder, string sortPropertyName, int page, int pageSize)
     {
-        var routeTemplate = "{0}/filtered?receiverId={1}&receiverName={2}&sortOrder={3}&sortPropertyName={4}&page={5}&pageSize={6}";
+        var routeTemplate = "{0}?receiverId={1}&receiverName={2}&sortOrder={3}&sortPropertyName={4}&page={5}&pageSize={6}";
 
         var route = string.Format(
             routeTemplate,

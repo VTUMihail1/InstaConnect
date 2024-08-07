@@ -69,7 +69,7 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
             .Returns(existingCurrentUserModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<GetAllFilteredMessagesQuery>(), CancellationToken)
+            .SendAsync(Arg.Any<GetAllMessagesQuery>(), CancellationToken)
             .Returns(existingMessagePaginationCollectionModel);
 
         InstaConnectSender

@@ -5,7 +5,7 @@ using InstaConnect.Shared.Data.Models.Enums;
 
 namespace InstaConnect.Messages.Business.Features.Messages.Queries.GetAllFilteredMessages;
 
-public record GetAllFilteredMessagesQuery(
+public record GetAllMessagesQuery(
     string CurrentUserId,
     string ReceiverId,
     string ReceiverName,

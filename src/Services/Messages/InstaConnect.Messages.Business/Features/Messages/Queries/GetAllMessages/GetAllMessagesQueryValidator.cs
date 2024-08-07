@@ -6,9 +6,9 @@ using InstaConnect.Shared.Business.Validators;
 
 namespace InstaConnect.Messages.Business.Features.Messages.Queries.GetAllFilteredMessages;
 
-public class GetAllFilteredMessagesQueryValidator : AbstractValidator<GetAllFilteredMessagesQuery>
+public class GetAllMessagesQueryValidator : AbstractValidator<GetAllMessagesQuery>
 {
-    public GetAllFilteredMessagesQueryValidator(IEntityPropertyValidator entityPropertyValidator)
+    public GetAllMessagesQueryValidator(IEntityPropertyValidator entityPropertyValidator)
     {
         Include(new CollectionModelValidator());
 

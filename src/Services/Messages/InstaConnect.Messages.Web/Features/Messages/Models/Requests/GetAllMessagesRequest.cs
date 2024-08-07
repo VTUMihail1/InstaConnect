@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Messages.Web.Features.Messages.Models.Requests;
 
-public class GetAllFilteredMessagesRequest : CollectionReadRequest
+public class GetAllMessagesRequest : CollectionReadRequest
 {
     [FromQuery(Name = "receiverId")]
     public string ReceiverId { get; set; } = string.Empty;
