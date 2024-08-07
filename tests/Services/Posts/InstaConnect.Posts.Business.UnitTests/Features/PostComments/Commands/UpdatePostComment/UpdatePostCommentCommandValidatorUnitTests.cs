@@ -1,28 +1,28 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
+using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
 using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
 using InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.DeleteFollow;
 
-public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
+public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
 {
-    private readonly UpdatePostCommandValidator _commandValidator;
+    private readonly UpdatePostCommentCommandValidator _commandValidator;
 
-    public UpdatePostCommandValidatorUnitTests()
+    public UpdatePostCommentCommandValidatorUnitTests()
     {
-        _commandValidator = new UpdatePostCommandValidator();
+        _commandValidator = new UpdatePostCommentCommandValidator();
     }
 
     [Fact]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var command = new UpdatePostCommand(
+        var command = new UpdatePostCommentCommand(
             null!,
             ValidCurrentUserId,
-            ValidTitle,
             ValidContent
         );
 
@@ -35,15 +35,14 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentBusinessConfigurations.ID_MIN_LENGTH - 1)]
+    [InlineData(PostCommentBusinessConfigurations.ID_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new UpdatePostCommand(
+        var command = new UpdatePostCommentCommand(
             Faker.Random.AlphaNumeric(length),
             ValidCurrentUserId,
-            ValidTitle,
             ValidContent
         );
 
@@ -58,10 +57,9 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var command = new UpdatePostCommand(
+        var command = new UpdatePostCommentCommand(
             ValidId,
             null!,
-            ValidTitle,
             ValidContent
         );
 
@@ -74,15 +72,14 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
+    [InlineData(PostCommentBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new UpdatePostCommand(
+        var command = new UpdatePostCommentCommand(
             ValidId,
             Faker.Random.AlphaNumeric(length),
-            ValidTitle,
             ValidContent
         );
 
@@ -91,55 +88,15 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
-    }
-
-    [Fact]
-    public void TestValidate_ShouldHaveAnErrorForTitle_WhenTitleIsNull()
-    {
-        // Arrange
-        var command = new UpdatePostCommand(
-            ValidId,
-            ValidCurrentUserId,
-            null!,
-            ValidContent
-        );
-
-        // Act
-        var result = _commandValidator.TestValidate(command);
-
-        // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Title);
-    }
-
-    [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.TITLE_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.TITLE_MAX_LENGTH + 1)]
-    public void TestValidate_ShouldHaveAnErrorForTitle_WhenTitleLengthIsInvalid(int length)
-    {
-        // Arrange
-        var command = new UpdatePostCommand(
-            ValidId,
-            ValidCurrentUserId,
-            Faker.Random.AlphaNumeric(length),
-            ValidContent
-        );
-
-        // Act
-        var result = _commandValidator.TestValidate(command);
-
-        // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Title);
     }
 
     [Fact]
     public void TestValidate_ShouldHaveAnErrorForContent_WhenContentIsNull()
     {
         // Arrange
-        var command = new UpdatePostCommand(
+        var command = new UpdatePostCommentCommand(
             ValidId,
             ValidCurrentUserId,
-            ValidTitle,
             null!
         );
 
@@ -152,15 +109,14 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.CONTENT_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CONTENT_MAX_LENGTH + 1)]
+    [InlineData(PostCommentBusinessConfigurations.CONTENT_MIN_LENGTH - 1)]
+    [InlineData(PostCommentBusinessConfigurations.CONTENT_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForContent_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new UpdatePostCommand(
+        var command = new UpdatePostCommentCommand(
             ValidId,
             ValidCurrentUserId,
-            ValidTitle,
             Faker.Random.AlphaNumeric(length)
         );
 
