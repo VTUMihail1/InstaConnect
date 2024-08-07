@@ -26,7 +26,7 @@ public class GetAllFilteredPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         // Arrange
         var query = new GetAllFilteredPostLikesQuery(
             ValidPostLikeCurrentUserId,
-            ValidTitle,
+            ValidPostTitle,
             ValidPostLikePostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
