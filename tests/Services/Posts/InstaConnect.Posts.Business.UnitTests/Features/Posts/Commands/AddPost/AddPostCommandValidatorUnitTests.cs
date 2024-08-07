@@ -1,9 +1,9 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
+using InstaConnect.Posts.Business.Features.Posts.Utilities;
+using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.AddFollow;
+namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Commands.AddPost;
 
 public class AddPostCommandValidatorUnitTests : BasePostUnitTest
 {

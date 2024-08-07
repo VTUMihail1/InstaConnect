@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Follows.Business.Features.Follows.Utilities;
+﻿namespace InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
 
 public class PostCommentLikeBusinessConfigurations
 {

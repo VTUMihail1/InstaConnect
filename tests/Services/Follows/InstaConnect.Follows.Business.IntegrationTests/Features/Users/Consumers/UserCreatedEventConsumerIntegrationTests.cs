@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Users.Consumers;
-using InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Business.IntegrationTests.Features.Utilities;
+using InstaConnect.Follows.Business.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Follows.Business.IntegrationTests.Utilities;
 using InstaConnect.Follows.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Business.Contracts.Users;

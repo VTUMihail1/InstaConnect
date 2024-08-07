@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Follows.Business.Features.Follows.Mappings;
 using InstaConnect.Follows.Business.Features.Follows.Utilities;
-using InstaConnect.Follows.Business.Features.Users.Mappings;
 using InstaConnect.Follows.Data.Features.Follows.Abstractions;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
@@ -10,7 +9,6 @@ using InstaConnect.Follows.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.UnitTests.Utilities;
 using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
 using NSubstitute;
 

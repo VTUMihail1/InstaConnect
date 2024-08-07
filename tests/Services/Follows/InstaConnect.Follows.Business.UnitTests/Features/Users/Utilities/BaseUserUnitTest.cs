@@ -8,7 +8,7 @@ using InstaConnect.Shared.Business.UnitTests.Utilities;
 using InstaConnect.Shared.Data.Abstractions;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Utilities;
+namespace InstaConnect.Follows.Business.UnitTests.Features.Users.Utilities;
 
 public abstract class BaseUserUnitTest : BaseSharedUnitTest
 {

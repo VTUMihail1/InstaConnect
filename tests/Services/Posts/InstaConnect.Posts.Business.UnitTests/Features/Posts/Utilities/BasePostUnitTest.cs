@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.Posts.Mappings;
+using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Data.Features.Posts.Abstract;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Data.Features.Posts.Models.Filters;
@@ -13,7 +13,7 @@ using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
+namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
 
 public abstract class BasePostUnitTest : BaseSharedUnitTest
 {

@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
+using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Filters;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFollows;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Queries.GetAllPostComments;
 
 public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
 {

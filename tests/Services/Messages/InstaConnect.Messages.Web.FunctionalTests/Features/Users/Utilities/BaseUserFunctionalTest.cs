@@ -1,7 +1,5 @@
 ﻿using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Data;
-using InstaConnect.Messages.Data.Features.Messages.Abstractions;
-using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Data.Features.Users.Abstract;
 using InstaConnect.Messages.Data.Features.Users.Models.Entities;
 using InstaConnect.Messages.Web.FunctionalTests.Utilities;

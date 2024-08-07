@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Follows.Utilities;
@@ -56,7 +55,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             existingFollowerId,
-            Faker.Random.AlphaNumeric(length), 
+            Faker.Random.AlphaNumeric(length),
             existingFollowingId,
             ValidUserName,
             ValidSortOrderProperty,

@@ -4,7 +4,6 @@ using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllFilter
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
-using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
 
 namespace InstaConnect.Posts.Business.Features.PostCommentLikes.Mappings;
@@ -15,7 +14,7 @@ public class PostCommentLikeQueryProfile : Profile
     {
         CreateMap<GetAllFilteredPostCommentLikesQuery, PostCommentLikeFilteredCollectionReadQuery>();
 
-        CreateMap<GetAllPostCommentLikesQuery, CollectionReadQuery>();
+        CreateMap<GetAllPostCommentLikesQuery, PostCommentLikeCollectionReadQuery>();
 
         CreateMap<PostCommentLike, PostCommentLikeQueryViewModel>()
             .ConstructUsing(src => new(

@@ -4,7 +4,6 @@ using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllFilteredPo
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Filters;
-using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
 
 namespace InstaConnect.Posts.Business.Features.PostComments.Mappings;

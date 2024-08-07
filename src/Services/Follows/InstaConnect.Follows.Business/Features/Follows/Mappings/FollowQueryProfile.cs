@@ -4,7 +4,6 @@ using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFilteredFollo
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
-using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
 
 namespace InstaConnect.Follows.Business.Features.Follows.Mappings;
