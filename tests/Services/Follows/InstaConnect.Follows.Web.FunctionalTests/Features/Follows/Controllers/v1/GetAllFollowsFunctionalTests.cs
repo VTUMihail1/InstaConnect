@@ -11,9 +11,9 @@ using InstaConnect.Shared.Data.Models.Enums;
 
 namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Controllers.v1;
 
-public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
+public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
 {
-    public GetAllFilteredFollowsFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetAllFollowsFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
     {
 
     }
@@ -21,7 +21,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     [Theory]
     [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
     [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenFollowerIdLengthIsInvalid(int length)
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenFollowerIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -47,7 +47,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     [Theory]
     [InlineData(FollowBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH - 1)]
     [InlineData(FollowBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenFollowerNameLengthIsInvalid(int length)
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenFollowerNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -73,7 +73,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     [Theory]
     [InlineData(FollowBusinessConfigurations.FOLLOWING_ID_MIN_LENGTH - 1)]
     [InlineData(FollowBusinessConfigurations.FOLLOWING_ID_MAX_LENGTH + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenFollowingIdLengthIsInvalid(int length)
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -99,7 +99,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     [Theory]
     [InlineData(FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH - 1)]
     [InlineData(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenFollowingNameLengthIsInvalid(int length)
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenFollowingNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -123,7 +123,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenFollowDoesNotContainProperty()
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenFollowDoesNotContainProperty()
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -149,7 +149,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     [Theory]
     [InlineData(SharedBusinessConfigurations.SORT_PROPERTY_NAME_MIN_LENGTH - 1)]
     [InlineData(SharedBusinessConfigurations.SORT_PROPERTY_NAME_MAX_LENGTH + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenSortPropertyNameLengthIsInvalid(int length)
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -175,7 +175,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     [Theory]
     [InlineData(SharedBusinessConfigurations.PAGE_MIN_VALUE - 1)]
     [InlineData(SharedBusinessConfigurations.PAGE_MAX_VALUE + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenPageValueIsInvalid(int value)
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageValueIsInvalid(int value)
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -203,7 +203,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     [Theory]
     [InlineData(SharedBusinessConfigurations.PAGE_SIZE_MIN_VALUE - 1)]
     [InlineData(SharedBusinessConfigurations.PAGE_SIZE_MAX_VALUE + 1)]
-    public async Task GetAllFilteredAsync_ShouldReturnBadRequestResponse_WhenPageSizeValueIsInvalid(int value)
+    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -227,7 +227,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnOkResponse_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -251,7 +251,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowerIdCaseDoesNotMatch()
+    public async Task GetAllAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowerIdCaseDoesNotMatch()
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -293,7 +293,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowerNameCaseDoesNotMatch()
+    public async Task GetAllAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowerNameCaseDoesNotMatch()
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -335,7 +335,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowerNameIsNotFull()
+    public async Task GetAllAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowerNameIsNotFull()
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -377,7 +377,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowingIdCaseDoesNotMatch()
+    public async Task GetAllAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowingIdCaseDoesNotMatch()
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -419,7 +419,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowingNameCaseDoesNotMatch()
+    public async Task GetAllAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowingNameCaseDoesNotMatch()
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -461,7 +461,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowingNameIsNotFull()
+    public async Task GetAllAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowingNameIsNotFull()
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
@@ -503,7 +503,7 @@ public class GetAllFilteredFollowsFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRouteHasNoParameters()
+    public async Task GetAllAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRouteHasNoParameters()
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);

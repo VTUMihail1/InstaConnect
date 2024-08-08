@@ -7,13 +7,13 @@ using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFilteredFollows;
+namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFollows;
 
-public class GetAllFilteredFollowsQueryHandlerUnitTests : BaseFollowUnitTest
+public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
 {
     private readonly GetAllFollowsQueryHandler _queryHandler;
 
-    public GetAllFilteredFollowsQueryHandlerUnitTests()
+    public GetAllFollowsQueryHandlerUnitTests()
     {
         _queryHandler = new(
             InstaConnectMapper,

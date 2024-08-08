@@ -26,7 +26,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
         var request = new GetAllFollowsRequest()
@@ -52,7 +52,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnFollowPaginationQueryResponse_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnFollowPaginationQueryResponse_WhenRequestIsValid()
     {
         // Arrange
         var request = new GetAllFollowsRequest()
@@ -93,7 +93,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldCallTheSender_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
         var request = new GetAllFollowsRequest()

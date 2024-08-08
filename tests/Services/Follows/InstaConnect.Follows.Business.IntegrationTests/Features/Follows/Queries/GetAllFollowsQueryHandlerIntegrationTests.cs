@@ -9,9 +9,9 @@ using InstaConnect.Shared.Business.Utilities;
 
 namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Queries;
 
-public class GetAllFilteredFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTest
+public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTest
 {
-    public GetAllFilteredFollowsQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetAllFollowsQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
     }
 
