@@ -192,7 +192,7 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
             .Returns(existingFollowFollowing);
 
         FollowReadRepository
-            .GetAllAsync(Arg.Is<FollowFilteredCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m =>
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

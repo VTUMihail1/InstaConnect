@@ -1,50 +1,50 @@
 ﻿using System.Linq.Expressions;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.Posts.Models;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllFilteredPosts;
-using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
-using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Data.Features.Posts.Models.Filters;
+using InstaConnect.Posts.Business.Features.PostLikes.Models;
+using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
+using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
+using InstaConnect.Posts.Data.Features.PostLikes.Models.Filters;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Queries.GetAllFilteredPosts;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Queries.GetAllPostLikes;
 
-public class GetAllFilteredPostsQueryHandlerUnitTests : BasePostUnitTest
+public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
 {
-    private readonly GetAllPostsQueryHandler _queryHandler;
+    private readonly GetAllPostLikesQueryHandler _queryHandler;
 
-    public GetAllFilteredPostsQueryHandlerUnitTests()
+    public GetAllPostLikesQueryHandlerUnitTests()
     {
         _queryHandler = new(
             InstaConnectMapper,
-            PostReadRepository);
+            PostLikeReadRepository);
     }
 
     [Fact]
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllPostsQuery(
-            ValidPostCurrentUserId,
-            ValidTitle,
-            ValidUserName,
+        var query = new GetAllPostLikesQuery(
+            ValidPostLikeCurrentUserId,
+            ValidPostTitle,
+            ValidPostLikePostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
             ValidPageSizeValue);
 
-        Expression<Func<Post, bool>> expectedExpression = p =>
-             (string.IsNullOrEmpty(ValidPostCurrentUserId) || p.UserId.Equals(ValidPostCurrentUserId)) &&
+        Expression<Func<PostLike, bool>> expectedExpression = p =>
+             (string.IsNullOrEmpty(ValidPostLikeCurrentUserId) || p.UserId.Equals(ValidPostLikeCurrentUserId)) &&
              (string.IsNullOrEmpty(ValidUserName) || p.User!.UserName.Equals(ValidUserName)) &&
-             (string.IsNullOrEmpty(ValidTitle) || p.Title.Equals(ValidTitle));
+             (string.IsNullOrEmpty(ValidPostLikePostId) || p.PostId.Equals(ValidPostLikePostId));
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        await PostReadRepository
+        await PostLikeReadRepository
             .Received(1)
-            .GetAllAsync(Arg.Is<PostFilteredCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<PostLikeCollectionReadQuery>(m =>
                                                                         m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
@@ -56,10 +56,10 @@ public class GetAllFilteredPostsQueryHandlerUnitTests : BasePostUnitTest
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllPostsQuery(
-            ValidPostCurrentUserId,
-            ValidTitle,
+        var query = new GetAllPostLikesQuery(
+            ValidPostLikeCurrentUserId,
             ValidUserName,
+            ValidPostLikePostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -71,12 +71,11 @@ public class GetAllFilteredPostsQueryHandlerUnitTests : BasePostUnitTest
         // Assert
         response
             .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
-                                                           m.UserId == ValidPostCurrentUserId &&
+            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
+                                                           m.UserId == ValidPostLikeCurrentUserId &&
                                                            m.UserName == ValidUserName &&
                                                            m.UserProfileImage == ValidUserProfileImage &&
-                                                           m.Title == ValidTitle &&
-                                                           m.Content == ValidContent) &&
+                                                           m.PostId == ValidPostLikePostId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
                                                            mc.TotalCount == ValidTotalCountValue &&

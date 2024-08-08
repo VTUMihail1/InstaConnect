@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Business.Features.Messages.Models;
-using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllFilteredMessages;
+using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
 using InstaConnect.Messages.Web.Features.Messages.Models.Requests;
 using InstaConnect.Messages.Web.Features.Messages.Models.Responses;

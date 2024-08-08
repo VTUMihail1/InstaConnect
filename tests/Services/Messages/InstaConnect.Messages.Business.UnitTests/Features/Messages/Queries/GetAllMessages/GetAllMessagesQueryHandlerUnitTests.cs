@@ -1,13 +1,13 @@
 ﻿using System.Linq.Expressions;
 using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Models;
-using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllFilteredMessages;
+using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Filters;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Queries.GetAllFilteredMessages;
+namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Queries.GetAllMessages;
 
 public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
 {
@@ -44,7 +44,7 @@ public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await MessageReadRepository
             .Received(1)
-            .GetAllAsync(Arg.Is<MessageFilteredCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<MessageCollectionReadQuery>(m =>
                                                                         m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&

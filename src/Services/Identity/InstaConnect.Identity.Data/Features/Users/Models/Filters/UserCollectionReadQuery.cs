@@ -4,7 +4,7 @@ using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Identity.Data.Features.Users.Models.Filters;
 
-public record UserFilteredCollectionReadQuery(
+public record UserCollectionReadQuery(
     string UserName,
     string FirstName,
     string LastName,
@@ -12,7 +12,7 @@ public record UserFilteredCollectionReadQuery(
     string SortPropertyName,
     int Page,
     int PageSize)
-    : FilteredCollectionReadQuery<User>(u => (string.IsNullOrEmpty(UserName) || u.UserName.StartsWith(UserName)) &&
+    : CollectionReadQuery<User>(u => (string.IsNullOrEmpty(UserName) || u.UserName.StartsWith(UserName)) &&
                                              (string.IsNullOrEmpty(FirstName) || u.FirstName.StartsWith(FirstName)) &&
                                              (string.IsNullOrEmpty(LastName) || u.LastName.StartsWith(LastName)),
                                         SortOrder, SortPropertyName, Page, PageSize);

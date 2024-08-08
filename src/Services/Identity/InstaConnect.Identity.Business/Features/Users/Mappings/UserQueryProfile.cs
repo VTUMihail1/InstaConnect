@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetAllFilteredUsers;
+using InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
 using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Data.Features.Users.Models.Filters;
 
@@ -14,6 +14,6 @@ internal class UserQueryProfile : Profile
 
         CreateMap<User, UserDetailedQueryViewModel>();
 
-        CreateMap<GetAllUsersQuery, UserFilteredCollectionReadQuery>();
+        CreateMap<GetAllUsersQuery, UserCollectionReadQuery>();
     }
 }

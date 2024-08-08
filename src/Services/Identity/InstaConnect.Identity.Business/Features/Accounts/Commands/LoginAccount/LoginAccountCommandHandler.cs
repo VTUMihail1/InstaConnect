@@ -53,7 +53,7 @@ public class LoginAccountCommandHandler : ICommandHandler<LoginAccountCommand, A
             throw new AccountInvalidDetailsException();
         }
 
-        var filteredCollectionQuery = _instaConnectMapper.Map<UserClaimFilteredCollectionWriteQuery>(existingUser);
+        var filteredCollectionQuery = _instaConnectMapper.Map<UserClaimCollectionWriteQuery>(existingUser);
         var userClaims = await _userClaimWriteRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
 
         var createAccessModel = _instaConnectMapper.Map<CreateAccessTokenModel>((userClaims, existingUser));

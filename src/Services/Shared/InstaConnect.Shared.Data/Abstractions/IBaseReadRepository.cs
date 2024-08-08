@@ -7,5 +7,5 @@ public interface IBaseReadRepository<TEntity> where TEntity : class, IBaseEntity
 {
     Task<TEntity?> GetByIdAsync(string id, CancellationToken cancellationToken);
 
-    Task<PaginationList<TEntity>> GetAllAsync(FilteredCollectionReadQuery<TEntity> filteredCollectionReadQuery, CancellationToken cancellationToken);
+    Task<PaginationList<TEntity>> GetAllAsync(CollectionReadQuery<TEntity> filteredCollectionReadQuery, CancellationToken cancellationToken);
 }

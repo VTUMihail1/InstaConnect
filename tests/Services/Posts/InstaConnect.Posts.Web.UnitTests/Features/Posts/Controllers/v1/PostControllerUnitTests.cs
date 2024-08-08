@@ -3,7 +3,7 @@ using FluentAssertions;
 using InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
 using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
 using InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllFilteredPosts;
+using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
 using InstaConnect.Posts.Web.Features.Posts.Controllers.v1;
 using InstaConnect.Posts.Web.Features.Posts.Models.Requests;
@@ -26,7 +26,7 @@ public class PostControllerUnitTests : BasePostUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
         var request = new GetAllPostsRequest()
@@ -51,7 +51,7 @@ public class PostControllerUnitTests : BasePostUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnPostPaginationQueryResponse_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnPostPaginationQueryResponse_WhenRequestIsValid()
     {
         // Arrange
         var request = new GetAllPostsRequest()
@@ -90,7 +90,7 @@ public class PostControllerUnitTests : BasePostUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldCallTheSender_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
         var request = new GetAllPostsRequest()
@@ -118,28 +118,6 @@ public class PostControllerUnitTests : BasePostUnitTest
                   m.SortPropertyName == ValidSortPropertyName &&
                   m.Page == ValidPageValue &&
                   m.PageSize == ValidPageSizeValue), CancellationToken);
-    }
-
-    [Fact]
-    public async Task GetAllFilteredAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllPostsRequest()
-        {
-            UserId = ValidCurrentUserId,
-            UserName = ValidUserName,
-            Title = ValidTitle,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        await _postController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        CurrentUserContext.Received(1);
     }
 
     [Fact]
@@ -203,21 +181,6 @@ public class PostControllerUnitTests : BasePostUnitTest
         await InstaConnectSender
               .Received(1)
               .SendAsync(Arg.Is<GetPostByIdQuery>(m => m.Id == ValidId), CancellationToken);
-    }
-
-    [Fact]
-    public async Task GetByIdAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
-    {
-        var request = new GetPostByIdRequest()
-        {
-            Id = ValidId
-        };
-
-        // Act
-        await _postController.GetByIdAsync(request, CancellationToken);
-
-        // Assert
-        CurrentUserContext.Received(1);
     }
 
     [Fact]
@@ -295,7 +258,9 @@ public class PostControllerUnitTests : BasePostUnitTest
         await _postController.AddAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 
     [Fact]
@@ -378,7 +343,9 @@ public class PostControllerUnitTests : BasePostUnitTest
         await _postController.UpdateAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 
     [Fact]
@@ -432,6 +399,8 @@ public class PostControllerUnitTests : BasePostUnitTest
         await _postController.DeleteAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 }

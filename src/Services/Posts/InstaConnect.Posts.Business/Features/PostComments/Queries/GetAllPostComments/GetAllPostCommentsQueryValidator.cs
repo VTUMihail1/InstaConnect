@@ -4,7 +4,7 @@ using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Validators;
 
-namespace InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllFilteredPostComments;
+namespace InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
 
 public class GetAllPostCommentsQueryValidator : AbstractValidator<GetAllPostCommentsQuery>
 {

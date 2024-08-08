@@ -4,7 +4,7 @@ using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Follows.Data.Features.Follows.Models.Filters;
 
-public record FollowFilteredCollectionReadQuery(
+public record FollowCollectionReadQuery(
     string FollowerId,
     string FollowerName,
     string FollowingId,
@@ -13,10 +13,10 @@ public record FollowFilteredCollectionReadQuery(
     string SortPropertyName,
     int Page,
     int PageSize)
-    : FilteredCollectionReadQuery<Follow>(
-        f => (string.IsNullOrEmpty(FollowerId) || f.FollowerId.Equals(FollowerId)) &&
+    : CollectionReadQuery<Follow>(
+        f => (string.IsNullOrEmpty(FollowerId) || f.FollowerId == FollowerId) &&
              (string.IsNullOrEmpty(FollowerName) || f.Follower!.UserName.StartsWith(FollowerName)) &&
-             (string.IsNullOrEmpty(FollowingId) || f.FollowingId.Equals(FollowingId)) &&
+             (string.IsNullOrEmpty(FollowingId) || f.FollowingId == FollowingId) &&
              (string.IsNullOrEmpty(FollowingName) || f.Following!.UserName.StartsWith(FollowingName)),
         SortOrder,
         SortPropertyName,

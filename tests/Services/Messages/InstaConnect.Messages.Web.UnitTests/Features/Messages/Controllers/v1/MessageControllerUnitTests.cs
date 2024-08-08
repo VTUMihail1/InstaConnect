@@ -3,7 +3,7 @@ using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
 using InstaConnect.Messages.Business.Features.Messages.Commands.DeleteMessage;
 using InstaConnect.Messages.Business.Features.Messages.Commands.UpdateMessage;
-using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllFilteredMessages;
+using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
 using InstaConnect.Messages.Web.Features.Messages.Controllers.v1;
 using InstaConnect.Messages.Web.Features.Messages.Models.Binding;
@@ -136,7 +136,9 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         await _messageController.GetAllAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 
     [Fact]
@@ -217,7 +219,9 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         await _messageController.GetByIdAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 
     [Fact]
@@ -295,7 +299,9 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         await _messageController.AddAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 
     [Fact]
@@ -377,7 +383,9 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         await _messageController.UpdateAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 
     [Fact]
@@ -431,6 +439,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         await _messageController.DeleteAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 }

@@ -1,50 +1,50 @@
 ﻿using System.Linq.Expressions;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllFilteredPostCommentLikes;
-using InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
+using InstaConnect.Posts.Business.Features.PostComments.Models;
+using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
+using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
+using InstaConnect.Posts.Data.Features.PostComments.Models.Filters;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Queries.GetAllFilteredPostCommentLikes;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Queries.GetAllPostComments;
 
-public class GetAllFilteredPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUnitTest
+public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
 {
-    private readonly GetAllPostCommentLikesQueryHandler _queryHandler;
+    private readonly GetAllPostCommentsQueryHandler _queryHandler;
 
-    public GetAllFilteredPostCommentLikesQueryHandlerUnitTests()
+    public GetAllPostCommentsQueryHandlerUnitTests()
     {
         _queryHandler = new(
             InstaConnectMapper,
-            PostCommentLikeReadRepository);
+            PostCommentReadRepository);
     }
 
     [Fact]
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllPostCommentLikesQuery(
-            ValidPostCommentLikeCurrentUserId,
+        var query = new GetAllPostCommentsQuery(
+            ValidPostCommentCurrentUserId,
             ValidUserName,
-            ValidPostCommentLikePostCommentId,
+            ValidPostCommentPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
             ValidPageSizeValue);
 
-        Expression<Func<PostCommentLike, bool>> expectedExpression = p =>
-             (string.IsNullOrEmpty(ValidPostCommentLikeCurrentUserId) || p.UserId.Equals(ValidPostCommentLikeCurrentUserId)) &&
-             (string.IsNullOrEmpty(ValidUserName) || p.User!.UserName.Equals(ValidUserName)) &&
-             (string.IsNullOrEmpty(ValidPostCommentLikePostCommentId) || p.PostCommentId.Equals(ValidPostCommentLikePostCommentId));
+        Expression<Func<PostComment, bool>> expectedExpression = pc =>
+             (string.IsNullOrEmpty(ValidPostCommentCurrentUserId) || pc.UserId == ValidPostCommentCurrentUserId) &&
+             (string.IsNullOrEmpty(ValidUserName) || pc.User!.UserName.StartsWith(ValidUserName)) &&
+             (string.IsNullOrEmpty(ValidPostCommentPostId) || pc.PostId == ValidPostCommentPostId);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        await PostCommentLikeReadRepository
+        await PostCommentReadRepository
             .Received(1)
-            .GetAllAsync(Arg.Is<PostCommentLikeFilteredCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<PostCommentCollectionReadQuery>(m =>
                                                                         m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
@@ -53,13 +53,13 @@ public class GetAllFilteredPostCommentLikesQueryHandlerUnitTests : BasePostComme
     }
 
     [Fact]
-    public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
+    public async Task Handle_ShouldReturnPostCommentViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllPostCommentLikesQuery(
-            ValidPostCommentLikeCurrentUserId,
+        var query = new GetAllPostCommentsQuery(
+            ValidPostCommentCurrentUserId,
             ValidUserName,
-            ValidPostCommentLikePostCommentId,
+            ValidPostCommentPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -71,15 +71,17 @@ public class GetAllFilteredPostCommentLikesQueryHandlerUnitTests : BasePostComme
         // Assert
         response
             .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
-                                                           m.UserId == ValidPostCommentLikeCurrentUserId &&
+            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
+                                                           m.UserId == ValidPostCommentCurrentUserId &&
                                                            m.UserName == ValidUserName &&
                                                            m.UserProfileImage == ValidUserProfileImage &&
-                                                           m.PostCommentId == ValidPostCommentLikePostCommentId) &&
+                                                           m.PostId == ValidPostCommentPostId &&
+                                                           m.Content == ValidContent) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
                                                            mc.TotalCount == ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
+        ;
     }
 }

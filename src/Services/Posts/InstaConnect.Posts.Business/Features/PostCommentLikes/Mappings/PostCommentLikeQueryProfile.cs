@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllFilteredPostCommentLikes;
+using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
@@ -11,7 +11,7 @@ public class PostCommentLikeQueryProfile : Profile
 {
     public PostCommentLikeQueryProfile()
     {
-        CreateMap<GetAllPostCommentLikesQuery, PostCommentLikeFilteredCollectionReadQuery>();
+        CreateMap<GetAllPostCommentLikesQuery, PostCommentLikeCollectionReadQuery>();
 
         CreateMap<PostCommentLike, PostCommentLikeQueryViewModel>()
             .ConstructUsing(src => new(

@@ -9,7 +9,6 @@ using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.UnitTests.Utilities;
 using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
 using NSubstitute;
 
@@ -142,7 +141,7 @@ public abstract class BasePostUnitTest : BaseSharedUnitTest
             .Returns(existingPostUser);
 
         PostReadRepository
-            .GetAllAsync(Arg.Is<PostFilteredCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<PostCollectionReadQuery>(m =>
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

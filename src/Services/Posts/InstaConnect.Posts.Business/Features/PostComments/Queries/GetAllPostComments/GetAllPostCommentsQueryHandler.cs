@@ -3,7 +3,7 @@ using InstaConnect.Posts.Data.Features.PostComments.Abstract;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Filters;
 using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllFilteredPostComments;
+namespace InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
 
 internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostCommentsQuery, PostCommentPaginationQueryViewModel>
 {
@@ -22,7 +22,7 @@ internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostComments
         GetAllPostCommentsQuery request,
         CancellationToken cancellationToken)
     {
-        var filteredCollectionQuery = _instaConnectMapper.Map<PostCommentFilteredCollectionReadQuery>(request);
+        var filteredCollectionQuery = _instaConnectMapper.Map<PostCommentCollectionReadQuery>(request);
 
         var postComments = await _postCommentReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
         var response = _instaConnectMapper.Map<PostCommentPaginationQueryViewModel>(postComments);

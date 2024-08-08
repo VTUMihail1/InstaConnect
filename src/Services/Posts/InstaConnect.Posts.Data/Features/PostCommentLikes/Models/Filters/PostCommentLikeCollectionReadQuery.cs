@@ -4,7 +4,7 @@ using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
 
-public record PostCommentLikeFilteredCollectionReadQuery(
+public record PostCommentLikeCollectionReadQuery(
     string UserId,
     string UserName,
     string PostCommentId,
@@ -12,7 +12,7 @@ public record PostCommentLikeFilteredCollectionReadQuery(
     string SortPropertyName,
     int Page,
     int PageSize)
-    : FilteredCollectionReadQuery<PostCommentLike>(pc => (string.IsNullOrEmpty(UserId) || pc.UserId.Equals(UserId)) &&
+    : CollectionReadQuery<PostCommentLike>(pc => (string.IsNullOrEmpty(UserId) || pc.UserId == UserId) &&
                                                          (string.IsNullOrEmpty(UserName) || pc.User!.UserName.StartsWith(UserName)) &&
-                                                         (string.IsNullOrEmpty(PostCommentId) || pc.PostCommentId.Equals(PostCommentId)),
+                                                         (string.IsNullOrEmpty(PostCommentId) || pc.PostCommentId == PostCommentId),
     SortOrder, SortPropertyName, Page, PageSize);

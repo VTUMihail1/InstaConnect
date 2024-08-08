@@ -10,7 +10,7 @@ internal class UserClaimProfile : Profile
 {
     public UserClaimProfile()
     {
-        CreateMap<User, UserClaimFilteredCollectionWriteQuery>()
+        CreateMap<User, UserClaimCollectionWriteQuery>()
             .ConstructUsing(src => new(src.Id));
 
         CreateMap<UserClaim, Claim>()

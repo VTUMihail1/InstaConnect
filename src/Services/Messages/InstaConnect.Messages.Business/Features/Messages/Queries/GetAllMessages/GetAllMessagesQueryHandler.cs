@@ -3,7 +3,7 @@ using InstaConnect.Messages.Data.Features.Messages.Abstractions;
 using InstaConnect.Messages.Data.Features.Messages.Models.Filters;
 using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Messages.Business.Features.Messages.Queries.GetAllFilteredMessages;
+namespace InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
 
 internal class GetAllMessagesQueryHandler : IQueryHandler<GetAllMessagesQuery, MessagePaginationQueryViewModel>
 {
@@ -20,7 +20,7 @@ internal class GetAllMessagesQueryHandler : IQueryHandler<GetAllMessagesQuery, M
 
     public async Task<MessagePaginationQueryViewModel> Handle(GetAllMessagesQuery request, CancellationToken cancellationToken)
     {
-        var filteredCollectionQuery = _instaConnectMapper.Map<MessageFilteredCollectionReadQuery>(request);
+        var filteredCollectionQuery = _instaConnectMapper.Map<MessageCollectionReadQuery>(request);
 
         var messages = await _messageReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
         var response = _instaConnectMapper.Map<MessagePaginationQueryViewModel>(messages);

@@ -4,7 +4,7 @@ using InstaConnect.Shared.Data.Models.Filters;
 
 namespace InstaConnect.Messages.Data.Features.Messages.Models.Filters;
 
-public record MessageFilteredCollectionReadQuery(
+public record MessageCollectionReadQuery(
     string CurrentUserId,
     string ReceiverId,
     string ReceiverName,
@@ -12,7 +12,7 @@ public record MessageFilteredCollectionReadQuery(
     string SortPropertyName,
     int Page,
     int PageSize)
-    : FilteredCollectionReadQuery<Message>(m => (string.IsNullOrEmpty(CurrentUserId) || m.SenderId.Equals(CurrentUserId)) &&
-                                                (string.IsNullOrEmpty(ReceiverId) || m.ReceiverId.Equals(ReceiverId)) &&
+    : CollectionReadQuery<Message>(m => (string.IsNullOrEmpty(CurrentUserId) || m.SenderId == CurrentUserId) &&
+                                                (string.IsNullOrEmpty(ReceiverId) || m.ReceiverId == ReceiverId) &&
                                                 (string.IsNullOrEmpty(ReceiverName) || m.Receiver!.UserName.StartsWith(ReceiverName)),
         SortOrder, SortPropertyName, Page, PageSize);

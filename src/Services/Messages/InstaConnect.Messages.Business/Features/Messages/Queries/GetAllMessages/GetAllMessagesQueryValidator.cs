@@ -4,7 +4,7 @@ using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Validators;
 
-namespace InstaConnect.Messages.Business.Features.Messages.Queries.GetAllFilteredMessages;
+namespace InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
 
 public class GetAllMessagesQueryValidator : AbstractValidator<GetAllMessagesQuery>
 {
