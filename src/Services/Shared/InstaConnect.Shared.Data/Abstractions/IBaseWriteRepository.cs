@@ -8,7 +8,7 @@ public interface IBaseWriteRepository<TEntity> where TEntity : class, IBaseEntit
     Task<bool> AnyAsync(CancellationToken cancellationToken);
     void Delete(TEntity entity);
     void DeleteRange(ICollection<TEntity> entities);
-    Task<ICollection<TEntity>> GetAllAsync(FilteredCollectionWriteQuery<TEntity> filteredCollectionWriteQuery, CancellationToken cancellationToken);
+    Task<ICollection<TEntity>> GetAllAsync(CollectionWriteQuery<TEntity> filteredCollectionWriteQuery, CancellationToken cancellationToken);
     Task<TEntity?> GetByIdAsync(string id, CancellationToken cancellationToken);
     void Update(TEntity entity);
     void UpdateRange(ICollection<TEntity> entities);

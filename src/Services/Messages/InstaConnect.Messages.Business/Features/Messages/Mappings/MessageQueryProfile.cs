@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Business.Features.Messages.Models;
-using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllFilteredMessages;
+using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
@@ -13,7 +13,7 @@ internal class MessageQueryProfile : Profile
     {
         CreateMap<PaginationList<Message>, MessagePaginationQueryViewModel>();
 
-        CreateMap<GetAllMessagesQuery, MessageFilteredCollectionReadQuery>();
+        CreateMap<GetAllMessagesQuery, MessageCollectionReadQuery>();
 
         CreateMap<Message, MessageQueryViewModel>()
             .ConstructUsing(src => new(

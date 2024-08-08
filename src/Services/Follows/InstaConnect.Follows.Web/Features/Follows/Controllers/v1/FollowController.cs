@@ -1,7 +1,7 @@
 ﻿using Asp.Versioning;
 using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
 using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFilteredFollows;
+using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
 using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;

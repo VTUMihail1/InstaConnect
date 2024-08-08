@@ -3,7 +3,7 @@ using InstaConnect.Posts.Data.Features.PostLikes.Abstract;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Filters;
 using InstaConnect.Shared.Business.Abstractions;
 
-namespace InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllFilteredPostLikes;
+namespace InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
 
 internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQuery, PostLikePaginationQueryViewModel>
 {
@@ -22,7 +22,7 @@ internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQuery,
         GetAllPostLikesQuery request,
         CancellationToken cancellationToken)
     {
-        var filteredCollectionQuery = _instaConnectMapper.Map<PostLikeFilteredCollectionReadQuery>(request);
+        var filteredCollectionQuery = _instaConnectMapper.Map<PostLikeCollectionReadQuery>(request);
 
         var postLikes = await _postLikeReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
         var response = _instaConnectMapper.Map<PostLikePaginationQueryViewModel>(postLikes);

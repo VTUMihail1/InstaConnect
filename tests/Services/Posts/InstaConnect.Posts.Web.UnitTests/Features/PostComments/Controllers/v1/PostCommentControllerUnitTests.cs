@@ -3,7 +3,7 @@ using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.AddPostComment;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.DeletePostComment;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllFilteredPostComments;
+using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
 using InstaConnect.Posts.Web.Features.PostComments.Controllers.v1;
 using InstaConnect.Posts.Web.Features.PostComments.Models.Requests;
@@ -26,7 +26,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
         var request = new GetAllPostCommentsRequest()
@@ -51,7 +51,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnPostPaginationQueryResponse_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnPostPaginationQueryResponse_WhenRequestIsValid()
     {
         // Arrange
         var request = new GetAllPostCommentsRequest()
@@ -90,7 +90,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldCallTheSender_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
         var request = new GetAllPostCommentsRequest()
@@ -118,28 +118,6 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
                   m.SortPropertyName == ValidSortPropertyName &&
                   m.Page == ValidPageValue &&
                   m.PageSize == ValidPageSizeValue), CancellationToken);
-    }
-
-    [Fact]
-    public async Task GetAllFilteredAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllPostCommentsRequest()
-        {
-            UserId = ValidCurrentUserId,
-            UserName = ValidUserName,
-            PostId = ValidPostId,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        await _postCommentController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        CurrentUserContext.Received(1);
     }
 
     [Fact]
@@ -203,21 +181,6 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         await InstaConnectSender
               .Received(1)
               .SendAsync(Arg.Is<GetPostCommentByIdQuery>(m => m.Id == ValidId), CancellationToken);
-    }
-
-    [Fact]
-    public async Task GetByIdAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
-    {
-        var request = new GetPostCommentByIdRequest()
-        {
-            Id = ValidId
-        };
-
-        // Act
-        await _postCommentController.GetByIdAsync(request, CancellationToken);
-
-        // Assert
-        CurrentUserContext.Received(1);
     }
 
     [Fact]
@@ -295,7 +258,9 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         await _postCommentController.AddAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 
     [Fact]
@@ -377,7 +342,9 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         await _postCommentController.UpdateAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 
     [Fact]
@@ -431,6 +398,8 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         await _postCommentController.DeleteAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 }

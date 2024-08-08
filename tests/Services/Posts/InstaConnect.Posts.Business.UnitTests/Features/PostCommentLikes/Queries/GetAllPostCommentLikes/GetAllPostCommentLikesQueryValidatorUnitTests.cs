@@ -1,30 +1,30 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllFilteredPosts;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
-using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
+using InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Shared.Business.Utilities;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Queries.GetAllFilteredPosts;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 
-public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
+public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLikeUnitTest
 {
-    private readonly GetAllPostsQueryValidator _queryValidator;
+    private readonly GetAllPostCommentLikesQueryValidator _queryValidator;
 
-    public GetAllFilteredPostsQueryValidatorUnitTests()
+    public GetAllPostCommentLikesQueryValidatorUnitTests()
     {
         _queryValidator = new(EntityPropertyValidator);
     }
 
     [Theory]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
+    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForUserId_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllPostsQuery(
+        var query = new GetAllPostCommentLikesQuery(
             Faker.Random.AlphaNumeric(length),
             ValidUserName,
-            ValidTitle,
+            ValidPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -38,15 +38,15 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH - 1)]
+    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForUserName_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllPostsQuery(
+        var query = new GetAllPostCommentLikesQuery(
             ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length),
-            ValidTitle,
+            ValidPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -60,12 +60,12 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [InlineData(PostBusinessConfigurations.TITLE_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.TITLE_MAX_LENGTH + 1)]
-    public void TestValidate_ShouldHaveAnErrorForTitle_WhenTitleLengthIsInvalid(int length)
+    [InlineData(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MIN_LENGTH - 1)]
+    [InlineData(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MAX_LENGTH + 1)]
+    public void TestValidate_ShouldHaveAnErrorForPostCommentId_WhenPostCommentIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllPostsQuery(
+        var query = new GetAllPostCommentLikesQuery(
             ValidCurrentUserId,
             ValidUserName,
             Faker.Random.AlphaNumeric(length),
@@ -78,17 +78,17 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
         var result = _queryValidator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Title);
+        result.ShouldHaveValidationErrorFor(m => m.PostCommentId);
     }
 
     [Fact]
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
     {
         // Arrange
-        var query = new GetAllPostsQuery(
+        var query = new GetAllPostCommentLikesQuery(
             ValidCurrentUserId,
             ValidUserName,
-            ValidTitle,
+            ValidPostCommentId,
             ValidSortOrderProperty,
             null!,
             ValidPageValue,
@@ -105,10 +105,10 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
     {
         // Arrange
-        var query = new GetAllPostsQuery(
+        var query = new GetAllPostCommentLikesQuery(
             ValidCurrentUserId,
             ValidUserName,
-            ValidTitle,
+            ValidPostCommentId,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
             ValidPageValue,
@@ -128,10 +128,10 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllPostsQuery(
+        var query = new GetAllPostCommentLikesQuery(
             ValidCurrentUserId,
             ValidUserName,
-            ValidTitle,
+            ValidPostCommentId,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
             ValidPageValue,
@@ -150,10 +150,10 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllPostsQuery(
+        var query = new GetAllPostCommentLikesQuery(
             ValidCurrentUserId,
             ValidUserName,
-            ValidTitle,
+            ValidPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             value,
@@ -172,10 +172,10 @@ public class GetAllFilteredPostsQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllPostsQuery(
+        var query = new GetAllPostCommentLikesQuery(
             ValidCurrentUserId,
             ValidUserName,
-            ValidTitle,
+            ValidPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

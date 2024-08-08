@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Features.Posts.Models;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllFilteredPosts;
+using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Data.Features.Posts.Models.Filters;
 using InstaConnect.Shared.Data.Models.Pagination;
@@ -11,7 +11,7 @@ public class PostQueryProfile : Profile
 {
     public PostQueryProfile()
     {
-        CreateMap<GetAllPostsQuery, PostFilteredCollectionReadQuery>();
+        CreateMap<GetAllPostsQuery, PostCollectionReadQuery>();
 
         CreateMap<Post, PostQueryViewModel>()
             .ConstructUsing(src => new(

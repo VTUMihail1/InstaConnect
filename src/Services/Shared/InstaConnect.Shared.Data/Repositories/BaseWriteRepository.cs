@@ -13,11 +13,11 @@ public abstract class BaseWriteRepository<TEntity> : IBaseWriteRepository<TEntit
         _dbContext = dbContext;
     }
 
-    public virtual async Task<ICollection<TEntity>> GetAllAsync(FilteredCollectionWriteQuery<TEntity> filteredCollectionWriteQuery, CancellationToken cancellationToken)
+    public virtual async Task<ICollection<TEntity>> GetAllAsync(CollectionWriteQuery<TEntity> collectionWriteQuery, CancellationToken cancellationToken)
     {
         var entities = await IncludeProperties(
             _dbContext.Set<TEntity>())
-            .Where(filteredCollectionWriteQuery.Expression)
+            .Where(collectionWriteQuery.Expression)
             .ToListAsync(cancellationToken);
 
         return entities;

@@ -2,7 +2,7 @@
 using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.AddPostCommentLike;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.DeletePostCommentLike;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllFilteredPostCommentLikes;
+using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Controllers.v1;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Requests;
@@ -26,7 +26,7 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
         var request = new GetAllPostCommentLikesRequest()
@@ -51,7 +51,7 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldReturnPostCommentLikePaginationQueryResponse_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnPostCommentLikePaginationQueryResponse_WhenRequestIsValid()
     {
         // Arrange
         var request = new GetAllPostCommentLikesRequest()
@@ -89,7 +89,7 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldCallTheSender_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
         var request = new GetAllPostCommentLikesRequest()
@@ -117,28 +117,6 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
                   m.SortPropertyName == ValidSortPropertyName &&
                   m.Page == ValidPageValue &&
                   m.PageSize == ValidPageSizeValue), CancellationToken);
-    }
-
-    [Fact]
-    public async Task GetAllFilteredAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllPostCommentLikesRequest()
-        {
-            UserId = ValidCurrentUserId,
-            UserName = ValidUserName,
-            PostCommentId = ValidPostCommentId,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        await _postCommentLikeController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        CurrentUserContext.Received(1);
     }
 
     [Fact]
@@ -201,21 +179,6 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
         await InstaConnectSender
               .Received(1)
               .SendAsync(Arg.Is<GetPostCommentLikeByIdQuery>(m => m.Id == ValidId), CancellationToken);
-    }
-
-    [Fact]
-    public async Task GetByIdAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
-    {
-        var request = new GetPostCommentLikeByIdRequest()
-        {
-            Id = ValidId
-        };
-
-        // Act
-        await _postCommentLikeController.GetByIdAsync(request, CancellationToken);
-
-        // Assert
-        CurrentUserContext.Received(1);
     }
 
     [Fact]
@@ -292,7 +255,9 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
         await _postCommentLikeController.AddAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 
     [Fact]
@@ -346,6 +311,8 @@ public class PostCommentLikeControllerUnitTests : BasePostCommentLikeUnitTest
         await _postCommentLikeController.DeleteAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 }

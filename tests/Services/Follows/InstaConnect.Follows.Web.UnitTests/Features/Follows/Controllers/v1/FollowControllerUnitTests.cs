@@ -2,7 +2,7 @@
 using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
 using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFilteredFollows;
+using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
 using InstaConnect.Follows.Web.Features.Follows.Controllers.v1;
 using InstaConnect.Follows.Web.Features.Follows.Models.Binding;
@@ -126,29 +126,6 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
     }
 
     [Fact]
-    public async Task GetAllFilteredAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
-    {
-        // Arrange
-        var request = new GetAllFollowsRequest()
-        {
-            FollowerId = ValidCurrentUserId,
-            FollowerName = ValidUserName,
-            FollowingId = ValidCurrentUserId,
-            FollowingName = ValidUserName,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
-        };
-
-        // Act
-        await _followController.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        CurrentUserContext.Received(1);
-    }
-
-    [Fact]
     public async Task GetByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
@@ -210,21 +187,6 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         await InstaConnectSender
               .Received(1)
               .SendAsync(Arg.Is<GetFollowByIdQuery>(m => m.Id == ValidId), CancellationToken);
-    }
-
-    [Fact]
-    public async Task GetByIdAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
-    {
-        var request = new GetFollowByIdRequest()
-        {
-            Id = ValidId
-        };
-
-        // Act
-        await _followController.GetByIdAsync(request, CancellationToken);
-
-        // Assert
-        CurrentUserContext.Received(1);
     }
 
     [Fact]
@@ -301,7 +263,9 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         await _followController.AddAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 
     [Fact]
@@ -355,6 +319,8 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         await _followController.DeleteAsync(request, CancellationToken);
 
         // Assert
-        CurrentUserContext.Received(1);
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
     }
 }

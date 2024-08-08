@@ -1,30 +1,30 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllFilteredPostLikes;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
+using InstaConnect.Posts.Business.Features.PostComments.Utilities;
+using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Shared.Business.Utilities;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Queries.GetAllFilteredPostLikes;
+namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Queries.GetAllPostComments;
 
-public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
+public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
 {
-    private readonly GetAllPostLikesQueryValidator _queryValidator;
+    private readonly GetAllPostCommentsQueryValidator _queryValidator;
 
-    public GetAllFilteredPostLikesQueryValidatorUnitTests()
+    public GetAllPostCommentsQueryValidatorUnitTests()
     {
         _queryValidator = new(EntityPropertyValidator);
     }
 
     [Theory]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
+    [InlineData(PostCommentBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForUserId_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllPostLikesQuery(
+        var query = new GetAllPostCommentsQuery(
             Faker.Random.AlphaNumeric(length),
             ValidUserName,
-            ValidPostId,
+            ValidPostCommentPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -38,15 +38,15 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     }
 
     [Theory]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH - 1)]
+    [InlineData(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForUserName_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllPostLikesQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length),
-            ValidPostId,
+            ValidPostCommentPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -60,12 +60,12 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     }
 
     [Theory]
-    [InlineData(PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentBusinessConfigurations.POST_ID_MIN_LENGTH - 1)]
+    [InlineData(PostCommentBusinessConfigurations.POST_ID_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllPostLikesQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             ValidUserName,
             Faker.Random.AlphaNumeric(length),
@@ -85,10 +85,10 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
     {
         // Arrange
-        var query = new GetAllPostLikesQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             ValidUserName,
-            ValidPostId,
+            ValidPostCommentPostId,
             ValidSortOrderProperty,
             null!,
             ValidPageValue,
@@ -105,10 +105,10 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
     {
         // Arrange
-        var query = new GetAllPostLikesQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             ValidUserName,
-            ValidPostId,
+            ValidPostCommentPostId,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
             ValidPageValue,
@@ -128,10 +128,10 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetAllPostLikesQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             ValidUserName,
-            ValidPostId,
+            ValidPostCommentPostId,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
             ValidPageValue,
@@ -150,10 +150,10 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllPostLikesQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             ValidUserName,
-            ValidPostId,
+            ValidPostCommentPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             value,
@@ -172,10 +172,10 @@ public class GetAllFilteredPostLikesQueryValidatorUnitTests : BasePostLikeUnitTe
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var query = new GetAllPostLikesQuery(
+        var query = new GetAllPostCommentsQuery(
             ValidCurrentUserId,
             ValidUserName,
-            ValidPostId,
+            ValidPostCommentPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

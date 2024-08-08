@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFilteredFollows;
+using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
@@ -46,7 +46,7 @@ public class GetAllFilteredFollowsQueryHandlerUnitTests : BaseFollowUnitTest
         // Assert
         await FollowReadRepository
             .Received(1)
-            .GetAllAsync(Arg.Is<FollowFilteredCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m =>
                                                                         m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&

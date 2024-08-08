@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetAllFilteredUsers;
+using InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUser;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUserDetailed;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserById;

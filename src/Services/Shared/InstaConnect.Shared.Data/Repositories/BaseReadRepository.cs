@@ -15,13 +15,13 @@ public abstract class BaseReadRepository<TEntity> : IBaseReadRepository<TEntity>
         _dbContext = dbContext;
     }
 
-    public virtual async Task<PaginationList<TEntity>> GetAllAsync(FilteredCollectionReadQuery<TEntity> filteredCollectionReadQuery, CancellationToken cancellationToken)
+    public virtual async Task<PaginationList<TEntity>> GetAllAsync(CollectionReadQuery<TEntity> collectionReadQuery, CancellationToken cancellationToken)
     {
         var entities = await IncludeProperties(
             _dbContext.Set<TEntity>())
-            .Where(filteredCollectionReadQuery.Expression)
-            .OrderEntities(filteredCollectionReadQuery.SortOrder, filteredCollectionReadQuery.SortPropertyName)
-            .ToPagedList(filteredCollectionReadQuery.Page, filteredCollectionReadQuery.PageSize, cancellationToken);
+            .Where(collectionReadQuery.Expression)
+            .OrderEntities(collectionReadQuery.SortOrder, collectionReadQuery.SortPropertyName)
+            .ToPagedList(collectionReadQuery.Page, collectionReadQuery.PageSize, cancellationToken);
 
         return entities;
     }
