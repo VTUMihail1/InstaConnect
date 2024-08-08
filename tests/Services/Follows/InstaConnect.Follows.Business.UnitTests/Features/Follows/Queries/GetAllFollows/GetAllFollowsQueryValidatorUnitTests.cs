@@ -4,13 +4,13 @@ using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Shared.Business.Utilities;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFilteredFollows;
+namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFollows;
 
-public class GetAllFilteredFollowsQueryValidatorUnitTests : BaseFollowUnitTest
+public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
 {
     private readonly GetAllFollowsQueryValidator _queryValidator;
 
-    public GetAllFilteredFollowsQueryValidatorUnitTests()
+    public GetAllFollowsQueryValidatorUnitTests()
     {
         _queryValidator = new(EntityPropertyValidator);
     }
