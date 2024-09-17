@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace InstaConnect.Posts.Read.Data.Migrations;
+namespace InstaConnect.Posts.Data.Migrations;
 
 /// <inheritdoc />
 public partial class Initial : Migration
@@ -19,11 +20,11 @@ public partial class Initial : Migration
                 last_name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                 email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 user_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                profile_image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                 UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
             },
-            constraints: table =>
-            table.PrimaryKey("PK_user", x => x.id));
+            constraints: table => table.PrimaryKey("PK_user", x => x.id));
 
         migrationBuilder.CreateTable(
             name: "post",
@@ -66,7 +67,7 @@ public partial class Initial : Migration
                     column: x => x.post_id,
                     principalTable: "post",
                     principalColumn: "id",
-                    onDelete: ReferentialAction.Restrict);
+                    onDelete: ReferentialAction.Cascade);
                 table.ForeignKey(
                     name: "FK_post_comment_user_user_id",
                     column: x => x.user_id,
