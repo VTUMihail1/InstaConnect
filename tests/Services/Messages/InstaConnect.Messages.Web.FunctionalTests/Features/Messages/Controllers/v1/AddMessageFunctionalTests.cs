@@ -118,7 +118,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingSenderId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel(existingReceiverId, ValidContent);
+        var request = new AddMessageBindingModel(existingReceiverId, ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
 
