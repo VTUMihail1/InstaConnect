@@ -62,7 +62,6 @@ public class PostConfigurations : IEntityTypeConfiguration<Post>
             .HasMany(p => p.PostComments)
             .WithOne(c => c.Post)
             .HasForeignKey(c => c.PostId)
-            .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

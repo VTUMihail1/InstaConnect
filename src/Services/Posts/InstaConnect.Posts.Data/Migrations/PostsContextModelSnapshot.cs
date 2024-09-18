@@ -211,7 +211,7 @@ namespace InstaConnect.Posts.Data.Migrations
             modelBuilder.Entity("InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites.PostCommentLike", b =>
                 {
                     b.HasOne("InstaConnect.Posts.Data.Features.PostComments.Models.Entitites.PostComment", "PostComment")
-                        .WithMany()
+                        .WithMany("PostCommentLikes")
                         .HasForeignKey("PostCommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -274,6 +274,11 @@ namespace InstaConnect.Posts.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("InstaConnect.Posts.Data.Features.PostComments.Models.Entitites.PostComment", b =>
+                {
+                    b.Navigation("PostCommentLikes");
                 });
 
             modelBuilder.Entity("InstaConnect.Posts.Data.Features.Posts.Models.Entitites.Post", b =>

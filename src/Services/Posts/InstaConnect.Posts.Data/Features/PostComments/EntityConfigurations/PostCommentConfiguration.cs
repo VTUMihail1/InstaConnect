@@ -55,5 +55,17 @@ public class PostCommentConfiguration : IEntityTypeConfiguration<PostComment>
             .WithMany(p => p.PostComments)
             .HasForeignKey(pc => pc.PostId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .HasOne(pc => pc.Post)
+            .WithMany(p => p.PostComments)
+            .HasForeignKey(pc => pc.PostId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .HasMany(p => p.PostCommentLikes)
+            .WithOne(c => c.PostComment)
+            .HasForeignKey(c => c.PostCommentId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

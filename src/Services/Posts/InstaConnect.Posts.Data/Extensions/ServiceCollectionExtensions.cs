@@ -6,6 +6,7 @@ using InstaConnect.Posts.Data.Features.Users.Extensions;
 using InstaConnect.Posts.Data.Helpers;
 using InstaConnect.Shared.Data.Abstractions;
 using InstaConnect.Shared.Data.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
