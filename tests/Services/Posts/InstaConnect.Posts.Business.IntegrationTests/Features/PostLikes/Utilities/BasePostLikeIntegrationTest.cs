@@ -1,9 +1,12 @@
 ﻿using InstaConnect.Posts.Business.Features.PostComments.Utilities;
+using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
 using InstaConnect.Posts.Data;
 using InstaConnect.Posts.Data.Features.PostComments.Abstract;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
+using InstaConnect.Posts.Data.Features.PostLikes.Abstract;
+using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
 using InstaConnect.Posts.Data.Features.Posts.Abstract;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Data.Features.Users.Abstract;
@@ -13,9 +16,9 @@ using InstaConnect.Shared.Data.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Utilities;
+namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Utilities;
 
-public abstract class BasePostCommentIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
+public abstract class BasePostLikeIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
     protected readonly string InvalidId;
     protected readonly string InvalidUserId;
@@ -29,9 +32,6 @@ public abstract class BasePostCommentIntegrationTest : BaseSharedIntegrationTest
     protected readonly string InvalidPostId;
     protected readonly string ValidPostTitle;
     protected readonly string ValidPostContent;
-    protected readonly string ValidContent;
-    protected readonly string ValidAddContent;
-    protected readonly string ValidUpdateContent;
 
     protected IUserReadRepository UserReadRepository
     {
@@ -55,44 +55,41 @@ public abstract class BasePostCommentIntegrationTest : BaseSharedIntegrationTest
         }
     }
 
-    protected IPostCommentWriteRepository PostCommentWriteRepository
+    protected IPostLikeWriteRepository PostLikeWriteRepository
     {
         get
         {
             var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var postCommentWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IPostCommentWriteRepository>();
+            var postLikeWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IPostLikeWriteRepository>();
 
-            return postCommentWriteRepository;
+            return postLikeWriteRepository;
         }
     }
 
-    protected IPostCommentReadRepository PostCommentReadRepository
+    protected IPostLikeReadRepository PostLikeReadRepository
     {
         get
         {
             var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var postCommentReadRepository = serviceScope.ServiceProvider.GetRequiredService<IPostCommentReadRepository>();
+            var postLikeReadRepository = serviceScope.ServiceProvider.GetRequiredService<IPostLikeReadRepository>();
 
-            return postCommentReadRepository;
+            return postLikeReadRepository;
         }
     }
 
-    protected BasePostCommentIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
+    protected BasePostLikeIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
         : base(integrationTestWebAppFactory.Services.CreateScope())
     {
-        InvalidId = GetAverageString(PostCommentBusinessConfigurations.ID_MAX_LENGTH, PostCommentBusinessConfigurations.ID_MIN_LENGTH);
-        InvalidUserId = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidAddUserName = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUpdateUserName = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserFirstName = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserLastName = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserEmail = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        InvalidPostId = GetAverageString(PostCommentBusinessConfigurations.POST_ID_MAX_LENGTH, PostCommentBusinessConfigurations.POST_ID_MIN_LENGTH);
-        ValidContent = GetAverageString(PostCommentBusinessConfigurations.CONTENT_MAX_LENGTH, PostCommentBusinessConfigurations.CONTENT_MIN_LENGTH);
-        ValidAddContent = GetAverageString(PostCommentBusinessConfigurations.CONTENT_MAX_LENGTH, PostCommentBusinessConfigurations.CONTENT_MIN_LENGTH);
-        ValidUpdateContent = GetAverageString(PostCommentBusinessConfigurations.CONTENT_MAX_LENGTH, PostCommentBusinessConfigurations.CONTENT_MIN_LENGTH);
+        InvalidId = GetAverageString(PostLikeBusinessConfigurations.ID_MAX_LENGTH, PostLikeBusinessConfigurations.ID_MIN_LENGTH);
+        InvalidUserId = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
+        ValidUserName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
+        ValidAddUserName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
+        ValidUpdateUserName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
+        ValidUserFirstName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
+        ValidUserLastName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
+        ValidUserEmail = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
+        ValidUserProfileImage = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
+        InvalidPostId = GetAverageString(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH, PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH);
         ValidPostTitle = GetAverageString(PostBusinessConfigurations.TITLE_MAX_LENGTH, PostBusinessConfigurations.TITLE_MIN_LENGTH);
         ValidPostContent = GetAverageString(PostBusinessConfigurations.CONTENT_MAX_LENGTH, PostBusinessConfigurations.CONTENT_MIN_LENGTH);
     }
@@ -113,20 +110,19 @@ public abstract class BasePostCommentIntegrationTest : BaseSharedIntegrationTest
         return post.Id;
     }
 
-    protected async Task<string> CreatePostCommentAsync(string userId, string postId, CancellationToken cancellationToken)
+    protected async Task<string> CreatePostLikeAsync(string userId, string postId, CancellationToken cancellationToken)
     {
-        var postComment = new PostComment(
-            userId,
+        var postLike = new PostLike(
             postId,
-            ValidContent);
+            userId);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var postCommentWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostCommentWriteRepository>();
+        var postLikeWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostLikeWriteRepository>();
 
-        postCommentWriteRepository.Add(postComment);
+        postLikeWriteRepository.Add(postLike);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return postComment.Id;
+        return postLike.Id;
     }
 
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
@@ -161,9 +157,9 @@ public abstract class BasePostCommentIntegrationTest : BaseSharedIntegrationTest
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<PostsContext>();
 
-        if (dbContext.PostComments.Any())
+        if (dbContext.PostLikes.Any())
         {
-            await dbContext.PostComments.ExecuteDeleteAsync(CancellationToken);
+            await dbContext.Posts.ExecuteDeleteAsync(CancellationToken);
         }
 
         if (dbContext.Posts.Any())

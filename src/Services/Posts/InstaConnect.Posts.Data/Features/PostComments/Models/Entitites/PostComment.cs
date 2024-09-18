@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
+﻿using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
+using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Data.Models.Base;
 
@@ -25,4 +26,6 @@ public class PostComment : BaseEntity
     public User? User { get; set; }
 
     public Post? Post { get; set; }
+
+    public ICollection<PostCommentLike> PostCommentLikes { get; set; } = [];
 }
