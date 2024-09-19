@@ -164,10 +164,10 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var PostLike = await PostLikeWriteRepository.GetByIdAsync(response.Id, CancellationToken);
+        var postLike = await PostLikeWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        PostLike
+        postLike
             .Should()
             .Match<PostLike>(p => p.Id == response.Id &&
                                      p.UserId == existingUserId &&

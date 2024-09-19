@@ -2,14 +2,10 @@
 using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
 using InstaConnect.Posts.Business.Features.PostComments.Utilities;
-using InstaConnect.Posts.Business.Features.Posts.Models;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
-using InstaConnect.Shared.Business.Exceptions.Posts;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Queries;
 

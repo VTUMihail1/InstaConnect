@@ -1,10 +1,7 @@
-﻿using InstaConnect.Posts.Business.Features.PostComments.Utilities;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
+﻿using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
 using InstaConnect.Posts.Data;
-using InstaConnect.Posts.Data.Features.PostComments.Abstract;
-using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostLikes.Abstract;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
 using InstaConnect.Posts.Data.Features.Posts.Abstract;

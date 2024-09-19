@@ -213,7 +213,7 @@ namespace InstaConnect.Posts.Data.Migrations
                     b.HasOne("InstaConnect.Posts.Data.Features.PostComments.Models.Entitites.PostComment", "PostComment")
                         .WithMany("PostCommentLikes")
                         .HasForeignKey("PostCommentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("InstaConnect.Posts.Data.Features.Users.Models.Entitites.User", "User")
@@ -232,7 +232,7 @@ namespace InstaConnect.Posts.Data.Migrations
                     b.HasOne("InstaConnect.Posts.Data.Features.Posts.Models.Entitites.Post", "Post")
                         .WithMany("PostComments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("InstaConnect.Posts.Data.Features.Users.Models.Entitites.User", "User")
@@ -251,7 +251,7 @@ namespace InstaConnect.Posts.Data.Migrations
                     b.HasOne("InstaConnect.Posts.Data.Features.Posts.Models.Entitites.Post", "Post")
                         .WithMany("PostLikes")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("InstaConnect.Posts.Data.Features.Users.Models.Entitites.User", "User")

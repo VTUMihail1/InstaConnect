@@ -4,7 +4,6 @@ using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
 using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
-using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Posts;

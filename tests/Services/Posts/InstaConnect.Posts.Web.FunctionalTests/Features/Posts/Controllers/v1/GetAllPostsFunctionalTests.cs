@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
 using InstaConnect.Posts.Business.Features.Posts.Utilities;
@@ -335,6 +334,45 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var route = GetApiRoute(
             existingUserId,
             GetNonCaseMatchingString(ValidUserName),
+            ValidTitle,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await HttpClient.GetAsync(route, CancellationToken);
+
+        var postPaginationCollectionResponse = await response
+            .Content
+            .ReadFromJsonAsync<PostPaginationQueryResponse>();
+
+        // Assert
+        postPaginationCollectionResponse
+            .Should()
+            .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
+                                                               m.Id == existingPostId &&
+                                                               m.UserId == existingUserId &&
+                                                               m.UserName == ValidUserName &&
+                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.Title == ValidTitle &&
+                                                               m.Content == ValidContent) &&
+                                                               mc.Page == ValidPageValue &&
+                                                               mc.PageSize == ValidPageSizeValue &&
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
+    }
+
+    [Fact]
+    public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndUserNameIsNotFull()
+    {
+        // Arrange
+        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var route = GetApiRoute(
+            existingUserId,
+            GetHalfStartString(ValidUserName),
             ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,

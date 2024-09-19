@@ -385,6 +385,46 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
     }
 
     [Fact]
+    public async Task GetAllAsync_ShouldReturnPostCommentLikePaginationCollectionResponse_WhenRequestIsValidAndUserIsNotFull()
+    {
+        // Arrange
+        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var route = GetApiRoute(
+            existingUserId,
+            GetHalfStartString(ValidUserName),
+            existingPostCommentId,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await HttpClient.GetAsync(route, CancellationToken);
+
+        var postCommentLikePaginationCollectionResponse = await response
+            .Content
+            .ReadFromJsonAsync<PostCommentLikePaginationQueryResponse>();
+
+        // Assert
+        postCommentLikePaginationCollectionResponse
+            .Should()
+            .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
+                                                               m.Id == existingPostCommentLikeId &&
+                                                               m.UserId == existingUserId &&
+                                                               m.UserName == ValidUserName &&
+                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.PostCommentId == existingPostCommentId) &&
+                                                               mc.Page == ValidPageValue &&
+                                                               mc.PageSize == ValidPageSizeValue &&
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
+    }
+
+    [Fact]
     public async Task GetAllAsync_ShouldReturnPostCommentLikePaginationCollectionResponse_WhenRequestIsValidAndPostIdCaseDoesNotMatch()
     {
         // Arrange

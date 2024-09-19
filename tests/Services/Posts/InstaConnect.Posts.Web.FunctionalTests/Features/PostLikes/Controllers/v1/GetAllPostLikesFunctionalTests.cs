@@ -373,6 +373,45 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
     }
 
     [Fact]
+    public async Task GetAllAsync_ShouldReturnPostLikePaginationCollectionResponse_WhenRequestIsValidAndUserNameIsNotFull()
+    {
+        // Arrange
+        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
+        var route = GetApiRoute(
+            existingUserId,
+            GetHalfStartString(ValidUserName),
+            existingPostId,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var response = await HttpClient.GetAsync(route, CancellationToken);
+
+        var postLikePaginationCollectionResponse = await response
+            .Content
+            .ReadFromJsonAsync<PostLikePaginationQueryResponse>();
+
+        // Assert
+        postLikePaginationCollectionResponse
+            .Should()
+            .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
+                                                               m.Id == existingPostLikeId &&
+                                                               m.UserId == existingUserId &&
+                                                               m.UserName == ValidUserName &&
+                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.PostId == existingPostId) &&
+                                                               mc.Page == ValidPageValue &&
+                                                               mc.PageSize == ValidPageSizeValue &&
+                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               !mc.HasPreviousPage &&
+                                                               !mc.HasNextPage);
+    }
+
+    [Fact]
     public async Task GetAllAsync_ShouldReturnPostLikePaginationCollectionResponse_WhenRequestIsValidAndPostIdCaseDoesNotMatch()
     {
         // Arrange

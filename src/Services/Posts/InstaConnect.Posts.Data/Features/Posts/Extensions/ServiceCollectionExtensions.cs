@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Posts.Data.Features.Posts.Abstract;
 using InstaConnect.Posts.Data.Features.Posts.Repositories;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Data.Features.Posts.Extensions;
