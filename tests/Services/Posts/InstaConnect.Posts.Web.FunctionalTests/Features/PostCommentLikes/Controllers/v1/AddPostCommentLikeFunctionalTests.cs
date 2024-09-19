@@ -3,18 +3,18 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
-using InstaConnect.Posts.Web.Features.PostLikes.Models.Binding;
-using InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
-using InstaConnect.Posts.Web.FunctionalTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
+using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Binding;
+using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Responses;
+using InstaConnect.Posts.Web.FunctionalTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
 
-namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostLikes.Controllers.v1;
+namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 
-public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
+public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTest
 {
-    public AddPostLikeFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public AddPostCommentLikeFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
     {
 
     }
@@ -25,7 +25,8 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new AddPostLikeBindingModel(existingPostId);
+        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
 
         // Act
         var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
@@ -35,12 +36,13 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     }
 
     [Fact]
-    public async Task AddAsync_ShouldReturnBadRequestResponse_WhenPostIdIsNull()
+    public async Task AddAsync_ShouldReturnBadRequestResponse_WhenPostCommentIdIsNull()
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new AddPostLikeBindingModel(null!);
+        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var request = new AddPostCommentLikeBindingModel(null!);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -54,14 +56,15 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH + 1)]
-    public async Task AddAsync_ShouldReturnBadRequestResponse_WhenPostIdLengthIsInvalid(int length)
+    [InlineData(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MIN_LENGTH - 1)]
+    [InlineData(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MAX_LENGTH + 1)]
+    public async Task AddAsync_ShouldReturnBadRequestResponse_WhenPostCommentIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new AddPostLikeBindingModel(Faker.Random.AlphaNumeric(length));
+        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var request = new AddPostCommentLikeBindingModel(Faker.Random.AlphaNumeric(length));
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -79,7 +82,8 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new AddPostLikeBindingModel(existingPostId);
+        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
 
@@ -93,14 +97,15 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
+    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new AddPostLikeBindingModel(existingPostId);
+        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
 
@@ -118,7 +123,8 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new AddPostLikeBindingModel(existingPostId);
+        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = InvalidUserId;
 
@@ -136,7 +142,8 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new AddPostLikeBindingModel(InvalidPostId);
+        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var request = new AddPostCommentLikeBindingModel(InvalidPostCommentId);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -149,13 +156,14 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     }
 
     [Fact]
-    public async Task AddAsync_ShouldReturnBadRequestResponse_WhenPostLikeAlreadyExists()
+    public async Task AddAsync_ShouldReturnBadRequestResponse_WhenPostCommentLikeAlreadyExists()
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new AddPostLikeBindingModel(existingPostId);
+        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -173,7 +181,8 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new AddPostLikeBindingModel(existingPostId);
+        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
 
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
@@ -187,12 +196,13 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     }
 
     [Fact]
-    public async Task AddAsync_ShouldAddPostLike_WhenRequestIsValid()
+    public async Task AddAsync_ShouldAddPostCommentLike_WhenRequestIsValid()
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new AddPostLikeBindingModel(existingPostId);
+        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -200,17 +210,17 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
         var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
 
-        var postLikeViewResponse = await response
+        var postCommentLikeViewResponse = await response
             .Content
-            .ReadFromJsonAsync<PostLikeCommandResponse>();
+            .ReadFromJsonAsync<PostCommentLikeCommandResponse>();
 
-        var postLike = await PostLikeWriteRepository.GetByIdAsync(postLikeViewResponse!.Id, CancellationToken);
+        var postCommentLike = await PostCommentLikeWriteRepository.GetByIdAsync(postCommentLikeViewResponse!.Id, CancellationToken);
 
         // Assert
-        postLike
+        postCommentLike
             .Should()
-            .Match<PostLike>(m => m.Id == postLikeViewResponse.Id &&
+            .Match<PostCommentLike>(m => m.Id == postCommentLikeViewResponse.Id &&
                                  m.UserId == existingUserId &&
-                                 m.PostId == existingPostId);
+                                 m.PostCommentId == existingPostCommentId);
     }
 }
