@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Posts.Data.Features.PostCommentLikes.Abstract;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
+using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Shared.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,5 +23,11 @@ internal class PostCommentLikeReadRepository : BaseReadRepository<PostCommentLik
             .FirstOrDefaultAsync(pl => pl.UserId == userId && pl.PostCommentId == postCommentId, cancellationToken);
 
         return postCommentLike;
+    }
+
+    protected override IQueryable<PostCommentLike> IncludeProperties(IQueryable<PostCommentLike> queryable)
+    {
+        return queryable
+            .Include(p => p.User);
     }
 }

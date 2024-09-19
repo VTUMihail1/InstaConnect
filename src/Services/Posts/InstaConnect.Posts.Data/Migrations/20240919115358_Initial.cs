@@ -67,7 +67,7 @@ public partial class Initial : Migration
                     column: x => x.post_id,
                     principalTable: "post",
                     principalColumn: "id",
-                    onDelete: ReferentialAction.Cascade);
+                    onDelete: ReferentialAction.Restrict);
                 table.ForeignKey(
                     name: "FK_post_comment_user_user_id",
                     column: x => x.user_id,
@@ -94,7 +94,7 @@ public partial class Initial : Migration
                     column: x => x.post_id,
                     principalTable: "post",
                     principalColumn: "id",
-                    onDelete: ReferentialAction.Cascade);
+                    onDelete: ReferentialAction.Restrict);
                 table.ForeignKey(
                     name: "FK_post_like_user_user_id",
                     column: x => x.user_id,
@@ -121,7 +121,7 @@ public partial class Initial : Migration
                     column: x => x.comment_id,
                     principalTable: "post_comment",
                     principalColumn: "id",
-                    onDelete: ReferentialAction.Cascade);
+                    onDelete: ReferentialAction.Restrict);
                 table.ForeignKey(
                     name: "FK_post_comment_like_user_user_id",
                     column: x => x.user_id,
