@@ -50,7 +50,7 @@ public class PostConfigurations : IEntityTypeConfiguration<Post>
             .WithOne(pl => pl.Post)
             .HasForeignKey(pl => pl.PostId)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder
             .HasOne(pl => pl.User)
@@ -62,6 +62,6 @@ public class PostConfigurations : IEntityTypeConfiguration<Post>
             .HasMany(p => p.PostComments)
             .WithOne(c => c.Post)
             .HasForeignKey(c => c.PostId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

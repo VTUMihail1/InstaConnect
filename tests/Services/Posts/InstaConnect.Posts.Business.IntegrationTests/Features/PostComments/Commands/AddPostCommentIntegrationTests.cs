@@ -2,12 +2,9 @@
 using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.AddPostComment;
 using InstaConnect.Posts.Business.Features.PostComments.Utilities;
-using InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Exceptions.User;

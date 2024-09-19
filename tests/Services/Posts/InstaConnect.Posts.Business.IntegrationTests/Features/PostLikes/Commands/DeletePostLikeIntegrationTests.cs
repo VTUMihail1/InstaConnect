@@ -156,10 +156,10 @@ public class DeletePostLikeIntegrationTests : BasePostLikeIntegrationTest
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
-        var PostLike = await PostLikeWriteRepository.GetByIdAsync(existingPostLikeId, CancellationToken);
+        var postLike = await PostLikeWriteRepository.GetByIdAsync(existingPostLikeId, CancellationToken);
 
         // Assert
-        PostLike
+        postLike
             .Should()
             .BeNull();
     }
@@ -178,10 +178,10 @@ public class DeletePostLikeIntegrationTests : BasePostLikeIntegrationTest
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
-        var PostLike = await PostLikeWriteRepository.GetByIdAsync(existingPostLikeId, CancellationToken);
+        var postLike = await PostLikeWriteRepository.GetByIdAsync(existingPostLikeId, CancellationToken);
 
         // Assert
-        PostLike
+        postLike
             .Should()
             .BeNull();
     }

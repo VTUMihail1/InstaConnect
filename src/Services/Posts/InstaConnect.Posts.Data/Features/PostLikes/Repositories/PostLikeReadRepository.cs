@@ -1,5 +1,4 @@
-﻿using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Data.Features.PostLikes.Abstract;
+﻿using InstaConnect.Posts.Data.Features.PostLikes.Abstract;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
 using InstaConnect.Shared.Data.Repositories;
 using Microsoft.EntityFrameworkCore;

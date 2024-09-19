@@ -7,7 +7,6 @@ using InstaConnect.Posts.Business.IntegrationTests.Utilities;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
-using InstaConnect.Shared.Business.Exceptions.Posts;
 using InstaConnect.Shared.Business.Exceptions.User;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostCommentLikes.Commands;

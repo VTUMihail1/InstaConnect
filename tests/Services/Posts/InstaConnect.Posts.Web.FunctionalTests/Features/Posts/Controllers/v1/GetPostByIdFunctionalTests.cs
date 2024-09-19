@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
 using InstaConnect.Posts.Business.Features.Posts.Utilities;
