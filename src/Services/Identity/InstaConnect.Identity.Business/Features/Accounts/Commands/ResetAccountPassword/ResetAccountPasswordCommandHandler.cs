@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Data.Features.Tokens.Abstractions;
+﻿using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Data.Features.Users.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
@@ -13,18 +13,18 @@ public class ResetAccountPasswordCommandHandler : ICommandHandler<ResetAccountPa
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUserWriteRepository _userWriteRepository;
-    private readonly ITokenWriteRepository _tokenWriteRepository;
+    private readonly IEmailConfirmationTokenWriteRepository _emailConfirmationTokenWriteRepository;
 
     public ResetAccountPasswordCommandHandler(
         IUnitOfWork unitOfWork,
         IPasswordHasher passwordHasher,
         IUserWriteRepository userWriteRepository,
-        ITokenWriteRepository tokenWriteRepository)
+        IEmailConfirmationTokenWriteRepository emailConfirmationTokenWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _passwordHasher = passwordHasher;
         _userWriteRepository = userWriteRepository;
-        _tokenWriteRepository = tokenWriteRepository;
+        _emailConfirmationTokenWriteRepository = emailConfirmationTokenWriteRepository;
     }
 
     public async Task Handle(
@@ -38,22 +38,22 @@ public class ResetAccountPasswordCommandHandler : ICommandHandler<ResetAccountPa
             throw new UserNotFoundException();
         }
 
-        var existingToken = await _tokenWriteRepository.GetByValueAsync(request.Token, cancellationToken);
+        var existingEmailConfirmationToken = await _emailConfirmationTokenWriteRepository.GetByValueAsync(request.Token, cancellationToken);
 
-        if (existingToken == null)
+        if (existingEmailConfirmationToken == null)
         {
             throw new TokenNotFoundException();
         }
 
-        if (existingToken.UserId != request.UserId)
+        if (existingEmailConfirmationToken.UserId != request.UserId)
         {
             throw new AccountForbiddenException();
         }
 
-        var passwordHashResultDTO = _passwordHasher.Hash(request.Password);
-        await _userWriteRepository.ResetPasswordAsync(existingUser.Id, passwordHashResultDTO.PasswordHash, cancellationToken);
+        var passwordHashResultModel = _passwordHasher.Hash(request.Password);
+        await _userWriteRepository.ResetPasswordAsync(existingUser.Id, passwordHashResultModel.PasswordHash, cancellationToken);
 
-        _tokenWriteRepository.Delete(existingToken);
+        _emailConfirmationTokenWriteRepository.Delete(existingEmailConfirmationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

@@ -17,12 +17,12 @@ namespace InstaConnect.Identity.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("InstaConnect.Identity.Data.Models.Entities.Token", b =>
+            modelBuilder.Entity("InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites.EmailConfirmationToken", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(255)
@@ -32,12 +32,6 @@ namespace InstaConnect.Identity.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("type");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2")
@@ -62,10 +56,83 @@ namespace InstaConnect.Identity.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("token", (string)null);
+                    b.ToTable("email_confirmation_token", (string)null);
                 });
 
-            modelBuilder.Entity("InstaConnect.Identity.Data.Models.Entities.User", b =>
+            modelBuilder.Entity("InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites.ForgotPasswordToken", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("user_id");
+
+                    b.Property<DateTime>("ValidUntil")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("is_valid_until");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnName("value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("forgot_password_token", (string)null);
+                });
+
+            modelBuilder.Entity("InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites.UserClaim", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Claim")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("claim");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("user_id");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_claim", (string)null);
+                });
+
+            modelBuilder.Entity("InstaConnect.Identity.Data.Features.Users.Models.Entitites.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -117,42 +184,6 @@ namespace InstaConnect.Identity.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("user", (string)null);
-                });
-
-            modelBuilder.Entity("InstaConnect.Identity.Data.Models.Entities.UserClaim", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Claim")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("claim");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("updated_at");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("user_id");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("value");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("user_claim", (string)null);
                 });
 
             modelBuilder.Entity("MassTransit.EntityFrameworkCoreIntegration.InboxState", b =>
@@ -327,10 +358,10 @@ namespace InstaConnect.Identity.Data.Migrations
                     b.ToTable("OutboxState");
                 });
 
-            modelBuilder.Entity("InstaConnect.Identity.Data.Models.Entities.Token", b =>
+            modelBuilder.Entity("InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites.EmailConfirmationToken", b =>
                 {
-                    b.HasOne("InstaConnect.Identity.Data.Models.Entities.User", "User")
-                        .WithMany("Tokens")
+                    b.HasOne("InstaConnect.Identity.Data.Features.Users.Models.Entitites.User", "User")
+                        .WithMany("EmailConfirmationTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -338,9 +369,20 @@ namespace InstaConnect.Identity.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("InstaConnect.Identity.Data.Models.Entities.UserClaim", b =>
+            modelBuilder.Entity("InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites.ForgotPasswordToken", b =>
                 {
-                    b.HasOne("InstaConnect.Identity.Data.Models.Entities.User", "User")
+                    b.HasOne("InstaConnect.Identity.Data.Features.Users.Models.Entitites.User", "User")
+                        .WithMany("ForgotPasswordTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites.UserClaim", b =>
+                {
+                    b.HasOne("InstaConnect.Identity.Data.Features.Users.Models.Entitites.User", "User")
                         .WithMany("UserClaims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -349,9 +391,11 @@ namespace InstaConnect.Identity.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("InstaConnect.Identity.Data.Models.Entities.User", b =>
+            modelBuilder.Entity("InstaConnect.Identity.Data.Features.Users.Models.Entitites.User", b =>
                 {
-                    b.Navigation("Tokens");
+                    b.Navigation("EmailConfirmationTokens");
+
+                    b.Navigation("ForgotPasswordTokens");
 
                     b.Navigation("UserClaims");
                 });

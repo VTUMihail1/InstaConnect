@@ -1,10 +1,8 @@
-﻿using InstaConnect.Identity.Business.Features.Accounts.Models;
-using InstaConnect.Identity.Data.Features.Tokens.Abstractions;
-using InstaConnect.Identity.Data.Features.Tokens.Models;
+﻿using InstaConnect.Identity.Business.Features.Accounts.Abstractions;
+using InstaConnect.Identity.Business.Features.Accounts.Models;
 using InstaConnect.Identity.Data.Features.Users.Abstractions;
 using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Contracts.Emails;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Models;
@@ -16,28 +14,28 @@ public class RegisterAccountCommandHandler : ICommandHandler<RegisterAccountComm
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IImageHandler _imageHandler;
-    private readonly ITokenGenerator _tokenGenerator;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IEventPublisher _eventPublisher;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IEmailConfirmationTokenPublisher _emailConfirmationTokenPublisher;
 
     public RegisterAccountCommandHandler(
         IUnitOfWork unitOfWork,
         IImageHandler imageHandler,
-        ITokenGenerator tokenGenerator,
         IPasswordHasher passwordHasher,
         IEventPublisher eventPublisher,
         IInstaConnectMapper instaConnectMapper,
-        IUserWriteRepository userWriteRepository)
+        IUserWriteRepository userWriteRepository,
+        IEmailConfirmationTokenPublisher emailConfirmationTokenPublisher)
     {
         _unitOfWork = unitOfWork;
         _imageHandler = imageHandler;
-        _tokenGenerator = tokenGenerator;
         _passwordHasher = passwordHasher;
         _eventPublisher = eventPublisher;
         _instaConnectMapper = instaConnectMapper;
         _userWriteRepository = userWriteRepository;
+        _emailConfirmationTokenPublisher = emailConfirmationTokenPublisher;
     }
 
     public async Task<AccountCommandViewModel> Handle(
@@ -74,12 +72,8 @@ public class RegisterAccountCommandHandler : ICommandHandler<RegisterAccountComm
         var userCreatedEvent = _instaConnectMapper.Map<UserCreatedEvent>(user);
         await _eventPublisher.PublishAsync(userCreatedEvent, cancellationToken);
 
-        var createAccountTokenModel = _instaConnectMapper.Map<CreateAccountTokenModel>(user);
-        var token = _tokenGenerator.GenerateEmailConfirmationToken(createAccountTokenModel);
-        var userConfirmEmailTokenCreatedEvent = _instaConnectMapper.Map<UserConfirmEmailTokenCreatedEvent>((token, user));
-
-        _instaConnectMapper.Map(user, userConfirmEmailTokenCreatedEvent);
-        await _eventPublisher.PublishAsync(userConfirmEmailTokenCreatedEvent, cancellationToken);
+        var createEmailConfirmationTokenModel = _instaConnectMapper.Map<CreateEmailConfirmationTokenModel>(user);
+        await _emailConfirmationTokenPublisher.PublishEmailConfirmationTokenAsync(createEmailConfirmationTokenModel, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

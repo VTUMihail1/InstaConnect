@@ -15,7 +15,6 @@ public static class ServiceCollectionExtensions
             .AddEmailServices(configuration);
 
         serviceCollection
-            .AddMapper(currentAssembly)
             .AddMessageBroker(configuration, currentAssembly);
 
         return serviceCollection;

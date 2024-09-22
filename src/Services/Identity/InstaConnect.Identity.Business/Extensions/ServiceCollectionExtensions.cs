@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Business.Features.Users.Extensions;
 using InstaConnect.Identity.Data;
 using InstaConnect.Shared.Business.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

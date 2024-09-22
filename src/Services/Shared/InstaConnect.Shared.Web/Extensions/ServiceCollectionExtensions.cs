@@ -25,14 +25,14 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddJwtBearer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
-        .AddOptions<TokenOptions>()
-        .BindConfiguration(nameof(TokenOptions))
+        .AddOptions<AccessTokenOptions>()
+        .BindConfiguration(nameof(AccessTokenOptions))
         .ValidateDataAnnotations()
         .ValidateOnStart();
 
         var tokenOptions = configuration
-            .GetSection(nameof(TokenOptions))
-            .Get<TokenOptions>()!;
+            .GetSection(nameof(AccessTokenOptions))
+            .Get<AccessTokenOptions>()!;
 
         serviceCollection
             .AddAuthentication(opt =>
@@ -46,7 +46,7 @@ public static class ServiceCollectionExtensions
                 opt.SaveToken = true;
                 opt.TokenValidationParameters = new TokenValidationParameters
                 {
-                    IssuerSigningKey = new SymmetricSecurityKey(tokenOptions.AccessTokenSecurityKeyByteArray),
+                    IssuerSigningKey = new SymmetricSecurityKey(tokenOptions.SecurityKeyByteArray),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };

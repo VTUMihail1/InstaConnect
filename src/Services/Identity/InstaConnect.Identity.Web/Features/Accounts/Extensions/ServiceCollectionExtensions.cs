@@ -7,12 +7,12 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddAccountServices(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        var tokenOptions = configuration
-            .GetSection(nameof(TokenOptions))
-            .Get<TokenOptions>()!;
+        var accessTokenOptions = configuration
+            .GetSection(nameof(AccessTokenOptions))
+            .Get<AccessTokenOptions>()!;
 
         serviceCollection
-            .Configure<CookieAuthenticationOptions>(options => options.ExpireTimeSpan = TimeSpan.FromSeconds(tokenOptions.AccountTokenLifetimeSeconds));
+            .Configure<CookieAuthenticationOptions>(options => options.ExpireTimeSpan = TimeSpan.FromSeconds(accessTokenOptions.LifetimeSeconds));
 
         return serviceCollection;
     }
