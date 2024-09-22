@@ -169,4 +169,22 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.Content);
     }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    {
+        // Arrange
+        var command = new UpdatePostCommand(
+            ValidId,
+            ValidCurrentUserId,
+            ValidTitle,
+            ValidContent
+        );
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrors();
+    }
 }

@@ -71,12 +71,27 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var command = new AddPostLikeCommand(
             ValidCurrentUserId,
-            Faker.Random.AlphaNumeric(length)!);
+            Faker.Random.AlphaNumeric(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.PostId);
+    }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    {
+        // Arrange
+        var command = new AddPostLikeCommand(
+            ValidCurrentUserId,
+            ValidPostId);
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrors();
     }
 }

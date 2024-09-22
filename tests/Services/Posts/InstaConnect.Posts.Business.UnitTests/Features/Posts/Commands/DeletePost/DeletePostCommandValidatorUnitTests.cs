@@ -83,4 +83,20 @@ public class DeletePostCommandValidatorUnitTests : BasePostUnitTest
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
     }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    {
+        // Arrange
+        var command = new DeletePostCommand(
+            ValidId,
+            ValidCurrentUserId
+        );
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrors();
+    }
 }

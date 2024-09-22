@@ -79,4 +79,19 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.PostCommentId);
     }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    {
+        // Arrange
+        var command = new AddPostCommentLikeCommand(
+             ValidCurrentUserId,
+             ValidPostCommentId);
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrors();
+    }
 }

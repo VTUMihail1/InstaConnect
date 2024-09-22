@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
 using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Options;
-using MassTransit.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Helpers;

@@ -39,10 +39,10 @@ internal class AccountCommandProfile : Profile
 
         CreateMap<(EmailConfirmationToken, User, GatewayOptions), UserConfirmEmailTokenCreatedEvent>()
             .ConstructUsing(src => new(
-                src.Item2.Email, 
-                src.Item2.Id, 
-                src.Item1.Value, 
-                src.Item3.Url, 
+                src.Item2.Email,
+                src.Item2.Id,
+                src.Item1.Value,
+                src.Item3.Url,
                 EmailConfigurations.EmailConfirmationUrlTemplate));
 
         CreateMap<(ForgotPasswordToken, User, GatewayOptions), UserForgotPasswordTokenCreatedEvent>()
