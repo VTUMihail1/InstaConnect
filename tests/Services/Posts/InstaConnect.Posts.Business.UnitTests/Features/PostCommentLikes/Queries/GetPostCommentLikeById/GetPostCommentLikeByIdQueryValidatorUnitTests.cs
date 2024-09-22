@@ -42,4 +42,17 @@ public class GetPostCommentLikeByIdQueryValidatorUnitTests : BasePostCommentLike
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.Id);
     }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    {
+        // Arrange
+        var query = new GetPostCommentLikeByIdQuery(ValidId);
+
+        // Act
+        var result = _validator.TestValidate(query);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrors();
+    }
 }

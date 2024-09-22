@@ -124,4 +124,21 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.Content);
     }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    {
+        // Arrange
+        var command = new UpdateMessageCommand(
+            ValidId,
+            ValidContent,
+            ValidCurrentUserId
+        );
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrors();
+    }
 }

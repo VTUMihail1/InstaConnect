@@ -187,4 +187,24 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.PageSize);
     }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    {
+        // Arrange
+        var query = new GetAllPostCommentLikesQuery(
+            ValidCurrentUserId,
+            ValidUserName,
+            ValidPostCommentId,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var result = _queryValidator.TestValidate(query);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrors();
+    }
 }

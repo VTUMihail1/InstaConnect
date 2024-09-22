@@ -83,4 +83,20 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
     }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    {
+        // Arrange
+        var query = new GetMessageByIdQuery(
+            ValidId,
+            ValidCurrentUserId
+        );
+
+        // Act
+        var result = _validator.TestValidate(query);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrors();
+    }
 }

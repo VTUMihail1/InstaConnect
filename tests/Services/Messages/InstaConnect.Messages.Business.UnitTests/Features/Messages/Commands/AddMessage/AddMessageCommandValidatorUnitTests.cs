@@ -115,7 +115,7 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         var command = new AddMessageCommand(
             ValidCurrentUserId,
             ValidReceiverId,
-            Faker.Random.AlphaNumeric(length)!
+            Faker.Random.AlphaNumeric(length)
         );
 
         // Act
@@ -123,5 +123,21 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.Content);
+    }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    {
+        // Arrange
+        var command = new AddMessageCommand(
+            ValidCurrentUserId,
+            ValidReceiverId,
+            ValidContent);
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrors();
     }
 }

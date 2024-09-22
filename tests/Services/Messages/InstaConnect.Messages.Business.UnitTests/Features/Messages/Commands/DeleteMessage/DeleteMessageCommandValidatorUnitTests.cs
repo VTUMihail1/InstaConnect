@@ -83,4 +83,20 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
     }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    {
+        // Arrange
+        var command = new DeleteMessageCommand(
+            ValidId,
+            ValidCurrentUserId
+        );
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrors();
+    }
 }

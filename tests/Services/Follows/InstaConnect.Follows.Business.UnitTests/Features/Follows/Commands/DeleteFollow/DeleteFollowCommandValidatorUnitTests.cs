@@ -50,22 +50,6 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
     }
 
     [Fact]
-    public void TestValidate_ShouldNotHaveAnErrorForId_WhenIdIsValid()
-    {
-        // Arrange
-        var command = new DeleteFollowCommand(
-            ValidId,
-            ValidCurrentUserId
-        );
-
-        // Act
-        var result = _commandValidator.TestValidate(command);
-
-        // Assert
-        result.ShouldNotHaveValidationErrorFor(m => m.Id);
-    }
-
-    [Fact]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
@@ -101,18 +85,17 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
     }
 
     [Fact]
-    public void TestValidate_ShouldNotHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsValid()
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
         var command = new DeleteFollowCommand(
             ValidId,
-            ValidCurrentUserId
-        );
+            ValidCurrentUserId);
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
-        result.ShouldNotHaveValidationErrorFor(m => m.CurrentUserId);
+        result.ShouldNotHaveAnyValidationErrors();
     }
 }

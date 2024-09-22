@@ -208,4 +208,25 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.PageSize);
     }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    {
+        // Arrange
+        var query = new GetAllMessagesQuery(
+            ValidCurrentUserId,
+            ValidReceiverId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue
+        );
+
+        // Act
+        var result = _queryValidator.TestValidate(query);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrors();
+    }
 }
