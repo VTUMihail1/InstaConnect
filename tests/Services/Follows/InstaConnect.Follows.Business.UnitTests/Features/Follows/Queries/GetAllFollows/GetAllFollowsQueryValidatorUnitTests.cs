@@ -38,6 +38,27 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
         result.ShouldHaveValidationErrorFor(m => m.FollowerId);
     }
 
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnErrorForFollowerId_WhenFollowerIdIsValid()
+    {
+        // Arrange
+        var query = new GetAllFollowsQuery(
+            ValidCurrentUserId,
+            ValidUserName,
+            ValidFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var result = _queryValidator.TestValidate(query);
+
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(m => m.FollowerId);
+    }
+
     [Theory]
     [InlineData(FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH - 1)]
     [InlineData(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH + 1)]
@@ -59,6 +80,27 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.FollowerName);
+    }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnErrorForFollowerName_WhenFollowerNameIsValid()
+    {
+        // Arrange
+        var query = new GetAllFollowsQuery(
+            ValidCurrentUserId,
+            ValidUserName,
+            ValidFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var result = _queryValidator.TestValidate(query);
+
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(m => m.FollowerName);
     }
 
     [Theory]
@@ -84,6 +126,27 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
         result.ShouldHaveValidationErrorFor(m => m.FollowingId);
     }
 
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnErrorForFollowingId_WhenFollowingIdIsValid()
+    {
+        // Arrange
+        var query = new GetAllFollowsQuery(
+            ValidCurrentUserId,
+            ValidUserName,
+            ValidFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var result = _queryValidator.TestValidate(query);
+
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(m => m.FollowingId);
+    }
+
     [Theory]
     [InlineData(FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH - 1)]
     [InlineData(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH + 1)]
@@ -105,6 +168,48 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.FollowingName);
+    }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnErrorForFollowingName_WhenFollowingNameIsValid()
+    {
+        // Arrange
+        var query = new GetAllFollowsQuery(
+            ValidCurrentUserId,
+            ValidUserName,
+            ValidFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var result = _queryValidator.TestValidate(query);
+
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(m => m.FollowingName);
+    }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnErrorForSortOrder_WhenSortOrderIsValid()
+    {
+        // Arrange
+        var query = new GetAllFollowsQuery(
+            ValidCurrentUserId,
+            ValidUserName,
+            ValidFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var result = _queryValidator.TestValidate(query);
+
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(m => m.SortOrder);
     }
 
     [Fact]
@@ -149,6 +254,27 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
         result.ShouldHaveValidationErrorFor(m => m.SortPropertyName);
     }
 
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsValid()
+    {
+        // Arrange
+        var query = new GetAllFollowsQuery(
+            ValidCurrentUserId,
+            ValidUserName,
+            ValidFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var result = _queryValidator.TestValidate(query);
+
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(m => m.SortPropertyName);
+    }
+
     [Theory]
     [InlineData(default(int))]
     [InlineData(SharedBusinessConfigurations.SORT_ORDER_MIN_LENGTH - 1)]
@@ -176,7 +302,7 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     [Theory]
     [InlineData(SharedBusinessConfigurations.PAGE_MIN_VALUE - 1)]
     [InlineData(SharedBusinessConfigurations.PAGE_MAX_VALUE + 1)]
-    public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
+    public void TestValidate_ShouldHaveAnErrorForPage_WhenPageValueIsInvalid(int value)
     {
         // Arrange
         var query = new GetAllFollowsQuery(
@@ -196,10 +322,31 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
         result.ShouldHaveValidationErrorFor(m => m.Page);
     }
 
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnErrorForPage_WhenPageIsValid()
+    {
+        // Arrange
+        var query = new GetAllFollowsQuery(
+            ValidCurrentUserId,
+            ValidUserName,
+            ValidFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var result = _queryValidator.TestValidate(query);
+
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(m => m.Page);
+    }
+
     [Theory]
     [InlineData(SharedBusinessConfigurations.PAGE_MIN_VALUE - 1)]
     [InlineData(SharedBusinessConfigurations.PAGE_MAX_VALUE + 1)]
-    public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
+    public void TestValidate_ShouldHaveAnErrorForPageSize_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
         var query = new GetAllFollowsQuery(
@@ -217,5 +364,26 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.PageSize);
+    }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnErrorForPageSize_WhenPageSizeIsValid()
+    {
+        // Arrange
+        var query = new GetAllFollowsQuery(
+            ValidCurrentUserId,
+            ValidUserName,
+            ValidFollowingId,
+            ValidUserName,
+            ValidSortOrderProperty,
+            ValidSortPropertyName,
+            ValidPageValue,
+            ValidPageSizeValue);
+
+        // Act
+        var result = _queryValidator.TestValidate(query);
+
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(m => m.PageSize);
     }
 }

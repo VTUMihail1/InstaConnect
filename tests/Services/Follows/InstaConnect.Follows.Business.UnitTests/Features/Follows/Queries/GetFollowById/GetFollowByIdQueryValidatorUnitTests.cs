@@ -1,4 +1,5 @@
 ﻿using FluentValidation.TestHelper;
+using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
 using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
@@ -41,5 +42,18 @@ public class GetFollowByIdQueryValidatorUnitTests : BaseFollowUnitTest
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.Id);
+    }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnErrorForId_WhenIdIsValid()
+    {
+        // Arrange
+        var query = new GetFollowByIdQuery(ValidId);
+
+        // Act
+        var result = _validator.TestValidate(query);
+
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(m => m.Id);
     }
 }

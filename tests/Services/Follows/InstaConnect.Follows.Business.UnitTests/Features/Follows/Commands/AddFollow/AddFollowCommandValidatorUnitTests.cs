@@ -48,6 +48,21 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     }
 
     [Fact]
+    public void TestValidate_ShouldNotHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsValid()
+    {
+        // Arrange
+        var command = new AddFollowCommand(
+            ValidCurrentUserId,
+            ValidFollowingId);
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(m => m.CurrentUserId);
+    }
+
+    [Fact]
     public void TestValidate_ShouldHaveAnErrorForFollowingId_WhenFollowingIdIsNull()
     {
         // Arrange
@@ -78,5 +93,20 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
 
         // Assert
         result.ShouldHaveValidationErrorFor(m => m.FollowingId);
+    }
+
+    [Fact]
+    public void TestValidate_ShouldNotHaveAnErrorForFollowingId_WhenFollowingIdIsValid()
+    {
+        // Arrange
+        var command = new AddFollowCommand(
+            ValidCurrentUserId,
+            ValidFollowingId);
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(m => m.FollowingId);
     }
 }
