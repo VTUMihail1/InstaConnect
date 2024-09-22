@@ -4,7 +4,11 @@ using InstaConnect.Identity.Business.Features.Accounts.Commands.EditCurrentAccou
 using InstaConnect.Identity.Business.Features.Accounts.Commands.EditCurrentAccountProfileImage;
 using InstaConnect.Identity.Business.Features.Accounts.Commands.RegisterAccount;
 using InstaConnect.Identity.Business.Features.Accounts.Models;
-using InstaConnect.Identity.Data.Features.Tokens.Models.Entitites;
+using InstaConnect.Identity.Business.Features.Accounts.Models.Options;
+using InstaConnect.Identity.Business.Features.Accounts.Utilities;
+using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
+using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites;
+using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Data.Features.Users.Models;
 using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Contracts.Emails;
@@ -25,16 +29,29 @@ internal class AccountCommandProfile : Profile
                 src.Item1.PasswordHash,
                 null!));
 
+        CreateMap<(ICollection<UserClaim>, User), CreateAccessTokenModel>()
+            .ConstructUsing(src => new(src.Item2.Id, src.Item2.Email, src.Item2.FirstName, src.Item2.LastName, src.Item2.UserName, src.Item1));
+
         CreateMap<EditCurrentAccountCommand, User>()
             .ForMember(dest => dest.Id, opt => opt.Ignore());
 
-        CreateMap<Token, AccountTokenCommandViewModel>();
+        CreateMap<AccessTokenResult, AccountTokenCommandViewModel>();
 
-        CreateMap<(Token, User), UserConfirmEmailTokenCreatedEvent>()
-            .ConstructUsing(src => new(src.Item2.Id, src.Item2.Email, src.Item1.Value));
+        CreateMap<(EmailConfirmationToken, User, GatewayOptions), UserConfirmEmailTokenCreatedEvent>()
+            .ConstructUsing(src => new(
+                src.Item2.Email, 
+                src.Item2.Id, 
+                src.Item1.Value, 
+                src.Item3.Url, 
+                EmailConfigurations.EmailConfirmationUrlTemplate));
 
-        CreateMap<(Token, User), UserForgotPasswordTokenCreatedEvent>()
-            .ConstructUsing(src => new(src.Item2.Id, src.Item2.Email, src.Item1.Value));
+        CreateMap<(ForgotPasswordToken, User, GatewayOptions), UserForgotPasswordTokenCreatedEvent>()
+            .ConstructUsing(src => new(
+                src.Item2.Email,
+                src.Item2.Id,
+                src.Item1.Value,
+                src.Item3.Url,
+                EmailConfigurations.ForgotPasswordUrlTemplate));
 
         CreateMap<EditCurrentAccountProfileImageCommand, ImageUploadModel>()
             .ForMember(dest => dest.FormFile, opt => opt.MapFrom(src => src.ProfileImage));

@@ -23,16 +23,8 @@ internal static class ServiceCollectionExtensions
             .Get<EmailOptions>()!;
 
         serviceCollection
-            .AddOptions<EndpointOptions>()
-            .BindConfiguration(nameof(EndpointOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        serviceCollection
-            .AddScoped<IEmailEndpointHandler, EmailEndpointHandler>()
             .AddScoped<IEmailSender, EmailSender>()
-            .AddScoped<IEmailFactory, EmailFactory>()
-            .AddScoped<IEmailHandler, EmailHandler>();
+            .AddScoped<IEmailFactory, EmailFactory>();
 
         serviceCollection.AddScoped(_ => new SmtpClient()
         {

@@ -61,7 +61,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasMany(u => u.Tokens)
+        builder.HasMany(u => u.EmailConfirmationTokens)
+            .WithOne(t => t.User)
+            .HasForeignKey(t => t.UserId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(u => u.ForgotPasswordTokens)
             .WithOne(t => t.User)
             .HasForeignKey(t => t.UserId)
             .IsRequired()

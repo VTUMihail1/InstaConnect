@@ -1,8 +1,7 @@
-﻿using InstaConnect.Identity.Data.Features.Tokens.Abstractions;
-using InstaConnect.Identity.Data.Features.Tokens.Models;
+﻿using InstaConnect.Identity.Business.Features.Accounts.Abstractions;
+using InstaConnect.Identity.Business.Features.Accounts.Models;
 using InstaConnect.Identity.Data.Features.Users.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Contracts.Emails;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstractions;
@@ -12,23 +11,20 @@ namespace InstaConnect.Identity.Business.Features.Accounts.Commands.ResendAccoun
 public class ResendAccountEmailConfirmationCommandHandler : ICommandHandler<ResendAccountEmailConfirmationCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IEventPublisher _eventPublisher;
-    private readonly ITokenGenerator _tokenGenerator;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IEmailConfirmationTokenPublisher _emailConfirmationTokenPublisher;
 
     public ResendAccountEmailConfirmationCommandHandler(
         IUnitOfWork unitOfWork,
-        IEventPublisher eventPublisher,
-        ITokenGenerator tokenGenerator,
         IInstaConnectMapper instaConnectMapper,
-        IUserWriteRepository userWriteRepository)
+        IUserWriteRepository userWriteRepository,
+        IEmailConfirmationTokenPublisher emailConfirmationTokenPublisher)
     {
         _unitOfWork = unitOfWork;
-        _eventPublisher = eventPublisher;
-        _tokenGenerator = tokenGenerator;
         _instaConnectMapper = instaConnectMapper;
         _userWriteRepository = userWriteRepository;
+        _emailConfirmationTokenPublisher = emailConfirmationTokenPublisher;
     }
 
     public async Task Handle(
@@ -47,11 +43,8 @@ public class ResendAccountEmailConfirmationCommandHandler : ICommandHandler<Rese
             throw new AccountEmailAlreadyConfirmedException();
         }
 
-        var createAccountTokenModel = _instaConnectMapper.Map<CreateAccountTokenModel>(existingUser);
-        var token = _tokenGenerator.GenerateEmailConfirmationToken(createAccountTokenModel);
-
-        var userConfirmEmailTokenCreatedEvent = _instaConnectMapper.Map<UserConfirmEmailTokenCreatedEvent>((token, existingUser));
-        await _eventPublisher.PublishAsync(userConfirmEmailTokenCreatedEvent, cancellationToken);
+        var createEmailConfirmationTokenModel = _instaConnectMapper.Map<CreateEmailConfirmationTokenModel>(existingUser);
+        await _emailConfirmationTokenPublisher.PublishEmailConfirmationTokenAsync(createEmailConfirmationTokenModel, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

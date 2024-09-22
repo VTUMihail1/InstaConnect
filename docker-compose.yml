@@ -53,12 +53,10 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
-      TokenOptions__Issuer: http://identity-svc:5200
-      TokenOptions__Audience: http://gateway-svc:5100
-      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
-      TokenOptions__AccessTokenLifetimeSeconds: 900
-      TokenOptions__AccountTokenLifetimeSeconds: 3600
+      AccessTokenOptions__Issuer: http://identity-svc:5200
+      AccessTokenOptions__Audience: http://gateway-svc:5100
+      AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
+      AccessTokenOptions__LifetimeSeconds: 900
       CorsOptions__AllowedOrigins: gateway-svc:5100
       ReverseProxy__Clusters__identity-cluster__Destinations__destination1__Address: http://identity-svc
       ReverseProxy__Clusters__posts-cluster__Destinations__destination1__Address: http://posts-svc
@@ -83,12 +81,12 @@ services:
       MessageBrokerOptions__Password: guest
       AdminOptions__Email: admin@instaconnect.com
       AdminOptions__Password: SecureAdminPass123!
-      TokenOptions__Issuer: http://identity-svc:5200
-      TokenOptions__Audience: http://gateway-svc:5100
-      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
-      TokenOptions__AccessTokenLifetimeSeconds: 900
-      TokenOptions__AccountTokenLifetimeSeconds: 3600
+      AccessTokenOptions__Issuer: http://identity-svc:5200
+      AccessTokenOptions__Audience: http://gateway-svc:5100
+      AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
+      AccessTokenOptions__LifetimeSeconds: 900
+      EmailConfirmationOptions__LifetimeSeconds: 900
+      ForgotPasswordOptions__LifetimeSeconds: 900
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
     ports:
@@ -111,12 +109,10 @@ services:
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest
-      TokenOptions__Issuer: http://identity-svc:5200
-      TokenOptions__Audience: http://gateway-svc:5100
-      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
-      TokenOptions__AccessTokenLifetimeSeconds: 900
-      TokenOptions__AccountTokenLifetimeSeconds: 3600
+      AccessTokenOptions__Issuer: http://identity-svc:5200
+      AccessTokenOptions__Audience: http://gateway-svc:5100
+      AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
+      AccessTokenOptions__LifetimeSeconds: 900
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
     ports:
@@ -139,12 +135,10 @@ services:
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest
       CorsOptions__AllowedOrigins: gateway-svc:5100
-      TokenOptions__Issuer: http://identity-svc:5200
-      TokenOptions__Audience: http://gateway-svc:5100
-      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
-      TokenOptions__AccessTokenLifetimeSeconds: 900
-      TokenOptions__AccountTokenLifetimeSeconds: 3600
+      AccessTokenOptions__Issuer: http://identity-svc:5200
+      AccessTokenOptions__Audience: http://gateway-svc:5100
+      AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
+      AccessTokenOptions__LifetimeSeconds: 900
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
     ports:
@@ -167,12 +161,10 @@ services:
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest
       CorsOptions__AllowedOrigins: gateway-svc:5100
-      TokenOptions__Issuer: http://identity-svc:5200
-      TokenOptions__Audience: http://gateway-svc:5100
-      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
-      TokenOptions__AccessTokenLifetimeSeconds: 900
-      TokenOptions__AccountTokenLifetimeSeconds: 3600
+      AccessTokenOptions__Issuer: http://identity-svc:5200
+      AccessTokenOptions__Audience: http://gateway-svc:5100
+      AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
+      AccessTokenOptions__LifetimeSeconds: 900
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
     ports:
@@ -194,12 +186,10 @@ services:
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest
       CorsOptions__AllowedOrigins: gateway-svc:5100
-      TokenOptions__Issuer: http://identity-svc:5200
-      TokenOptions__Audience: http://gateway-svc:5100
-      TokenOptions__AccessTokenSecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
-      TokenOptions__AccountTokenSecurityKey: 8T1z2Q5w&3E8^9N@R7y6K0L3*F6D1#P4
-      TokenOptions__AccessTokenLifetimeSeconds: 900
-      TokenOptions__AccountTokenLifetimeSeconds: 3600
+      AccessTokenOptions__Issuer: http://identity-svc:5200
+      AccessTokenOptions__Audience: http://gateway-svc:5100
+      AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
+      AccessTokenOptions__LifetimeSeconds: 900
       EndpointOptions__ConfirmEmail: http://gateway-svc:5100/accounts/confirm-email
       EndpointOptions__ForgotPassword: http://gateway-svc:5100/accounts/forgot-password
       EmailOptions__SmtpServer: smtp.sendgrid.net

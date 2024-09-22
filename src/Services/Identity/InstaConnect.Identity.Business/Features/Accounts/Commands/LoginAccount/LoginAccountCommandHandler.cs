@@ -1,6 +1,5 @@
-﻿using InstaConnect.Identity.Business.Features.Accounts.Models;
-using InstaConnect.Identity.Data.Features.Tokens.Abstractions;
-using InstaConnect.Identity.Data.Features.Tokens.Models;
+﻿using InstaConnect.Identity.Business.Features.Accounts.Abstractions;
+using InstaConnect.Identity.Business.Features.Accounts.Models;
 using InstaConnect.Identity.Data.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Data.Features.UserClaims.Models.Filters;
 using InstaConnect.Identity.Data.Features.Users.Abstractions;
@@ -13,25 +12,25 @@ namespace InstaConnect.Identity.Business.Features.Accounts.Commands.LoginAccount
 public class LoginAccountCommandHandler : ICommandHandler<LoginAccountCommand, AccountTokenCommandViewModel>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ITokenGenerator _tokenGenerator;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
     private readonly IUserClaimWriteRepository _userClaimWriteRepository;
 
     public LoginAccountCommandHandler(
         IUnitOfWork unitOfWork,
-        ITokenGenerator tokenGenerator,
         IPasswordHasher passwordHasher,
         IInstaConnectMapper instaConnectMapper,
         IUserWriteRepository userWriteRepository,
+        IAccessTokenGenerator accessTokenGenerator,
         IUserClaimWriteRepository userClaimWriteRepository)
     {
         _unitOfWork = unitOfWork;
-        _tokenGenerator = tokenGenerator;
         _passwordHasher = passwordHasher;
         _instaConnectMapper = instaConnectMapper;
         _userWriteRepository = userWriteRepository;
+        _accessTokenGenerator = accessTokenGenerator;
         _userClaimWriteRepository = userClaimWriteRepository;
     }
 
@@ -57,7 +56,7 @@ public class LoginAccountCommandHandler : ICommandHandler<LoginAccountCommand, A
         var userClaims = await _userClaimWriteRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
 
         var createAccessModel = _instaConnectMapper.Map<CreateAccessTokenModel>((userClaims, existingUser));
-        var token = _tokenGenerator.GenerateAccessToken(createAccessModel);
+        var token = _accessTokenGenerator.GenerateAccessToken(createAccessModel);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

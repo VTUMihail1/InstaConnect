@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Data.Features.Tokens.Abstractions;
+﻿using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Data.Features.Users.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
@@ -12,16 +12,16 @@ public class ConfirmAccountEmailCommandHandler : ICommandHandler<ConfirmAccountE
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserWriteRepository _userWriteRepository;
-    private readonly ITokenWriteRepository _tokenWriteRepository;
+    private readonly IEmailConfirmationTokenWriteRepository _emailConfirmationTokenWriteRepository;
 
     public ConfirmAccountEmailCommandHandler(
         IUnitOfWork unitOfWork,
         IUserWriteRepository userWriteRepository,
-        ITokenWriteRepository tokenWriteRepository)
+        IEmailConfirmationTokenWriteRepository emailConfirmationTokenWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _userWriteRepository = userWriteRepository;
-        _tokenWriteRepository = tokenWriteRepository;
+        _emailConfirmationTokenWriteRepository = emailConfirmationTokenWriteRepository;
     }
 
     public async Task Handle(
@@ -40,7 +40,7 @@ public class ConfirmAccountEmailCommandHandler : ICommandHandler<ConfirmAccountE
             throw new AccountEmailAlreadyConfirmedException();
         }
 
-        var existingToken = await _tokenWriteRepository.GetByValueAsync(request.Token, cancellationToken);
+        var existingToken = await _emailConfirmationTokenWriteRepository.GetByValueAsync(request.Token, cancellationToken);
 
         if (existingToken == null)
         {
@@ -52,7 +52,7 @@ public class ConfirmAccountEmailCommandHandler : ICommandHandler<ConfirmAccountE
             throw new AccountForbiddenException();
         }
 
-        _tokenWriteRepository.Delete(existingToken);
+        _emailConfirmationTokenWriteRepository.Delete(existingToken);
 
         await _userWriteRepository.ConfirmEmailAsync(existingUser.Id, cancellationToken);
 

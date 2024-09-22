@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Identity.Business.Features.Accounts.Models;
 
-public record AccountTokenCommandViewModel(string Type, string Value, DateTime ValidUntil);
+public record AccountTokenCommandViewModel(string Value, DateTime ValidUntil);

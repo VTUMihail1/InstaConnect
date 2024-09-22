@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Data.Features.Tokens.Models.Entitites;
+﻿using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
+using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites;
 using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
 using InstaConnect.Shared.Data.Models.Base;
 
@@ -36,7 +37,9 @@ public class User : BaseEntity
 
     public bool IsEmailConfirmed { get; set; } = false;
 
-    public ICollection<Token> Tokens { get; set; } = [];
+    public ICollection<ForgotPasswordToken> ForgotPasswordTokens { get; set; } = [];
+
+    public ICollection<EmailConfirmationToken> EmailConfirmationTokens { get; set; } = [];
 
     public ICollection<UserClaim> UserClaims { get; set; } = [];
 }
