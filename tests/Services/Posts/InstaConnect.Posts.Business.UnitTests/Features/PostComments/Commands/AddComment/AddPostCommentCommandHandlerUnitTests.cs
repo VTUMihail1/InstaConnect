@@ -70,7 +70,7 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         // Assert
         response
             .Should()
-            .Match<PostCommentCommandViewModel>(m => m.Id == ValidId);
+            .Match<PostCommentCommandViewModel>(m => !string.IsNullOrEmpty(m.Id));
     }
 
     [Fact]

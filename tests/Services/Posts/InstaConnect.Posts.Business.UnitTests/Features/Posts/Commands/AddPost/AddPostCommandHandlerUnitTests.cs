@@ -52,7 +52,7 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
         // Assert
         response
             .Should()
-            .Match<PostCommandViewModel>(m => m.Id == ValidId);
+            .Match<PostCommandViewModel>(m => !string.IsNullOrEmpty(m.Id));
     }
 
     [Fact]

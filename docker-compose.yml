@@ -87,6 +87,7 @@ services:
       AccessTokenOptions__LifetimeSeconds: 900
       EmailConfirmationOptions__LifetimeSeconds: 900
       ForgotPasswordOptions__LifetimeSeconds: 900
+      GatewayOptions__Url: http://gateway-svc:5100
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
     ports:
@@ -190,8 +191,6 @@ services:
       AccessTokenOptions__Audience: http://gateway-svc:5100
       AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
       AccessTokenOptions__LifetimeSeconds: 900
-      EndpointOptions__ConfirmEmail: http://gateway-svc:5100/accounts/confirm-email
-      EndpointOptions__ForgotPassword: http://gateway-svc:5100/accounts/forgot-password
       EmailOptions__SmtpServer: smtp.sendgrid.net
       EmailOptions__Port: 587
       EmailOptions__Sender: mihail.nikolov125@gmail.com

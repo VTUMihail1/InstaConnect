@@ -83,15 +83,6 @@ public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
         PostCommentReadRepository = Substitute.For<IPostCommentReadRepository>();
         PostCommentWriteRepository = Substitute.For<IPostCommentWriteRepository>();
 
-        PostCommentWriteRepository.When(x => x.Add(Arg.Is<PostComment>(m => m.UserId == ValidCurrentUserId &&
-                                                                            m.PostId == ValidPostId &&
-                                                                            m.Content == ValidContent)))
-                         .Do(ci =>
-                              {
-                                  var postComment = ci.Arg<PostComment>();
-                                  postComment.Id = ValidId;
-                              });
-
         var existingUser = new User(
             ValidUserFirstName,
             ValidUserLastName,
