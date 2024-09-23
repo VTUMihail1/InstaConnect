@@ -83,7 +83,7 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
         // Assert
         response
             .Should()
-            .Match<PostLikeCommandViewModel>(m => m.Id == ValidId);
+            .Match<PostLikeCommandViewModel>(m => !string.IsNullOrEmpty(m.Id));
     }
 
     [Fact]

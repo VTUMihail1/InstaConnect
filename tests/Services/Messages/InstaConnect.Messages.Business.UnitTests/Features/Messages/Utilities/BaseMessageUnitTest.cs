@@ -74,15 +74,6 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
         MessageReadRepository = Substitute.For<IMessageReadRepository>();
         MessageWriteRepository = Substitute.For<IMessageWriteRepository>();
 
-        MessageWriteRepository.When(x => x.Add(Arg.Is<Message>(m => m.SenderId == ValidCurrentUserId &&
-                                                               m.ReceiverId == ValidReceiverId &&
-                                                               m.Content == ValidContent)))
-                         .Do(ci =>
-                              {
-                                  var message = ci.Arg<Message>();
-                                  message.Id = ValidId;
-                              });
-
         var existingSender = new User(
             ValidUserFirstName,
             ValidUserLastName,

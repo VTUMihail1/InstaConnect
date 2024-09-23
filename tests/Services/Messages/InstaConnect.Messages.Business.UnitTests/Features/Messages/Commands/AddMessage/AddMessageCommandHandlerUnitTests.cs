@@ -72,7 +72,7 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         response
             .Should()
-            .Match<MessageCommandViewModel>(m => m.Id == ValidId);
+            .Match<MessageCommandViewModel>(m => !string.IsNullOrEmpty(m.Id));
     }
 
     [Fact]

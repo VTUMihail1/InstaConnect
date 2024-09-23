@@ -66,15 +66,6 @@ public abstract class BasePostUnitTest : BaseSharedUnitTest
         PostReadRepository = Substitute.For<IPostReadRepository>();
         PostWriteRepository = Substitute.For<IPostWriteRepository>();
 
-        PostWriteRepository.When(x => x.Add(Arg.Is<Post>(m => m.UserId == ValidCurrentUserId &&
-                                                              m.Title == ValidTitle &&
-                                                              m.Content == ValidContent)))
-                         .Do(ci =>
-                              {
-                                  var post = ci.Arg<Post>();
-                                  post.Id = ValidId;
-                              });
-
         var existingUser = new User(
             ValidUserFirstName,
             ValidUserLastName,

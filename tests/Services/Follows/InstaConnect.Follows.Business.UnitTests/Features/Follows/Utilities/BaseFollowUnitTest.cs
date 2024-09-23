@@ -66,14 +66,6 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
         FollowReadRepository = Substitute.For<IFollowReadRepository>();
         FollowWriteRepository = Substitute.For<IFollowWriteRepository>();
 
-        FollowWriteRepository.When(x => x.Add(Arg.Is<Follow>(m => m.FollowerId == ValidCurrentUserId &&
-                                                                  m.FollowingId == ValidFollowingId)))
-                         .Do(ci =>
-                              {
-                                  var follow = ci.Arg<Follow>();
-                                  follow.Id = ValidId;
-                              });
-
         var existingFollower = new User(
             ValidUserFirstName,
             ValidUserLastName,

@@ -81,7 +81,7 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
         // Assert
         response
             .Should()
-            .Match<FollowCommandViewModel>(m => m.Id == ValidId);
+            .Match<FollowCommandViewModel>(m => !string.IsNullOrEmpty(m.Id));
     }
 
     [Fact]

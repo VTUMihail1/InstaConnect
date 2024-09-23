@@ -81,14 +81,6 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
         PostLikeReadRepository = Substitute.For<IPostLikeReadRepository>();
         PostLikeWriteRepository = Substitute.For<IPostLikeWriteRepository>();
 
-        PostLikeWriteRepository.When(x => x.Add(Arg.Is<PostLike>(m => m.UserId == ValidCurrentUserId &&
-                                                                      m.PostId == ValidPostId)))
-                         .Do(ci =>
-                              {
-                                  var postLike = ci.Arg<PostLike>();
-                                  postLike.Id = ValidId;
-                              });
-
         var existingUser = new User(
             ValidUserFirstName,
             ValidUserLastName,
