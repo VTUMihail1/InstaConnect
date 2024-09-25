@@ -1,31 +1,31 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostLikes.Models;
-using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
-using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Data.Features.PostLikes.Models.Filters;
+using InstaConnect.Identity.Business.Features.Users.Models;
+using InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
+using InstaConnect.Identity.Business.UnitTests.Features.Accounts.Utilities;
+using InstaConnect.Identity.Data.Features.Users.Models.Filters;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Queries.GetAllPostLikes;
+namespace InstaConnect.Identity.Business.UnitTests.Features.Accounts.Queries.GetAllUsers;
 
-public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
+public class GetAllUsersQueryHandlerUnitTests : BaseAccountUnitTest
 {
-    private readonly GetAllPostLikesQueryHandler _queryHandler;
+    private readonly GetAllUsersQueryHandler _queryHandler;
 
-    public GetAllPostLikesQueryHandlerUnitTests()
+    public GetAllUsersQueryHandlerUnitTests()
     {
         _queryHandler = new(
             InstaConnectMapper,
-            PostLikeReadRepository);
+            UserReadRepository);
     }
 
     [Fact]
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllPostLikesQuery(
-            ValidPostLikeCurrentUserId,
-            ValidUserName,
-            ValidPostLikePostId,
+        var query = new GetAllUsersQuery(
+            ValidName,
+            ValidFirstName,
+            ValidLastName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -35,12 +35,12 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        await PostLikeReadRepository
+        await UserReadRepository
             .Received(1)
-            .GetAllAsync(Arg.Is<PostLikeCollectionReadQuery>(m =>
-                                                                        m.UserId == ValidPostLikeCurrentUserId &&
-                                                                        m.UserName == ValidUserName &&
-                                                                        m.PostId == ValidPostLikePostId &&
+            .GetAllAsync(Arg.Is<UserCollectionReadQuery>(m =>
+                                                                        m.FirstName == ValidFirstName &&
+                                                                        m.LastName == ValidLastName &&
+                                                                        m.UserName == ValidName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
@@ -52,10 +52,10 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetAllPostLikesQuery(
-            ValidPostLikeCurrentUserId,
-            ValidUserName,
-            ValidPostLikePostId,
+        var query = new GetAllUsersQuery(
+            ValidName,
+            ValidFirstName,
+            ValidLastName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -67,11 +67,12 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         // Assert
         response
             .Should()
-            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
-                                                           m.UserId == ValidPostLikeCurrentUserId &&
-                                                           m.UserName == ValidUserName &&
-                                                           m.UserProfileImage == ValidUserProfileImage &&
-                                                           m.PostId == ValidPostLikePostId) &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
+                                                           m.Id == ValidId &&
+                                                           m.UserName == ValidName &&
+                                                           m.ProfileImage == ValidProfileImage &&
+                                                           m.FirstName == ValidFirstName &&
+                                                           m.LastName == ValidLastName) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
                                                            mc.TotalCount == ValidTotalCountValue &&

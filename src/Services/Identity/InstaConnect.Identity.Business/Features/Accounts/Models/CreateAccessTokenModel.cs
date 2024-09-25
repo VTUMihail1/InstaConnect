@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
+﻿using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
 
 namespace InstaConnect.Identity.Business.Features.Accounts.Models;
 

@@ -69,6 +69,7 @@ public class UserController : ControllerBase
 
     // GET: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/detailed
     [HttpGet("{id}/detailed")]
+    [Authorize(AppPolicies.AdminPolicy)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
