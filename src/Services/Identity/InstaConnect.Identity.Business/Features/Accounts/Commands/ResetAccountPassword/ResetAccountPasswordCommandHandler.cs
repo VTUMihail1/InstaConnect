@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Abstractions;
+﻿using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Abstractions;
 using InstaConnect.Identity.Data.Features.Users.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
@@ -13,18 +13,18 @@ public class ResetAccountPasswordCommandHandler : ICommandHandler<ResetAccountPa
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUserWriteRepository _userWriteRepository;
-    private readonly IEmailConfirmationTokenWriteRepository _emailConfirmationTokenWriteRepository;
+    private readonly IForgotPasswordTokenWriteRepository _forgotPasswordTokenWriteRepository;
 
     public ResetAccountPasswordCommandHandler(
         IUnitOfWork unitOfWork,
         IPasswordHasher passwordHasher,
         IUserWriteRepository userWriteRepository,
-        IEmailConfirmationTokenWriteRepository emailConfirmationTokenWriteRepository)
+        IForgotPasswordTokenWriteRepository forgotPasswordTokenWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _passwordHasher = passwordHasher;
         _userWriteRepository = userWriteRepository;
-        _emailConfirmationTokenWriteRepository = emailConfirmationTokenWriteRepository;
+        _forgotPasswordTokenWriteRepository = forgotPasswordTokenWriteRepository;
     }
 
     public async Task Handle(
@@ -38,14 +38,14 @@ public class ResetAccountPasswordCommandHandler : ICommandHandler<ResetAccountPa
             throw new UserNotFoundException();
         }
 
-        var existingEmailConfirmationToken = await _emailConfirmationTokenWriteRepository.GetByValueAsync(request.Token, cancellationToken);
+        var existingForgotPasswordToken = await _forgotPasswordTokenWriteRepository.GetByValueAsync(request.Token, cancellationToken);
 
-        if (existingEmailConfirmationToken == null)
+        if (existingForgotPasswordToken == null)
         {
             throw new TokenNotFoundException();
         }
 
-        if (existingEmailConfirmationToken.UserId != request.UserId)
+        if (existingForgotPasswordToken.UserId != request.UserId)
         {
             throw new AccountForbiddenException();
         }
@@ -53,7 +53,7 @@ public class ResetAccountPasswordCommandHandler : ICommandHandler<ResetAccountPa
         var passwordHashResultModel = _passwordHasher.Hash(request.Password);
         await _userWriteRepository.ResetPasswordAsync(existingUser.Id, passwordHashResultModel.PasswordHash, cancellationToken);
 
-        _emailConfirmationTokenWriteRepository.Delete(existingEmailConfirmationToken);
+        _forgotPasswordTokenWriteRepository.Delete(existingForgotPasswordToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

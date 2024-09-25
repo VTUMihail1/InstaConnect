@@ -11,7 +11,6 @@ namespace InstaConnect.Identity.Business.Features.Accounts.Commands.LoginAccount
 
 public class LoginAccountCommandHandler : ICommandHandler<LoginAccountCommand, AccountTokenCommandViewModel>
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
@@ -19,14 +18,12 @@ public class LoginAccountCommandHandler : ICommandHandler<LoginAccountCommand, A
     private readonly IUserClaimWriteRepository _userClaimWriteRepository;
 
     public LoginAccountCommandHandler(
-        IUnitOfWork unitOfWork,
         IPasswordHasher passwordHasher,
         IInstaConnectMapper instaConnectMapper,
         IUserWriteRepository userWriteRepository,
         IAccessTokenGenerator accessTokenGenerator,
         IUserClaimWriteRepository userClaimWriteRepository)
     {
-        _unitOfWork = unitOfWork;
         _passwordHasher = passwordHasher;
         _instaConnectMapper = instaConnectMapper;
         _userWriteRepository = userWriteRepository;
@@ -58,11 +55,9 @@ public class LoginAccountCommandHandler : ICommandHandler<LoginAccountCommand, A
         var createAccessModel = _instaConnectMapper.Map<CreateAccessTokenModel>((userClaims, existingUser));
         var token = _accessTokenGenerator.GenerateAccessToken(createAccessModel);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var accountTokenCommandViewModel = _instaConnectMapper.Map<AccountTokenCommandViewModel>(token);
 
-        var accountViewDTO = _instaConnectMapper.Map<AccountTokenCommandViewModel>(token);
-
-        return accountViewDTO;
+        return accountTokenCommandViewModel;
     }
 }
 
