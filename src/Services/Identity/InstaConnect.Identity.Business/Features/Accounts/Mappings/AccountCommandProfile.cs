@@ -8,6 +8,7 @@ using InstaConnect.Identity.Business.Features.Accounts.Utilities;
 using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
 using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites;
 using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
+using InstaConnect.Identity.Data.Features.UserClaims.Models.Filters;
 using InstaConnect.Identity.Data.Features.Users.Models;
 using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Contracts.Emails;
@@ -55,9 +56,19 @@ internal class AccountCommandProfile : Profile
 
         CreateMap<User, UserCreatedEvent>();
 
+        CreateMap<User, UserUpdatedEvent>();
+
         CreateMap<User, UserDeletedEvent>();
 
+        CreateMap<User, UserClaimCollectionWriteQuery>()
+            .ConstructUsing(src => new(src.Id));
+
         CreateMap<User, CreateEmailConfirmationTokenModel>()
+            .ConstructUsing(src => new(
+                src.Id,
+                src.Email));
+
+        CreateMap<User, CreateForgotPasswordTokenModel>()
             .ConstructUsing(src => new(
                 src.Id,
                 src.Email));

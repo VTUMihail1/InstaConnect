@@ -19,16 +19,15 @@ internal class AccessTokenGenerator : IAccessTokenGenerator
 
     public AccessTokenResult GenerateAccessToken(CreateAccessTokenModel createAccessTokenModel)
     {
-        var result = GetToken(createAccessTokenModel.Claims);
-
-        return result;
-    }
-
-    private AccessTokenResult GetToken(IEnumerable<Claim>? claims = null)
-    {
         var validUntil = DateTime.Now.AddSeconds(_accessTokenOptions.LifetimeSeconds);
         var signingKey = new SymmetricSecurityKey(_accessTokenOptions.SecurityKeyByteArray);
-        var claimsIdentity = new ClaimsIdentity(claims);
+        var claimsIdentity = new ClaimsIdentity(
+            [new(ClaimTypes.NameIdentifier, createAccessTokenModel.UserId),
+             new(ClaimTypes.Email, createAccessTokenModel.Email),
+             new(ClaimTypes.GivenName, createAccessTokenModel.FirstName),
+             new(ClaimTypes.Surname, createAccessTokenModel.LastName),
+             new(ClaimTypes.Name, createAccessTokenModel.UserName),
+             ..createAccessTokenModel.UserClaims.Select(uc => new Claim(uc.Claim, uc.Value))]);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
