@@ -20,8 +20,6 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
     protected readonly string ValidUserLastName;
     protected readonly string ValidUserProfileImage;
 
-    protected IUserReadRepository UserReadRepository { get; }
-
     protected IUserWriteRepository UserWriteRepository { get; }
 
     public BaseUserUnitTest() : base(
@@ -39,7 +37,6 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
         ValidUserProfileImage = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
         ValidCurrentUserId = GetAverageString(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
 
-        UserReadRepository = Substitute.For<IUserReadRepository>();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
 
         var existingUser = new User(
@@ -51,11 +48,6 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
         {
             Id = ValidCurrentUserId,
         };
-
-        UserReadRepository.GetByIdAsync(
-            ValidCurrentUserId,
-            CancellationToken)
-            .Returns(existingUser);
 
         UserWriteRepository.GetByIdAsync(
             ValidCurrentUserId,

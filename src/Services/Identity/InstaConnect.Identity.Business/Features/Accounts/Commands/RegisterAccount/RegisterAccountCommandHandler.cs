@@ -53,7 +53,7 @@ public class RegisterAccountCommandHandler : ICommandHandler<RegisterAccountComm
 
         if (existingNameUser != null)
         {
-            throw new AccountUsernameAlreadyTakenException();
+            throw new AccountNameAlreadyTakenException();
         }
 
         var passwordHash = _passwordHasher.Hash(request.Password);

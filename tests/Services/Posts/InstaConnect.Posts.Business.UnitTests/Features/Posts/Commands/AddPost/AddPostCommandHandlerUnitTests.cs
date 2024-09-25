@@ -71,6 +71,7 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
         PostWriteRepository
             .Received(1)
             .Add(Arg.Is<Post>(m =>
+                !string.IsNullOrEmpty(m.Id) &&
                 m.UserId == ValidCurrentUserId &&
                 m.Title == ValidTitle &&
                 m.Content == ValidContent));

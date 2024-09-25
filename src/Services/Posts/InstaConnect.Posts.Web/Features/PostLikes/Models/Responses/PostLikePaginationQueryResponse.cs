@@ -1,6 +1,4 @@
-﻿using InstaConnect.Shared.Business.Models;
-
-namespace InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
+﻿namespace InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
 
 public record PostLikePaginationQueryResponse(
     ICollection<PostLikeQueryResponse> Items,
@@ -8,5 +6,4 @@ public record PostLikePaginationQueryResponse(
     int PageSize,
     int TotalCount,
     bool HasNextPage,
-    bool HasPreviousPage)
-    : PaginationQueryViewModel<PostLikeQueryResponse>(Items, Page, PageSize, TotalCount, HasNextPage, HasPreviousPage);
+    bool HasPreviousPage);

@@ -1,15 +1,14 @@
 ﻿using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Abstractions;
 using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites;
-using InstaConnect.Shared.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Repositories;
 
-internal class ForgotPasswordTokenWriteRepository : BaseWriteRepository<ForgotPasswordToken>, IForgotPasswordTokenWriteRepository
+internal class ForgotPasswordTokenWriteRepository : IForgotPasswordTokenWriteRepository
 {
     private readonly IdentityContext _identityContext;
 
-    public ForgotPasswordTokenWriteRepository(IdentityContext identityContext) : base(identityContext)
+    public ForgotPasswordTokenWriteRepository(IdentityContext identityContext)
     {
         _identityContext = identityContext;
     }
@@ -20,5 +19,19 @@ internal class ForgotPasswordTokenWriteRepository : BaseWriteRepository<ForgotPa
             .FirstOrDefaultAsync(e => e.Value == value, cancellationToken);
 
         return token;
+    }
+
+    public void Add(ForgotPasswordToken forgotPasswordToken)
+    {
+        _identityContext
+            .ForgotPasswordTokens
+            .Add(forgotPasswordToken);
+    }
+
+    public void Delete(ForgotPasswordToken forgotPasswordToken)
+    {
+        _identityContext
+            .ForgotPasswordTokens
+            .Remove(forgotPasswordToken);
     }
 }

@@ -9,7 +9,6 @@ internal static class ServiceCollectionExtensions
     internal static IServiceCollection AddUserServices(this IServiceCollection serviceCollection)
     {
         serviceCollection
-            .AddScoped<IUserReadRepository, UserReadRepository>()
             .AddScoped<IUserWriteRepository, UserWriteRepository>();
 
         return serviceCollection;

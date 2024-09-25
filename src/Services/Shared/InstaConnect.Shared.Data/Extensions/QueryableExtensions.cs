@@ -26,7 +26,7 @@ public static class QueryableExtensions
         return queryable.OrderBy(orderByClause);
     }
 
-    public static async Task<PaginationList<T>> ToPagedList<T>(
+    public static async Task<PaginationList<T>> ToPagedListAsync<T>(
         this IQueryable<T> queryable,
         int page,
         int pageSize,

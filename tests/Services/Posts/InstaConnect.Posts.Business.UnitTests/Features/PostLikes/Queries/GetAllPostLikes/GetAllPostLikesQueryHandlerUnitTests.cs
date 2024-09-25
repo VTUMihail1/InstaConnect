@@ -26,17 +26,12 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         // Arrange
         var query = new GetAllPostLikesQuery(
             ValidPostLikeCurrentUserId,
-            ValidPostTitle,
+            ValidUserName,
             ValidPostLikePostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
             ValidPageSizeValue);
-
-        Expression<Func<PostLike, bool>> expectedExpression = p =>
-             (string.IsNullOrEmpty(ValidPostLikeCurrentUserId) || p.UserId.Equals(ValidPostLikeCurrentUserId)) &&
-             (string.IsNullOrEmpty(ValidUserName) || p.User!.UserName.Equals(ValidUserName)) &&
-             (string.IsNullOrEmpty(ValidPostLikePostId) || p.PostId.Equals(ValidPostLikePostId));
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -45,7 +40,10 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         await PostLikeReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<PostLikeCollectionReadQuery>(m =>
-                                                                        m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
+                                                                        m.UserId == ValidPostLikeCurrentUserId &&
+                                                                        m.UserName == ValidUserName &&
+                                                                        m.PostId == ValidPostLikePostId &&
+                                                                        m.Page == ValidPageValue &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

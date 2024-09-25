@@ -33,11 +33,6 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
             ValidPageValue,
             ValidPageSizeValue);
 
-        Expression<Func<PostComment, bool>> expectedExpression = pc =>
-             (string.IsNullOrEmpty(ValidPostCommentCurrentUserId) || pc.UserId == ValidPostCommentCurrentUserId) &&
-             (string.IsNullOrEmpty(ValidUserName) || pc.User!.UserName.StartsWith(ValidUserName)) &&
-             (string.IsNullOrEmpty(ValidPostCommentPostId) || pc.PostId == ValidPostCommentPostId);
-
         // Act
         await _queryHandler.Handle(query, CancellationToken);
 
@@ -45,7 +40,10 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
         await PostCommentReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<PostCommentCollectionReadQuery>(m =>
-                                                                        m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
+                                                                        m.UserId == ValidPostCommentCurrentUserId &&
+                                                                        m.UserName == ValidUserName &&
+                                                                        m.PostId == ValidPostCommentPostId &&
+                                                                        m.Page == ValidPageValue &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

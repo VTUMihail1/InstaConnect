@@ -101,6 +101,7 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
         PostLikeWriteRepository
             .Received(1)
             .Add(Arg.Is<PostLike>(m =>
+                !string.IsNullOrEmpty(m.Id) &&
                 m.UserId == ValidCurrentUserId &&
                 m.PostId == ValidPostId));
     }

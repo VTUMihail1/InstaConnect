@@ -1,8 +1,11 @@
 ﻿using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Messages.Data.Features.Messages.Abstractions;
-
-public interface IMessageWriteRepository : IBaseWriteRepository<Message>
+public interface IMessageWriteRepository
 {
+    void Add(Message message);
+    Task<bool> AnyAsync(CancellationToken cancellationToken);
+    void Delete(Message message);
+    Task<Message?> GetByIdAsync(string id, CancellationToken cancellationToken);
+    void Update(Message message);
 }

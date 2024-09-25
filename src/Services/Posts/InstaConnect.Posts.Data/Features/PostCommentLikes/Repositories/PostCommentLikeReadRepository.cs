@@ -1,32 +1,42 @@
 ﻿using InstaConnect.Posts.Data.Features.PostCommentLikes.Abstract;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Shared.Data.Repositories;
+using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
+using InstaConnect.Shared.Data.Extensions;
+using InstaConnect.Shared.Data.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Posts.Data.Features.PostCommentLikes.Repositories;
 
-internal class PostCommentLikeReadRepository : BaseReadRepository<PostCommentLike>, IPostCommentLikeReadRepository
+internal class PostCommentLikeReadRepository : IPostCommentLikeReadRepository
 {
     private readonly PostsContext _postsContext;
 
-    public PostCommentLikeReadRepository(PostsContext postsContext) : base(postsContext)
+    public PostCommentLikeReadRepository(PostsContext postsContext)
     {
         _postsContext = postsContext;
     }
 
-    public virtual async Task<PostCommentLike?> GetByUserIdAndPostCommentIdAsync(string userId, string postCommentId, CancellationToken cancellationToken)
+    public async Task<PaginationList<PostCommentLike>> GetAllAsync(PostCommentLikeCollectionReadQuery query, CancellationToken cancellationToken)
     {
-        var postCommentLike =
-        await IncludeProperties(
-            _postsContext.PostCommentLikes)
-            .FirstOrDefaultAsync(pl => pl.UserId == userId && pl.PostCommentId == postCommentId, cancellationToken);
+        var postCommentLikes = await _postsContext
+            .PostCommentLikes
+            .Include(p => p.User)
+            .Where(p => (string.IsNullOrEmpty(query.UserId) || p.UserId == query.UserId) &&
+                         (string.IsNullOrEmpty(query.UserName) || p.User!.UserName.StartsWith(query.UserName)) &&
+                         (string.IsNullOrEmpty(query.PostCommentId) || p.PostCommentId == query.PostCommentId))
+            .OrderEntities(query.SortOrder, query.SortPropertyName)
+            .ToPagedListAsync(query.Page, query.PageSize, cancellationToken);
 
-        return postCommentLike;
+        return postCommentLikes;
     }
 
-    protected override IQueryable<PostCommentLike> IncludeProperties(IQueryable<PostCommentLike> queryable)
+    public async Task<PostCommentLike?> GetByIdAsync(string id, CancellationToken cancellationToken)
     {
-        return queryable
-            .Include(p => p.User);
+        var postCommentLike = await _postsContext
+            .PostCommentLikes
+            .Include(m => m.User)
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+
+        return postCommentLike;
     }
 }

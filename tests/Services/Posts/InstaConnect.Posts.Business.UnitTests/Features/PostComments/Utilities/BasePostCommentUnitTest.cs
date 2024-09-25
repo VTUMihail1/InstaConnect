@@ -36,8 +36,6 @@ public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
     protected readonly string ValidPostCommentPostId;
     protected readonly string ValidPostCommentCurrentUserId;
 
-    protected IUserReadRepository UserReadRepository { get; }
-
     protected IUserWriteRepository UserWriteRepository { get; }
 
     protected IPostReadRepository PostReadRepository { get; }
@@ -76,7 +74,6 @@ public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
         ValidPostCommentPostId = GetAverageString(PostCommentBusinessConfigurations.POST_ID_MAX_LENGTH, PostCommentBusinessConfigurations.POST_ID_MIN_LENGTH);
         ValidPostCommentCurrentUserId = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
 
-        UserReadRepository = Substitute.For<IUserReadRepository>();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         PostReadRepository = Substitute.For<IPostReadRepository>();
         PostWriteRepository = Substitute.For<IPostWriteRepository>();
@@ -145,16 +142,6 @@ public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
             CancellationToken)
             .Returns(existingPostComment);
 
-        UserReadRepository.GetByIdAsync(
-            ValidCurrentUserId,
-            CancellationToken)
-            .Returns(existingUser);
-
-        UserReadRepository.GetByIdAsync(
-            ValidPostCommentCurrentUserId,
-            CancellationToken)
-            .Returns(existingPostCommentUser);
-
         UserWriteRepository.GetByIdAsync(
             ValidCurrentUserId,
             CancellationToken)
@@ -187,6 +174,9 @@ public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
 
         PostCommentReadRepository
             .GetAllAsync(Arg.Is<PostCommentCollectionReadQuery>(m =>
+                                                                        m.PostId == ValidPostCommentPostId &&
+                                                                        m.UserId == ValidPostCommentCurrentUserId &&
+                                                                        m.UserName == ValidUserName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

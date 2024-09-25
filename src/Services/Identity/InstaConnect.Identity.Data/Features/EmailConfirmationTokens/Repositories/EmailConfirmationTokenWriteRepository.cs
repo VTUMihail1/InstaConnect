@@ -1,15 +1,14 @@
 ﻿using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
-using InstaConnect.Shared.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Repositories;
 
-internal class EmailConfirmationTokenWriteRepository : BaseWriteRepository<EmailConfirmationToken>, IEmailConfirmationTokenWriteRepository
+internal class EmailConfirmationTokenWriteRepository : IEmailConfirmationTokenWriteRepository
 {
     private readonly IdentityContext _identityContext;
 
-    public EmailConfirmationTokenWriteRepository(IdentityContext identityContext) : base(identityContext)
+    public EmailConfirmationTokenWriteRepository(IdentityContext identityContext)
     {
         _identityContext = identityContext;
     }
@@ -20,5 +19,19 @@ internal class EmailConfirmationTokenWriteRepository : BaseWriteRepository<Email
             .FirstOrDefaultAsync(e => e.Value == value, cancellationToken);
 
         return token;
+    }
+
+    public void Add(EmailConfirmationToken emailConfirmationToken)
+    {
+        _identityContext
+            .EmailConfirmationTokens
+            .Add(emailConfirmationToken);
+    }
+
+    public void Delete(EmailConfirmationToken emailConfirmationToken)
+    {
+        _identityContext
+            .EmailConfirmationTokens
+            .Remove(emailConfirmationToken);
     }
 }

@@ -92,6 +92,7 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
         MessageWriteRepository
             .Received(1)
             .Add(Arg.Is<Message>(m =>
+                !string.IsNullOrEmpty(m.Id) &&
                 m.SenderId == ValidCurrentUserId &&
                 m.ReceiverId == ValidReceiverId &&
                 m.Content == ValidContent));

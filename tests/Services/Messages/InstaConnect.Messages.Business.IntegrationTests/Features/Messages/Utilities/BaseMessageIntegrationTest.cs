@@ -27,17 +27,6 @@ public abstract class BaseMessageIntegrationTest : BaseSharedIntegrationTest, IC
     protected readonly string ValidUserLastName;
     protected readonly string ValidUserProfileImage;
 
-    protected IUserReadRepository UserReadRepository
-    {
-        get
-        {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var userReadRepository = serviceScope.ServiceProvider.GetRequiredService<IUserReadRepository>();
-
-            return userReadRepository;
-        }
-    }
-
     protected IUserWriteRepository UserWriteRepository
     {
         get

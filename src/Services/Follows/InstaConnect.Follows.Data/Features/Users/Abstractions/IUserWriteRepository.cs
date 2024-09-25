@@ -1,8 +1,10 @@
 ﻿using InstaConnect.Follows.Data.Features.Users.Models.Entities;
-using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Follows.Data.Features.Users.Abstractions;
-
-public interface IUserWriteRepository : IBaseWriteRepository<User>
+public interface IUserWriteRepository
 {
+    void Add(User user);
+    void Delete(User user);
+    Task<User?> GetByIdAsync(string id, CancellationToken cancellationToken);
+    void Update(User user);
 }

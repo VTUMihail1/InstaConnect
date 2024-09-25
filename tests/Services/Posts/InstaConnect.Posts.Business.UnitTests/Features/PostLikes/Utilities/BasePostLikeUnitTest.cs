@@ -35,8 +35,6 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
     protected readonly string ValidPostLikePostId;
     protected readonly string ValidPostLikeCurrentUserId;
 
-    protected IUserReadRepository UserReadRepository { get; }
-
     protected IUserWriteRepository UserWriteRepository { get; }
 
     protected IPostReadRepository PostReadRepository { get; }
@@ -74,7 +72,6 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
         ValidPostLikePostId = GetAverageString(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH, PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH);
         ValidPostLikeCurrentUserId = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
 
-        UserReadRepository = Substitute.For<IUserReadRepository>();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         PostReadRepository = Substitute.For<IPostReadRepository>();
         PostWriteRepository = Substitute.For<IPostWriteRepository>();
@@ -134,16 +131,6 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
             ValidPageSizeValue,
             ValidTotalCountValue);
 
-        UserReadRepository.GetByIdAsync(
-            ValidCurrentUserId,
-            CancellationToken)
-            .Returns(existingUser);
-
-        UserReadRepository.GetByIdAsync(
-            ValidPostLikeCurrentUserId,
-            CancellationToken)
-            .Returns(existingPostLikeUser);
-
         UserWriteRepository.GetByIdAsync(
             ValidCurrentUserId,
             CancellationToken)
@@ -184,12 +171,6 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
             CancellationToken)
             .Returns(existingPostLike);
 
-        PostLikeReadRepository.GetByUserIdAndPostIdAsync(
-            ValidPostLikeCurrentUserId,
-            ValidPostLikePostId,
-            CancellationToken)
-            .Returns(existingPostLike);
-
         PostLikeWriteRepository.GetByUserIdAndPostIdAsync(
             ValidPostLikeCurrentUserId,
             ValidPostLikePostId,
@@ -198,6 +179,9 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
 
         PostLikeReadRepository
             .GetAllAsync(Arg.Is<PostLikeCollectionReadQuery>(m =>
+                                                                        m.PostId == ValidPostLikePostId &&
+                                                                        m.UserId == ValidPostLikeCurrentUserId &&
+                                                                        m.UserName == ValidUserName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

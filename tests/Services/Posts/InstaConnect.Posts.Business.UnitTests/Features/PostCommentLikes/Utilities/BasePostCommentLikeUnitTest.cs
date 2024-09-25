@@ -35,8 +35,6 @@ public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
     protected readonly string ValidPostCommentLikePostCommentId;
     protected readonly string ValidPostCommentLikeCurrentUserId;
 
-    protected IUserReadRepository UserReadRepository { get; }
-
     protected IUserWriteRepository UserWriteRepository { get; }
 
     protected IPostCommentReadRepository PostCommentReadRepository { get; }
@@ -73,7 +71,6 @@ public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
         ValidPostCommentLikePostCommentId = GetAverageString(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MAX_LENGTH, PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MIN_LENGTH);
         ValidPostCommentLikeCurrentUserId = GetAverageString(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
 
-        UserReadRepository = Substitute.For<IUserReadRepository>();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         PostCommentReadRepository = Substitute.For<IPostCommentReadRepository>();
         PostCommentWriteRepository = Substitute.For<IPostCommentWriteRepository>();
@@ -135,16 +132,6 @@ public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
             ValidPageSizeValue,
             ValidTotalCountValue);
 
-        UserReadRepository.GetByIdAsync(
-            ValidCurrentUserId,
-            CancellationToken)
-            .Returns(existingUser);
-
-        UserReadRepository.GetByIdAsync(
-            ValidPostCommentLikeCurrentUserId,
-            CancellationToken)
-            .Returns(existingPostCommentLikeUser);
-
         UserWriteRepository.GetByIdAsync(
             ValidCurrentUserId,
             CancellationToken)
@@ -185,12 +172,6 @@ public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
             CancellationToken)
             .Returns(existingPostCommentLike);
 
-        PostCommentLikeReadRepository.GetByUserIdAndPostCommentIdAsync(
-            ValidPostCommentLikeCurrentUserId,
-            ValidPostCommentLikePostCommentId,
-            CancellationToken)
-            .Returns(existingPostCommentLike);
-
         PostCommentLikeWriteRepository.GetByUserIdAndPostCommentIdAsync(
             ValidPostCommentLikeCurrentUserId,
             ValidPostCommentLikePostCommentId,
@@ -199,6 +180,9 @@ public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
 
         PostCommentLikeReadRepository
             .GetAllAsync(Arg.Is<PostCommentLikeCollectionReadQuery>(m =>
+                                                                        m.PostCommentId == ValidPostCommentLikePostCommentId &&
+                                                                        m.UserId == ValidPostCommentLikeCurrentUserId &&
+                                                                        m.UserName == ValidUserName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

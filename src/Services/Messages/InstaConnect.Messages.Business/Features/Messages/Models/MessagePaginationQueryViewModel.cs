@@ -1,6 +1,4 @@
-﻿using InstaConnect.Shared.Business.Models;
-
-namespace InstaConnect.Messages.Business.Features.Messages.Models;
+﻿namespace InstaConnect.Messages.Business.Features.Messages.Models;
 
 public record MessagePaginationQueryViewModel(
     ICollection<MessageQueryViewModel> Items,
@@ -8,5 +6,4 @@ public record MessagePaginationQueryViewModel(
     int PageSize,
     int TotalCount,
     bool HasNextPage,
-    bool HasPreviousPage)
-    : PaginationQueryViewModel<MessageQueryViewModel>(Items, Page, PageSize, TotalCount, HasNextPage, HasPreviousPage);
+    bool HasPreviousPage);
