@@ -5,7 +5,6 @@ using InstaConnect.Identity.Data.Features.UserClaims.Models.Filters;
 using InstaConnect.Identity.Data.Features.Users.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Account;
-using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Identity.Business.Features.Accounts.Commands.LoginAccount;
 

@@ -161,7 +161,7 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
             .Returns(existingFollowFollowing);
 
         FollowReadRepository
-            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m =>  m.FollowerId == ValidFollowCurrentUserId &&
+            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m => m.FollowerId == ValidFollowCurrentUserId &&
                                                                  m.FollowingId == ValidFollowFollowingId &&
                                                                  m.FollowerName == ValidUserName &&
                                                                  m.Page == ValidPageValue &&

@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Business.Features.Accounts.Abstractions;
 using InstaConnect.Identity.Business.Features.Accounts.Mappings;
 using InstaConnect.Identity.Business.Features.Accounts.Models;
+using InstaConnect.Identity.Business.Features.Users.Mappings;
 using InstaConnect.Identity.Business.Features.Users.Utilities;
 using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
@@ -13,11 +14,13 @@ using InstaConnect.Identity.Data.Features.UserClaims.Models.Filters;
 using InstaConnect.Identity.Data.Features.Users.Abstractions;
 using InstaConnect.Identity.Data.Features.Users.Models;
 using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
+using InstaConnect.Identity.Data.Features.Users.Models.Filters;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Business.Models;
 using InstaConnect.Shared.Business.UnitTests.Utilities;
 using InstaConnect.Shared.Data.Abstractions;
+using InstaConnect.Shared.Data.Models.Pagination;
 using InstaConnect.Shared.Data.Utilities;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
@@ -59,6 +62,8 @@ public abstract class BaseAccountUnitTest : BaseSharedUnitTest
 
     protected IEventPublisher EventPublisher { get; }
 
+    protected IUserReadRepository UserReadRepository { get; }
+
     protected IUserWriteRepository UserWriteRepository { get; }
 
     protected IEmailConfirmationTokenWriteRepository EmailConfirmationTokenWriteRepository { get; }
@@ -79,7 +84,11 @@ public abstract class BaseAccountUnitTest : BaseSharedUnitTest
         Substitute.For<IUnitOfWork>(),
         new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg => cfg.AddProfile<AccountCommandProfile>()))),
+                new MapperConfiguration(cfg =>
+                {
+                    cfg.AddProfile<AccountCommandProfile>();
+                    cfg.AddProfile<UserQueryProfile>();
+                }))),
         new EntityPropertyValidator())
     {
         ValidId = GetAverageString(UserBusinessConfigurations.ID_MAX_LENGTH, UserBusinessConfigurations.ID_MIN_LENGTH);
@@ -113,6 +122,7 @@ public abstract class BaseAccountUnitTest : BaseSharedUnitTest
 
         ImageHandler = Substitute.For<IImageHandler>();
         EventPublisher = Substitute.For<IEventPublisher>();
+        UserReadRepository = Substitute.For<IUserReadRepository>();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         EmailConfirmationTokenWriteRepository = Substitute.For<IEmailConfirmationTokenWriteRepository>();
         ForgotPasswordTokenWriteRepository = Substitute.For<IForgotPasswordTokenWriteRepository>();
@@ -191,10 +201,22 @@ public abstract class BaseAccountUnitTest : BaseSharedUnitTest
 
         var existingUserClaim = new UserClaim(AppClaims.Admin, AppClaims.Admin, ValidId);
 
+        var existingUserPaginationList = new PaginationList<User>(
+            [existingUser],
+            ValidPageValue,
+            ValidPageSizeValue,
+            ValidTotalCountValue);
+
         UserWriteRepository.GetByIdAsync(ValidId, CancellationToken)
             .Returns(existingUser);
 
         UserWriteRepository.GetByNameAsync(ValidName, CancellationToken)
+            .Returns(existingUser);
+
+        UserReadRepository.GetByIdAsync(ValidId, CancellationToken)
+            .Returns(existingUser);
+
+        UserReadRepository.GetByNameAsync(ValidName, CancellationToken)
             .Returns(existingUser);
 
         UserWriteRepository.GetByEmailAsync(ValidEmail, CancellationToken)
@@ -254,5 +276,16 @@ public abstract class BaseAccountUnitTest : BaseSharedUnitTest
                                                                                                               uc.Claim == AppClaims.Admin &&
                                                                                                               uc.Value == AppClaims.Admin)))
             .Returns(existingAccessTokenResult);
+
+        UserReadRepository
+            .GetAllAsync(Arg.Is<UserCollectionReadQuery>(m =>
+                                                                        m.FirstName == ValidFirstName &&
+                                                                        m.LastName == ValidLastName &&
+                                                                        m.UserName == ValidName &&
+                                                                        m.Page == ValidPageValue &&
+                                                                        m.PageSize == ValidPageSizeValue &&
+                                                                        m.SortOrder == ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken)
+            .Returns(existingUserPaginationList);
     }
 }

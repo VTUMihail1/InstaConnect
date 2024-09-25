@@ -1,9 +1,7 @@
-﻿using System.Linq.Expressions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
 using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
-using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Filters;
 using NSubstitute;
 

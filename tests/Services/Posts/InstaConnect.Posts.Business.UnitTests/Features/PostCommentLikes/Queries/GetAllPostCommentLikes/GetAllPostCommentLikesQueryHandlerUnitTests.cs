@@ -1,9 +1,7 @@
-﻿using System.Linq.Expressions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 using InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
 using NSubstitute;
 using NSubstitute.ReceivedExtensions;

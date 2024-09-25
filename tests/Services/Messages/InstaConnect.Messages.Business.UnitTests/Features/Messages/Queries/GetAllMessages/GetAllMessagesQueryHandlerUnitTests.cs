@@ -1,9 +1,7 @@
-﻿using System.Linq.Expressions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
-using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Filters;
 using NSubstitute;
 
