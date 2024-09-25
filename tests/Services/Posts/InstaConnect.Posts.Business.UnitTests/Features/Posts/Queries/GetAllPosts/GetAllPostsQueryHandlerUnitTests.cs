@@ -26,17 +26,12 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
         // Arrange
         var query = new GetAllPostsQuery(
             ValidPostCurrentUserId,
-            ValidTitle,
             ValidUserName,
+            ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
             ValidPageSizeValue);
-
-        Expression<Func<Post, bool>> expectedExpression = p =>
-             (string.IsNullOrEmpty(ValidPostCurrentUserId) || p.UserId.Equals(ValidPostCurrentUserId)) &&
-             (string.IsNullOrEmpty(ValidUserName) || p.User!.UserName.Equals(ValidUserName)) &&
-             (string.IsNullOrEmpty(ValidTitle) || p.Title.Equals(ValidTitle));
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -45,7 +40,10 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
         await PostReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<PostCollectionReadQuery>(m =>
-                                                                        m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
+                                                                        m.UserId == ValidPostCurrentUserId &&
+                                                                        m.UserName == ValidUserName &&
+                                                                        m.Title == ValidTitle &&
+                                                                        m.Page == ValidPageValue &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&
@@ -58,8 +56,8 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
         // Arrange
         var query = new GetAllPostsQuery(
             ValidPostCurrentUserId,
-            ValidTitle,
             ValidUserName,
+            ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

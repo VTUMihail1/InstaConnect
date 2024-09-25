@@ -99,6 +99,7 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
         FollowWriteRepository
             .Received(1)
             .Add(Arg.Is<Follow>(m =>
+                !string.IsNullOrEmpty(m.Id) &&
                 m.FollowerId == ValidCurrentUserId &&
                 m.FollowingId == ValidFollowingId));
     }

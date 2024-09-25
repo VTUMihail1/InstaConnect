@@ -1,9 +1,9 @@
 ﻿using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
-using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Abstractions;
-
-public interface IEmailConfirmationTokenWriteRepository : IBaseWriteRepository<EmailConfirmationToken>
+public interface IEmailConfirmationTokenWriteRepository
 {
+    void Add(EmailConfirmationToken emailConfirmationToken);
+    void Delete(EmailConfirmationToken emailConfirmationToken);
     Task<EmailConfirmationToken?> GetByValueAsync(string value, CancellationToken cancellationToken);
 }

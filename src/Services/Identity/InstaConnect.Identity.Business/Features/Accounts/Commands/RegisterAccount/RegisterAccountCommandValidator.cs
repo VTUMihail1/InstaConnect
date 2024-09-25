@@ -33,10 +33,6 @@ public class RegisterAccountCommandValidator : AbstractValidator<RegisterAccount
             .MaximumLength(AccountBusinessConfigurations.PASSWORD_MAX_LENGTH);
 
         RuleFor(c => c.ConfirmPassword)
-            .NotEmpty()
             .Equal(c => c.Password);
-
-        RuleFor(c => c.ProfileImage)
-            .NotEmpty();
     }
 }

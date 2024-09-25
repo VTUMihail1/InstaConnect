@@ -2,7 +2,6 @@
 using InstaConnect.Identity.Business.Features.Accounts.Commands.ConfirmAccountEmail;
 using InstaConnect.Identity.Business.Features.Accounts.Commands.DeleteAccountById;
 using InstaConnect.Identity.Business.Features.Accounts.Commands.EditCurrentAccount;
-using InstaConnect.Identity.Business.Features.Accounts.Commands.EditCurrentAccountProfileImage;
 using InstaConnect.Identity.Business.Features.Accounts.Commands.LoginAccount;
 using InstaConnect.Identity.Business.Features.Accounts.Commands.RegisterAccount;
 using InstaConnect.Identity.Business.Features.Accounts.Commands.ResendAccountEmailConfirmation;
@@ -49,10 +48,8 @@ internal class AccountCommandProfile : Profile
                 src.Item1.Id,
                 src.Item2.EditCurrentAccountBindingModel.FirstName,
                 src.Item2.EditCurrentAccountBindingModel.LastName,
-                src.Item2.EditCurrentAccountBindingModel.UserName));
-
-        CreateMap<(CurrentUserModel, EditCurrentAccountProfileImageRequest), EditCurrentAccountProfileImageCommand>()
-            .ConstructUsing(src => new(src.Item1.Id, src.Item2.EditCurrentAccountProfileImageBindingModel.ProfileImage));
+                src.Item2.EditCurrentAccountBindingModel.UserName,
+                src.Item2.EditCurrentAccountBindingModel.ProfileImage));
 
         CreateMap<DeleteAccountByIdRequest, DeleteAccountByIdCommand>();
 

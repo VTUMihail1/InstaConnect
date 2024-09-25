@@ -3,7 +3,6 @@ using InstaConnect.Identity.Business.Features.Accounts.Commands.ConfirmAccountEm
 using InstaConnect.Identity.Business.Features.Accounts.Commands.DeleteAccountById;
 using InstaConnect.Identity.Business.Features.Accounts.Commands.DeleteCurrentAccount;
 using InstaConnect.Identity.Business.Features.Accounts.Commands.EditCurrentAccount;
-using InstaConnect.Identity.Business.Features.Accounts.Commands.EditCurrentAccountProfileImage;
 using InstaConnect.Identity.Business.Features.Accounts.Commands.LoginAccount;
 using InstaConnect.Identity.Business.Features.Accounts.Commands.RegisterAccount;
 using InstaConnect.Identity.Business.Features.Accounts.Commands.ResendAccountEmailConfirmation;
@@ -138,24 +137,6 @@ public class AccountController : ControllerBase
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var commandRequest = _instaConnectMapper.Map<EditCurrentAccountCommand>((currentUser, request));
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<AccountCommandResponse>(commandResponse);
-
-        return Ok(response);
-    }
-
-    // PUT: api/accounts/current
-    [Authorize]
-    [HttpPut("current/profile-image")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> EditCurrentProfileImageAsync(
-        EditCurrentAccountProfileImageRequest request,
-        CancellationToken cancellationToken)
-    {
-        var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<EditCurrentAccountProfileImageCommand>((currentUser, request));
         var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
         var response = _instaConnectMapper.Map<AccountCommandResponse>(commandResponse);
 

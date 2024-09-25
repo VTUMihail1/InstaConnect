@@ -34,12 +34,6 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
             ValidPageValue,
             ValidPageSizeValue);
 
-        Expression<Func<Follow, bool>> expectedExpression = f =>
-             (string.IsNullOrEmpty(ValidFollowCurrentUserId) || f.FollowerId.Equals(ValidFollowCurrentUserId)) &&
-             (string.IsNullOrEmpty(ValidUserName) || f.Follower!.UserName.Equals(ValidUserName)) &&
-             (string.IsNullOrEmpty(ValidFollowFollowingId) || f.FollowingId.Equals(ValidFollowFollowingId)) &&
-             (string.IsNullOrEmpty(ValidUserName) || f.Following!.UserName.Equals(ValidUserName));
-
         // Act
         await _queryHandler.Handle(query, CancellationToken);
 
@@ -47,7 +41,10 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
         await FollowReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m =>
-                                                                        m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
+                                                                        m.FollowerId == ValidFollowCurrentUserId &&
+                                                                        m.FollowerName == ValidUserName &&
+                                                                        m.FollowingId == ValidFollowFollowingId &&
+                                                                        m.FollowingName == ValidUserName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

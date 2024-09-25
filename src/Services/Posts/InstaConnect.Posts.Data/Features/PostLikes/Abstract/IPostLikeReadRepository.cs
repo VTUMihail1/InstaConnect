@@ -1,9 +1,10 @@
 ﻿using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
-using InstaConnect.Shared.Data.Abstractions;
+using InstaConnect.Posts.Data.Features.PostLikes.Models.Filters;
+using InstaConnect.Shared.Data.Models.Pagination;
 
 namespace InstaConnect.Posts.Data.Features.PostLikes.Abstract;
-
-public interface IPostLikeReadRepository : IBaseReadRepository<PostLike>
+public interface IPostLikeReadRepository
 {
-    Task<PostLike?> GetByUserIdAndPostIdAsync(string userId, string postId, CancellationToken cancellationToken);
+    Task<PaginationList<PostLike>> GetAllAsync(PostLikeCollectionReadQuery query, CancellationToken cancellationToken);
+    Task<PostLike?> GetByIdAsync(string id, CancellationToken cancellationToken);
 }

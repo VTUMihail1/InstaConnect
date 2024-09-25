@@ -2,11 +2,12 @@
 
 public class EditCurrentAccountBindingModel
 {
-    public EditCurrentAccountBindingModel(string userName, string firstName, string lastName)
+    public EditCurrentAccountBindingModel(string userName, string firstName, string lastName, IFormFile? profileImage)
     {
         UserName = userName;
         FirstName = firstName;
         LastName = lastName;
+        ProfileImage = profileImage;
     }
 
     public string UserName { get; set; }
@@ -14,4 +15,6 @@ public class EditCurrentAccountBindingModel
     public string FirstName { get; set; }
 
     public string LastName { get; set; }
+
+    public IFormFile? ProfileImage { get; set; }
 }

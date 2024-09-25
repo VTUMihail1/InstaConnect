@@ -4,6 +4,7 @@ using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Business.Models;
 using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Identity.Business.Features.Accounts.Commands.EditCurrentAccount;
@@ -11,17 +12,20 @@ namespace InstaConnect.Identity.Business.Features.Accounts.Commands.EditCurrentA
 public class EditCurrentAccountCommandHandler : ICommandHandler<EditCurrentAccountCommand, AccountCommandViewModel>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IImageHandler _imageHandler;
     private readonly IEventPublisher _eventPublisher;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
 
     public EditCurrentAccountCommandHandler(
         IUnitOfWork unitOfWork,
+        IImageHandler imageHandler,
         IEventPublisher eventPublisher,
         IInstaConnectMapper instaConnectMapper,
         IUserWriteRepository userWriteRepository)
     {
         _unitOfWork = unitOfWork;
+        _imageHandler = imageHandler;
         _eventPublisher = eventPublisher;
         _instaConnectMapper = instaConnectMapper;
         _userWriteRepository = userWriteRepository;
@@ -42,10 +46,18 @@ public class EditCurrentAccountCommandHandler : ICommandHandler<EditCurrentAccou
 
         if (existingUserById.UserName != request.UserName && existingUserByName != null)
         {
-            throw new AccountUsernameAlreadyTakenException();
+            throw new AccountNameAlreadyTakenException();
         }
 
         _instaConnectMapper.Map(request, existingUserById);
+
+        if (request.ProfileImage != null)
+        {
+            var imageUploadModel = _instaConnectMapper.Map<ImageUploadModel>(request);
+            var imageUploadResult = await _imageHandler.UploadAsync(imageUploadModel, cancellationToken);
+            _instaConnectMapper.Map(imageUploadResult, existingUserById);
+        }
+
         _userWriteRepository.Update(existingUserById);
 
         var userUpdatedEvent = _instaConnectMapper.Map<UserUpdatedEvent>(existingUserById);

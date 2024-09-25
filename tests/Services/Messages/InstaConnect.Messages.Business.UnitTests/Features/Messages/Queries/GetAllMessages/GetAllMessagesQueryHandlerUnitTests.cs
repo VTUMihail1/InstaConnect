@@ -33,11 +33,6 @@ public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
             ValidPageValue,
             ValidPageSizeValue);
 
-        Expression<Func<Message, bool>> expectedExpression = m =>
-                                       (string.IsNullOrEmpty(ValidMessageCurrentUserId) || m.SenderId.Equals(ValidMessageCurrentUserId)) &&
-                                       (string.IsNullOrEmpty(ValidMessageReceiverId) || m.ReceiverId.Equals(ValidMessageReceiverId)) &&
-                                       (string.IsNullOrEmpty(ValidUserName) || m.Receiver!.UserName.Equals(ValidUserName));
-
         // Act
         await _queryHandler.Handle(query, CancellationToken);
 
@@ -45,7 +40,9 @@ public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
         await MessageReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<MessageCollectionReadQuery>(m =>
-                                                                        m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
+                                                                        m.CurrentUserId == ValidMessageCurrentUserId &&
+                                                                        m.ReceiverId == ValidMessageReceiverId &&
+                                                                        m.ReceiverName == ValidUserName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

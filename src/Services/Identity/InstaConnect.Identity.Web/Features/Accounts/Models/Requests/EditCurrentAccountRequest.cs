@@ -6,5 +6,5 @@ namespace InstaConnect.Identity.Web.Features.Accounts.Models.Requests;
 public class EditCurrentAccountRequest
 {
     [FromBody]
-    public EditCurrentAccountBindingModel EditCurrentAccountBindingModel { get; set; } = new(string.Empty, string.Empty, string.Empty);
+    public EditCurrentAccountBindingModel EditCurrentAccountBindingModel { get; set; } = new(string.Empty, string.Empty, string.Empty, null);
 }

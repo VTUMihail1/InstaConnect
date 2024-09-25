@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Models;
@@ -10,25 +9,30 @@ namespace InstaConnect.Shared.Business.Helpers;
 internal class ImageHandler : IImageHandler
 {
     private readonly Cloudinary _cloudinary;
+    private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IImageUploadFactory _imageUploadFactory;
 
     public ImageHandler(
         Cloudinary cloudinary,
+        IInstaConnectMapper instaConnectMapper,
         IImageUploadFactory imageUploadFactory)
     {
         _cloudinary = cloudinary;
+        _instaConnectMapper = instaConnectMapper;
         _imageUploadFactory = imageUploadFactory;
     }
 
-    public async Task<ImageUploadResult> UploadAsync(ImageUploadModel imageUploadModel, CancellationToken cancellationToken)
+    public async Task<ImageResult> UploadAsync(ImageUploadModel imageUploadModel, CancellationToken cancellationToken)
     {
         var imageUploadParams = _imageUploadFactory.GetImageUploadParams(imageUploadModel.FormFile);
-        var uploadResult = await _cloudinary.UploadAsync(imageUploadParams, cancellationToken);
+        var imageUploadResult = await _cloudinary.UploadAsync(imageUploadParams, cancellationToken);
 
-        if (uploadResult.StatusCode != HttpStatusCode.OK)
+        if (imageUploadResult.StatusCode != HttpStatusCode.OK)
         {
-            throw new BadRequestException(uploadResult.Error.Message);
+            throw new BadRequestException(imageUploadResult.Error.Message);
         }
+
+        var uploadResult = _instaConnectMapper.Map<ImageResult>(imageUploadResult);
 
         return uploadResult;
     }

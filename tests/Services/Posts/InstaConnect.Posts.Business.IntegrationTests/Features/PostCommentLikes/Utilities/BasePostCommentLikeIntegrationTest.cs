@@ -34,17 +34,6 @@ public abstract class BasePostCommentLikeIntegrationTest : BaseSharedIntegration
     protected readonly string InvalidPostCommentId;
     protected readonly string ValidPostCommentContent;
 
-    protected IUserReadRepository UserReadRepository
-    {
-        get
-        {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var userReadRepository = serviceScope.ServiceProvider.GetRequiredService<IUserReadRepository>();
-
-            return userReadRepository;
-        }
-    }
-
     protected IUserWriteRepository UserWriteRepository
     {
         get

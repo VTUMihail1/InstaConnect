@@ -1,34 +1,59 @@
 ﻿using InstaConnect.Follows.Data.Features.Follows.Abstractions;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Shared.Data.Repositories;
+using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
+using InstaConnect.Shared.Data.Extensions;
+using InstaConnect.Shared.Data.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Follows.Data.Features.Follows.Repositories;
 
-internal class FollowReadRepository : BaseReadRepository<Follow>, IFollowReadRepository
+internal class FollowReadRepository : IFollowReadRepository
 {
     private readonly FollowsContext _followsContext;
 
-    public FollowReadRepository(FollowsContext followsContext) : base(followsContext)
+    public FollowReadRepository(FollowsContext followsContext)
     {
         _followsContext = followsContext;
     }
 
-    public virtual async Task<Follow?> GetByFollowerIdAndFollowingIdAsync(string followerId, string followingId, CancellationToken cancellationToken)
+    public async Task<PaginationList<Follow>> GetAllAsync(FollowCollectionReadQuery query, CancellationToken cancellationToken)
     {
-        var follow =
-        await IncludeProperties(
-            _followsContext.Follows)
-            .FirstOrDefaultAsync(f => f.FollowerId == followerId && f.FollowingId == followingId);
+        var follows = await _followsContext
+            .Follows
+            .Include(f => f.Follower)
+            .Include(f => f.Following)
+            .AsSplitQuery()
+            .Where(f => (string.IsNullOrEmpty(query.FollowerId) || f.FollowerId == query.FollowerId) &&
+                        (string.IsNullOrEmpty(query.FollowerName) || f.Follower!.UserName.StartsWith(query.FollowerName)) &&
+                        (string.IsNullOrEmpty(query.FollowingId) || f.FollowingId == query.FollowingId) &&
+                        (string.IsNullOrEmpty(query.FollowingName) || f.Following!.UserName.StartsWith(query.FollowingName)))
+            .OrderEntities(query.SortOrder, query.SortPropertyName)
+            .ToPagedListAsync(query.Page, query.PageSize, cancellationToken);
+
+        return follows;
+    }
+
+    public async Task<Follow?> GetByIdAsync(string id, CancellationToken cancellationToken)
+    {
+        var follow = await _followsContext
+            .Follows
+            .Include(f => f.Follower)
+            .Include(f => f.Following)
+            .AsSplitQuery()
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
         return follow;
     }
 
-    protected override IQueryable<Follow> IncludeProperties(IQueryable<Follow> queryable)
+    public async Task<Follow?> GetByFollowerIdAndFollowingIdAsync(string followerId, string followingId, CancellationToken cancellationToken)
     {
-        return queryable
+        var follow = await _followsContext
+            .Follows
             .Include(f => f.Follower)
             .Include(f => f.Following)
-            .AsSplitQuery();
+            .AsSplitQuery()
+            .FirstOrDefaultAsync(f => f.FollowerId == followerId && f.FollowingId == followingId, cancellationToken);
+
+        return follow;
     }
 }

@@ -1,12 +1,55 @@
 ﻿using InstaConnect.Posts.Data.Features.Posts.Abstract;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
-using InstaConnect.Shared.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Posts.Data.Features.Posts.Repositories;
 
-internal class PostWriteRepository : BaseWriteRepository<Post>, IPostWriteRepository
+internal class PostWriteRepository : IPostWriteRepository
 {
-    public PostWriteRepository(PostsContext postsContext) : base(postsContext)
+    private readonly PostsContext _postsContext;
+
+    public PostWriteRepository(PostsContext postsContext)
     {
+        _postsContext = postsContext;
+    }
+
+    public async Task<Post?> GetByIdAsync(string id, CancellationToken cancellationToken)
+    {
+        var post = await _postsContext
+            .Posts
+            .Include(f => f.User)
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+
+        return post;
+    }
+
+    public async Task<bool> AnyAsync(CancellationToken cancellationToken)
+    {
+        var any = await _postsContext
+            .Posts
+            .AnyAsync(cancellationToken);
+
+        return any;
+    }
+
+    public void Add(Post post)
+    {
+        _postsContext
+            .Posts
+            .Add(post);
+    }
+
+    public void Update(Post post)
+    {
+        _postsContext
+            .Posts
+            .Update(post);
+    }
+
+    public void Delete(Post post)
+    {
+        _postsContext
+            .Posts
+            .Remove(post);
     }
 }

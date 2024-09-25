@@ -6,6 +6,7 @@ using InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
 using NSubstitute;
+using NSubstitute.ReceivedExtensions;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 
@@ -33,11 +34,6 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
             ValidPageValue,
             ValidPageSizeValue);
 
-        Expression<Func<PostCommentLike, bool>> expectedExpression = p =>
-             (string.IsNullOrEmpty(ValidPostCommentLikeCurrentUserId) || p.UserId.Equals(ValidPostCommentLikeCurrentUserId)) &&
-             (string.IsNullOrEmpty(ValidUserName) || p.User!.UserName.Equals(ValidUserName)) &&
-             (string.IsNullOrEmpty(ValidPostCommentLikePostCommentId) || p.PostCommentId.Equals(ValidPostCommentLikePostCommentId));
-
         // Act
         await _queryHandler.Handle(query, CancellationToken);
 
@@ -45,7 +41,9 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
         await PostCommentLikeReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<PostCommentLikeCollectionReadQuery>(m =>
-                                                                        m.Expression.Compile().ToString() == expectedExpression.Compile().ToString() &&
+                                                                        m.UserId == ValidPostCommentLikeCurrentUserId &&
+                                                                        m.UserName == ValidUserName &&
+                                                                        m.PostCommentId == ValidPostCommentLikePostCommentId &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

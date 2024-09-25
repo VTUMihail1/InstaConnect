@@ -1,9 +1,10 @@
 ﻿using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Shared.Data.Abstractions;
+using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
+using InstaConnect.Shared.Data.Models.Pagination;
 
 namespace InstaConnect.Posts.Data.Features.PostCommentLikes.Abstract;
-
-public interface IPostCommentLikeReadRepository : IBaseReadRepository<PostCommentLike>
+public interface IPostCommentLikeReadRepository
 {
-    Task<PostCommentLike?> GetByUserIdAndPostCommentIdAsync(string userId, string postCommentId, CancellationToken cancellationToken);
+    Task<PaginationList<PostCommentLike>> GetAllAsync(PostCommentLikeCollectionReadQuery query, CancellationToken cancellationToken);
+    Task<PostCommentLike?> GetByIdAsync(string id, CancellationToken cancellationToken);
 }

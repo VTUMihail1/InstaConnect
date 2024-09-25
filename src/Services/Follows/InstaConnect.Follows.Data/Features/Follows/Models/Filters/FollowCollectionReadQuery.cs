@@ -1,6 +1,4 @@
-﻿using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Shared.Data.Models.Enums;
-using InstaConnect.Shared.Data.Models.Filters;
+﻿using InstaConnect.Shared.Data.Models.Enums;
 
 namespace InstaConnect.Follows.Data.Features.Follows.Models.Filters;
 
@@ -12,13 +10,4 @@ public record FollowCollectionReadQuery(
     SortOrder SortOrder,
     string SortPropertyName,
     int Page,
-    int PageSize)
-    : CollectionReadQuery<Follow>(
-        f => (string.IsNullOrEmpty(FollowerId) || f.FollowerId == FollowerId) &&
-             (string.IsNullOrEmpty(FollowerName) || f.Follower!.UserName.StartsWith(FollowerName)) &&
-             (string.IsNullOrEmpty(FollowingId) || f.FollowingId == FollowingId) &&
-             (string.IsNullOrEmpty(FollowingName) || f.Following!.UserName.StartsWith(FollowingName)),
-        SortOrder,
-        SortPropertyName,
-        Page,
-        PageSize);
+    int PageSize);

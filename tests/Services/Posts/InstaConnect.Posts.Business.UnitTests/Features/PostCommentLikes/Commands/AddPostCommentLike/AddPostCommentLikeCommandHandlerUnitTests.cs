@@ -101,6 +101,7 @@ public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeUnit
         PostCommentLikeWriteRepository
             .Received(1)
             .Add(Arg.Is<PostCommentLike>(m =>
+                !string.IsNullOrEmpty(m.Id) &&
                 m.UserId == ValidCurrentUserId &&
                 m.PostCommentId == ValidPostCommentId));
     }

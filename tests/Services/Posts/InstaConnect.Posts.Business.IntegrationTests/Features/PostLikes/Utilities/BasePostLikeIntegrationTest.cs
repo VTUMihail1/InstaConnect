@@ -30,17 +30,6 @@ public abstract class BasePostLikeIntegrationTest : BaseSharedIntegrationTest, I
     protected readonly string ValidPostTitle;
     protected readonly string ValidPostContent;
 
-    protected IUserReadRepository UserReadRepository
-    {
-        get
-        {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var userReadRepository = serviceScope.ServiceProvider.GetRequiredService<IUserReadRepository>();
-
-            return userReadRepository;
-        }
-    }
-
     protected IUserWriteRepository UserWriteRepository
     {
         get

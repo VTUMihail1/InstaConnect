@@ -1,9 +1,9 @@
 ﻿using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites;
-using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Abstractions;
-
-public interface IForgotPasswordTokenWriteRepository : IBaseWriteRepository<ForgotPasswordToken>
+public interface IForgotPasswordTokenWriteRepository
 {
+    void Add(ForgotPasswordToken forgotPasswordToken);
+    void Delete(ForgotPasswordToken forgotPasswordToken);
     Task<ForgotPasswordToken?> GetByValueAsync(string value, CancellationToken cancellationToken);
 }

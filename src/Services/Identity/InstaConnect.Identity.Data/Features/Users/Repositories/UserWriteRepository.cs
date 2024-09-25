@@ -1,47 +1,83 @@
 ﻿using InstaConnect.Identity.Data.Features.Users.Abstractions;
 using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Identity.Data.Features.Users.Repositories;
 
-internal class UserWriteRepository : BaseWriteRepository<User>, IUserWriteRepository
+internal class UserWriteRepository : IUserWriteRepository
 {
     private readonly IdentityContext _identityContext;
 
-    public UserWriteRepository(IdentityContext identityContext) : base(identityContext)
+    public UserWriteRepository(IdentityContext identityContext)
     {
         _identityContext = identityContext;
     }
 
-    public virtual async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
+    public async Task<User?> GetByIdAsync(string id, CancellationToken cancellationToken)
     {
-        var entity =
-            await IncludeProperties(
-            _identityContext.Users)
+        var entity = await _identityContext
+            .Users
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+
+        return entity;
+    }
+
+    public async Task<bool> AnyAsync(CancellationToken cancellationToken)
+    {
+        var any = await _identityContext
+            .Users
+            .AnyAsync(cancellationToken);
+
+        return any;
+    }
+
+    public void Add(User entity)
+    {
+        _identityContext
+            .Users
+            .Add(entity);
+    }
+
+    public void Update(User entity)
+    {
+        _identityContext
+            .Users
+            .Update(entity);
+    }
+
+    public void Delete(User entity)
+    {
+        _identityContext
+            .Users
+            .Remove(entity);
+    }
+
+    public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
+    {
+        var entity = await _identityContext
+            .Users
             .FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
 
         return entity;
     }
 
-    public virtual async Task<User?> GetByNameAsync(string name, CancellationToken cancellationToken)
+    public async Task<User?> GetByNameAsync(string name, CancellationToken cancellationToken)
     {
-        var entity =
-            await IncludeProperties(
-            _identityContext.Users)
+        var entity = await _identityContext
+            .Users
             .FirstOrDefaultAsync(u => u.UserName == name, cancellationToken);
 
         return entity;
     }
 
-    public virtual async Task ConfirmEmailAsync(string id, CancellationToken cancellationToken)
+    public async Task ConfirmEmailAsync(string id, CancellationToken cancellationToken)
     {
         await _identityContext.Users
                .Where(u => u.Id == id)
                .ExecuteUpdateAsync(u => u.SetProperty(u => u.IsEmailConfirmed, true), cancellationToken);
     }
 
-    public virtual async Task ResetPasswordAsync(string id, string passwordHash, CancellationToken cancellationToken)
+    public async Task ResetPasswordAsync(string id, string passwordHash, CancellationToken cancellationToken)
     {
         await _identityContext.Users
              .Where(u => u.Id == id)

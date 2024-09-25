@@ -34,8 +34,6 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
 
     protected IMessageSender MessageSender { get; }
 
-    protected IUserReadRepository UserReadRepository { get; }
-
     protected IUserWriteRepository UserWriteRepository { get; }
 
     protected IMessageReadRepository MessageReadRepository { get; }
@@ -68,7 +66,6 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
         ValidMessageReceiverId = GetAverageString(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH);
         ValidMessageCurrentUserId = GetAverageString(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
 
-        UserReadRepository = Substitute.For<IUserReadRepository>();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         MessageSender = Substitute.For<IMessageSender>();
         MessageReadRepository = Substitute.For<IMessageReadRepository>();
@@ -140,26 +137,6 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
             CancellationToken)
             .Returns(existingMessage);
 
-        UserReadRepository.GetByIdAsync(
-            ValidCurrentUserId,
-            CancellationToken)
-            .Returns(existingSender);
-
-        UserReadRepository.GetByIdAsync(
-            ValidReceiverId,
-            CancellationToken)
-            .Returns(existingReceiver);
-
-        UserReadRepository.GetByIdAsync(
-            ValidMessageCurrentUserId,
-            CancellationToken)
-            .Returns(existingMessageSender);
-
-        UserReadRepository.GetByIdAsync(
-            ValidMessageReceiverId,
-            CancellationToken)
-            .Returns(existingMessageReceiver);
-
         UserWriteRepository.GetByIdAsync(
             ValidCurrentUserId,
             CancellationToken)
@@ -182,6 +159,9 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
 
         MessageReadRepository
             .GetAllAsync(Arg.Is<MessageCollectionReadQuery>(m =>
+                                                                        m.CurrentUserId == ValidMessageCurrentUserId &&
+                                                                        m.ReceiverId == ValidMessageReceiverId &&
+                                                                        m.ReceiverName == ValidUserName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

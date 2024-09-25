@@ -29,8 +29,6 @@ public abstract class BasePostUnitTest : BaseSharedUnitTest
     protected readonly string ValidUserProfileImage;
     protected readonly string ValidPostCurrentUserId;
 
-    protected IUserReadRepository UserReadRepository { get; }
-
     protected IUserWriteRepository UserWriteRepository { get; }
 
     protected IPostReadRepository PostReadRepository { get; }
@@ -61,7 +59,6 @@ public abstract class BasePostUnitTest : BaseSharedUnitTest
         ValidCurrentUserId = GetAverageString(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
         ValidPostCurrentUserId = GetAverageString(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
 
-        UserReadRepository = Substitute.For<IUserReadRepository>();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         PostReadRepository = Substitute.For<IPostReadRepository>();
         PostWriteRepository = Substitute.For<IPostWriteRepository>();
@@ -111,16 +108,6 @@ public abstract class BasePostUnitTest : BaseSharedUnitTest
             CancellationToken)
             .Returns(existingPost);
 
-        UserReadRepository.GetByIdAsync(
-            ValidCurrentUserId,
-            CancellationToken)
-            .Returns(existingUser);
-
-        UserReadRepository.GetByIdAsync(
-            ValidPostCurrentUserId,
-            CancellationToken)
-            .Returns(existingPostUser);
-
         UserWriteRepository.GetByIdAsync(
             ValidCurrentUserId,
             CancellationToken)
@@ -133,6 +120,9 @@ public abstract class BasePostUnitTest : BaseSharedUnitTest
 
         PostReadRepository
             .GetAllAsync(Arg.Is<PostCollectionReadQuery>(m =>
+                                                                        m.Title == ValidTitle &&
+                                                                        m.UserId == ValidPostCurrentUserId &&
+                                                                        m.UserName == ValidUserName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

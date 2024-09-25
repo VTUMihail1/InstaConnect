@@ -29,8 +29,6 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
     protected readonly string ValidFollowFollowingId;
     protected readonly string ValidFollowCurrentUserId;
 
-    protected IUserReadRepository UserReadRepository { get; }
-
     protected IUserWriteRepository UserWriteRepository { get; }
 
     protected IFollowReadRepository FollowReadRepository { get; }
@@ -61,7 +59,6 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
         ValidFollowFollowingId = GetAverageString(FollowBusinessConfigurations.FOLLOWING_ID_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_ID_MIN_LENGTH);
         ValidFollowCurrentUserId = GetAverageString(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
 
-        UserReadRepository = Substitute.For<IUserReadRepository>();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         FollowReadRepository = Substitute.For<IFollowReadRepository>();
         FollowWriteRepository = Substitute.For<IFollowWriteRepository>();
@@ -143,26 +140,6 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
             CancellationToken)
             .Returns(existingFollow);
 
-        UserReadRepository.GetByIdAsync(
-            ValidCurrentUserId,
-            CancellationToken)
-            .Returns(existingFollower);
-
-        UserReadRepository.GetByIdAsync(
-            ValidFollowingId,
-            CancellationToken)
-            .Returns(existingFollowing);
-
-        UserReadRepository.GetByIdAsync(
-            ValidFollowCurrentUserId,
-            CancellationToken)
-            .Returns(existingFollowFollower);
-
-        UserReadRepository.GetByIdAsync(
-            ValidFollowFollowingId,
-            CancellationToken)
-            .Returns(existingFollowFollowing);
-
         UserWriteRepository.GetByIdAsync(
             ValidCurrentUserId,
             CancellationToken)
@@ -184,11 +161,13 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
             .Returns(existingFollowFollowing);
 
         FollowReadRepository
-            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m =>
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken)
+            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m =>  m.FollowerId == ValidFollowCurrentUserId &&
+                                                                 m.FollowingId == ValidFollowFollowingId &&
+                                                                 m.FollowerName == ValidUserName &&
+                                                                 m.Page == ValidPageValue &&
+                                                                 m.PageSize == ValidPageSizeValue &&
+                                                                 m.SortOrder == ValidSortOrderProperty &&
+                                                                 m.SortPropertyName == ValidSortPropertyName), CancellationToken)
             .Returns(existingFollowPaginationList);
     }
 }

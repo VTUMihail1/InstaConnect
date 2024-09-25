@@ -89,6 +89,7 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         PostCommentWriteRepository
             .Received(1)
             .Add(Arg.Is<PostComment>(m =>
+                !string.IsNullOrEmpty(m.Id) &&
                 m.UserId == ValidCurrentUserId &&
                 m.PostId == ValidPostId &&
                 m.Content == ValidContent));
