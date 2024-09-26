@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using InstaConnect.Identity.Business.Features.Users.Models;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUser;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUserDetailed;
@@ -38,14 +39,14 @@ public class UserController : ControllerBase
     // GET: api/users
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAllAsync(
+    public async Task<ActionResult<UserPaginationQueryResponse>> GetAllAsync(
         GetAllUsersRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllUsersQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _instaConnectMapper.Map<ICollection<UserQueryResponse>>(queryResponse);
+        var response = _instaConnectMapper.Map<UserPaginationQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -56,7 +57,7 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetCurrentDetailedAsync(CancellationToken cancellationToken)
+    public async Task<ActionResult<UserDetailedQueryResponse>> GetCurrentDetailedAsync(CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var queryRequest = _instaConnectMapper.Map<GetCurrentUserDetailedQuery>(currentUser);
@@ -73,7 +74,7 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetDetailedByIdAsync(
+    public async Task<ActionResult<UserDetailedQueryResponse>> GetDetailedByIdAsync(
         GetUserDetailedByIdRequest request,
         CancellationToken cancellationToken)
     {
@@ -90,7 +91,7 @@ public class UserController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetCurrentAsync(CancellationToken cancellationToken)
+    public async Task<ActionResult<UserQueryResponse>> GetCurrentAsync(CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
         var queryRequest = _instaConnectMapper.Map<GetCurrentUserQuery>(currentUser);
@@ -105,7 +106,7 @@ public class UserController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetByIdAsync(
+    public async Task<ActionResult<UserQueryResponse>> GetByIdAsync(
         GetUserByIdRequest request,
         CancellationToken cancellationToken)
     {
@@ -121,7 +122,7 @@ public class UserController : ControllerBase
     [HttpGet("by-username/{username}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetByUsernameAsync(
+    public async Task<ActionResult<UserQueryResponse>> GetByNameAsync(
         GetUserByNameRequest request,
         CancellationToken cancellationToken)
     {
