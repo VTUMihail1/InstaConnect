@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Identity.Web.Features.Accounts.Models.Requests;
 
-public class ConfirmAccountEmailTokenRequest
+public class ConfirmAccountEmailRequest
 {
     [FromRoute]
     public string UserId { get; set; } = string.Empty;

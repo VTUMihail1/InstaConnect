@@ -42,8 +42,8 @@ public class AccountController : ControllerBase
     [HttpGet("confirm-email/by-user/{userId}/by-token/{token}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> ConfirmEmailAsync(
-        ConfirmAccountEmailTokenRequest request,
+    public async Task<ActionResult> ConfirmEmailAsync(
+        ConfirmAccountEmailRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<ConfirmAccountEmailCommand>(request);
@@ -56,7 +56,7 @@ public class AccountController : ControllerBase
     [HttpGet("resend-confirm-email/by-email/{email}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> ResendConfirmEmailAsync(
+    public async Task<ActionResult> ResendConfirmEmailAsync(
         ResendAccountConfirmEmailRequest request,
         CancellationToken cancellationToken)
     {
@@ -70,7 +70,7 @@ public class AccountController : ControllerBase
     [HttpGet("send-reset-password/by-email/{email}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> SendResetPasswordAsync(
+    public async Task<ActionResult> SendResetPasswordAsync(
         SendAccountPasswordResetRequest request,
         CancellationToken cancellationToken)
     {
@@ -84,7 +84,7 @@ public class AccountController : ControllerBase
     [HttpPost("login")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> LoginAsync(
+    public async Task<ActionResult<AccountTokenCommandResponse>> LoginAsync(
         LoginAccountRequest request,
         CancellationToken cancellationToken)
     {
@@ -100,7 +100,7 @@ public class AccountController : ControllerBase
     [HttpPost("register")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RegisterAsync(
+    public async Task<ActionResult<AccountCommandResponse>> RegisterAsync(
         RegisterAccountRequest request,
         CancellationToken cancellationToken)
     {
@@ -115,7 +115,7 @@ public class AccountController : ControllerBase
     [HttpPost("reset-password/by-user/{userId}/by-token/{token}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> ResetPasswordAsync(
+    public async Task<ActionResult> ResetPasswordAsync(
         ResetAccountPasswordRequest request,
         CancellationToken cancellationToken)
     {
@@ -131,7 +131,7 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> EditCurrentAsync(
+    public async Task<ActionResult<AccountCommandResponse>> EditCurrentAsync(
         EditCurrentAccountRequest request,
         CancellationToken cancellationToken)
     {
@@ -148,7 +148,7 @@ public class AccountController : ControllerBase
     [HttpDelete("current")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteCurrentAsync(
+    public async Task<ActionResult> DeleteCurrentAsync(
         CancellationToken cancellationToken)
     {
         var currentUser = _currentUserContext.GetCurrentUser();
@@ -163,7 +163,7 @@ public class AccountController : ControllerBase
     [HttpDelete("admin/{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteByIdAsync(
+    public async Task<ActionResult> DeleteByIdAsync(
         DeleteAccountByIdRequest request,
         CancellationToken cancellationToken)
     {
