@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Posts.Data.Features.Posts.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Posts;
+using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
@@ -30,7 +30,7 @@ internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
 
         if (request.CurrentUserId != existingPost.UserId)
         {
-            throw new AccountForbiddenException();
+            throw new UserForbiddenException();
         }
 
         _postWriteRepository.Delete(existingPost);

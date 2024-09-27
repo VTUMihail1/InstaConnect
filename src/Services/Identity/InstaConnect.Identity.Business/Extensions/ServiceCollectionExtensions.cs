@@ -1,5 +1,4 @@
-﻿using InstaConnect.Identity.Business.Features.Accounts.Extensions;
-using InstaConnect.Identity.Business.Features.Users.Extensions;
+﻿using InstaConnect.Identity.Business.Features.Users.Extensions;
 using InstaConnect.Identity.Data;
 using InstaConnect.Shared.Business.Extensions;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +13,6 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
-            .AddAccountServices()
             .AddUserServices();
 
         serviceCollection

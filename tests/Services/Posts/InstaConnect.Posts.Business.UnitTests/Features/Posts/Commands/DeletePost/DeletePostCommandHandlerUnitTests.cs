@@ -2,8 +2,8 @@
 using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Posts;
+using InstaConnect.Shared.Business.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Commands.DeletePost;
@@ -48,7 +48,7 @@ public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AccountForbiddenException>();
+        await action.Should().ThrowAsync<UserForbiddenException>();
     }
 
     [Fact]

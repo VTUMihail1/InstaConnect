@@ -5,9 +5,9 @@ using InstaConnect.Posts.Business.Features.PostComments.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
+using InstaConnect.Shared.Business.Exceptions.User;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Commands;
 
@@ -185,7 +185,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AccountForbiddenException>();
+        await action.Should().ThrowAsync<UserForbiddenException>();
     }
 
     [Fact]

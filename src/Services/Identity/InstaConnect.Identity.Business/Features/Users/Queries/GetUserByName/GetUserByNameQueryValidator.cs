@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using InstaConnect.Identity.Business.Features.Accounts.Utilities;
+using InstaConnect.Identity.Business.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Business.Features.Users.Queries.GetUserByName;
 
@@ -9,8 +9,8 @@ public class GetUserByNameQueryValidator : AbstractValidator<GetUserByNameQuery>
     {
         RuleFor(q => q.UserName)
             .NotEmpty()
-            .MinimumLength(AccountBusinessConfigurations.USER_NAME_MIN_LENGTH)
-            .MaximumLength(AccountBusinessConfigurations.USER_NAME_MAX_LENGTH);
+            .MinimumLength(UserBusinessConfigurations.USER_NAME_MIN_LENGTH)
+            .MaximumLength(UserBusinessConfigurations.USER_NAME_MAX_LENGTH);
         ;
     }
 }

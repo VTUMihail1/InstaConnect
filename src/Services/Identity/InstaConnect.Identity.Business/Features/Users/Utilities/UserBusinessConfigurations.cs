@@ -5,9 +5,6 @@ public class UserBusinessConfigurations
     public const int ID_MIN_LENGTH = 7;
     public const int ID_MAX_LENGTH = 100;
 
-    public const int CURRENT_USER_ID_MIN_LENGTH = 7;
-    public const int CURRENT_USER_ID_MAX_LENGTH = 100;
-
     public const int TOKEN_MIN_LENGTH = 7;
     public const int TOKEN_MAX_LENGTH = 100;
 

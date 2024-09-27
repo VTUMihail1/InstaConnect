@@ -5,9 +5,9 @@ using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Message;
+using InstaConnect.Shared.Business.Exceptions.User;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Commands;
 
@@ -185,7 +185,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AccountForbiddenException>();
+        await action.Should().ThrowAsync<UserForbiddenException>();
     }
 
     [Fact]

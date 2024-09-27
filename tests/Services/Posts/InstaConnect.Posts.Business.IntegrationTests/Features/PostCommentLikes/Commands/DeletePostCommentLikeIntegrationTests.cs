@@ -4,9 +4,9 @@ using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.DeletePostC
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.PostCommentLike;
+using InstaConnect.Shared.Business.Exceptions.User;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostCommentLikes.Commands;
 
@@ -145,7 +145,7 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AccountForbiddenException>();
+        await action.Should().ThrowAsync<UserForbiddenException>();
     }
 
     [Fact]

@@ -4,9 +4,9 @@ using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
 using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Posts;
+using InstaConnect.Shared.Business.Exceptions.User;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.Posts.Commands;
 
@@ -130,7 +130,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AccountForbiddenException>();
+        await action.Should().ThrowAsync<UserForbiddenException>();
     }
 
     [Fact]

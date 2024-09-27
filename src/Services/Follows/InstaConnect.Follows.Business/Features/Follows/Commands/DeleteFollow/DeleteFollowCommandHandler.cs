@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Follows.Data.Features.Follows.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Follow;
+using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
@@ -32,7 +32,7 @@ internal class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommand>
 
         if (request.CurrentUserId != existingFollow.FollowerId)
         {
-            throw new AccountForbiddenException();
+            throw new UserForbiddenException();
         }
 
         _followWriteRepository.Delete(existingFollow);
