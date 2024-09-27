@@ -4,9 +4,9 @@ using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
 using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Message;
+using InstaConnect.Shared.Business.Exceptions.User;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Queries;
 
@@ -134,7 +134,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AccountForbiddenException>();
+        await action.Should().ThrowAsync<UserForbiddenException>();
     }
 
     [Fact]

@@ -1,5 +1,14 @@
 ﻿using System.Net;
 using FluentAssertions;
+using InstaConnect.Identity.Business.Features.Users.Commands.ConfirmUserEmail;
+using InstaConnect.Identity.Business.Features.Users.Commands.DeleteCurrentUser;
+using InstaConnect.Identity.Business.Features.Users.Commands.DeleteUserById;
+using InstaConnect.Identity.Business.Features.Users.Commands.EditCurrentUser;
+using InstaConnect.Identity.Business.Features.Users.Commands.LoginUser;
+using InstaConnect.Identity.Business.Features.Users.Commands.RegisterUser;
+using InstaConnect.Identity.Business.Features.Users.Commands.ResendUserEmailConfirmation;
+using InstaConnect.Identity.Business.Features.Users.Commands.ResetUserPassword;
+using InstaConnect.Identity.Business.Features.Users.Commands.SendUserPasswordReset;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUser;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUserDetailed;
@@ -423,5 +432,458 @@ public class UserControllerUnitTests : BaseUserUnitTest
         CurrentUserContext
             .Received(1)
             .GetCurrentUser();
+    }
+
+    [Fact]
+    public async Task RegisterAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new RegisterUserRequest()
+        {
+            RegisterUserBindingModel = new(
+                ValidName,
+                ValidEmail,
+                ValidPassword,
+                ValidPassword,
+                ValidFirstName,
+                ValidLastName,
+                ValidFormFile)
+        };
+
+        // Act
+        var response = await _userController.RegisterAsync(request, CancellationToken);
+
+        // Assert
+        response
+            .Result
+            .Should()
+            .Match<OkObjectResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.OK));
+    }
+
+    [Fact]
+    public async Task RegisterAsync_ShouldReturnMessageViewModel_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new RegisterUserRequest()
+        {
+            RegisterUserBindingModel = new(
+                ValidName,
+                ValidEmail,
+                ValidPassword,
+                ValidPassword,
+                ValidFirstName,
+                ValidLastName,
+                ValidFormFile)
+        };
+
+        // Act
+        var response = await _userController.RegisterAsync(request, CancellationToken);
+
+        // Assert
+        response.Result
+            .Should()
+            .BeOfType<OkObjectResult>()
+            .Which
+            .Value
+            .Should()
+            .Match<UserCommandResponse>(m => m.Id == ValidId);
+    }
+
+    [Fact]
+    public async Task RegisterAsync_ShouldCallTheSender_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new RegisterUserRequest()
+        {
+            RegisterUserBindingModel = new(
+                ValidName,
+                ValidEmail,
+                ValidPassword,
+                ValidPassword,
+                ValidFirstName,
+                ValidLastName,
+                ValidFormFile)
+        };
+
+        // Act
+        await _userController.RegisterAsync(request, CancellationToken);
+
+        // Assert
+        await InstaConnectSender
+              .Received(1)
+              .SendAsync(Arg.Is<RegisterUserCommand>(m => m.Email == ValidEmail &&
+                                                                m.Password == ValidPassword &&
+                                                                m.ConfirmPassword == ValidPassword &&
+                                                                m.UserName == ValidName &&
+                                                                m.FirstName == ValidFirstName &&
+                                                                m.LastName == ValidLastName &&
+                                                                m.ProfileImage == ValidFormFile), CancellationToken);
+    }
+
+    [Fact]
+    public async Task EditCurrentAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new EditCurrentUserRequest()
+        {
+            EditCurrentUserBindingModel = new(ValidName, ValidFirstName, ValidLastName, ValidFormFile)
+        };
+
+        // Act
+        var response = await _userController.EditCurrentAsync(request, CancellationToken);
+
+        // Assert
+        response
+            .Result
+            .Should()
+            .Match<OkObjectResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.OK));
+    }
+
+    [Fact]
+    public async Task EditCurrentAsync_ShouldReturnMessageViewModel_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new EditCurrentUserRequest()
+        {
+            EditCurrentUserBindingModel = new(ValidName, ValidFirstName, ValidLastName, ValidFormFile)
+        };
+
+        // Act
+        var response = await _userController.EditCurrentAsync(request, CancellationToken);
+
+        // Assert
+        response.Result
+            .Should()
+            .BeOfType<OkObjectResult>()
+            .Which
+            .Value
+            .Should()
+            .Match<UserCommandResponse>(m => m.Id == ValidId);
+    }
+
+    [Fact]
+    public async Task EditCurrentAsync_ShouldCallTheSender_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new EditCurrentUserRequest()
+        {
+            EditCurrentUserBindingModel = new(ValidName, ValidFirstName, ValidLastName, ValidFormFile)
+        };
+
+        // Act
+        await _userController.EditCurrentAsync(request, CancellationToken);
+
+        // Assert
+        await InstaConnectSender
+              .Received(1)
+              .SendAsync(Arg.Is<EditCurrentUserCommand>(m => m.CurrentUserId == ValidId &&
+                                                                m.UserName == ValidName &&
+                                                                m.FirstName == ValidFirstName &&
+                                                                m.LastName == ValidLastName &&
+                                                                m.ProfileImage == ValidFormFile), CancellationToken);
+    }
+
+    [Fact]
+    public async Task EditCurrentAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new EditCurrentUserRequest()
+        {
+            EditCurrentUserBindingModel = new(ValidName, ValidFirstName, ValidLastName, ValidFormFile)
+        };
+
+        // Act
+        await _userController.EditCurrentAsync(request, CancellationToken);
+
+        // Assert
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
+    }
+
+    [Fact]
+    public async Task LoginAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new LoginUserRequest()
+        {
+            LoginUserBindingModel = new(ValidEmail, ValidPassword)
+        };
+
+        // Act
+        var response = await _userController.LoginAsync(request, CancellationToken);
+
+        // Assert
+        response
+            .Result
+            .Should()
+            .Match<OkObjectResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.OK));
+    }
+
+    [Fact]
+    public async Task LoginAsync_ShouldReturnMessageViewModel_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new LoginUserRequest()
+        {
+            LoginUserBindingModel = new(ValidEmail, ValidPassword)
+        };
+
+        // Act
+        var response = await _userController.LoginAsync(request, CancellationToken);
+
+        // Assert
+        response.Result
+            .Should()
+            .BeOfType<OkObjectResult>()
+            .Which
+            .Value
+            .Should()
+            .Match<UserTokenCommandResponse>(m => m.Value == ValidAccessToken &&
+                                                     m.ValidUntil == ValidUntil);
+    }
+
+    [Fact]
+    public async Task LoginAsync_ShouldCallTheSender_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new LoginUserRequest()
+        {
+            LoginUserBindingModel = new(ValidEmail, ValidPassword)
+        };
+
+        // Act
+        await _userController.LoginAsync(request, CancellationToken);
+
+        // Assert
+        await InstaConnectSender
+              .Received(1)
+              .SendAsync(Arg.Is<LoginUserCommand>(m => m.Email == ValidEmail &&
+                                                          m.Password == ValidPassword), CancellationToken);
+    }
+
+    [Fact]
+    public async Task DeleteByIdAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new DeleteUserByIdRequest()
+        {
+            Id = ValidId
+        };
+
+        // Act
+        var response = await _userController.DeleteByIdAsync(request, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<NoContentResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.NoContent));
+    }
+
+    [Fact]
+    public async Task DeleteByIdAsync_ShouldCallTheSender_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new DeleteUserByIdRequest()
+        {
+            Id = ValidId
+        };
+
+        // Act
+        var response = await _userController.DeleteByIdAsync(request, CancellationToken);
+
+        // Assert
+        await InstaConnectSender
+              .Received(1)
+              .SendAsync(Arg.Is<DeleteUserByIdCommand>(m => m.Id == ValidId), CancellationToken);
+    }
+
+    [Fact]
+    public async Task DeleteCurrentAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
+    {
+        // Act
+        var response = await _userController.DeleteCurrentAsync(CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<NoContentResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.NoContent));
+    }
+
+    [Fact]
+    public async Task DeleteCurrentAsync_ShouldCallTheSender_WhenRequestIsValid()
+    {
+        // Act
+        var response = await _userController.DeleteCurrentAsync(CancellationToken);
+
+        // Assert
+        await InstaConnectSender
+              .Received(1)
+              .SendAsync(Arg.Is<DeleteCurrentUserCommand>(m => m.CurrentUserId == ValidId), CancellationToken);
+    }
+
+    [Fact]
+    public async Task DeleteCurrentAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
+    {
+        // Act
+        var response = await _userController.DeleteCurrentAsync(CancellationToken);
+
+        // Assert
+        CurrentUserContext
+            .Received(1)
+            .GetCurrentUser();
+    }
+
+    [Fact]
+    public async Task ConfirmEmailAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new ConfirmUserEmailRequest()
+        {
+            Token = ValidEmailConfirmationToken,
+            UserId = ValidId
+        };
+
+        // Act
+        var response = await _userController.ConfirmEmailAsync(request, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<NoContentResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.NoContent));
+    }
+
+    [Fact]
+    public async Task ConfirmEmailAsync_ShouldCallTheSender_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new ConfirmUserEmailRequest()
+        {
+            Token = ValidEmailConfirmationToken,
+            UserId = ValidId
+        };
+
+        // Act
+        var response = await _userController.ConfirmEmailAsync(request, CancellationToken);
+
+        // Assert
+        await InstaConnectSender
+              .Received(1)
+              .SendAsync(Arg.Is<ConfirmUserEmailCommand>(m => m.Token == ValidEmailConfirmationToken &&
+                                                                 m.UserId == ValidId), CancellationToken);
+    }
+
+    [Fact]
+    public async Task ResetPasswordAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new ResetUserPasswordRequest()
+        {
+            Token = ValidEmailConfirmationToken,
+            UserId = ValidId
+        };
+
+        // Act
+        var response = await _userController.ResetPasswordAsync(request, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<NoContentResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.NoContent));
+    }
+
+    [Fact]
+    public async Task ResetPasswordAsync_ShouldCallTheSender_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new ResetUserPasswordRequest()
+        {
+            Token = ValidEmailConfirmationToken,
+            UserId = ValidId,
+            ResetUserPasswordBindingModel = new(ValidPassword, ValidPassword)
+        };
+
+        // Act
+        var response = await _userController.ResetPasswordAsync(request, CancellationToken);
+
+        // Assert
+        await InstaConnectSender
+              .Received(1)
+              .SendAsync(Arg.Is<ResetUserPasswordCommand>(m => m.Token == ValidEmailConfirmationToken &&
+                                                                 m.UserId == ValidId &&
+                                                                 m.Password == ValidPassword &&
+                                                                 m.ConfirmPassword == ValidPassword), CancellationToken);
+    }
+
+    [Fact]
+    public async Task ResendConfirmEmailAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new ResendUserConfirmEmailRequest()
+        {
+            Email = ValidEmail
+        };
+
+        // Act
+        var response = await _userController.ResendConfirmEmailAsync(request, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<NoContentResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.NoContent));
+    }
+
+    [Fact]
+    public async Task ResendConfirmEmailAsync_ShouldCallTheSender_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new ResendUserConfirmEmailRequest()
+        {
+            Email = ValidEmail
+        };
+
+        // Act
+        var response = await _userController.ResendConfirmEmailAsync(request, CancellationToken);
+
+        // Assert
+        await InstaConnectSender
+              .Received(1)
+              .SendAsync(Arg.Is<ResendUserEmailConfirmationCommand>(m => m.Email == ValidEmail), CancellationToken);
+    }
+
+    [Fact]
+    public async Task SendResetPasswordAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new SendUserPasswordResetRequest()
+        {
+            Email = ValidEmail
+        };
+
+        // Act
+        var response = await _userController.SendResetPasswordAsync(request, CancellationToken);
+
+        // Assert
+        response
+            .Should()
+            .Match<NoContentResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.NoContent));
+    }
+
+    [Fact]
+    public async Task SendResetPasswordAsync_ShouldCallTheSender_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = new SendUserPasswordResetRequest()
+        {
+            Email = ValidEmail
+        };
+
+        // Act
+        var response = await _userController.SendResetPasswordAsync(request, CancellationToken);
+
+        // Assert
+        await InstaConnectSender
+              .Received(1)
+              .SendAsync(Arg.Is<SendUserPasswordResetCommand>(m => m.Email == ValidEmail), CancellationToken);
     }
 }

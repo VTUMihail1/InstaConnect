@@ -4,9 +4,9 @@ using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
 using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Follow;
+using InstaConnect.Shared.Business.Exceptions.User;
 
 namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Commands;
 
@@ -135,7 +135,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AccountForbiddenException>();
+        await action.Should().ThrowAsync<UserForbiddenException>();
     }
 
     [Fact]

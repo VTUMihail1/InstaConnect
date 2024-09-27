@@ -3,8 +3,8 @@ using InstaConnect.Messages.Business.Features.Messages.Commands.UpdateMessage;
 using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
+using InstaConnect.Shared.Business.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Commands.UpdateMessage;
@@ -52,7 +52,7 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AccountForbiddenException>();
+        await action.Should().ThrowAsync<UserForbiddenException>();
     }
 
     [Fact]

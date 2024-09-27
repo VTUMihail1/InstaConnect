@@ -2,8 +2,8 @@
 using InstaConnect.Posts.Business.Features.PostComments.Commands.DeletePostComment;
 using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
+using InstaConnect.Shared.Business.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Commands.DeletePostComment;
@@ -48,7 +48,7 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AccountForbiddenException>();
+        await action.Should().ThrowAsync<UserForbiddenException>();
     }
 
     [Fact]

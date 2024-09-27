@@ -1,8 +1,8 @@
 ﻿using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Messages.Data.Features.Messages.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
+using InstaConnect.Shared.Business.Exceptions.User;
 
 namespace InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
 
@@ -30,7 +30,7 @@ internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, M
 
         if (message.SenderId != request.CurrentUserId)
         {
-            throw new AccountForbiddenException();
+            throw new UserForbiddenException();
         }
 
         var response = _instaConnectMapper.Map<MessageQueryViewModel>(message);

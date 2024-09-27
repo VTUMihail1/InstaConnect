@@ -1,6 +1,4 @@
-﻿using InstaConnect.Identity.Business.Features.Accounts.Extensions;
-using InstaConnect.Identity.Business.Features.Users.Extensions;
-using InstaConnect.Identity.Web.Features.Accounts.Extensions;
+﻿using InstaConnect.Identity.Business.Features.Users.Extensions;
 using InstaConnect.Identity.Web.Features.Users.Extensions;
 using InstaConnect.Shared.Business.Extensions;
 using InstaConnect.Shared.Web.Extensions;
@@ -14,8 +12,7 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
-            .AddAccountServices(configuration)
-            .AddUserServices();
+            .AddUserServices(configuration);
 
         serviceCollection
             .AddJwtBearer(configuration)

@@ -1,8 +1,8 @@
 ﻿using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Messages.Data.Features.Messages.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
+using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Messages.Business.Features.Messages.Commands.UpdateMessage;
@@ -34,7 +34,7 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
 
         if (request.CurrentUserId != existingMessage.SenderId)
         {
-            throw new AccountForbiddenException();
+            throw new UserForbiddenException();
         }
 
         _instaConnectMapper.Map(request, existingMessage);

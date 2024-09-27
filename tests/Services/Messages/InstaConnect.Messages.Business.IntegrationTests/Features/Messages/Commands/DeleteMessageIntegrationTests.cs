@@ -4,9 +4,9 @@ using InstaConnect.Messages.Business.Features.Messages.Commands.DeleteMessage;
 using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Exceptions.Message;
+using InstaConnect.Shared.Business.Exceptions.User;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Commands;
 
@@ -135,7 +135,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AccountForbiddenException>();
+        await action.Should().ThrowAsync<UserForbiddenException>();
     }
 
     [Fact]

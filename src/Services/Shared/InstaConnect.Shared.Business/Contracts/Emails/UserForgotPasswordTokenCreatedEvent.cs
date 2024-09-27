@@ -2,10 +2,10 @@
 
 public class UserForgotPasswordTokenCreatedEvent
 {
-    public UserForgotPasswordTokenCreatedEvent(string email, string userId, string token, string url, string urlTemplate)
+    public UserForgotPasswordTokenCreatedEvent(string email, string userId, string token, string urlTemplate)
     {
         Email = email;
-        RedirectUrl = string.Format(urlTemplate, url, userId, token);
+        RedirectUrl = string.Format(urlTemplate, userId, token);
     }
 
     public string Email { get; }

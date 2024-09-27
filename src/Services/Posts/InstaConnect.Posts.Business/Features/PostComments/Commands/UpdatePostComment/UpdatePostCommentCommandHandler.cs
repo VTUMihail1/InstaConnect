@@ -1,8 +1,8 @@
 ﻿using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Data.Features.PostComments.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.PostComment;
+using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
@@ -36,7 +36,7 @@ internal class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostComme
 
         if (request.CurrentUserId != existingPostComment.UserId)
         {
-            throw new AccountForbiddenException();
+            throw new UserForbiddenException();
         }
 
         _instaConnectMapper.Map(request, existingPostComment);

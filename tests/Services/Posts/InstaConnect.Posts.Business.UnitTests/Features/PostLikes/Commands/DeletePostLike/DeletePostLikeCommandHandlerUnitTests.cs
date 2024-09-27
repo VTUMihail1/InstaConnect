@@ -2,8 +2,8 @@
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.DeletePostLike;
 using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.PostLike;
+using InstaConnect.Shared.Business.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Commands.DeletePostLike;
@@ -48,7 +48,7 @@ public class DeletePostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AccountForbiddenException>();
+        await action.Should().ThrowAsync<UserForbiddenException>();
     }
 
     [Fact]

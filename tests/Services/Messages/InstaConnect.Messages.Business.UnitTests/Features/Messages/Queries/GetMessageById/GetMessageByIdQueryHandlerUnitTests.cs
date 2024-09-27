@@ -2,8 +2,8 @@
 using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Account;
 using InstaConnect.Shared.Business.Exceptions.Message;
+using InstaConnect.Shared.Business.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Queries.GetMessageById;
@@ -48,7 +48,7 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
         var action = async () => await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AccountForbiddenException>();
+        await action.Should().ThrowAsync<UserForbiddenException>();
     }
 
     [Fact]

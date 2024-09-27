@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using InstaConnect.Identity.Business.Features.Accounts.Commands.EditCurrentAccount;
-using InstaConnect.Identity.Business.Features.Accounts.Commands.LoginAccount;
-using InstaConnect.Identity.Business.Features.Accounts.Commands.RegisterAccount;
-using InstaConnect.Identity.Business.Features.Accounts.Models;
+using InstaConnect.Identity.Business.Features.Users.Commands.EditCurrentUser;
+using InstaConnect.Identity.Business.Features.Users.Commands.LoginUser;
+using InstaConnect.Identity.Business.Features.Users.Commands.RegisterUser;
 using InstaConnect.Identity.Business.Features.Users.Models;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUser;
@@ -11,7 +10,6 @@ using InstaConnect.Identity.Business.Features.Users.Queries.GetUserById;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserByName;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserDetailedById;
 using InstaConnect.Identity.Business.Features.Users.Utilities;
-using InstaConnect.Identity.Web.Features.Accounts.Mappings;
 using InstaConnect.Identity.Web.Features.Users.Mappings;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
@@ -45,7 +43,7 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
             new Mapper(
                 new MapperConfiguration(cfg =>
                 {
-                    cfg.AddProfile<AccountCommandProfile>();
+                    cfg.AddProfile<UserCommandProfile>();
                     cfg.AddProfile<UserQueryProfile>();
                 }))))
     {
@@ -77,9 +75,9 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
             ValidEmail,
             ValidProfileImage);
 
-        var existingAccountCommandViewModel = new AccountCommandViewModel(ValidId);
+        var existingUserCommandViewModel = new UserCommandViewModel(ValidId);
 
-        var existingAccountTokenCommandViewModel = new AccountTokenCommandViewModel(ValidAccessToken, ValidUntil);
+        var existingUserTokenCommandViewModel = new UserTokenCommandViewModel(ValidAccessToken, ValidUntil);
 
         var existingCurrentUserModel = new CurrentUserModel(ValidId, ValidName);
 
@@ -121,15 +119,15 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
             .Returns(existingUserDetailedQueryViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<EditCurrentAccountCommand>(), CancellationToken)
-            .Returns(existingAccountCommandViewModel);
+            .SendAsync(Arg.Any<EditCurrentUserCommand>(), CancellationToken)
+            .Returns(existingUserCommandViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<RegisterAccountCommand>(), CancellationToken)
-            .Returns(existingAccountCommandViewModel);
+            .SendAsync(Arg.Any<RegisterUserCommand>(), CancellationToken)
+            .Returns(existingUserCommandViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<LoginAccountCommand>(), CancellationToken)
-            .Returns(existingAccountTokenCommandViewModel);
+            .SendAsync(Arg.Any<LoginUserCommand>(), CancellationToken)
+            .Returns(existingUserTokenCommandViewModel);
     }
 }
