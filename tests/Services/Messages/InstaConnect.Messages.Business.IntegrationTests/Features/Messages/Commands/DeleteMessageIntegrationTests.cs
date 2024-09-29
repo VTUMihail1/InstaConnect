@@ -14,7 +14,6 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
 {
     public DeleteMessageIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
-
     }
 
     [Fact]

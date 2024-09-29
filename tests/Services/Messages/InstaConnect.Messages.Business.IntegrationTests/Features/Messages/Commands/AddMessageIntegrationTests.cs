@@ -13,7 +13,6 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
 {
     public AddMessageIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
-
     }
 
     [Fact]
