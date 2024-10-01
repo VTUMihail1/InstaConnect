@@ -1,4 +1,5 @@
-﻿using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Shared.Common.Models.Enums;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Follows.Common.Features.Follows.Utilities;
 
@@ -22,4 +23,13 @@ public class FollowTestUtilities : SharedTestUtilities
 
     public static readonly string ValidAddUserName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
     public static readonly string ValidUpdateUserName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
+
+    public static readonly int ValidPageValue = 1;
+    public static readonly int ValidPageSizeValue = 20;
+    public static readonly int ValidTotalCountValue = 1;
+
+    public static readonly string ValidSortPropertyName = "CreatedAt";
+    public static readonly string InvalidSortPropertyName = "CreatedAtt";
+
+    public static readonly SortOrder ValidSortOrderProperty = SortOrder.ASC;
 }

@@ -1,4 +1,5 @@
-﻿using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Shared.Common.Models.Enums;
+using InstaConnect.Shared.Common.Utilities;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
 
@@ -50,4 +51,13 @@ public abstract class UserTestUtilities : SharedTestUtilities
     public static readonly IFormFile ValidAddFormFile = Substitute.For<IFormFile>();
     public static readonly IFormFile ValidUpdateFormFile = Substitute.For<IFormFile>();
     public static readonly DateTime ValidUntil = GetMaxDate();
+
+    public static readonly int ValidPageValue = 1;
+    public static readonly int ValidPageSizeValue = 20;
+    public static readonly int ValidTotalCountValue = 1;
+
+    public static readonly string ValidSortPropertyName = "CreatedAt";
+    public static readonly string InvalidSortPropertyName = "CreatedAtt";
+
+    public static readonly SortOrder ValidSortOrderProperty = SortOrder.ASC;
 }

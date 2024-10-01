@@ -16,7 +16,6 @@ namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 
 public abstract class BaseFollowUnitTest : BaseSharedUnitTest
 {
-
     protected IUserWriteRepository UserWriteRepository { get; }
 
     protected IFollowReadRepository FollowReadRepository { get; }
@@ -90,9 +89,9 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
 
         var existingFollowPaginationList = new PaginationList<Follow>(
             [existingFollow],
-            ValidPageValue,
-            ValidPageSizeValue,
-            ValidTotalCountValue);
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue,
+            FollowTestUtilities.ValidTotalCountValue);
 
         FollowReadRepository.GetByIdAsync(
             FollowTestUtilities.ValidId,
@@ -140,10 +139,10 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
             .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m => m.FollowerId == FollowTestUtilities.ValidFollowCurrentUserId &&
                                                                  m.FollowingId == FollowTestUtilities.ValidFollowFollowingId &&
                                                                  m.FollowerName == FollowTestUtilities.ValidUserName &&
-                                                                 m.Page == ValidPageValue &&
-                                                                 m.PageSize == ValidPageSizeValue &&
-                                                                 m.SortOrder == ValidSortOrderProperty &&
-                                                                 m.SortPropertyName == ValidSortPropertyName), CancellationToken)
+                                                                 m.Page == FollowTestUtilities.ValidPageValue &&
+                                                                 m.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                                 m.SortOrder == FollowTestUtilities.ValidSortOrderProperty &&
+                                                                 m.SortPropertyName == FollowTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(existingFollowPaginationList);
     }
 }

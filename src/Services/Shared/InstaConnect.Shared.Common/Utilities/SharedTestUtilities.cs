@@ -1,21 +1,10 @@
 ﻿using Bogus;
-using InstaConnect.Shared.Common.Models.Enums;
 
 namespace InstaConnect.Shared.Common.Utilities;
 
 public class SharedTestUtilities
 {
     private static readonly Faker _faker = new();
-
-    public static readonly int ValidPageValue = 1;
-    public static readonly int ValidPageSizeValue = 20;
-    public static readonly int ValidTotalCountValue = 1;
-
-    public static readonly string ValidSortPropertyName = "CreatedAt";
-    public static readonly string InvalidSortPropertyName = "CreatedAtt";
-
-    public static readonly SortOrder ValidSortOrderProperty = SortOrder.ASC;
-
 
     public static string GetGuid()
     {
@@ -61,7 +50,7 @@ public class SharedTestUtilities
 
     public static string GetHalfStartString(string value)
     {
-        var result = value.Substring(0, value.Length / 2);
+        var result = value[..(value.Length / 2)];
 
         return result;
     }

@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Shared.Common.Models.Enums;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
@@ -25,4 +26,13 @@ public class PostCommentLikeTestUtilities : SharedTestUtilities
     public static readonly string ValidUpdateUserName = GetAverageString(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
     public static readonly string ValidPostTitle = GetAverageString(PostBusinessConfigurations.TITLE_MAX_LENGTH, PostBusinessConfigurations.TITLE_MIN_LENGTH);
     public static readonly string ValidPostContent = GetAverageString(PostBusinessConfigurations.CONTENT_MAX_LENGTH, PostBusinessConfigurations.CONTENT_MIN_LENGTH);
+
+    public static readonly int ValidPageValue = 1;
+    public static readonly int ValidPageSizeValue = 20;
+    public static readonly int ValidTotalCountValue = 1;
+
+    public static readonly string ValidSortPropertyName = "CreatedAt";
+    public static readonly string InvalidSortPropertyName = "CreatedAtt";
+
+    public static readonly SortOrder ValidSortOrderProperty = SortOrder.ASC;
 }

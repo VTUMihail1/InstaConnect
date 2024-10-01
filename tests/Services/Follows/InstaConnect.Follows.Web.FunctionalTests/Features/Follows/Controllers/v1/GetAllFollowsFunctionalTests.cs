@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using Bogus;
 using FluentAssertions;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
@@ -32,10 +31,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -58,10 +57,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             SharedTestUtilities.GetString(length),
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -84,10 +83,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             FollowTestUtilities.ValidUserName,
             SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -110,10 +109,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             SharedTestUtilities.GetString(length),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -134,10 +133,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            InvalidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.InvalidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -160,10 +159,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -186,10 +185,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
             value,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -214,9 +213,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
             value);
 
         // Act
@@ -238,10 +237,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -262,10 +261,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -285,9 +284,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
                                                                m.FollowingId == existingFollowingId &&
                                                                m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -304,10 +303,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -327,9 +326,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
                                                                m.FollowingId == existingFollowingId &&
                                                                m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -346,10 +345,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -369,9 +368,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
                                                                m.FollowingId == existingFollowingId &&
                                                                m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -388,10 +387,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             FollowTestUtilities.ValidUserName,
             SharedTestUtilities.GetNonCaseMatchingString(existingFollowingId),
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -411,9 +410,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
                                                                m.FollowingId == existingFollowingId &&
                                                                m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -430,10 +429,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -453,9 +452,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
                                                                m.FollowingId == existingFollowingId &&
                                                                m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -472,10 +471,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -495,9 +494,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
                                                                m.FollowingId == existingFollowingId &&
                                                                m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -528,9 +527,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
                                                                m.FollowingId == existingFollowingId &&
                                                                m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }

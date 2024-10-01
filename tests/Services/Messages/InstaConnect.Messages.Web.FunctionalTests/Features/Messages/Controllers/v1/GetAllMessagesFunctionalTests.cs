@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
-using Bogus;
 using FluentAssertions;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.Features.Messages.Models.Responses;
@@ -29,10 +28,10 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -51,10 +50,10 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
 
@@ -78,10 +77,10 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -105,10 +104,10 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             existingReceiverId,
             SharedTestUtilities.GetString(length),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -130,10 +129,10 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            InvalidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.InvalidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -157,10 +156,10 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -184,10 +183,10 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
             value,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -213,9 +212,9 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
             value);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
@@ -238,10 +237,10 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -263,10 +262,10 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -290,9 +289,9 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
                                                                m.ReceiverId == existingReceiverId &&
                                                                m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -307,10 +306,10 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetNonCaseMatchingString(existingSenderId);
 
@@ -334,9 +333,9 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
                                                                m.ReceiverId == existingReceiverId &&
                                                                m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -351,10 +350,10 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             SharedTestUtilities.GetNonCaseMatchingString(existingReceiverId),
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -378,9 +377,9 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
                                                                m.ReceiverId == existingReceiverId &&
                                                                m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -395,10 +394,10 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             existingReceiverId,
             SharedTestUtilities.GetNonCaseMatchingString(MessageTestUtilities.ValidUserName),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -422,9 +421,9 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
                                                                m.ReceiverId == existingReceiverId &&
                                                                m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -439,10 +438,10 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var route = GetApiRoute(
             existingReceiverId,
             SharedTestUtilities.GetHalfStartString(MessageTestUtilities.ValidUserName),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -466,9 +465,9 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
                                                                m.ReceiverId == existingReceiverId &&
                                                                m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -503,9 +502,9 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
                                                                m.ReceiverId == existingReceiverId &&
                                                                m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }

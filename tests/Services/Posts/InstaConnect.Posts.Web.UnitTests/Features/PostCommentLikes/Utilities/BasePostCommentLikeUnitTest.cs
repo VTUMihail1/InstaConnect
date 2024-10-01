@@ -38,9 +38,9 @@ public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
         var existingCurrentUserModel = new CurrentUserModel(PostCommentLikeTestUtilities.ValidCurrentUserId, PostCommentLikeTestUtilities.ValidUserName);
         var existingPostCommentLikePaginationCollectionModel = new PostCommentLikePaginationQueryViewModel(
             [existingPostCommentLikeQueryViewModel],
-            ValidPageValue,
-            ValidPageSizeValue,
-            ValidTotalCountValue,
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue,
+            PostCommentLikeTestUtilities.ValidTotalCountValue,
             false,
             false);
 

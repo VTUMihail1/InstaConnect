@@ -43,9 +43,9 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
         var existingCurrentUserModel = new CurrentUserModel(MessageTestUtilities.ValidCurrentUserId, MessageTestUtilities.ValidUserName);
         var existingMessagePaginationCollectionModel = new MessagePaginationQueryViewModel(
             [existingMessageQueryViewModel],
-            ValidPageValue,
-            ValidPageSizeValue,
-            ValidTotalCountValue,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue,
+            MessageTestUtilities.ValidTotalCountValue,
             false,
             false);
 

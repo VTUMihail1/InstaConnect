@@ -1,5 +1,4 @@
-﻿using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
+﻿using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Data;
 using InstaConnect.Posts.Data.Features.Users.Abstract;
 using InstaConnect.Posts.Data.Features.Users.Models.Entitites;

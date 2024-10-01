@@ -36,10 +36,10 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
             FollowerName = FollowTestUtilities.ValidUserName,
             FollowingId = FollowTestUtilities.ValidCurrentUserId,
             FollowingName = FollowTestUtilities.ValidUserName,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -62,10 +62,10 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
             FollowerName = FollowTestUtilities.ValidUserName,
             FollowingId = FollowTestUtilities.ValidCurrentUserId,
             FollowingName = FollowTestUtilities.ValidUserName,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -86,9 +86,9 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
                                                                  m.FollowingId == FollowTestUtilities.ValidFollowingId &&
                                                                  m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                  m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                              mc.Page == ValidPageValue &&
-                                                              mc.PageSize == ValidPageSizeValue &&
-                                                              mc.TotalCount == ValidTotalCountValue &&
+                                                              mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                              mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                              mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                               !mc.HasNextPage &&
                                                               !mc.HasPreviousPage);
     }
@@ -103,10 +103,10 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
             FollowerName = FollowTestUtilities.ValidUserName,
             FollowingId = FollowTestUtilities.ValidFollowingId,
             FollowingName = FollowTestUtilities.ValidUserName,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -120,10 +120,10 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
                   m.FollowerName == FollowTestUtilities.ValidUserName &&
                   m.FollowingId == FollowTestUtilities.ValidFollowingId &&
                   m.FollowingName == FollowTestUtilities.ValidUserName &&
-                  m.SortOrder == ValidSortOrderProperty &&
-                  m.SortPropertyName == ValidSortPropertyName &&
-                  m.Page == ValidPageValue &&
-                  m.PageSize == ValidPageSizeValue), CancellationToken);
+                  m.SortOrder == FollowTestUtilities.ValidSortOrderProperty &&
+                  m.SortPropertyName == FollowTestUtilities.ValidSortPropertyName &&
+                  m.Page == FollowTestUtilities.ValidPageValue &&
+                  m.PageSize == FollowTestUtilities.ValidPageSizeValue), CancellationToken);
     }
 
     [Fact]

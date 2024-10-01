@@ -93,9 +93,9 @@ public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
 
         var existingPostCommentPaginationList = new PaginationList<PostComment>(
             [existingPostComment],
-            ValidPageValue,
-            ValidPageSizeValue,
-            ValidTotalCountValue);
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue,
+            PostCommentTestUtilities.ValidTotalCountValue);
 
         PostCommentReadRepository.GetByIdAsync(
             PostCommentTestUtilities.ValidId,
@@ -142,10 +142,10 @@ public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
                                                                         m.PostId == PostCommentTestUtilities.ValidPostCommentPostId &&
                                                                         m.UserId == PostCommentTestUtilities.ValidPostCommentCurrentUserId &&
                                                                         m.UserName == PostCommentTestUtilities.ValidUserName &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken)
+                                                                        m.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == PostCommentTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == PostCommentTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(existingPostCommentPaginationList);
     }
 }

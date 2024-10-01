@@ -28,10 +28,10 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
             FollowTestUtilities.ValidUserName,
             FollowTestUtilities.ValidFollowFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -44,10 +44,10 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
                                                                         m.FollowerName == FollowTestUtilities.ValidUserName &&
                                                                         m.FollowingId == FollowTestUtilities.ValidFollowFollowingId &&
                                                                         m.FollowingName == FollowTestUtilities.ValidUserName &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken);
+                                                                        m.Page == FollowTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == FollowTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == FollowTestUtilities.ValidSortPropertyName), CancellationToken);
     }
 
     [Fact]
@@ -59,10 +59,10 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
             FollowTestUtilities.ValidUserName,
             FollowTestUtilities.ValidFollowFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -77,9 +77,9 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
                                                            m.FollowingId == FollowTestUtilities.ValidFollowFollowingId &&
                                                            m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                            m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
         ;

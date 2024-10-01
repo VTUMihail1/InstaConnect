@@ -26,10 +26,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             FollowTestUtilities.ValidUserName,
             FollowTestUtilities.ValidFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -49,10 +49,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -72,10 +72,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             FollowTestUtilities.ValidUserName,
             SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -95,10 +95,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             FollowTestUtilities.ValidUserName,
             FollowTestUtilities.ValidFollowingId,
             SharedTestUtilities.GetString(length),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -116,10 +116,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             FollowTestUtilities.ValidUserName,
             FollowTestUtilities.ValidFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortOrderProperty,
             null!,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -137,10 +137,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             FollowTestUtilities.ValidUserName,
             FollowTestUtilities.ValidFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            InvalidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.InvalidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -161,10 +161,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             FollowTestUtilities.ValidUserName,
             FollowTestUtilities.ValidFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -184,10 +184,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             FollowTestUtilities.ValidUserName,
             FollowTestUtilities.ValidFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
             value,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -207,9 +207,9 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             FollowTestUtilities.ValidUserName,
             FollowTestUtilities.ValidFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
             value);
 
         // Act
@@ -228,10 +228,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             FollowTestUtilities.ValidUserName,
             FollowTestUtilities.ValidFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);

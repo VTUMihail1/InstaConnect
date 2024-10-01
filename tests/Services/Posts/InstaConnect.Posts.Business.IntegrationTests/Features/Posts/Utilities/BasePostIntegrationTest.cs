@@ -14,8 +14,6 @@ namespace InstaConnect.Posts.Business.IntegrationTests.Features.Posts.Utilities;
 
 public abstract class BasePostIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
-
-
     protected IUserWriteRepository UserWriteRepository
     {
         get

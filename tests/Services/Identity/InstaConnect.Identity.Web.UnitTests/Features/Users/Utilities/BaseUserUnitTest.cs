@@ -56,9 +56,9 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
 
         var existingUserPaginationCollectionModel = new UserPaginationQueryViewModel(
             [existingUserQueryViewModel],
-            ValidPageValue,
-            ValidPageSizeValue,
-            ValidTotalCountValue,
+            UserTestUtilities.ValidPageValue,
+            UserTestUtilities.ValidPageSizeValue,
+            UserTestUtilities.ValidTotalCountValue,
             false,
             false);
 

@@ -68,9 +68,9 @@ public abstract class BasePostUnitTest : BaseSharedUnitTest
 
         var existingPostPaginationList = new PaginationList<Post>(
             [existingPost],
-            ValidPageValue,
-            ValidPageSizeValue,
-            ValidTotalCountValue);
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue,
+            PostTestUtilities.ValidTotalCountValue);
 
         PostReadRepository.GetByIdAsync(
             PostTestUtilities.ValidId,
@@ -97,10 +97,10 @@ public abstract class BasePostUnitTest : BaseSharedUnitTest
                                                                         m.Title == PostTestUtilities.ValidTitle &&
                                                                         m.UserId == PostTestUtilities.ValidPostCurrentUserId &&
                                                                         m.UserName == PostTestUtilities.ValidUserName &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken)
+                                                                        m.Page == PostTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == PostTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == PostTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == PostTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(existingPostPaginationList);
     }
 }

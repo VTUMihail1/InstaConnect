@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using Bogus;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
@@ -30,10 +29,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -54,10 +53,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingUserId,
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -78,10 +77,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingUserId,
             PostTestUtilities.ValidUserName,
             SharedTestUtilities.GetString(length),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -100,10 +99,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingUserId,
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            InvalidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.InvalidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -124,10 +123,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingUserId,
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
+            PostTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -148,10 +147,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingUserId,
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
             value,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -174,9 +173,9 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingUserId,
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
             value);
 
         // Act
@@ -196,10 +195,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingUserId,
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -218,10 +217,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingUserId,
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -240,9 +239,9 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -257,10 +256,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingUserId,
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -279,9 +278,9 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -296,10 +295,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -318,9 +317,9 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -335,10 +334,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingUserId,
             SharedTestUtilities.GetNonCaseMatchingString(PostTestUtilities.ValidUserName),
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -357,9 +356,9 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -374,10 +373,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingUserId,
             SharedTestUtilities.GetHalfStartString(PostTestUtilities.ValidUserName),
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -396,9 +395,9 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -413,10 +412,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingUserId,
             PostTestUtilities.ValidUserName,
             SharedTestUtilities.GetNonCaseMatchingString(PostTestUtilities.ValidTitle),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -435,9 +434,9 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -452,10 +451,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingUserId,
             SharedTestUtilities.GetHalfStartString(PostTestUtilities.ValidUserName),
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -474,9 +473,9 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -505,9 +504,9 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }

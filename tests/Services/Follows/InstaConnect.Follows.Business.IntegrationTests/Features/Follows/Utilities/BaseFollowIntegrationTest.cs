@@ -14,8 +14,6 @@ namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Utilit
 
 public abstract class BaseFollowIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
-
-
     protected IUserWriteRepository UserWriteRepository
     {
         get

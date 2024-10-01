@@ -28,10 +28,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             SharedTestUtilities.GetString(length),
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -53,10 +53,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             SharedTestUtilities.GetString(length),
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -78,10 +78,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
             SharedTestUtilities.GetString(length),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -101,10 +101,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortOrderProperty,
             null!,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -124,10 +124,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            InvalidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.InvalidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -150,10 +150,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -175,10 +175,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
             value,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -200,9 +200,9 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
             value);
 
         // Act
@@ -223,10 +223,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             null!,
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -240,9 +240,9 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId &&
                                                                     m.Content == PostCommentTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -258,10 +258,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             string.Empty,
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -275,9 +275,9 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId &&
                                                                     m.Content == PostCommentTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -293,10 +293,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -310,9 +310,9 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId &&
                                                                     m.Content == PostCommentTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -328,10 +328,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             null!,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -345,9 +345,9 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId &&
                                                                     m.Content == PostCommentTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -363,10 +363,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             string.Empty,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -380,9 +380,9 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId &&
                                                                     m.Content == PostCommentTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -398,10 +398,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             SharedTestUtilities.GetNonCaseMatchingString(PostCommentTestUtilities.ValidUserName),
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -415,9 +415,9 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId &&
                                                                     m.Content == PostCommentTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -433,10 +433,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
             null!,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -450,9 +450,9 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId &&
                                                                     m.Content == PostCommentTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -468,10 +468,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
             string.Empty,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -485,9 +485,9 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId &&
                                                                     m.Content == PostCommentTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -503,10 +503,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
             SharedTestUtilities.GetNonCaseMatchingString(existingPostId),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -520,9 +520,9 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId &&
                                                                     m.Content == PostCommentTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -538,10 +538,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -555,9 +555,9 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId &&
                                                                     m.Content == PostCommentTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }

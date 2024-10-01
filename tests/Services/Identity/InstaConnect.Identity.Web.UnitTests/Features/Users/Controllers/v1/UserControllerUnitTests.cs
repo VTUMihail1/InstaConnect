@@ -45,10 +45,10 @@ public class UserControllerUnitTests : BaseUserUnitTest
             FirstName = UserTestUtilities.ValidFirstName,
             LastName = UserTestUtilities.ValidLastName,
             UserName = UserTestUtilities.ValidName,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = UserTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = UserTestUtilities.ValidSortPropertyName,
+            Page = UserTestUtilities.ValidPageValue,
+            PageSize = UserTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -70,10 +70,10 @@ public class UserControllerUnitTests : BaseUserUnitTest
             FirstName = UserTestUtilities.ValidFirstName,
             LastName = UserTestUtilities.ValidLastName,
             UserName = UserTestUtilities.ValidName,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = UserTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = UserTestUtilities.ValidSortPropertyName,
+            Page = UserTestUtilities.ValidPageValue,
+            PageSize = UserTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -92,9 +92,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
                                                                  m.LastName == UserTestUtilities.ValidLastName &&
                                                                  m.UserName == UserTestUtilities.ValidName &&
                                                                  m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
-                                                              mc.Page == ValidPageValue &&
-                                                              mc.PageSize == ValidPageSizeValue &&
-                                                              mc.TotalCount == ValidTotalCountValue &&
+                                                              mc.Page == UserTestUtilities.ValidPageValue &&
+                                                              mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
+                                                              mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
                                                               !mc.HasNextPage &&
                                                               !mc.HasPreviousPage);
     }
@@ -108,10 +108,10 @@ public class UserControllerUnitTests : BaseUserUnitTest
             FirstName = UserTestUtilities.ValidFirstName,
             LastName = UserTestUtilities.ValidLastName,
             UserName = UserTestUtilities.ValidName,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = UserTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = UserTestUtilities.ValidSortPropertyName,
+            Page = UserTestUtilities.ValidPageValue,
+            PageSize = UserTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -124,10 +124,10 @@ public class UserControllerUnitTests : BaseUserUnitTest
                   m.FirstName == UserTestUtilities.ValidFirstName &&
                   m.LastName == UserTestUtilities.ValidLastName &&
                   m.UserName == UserTestUtilities.ValidName &&
-                  m.SortOrder == ValidSortOrderProperty &&
-                  m.SortPropertyName == ValidSortPropertyName &&
-                  m.Page == ValidPageValue &&
-                  m.PageSize == ValidPageSizeValue), CancellationToken);
+                  m.SortOrder == UserTestUtilities.ValidSortOrderProperty &&
+                  m.SortPropertyName == UserTestUtilities.ValidSortPropertyName &&
+                  m.Page == UserTestUtilities.ValidPageValue &&
+                  m.PageSize == UserTestUtilities.ValidPageSizeValue), CancellationToken);
     }
 
     [Fact]

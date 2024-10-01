@@ -25,10 +25,10 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
             SharedTestUtilities.GetString(length),
             PostLikeTestUtilities.ValidUserName,
             PostLikeTestUtilities.ValidPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -47,10 +47,10 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
             PostLikeTestUtilities.ValidCurrentUserId,
             SharedTestUtilities.GetString(length),
             PostLikeTestUtilities.ValidPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -69,10 +69,10 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
             PostLikeTestUtilities.ValidCurrentUserId,
             PostLikeTestUtilities.ValidUserName,
             SharedTestUtilities.GetString(length),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -89,10 +89,10 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
             PostLikeTestUtilities.ValidCurrentUserId,
             PostLikeTestUtilities.ValidUserName,
             PostLikeTestUtilities.ValidPostId,
-            ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortOrderProperty,
             null!,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -109,10 +109,10 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
             PostLikeTestUtilities.ValidCurrentUserId,
             PostLikeTestUtilities.ValidUserName,
             PostLikeTestUtilities.ValidPostId,
-            ValidSortOrderProperty,
-            InvalidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.InvalidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -132,10 +132,10 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
             PostLikeTestUtilities.ValidCurrentUserId,
             PostLikeTestUtilities.ValidUserName,
             PostLikeTestUtilities.ValidPostId,
-            ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -154,10 +154,10 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
             PostLikeTestUtilities.ValidCurrentUserId,
             PostLikeTestUtilities.ValidUserName,
             PostLikeTestUtilities.ValidPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
             value,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -176,9 +176,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
             PostLikeTestUtilities.ValidCurrentUserId,
             PostLikeTestUtilities.ValidUserName,
             PostLikeTestUtilities.ValidPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
             value);
 
         // Act
@@ -196,10 +196,10 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
             PostLikeTestUtilities.ValidCurrentUserId,
             PostLikeTestUtilities.ValidUserName,
             PostLikeTestUtilities.ValidPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
