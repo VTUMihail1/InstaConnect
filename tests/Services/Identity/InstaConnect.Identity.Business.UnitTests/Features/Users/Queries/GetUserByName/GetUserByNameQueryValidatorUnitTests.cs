@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserByName;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Queries.GetUserByName;
 
@@ -34,7 +35,7 @@ public class GetUserByNameQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForName_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetUserByNameQuery(Faker.Random.AlphaNumeric(length));
+        var query = new GetUserByNameQuery(SharedTestUtilities.GetString(length));
 
         // Act
         var result = _validator.TestValidate(query);

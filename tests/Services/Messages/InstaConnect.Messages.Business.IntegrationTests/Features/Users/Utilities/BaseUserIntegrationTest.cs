@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Messages.Business.IntegrationTests.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Data;
 using InstaConnect.Messages.Data.Features.Users.Abstract;
 using InstaConnect.Messages.Data.Features.Users.Models.Entities;
@@ -12,15 +13,6 @@ namespace InstaConnect.Messages.Business.IntegrationTests.Features.Users.Utiliti
 
 public abstract class BaseUserIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
-    protected readonly string InvalidUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidAddUserName;
-    protected readonly string ValidUpdateUserName;
-    protected readonly string ValidUserFirstName;
-    protected readonly string ValidUserEmail;
-    protected readonly string ValidUserLastName;
-    protected readonly string ValidUserProfileImage;
-
     protected IUserWriteRepository UserWriteRepository
     {
         get
@@ -35,24 +27,16 @@ public abstract class BaseUserIntegrationTest : BaseSharedIntegrationTest, IClas
     protected BaseUserIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
         : base(integrationTestWebAppFactory.Services.CreateScope())
     {
-        InvalidUserId = GetAverageString(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidAddUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUpdateUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUserFirstName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUserLastName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUserEmail = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
     }
 
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage);
+            UserTestUtilities.ValidUserFirstName,
+            UserTestUtilities.ValidUserLastName,
+            UserTestUtilities.ValidUserEmail,
+            UserTestUtilities.ValidUserName,
+            UserTestUtilities.ValidUserProfileImage);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();

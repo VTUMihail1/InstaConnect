@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
 using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Commands.UpdatePostComment;
 
@@ -39,7 +40,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
     {
         // Arrange
         var command = new UpdatePostCommentCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostCommentTestUtilities.ValidCurrentUserId,
             PostCommentTestUtilities.ValidContent
         );
@@ -77,7 +78,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         // Arrange
         var command = new UpdatePostCommentCommand(
             PostCommentTestUtilities.ValidId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostCommentTestUtilities.ValidContent
         );
 
@@ -115,7 +116,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var command = new UpdatePostCommentCommand(
             PostCommentTestUtilities.ValidId,
             PostCommentTestUtilities.ValidCurrentUserId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act

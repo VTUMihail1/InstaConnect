@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Business.Features.Users.Commands.DeleteUserById;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.DeleteUserById;
 
@@ -34,7 +35,7 @@ public class DeleteUserByIdCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new DeleteUserByIdCommand(Faker.Random.AlphaNumeric(length));
+        var command = new DeleteUserByIdCommand(SharedTestUtilities.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);

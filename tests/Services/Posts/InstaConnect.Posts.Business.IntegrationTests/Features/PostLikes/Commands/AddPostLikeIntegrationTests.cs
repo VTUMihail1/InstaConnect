@@ -8,6 +8,7 @@ using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Posts;
 using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Commands;
 
@@ -46,7 +47,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var command = new AddPostLikeCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingPostId
         );
 
@@ -86,7 +87,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var command = new AddPostLikeCommand(
             existingUserId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act

@@ -24,7 +24,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
@@ -50,7 +50,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
             existingFollowerId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
@@ -76,7 +76,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var query = new GetAllFollowsQuery(
             existingFollowerId,
             FollowTestUtilities.ValidUserName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -102,7 +102,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             existingFollowerId,
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -177,7 +177,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 
@@ -320,7 +320,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var query = new GetAllFollowsQuery(
-            GetNonCaseMatchingString(existingFollowerId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingFollowerId),
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
@@ -432,7 +432,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var query = new GetAllFollowsQuery(
             existingFollowerId,
-            GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
@@ -469,7 +469,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var query = new GetAllFollowsQuery(
             existingFollowerId,
-            GetHalfStartString(FollowTestUtilities.ValidUserName),
+            SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
@@ -581,7 +581,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var query = new GetAllFollowsQuery(
             existingFollowerId,
             FollowTestUtilities.ValidUserName,
-            GetNonCaseMatchingString(existingFollowingId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingFollowingId),
             FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -693,7 +693,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             existingFollowerId,
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
-            GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -730,7 +730,7 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             existingFollowerId,
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
-            GetHalfStartString(FollowTestUtilities.ValidUserName),
+            SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Commands.UpdatePost;
 
@@ -40,7 +41,7 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new UpdatePostCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidCurrentUserId,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidContent
@@ -80,7 +81,7 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
         // Arrange
         var command = new UpdatePostCommand(
             PostTestUtilities.ValidId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidContent
         );
@@ -120,7 +121,7 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
         var command = new UpdatePostCommand(
             PostTestUtilities.ValidId,
             PostTestUtilities.ValidCurrentUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidContent
         );
 
@@ -160,7 +161,7 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
             PostTestUtilities.ValidId,
             PostTestUtilities.ValidCurrentUserId,
             PostTestUtilities.ValidTitle,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act

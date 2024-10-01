@@ -7,6 +7,7 @@ using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Message;
 using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Commands;
 
@@ -46,7 +47,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new DeleteMessageCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingSenderId
         );
 
@@ -88,7 +89,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new DeleteMessageCommand(
             existingMessageId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act
@@ -168,7 +169,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new DeleteMessageCommand(
-            GetNonCaseMatchingString(existingMessageId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessageId),
             existingSenderId
         );
 

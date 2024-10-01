@@ -6,6 +6,7 @@ using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 
@@ -28,7 +29,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(Faker.Random.AlphaNumeric(length)), CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetString(length)), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -103,7 +104,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(GetNonCaseMatchingString(existingPostCommentLikeId)), CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLikeId)), CancellationToken);
 
         var postCommentLikeViewResponse = await response
             .Content

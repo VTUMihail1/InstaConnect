@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.DeletePostLike;
 using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Commands.DeletePostLike;
 
@@ -38,7 +39,7 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new DeletePostLikeCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostLikeTestUtilities.ValidCurrentUserId
         );
 
@@ -74,7 +75,7 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var command = new DeletePostLikeCommand(
             PostLikeTestUtilities.ValidId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act

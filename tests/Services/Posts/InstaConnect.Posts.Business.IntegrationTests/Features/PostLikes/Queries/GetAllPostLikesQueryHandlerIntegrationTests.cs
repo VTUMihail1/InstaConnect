@@ -25,7 +25,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
@@ -51,7 +51,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -77,7 +77,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var query = new GetAllPostLikesQuery(
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -151,7 +151,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 
@@ -288,7 +288,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
-            GetNonCaseMatchingString(existingUserId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
@@ -391,7 +391,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingUserId,
-            GetNonCaseMatchingString(PostLikeTestUtilities.ValidUserName),
+            SharedTestUtilities.GetNonCaseMatchingString(PostLikeTestUtilities.ValidUserName),
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -494,7 +494,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var query = new GetAllPostLikesQuery(
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
-            GetNonCaseMatchingString(existingPostId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostId),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

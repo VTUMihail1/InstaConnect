@@ -2,6 +2,7 @@
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetFollowById;
 
@@ -34,7 +35,7 @@ public class GetFollowByIdQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetFollowByIdQuery(Faker.Random.AlphaNumeric(length));
+        var query = new GetFollowByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
         var result = _validator.TestValidate(query);

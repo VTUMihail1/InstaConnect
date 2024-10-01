@@ -5,6 +5,7 @@ using FluentAssertions;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Controllers.v1;
 
@@ -44,7 +45,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(GetIdRoute(Faker.Random.AlphaNumeric(length)), CancellationToken);
+        var response = await HttpClient.DeleteAsync(GetIdRoute(SharedTestUtilities.GetString(length)), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -79,7 +80,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
@@ -178,7 +179,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        await HttpClient.DeleteAsync(GetIdRoute(GetNonCaseMatchingString(existingMessageId)), CancellationToken);
+        await HttpClient.DeleteAsync(GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingMessageId)), CancellationToken);
 
         var message = await MessageWriteRepository.GetByIdAsync(existingMessageId, CancellationToken);
 

@@ -27,7 +27,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
@@ -52,7 +52,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -77,7 +77,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var route = GetApiRoute(
             existingUserId,
             PostTestUtilities.ValidUserName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -125,7 +125,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 
@@ -293,7 +293,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
-            GetNonCaseMatchingString(existingUserId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
@@ -333,7 +333,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetNonCaseMatchingString(PostTestUtilities.ValidUserName),
+            SharedTestUtilities.GetNonCaseMatchingString(PostTestUtilities.ValidUserName),
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -372,7 +372,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetHalfStartString(PostTestUtilities.ValidUserName),
+            SharedTestUtilities.GetHalfStartString(PostTestUtilities.ValidUserName),
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -412,7 +412,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var route = GetApiRoute(
             existingUserId,
             PostTestUtilities.ValidUserName,
-            GetNonCaseMatchingString(PostTestUtilities.ValidTitle),
+            SharedTestUtilities.GetNonCaseMatchingString(PostTestUtilities.ValidTitle),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -450,7 +450,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetHalfStartString(PostTestUtilities.ValidUserName),
+            SharedTestUtilities.GetHalfStartString(PostTestUtilities.ValidUserName),
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,

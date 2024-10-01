@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Business.Features.Users.Commands.ConfirmUserEmail;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.ConfirmUserEmail;
 
@@ -37,7 +38,7 @@ public class ConfirmUserEmailCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ConfirmUserEmailCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidEmailConfirmationTokenValue);
 
         // Act
@@ -71,7 +72,7 @@ public class ConfirmUserEmailCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new ConfirmUserEmailCommand(
             UserTestUtilities.ValidId,
-            Faker.Random.AlphaNumeric(length));
+            SharedTestUtilities.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);

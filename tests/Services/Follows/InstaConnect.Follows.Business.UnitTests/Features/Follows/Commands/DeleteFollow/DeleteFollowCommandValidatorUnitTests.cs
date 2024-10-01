@@ -2,6 +2,7 @@
 using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.DeleteFollow;
 
@@ -38,7 +39,7 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new DeleteFollowCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidCurrentUserId
         );
 
@@ -74,7 +75,7 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
         // Arrange
         var command = new DeleteFollowCommand(
             FollowTestUtilities.ValidId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act

@@ -2,6 +2,7 @@
 using InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Commands.AddMessage;
 
@@ -39,7 +40,7 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            Faker.Random.AlphaNumeric(length)!,
+            SharedTestUtilities.GetString(length)!,
             MessageTestUtilities.ValidReceiverId,
             MessageTestUtilities.ValidContent
         );
@@ -77,7 +78,7 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var command = new AddMessageCommand(
             MessageTestUtilities.ValidCurrentUserId,
-            Faker.Random.AlphaNumeric(length)!,
+            SharedTestUtilities.GetString(length)!,
             MessageTestUtilities.ValidContent
         );
 
@@ -115,7 +116,7 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         var command = new AddMessageCommand(
             MessageTestUtilities.ValidCurrentUserId,
             MessageTestUtilities.ValidReceiverId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act

@@ -9,6 +9,7 @@ using InstaConnect.Messages.Web.Features.Messages.Models.Binding;
 using InstaConnect.Messages.Web.Features.Messages.Models.Responses;
 using InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Controllers.v1;
 
@@ -61,7 +62,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel(Faker.Random.AlphaNumeric(length), MessageTestUtilities.ValidAddContent);
+        var request = new AddMessageBindingModel(SharedTestUtilities.GetString(length), MessageTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -100,7 +101,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel(existingReceiverId, Faker.Random.AlphaNumeric(length));
+        var request = new AddMessageBindingModel(existingReceiverId, SharedTestUtilities.GetString(length));
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -141,7 +142,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var request = new AddMessageBindingModel(existingReceiverId, MessageTestUtilities.ValidAddContent);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);

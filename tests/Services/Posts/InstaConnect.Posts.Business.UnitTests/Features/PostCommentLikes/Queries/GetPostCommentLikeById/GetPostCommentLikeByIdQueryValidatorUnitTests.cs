@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
 using InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
 
@@ -34,7 +35,7 @@ public class GetPostCommentLikeByIdQueryValidatorUnitTests : BasePostCommentLike
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetPostCommentLikeByIdQuery(Faker.Random.AlphaNumeric(length));
+        var query = new GetPostCommentLikeByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
         var result = _validator.TestValidate(query);

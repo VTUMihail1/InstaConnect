@@ -16,8 +16,6 @@ public class BaseSharedIntegrationTest
 
     protected readonly SortOrder ValidSortOrderProperty;
 
-    protected Faker Faker { get; }
-
     protected IServiceScope ServiceScope { get; }
 
     protected CancellationToken CancellationToken { get; }
@@ -36,37 +34,8 @@ public class BaseSharedIntegrationTest
 
         ValidSortOrderProperty = SortOrder.ASC;
 
-        Faker = new Faker();
         ServiceScope = serviceScope;
         CancellationToken = new CancellationToken();
         InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
-    }
-
-    protected string GetAverageString(int maxLength, int minLength)
-    {
-        var result = Faker.Random.AlphaNumeric(GetAverageNumber(maxLength, minLength));
-
-        return result;
-    }
-
-    protected int GetAverageNumber(int maxLength, int minLength)
-    {
-        var result = (maxLength + minLength) / 2;
-
-        return result;
-    }
-
-    protected string GetHalfStartString(string value)
-    {
-        var result = value.Substring(0, value.Length / 2);
-
-        return result;
-    }
-
-    protected string GetNonCaseMatchingString(string value)
-    {
-        var result = value.ToUpper();
-
-        return result;
     }
 }

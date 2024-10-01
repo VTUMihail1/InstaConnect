@@ -6,6 +6,7 @@ using InstaConnect.Posts.Business.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.PostCommentLike;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostCommentLikes.Queries;
 
@@ -43,7 +44,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
-        var query = new GetPostCommentLikeByIdQuery(Faker.Random.AlphaNumeric(length));
+        var query = new GetPostCommentLikeByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -100,7 +101,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
-        var query = new GetPostCommentLikeByIdQuery(GetNonCaseMatchingString(existingPostCommentLikeId));
+        var query = new GetPostCommentLikeByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLikeId));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);

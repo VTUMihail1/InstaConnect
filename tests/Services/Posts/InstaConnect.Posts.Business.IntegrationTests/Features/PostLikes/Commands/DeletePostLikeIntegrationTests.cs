@@ -7,6 +7,7 @@ using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.PostLike;
 using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Commands;
 
@@ -49,7 +50,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeIntegrationTest
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
 
         var command = new DeletePostLikeCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingUserId
         );
 
@@ -93,7 +94,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeIntegrationTest
 
         var command = new DeletePostLikeCommand(
             existingPostLikeId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act
@@ -172,7 +173,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeIntegrationTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var command = new DeletePostLikeCommand(
-            GetNonCaseMatchingString(existingPostLikeId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostLikeId),
             existingUserId
         );
 

@@ -8,6 +8,7 @@ using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Posts;
 using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Commands;
 
@@ -47,7 +48,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var command = new AddPostCommentCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingPostId,
             PostCommentTestUtilities.ValidAddContent
         );
@@ -89,7 +90,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var command = new AddPostCommentCommand(
             existingUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostCommentTestUtilities.ValidAddContent
         );
 
@@ -132,7 +133,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new AddPostCommentCommand(
             existingUserId,
             existingPostId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act

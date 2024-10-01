@@ -7,6 +7,7 @@ using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.Posts.Commands;
 
@@ -44,7 +45,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidAddTitle,
             PostTestUtilities.ValidAddContent
         );
@@ -84,7 +85,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
             existingUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidAddContent
         );
 
@@ -125,7 +126,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var command = new AddPostCommand(
             existingUserId,
             PostTestUtilities.ValidAddTitle,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act

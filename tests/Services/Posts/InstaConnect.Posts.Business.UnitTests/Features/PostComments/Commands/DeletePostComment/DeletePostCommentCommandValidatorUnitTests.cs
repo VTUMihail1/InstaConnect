@@ -3,6 +3,7 @@ using InstaConnect.Posts.Business.Features.PostComments.Commands.DeletePostComme
 using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Commands.DeletePostComment;
 
@@ -39,7 +40,7 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
     {
         // Arrange
         var command = new DeletePostCommentCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostCommentTestUtilities.ValidCurrentUserId
         );
 
@@ -75,7 +76,7 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         // Arrange
         var command = new DeletePostCommentCommand(
             PostCommentTestUtilities.ValidId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act

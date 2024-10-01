@@ -2,6 +2,7 @@
 using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.AddFollow;
 
@@ -37,7 +38,7 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new AddFollowCommand(
-            Faker.Random.AlphaNumeric(length)!,
+            SharedTestUtilities.GetString(length)!,
             FollowTestUtilities.ValidFollowingId);
 
         // Act
@@ -71,7 +72,7 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
         // Arrange
         var command = new AddFollowCommand(
             FollowTestUtilities.ValidCurrentUserId,
-            Faker.Random.AlphaNumeric(length));
+            SharedTestUtilities.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);

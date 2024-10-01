@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Posts.Business.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Data;
 using InstaConnect.Posts.Data.Features.Users.Abstract;
 using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
@@ -12,15 +13,6 @@ namespace InstaConnect.Posts.Business.IntegrationTests.Features.Users.Utilities;
 
 public abstract class BaseUserIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
-    protected readonly string InvalidUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidAddUserName;
-    protected readonly string ValidUpdateUserName;
-    protected readonly string ValidUserFirstName;
-    protected readonly string ValidUserEmail;
-    protected readonly string ValidUserLastName;
-    protected readonly string ValidUserProfileImage;
-
     protected IUserWriteRepository UserWriteRepository
     {
         get
@@ -35,24 +27,16 @@ public abstract class BaseUserIntegrationTest : BaseSharedIntegrationTest, IClas
     protected BaseUserIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
         : base(integrationTestWebAppFactory.Services.CreateScope())
     {
-        InvalidUserId = GetAverageString(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidAddUserName = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUpdateUserName = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserFirstName = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserLastName = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserEmail = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
     }
 
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage);
+            UserTestUtilities.ValidUserFirstName,
+            UserTestUtilities.ValidUserLastName,
+            UserTestUtilities.ValidUserEmail,
+            UserTestUtilities.ValidUserName,
+            UserTestUtilities.ValidUserProfileImage);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();

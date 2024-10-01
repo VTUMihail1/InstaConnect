@@ -43,7 +43,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetAllMessagesQuery(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidReceiverId,
             MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
@@ -66,7 +66,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var query = new GetAllMessagesQuery(
             MessageTestUtilities.ValidCurrentUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -89,7 +89,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         var query = new GetAllMessagesQuery(
             MessageTestUtilities.ValidCurrentUserId,
             MessageTestUtilities.ValidReceiverId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -154,7 +154,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             MessageTestUtilities.ValidReceiverId,
             MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 

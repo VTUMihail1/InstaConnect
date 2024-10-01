@@ -9,6 +9,7 @@ using InstaConnect.Posts.Web.Features.Posts.Models.Binding;
 using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Web.FunctionalTests.Features.Posts.Controllers.v1;
 
@@ -58,7 +59,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(Faker.Random.AlphaNumeric(length), PostTestUtilities.ValidAddContent);
+        var request = new AddPostBindingModel(SharedTestUtilities.GetString(length), PostTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -95,7 +96,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, Faker.Random.AlphaNumeric(length));
+        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, SharedTestUtilities.GetString(length));
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -134,7 +135,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);

@@ -22,7 +22,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var query = new GetAllPostsQuery(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
@@ -45,7 +45,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         // Arrange
         var query = new GetAllPostsQuery(
             PostTestUtilities.ValidCurrentUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -68,7 +68,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var query = new GetAllPostsQuery(
             PostTestUtilities.ValidCurrentUserId,
             PostTestUtilities.ValidUserName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -133,7 +133,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 

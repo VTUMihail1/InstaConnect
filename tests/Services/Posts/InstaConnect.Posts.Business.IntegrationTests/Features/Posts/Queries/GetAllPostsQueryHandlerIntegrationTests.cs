@@ -24,7 +24,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var query = new GetAllPostsQuery(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
@@ -49,7 +49,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var query = new GetAllPostsQuery(
             existingUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -74,7 +74,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingUserId,
             PostTestUtilities.ValidUserName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -145,7 +145,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 
@@ -279,7 +279,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var query = new GetAllPostsQuery(
-            GetNonCaseMatchingString(existingUserId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
@@ -382,7 +382,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var query = new GetAllPostsQuery(
             existingUserId,
-            GetNonCaseMatchingString(PostTestUtilities.ValidUserName),
+            SharedTestUtilities.GetNonCaseMatchingString(PostTestUtilities.ValidUserName),
             PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -485,7 +485,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingUserId,
             PostTestUtilities.ValidUserName,
-            GetNonCaseMatchingString(PostTestUtilities.ValidTitle),
+            SharedTestUtilities.GetNonCaseMatchingString(PostTestUtilities.ValidTitle),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -519,7 +519,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingUserId,
             PostTestUtilities.ValidUserName,
-            GetHalfStartString(PostTestUtilities.ValidTitle),
+            SharedTestUtilities.GetHalfStartString(PostTestUtilities.ValidTitle),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

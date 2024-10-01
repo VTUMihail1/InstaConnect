@@ -5,6 +5,7 @@ using FluentAssertions;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 
@@ -46,7 +47,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikeFunctiona
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(GetIdRoute(Faker.Random.AlphaNumeric(length)), CancellationToken);
+        var response = await HttpClient.DeleteAsync(GetIdRoute(SharedTestUtilities.GetString(length)), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -83,7 +84,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikeFunctiona
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
@@ -187,7 +188,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikeFunctiona
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        await HttpClient.DeleteAsync(GetIdRoute(GetNonCaseMatchingString(existingPostCommentLikeId)), CancellationToken);
+        await HttpClient.DeleteAsync(GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLikeId)), CancellationToken);
 
         var message = await PostCommentLikeWriteRepository.GetByIdAsync(existingPostCommentLikeId, CancellationToken);
 

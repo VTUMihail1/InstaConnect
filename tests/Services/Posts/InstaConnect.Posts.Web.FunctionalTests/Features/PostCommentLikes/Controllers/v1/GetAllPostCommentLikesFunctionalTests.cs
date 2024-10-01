@@ -29,7 +29,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
             ValidSortOrderProperty,
@@ -56,7 +56,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -83,7 +83,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var route = GetApiRoute(
             existingUserId,
             PostCommentLikeTestUtilities.ValidUserName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -135,7 +135,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 
@@ -313,7 +313,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
-            GetNonCaseMatchingString(existingUserId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
             PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
             ValidSortOrderProperty,
@@ -354,7 +354,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetNonCaseMatchingString(PostCommentLikeTestUtilities.ValidUserName),
+            SharedTestUtilities.GetNonCaseMatchingString(PostCommentLikeTestUtilities.ValidUserName),
             existingPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -394,7 +394,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetHalfStartString(PostCommentLikeTestUtilities.ValidUserName),
+            SharedTestUtilities.GetHalfStartString(PostCommentLikeTestUtilities.ValidUserName),
             existingPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -435,7 +435,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var route = GetApiRoute(
             existingUserId,
             PostCommentLikeTestUtilities.ValidUserName,
-            GetNonCaseMatchingString(existingPostCommentId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentId),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

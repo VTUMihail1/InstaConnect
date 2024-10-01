@@ -8,6 +8,7 @@ using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.PostComment;
 using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostCommentLikes.Commands;
 
@@ -48,7 +49,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var command = new AddPostCommentLikeCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingPostCommentId
         );
 
@@ -90,7 +91,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var command = new AddPostCommentLikeCommand(
             existingUserId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act

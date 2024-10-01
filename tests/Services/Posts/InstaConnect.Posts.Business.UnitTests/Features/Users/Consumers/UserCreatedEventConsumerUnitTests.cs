@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Posts.Business.Features.Users.Consumers;
 using InstaConnect.Posts.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Contracts.Users;
 using MassTransit;
@@ -27,12 +28,12 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var userCreatedEvent = new UserCreatedEvent(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidUserEmail,
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserProfileImage);
+            UserTestUtilities.ValidCurrentUserId,
+            UserTestUtilities.ValidUserName,
+            UserTestUtilities.ValidUserEmail,
+            UserTestUtilities.ValidUserFirstName,
+            UserTestUtilities.ValidUserLastName,
+            UserTestUtilities.ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -42,7 +43,7 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(ValidCurrentUserId, CancellationToken);
+            .GetByIdAsync(UserTestUtilities.ValidCurrentUserId, CancellationToken);
     }
 
     [Fact]
@@ -50,12 +51,12 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var userCreatedEvent = new UserCreatedEvent(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidUserEmail,
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserProfileImage);
+            UserTestUtilities.ValidCurrentUserId,
+            UserTestUtilities.ValidUserName,
+            UserTestUtilities.ValidUserEmail,
+            UserTestUtilities.ValidUserFirstName,
+            UserTestUtilities.ValidUserLastName,
+            UserTestUtilities.ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -73,12 +74,12 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var userCreatedEvent = new UserCreatedEvent(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidUserEmail,
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserProfileImage);
+            UserTestUtilities.ValidCurrentUserId,
+            UserTestUtilities.ValidUserName,
+            UserTestUtilities.ValidUserEmail,
+            UserTestUtilities.ValidUserFirstName,
+            UserTestUtilities.ValidUserLastName,
+            UserTestUtilities.ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -96,12 +97,12 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var userCreatedEvent = new UserCreatedEvent(
-            InvalidUserId,
-            ValidUserName,
-            ValidUserEmail,
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserProfileImage);
+            UserTestUtilities.InvalidUserId,
+            UserTestUtilities.ValidUserName,
+            UserTestUtilities.ValidUserEmail,
+            UserTestUtilities.ValidUserFirstName,
+            UserTestUtilities.ValidUserLastName,
+            UserTestUtilities.ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -111,7 +112,7 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(InvalidUserId, CancellationToken);
+            .GetByIdAsync(UserTestUtilities.InvalidUserId, CancellationToken);
     }
 
     [Fact]
@@ -119,12 +120,12 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var userCreatedEvent = new UserCreatedEvent(
-            InvalidUserId,
-            ValidUserName,
-            ValidUserEmail,
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserProfileImage);
+            UserTestUtilities.InvalidUserId,
+            UserTestUtilities.ValidUserName,
+            UserTestUtilities.ValidUserEmail,
+            UserTestUtilities.ValidUserFirstName,
+            UserTestUtilities.ValidUserLastName,
+            UserTestUtilities.ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -134,12 +135,12 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         UserWriteRepository
             .Received(1)
-            .Add(Arg.Is<User>(m => m.Id == InvalidUserId &&
-                                   m.UserName == ValidUserName &&
-                                   m.FirstName == ValidUserFirstName &&
-                                   m.LastName == ValidUserLastName &&
-                                   m.Email == ValidUserEmail &&
-                                   m.ProfileImage == ValidUserProfileImage));
+            .Add(Arg.Is<User>(m => m.Id == UserTestUtilities.InvalidUserId &&
+                                   m.UserName == UserTestUtilities.ValidUserName &&
+                                   m.FirstName == UserTestUtilities.ValidUserFirstName &&
+                                   m.LastName == UserTestUtilities.ValidUserLastName &&
+                                   m.Email == UserTestUtilities.ValidUserEmail &&
+                                   m.ProfileImage == UserTestUtilities.ValidUserProfileImage));
     }
 
     [Fact]
@@ -147,12 +148,12 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var userCreatedEvent = new UserCreatedEvent(
-            InvalidUserId,
-            ValidUserName,
-            ValidUserEmail,
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserProfileImage);
+            UserTestUtilities.InvalidUserId,
+            UserTestUtilities.ValidUserName,
+            UserTestUtilities.ValidUserEmail,
+            UserTestUtilities.ValidUserFirstName,
+            UserTestUtilities.ValidUserLastName,
+            UserTestUtilities.ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 

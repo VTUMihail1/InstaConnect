@@ -19,8 +19,6 @@ public class BaseSharedFunctionalTest
 
     protected readonly SortOrder ValidSortOrderProperty;
 
-    protected Faker Faker { get; }
-
     protected HttpClient HttpClient { get; }
 
     protected ITestHarness TestHarness
@@ -56,7 +54,6 @@ public class BaseSharedFunctionalTest
 
         ValidSortOrderProperty = SortOrder.ASC;
 
-        Faker = new Faker();
         HttpClient = httpClient;
         ServiceScope = serviceScope;
         CancellationToken = new CancellationToken();
@@ -66,20 +63,6 @@ public class BaseSharedFunctionalTest
         };
     }
 
-    protected string GetAverageString(int maxLength, int minLength)
-    {
-        var result = Faker.Random.AlphaNumeric(GetAverageNumber(maxLength, minLength));
-
-        return result;
-    }
-
-    protected int GetAverageNumber(int maxLength, int minLength)
-    {
-        var result = (maxLength + minLength) / 2;
-
-        return result;
-    }
-
     protected string GetIdRoute(string id)
     {
         var route = $"{ApiRoute}/{id}";
@@ -87,17 +70,5 @@ public class BaseSharedFunctionalTest
         return route;
     }
 
-    protected string GetHalfStartString(string value)
-    {
-        var result = value.Substring(0, value.Length / 2);
-
-        return result;
-    }
-
-    protected string GetNonCaseMatchingString(string value)
-    {
-        var result = value.ToUpper();
-
-        return result;
-    }
+    
 }

@@ -9,6 +9,7 @@ using InstaConnect.Posts.Web.Features.Posts.Models.Binding;
 using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Web.FunctionalTests.Features.Posts.Controllers.v1;
 
@@ -52,7 +53,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
         var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(Faker.Random.AlphaNumeric(length)),
+            GetIdRoute(SharedTestUtilities.GetString(length)),
             request,
             CancellationToken);
 
@@ -90,7 +91,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new UpdatePostBindingModel(Faker.Random.AlphaNumeric(length), PostTestUtilities.ValidUpdateContent);
+        var request = new UpdatePostBindingModel(SharedTestUtilities.GetString(length), PostTestUtilities.ValidUpdateContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -135,7 +136,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new UpdatePostBindingModel(PostTestUtilities.ValidUpdateTitle, Faker.Random.AlphaNumeric(length));
+        var request = new UpdatePostBindingModel(PostTestUtilities.ValidUpdateTitle, SharedTestUtilities.GetString(length));
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -182,7 +183,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var request = new UpdatePostBindingModel(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
@@ -327,7 +328,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
         var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(GetNonCaseMatchingString(existingPostId)),
+            GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingPostId)),
             request,
             CancellationToken);
 

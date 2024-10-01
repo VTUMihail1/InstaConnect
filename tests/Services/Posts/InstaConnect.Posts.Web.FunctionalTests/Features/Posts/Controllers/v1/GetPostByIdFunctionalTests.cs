@@ -6,6 +6,7 @@ using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Web.FunctionalTests.Features.Posts.Controllers.v1;
 
@@ -26,7 +27,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(Faker.Random.AlphaNumeric(length)), CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetString(length)), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -94,7 +95,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(GetNonCaseMatchingString(existingPostId)), CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingPostId)), CancellationToken);
 
         var postViewResponse = await response
             .Content

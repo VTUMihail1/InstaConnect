@@ -22,7 +22,7 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     {
         // Arrange
         var query = new GetAllPostCommentLikesQuery(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostCommentLikeTestUtilities.ValidUserName,
             PostCommentLikeTestUtilities.ValidPostCommentId,
             ValidSortOrderProperty,
@@ -45,7 +45,7 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
         // Arrange
         var query = new GetAllPostCommentLikesQuery(
             PostCommentLikeTestUtilities.ValidCurrentUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostCommentLikeTestUtilities.ValidPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -68,7 +68,7 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
         var query = new GetAllPostCommentLikesQuery(
             PostCommentLikeTestUtilities.ValidCurrentUserId,
             PostCommentLikeTestUtilities.ValidUserName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -133,7 +133,7 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
             PostCommentLikeTestUtilities.ValidUserName,
             PostCommentLikeTestUtilities.ValidPostCommentId,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 

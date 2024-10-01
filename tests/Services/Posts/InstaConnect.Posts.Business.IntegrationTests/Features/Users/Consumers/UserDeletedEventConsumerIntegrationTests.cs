@@ -2,8 +2,10 @@
 using InstaConnect.Posts.Business.Features.Users.Consumers;
 using InstaConnect.Posts.Business.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Contracts.Users;
+using InstaConnect.Shared.Common.Utilities;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
@@ -27,7 +29,7 @@ public class UserDeletedEventConsumerIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var userDeletedEvent = new UserDeletedEvent(InvalidUserId);
+        var userDeletedEvent = new UserDeletedEvent(UserTestUtilities.InvalidUserId);
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 
@@ -39,11 +41,11 @@ public class UserDeletedEventConsumerIntegrationTests : BaseUserIntegrationTest
         existingUser
             .Should()
             .Match<User>(m => m.Id == existingUserId &&
-                              m.FirstName == ValidUserFirstName &&
-                              m.LastName == ValidUserLastName &&
-                              m.UserName == ValidUserName &&
-                              m.Email == ValidUserEmail &&
-                              m.ProfileImage == ValidUserProfileImage);
+                              m.FirstName == UserTestUtilities.ValidUserFirstName &&
+                              m.LastName == UserTestUtilities.ValidUserLastName &&
+                              m.UserName == UserTestUtilities.ValidUserName &&
+                              m.Email == UserTestUtilities.ValidUserEmail &&
+                              m.ProfileImage == UserTestUtilities.ValidUserProfileImage);
     }
 
     [Fact]
@@ -70,7 +72,7 @@ public class UserDeletedEventConsumerIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var userDeletedEvent = new UserDeletedEvent(GetNonCaseMatchingString(existingUserId));
+        var userDeletedEvent = new UserDeletedEvent(SharedTestUtilities.GetNonCaseMatchingString(existingUserId));
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 

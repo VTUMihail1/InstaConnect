@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Web.FunctionalTests.Features.Users.Utilities;
 using InstaConnect.Messages.Web.FunctionalTests.Utilities;
 using InstaConnect.Shared.Business.Contracts.Users;
@@ -19,11 +20,11 @@ public class UserCreatedEventConsumerFunctionalTests : BaseUserFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var userUpdatedEvent = new UserUpdatedEvent(
             existingUserId,
-            ValidUserName,
-            ValidUserEmail,
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserProfileImage);
+            UserTestUtilities.ValidUserName,
+            UserTestUtilities.ValidUserEmail,
+            UserTestUtilities.ValidUserFirstName,
+            UserTestUtilities.ValidUserLastName,
+            UserTestUtilities.ValidUserProfileImage);
 
         // Act
         await TestHarness.Start();
@@ -33,11 +34,11 @@ public class UserCreatedEventConsumerFunctionalTests : BaseUserFunctionalTest
 
         var result = await TestHarness.Consumed.Any<UserUpdatedEvent>(m =>
                               m.Context.Message.Id == existingUserId &&
-                              m.Context.Message.FirstName == ValidUserFirstName &&
-                              m.Context.Message.LastName == ValidUserLastName &&
-                              m.Context.Message.UserName == ValidUserName &&
-                              m.Context.Message.Email == ValidUserEmail &&
-                              m.Context.Message.ProfileImage == ValidUserProfileImage, CancellationToken);
+                              m.Context.Message.FirstName == UserTestUtilities.ValidUserFirstName &&
+                              m.Context.Message.LastName == UserTestUtilities.ValidUserLastName &&
+                              m.Context.Message.UserName == UserTestUtilities.ValidUserName &&
+                              m.Context.Message.Email == UserTestUtilities.ValidUserEmail &&
+                              m.Context.Message.ProfileImage == UserTestUtilities.ValidUserProfileImage, CancellationToken);
 
         // Assert
         result.Should().BeTrue();

@@ -7,6 +7,7 @@ using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Follow;
 using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Commands;
 
@@ -47,7 +48,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var command = new DeleteFollowCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingFollowerId
         );
 
@@ -89,7 +90,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var command = new DeleteFollowCommand(
             existingFollowId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act
@@ -169,7 +170,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var command = new DeleteFollowCommand(
-            GetNonCaseMatchingString(existingFollowId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingFollowId),
             existingFollowerId
         );
 

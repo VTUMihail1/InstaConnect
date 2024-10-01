@@ -7,6 +7,7 @@ using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Commands;
 public class AddMessageIntegrationTests : BaseMessageIntegrationTest
@@ -42,7 +43,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingReceiverId,
             MessageTestUtilities.ValidAddContent
         );
@@ -82,7 +83,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
             existingSenderId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidAddContent
         );
 
@@ -124,7 +125,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var command = new AddMessageCommand(
             existingSenderId,
             existingReceiverId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act
