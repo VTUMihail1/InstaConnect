@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Business.Features.Users.Commands.EditCurrentUser;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.EditCurrentUser;
 
@@ -41,7 +42,7 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new EditCurrentUserCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidFirstName,
             UserTestUtilities.ValidLastName,
             UserTestUtilities.ValidName,
@@ -83,7 +84,7 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new EditCurrentUserCommand(
             UserTestUtilities.ValidId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidLastName,
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidFormFile
@@ -125,7 +126,7 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
         var command = new EditCurrentUserCommand(
             UserTestUtilities.ValidId,
             UserTestUtilities.ValidFirstName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidFormFile
         );
@@ -167,7 +168,7 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
             UserTestUtilities.ValidId,
             UserTestUtilities.ValidFirstName,
             UserTestUtilities.ValidLastName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidFormFile
         );
 

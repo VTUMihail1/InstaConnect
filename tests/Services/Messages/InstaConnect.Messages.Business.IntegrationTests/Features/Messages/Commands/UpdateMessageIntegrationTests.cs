@@ -8,6 +8,7 @@ using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Message;
 using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Commands;
 
@@ -48,7 +49,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new UpdateMessageCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidContent,
             existingSenderId
         );
@@ -93,7 +94,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var command = new UpdateMessageCommand(
             existingMessageId,
             MessageTestUtilities.ValidContent,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act
@@ -135,7 +136,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new UpdateMessageCommand(
             existingMessageId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingSenderId
         );
 
@@ -221,7 +222,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new UpdateMessageCommand(
-            GetNonCaseMatchingString(existingMessageId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessageId),
             MessageTestUtilities.ValidUpdateContent,
             existingSenderId
         );

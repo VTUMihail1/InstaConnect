@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Business.Features.Users.Commands.ResendUserEmailConfirmation;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.ResendUserEmailConfirmation;
 
@@ -34,7 +35,7 @@ public class ResendUserEmailConfirmationCommandValidatorUnitTests : BaseUserUnit
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new ResendUserEmailConfirmationCommand(Faker.Random.AlphaNumeric(length));
+        var command = new ResendUserEmailConfirmationCommand(SharedTestUtilities.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);

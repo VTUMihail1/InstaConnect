@@ -28,7 +28,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
@@ -54,7 +54,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -80,7 +80,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var route = GetApiRoute(
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -130,7 +130,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 
@@ -304,7 +304,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
-            GetNonCaseMatchingString(existingUserId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
@@ -345,7 +345,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetNonCaseMatchingString(PostCommentTestUtilities.ValidUserName),
+            SharedTestUtilities.GetNonCaseMatchingString(PostCommentTestUtilities.ValidUserName),
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -385,7 +385,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetHalfStartString(PostCommentTestUtilities.ValidUserName),
+            SharedTestUtilities.GetHalfStartString(PostCommentTestUtilities.ValidUserName),
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -426,7 +426,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var route = GetApiRoute(
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
-            GetNonCaseMatchingString(existingPostId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostId),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

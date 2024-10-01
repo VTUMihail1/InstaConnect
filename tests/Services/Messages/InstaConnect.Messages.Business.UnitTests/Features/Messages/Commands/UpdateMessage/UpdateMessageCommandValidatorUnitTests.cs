@@ -2,6 +2,7 @@
 using InstaConnect.Messages.Business.Features.Messages.Commands.UpdateMessage;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Commands.UpdateMessage;
 
@@ -39,7 +40,7 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new UpdateMessageCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidContent,
             MessageTestUtilities.ValidCurrentUserId
         );
@@ -78,7 +79,7 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
         var command = new UpdateMessageCommand(
             MessageTestUtilities.ValidId,
             MessageTestUtilities.ValidContent,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act
@@ -114,7 +115,7 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var command = new UpdateMessageCommand(
             MessageTestUtilities.ValidId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidCurrentUserId
         );
 

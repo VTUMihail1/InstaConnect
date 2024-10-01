@@ -2,6 +2,7 @@
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Queries.GetMessageById;
 
@@ -38,7 +39,7 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetMessageByIdQuery(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidCurrentUserId
         );
 
@@ -74,7 +75,7 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var query = new GetMessageByIdQuery(
             MessageTestUtilities.ValidId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act

@@ -28,7 +28,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
@@ -54,7 +54,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -80,7 +80,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var route = GetApiRoute(
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -130,7 +130,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 
@@ -302,7 +302,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
-            GetNonCaseMatchingString(existingUserId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
@@ -342,7 +342,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetNonCaseMatchingString(PostLikeTestUtilities.ValidUserName),
+            SharedTestUtilities.GetNonCaseMatchingString(PostLikeTestUtilities.ValidUserName),
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -381,7 +381,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetHalfStartString(PostLikeTestUtilities.ValidUserName),
+            SharedTestUtilities.GetHalfStartString(PostLikeTestUtilities.ValidUserName),
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -421,7 +421,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var route = GetApiRoute(
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
-            GetNonCaseMatchingString(existingPostId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostId),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

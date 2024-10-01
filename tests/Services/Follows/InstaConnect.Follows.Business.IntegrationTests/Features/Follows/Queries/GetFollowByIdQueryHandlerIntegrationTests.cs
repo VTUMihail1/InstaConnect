@@ -6,6 +6,7 @@ using InstaConnect.Follows.Business.IntegrationTests.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Follow;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Queries;
 
@@ -41,7 +42,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetFollowByIdQuery(Faker.Random.AlphaNumeric(length));
+        var query = new GetFollowByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -97,7 +98,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetFollowByIdQuery(GetNonCaseMatchingString(existingFollowId));
+        var query = new GetFollowByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingFollowId));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);

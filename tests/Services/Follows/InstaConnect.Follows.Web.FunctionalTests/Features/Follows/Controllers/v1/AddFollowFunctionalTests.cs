@@ -9,6 +9,7 @@ using InstaConnect.Follows.Web.Features.Follows.Models.Binding;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Controllers.v1;
 
@@ -61,7 +62,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowBindingModel(Faker.Random.AlphaNumeric(length));
+        var request = new AddFollowBindingModel(SharedTestUtilities.GetString(length));
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 
@@ -103,7 +104,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var request = new AddFollowBindingModel(existingFollowingId);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);

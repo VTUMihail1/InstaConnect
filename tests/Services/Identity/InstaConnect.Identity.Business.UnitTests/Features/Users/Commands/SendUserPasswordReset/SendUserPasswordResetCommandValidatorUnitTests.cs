@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Business.Features.Users.Commands.SendUserPasswordReset;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.SendUserPasswordReset;
 
@@ -34,7 +35,7 @@ public class SendUserPasswordResetCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new SendUserPasswordResetCommand(Faker.Random.AlphaNumeric(length));
+        var command = new SendUserPasswordResetCommand(SharedTestUtilities.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);

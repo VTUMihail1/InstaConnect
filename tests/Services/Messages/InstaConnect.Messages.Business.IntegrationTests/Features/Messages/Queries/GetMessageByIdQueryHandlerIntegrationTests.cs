@@ -7,6 +7,7 @@ using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Message;
 using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Queries;
 
@@ -46,7 +47,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var query = new GetMessageByIdQuery(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingSenderId
         );
 
@@ -88,7 +89,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var query = new GetMessageByIdQuery(
             existingMessageId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act
@@ -173,7 +174,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var query = new GetMessageByIdQuery(
-            GetNonCaseMatchingString(existingMessageId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessageId),
             existingSenderId
         );
 

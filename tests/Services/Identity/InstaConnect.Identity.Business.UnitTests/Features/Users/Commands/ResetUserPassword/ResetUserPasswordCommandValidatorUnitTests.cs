@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Business.Features.Users.Commands.ResetUserPassword;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.ResetUserPassword;
 
@@ -40,7 +41,7 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidForgotPasswordTokenValue,
             UserTestUtilities.ValidPassword,
             UserTestUtilities.ValidPassword
@@ -80,7 +81,7 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new ResetUserPasswordCommand(
             UserTestUtilities.ValidName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPassword,
             UserTestUtilities.ValidPassword
         );
@@ -117,7 +118,7 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
-        var invalidPassword = Faker.Random.AlphaNumeric(length);
+        var invalidPassword = SharedTestUtilities.GetString(length);
         var command = new ResetUserPasswordCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,

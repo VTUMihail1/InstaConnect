@@ -76,7 +76,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -104,7 +104,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -158,7 +158,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 
@@ -312,7 +312,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             ValidPageValue,
             ValidPageSizeValue);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = GetNonCaseMatchingString(existingSenderId);
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetNonCaseMatchingString(existingSenderId);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
@@ -349,7 +349,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
-            GetNonCaseMatchingString(existingReceiverId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingReceiverId),
             MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -394,7 +394,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            GetNonCaseMatchingString(MessageTestUtilities.ValidUserName),
+            SharedTestUtilities.GetNonCaseMatchingString(MessageTestUtilities.ValidUserName),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -438,7 +438,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            GetHalfStartString(MessageTestUtilities.ValidUserName),
+            SharedTestUtilities.GetHalfStartString(MessageTestUtilities.ValidUserName),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

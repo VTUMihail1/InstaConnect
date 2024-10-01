@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Follows.Business.Features.Users.Mappings;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Data.Features.Users.Abstractions;
 using InstaConnect.Follows.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Business.Helpers;
@@ -12,14 +13,6 @@ namespace InstaConnect.Follows.Business.UnitTests.Features.Users.Utilities;
 
 public abstract class BaseUserUnitTest : BaseSharedUnitTest
 {
-    protected readonly string ValidCurrentUserId;
-    protected readonly string InvalidUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidUserFirstName;
-    protected readonly string ValidUserEmail;
-    protected readonly string ValidUserLastName;
-    protected readonly string ValidUserProfileImage;
-
     protected IUserWriteRepository UserWriteRepository { get; }
 
     public BaseUserUnitTest() : base(
@@ -29,28 +22,20 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
                 new MapperConfiguration(cfg => cfg.AddProfile<UserConsumerProfile>()))),
         new EntityPropertyValidator())
     {
-        InvalidUserId = GetAverageString(FollowBusinessConfigurations.FOLLOWING_ID_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-        ValidUserFirstName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-        ValidUserLastName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-        ValidUserEmail = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-        ValidCurrentUserId = GetAverageString(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
 
         var existingUser = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            UserTestUtilities.ValidUserFirstName,
+            UserTestUtilities.ValidUserLastName,
+            UserTestUtilities.ValidUserEmail,
+            UserTestUtilities.ValidUserName,
+            UserTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidCurrentUserId,
+            Id = UserTestUtilities.ValidCurrentUserId,
         };
 
         UserWriteRepository.GetByIdAsync(
-            ValidCurrentUserId,
+            UserTestUtilities.ValidCurrentUserId,
             CancellationToken)
             .Returns(existingUser);
     }

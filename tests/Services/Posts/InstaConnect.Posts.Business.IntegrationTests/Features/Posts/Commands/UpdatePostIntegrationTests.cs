@@ -8,6 +8,7 @@ using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Posts;
 using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.Posts.Commands;
 
@@ -48,7 +49,7 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var command = new UpdatePostCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingUserId,
             PostTestUtilities.ValidUpdateTitle,
             PostTestUtilities.ValidUpdateContent
@@ -92,7 +93,7 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var command = new UpdatePostCommand(
             existingPostId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidUpdateTitle,
             PostTestUtilities.ValidUpdateContent
         );
@@ -136,7 +137,7 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
         var command = new UpdatePostCommand(
             existingPostId,
             existingUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidUpdateContent
         );
 
@@ -180,7 +181,7 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
             existingPostId,
             existingUserId,
             PostTestUtilities.ValidUpdateTitle,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act
@@ -264,7 +265,7 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var command = new UpdatePostCommand(
-            GetNonCaseMatchingString(existingPostId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostId),
             existingUserId,
             PostTestUtilities.ValidUpdateTitle,
             PostTestUtilities.ValidUpdateContent

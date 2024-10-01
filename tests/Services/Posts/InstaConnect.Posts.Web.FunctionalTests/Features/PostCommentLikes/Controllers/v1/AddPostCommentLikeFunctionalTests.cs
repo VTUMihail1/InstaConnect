@@ -9,6 +9,7 @@ using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Binding;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 
@@ -64,7 +65,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTe
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new AddPostCommentLikeBindingModel(Faker.Random.AlphaNumeric(length));
+        var request = new AddPostCommentLikeBindingModel(SharedTestUtilities.GetString(length));
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -107,7 +108,7 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTe
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);

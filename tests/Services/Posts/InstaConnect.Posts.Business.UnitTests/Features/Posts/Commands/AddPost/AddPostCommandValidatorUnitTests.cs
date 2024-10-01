@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Commands.AddPost;
 
@@ -38,7 +39,7 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new AddPostCommand(
-            Faker.Random.AlphaNumeric(length)!,
+            SharedTestUtilities.GetString(length)!,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidContent);
 
@@ -74,7 +75,7 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
         // Arrange
         var command = new AddPostCommand(
             PostTestUtilities.ValidCurrentUserId,
-            Faker.Random.AlphaNumeric(length)!,
+            SharedTestUtilities.GetString(length)!,
             PostTestUtilities.ValidContent);
 
         // Act
@@ -110,7 +111,7 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
         var command = new AddPostCommand(
             PostTestUtilities.ValidCurrentUserId,
             PostTestUtilities.ValidTitle,
-            Faker.Random.AlphaNumeric(length)!);
+            SharedTestUtilities.GetString(length)!);
 
         // Act
         var result = _commandValidator.TestValidate(command);

@@ -9,6 +9,7 @@ using InstaConnect.Posts.Web.Features.PostLikes.Models.Binding;
 using InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostLikes.Controllers.v1;
 
@@ -61,7 +62,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new AddPostLikeBindingModel(Faker.Random.AlphaNumeric(length));
+        var request = new AddPostLikeBindingModel(SharedTestUtilities.GetString(length));
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -102,7 +103,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var request = new AddPostLikeBindingModel(existingPostId);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);

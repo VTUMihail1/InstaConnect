@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Business.Features.Users.Commands.RegisterUser;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.RegisterUser;
 
@@ -43,7 +44,7 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword,
             UserTestUtilities.ValidPassword,
@@ -89,7 +90,7 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new RegisterUserCommand(
             UserTestUtilities.ValidName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPassword,
             UserTestUtilities.ValidPassword,
             UserTestUtilities.ValidFirstName,
@@ -132,7 +133,7 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
-        var invalidPassword = Faker.Random.AlphaNumeric(length);
+        var invalidPassword = SharedTestUtilities.GetString(length);
         var command = new RegisterUserCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,
@@ -204,7 +205,7 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword,
             UserTestUtilities.ValidPassword,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidLastName,
             UserTestUtilities.ValidFormFile
         );
@@ -250,7 +251,7 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
             UserTestUtilities.ValidPassword,
             UserTestUtilities.ValidPassword,
             UserTestUtilities.ValidFirstName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidFormFile
         );
 

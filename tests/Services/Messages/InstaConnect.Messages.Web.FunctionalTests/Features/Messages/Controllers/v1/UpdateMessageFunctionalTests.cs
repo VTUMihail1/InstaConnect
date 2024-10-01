@@ -9,6 +9,7 @@ using InstaConnect.Messages.Web.Features.Messages.Models.Binding;
 using InstaConnect.Messages.Web.Features.Messages.Models.Responses;
 using InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Controllers.v1;
 
@@ -54,7 +55,7 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
         var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(Faker.Random.AlphaNumeric(length)),
+            GetIdRoute(SharedTestUtilities.GetString(length)),
             request,
             CancellationToken);
 
@@ -94,7 +95,7 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var request = new UpdateMessageBindingModel(Faker.Random.AlphaNumeric(length));
+        var request = new UpdateMessageBindingModel(SharedTestUtilities.GetString(length));
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -143,7 +144,7 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var request = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
@@ -291,7 +292,7 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
         var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(GetNonCaseMatchingString(existingMessageId)),
+            GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingMessageId)),
             request,
             CancellationToken);
 

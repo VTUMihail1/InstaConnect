@@ -25,7 +25,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostCommentsQuery(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
@@ -51,7 +51,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -77,7 +77,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var query = new GetAllPostCommentsQuery(
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -151,7 +151,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 
@@ -290,7 +290,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostCommentsQuery(
-            GetNonCaseMatchingString(existingUserId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
             PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
@@ -396,7 +396,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingUserId,
-            GetNonCaseMatchingString(PostCommentTestUtilities.ValidUserName),
+            SharedTestUtilities.GetNonCaseMatchingString(PostCommentTestUtilities.ValidUserName),
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -502,7 +502,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var query = new GetAllPostCommentsQuery(
             existingUserId,
             PostCommentTestUtilities.ValidUserName,
-            GetNonCaseMatchingString(existingPostId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostId),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

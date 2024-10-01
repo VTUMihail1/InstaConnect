@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Business.Features.Users.Commands.DeleteCurrentUser;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.DeleteCurrentUser;
 
@@ -34,7 +35,7 @@ public class DeleteCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new DeleteCurrentUserCommand(Faker.Random.AlphaNumeric(length));
+        var command = new DeleteCurrentUserCommand(SharedTestUtilities.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);

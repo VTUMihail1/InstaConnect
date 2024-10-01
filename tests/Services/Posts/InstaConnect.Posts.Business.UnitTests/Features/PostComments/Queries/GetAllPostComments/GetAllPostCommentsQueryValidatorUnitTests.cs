@@ -22,7 +22,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var query = new GetAllPostCommentsQuery(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostCommentTestUtilities.ValidUserName,
             PostCommentTestUtilities.ValidPostCommentPostId,
             ValidSortOrderProperty,
@@ -45,7 +45,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
         // Arrange
         var query = new GetAllPostCommentsQuery(
             PostCommentTestUtilities.ValidCurrentUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostCommentTestUtilities.ValidPostCommentPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -68,7 +68,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
         var query = new GetAllPostCommentsQuery(
             PostCommentTestUtilities.ValidCurrentUserId,
             PostCommentTestUtilities.ValidUserName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -133,7 +133,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
             PostCommentTestUtilities.ValidUserName,
             PostCommentTestUtilities.ValidPostCommentPostId,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 

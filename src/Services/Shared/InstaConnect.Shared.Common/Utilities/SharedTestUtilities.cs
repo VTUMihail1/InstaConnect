@@ -58,4 +58,18 @@ public class SharedTestUtilities
 
         return result;
     }
+
+    public static string GetHalfStartString(string value)
+    {
+        var result = value.Substring(0, value.Length / 2);
+
+        return result;
+    }
+
+    public static string GetNonCaseMatchingString(string value)
+    {
+        var result = value.ToUpper();
+
+        return result;
+    }
 }

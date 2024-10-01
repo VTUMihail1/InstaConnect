@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Business.Features.Users.Consumers;
 using InstaConnect.Posts.Business.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Contracts.Users;
 using MassTransit;
@@ -29,11 +30,11 @@ public class UserCreatedEventConsumerIntegrationTests : BaseUserIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var userCreatedEvent = new UserCreatedEvent(
             existingUserId,
-            ValidAddUserName,
-            ValidUserEmail,
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserProfileImage);
+            UserTestUtilities.ValidAddUserName,
+            UserTestUtilities.ValidUserEmail,
+            UserTestUtilities.ValidUserFirstName,
+            UserTestUtilities.ValidUserLastName,
+            UserTestUtilities.ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -45,11 +46,11 @@ public class UserCreatedEventConsumerIntegrationTests : BaseUserIntegrationTest
         existingUser
             .Should()
             .Match<User>(m => m.Id == existingUserId &&
-                              m.FirstName == ValidUserFirstName &&
-                              m.LastName == ValidUserLastName &&
-                              m.UserName == ValidUserName &&
-                              m.Email == ValidUserEmail &&
-                              m.ProfileImage == ValidUserProfileImage);
+                              m.FirstName == UserTestUtilities.ValidUserFirstName &&
+                              m.LastName == UserTestUtilities.ValidUserLastName &&
+                              m.UserName == UserTestUtilities.ValidUserName &&
+                              m.Email == UserTestUtilities.ValidUserEmail &&
+                              m.ProfileImage == UserTestUtilities.ValidUserProfileImage);
     }
 
     [Fact]
@@ -58,28 +59,28 @@ public class UserCreatedEventConsumerIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var userCreatedEvent = new UserCreatedEvent(
-            InvalidUserId,
-            ValidAddUserName,
-            ValidUserEmail,
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserProfileImage);
+            UserTestUtilities.InvalidUserId,
+            UserTestUtilities.ValidAddUserName,
+            UserTestUtilities.ValidUserEmail,
+            UserTestUtilities.ValidUserFirstName,
+            UserTestUtilities.ValidUserLastName,
+            UserTestUtilities.ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
         // Act
         await _userCreatedEventConsumer.Consume(_userCreatedEventConsumeContext);
-        var existingUser = await UserWriteRepository.GetByIdAsync(InvalidUserId, CancellationToken);
+        var existingUser = await UserWriteRepository.GetByIdAsync(UserTestUtilities.InvalidUserId, CancellationToken);
 
         // Assert
         existingUser
             .Should()
-            .Match<User>(m => m.Id == InvalidUserId &&
-                              m.FirstName == ValidUserFirstName &&
-                              m.LastName == ValidUserLastName &&
-                              m.UserName == ValidAddUserName &&
-                              m.Email == ValidUserEmail &&
-                              m.ProfileImage == ValidUserProfileImage);
+            .Match<User>(m => m.Id == UserTestUtilities.InvalidUserId &&
+                              m.FirstName == UserTestUtilities.ValidUserFirstName &&
+                              m.LastName == UserTestUtilities.ValidUserLastName &&
+                              m.UserName == UserTestUtilities.ValidAddUserName &&
+                              m.Email == UserTestUtilities.ValidUserEmail &&
+                              m.ProfileImage == UserTestUtilities.ValidUserProfileImage);
     }
 
     [Fact]
@@ -88,27 +89,27 @@ public class UserCreatedEventConsumerIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var userCreatedEvent = new UserCreatedEvent(
-            InvalidUserId,
-            ValidAddUserName,
-            ValidUserEmail,
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserProfileImage);
+            UserTestUtilities.InvalidUserId,
+            UserTestUtilities.ValidAddUserName,
+            UserTestUtilities.ValidUserEmail,
+            UserTestUtilities.ValidUserFirstName,
+            UserTestUtilities.ValidUserLastName,
+            UserTestUtilities.ValidUserProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
         // Act
         await _userCreatedEventConsumer.Consume(_userCreatedEventConsumeContext);
-        var existingUser = await UserWriteRepository.GetByIdAsync(InvalidUserId, CancellationToken);
+        var existingUser = await UserWriteRepository.GetByIdAsync(UserTestUtilities.InvalidUserId, CancellationToken);
 
         // Assert
         existingUser
             .Should()
-            .Match<User>(m => m.Id == InvalidUserId &&
-                              m.FirstName == ValidUserFirstName &&
-                              m.LastName == ValidUserLastName &&
-                              m.UserName == ValidAddUserName &&
-                              m.Email == ValidUserEmail &&
-                              m.ProfileImage == ValidUserProfileImage);
+            .Match<User>(m => m.Id == UserTestUtilities.InvalidUserId &&
+                              m.FirstName == UserTestUtilities.ValidUserFirstName &&
+                              m.LastName == UserTestUtilities.ValidUserLastName &&
+                              m.UserName == UserTestUtilities.ValidAddUserName &&
+                              m.Email == UserTestUtilities.ValidUserEmail &&
+                              m.ProfileImage == UserTestUtilities.ValidUserProfileImage);
     }
 }

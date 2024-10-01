@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Queries.GetPostById;
 
@@ -34,7 +35,7 @@ public class GetPostByIdQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetPostByIdQuery(Faker.Random.AlphaNumeric(length));
+        var query = new GetPostByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
         var result = _validator.TestValidate(query);

@@ -7,6 +7,7 @@ using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.PostCommentLike;
 using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostCommentLikes.Commands;
 
@@ -51,7 +52,7 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
 
         var command = new DeletePostCommentLikeCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingUserId
         );
 
@@ -97,7 +98,7 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
 
         var command = new DeletePostCommentLikeCommand(
             existingPostCommentLikeId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act
@@ -180,7 +181,7 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var command = new DeletePostCommentLikeCommand(
-            GetNonCaseMatchingString(existingPostCommentLikeId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLikeId),
             existingUserId
         );
 

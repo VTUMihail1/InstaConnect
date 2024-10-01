@@ -6,6 +6,7 @@ using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Web.Features.PostComments.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostComments.Controllers.v1;
 
@@ -27,7 +28,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(Faker.Random.AlphaNumeric(length)), CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetString(length)), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
@@ -99,7 +100,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(GetNonCaseMatchingString(existingPostCommentId)), CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentId)), CancellationToken);
 
         var postCommentViewResponse = await response
             .Content

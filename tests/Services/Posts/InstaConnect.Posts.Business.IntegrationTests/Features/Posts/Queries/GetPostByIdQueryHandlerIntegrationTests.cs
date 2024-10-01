@@ -6,6 +6,7 @@ using InstaConnect.Posts.Business.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Posts;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.Posts.Queries;
 
@@ -39,7 +40,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var query = new GetPostByIdQuery(Faker.Random.AlphaNumeric(length));
+        var query = new GetPostByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -91,7 +92,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var query = new GetPostByIdQuery(GetNonCaseMatchingString(existingPostId));
+        var query = new GetPostByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingPostId));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);

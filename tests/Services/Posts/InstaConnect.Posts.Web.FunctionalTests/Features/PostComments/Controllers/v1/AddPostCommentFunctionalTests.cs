@@ -9,6 +9,7 @@ using InstaConnect.Posts.Web.Features.PostComments.Models.Binding;
 using InstaConnect.Posts.Web.Features.PostComments.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostComments.Controllers.v1;
 
@@ -61,7 +62,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new AddPostCommentBindingModel(Faker.Random.AlphaNumeric(length), PostCommentTestUtilities.ValidAddContent);
+        var request = new AddPostCommentBindingModel(SharedTestUtilities.GetString(length), PostCommentTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -100,7 +101,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new AddPostCommentBindingModel(existingPostId, Faker.Random.AlphaNumeric(length));
+        var request = new AddPostCommentBindingModel(existingPostId, SharedTestUtilities.GetString(length));
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -141,7 +142,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var request = new AddPostCommentBindingModel(existingPostId, PostCommentTestUtilities.ValidAddContent);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);

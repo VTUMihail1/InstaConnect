@@ -22,7 +22,7 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var query = new GetAllUsersQuery(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidFirstName,
             UserTestUtilities.ValidLastName,
             ValidSortOrderProperty,
@@ -45,7 +45,7 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var query = new GetAllUsersQuery(
             UserTestUtilities.ValidName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidLastName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -68,7 +68,7 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
         var query = new GetAllUsersQuery(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidFirstName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -133,7 +133,7 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
             UserTestUtilities.ValidFirstName,
             UserTestUtilities.ValidLastName,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 

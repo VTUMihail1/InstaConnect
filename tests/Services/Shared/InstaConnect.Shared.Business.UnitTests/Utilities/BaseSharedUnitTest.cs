@@ -16,8 +16,6 @@ public class BaseSharedUnitTest
 
     protected readonly SortOrder ValidSortOrderProperty;
 
-    protected Faker Faker { get; }
-
     protected IUnitOfWork UnitOfWork { get; }
 
     protected CancellationToken CancellationToken { get; }
@@ -40,24 +38,9 @@ public class BaseSharedUnitTest
 
         ValidSortOrderProperty = SortOrder.ASC;
 
-        Faker = new Faker();
         UnitOfWork = unitOfWork;
         InstaConnectMapper = instaConnectMapper;
         CancellationToken = new CancellationToken();
         EntityPropertyValidator = entityPropertyValidator;
-    }
-
-    protected string GetAverageString(int maxLength, int minLength)
-    {
-        var result = Faker.Random.AlphaNumeric(GetAverageNumber(maxLength, minLength));
-
-        return result;
-    }
-
-    protected int GetAverageNumber(int maxLength, int minLength)
-    {
-        var result = (maxLength + minLength) / 2;
-
-        return result;
     }
 }

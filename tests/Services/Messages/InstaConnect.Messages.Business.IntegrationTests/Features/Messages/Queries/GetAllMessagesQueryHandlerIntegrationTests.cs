@@ -45,7 +45,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
@@ -69,7 +69,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
             existingSenderId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -94,7 +94,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -165,7 +165,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 
@@ -232,7 +232,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var query = new GetAllMessagesQuery(
-            GetNonCaseMatchingString(existingSenderId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingSenderId),
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
@@ -344,7 +344,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var query = new GetAllMessagesQuery(
             existingSenderId,
-            GetNonCaseMatchingString(existingReceiverId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingReceiverId),
             MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -456,7 +456,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
-            GetNonCaseMatchingString(MessageTestUtilities.ValidUserName),
+            SharedTestUtilities.GetNonCaseMatchingString(MessageTestUtilities.ValidUserName),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -493,7 +493,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingSenderId,
             existingReceiverId,
-            GetHalfStartString(MessageTestUtilities.ValidUserName),
+            SharedTestUtilities.GetHalfStartString(MessageTestUtilities.ValidUserName),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

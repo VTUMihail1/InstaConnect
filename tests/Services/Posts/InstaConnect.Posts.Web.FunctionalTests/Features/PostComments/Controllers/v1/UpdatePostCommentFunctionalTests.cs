@@ -9,6 +9,7 @@ using InstaConnect.Posts.Web.Features.PostComments.Models.Binding;
 using InstaConnect.Posts.Web.Features.PostComments.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostComments.Controllers.v1;
 
@@ -54,7 +55,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
         var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(Faker.Random.AlphaNumeric(length)),
+            GetIdRoute(SharedTestUtilities.GetString(length)),
             request,
             CancellationToken);
 
@@ -94,7 +95,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(Faker.Random.AlphaNumeric(length));
+        var request = new UpdatePostCommentBindingModel(SharedTestUtilities.GetString(length));
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -143,7 +144,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
@@ -294,7 +295,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
         var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(GetNonCaseMatchingString(existingPostCommentId)),
+            GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentId)),
             request,
             CancellationToken);
 

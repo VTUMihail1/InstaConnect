@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserById;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Queries.GetUserById;
 
@@ -34,7 +35,7 @@ public class GetUserByIdQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetUserByIdQuery(Faker.Random.AlphaNumeric(length));
+        var query = new GetUserByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
         var result = _validator.TestValidate(query);

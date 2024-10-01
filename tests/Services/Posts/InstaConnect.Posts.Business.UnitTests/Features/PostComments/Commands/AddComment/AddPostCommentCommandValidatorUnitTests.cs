@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Business.Features.PostComments.Commands.AddPostComment;
 using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Commands.AddComment;
 
@@ -38,7 +39,7 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var command = new AddPostCommentCommand(
-            Faker.Random.AlphaNumeric(length)!,
+            SharedTestUtilities.GetString(length)!,
             PostCommentTestUtilities.ValidPostId,
             PostCommentTestUtilities.ValidContent);
 
@@ -74,7 +75,7 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
         // Arrange
         var command = new AddPostCommentCommand(
             PostCommentTestUtilities.ValidCurrentUserId,
-            Faker.Random.AlphaNumeric(length)!,
+            SharedTestUtilities.GetString(length)!,
             PostCommentTestUtilities.ValidContent);
 
         // Act
@@ -110,7 +111,7 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
         var command = new AddPostCommentCommand(
             PostCommentTestUtilities.ValidCurrentUserId,
             PostCommentTestUtilities.ValidPostTitle,
-            Faker.Random.AlphaNumeric(length)!);
+            SharedTestUtilities.GetString(length)!);
 
         // Act
         var result = _commandValidator.TestValidate(command);

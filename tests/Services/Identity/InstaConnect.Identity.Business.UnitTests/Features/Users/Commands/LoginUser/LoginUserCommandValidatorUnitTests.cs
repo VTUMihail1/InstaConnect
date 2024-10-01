@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Business.Features.Users.Commands.LoginUser;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.LoginUser;
 
@@ -38,7 +39,7 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new LoginUserCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPassword
         );
 
@@ -74,7 +75,7 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new LoginUserCommand(
             UserTestUtilities.ValidEmail,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act

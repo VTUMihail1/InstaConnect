@@ -8,6 +8,7 @@ using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.PostComment;
 using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Commands;
 
@@ -49,7 +50,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var command = new UpdatePostCommentCommand(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             existingUserId,
             PostCommentTestUtilities.ValidUpdateContent
         );
@@ -93,7 +94,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var command = new UpdatePostCommentCommand(
             existingPostCommentId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             PostCommentTestUtilities.ValidUpdateContent
         );
 
@@ -137,7 +138,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new UpdatePostCommentCommand(
             existingPostCommentId,
             existingUserId,
-            Faker.Random.AlphaNumeric(length)
+            SharedTestUtilities.GetString(length)
         );
 
         // Act
@@ -222,7 +223,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var command = new UpdatePostCommentCommand(
-            GetNonCaseMatchingString(existingPostCommentId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentId),
             existingUserId,
             PostCommentTestUtilities.ValidUpdateContent
         );

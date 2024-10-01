@@ -22,7 +22,7 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var query = new GetAllFollowsQuery(
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidUserName,
             FollowTestUtilities.ValidFollowingId,
             FollowTestUtilities.ValidUserName,
@@ -46,7 +46,7 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
         // Arrange
         var query = new GetAllFollowsQuery(
             FollowTestUtilities.ValidCurrentUserId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidFollowingId,
             FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
@@ -70,7 +70,7 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
         var query = new GetAllFollowsQuery(
             FollowTestUtilities.ValidCurrentUserId,
             FollowTestUtilities.ValidUserName,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -94,7 +94,7 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             FollowTestUtilities.ValidCurrentUserId,
             FollowTestUtilities.ValidUserName,
             FollowTestUtilities.ValidFollowingId,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -162,7 +162,7 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             FollowTestUtilities.ValidFollowingId,
             FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
-            Faker.Random.AlphaNumeric(length),
+            SharedTestUtilities.GetString(length),
             ValidPageValue,
             ValidPageSizeValue);
 

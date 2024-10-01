@@ -1,6 +1,7 @@
 ﻿using Bogus;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Common.Models.Enums;
+using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Web.Abstractions;
 
 namespace InstaConnect.Shared.Web.UnitTests.Utilities;
@@ -49,7 +50,7 @@ public class BaseSharedUnitTest
 
     protected string GetAverageString(int maxLength, int minLength)
     {
-        var result = Faker.Random.AlphaNumeric(GetAverageNumber(maxLength, minLength));
+        var result = SharedTestUtilities.GetString(GetAverageNumber(maxLength, minLength));
 
         return result;
     }
