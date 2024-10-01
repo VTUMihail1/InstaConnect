@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUserDetailed;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Queries.GetCurrentUserDetailed;
 
@@ -47,7 +47,7 @@ public class GetCurrentUserDetailedQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var query = new GetCurrentUserDetailedQuery(ValidId);
+        var query = new GetCurrentUserDetailedQuery(UserTestUtilities.ValidId);
 
         // Act
         var result = _validator.TestValidate(query);

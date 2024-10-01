@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Validators;

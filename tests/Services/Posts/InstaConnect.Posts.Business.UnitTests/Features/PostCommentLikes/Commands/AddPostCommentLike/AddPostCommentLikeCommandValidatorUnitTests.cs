@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.AddPostCommentLike;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Commands.AddPostCommentLike;
 
@@ -20,7 +20,7 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
         // Arrange
         var command = new AddPostCommentLikeCommand(
             null!,
-            ValidPostCommentId);
+            PostCommentLikeTestUtilities.ValidPostCommentId);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -38,7 +38,7 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
         // Arrange
         var command = new AddPostCommentLikeCommand(
             Faker.Random.AlphaNumeric(length)!,
-            ValidPostCommentId);
+            PostCommentLikeTestUtilities.ValidPostCommentId);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -52,7 +52,7 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     {
         // Arrange
         var command = new AddPostCommentLikeCommand(
-            ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
             null!);
 
         // Act
@@ -70,7 +70,7 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     {
         // Arrange
         var command = new AddPostCommentLikeCommand(
-            ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length)!);
 
         // Act
@@ -85,8 +85,8 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     {
         // Arrange
         var command = new AddPostCommentLikeCommand(
-             ValidCurrentUserId,
-             ValidPostCommentId);
+             PostCommentLikeTestUtilities.ValidCurrentUserId,
+             PostCommentLikeTestUtilities.ValidPostCommentId);
 
         // Act
         var result = _commandValidator.TestValidate(command);

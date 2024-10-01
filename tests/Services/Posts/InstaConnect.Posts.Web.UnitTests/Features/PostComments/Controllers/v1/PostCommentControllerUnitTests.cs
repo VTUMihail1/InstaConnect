@@ -5,6 +5,7 @@ using InstaConnect.Posts.Business.Features.PostComments.Commands.DeletePostComme
 using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Web.Features.PostComments.Controllers.v1;
 using InstaConnect.Posts.Web.Features.PostComments.Models.Requests;
 using InstaConnect.Posts.Web.Features.PostComments.Models.Responses;
@@ -31,9 +32,9 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new GetAllPostCommentsRequest()
         {
-            UserId = ValidCurrentUserId,
-            UserName = ValidUserName,
-            PostId = ValidPostId,
+            UserId = PostCommentTestUtilities.ValidCurrentUserId,
+            UserName = PostCommentTestUtilities.ValidUserName,
+            PostId = PostCommentTestUtilities.ValidPostId,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -56,9 +57,9 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new GetAllPostCommentsRequest()
         {
-            UserId = ValidCurrentUserId,
-            UserName = ValidUserName,
-            PostId = ValidPostId,
+            UserId = PostCommentTestUtilities.ValidCurrentUserId,
+            UserName = PostCommentTestUtilities.ValidUserName,
+            PostId = PostCommentTestUtilities.ValidPostId,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -76,12 +77,12 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
             .Value
             .Should()
             .Match<PostCommentPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                                 m.Id == ValidId &&
-                                                                 m.PostId == ValidPostId &&
-                                                                 m.Content == ValidContent &&
-                                                                 m.UserId == ValidCurrentUserId &&
-                                                                 m.UserName == ValidUserName &&
-                                                                 m.UserProfileImage == ValidUserProfileImage) &&
+                                                                 m.Id == PostCommentTestUtilities.ValidId &&
+                                                                 m.PostId == PostCommentTestUtilities.ValidPostId &&
+                                                                 m.Content == PostCommentTestUtilities.ValidContent &&
+                                                                 m.UserId == PostCommentTestUtilities.ValidCurrentUserId &&
+                                                                 m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                                                 m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage) &&
                                                               mc.Page == ValidPageValue &&
                                                               mc.PageSize == ValidPageSizeValue &&
                                                               mc.TotalCount == ValidTotalCountValue &&
@@ -95,9 +96,9 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new GetAllPostCommentsRequest()
         {
-            UserId = ValidCurrentUserId,
-            UserName = ValidUserName,
-            PostId = ValidPostId,
+            UserId = PostCommentTestUtilities.ValidCurrentUserId,
+            UserName = PostCommentTestUtilities.ValidUserName,
+            PostId = PostCommentTestUtilities.ValidPostId,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -111,9 +112,9 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         await InstaConnectSender
               .Received(1)
               .SendAsync(Arg.Is<GetAllPostCommentsQuery>(m =>
-                  m.UserId == ValidCurrentUserId &&
-                  m.UserName == ValidUserName &&
-                  m.PostId == ValidPostId &&
+                  m.UserId == PostCommentTestUtilities.ValidCurrentUserId &&
+                  m.UserName == PostCommentTestUtilities.ValidUserName &&
+                  m.PostId == PostCommentTestUtilities.ValidPostId &&
                   m.SortOrder == ValidSortOrderProperty &&
                   m.SortPropertyName == ValidSortPropertyName &&
                   m.Page == ValidPageValue &&
@@ -126,7 +127,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new GetPostCommentByIdRequest()
         {
-            Id = ValidId
+            Id = PostCommentTestUtilities.ValidId
         };
 
         // Act
@@ -145,7 +146,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new GetPostCommentByIdRequest()
         {
-            Id = ValidId
+            Id = PostCommentTestUtilities.ValidId
         };
 
         // Act
@@ -158,12 +159,12 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
             .Which
             .Value
             .Should()
-            .Match<PostCommentQueryResponse>(m => m.Id == ValidId &&
-                                                 m.PostId == ValidPostId &&
-                                                 m.Content == ValidContent &&
-                                                 m.UserId == ValidCurrentUserId &&
-                                                 m.UserName == ValidUserName &&
-                                                 m.UserProfileImage == ValidUserProfileImage);
+            .Match<PostCommentQueryResponse>(m => m.Id == PostCommentTestUtilities.ValidId &&
+                                                 m.PostId == PostCommentTestUtilities.ValidPostId &&
+                                                 m.Content == PostCommentTestUtilities.ValidContent &&
+                                                 m.UserId == PostCommentTestUtilities.ValidCurrentUserId &&
+                                                 m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                                 m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage);
     }
 
     [Fact]
@@ -171,7 +172,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
     {
         var request = new GetPostCommentByIdRequest()
         {
-            Id = ValidId
+            Id = PostCommentTestUtilities.ValidId
         };
 
         // Act
@@ -180,7 +181,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetPostCommentByIdQuery>(m => m.Id == ValidId), CancellationToken);
+              .SendAsync(Arg.Is<GetPostCommentByIdQuery>(m => m.Id == PostCommentTestUtilities.ValidId), CancellationToken);
     }
 
     [Fact]
@@ -189,7 +190,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new AddPostCommentRequest()
         {
-            AddPostCommentBindingModel = new(ValidPostId, ValidContent)
+            AddPostCommentBindingModel = new(PostCommentTestUtilities.ValidPostId, PostCommentTestUtilities.ValidContent)
         };
 
         // Act
@@ -208,7 +209,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new AddPostCommentRequest()
         {
-            AddPostCommentBindingModel = new(ValidPostId, ValidContent)
+            AddPostCommentBindingModel = new(PostCommentTestUtilities.ValidPostId, PostCommentTestUtilities.ValidContent)
         };
 
         // Act
@@ -221,7 +222,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
             .Which
             .Value
             .Should()
-            .Match<PostCommentCommandResponse>(m => m.Id == ValidId);
+            .Match<PostCommentCommandResponse>(m => m.Id == PostCommentTestUtilities.ValidId);
     }
 
     [Fact]
@@ -230,7 +231,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new AddPostCommentRequest()
         {
-            AddPostCommentBindingModel = new(ValidPostId, ValidContent)
+            AddPostCommentBindingModel = new(PostCommentTestUtilities.ValidPostId, PostCommentTestUtilities.ValidContent)
         };
 
         // Act
@@ -239,9 +240,9 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<AddPostCommentCommand>(m => m.CurrentUserId == ValidCurrentUserId &&
-                                                     m.PostId == ValidPostId &&
-                                                     m.Content == ValidContent),
+            .SendAsync(Arg.Is<AddPostCommentCommand>(m => m.CurrentUserId == PostCommentTestUtilities.ValidCurrentUserId &&
+                                                     m.PostId == PostCommentTestUtilities.ValidPostId &&
+                                                     m.Content == PostCommentTestUtilities.ValidContent),
                                                      CancellationToken);
     }
 
@@ -251,7 +252,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new AddPostCommentRequest()
         {
-            AddPostCommentBindingModel = new(ValidPostId, ValidContent)
+            AddPostCommentBindingModel = new(PostCommentTestUtilities.ValidPostId, PostCommentTestUtilities.ValidContent)
         };
 
         // Act
@@ -269,8 +270,8 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new UpdatePostCommentRequest()
         {
-            Id = ValidId,
-            UpdatePostCommentBindingModel = new(ValidContent)
+            Id = PostCommentTestUtilities.ValidId,
+            UpdatePostCommentBindingModel = new(PostCommentTestUtilities.ValidContent)
         };
 
         // Act
@@ -289,8 +290,8 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new UpdatePostCommentRequest()
         {
-            Id = ValidId,
-            UpdatePostCommentBindingModel = new(ValidContent)
+            Id = PostCommentTestUtilities.ValidId,
+            UpdatePostCommentBindingModel = new(PostCommentTestUtilities.ValidContent)
         };
 
         // Act
@@ -303,7 +304,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
             .Which
             .Value
             .Should()
-            .Match<PostCommentCommandResponse>(m => m.Id == ValidId);
+            .Match<PostCommentCommandResponse>(m => m.Id == PostCommentTestUtilities.ValidId);
     }
 
     [Fact]
@@ -312,8 +313,8 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new UpdatePostCommentRequest()
         {
-            Id = ValidId,
-            UpdatePostCommentBindingModel = new(ValidContent)
+            Id = PostCommentTestUtilities.ValidId,
+            UpdatePostCommentBindingModel = new(PostCommentTestUtilities.ValidContent)
         };
 
         // Act
@@ -322,9 +323,9 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<UpdatePostCommentCommand>(m => m.Id == ValidId &&
-                                                      m.CurrentUserId == ValidCurrentUserId &&
-                                                      m.Content == ValidContent),
+            .SendAsync(Arg.Is<UpdatePostCommentCommand>(m => m.Id == PostCommentTestUtilities.ValidId &&
+                                                      m.CurrentUserId == PostCommentTestUtilities.ValidCurrentUserId &&
+                                                      m.Content == PostCommentTestUtilities.ValidContent),
                                                     CancellationToken);
     }
 
@@ -334,8 +335,8 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new UpdatePostCommentRequest()
         {
-            Id = ValidId,
-            UpdatePostCommentBindingModel = new(ValidContent)
+            Id = PostCommentTestUtilities.ValidId,
+            UpdatePostCommentBindingModel = new(PostCommentTestUtilities.ValidContent)
         };
 
         // Act
@@ -353,7 +354,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new DeletePostCommentRequest()
         {
-            Id = ValidId
+            Id = PostCommentTestUtilities.ValidId
         };
 
         // Act
@@ -371,7 +372,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new DeletePostCommentRequest()
         {
-            Id = ValidId
+            Id = PostCommentTestUtilities.ValidId
         };
 
         // Act
@@ -380,8 +381,8 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<DeletePostCommentCommand>(m => m.Id == ValidId &&
-                                                    m.CurrentUserId == ValidCurrentUserId),
+            .SendAsync(Arg.Is<DeletePostCommentCommand>(m => m.Id == PostCommentTestUtilities.ValidId &&
+                                                    m.CurrentUserId == PostCommentTestUtilities.ValidCurrentUserId),
                                                     CancellationToken);
     }
 
@@ -391,7 +392,7 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
         // Arrange
         var request = new DeletePostCommentRequest()
         {
-            Id = ValidId
+            Id = PostCommentTestUtilities.ValidId
         };
 
         // Act

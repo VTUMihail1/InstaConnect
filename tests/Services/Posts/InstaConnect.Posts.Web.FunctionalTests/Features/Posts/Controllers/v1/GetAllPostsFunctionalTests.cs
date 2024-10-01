@@ -2,12 +2,12 @@
 using System.Net.Http.Json;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
-using InstaConnect.Shared.Business.Utilities;
-using InstaConnect.Shared.Data.Models.Enums;
+using InstaConnect.Shared.Common.Models.Enums;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Web.FunctionalTests.Features.Posts.Controllers.v1;
 
@@ -28,8 +28,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             Faker.Random.AlphaNumeric(length),
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -53,7 +53,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var route = GetApiRoute(
             existingUserId,
             Faker.Random.AlphaNumeric(length),
-            ValidTitle,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -76,7 +76,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostTestUtilities.ValidUserName,
             Faker.Random.AlphaNumeric(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -98,8 +98,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
             ValidPageValue,
@@ -122,8 +122,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
             ValidPageValue,
@@ -146,8 +146,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             value,
@@ -172,8 +172,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -194,8 +194,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -216,8 +216,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -236,10 +236,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
-                                                               m.Title == ValidTitle &&
-                                                               m.Content == ValidContent) &&
+                                                               m.UserName == PostTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Title == PostTestUtilities.ValidTitle &&
+                                                               m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -255,8 +255,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -275,10 +275,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
-                                                               m.Title == ValidTitle &&
-                                                               m.Content == ValidContent) &&
+                                                               m.UserName == PostTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Title == PostTestUtilities.ValidTitle &&
+                                                               m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -294,8 +294,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             GetNonCaseMatchingString(existingUserId),
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -314,10 +314,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
-                                                               m.Title == ValidTitle &&
-                                                               m.Content == ValidContent) &&
+                                                               m.UserName == PostTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Title == PostTestUtilities.ValidTitle &&
+                                                               m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -333,8 +333,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetNonCaseMatchingString(ValidUserName),
-            ValidTitle,
+            GetNonCaseMatchingString(PostTestUtilities.ValidUserName),
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -353,10 +353,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
-                                                               m.Title == ValidTitle &&
-                                                               m.Content == ValidContent) &&
+                                                               m.UserName == PostTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Title == PostTestUtilities.ValidTitle &&
+                                                               m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -372,8 +372,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetHalfStartString(ValidUserName),
-            ValidTitle,
+            GetHalfStartString(PostTestUtilities.ValidUserName),
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -392,10 +392,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
-                                                               m.Title == ValidTitle &&
-                                                               m.Content == ValidContent) &&
+                                                               m.UserName == PostTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Title == PostTestUtilities.ValidTitle &&
+                                                               m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -411,8 +411,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
-            GetNonCaseMatchingString(ValidTitle),
+            PostTestUtilities.ValidUserName,
+            GetNonCaseMatchingString(PostTestUtilities.ValidTitle),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -431,10 +431,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
-                                                               m.Title == ValidTitle &&
-                                                               m.Content == ValidContent) &&
+                                                               m.UserName == PostTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Title == PostTestUtilities.ValidTitle &&
+                                                               m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -450,8 +450,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetHalfStartString(ValidUserName),
-            ValidTitle,
+            GetHalfStartString(PostTestUtilities.ValidUserName),
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -470,10 +470,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
-                                                               m.Title == ValidTitle &&
-                                                               m.Content == ValidContent) &&
+                                                               m.UserName == PostTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Title == PostTestUtilities.ValidTitle &&
+                                                               m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -501,10 +501,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
-                                                               m.Title == ValidTitle &&
-                                                               m.Content == ValidContent) &&
+                                                               m.UserName == PostTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Title == PostTestUtilities.ValidTitle &&
+                                                               m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&

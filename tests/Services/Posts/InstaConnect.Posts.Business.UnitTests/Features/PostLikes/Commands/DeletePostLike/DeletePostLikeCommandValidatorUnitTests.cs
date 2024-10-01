@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.DeletePostLike;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Commands.DeletePostLike;
 
@@ -20,7 +20,7 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var command = new DeletePostLikeCommand(
             null!,
-            ValidCurrentUserId
+            PostLikeTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -39,7 +39,7 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var command = new DeletePostLikeCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidCurrentUserId
+            PostLikeTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -54,7 +54,7 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new DeletePostLikeCommand(
-            ValidId,
+            PostLikeTestUtilities.ValidId,
             null!
         );
 
@@ -73,7 +73,7 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new DeletePostLikeCommand(
-            ValidId,
+            PostLikeTestUtilities.ValidId,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -89,8 +89,8 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new DeletePostLikeCommand(
-            ValidId,
-            ValidCurrentUserId
+            PostLikeTestUtilities.ValidId,
+            PostLikeTestUtilities.ValidCurrentUserId
         );
 
         // Act

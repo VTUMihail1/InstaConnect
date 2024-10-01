@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
@@ -43,7 +43,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(InvalidId), CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(PostLikeTestUtilities.InvalidId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
@@ -84,8 +84,8 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
             .Should()
             .Match<PostLikeQueryResponse>(m => m.Id == existingPostLikeId &&
                                  m.UserId == existingUserId &&
-                                 m.UserName == ValidUserName &&
-                                 m.UserProfileImage == ValidUserProfileImage &&
+                                 m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                 m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                  m.PostId == existingPostId);
     }
 
@@ -109,8 +109,8 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
             .Should()
             .Match<PostLikeQueryResponse>(m => m.Id == existingPostLikeId &&
                                  m.UserId == existingUserId &&
-                                 m.UserName == ValidUserName &&
-                                 m.UserProfileImage == ValidUserProfileImage &&
+                                 m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                 m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                  m.PostId == existingPostId);
     }
 }

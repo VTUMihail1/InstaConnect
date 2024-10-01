@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
 using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Filters;
 using NSubstitute;
 
@@ -23,9 +24,9 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var query = new GetAllPostCommentsQuery(
-            ValidPostCommentCurrentUserId,
-            ValidUserName,
-            ValidPostCommentPostId,
+            PostCommentTestUtilities.ValidPostCommentCurrentUserId,
+            PostCommentTestUtilities.ValidUserName,
+            PostCommentTestUtilities.ValidPostCommentPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -38,9 +39,9 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
         await PostCommentReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<PostCommentCollectionReadQuery>(m =>
-                                                                        m.UserId == ValidPostCommentCurrentUserId &&
-                                                                        m.UserName == ValidUserName &&
-                                                                        m.PostId == ValidPostCommentPostId &&
+                                                                        m.UserId == PostCommentTestUtilities.ValidPostCommentCurrentUserId &&
+                                                                        m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                                                        m.PostId == PostCommentTestUtilities.ValidPostCommentPostId &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
@@ -53,9 +54,9 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var query = new GetAllPostCommentsQuery(
-            ValidPostCommentCurrentUserId,
-            ValidUserName,
-            ValidPostCommentPostId,
+            PostCommentTestUtilities.ValidPostCommentCurrentUserId,
+            PostCommentTestUtilities.ValidUserName,
+            PostCommentTestUtilities.ValidPostCommentPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -67,12 +68,12 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
         // Assert
         response
             .Should()
-            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
-                                                           m.UserId == ValidPostCommentCurrentUserId &&
-                                                           m.UserName == ValidUserName &&
-                                                           m.UserProfileImage == ValidUserProfileImage &&
-                                                           m.PostId == ValidPostCommentPostId &&
-                                                           m.Content == ValidContent) &&
+            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == PostCommentTestUtilities.ValidId &&
+                                                           m.UserId == PostCommentTestUtilities.ValidPostCommentCurrentUserId &&
+                                                           m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                                           m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
+                                                           m.PostId == PostCommentTestUtilities.ValidPostCommentPostId &&
+                                                           m.Content == PostCommentTestUtilities.ValidContent) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
                                                            mc.TotalCount == ValidTotalCountValue &&

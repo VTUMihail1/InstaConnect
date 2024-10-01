@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Follows.Business.Features.Follows.Mappings;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Data.Features.Follows.Abstractions;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
@@ -16,18 +16,6 @@ namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 
 public abstract class BaseFollowUnitTest : BaseSharedUnitTest
 {
-    protected readonly string ValidId;
-    protected readonly string InvalidId;
-    protected readonly string ValidCurrentUserId;
-    protected readonly string ValidFollowingId;
-    protected readonly string InvalidUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidUserFirstName;
-    protected readonly string ValidUserEmail;
-    protected readonly string ValidUserLastName;
-    protected readonly string ValidUserProfileImage;
-    protected readonly string ValidFollowFollowingId;
-    protected readonly string ValidFollowCurrentUserId;
 
     protected IUserWriteRepository UserWriteRepository { get; }
 
@@ -46,68 +34,56 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
                 }))),
         new EntityPropertyValidator())
     {
-        ValidId = GetAverageString(FollowBusinessConfigurations.ID_MAX_LENGTH, FollowBusinessConfigurations.ID_MIN_LENGTH);
-        InvalidId = GetAverageString(FollowBusinessConfigurations.ID_MAX_LENGTH, FollowBusinessConfigurations.ID_MIN_LENGTH);
-        ValidFollowingId = GetAverageString(FollowBusinessConfigurations.FOLLOWING_ID_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_ID_MIN_LENGTH);
-        InvalidUserId = GetAverageString(FollowBusinessConfigurations.FOLLOWING_ID_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-        ValidUserFirstName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-        ValidUserLastName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-        ValidUserEmail = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-        ValidCurrentUserId = GetAverageString(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidFollowFollowingId = GetAverageString(FollowBusinessConfigurations.FOLLOWING_ID_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_ID_MIN_LENGTH);
-        ValidFollowCurrentUserId = GetAverageString(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
 
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         FollowReadRepository = Substitute.For<IFollowReadRepository>();
         FollowWriteRepository = Substitute.For<IFollowWriteRepository>();
 
         var existingFollower = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            FollowTestUtilities.ValidUserFirstName,
+            FollowTestUtilities.ValidUserLastName,
+            FollowTestUtilities.ValidUserEmail,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidCurrentUserId,
+            Id = FollowTestUtilities.ValidCurrentUserId,
         };
 
         var existingFollowFollower = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            FollowTestUtilities.ValidUserFirstName,
+            FollowTestUtilities.ValidUserLastName,
+            FollowTestUtilities.ValidUserEmail,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidFollowCurrentUserId,
+            Id = FollowTestUtilities.ValidFollowCurrentUserId,
         };
 
         var existingFollowing = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            FollowTestUtilities.ValidUserFirstName,
+            FollowTestUtilities.ValidUserLastName,
+            FollowTestUtilities.ValidUserEmail,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidFollowingId
+            Id = FollowTestUtilities.ValidFollowingId
         };
 
         var existingFollowFollowing = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            FollowTestUtilities.ValidUserFirstName,
+            FollowTestUtilities.ValidUserLastName,
+            FollowTestUtilities.ValidUserEmail,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidFollowFollowingId
+            Id = FollowTestUtilities.ValidFollowFollowingId
         };
 
         var existingFollow = new Follow(
-            ValidFollowCurrentUserId,
-            ValidFollowFollowingId)
+            FollowTestUtilities.ValidFollowCurrentUserId,
+            FollowTestUtilities.ValidFollowFollowingId)
         {
-            Id = ValidId,
+            Id = FollowTestUtilities.ValidId,
             Follower = existingFollowFollower,
             Following = existingFollowFollowing
         };
@@ -119,51 +95,51 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
             ValidTotalCountValue);
 
         FollowReadRepository.GetByIdAsync(
-            ValidId,
+            FollowTestUtilities.ValidId,
             CancellationToken)
             .Returns(existingFollow);
 
         FollowWriteRepository.GetByIdAsync(
-            ValidId,
+            FollowTestUtilities.ValidId,
             CancellationToken)
             .Returns(existingFollow);
 
         FollowReadRepository.GetByFollowerIdAndFollowingIdAsync(
-            ValidFollowCurrentUserId,
-            ValidFollowFollowingId,
+            FollowTestUtilities.ValidFollowCurrentUserId,
+            FollowTestUtilities.ValidFollowFollowingId,
             CancellationToken)
             .Returns(existingFollow);
 
         FollowWriteRepository.GetByFollowerIdAndFollowingIdAsync(
-            ValidFollowCurrentUserId,
-            ValidFollowFollowingId,
+            FollowTestUtilities.ValidFollowCurrentUserId,
+            FollowTestUtilities.ValidFollowFollowingId,
             CancellationToken)
             .Returns(existingFollow);
 
         UserWriteRepository.GetByIdAsync(
-            ValidCurrentUserId,
+            FollowTestUtilities.ValidCurrentUserId,
             CancellationToken)
             .Returns(existingFollower);
 
         UserWriteRepository.GetByIdAsync(
-            ValidFollowingId,
+            FollowTestUtilities.ValidFollowingId,
             CancellationToken)
             .Returns(existingFollowing);
 
         UserWriteRepository.GetByIdAsync(
-            ValidFollowCurrentUserId,
+            FollowTestUtilities.ValidFollowCurrentUserId,
             CancellationToken)
             .Returns(existingFollowFollower);
 
         UserWriteRepository.GetByIdAsync(
-            ValidFollowFollowingId,
+            FollowTestUtilities.ValidFollowFollowingId,
             CancellationToken)
             .Returns(existingFollowFollowing);
 
         FollowReadRepository
-            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m => m.FollowerId == ValidFollowCurrentUserId &&
-                                                                 m.FollowingId == ValidFollowFollowingId &&
-                                                                 m.FollowerName == ValidUserName &&
+            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m => m.FollowerId == FollowTestUtilities.ValidFollowCurrentUserId &&
+                                                                 m.FollowingId == FollowTestUtilities.ValidFollowFollowingId &&
+                                                                 m.FollowerName == FollowTestUtilities.ValidUserName &&
                                                                  m.Page == ValidPageValue &&
                                                                  m.PageSize == ValidPageSizeValue &&
                                                                  m.SortOrder == ValidSortOrderProperty &&

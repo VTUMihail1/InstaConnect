@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.AddPostLike;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Commands.AddPostLike;
 
@@ -20,7 +20,7 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var command = new AddPostLikeCommand(
             null!,
-            ValidPostId);
+            PostLikeTestUtilities.ValidPostId);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -38,7 +38,7 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var command = new AddPostLikeCommand(
             Faker.Random.AlphaNumeric(length)!,
-            ValidPostId);
+            PostLikeTestUtilities.ValidPostId);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -52,7 +52,7 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new AddPostLikeCommand(
-            ValidCurrentUserId,
+            PostLikeTestUtilities.ValidCurrentUserId,
             null!);
 
         // Act
@@ -70,7 +70,7 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new AddPostLikeCommand(
-            ValidCurrentUserId,
+            PostLikeTestUtilities.ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length));
 
         // Act
@@ -85,8 +85,8 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new AddPostLikeCommand(
-            ValidCurrentUserId,
-            ValidPostId);
+            PostLikeTestUtilities.ValidCurrentUserId,
+            PostLikeTestUtilities.ValidPostId);
 
         // Act
         var result = _commandValidator.TestValidate(command);

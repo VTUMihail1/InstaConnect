@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.DeleteFollow;
 
@@ -20,7 +20,7 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
         // Arrange
         var command = new DeleteFollowCommand(
             null!,
-            ValidCurrentUserId
+            FollowTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -39,7 +39,7 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
         // Arrange
         var command = new DeleteFollowCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidCurrentUserId
+            FollowTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -54,7 +54,7 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new DeleteFollowCommand(
-            ValidId,
+            FollowTestUtilities.ValidId,
             null!
         );
 
@@ -73,7 +73,7 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new DeleteFollowCommand(
-            ValidId,
+            FollowTestUtilities.ValidId,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -89,8 +89,8 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new DeleteFollowCommand(
-            ValidId,
-            ValidCurrentUserId);
+            FollowTestUtilities.ValidId,
+            FollowTestUtilities.ValidCurrentUserId);
 
         // Act
         var result = _commandValidator.TestValidate(command);

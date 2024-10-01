@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Posts;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Posts;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Commands.UpdatePost;
@@ -25,10 +26,10 @@ public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new UpdatePostCommand(
-            InvalidId,
-            ValidPostCurrentUserId,
-            ValidTitle,
-            ValidContent
+            PostTestUtilities.InvalidId,
+            PostTestUtilities.ValidPostCurrentUserId,
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent
         );
 
         // Act
@@ -43,10 +44,10 @@ public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new UpdatePostCommand(
-            ValidId,
-            ValidCurrentUserId,
-            ValidTitle,
-            ValidContent
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent
         );
 
         // Act
@@ -61,10 +62,10 @@ public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new UpdatePostCommand(
-            ValidId,
-            ValidPostCurrentUserId,
-            ValidTitle,
-            ValidContent
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidPostCurrentUserId,
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent
         );
 
         // Act
@@ -73,7 +74,7 @@ public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
         // Assert
         await PostWriteRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(PostTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
@@ -81,10 +82,10 @@ public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new UpdatePostCommand(
-            ValidId,
-            ValidPostCurrentUserId,
-            ValidTitle,
-            ValidContent
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidPostCurrentUserId,
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent
         );
 
         // Act
@@ -93,10 +94,10 @@ public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
         // Assert
         PostWriteRepository
             .Received(1)
-            .Update(Arg.Is<Post>(m => m.Id == ValidId &&
-                                      m.UserId == ValidPostCurrentUserId &&
-                                      m.Title == ValidTitle &&
-                                      m.Content == ValidContent));
+            .Update(Arg.Is<Post>(m => m.Id == PostTestUtilities.ValidId &&
+                                      m.UserId == PostTestUtilities.ValidPostCurrentUserId &&
+                                      m.Title == PostTestUtilities.ValidTitle &&
+                                      m.Content == PostTestUtilities.ValidContent));
     }
 
     [Fact]
@@ -104,10 +105,10 @@ public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new UpdatePostCommand(
-            ValidId,
-            ValidPostCurrentUserId,
-            ValidTitle,
-            ValidContent
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidPostCurrentUserId,
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent
         );
 
         // Act

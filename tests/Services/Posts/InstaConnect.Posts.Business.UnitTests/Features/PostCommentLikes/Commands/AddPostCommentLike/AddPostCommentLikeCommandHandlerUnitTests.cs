@@ -2,10 +2,11 @@
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.AddPostCommentLike;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.PostComment;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.PostComment;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Commands.AddPostCommentLike;
@@ -29,8 +30,8 @@ public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeUnit
     {
         // Arrange
         var command = new AddPostCommentLikeCommand(
-            InvalidUserId,
-            ValidPostCommentId);
+            PostCommentLikeTestUtilities.InvalidUserId,
+            PostCommentLikeTestUtilities.ValidPostCommentId);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -44,8 +45,8 @@ public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeUnit
     {
         // Arrange
         var command = new AddPostCommentLikeCommand(
-            ValidCurrentUserId,
-            InvalidPostCommentId);
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            PostCommentLikeTestUtilities.InvalidPostCommentId);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -59,8 +60,8 @@ public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeUnit
     {
         // Arrange
         var command = new AddPostCommentLikeCommand(
-            ValidPostCommentLikeCurrentUserId,
-            ValidPostCommentLikePostCommentId);
+            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
+            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -74,8 +75,8 @@ public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeUnit
     {
         // Arrange
         var command = new AddPostCommentLikeCommand(
-            ValidCurrentUserId,
-            ValidPostCommentId);
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidPostCommentId);
 
         // Act
         var response = await _commandHandler.Handle(command, CancellationToken);
@@ -91,8 +92,8 @@ public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeUnit
     {
         // Arrange
         var command = new AddPostCommentLikeCommand(
-            ValidCurrentUserId,
-            ValidPostCommentId);
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidPostCommentId);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -102,8 +103,8 @@ public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeUnit
             .Received(1)
             .Add(Arg.Is<PostCommentLike>(m =>
                 !string.IsNullOrEmpty(m.Id) &&
-                m.UserId == ValidCurrentUserId &&
-                m.PostCommentId == ValidPostCommentId));
+                m.UserId == PostCommentLikeTestUtilities.ValidCurrentUserId &&
+                m.PostCommentId == PostCommentLikeTestUtilities.ValidPostCommentId));
     }
 
     [Fact]
@@ -111,8 +112,8 @@ public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeUnit
     {
         // Arrange
         var command = new AddPostCommentLikeCommand(
-            ValidCurrentUserId,
-            ValidPostCommentId);
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidPostCommentId);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

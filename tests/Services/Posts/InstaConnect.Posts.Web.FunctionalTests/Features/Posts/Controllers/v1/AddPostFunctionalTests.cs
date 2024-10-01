@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Web.Features.Posts.Models.Binding;
 using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
@@ -24,7 +24,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(ValidAddTitle, ValidAddContent);
+        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent);
 
         // Act
         var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
@@ -38,7 +38,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(null!, ValidAddContent);
+        var request = new AddPostBindingModel(null!, PostTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -58,7 +58,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(Faker.Random.AlphaNumeric(length), ValidAddContent);
+        var request = new AddPostBindingModel(Faker.Random.AlphaNumeric(length), PostTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -75,7 +75,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(ValidAddTitle, null!);
+        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, null!);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -95,7 +95,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(ValidAddTitle, Faker.Random.AlphaNumeric(length));
+        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, Faker.Random.AlphaNumeric(length));
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -112,7 +112,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(ValidAddTitle, ValidAddContent);
+        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
 
@@ -132,7 +132,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(ValidAddTitle, ValidAddContent);
+        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
 
@@ -149,9 +149,9 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(ValidAddTitle, ValidAddContent);
+        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = InvalidUserId;
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = PostTestUtilities.InvalidUserId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
@@ -166,7 +166,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(ValidAddTitle, ValidAddContent);
+        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent);
 
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
@@ -184,7 +184,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(ValidAddTitle, ValidAddContent);
+        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -203,7 +203,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
             .Should()
             .Match<Post>(m => m.Id == postViewResponse.Id &&
                                  m.UserId == existingUserId &&
-                                 m.Content == ValidAddContent &&
-                                 m.Title == ValidAddTitle);
+                                 m.Content == PostTestUtilities.ValidAddContent &&
+                                 m.Title == PostTestUtilities.ValidAddTitle);
     }
 }

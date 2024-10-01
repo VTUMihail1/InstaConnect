@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Common.Models.Enums;
 using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Models.Enums;
 
 namespace InstaConnect.Shared.Business.UnitTests.Utilities;
 

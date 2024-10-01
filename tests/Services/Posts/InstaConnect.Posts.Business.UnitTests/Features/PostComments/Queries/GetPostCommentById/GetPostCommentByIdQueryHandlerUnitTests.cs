@@ -2,7 +2,8 @@
 using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
 using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
-using InstaConnect.Shared.Business.Exceptions.PostComment;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Shared.Common.Exceptions.PostComment;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Queries.GetPostCommentById;
@@ -22,7 +23,7 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentUnitTest
     public async Task Handle_ShouldThrowPostCommentNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var query = new GetPostCommentByIdQuery(InvalidId);
+        var query = new GetPostCommentByIdQuery(PostCommentTestUtilities.InvalidId);
 
         // Act
         var action = async () => await _queryHandler.Handle(query, CancellationToken);
@@ -35,7 +36,7 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetByIdMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetPostCommentByIdQuery(ValidId);
+        var query = new GetPostCommentByIdQuery(PostCommentTestUtilities.ValidId);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -43,14 +44,14 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentUnitTest
         // Assert
         await PostCommentReadRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(PostCommentTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldReturnPostCommentViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetPostCommentByIdQuery(ValidId);
+        var query = new GetPostCommentByIdQuery(PostCommentTestUtilities.ValidId);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -58,11 +59,11 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentUnitTest
         // Assert
         response
             .Should()
-            .Match<PostCommentQueryViewModel>(m => m.Id == ValidId &&
-                                              m.UserId == ValidPostCommentCurrentUserId &&
-                                              m.UserName == ValidUserName &&
-                                              m.UserProfileImage == ValidUserProfileImage &&
-                                              m.PostId == ValidPostCommentPostId &&
-                                              m.Content == ValidContent);
+            .Match<PostCommentQueryViewModel>(m => m.Id == PostCommentTestUtilities.ValidId &&
+                                              m.UserId == PostCommentTestUtilities.ValidPostCommentCurrentUserId &&
+                                              m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                              m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
+                                              m.PostId == PostCommentTestUtilities.ValidPostCommentPostId &&
+                                              m.Content == PostCommentTestUtilities.ValidContent);
     }
 }

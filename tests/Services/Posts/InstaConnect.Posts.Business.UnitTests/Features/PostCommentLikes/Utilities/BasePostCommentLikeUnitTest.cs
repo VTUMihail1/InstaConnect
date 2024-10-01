@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Mappings;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Abstract;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
@@ -20,21 +18,6 @@ namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilit
 
 public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
 {
-    protected readonly string ValidId;
-    protected readonly string InvalidId;
-    protected readonly string ValidPostCommentId;
-    protected readonly string InvalidPostCommentId;
-    protected readonly string ValidPostCommentContent;
-    protected readonly string ValidCurrentUserId;
-    protected readonly string InvalidUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidUserFirstName;
-    protected readonly string ValidUserEmail;
-    protected readonly string ValidUserLastName;
-    protected readonly string ValidUserProfileImage;
-    protected readonly string ValidPostCommentLikePostCommentId;
-    protected readonly string ValidPostCommentLikeCurrentUserId;
-
     protected IUserWriteRepository UserWriteRepository { get; }
 
     protected IPostCommentReadRepository PostCommentReadRepository { get; }
@@ -56,20 +39,6 @@ public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
                 }))),
         new EntityPropertyValidator())
     {
-        ValidId = GetAverageString(PostCommentLikeBusinessConfigurations.ID_MAX_LENGTH, PostCommentLikeBusinessConfigurations.ID_MIN_LENGTH);
-        InvalidId = GetAverageString(PostCommentLikeBusinessConfigurations.ID_MAX_LENGTH, PostCommentLikeBusinessConfigurations.ID_MIN_LENGTH);
-        ValidPostCommentId = GetAverageString(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MAX_LENGTH, PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MIN_LENGTH);
-        InvalidPostCommentId = GetAverageString(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MAX_LENGTH, PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MIN_LENGTH);
-        ValidPostCommentContent = GetAverageString(PostCommentBusinessConfigurations.CONTENT_MAX_LENGTH, PostCommentBusinessConfigurations.CONTENT_MIN_LENGTH);
-        InvalidUserId = GetAverageString(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserFirstName = GetAverageString(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserLastName = GetAverageString(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserEmail = GetAverageString(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidCurrentUserId = GetAverageString(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidPostCommentLikePostCommentId = GetAverageString(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MAX_LENGTH, PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MIN_LENGTH);
-        ValidPostCommentLikeCurrentUserId = GetAverageString(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
 
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         PostCommentReadRepository = Substitute.For<IPostCommentReadRepository>();
@@ -78,50 +47,50 @@ public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
         PostCommentLikeWriteRepository = Substitute.For<IPostCommentLikeWriteRepository>();
 
         var existingUser = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            PostCommentLikeTestUtilities.ValidUserFirstName,
+            PostCommentLikeTestUtilities.ValidUserLastName,
+            PostCommentLikeTestUtilities.ValidUserEmail,
+            PostCommentLikeTestUtilities.ValidUserName,
+            PostCommentLikeTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidCurrentUserId,
+            Id = PostCommentLikeTestUtilities.ValidCurrentUserId,
         };
 
         var existingPostCommentLikeUser = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            PostCommentLikeTestUtilities.ValidUserFirstName,
+            PostCommentLikeTestUtilities.ValidUserLastName,
+            PostCommentLikeTestUtilities.ValidUserEmail,
+            PostCommentLikeTestUtilities.ValidUserName,
+            PostCommentLikeTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidPostCommentLikeCurrentUserId,
+            Id = PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
         };
 
         var existingPostComment = new PostComment(
-            ValidPostCommentLikeCurrentUserId,
-            ValidPostCommentLikePostCommentId,
-            ValidPostCommentContent
+            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
+            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
+            PostCommentLikeTestUtilities.ValidPostCommentContent
             )
         {
-            Id = ValidPostCommentId,
+            Id = PostCommentLikeTestUtilities.ValidPostCommentId,
             User = existingPostCommentLikeUser
         };
 
         var existingPostCommentLikePostComment = new PostComment(
-            ValidPostCommentLikeCurrentUserId,
-            ValidPostCommentLikePostCommentId,
-            ValidPostCommentContent
+            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
+            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
+            PostCommentLikeTestUtilities.ValidPostCommentContent
             )
         {
-            Id = ValidPostCommentLikePostCommentId,
+            Id = PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
             User = existingPostCommentLikeUser,
         };
 
         var existingPostCommentLike = new PostCommentLike(
-            ValidPostCommentLikePostCommentId,
-            ValidPostCommentLikeCurrentUserId)
+            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
+            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId)
         {
-            Id = ValidId,
+            Id = PostCommentLikeTestUtilities.ValidId,
             User = existingPostCommentLikeUser,
             PostComment = existingPostCommentLikePostComment,
         };
@@ -133,56 +102,56 @@ public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
             ValidTotalCountValue);
 
         UserWriteRepository.GetByIdAsync(
-            ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
             CancellationToken)
             .Returns(existingUser);
 
         UserWriteRepository.GetByIdAsync(
-            ValidPostCommentLikeCurrentUserId,
+            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
             CancellationToken)
             .Returns(existingPostCommentLikeUser);
 
         PostCommentReadRepository.GetByIdAsync(
-            ValidPostCommentId,
+            PostCommentLikeTestUtilities.ValidPostCommentId,
             CancellationToken)
             .Returns(existingPostComment);
 
         PostCommentWriteRepository.GetByIdAsync(
-            ValidPostCommentId,
+            PostCommentLikeTestUtilities.ValidPostCommentId,
             CancellationToken)
             .Returns(existingPostComment);
 
         PostCommentReadRepository.GetByIdAsync(
-            ValidPostCommentLikePostCommentId,
+            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
             CancellationToken)
             .Returns(existingPostCommentLikePostComment);
 
         PostCommentWriteRepository.GetByIdAsync(
-            ValidPostCommentLikePostCommentId,
+            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
             CancellationToken)
             .Returns(existingPostCommentLikePostComment);
 
         PostCommentLikeReadRepository.GetByIdAsync(
-            ValidId,
+            PostCommentLikeTestUtilities.ValidId,
             CancellationToken)
             .Returns(existingPostCommentLike);
 
         PostCommentLikeWriteRepository.GetByIdAsync(
-            ValidId,
+            PostCommentLikeTestUtilities.ValidId,
             CancellationToken)
             .Returns(existingPostCommentLike);
 
         PostCommentLikeWriteRepository.GetByUserIdAndPostCommentIdAsync(
-            ValidPostCommentLikeCurrentUserId,
-            ValidPostCommentLikePostCommentId,
+            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
+            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
             CancellationToken)
             .Returns(existingPostCommentLike);
 
         PostCommentLikeReadRepository
             .GetAllAsync(Arg.Is<PostCommentLikeCollectionReadQuery>(m =>
-                                                                        m.PostCommentId == ValidPostCommentLikePostCommentId &&
-                                                                        m.UserId == ValidPostCommentLikeCurrentUserId &&
-                                                                        m.UserName == ValidUserName &&
+                                                                        m.PostCommentId == PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId &&
+                                                                        m.UserId == PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId &&
+                                                                        m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

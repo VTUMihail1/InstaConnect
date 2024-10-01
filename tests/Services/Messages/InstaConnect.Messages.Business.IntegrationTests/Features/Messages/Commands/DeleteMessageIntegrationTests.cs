@@ -1,12 +1,12 @@
 ﻿using Bogus;
 using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Commands.DeleteMessage;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.Message;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.Message;
+using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Commands;
 
@@ -106,7 +106,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new DeleteMessageCommand(
-            InvalidId,
+            MessageTestUtilities.InvalidId,
             existingSenderId
         );
 

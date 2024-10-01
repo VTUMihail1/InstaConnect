@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
@@ -41,7 +41,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(InvalidId), CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(PostTestUtilities.InvalidId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
@@ -79,11 +79,11 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         postViewResponse
             .Should()
             .Match<PostQueryResponse>(m => m.Id == existingPostId &&
-                                 m.Content == ValidContent &&
+                                 m.Content == PostTestUtilities.ValidContent &&
                                  m.UserId == existingUserId &&
-                                 m.UserName == ValidUserName &&
-                                 m.UserProfileImage == ValidUserProfileImage &&
-                                 m.Title == ValidTitle);
+                                 m.UserName == PostTestUtilities.ValidUserName &&
+                                 m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                 m.Title == PostTestUtilities.ValidTitle);
     }
 
     [Fact]
@@ -104,10 +104,10 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         postViewResponse
             .Should()
             .Match<PostQueryResponse>(m => m.Id == existingPostId &&
-                                 m.Content == ValidContent &&
+                                 m.Content == PostTestUtilities.ValidContent &&
                                  m.UserId == existingUserId &&
-                                 m.UserName == ValidUserName &&
-                                 m.UserProfileImage == ValidUserProfileImage &&
-                                 m.Title == ValidTitle);
+                                 m.UserName == PostTestUtilities.ValidUserName &&
+                                 m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                 m.Title == PostTestUtilities.ValidTitle);
     }
 }

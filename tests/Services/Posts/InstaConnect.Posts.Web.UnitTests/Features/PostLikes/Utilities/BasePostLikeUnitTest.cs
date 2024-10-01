@@ -3,7 +3,7 @@ using InstaConnect.Posts.Business.Features.PostLikes.Commands.AddPostLike;
 using InstaConnect.Posts.Business.Features.PostLikes.Models;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetPostLikeById;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Web.Features.PostLikes.Mappings;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
@@ -16,12 +16,6 @@ namespace InstaConnect.Posts.Web.UnitTests.Features.PostLikes.Utilities;
 
 public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
 {
-    protected readonly string ValidId;
-    protected readonly string ValidPostId;
-    protected readonly string ValidCurrentUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidUserProfileImage;
-
     public BasePostLikeUnitTest() : base(
         Substitute.For<IInstaConnectSender>(),
         Substitute.For<ICurrentUserContext>(),
@@ -33,21 +27,16 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
                     cfg.AddProfile<PostLikeQueryProfile>();
                 }))))
     {
-        ValidId = GetAverageString(PostLikeBusinessConfigurations.ID_MAX_LENGTH, PostLikeBusinessConfigurations.ID_MIN_LENGTH);
-        ValidPostId = GetAverageString(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH, PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH);
-        ValidCurrentUserId = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
 
         var existingPostLikeQueryViewModel = new PostLikeQueryViewModel(
-            ValidId,
-            ValidPostId,
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidUserProfileImage);
+            PostLikeTestUtilities.ValidId,
+            PostLikeTestUtilities.ValidPostId,
+            PostLikeTestUtilities.ValidCurrentUserId,
+            PostLikeTestUtilities.ValidUserName,
+            PostLikeTestUtilities.ValidUserProfileImage);
 
-        var existingPostLikeCommandViewModel = new PostLikeCommandViewModel(ValidId);
-        var existingCurrentUserModel = new CurrentUserModel(ValidCurrentUserId, ValidUserName);
+        var existingPostLikeCommandViewModel = new PostLikeCommandViewModel(PostLikeTestUtilities.ValidId);
+        var existingCurrentUserModel = new CurrentUserModel(PostLikeTestUtilities.ValidCurrentUserId, PostLikeTestUtilities.ValidUserName);
         var existingPostLikePaginationCollectionModel = new PostLikePaginationQueryViewModel(
             [existingPostLikeQueryViewModel],
             ValidPageValue,

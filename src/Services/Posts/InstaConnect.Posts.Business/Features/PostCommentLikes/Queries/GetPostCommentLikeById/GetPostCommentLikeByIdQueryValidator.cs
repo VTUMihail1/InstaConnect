@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 
 namespace InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
 

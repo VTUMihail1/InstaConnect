@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.DeletePostComment;
 using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.PostComment;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.PostComment;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Commands.DeletePostComment;
@@ -24,8 +25,8 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var command = new DeletePostCommentCommand(
-            InvalidId,
-            ValidPostCommentCurrentUserId
+            PostCommentTestUtilities.InvalidId,
+            PostCommentTestUtilities.ValidPostCommentCurrentUserId
         );
 
         // Act
@@ -40,8 +41,8 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var command = new DeletePostCommentCommand(
-            ValidId,
-            ValidCurrentUserId
+            PostCommentTestUtilities.ValidId,
+            PostCommentTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -56,8 +57,8 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var command = new DeletePostCommentCommand(
-            ValidId,
-            ValidPostCommentCurrentUserId
+            PostCommentTestUtilities.ValidId,
+            PostCommentTestUtilities.ValidPostCommentCurrentUserId
         );
 
         // Act
@@ -66,7 +67,7 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         // Assert
         await PostCommentWriteRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(PostCommentTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
@@ -74,8 +75,8 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var command = new DeletePostCommentCommand(
-            ValidId,
-            ValidPostCommentCurrentUserId
+            PostCommentTestUtilities.ValidId,
+            PostCommentTestUtilities.ValidPostCommentCurrentUserId
         );
 
         // Act
@@ -84,10 +85,10 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         // Assert
         PostCommentWriteRepository
             .Received(1)
-            .Delete(Arg.Is<PostComment>(m => m.Id == ValidId &&
-                                             m.UserId == ValidPostCommentCurrentUserId &&
-                                             m.PostId == ValidPostCommentPostId &&
-                                             m.Content == ValidContent));
+            .Delete(Arg.Is<PostComment>(m => m.Id == PostCommentTestUtilities.ValidId &&
+                                             m.UserId == PostCommentTestUtilities.ValidPostCommentCurrentUserId &&
+                                             m.PostId == PostCommentTestUtilities.ValidPostCommentPostId &&
+                                             m.Content == PostCommentTestUtilities.ValidContent));
     }
 
     [Fact]
@@ -95,8 +96,8 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var command = new DeletePostCommentCommand(
-            ValidId,
-            ValidPostCommentCurrentUserId
+            PostCommentTestUtilities.ValidId,
+            PostCommentTestUtilities.ValidPostCommentCurrentUserId
         );
 
         // Act

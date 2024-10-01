@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.FunctionalTests.Utilities;
 
@@ -101,7 +101,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(GetIdRoute(InvalidId), CancellationToken);
+        var response = await HttpClient.DeleteAsync(GetIdRoute(MessageTestUtilities.InvalidId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);

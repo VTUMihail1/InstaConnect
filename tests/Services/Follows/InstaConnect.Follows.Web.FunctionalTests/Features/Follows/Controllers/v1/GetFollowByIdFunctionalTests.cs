@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.FunctionalTests.Utilities;
@@ -42,7 +42,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(InvalidId), CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(FollowTestUtilities.InvalidId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
@@ -83,11 +83,11 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
             .Should()
             .Match<FollowQueryResponse>(m => m.Id == existingFollowId &&
                                  m.FollowerId == existingFollowerId &&
-                                 m.FollowerName == ValidUserName &&
-                                 m.FollowerProfileImage == ValidUserProfileImage &&
+                                 m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                 m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
                                  m.FollowingId == existingFollowingId &&
-                                 m.FollowingName == ValidUserName &&
-                                 m.FollowingProfileImage == ValidUserProfileImage);
+                                 m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                 m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage);
     }
 
     [Fact]
@@ -110,10 +110,10 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
             .Should()
             .Match<FollowQueryResponse>(m => m.Id == existingFollowId &&
                                  m.FollowerId == existingFollowerId &&
-                                 m.FollowerName == ValidUserName &&
-                                 m.FollowerProfileImage == ValidUserProfileImage &&
+                                 m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                 m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
                                  m.FollowingId == existingFollowingId &&
-                                 m.FollowingName == ValidUserName &&
-                                 m.FollowingProfileImage == ValidUserProfileImage);
+                                 m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                 m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage);
     }
 }

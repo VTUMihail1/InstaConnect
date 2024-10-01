@@ -4,6 +4,7 @@ using InstaConnect.Posts.Business.Features.PostLikes.Commands.AddPostLike;
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.DeletePostLike;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetPostLikeById;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Web.Features.PostLikes.Controllers.v1;
 using InstaConnect.Posts.Web.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
@@ -31,9 +32,9 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Arrange
         var request = new GetAllPostLikesRequest()
         {
-            UserId = ValidCurrentUserId,
-            UserName = ValidUserName,
-            PostId = ValidPostId,
+            UserId = PostLikeTestUtilities.ValidCurrentUserId,
+            UserName = PostLikeTestUtilities.ValidUserName,
+            PostId = PostLikeTestUtilities.ValidPostId,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -56,9 +57,9 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Arrange
         var request = new GetAllPostLikesRequest()
         {
-            UserId = ValidCurrentUserId,
-            UserName = ValidUserName,
-            PostId = ValidPostId,
+            UserId = PostLikeTestUtilities.ValidCurrentUserId,
+            UserName = PostLikeTestUtilities.ValidUserName,
+            PostId = PostLikeTestUtilities.ValidPostId,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -76,11 +77,11 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
             .Value
             .Should()
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                                 m.Id == ValidId &&
-                                                                 m.PostId == ValidPostId &&
-                                                                 m.UserId == ValidCurrentUserId &&
-                                                                 m.UserName == ValidUserName &&
-                                                                 m.UserProfileImage == ValidUserProfileImage) &&
+                                                                 m.Id == PostLikeTestUtilities.ValidId &&
+                                                                 m.PostId == PostLikeTestUtilities.ValidPostId &&
+                                                                 m.UserId == PostLikeTestUtilities.ValidCurrentUserId &&
+                                                                 m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                                 m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage) &&
                                                               mc.Page == ValidPageValue &&
                                                               mc.PageSize == ValidPageSizeValue &&
                                                               mc.TotalCount == ValidTotalCountValue &&
@@ -94,9 +95,9 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Arrange
         var request = new GetAllPostLikesRequest()
         {
-            UserId = ValidCurrentUserId,
-            UserName = ValidUserName,
-            PostId = ValidPostId,
+            UserId = PostLikeTestUtilities.ValidCurrentUserId,
+            UserName = PostLikeTestUtilities.ValidUserName,
+            PostId = PostLikeTestUtilities.ValidPostId,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -110,9 +111,9 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         await InstaConnectSender
               .Received(1)
               .SendAsync(Arg.Is<GetAllPostLikesQuery>(m =>
-                  m.UserId == ValidCurrentUserId &&
-                  m.UserName == ValidUserName &&
-                  m.PostId == ValidPostId &&
+                  m.UserId == PostLikeTestUtilities.ValidCurrentUserId &&
+                  m.UserName == PostLikeTestUtilities.ValidUserName &&
+                  m.PostId == PostLikeTestUtilities.ValidPostId &&
                   m.SortOrder == ValidSortOrderProperty &&
                   m.SortPropertyName == ValidSortPropertyName &&
                   m.Page == ValidPageValue &&
@@ -125,7 +126,7 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Arrange
         var request = new GetPostLikeByIdRequest()
         {
-            Id = ValidId
+            Id = PostLikeTestUtilities.ValidId
         };
 
         // Act
@@ -144,7 +145,7 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Arrange
         var request = new GetPostLikeByIdRequest()
         {
-            Id = ValidId
+            Id = PostLikeTestUtilities.ValidId
         };
 
         // Act
@@ -157,11 +158,11 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
             .Which
             .Value
             .Should()
-            .Match<PostLikeQueryResponse>(m => m.Id == ValidId &&
-                                                 m.PostId == ValidPostId &&
-                                                 m.UserId == ValidCurrentUserId &&
-                                                 m.UserName == ValidUserName &&
-                                                 m.UserProfileImage == ValidUserProfileImage);
+            .Match<PostLikeQueryResponse>(m => m.Id == PostLikeTestUtilities.ValidId &&
+                                                 m.PostId == PostLikeTestUtilities.ValidPostId &&
+                                                 m.UserId == PostLikeTestUtilities.ValidCurrentUserId &&
+                                                 m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                 m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage);
     }
 
     [Fact]
@@ -169,7 +170,7 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
     {
         var request = new GetPostLikeByIdRequest()
         {
-            Id = ValidId
+            Id = PostLikeTestUtilities.ValidId
         };
 
         // Act
@@ -178,7 +179,7 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetPostLikeByIdQuery>(m => m.Id == ValidId), CancellationToken);
+              .SendAsync(Arg.Is<GetPostLikeByIdQuery>(m => m.Id == PostLikeTestUtilities.ValidId), CancellationToken);
     }
 
     [Fact]
@@ -187,7 +188,7 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Arrange
         var request = new AddPostLikeRequest()
         {
-            AddPostLikeBindingModel = new(ValidPostId)
+            AddPostLikeBindingModel = new(PostLikeTestUtilities.ValidPostId)
         };
 
         // Act
@@ -206,7 +207,7 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Arrange
         var request = new AddPostLikeRequest()
         {
-            AddPostLikeBindingModel = new(ValidPostId)
+            AddPostLikeBindingModel = new(PostLikeTestUtilities.ValidPostId)
         };
 
         // Act
@@ -219,7 +220,7 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
             .Which
             .Value
             .Should()
-            .Match<PostLikeCommandResponse>(m => m.Id == ValidId);
+            .Match<PostLikeCommandResponse>(m => m.Id == PostLikeTestUtilities.ValidId);
     }
 
     [Fact]
@@ -228,7 +229,7 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Arrange
         var request = new AddPostLikeRequest()
         {
-            AddPostLikeBindingModel = new(ValidPostId)
+            AddPostLikeBindingModel = new(PostLikeTestUtilities.ValidPostId)
         };
 
         // Act
@@ -237,8 +238,8 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<AddPostLikeCommand>(m => m.CurrentUserId == ValidCurrentUserId &&
-                                                     m.PostId == ValidPostId),
+            .SendAsync(Arg.Is<AddPostLikeCommand>(m => m.CurrentUserId == PostLikeTestUtilities.ValidCurrentUserId &&
+                                                     m.PostId == PostLikeTestUtilities.ValidPostId),
                                                      CancellationToken);
     }
 
@@ -248,7 +249,7 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Arrange
         var request = new AddPostLikeRequest()
         {
-            AddPostLikeBindingModel = new(ValidPostId)
+            AddPostLikeBindingModel = new(PostLikeTestUtilities.ValidPostId)
         };
 
         // Act
@@ -266,7 +267,7 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Arrange
         var request = new DeletePostLikeRequest()
         {
-            Id = ValidId
+            Id = PostLikeTestUtilities.ValidId
         };
 
         // Act
@@ -284,7 +285,7 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Arrange
         var request = new DeletePostLikeRequest()
         {
-            Id = ValidId
+            Id = PostLikeTestUtilities.ValidId
         };
 
         // Act
@@ -293,8 +294,8 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<DeletePostLikeCommand>(m => m.Id == ValidId &&
-                                                    m.CurrentUserId == ValidCurrentUserId),
+            .SendAsync(Arg.Is<DeletePostLikeCommand>(m => m.Id == PostLikeTestUtilities.ValidId &&
+                                                    m.CurrentUserId == PostLikeTestUtilities.ValidCurrentUserId),
                                                     CancellationToken);
     }
 
@@ -304,7 +305,7 @@ public class PostLikeControllerUnitTests : BasePostLikeUnitTest
         // Arrange
         var request = new DeletePostLikeRequest()
         {
-            Id = ValidId
+            Id = PostLikeTestUtilities.ValidId
         };
 
         // Act

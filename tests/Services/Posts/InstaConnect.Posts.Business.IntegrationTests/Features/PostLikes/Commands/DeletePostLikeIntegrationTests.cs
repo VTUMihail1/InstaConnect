@@ -1,12 +1,12 @@
 ﻿using Bogus;
 using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.DeletePostLike;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.PostLike;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.PostLike;
+using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Commands;
 
@@ -111,7 +111,7 @@ public class DeletePostLikeIntegrationTests : BasePostLikeIntegrationTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var command = new DeletePostLikeCommand(
-            InvalidId,
+            PostLikeTestUtilities.InvalidId,
             existingUserId
         );
 

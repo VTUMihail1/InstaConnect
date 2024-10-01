@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
 using InstaConnect.Posts.Web.Features.PostComments.Models.Binding;
 using InstaConnect.Posts.Web.Features.PostComments.Models.Responses;
@@ -26,7 +26,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(ValidUpdateContent);
+        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
 
         // Act
         var response = await HttpClient.PutAsJsonAsync(
@@ -47,7 +47,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(ValidUpdateContent);
+        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -116,7 +116,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(ValidUpdateContent);
+        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
 
@@ -141,7 +141,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(ValidUpdateContent);
+        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
 
@@ -163,14 +163,14 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(ValidUpdateContent);
+        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
         var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(InvalidId),
+            GetIdRoute(PostCommentTestUtilities.InvalidId),
             request,
             CancellationToken);
 
@@ -186,7 +186,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingPostCommentUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(ValidUpdateContent);
+        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -208,7 +208,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(ValidUpdateContent);
+        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -230,7 +230,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(ValidUpdateContent);
+        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -258,7 +258,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(ValidUpdateContent);
+        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -277,7 +277,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
             .Match<PostComment>(m => m.Id == existingPostCommentId &&
                                  m.UserId == existingUserId &&
                                  m.PostId == existingPostId &&
-                                 m.Content == ValidUpdateContent);
+                                 m.Content == PostCommentTestUtilities.ValidUpdateContent);
     }
 
     [Fact]
@@ -287,7 +287,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(ValidUpdateContent);
+        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 
@@ -306,6 +306,6 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
             .Match<PostComment>(m => m.Id == existingPostCommentId &&
                                  m.UserId == existingUserId &&
                                  m.PostId == existingPostId &&
-                                 m.Content == ValidUpdateContent);
+                                 m.Content == PostCommentTestUtilities.ValidUpdateContent);
     }
 }

@@ -2,7 +2,8 @@
 using InstaConnect.Identity.Business.Features.Users.Models;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserByName;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Queries.GetUserByName;
@@ -22,7 +23,7 @@ public class GetUserByNameQueryHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenNameIsInvalid()
     {
         // Arrange
-        var query = new GetUserByNameQuery(InvalidName);
+        var query = new GetUserByNameQuery(UserTestUtilities.InvalidName);
 
         // Act
         var action = async () => await _queryHandler.Handle(query, CancellationToken);
@@ -35,7 +36,7 @@ public class GetUserByNameQueryHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetByNameMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetUserByNameQuery(ValidName);
+        var query = new GetUserByNameQuery(UserTestUtilities.ValidName);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -43,14 +44,14 @@ public class GetUserByNameQueryHandlerUnitTests : BaseUserUnitTest
         // Assert
         await UserReadRepository
             .Received(1)
-            .GetByNameAsync(ValidName, CancellationToken);
+            .GetByNameAsync(UserTestUtilities.ValidName, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldReturnUserViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetUserByNameQuery(ValidName);
+        var query = new GetUserByNameQuery(UserTestUtilities.ValidName);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -58,10 +59,10 @@ public class GetUserByNameQueryHandlerUnitTests : BaseUserUnitTest
         // Assert
         response
             .Should()
-            .Match<UserQueryViewModel>(m => m.Id == ValidId &&
-                                            m.UserName == ValidName &&
-                                            m.FirstName == ValidFirstName &&
-                                            m.LastName == ValidLastName &&
-                                            m.ProfileImage == ValidProfileImage);
+            .Match<UserQueryViewModel>(m => m.Id == UserTestUtilities.ValidId &&
+                                            m.UserName == UserTestUtilities.ValidName &&
+                                            m.FirstName == UserTestUtilities.ValidFirstName &&
+                                            m.LastName == UserTestUtilities.ValidLastName &&
+                                            m.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 }

@@ -4,7 +4,7 @@ using InstaConnect.Messages.Data.Features.Messages.Abstractions;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Data.Features.Users.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.User;
 using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;

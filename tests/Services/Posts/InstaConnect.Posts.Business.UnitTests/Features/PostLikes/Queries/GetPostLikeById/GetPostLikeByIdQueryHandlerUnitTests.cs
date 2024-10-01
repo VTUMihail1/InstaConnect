@@ -2,7 +2,8 @@
 using InstaConnect.Posts.Business.Features.PostLikes.Models;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetPostLikeById;
 using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
-using InstaConnect.Shared.Business.Exceptions.PostLike;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+using InstaConnect.Shared.Common.Exceptions.PostLike;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Queries.GetPostLikeById;
@@ -22,7 +23,7 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeUnitTest
     public async Task Handle_ShouldThrowPostLikeNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var query = new GetPostLikeByIdQuery(InvalidId);
+        var query = new GetPostLikeByIdQuery(PostLikeTestUtilities.InvalidId);
 
         // Act
         var action = async () => await _queryHandler.Handle(query, CancellationToken);
@@ -35,7 +36,7 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetByIdMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetPostLikeByIdQuery(ValidId);
+        var query = new GetPostLikeByIdQuery(PostLikeTestUtilities.ValidId);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -43,14 +44,14 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeUnitTest
         // Assert
         await PostLikeReadRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(PostLikeTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldReturnPostLikeViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetPostLikeByIdQuery(ValidId);
+        var query = new GetPostLikeByIdQuery(PostLikeTestUtilities.ValidId);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -58,10 +59,10 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeUnitTest
         // Assert
         response
             .Should()
-            .Match<PostLikeQueryViewModel>(m => m.Id == ValidId &&
-                                              m.UserId == ValidPostLikeCurrentUserId &&
-                                              m.UserName == ValidUserName &&
-                                              m.UserProfileImage == ValidUserProfileImage &&
-                                              m.PostId == ValidPostLikePostId);
+            .Match<PostLikeQueryViewModel>(m => m.Id == PostLikeTestUtilities.ValidId &&
+                                              m.UserId == PostLikeTestUtilities.ValidPostLikeCurrentUserId &&
+                                              m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                              m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
+                                              m.PostId == PostLikeTestUtilities.ValidPostLikePostId);
     }
 }

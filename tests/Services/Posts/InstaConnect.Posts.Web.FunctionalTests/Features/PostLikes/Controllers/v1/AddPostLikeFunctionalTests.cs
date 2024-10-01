@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
 using InstaConnect.Posts.Web.Features.PostLikes.Models.Binding;
 using InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
@@ -120,7 +120,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var request = new AddPostLikeBindingModel(existingPostId);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = InvalidUserId;
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = PostLikeTestUtilities.InvalidUserId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
@@ -136,7 +136,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var request = new AddPostLikeBindingModel(InvalidPostId);
+        var request = new AddPostLikeBindingModel(PostLikeTestUtilities.InvalidPostId);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
 

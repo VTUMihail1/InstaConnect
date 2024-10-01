@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostLikes.Models;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetPostLikeById;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.PostLike;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.PostLike;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Queries;
 
@@ -57,7 +57,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var query = new GetPostLikeByIdQuery(InvalidId);
+        var query = new GetPostLikeByIdQuery(PostLikeTestUtilities.InvalidId);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -83,8 +83,8 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrati
             .Should()
             .Match<PostLikeQueryViewModel>(m => m.Id == existingPostLikeId &&
                                                   m.UserId == existingUserId &&
-                                                  m.UserName == ValidUserName &&
-                                                  m.UserProfileImage == ValidUserProfileImage &&
+                                                  m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                  m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                   m.PostId == existingPostId);
     }
 
@@ -105,8 +105,8 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrati
             .Should()
             .Match<PostLikeQueryViewModel>(m => m.Id == existingPostLikeId &&
                                                   m.UserId == existingUserId &&
-                                                  m.UserName == ValidUserName &&
-                                                  m.UserProfileImage == ValidUserProfileImage &&
+                                                  m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                  m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                   m.PostId == existingPostId);
     }
 }

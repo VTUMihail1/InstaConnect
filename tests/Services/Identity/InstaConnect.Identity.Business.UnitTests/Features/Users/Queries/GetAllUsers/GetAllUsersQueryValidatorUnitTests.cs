@@ -1,8 +1,8 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
-using InstaConnect.Shared.Business.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Queries.GetAllUsers;
 
@@ -23,8 +23,8 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var query = new GetAllUsersQuery(
             Faker.Random.AlphaNumeric(length),
-            ValidFirstName,
-            ValidLastName,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -44,9 +44,9 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var query = new GetAllUsersQuery(
-            ValidName,
+            UserTestUtilities.ValidName,
             Faker.Random.AlphaNumeric(length),
-            ValidLastName,
+            UserTestUtilities.ValidLastName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -66,8 +66,8 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var query = new GetAllUsersQuery(
-            ValidName,
-            ValidFirstName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFirstName,
             Faker.Random.AlphaNumeric(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -86,9 +86,9 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var query = new GetAllUsersQuery(
-            ValidName,
-            ValidFirstName,
-            ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
             ValidSortOrderProperty,
             null!,
             ValidPageValue,
@@ -106,9 +106,9 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var query = new GetAllUsersQuery(
-            ValidName,
-            ValidFirstName,
-            ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
             ValidPageValue,
@@ -129,9 +129,9 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var query = new GetAllUsersQuery(
-            ValidName,
-            ValidFirstName,
-            ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
             ValidPageValue,
@@ -151,9 +151,9 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var query = new GetAllUsersQuery(
-            ValidName,
-            ValidFirstName,
-            ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             value,
@@ -173,9 +173,9 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var query = new GetAllUsersQuery(
-            ValidName,
-            ValidFirstName,
-            ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -193,9 +193,9 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var query = new GetAllUsersQuery(
-            ValidName,
-            ValidFirstName,
-            ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

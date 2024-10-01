@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
 
@@ -47,7 +47,7 @@ public class GetPostCommentLikeByIdQueryValidatorUnitTests : BasePostCommentLike
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var query = new GetPostCommentLikeByIdQuery(ValidId);
+        var query = new GetPostCommentLikeByIdQuery(PostCommentLikeTestUtilities.ValidId);
 
         // Act
         var result = _validator.TestValidate(query);

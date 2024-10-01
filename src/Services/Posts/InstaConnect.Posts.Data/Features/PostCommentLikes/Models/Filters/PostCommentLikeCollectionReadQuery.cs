@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Data.Models.Enums;
+﻿using InstaConnect.Shared.Common.Models.Enums;
 
 namespace InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
 

@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Queries.GetPostById;
 
@@ -47,7 +47,7 @@ public class GetPostByIdQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var query = new GetPostByIdQuery(ValidId);
+        var query = new GetPostByIdQuery(PostTestUtilities.ValidId);
 
         // Act
         var result = _validator.TestValidate(query);

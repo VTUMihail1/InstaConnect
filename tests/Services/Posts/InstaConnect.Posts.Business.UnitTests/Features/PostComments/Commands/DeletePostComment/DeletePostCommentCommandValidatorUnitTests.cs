@@ -1,7 +1,8 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.DeletePostComment;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Commands.DeletePostComment;
 
@@ -20,7 +21,7 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         // Arrange
         var command = new DeletePostCommentCommand(
             null!,
-            ValidCurrentUserId
+            PostCommentTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -39,7 +40,7 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         // Arrange
         var command = new DeletePostCommentCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidCurrentUserId
+            PostCommentTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -54,7 +55,7 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
     {
         // Arrange
         var command = new DeletePostCommentCommand(
-            ValidId,
+            PostCommentTestUtilities.ValidId,
             null!
         );
 
@@ -73,7 +74,7 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
     {
         // Arrange
         var command = new DeletePostCommentCommand(
-            ValidId,
+            PostCommentTestUtilities.ValidId,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -89,8 +90,8 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
     {
         // Arrange
         var command = new DeletePostCommentCommand(
-            ValidId,
-            ValidCurrentUserId
+            PostCommentTestUtilities.ValidId,
+            PostCommentTestUtilities.ValidCurrentUserId
         );
 
         // Act

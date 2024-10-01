@@ -1,8 +1,8 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
-using InstaConnect.Shared.Business.Utilities;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Queries.GetAllPostLikes;
 
@@ -23,8 +23,8 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var query = new GetAllPostLikesQuery(
             Faker.Random.AlphaNumeric(length),
-            ValidUserName,
-            ValidPostId,
+            PostLikeTestUtilities.ValidUserName,
+            PostLikeTestUtilities.ValidPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -44,9 +44,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var query = new GetAllPostLikesQuery(
-            ValidCurrentUserId,
+            PostLikeTestUtilities.ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length),
-            ValidPostId,
+            PostLikeTestUtilities.ValidPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -66,8 +66,8 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var query = new GetAllPostLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
+            PostLikeTestUtilities.ValidCurrentUserId,
+            PostLikeTestUtilities.ValidUserName,
             Faker.Random.AlphaNumeric(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -86,9 +86,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var query = new GetAllPostLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidPostId,
+            PostLikeTestUtilities.ValidCurrentUserId,
+            PostLikeTestUtilities.ValidUserName,
+            PostLikeTestUtilities.ValidPostId,
             ValidSortOrderProperty,
             null!,
             ValidPageValue,
@@ -106,9 +106,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var query = new GetAllPostLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidPostId,
+            PostLikeTestUtilities.ValidCurrentUserId,
+            PostLikeTestUtilities.ValidUserName,
+            PostLikeTestUtilities.ValidPostId,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
             ValidPageValue,
@@ -129,9 +129,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var query = new GetAllPostLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidPostId,
+            PostLikeTestUtilities.ValidCurrentUserId,
+            PostLikeTestUtilities.ValidUserName,
+            PostLikeTestUtilities.ValidPostId,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
             ValidPageValue,
@@ -151,9 +151,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var query = new GetAllPostLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidPostId,
+            PostLikeTestUtilities.ValidCurrentUserId,
+            PostLikeTestUtilities.ValidUserName,
+            PostLikeTestUtilities.ValidPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             value,
@@ -173,9 +173,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var query = new GetAllPostLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidPostId,
+            PostLikeTestUtilities.ValidCurrentUserId,
+            PostLikeTestUtilities.ValidUserName,
+            PostLikeTestUtilities.ValidPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -193,9 +193,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var query = new GetAllPostLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidPostId,
+            PostLikeTestUtilities.ValidCurrentUserId,
+            PostLikeTestUtilities.ValidUserName,
+            PostLikeTestUtilities.ValidPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

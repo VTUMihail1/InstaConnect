@@ -2,12 +2,12 @@
 using System.Net.Http.Json;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Web.Features.PostComments.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
-using InstaConnect.Shared.Business.Utilities;
-using InstaConnect.Shared.Data.Models.Enums;
+using InstaConnect.Shared.Common.Models.Enums;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostComments.Controllers.v1;
 
@@ -29,7 +29,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             Faker.Random.AlphaNumeric(length),
-            ValidUserName,
+            PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -79,7 +79,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentTestUtilities.ValidUserName,
             Faker.Random.AlphaNumeric(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -102,7 +102,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
@@ -127,7 +127,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
@@ -152,7 +152,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -179,7 +179,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -202,7 +202,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -225,7 +225,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -245,10 +245,10 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
             .Match<PostCommentPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId &&
-                                                               m.Content == ValidContent) &&
+                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -265,7 +265,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -285,10 +285,10 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
             .Match<PostCommentPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId &&
-                                                               m.Content == ValidContent) &&
+                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -305,7 +305,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             GetNonCaseMatchingString(existingUserId),
-            ValidUserName,
+            PostCommentTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -325,10 +325,10 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
             .Match<PostCommentPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId &&
-                                                               m.Content == ValidContent) &&
+                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -345,7 +345,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetNonCaseMatchingString(ValidUserName),
+            GetNonCaseMatchingString(PostCommentTestUtilities.ValidUserName),
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -365,10 +365,10 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
             .Match<PostCommentPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId &&
-                                                               m.Content == ValidContent) &&
+                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -385,7 +385,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetHalfStartString(ValidUserName),
+            GetHalfStartString(PostCommentTestUtilities.ValidUserName),
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -405,10 +405,10 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
             .Match<PostCommentPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId &&
-                                                               m.Content == ValidContent) &&
+                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -425,7 +425,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentTestUtilities.ValidUserName,
             GetNonCaseMatchingString(existingPostId),
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -445,10 +445,10 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
             .Match<PostCommentPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId &&
-                                                               m.Content == ValidContent) &&
+                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -477,10 +477,10 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
             .Match<PostCommentPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId &&
-                                                               m.Content == ValidContent) &&
+                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&

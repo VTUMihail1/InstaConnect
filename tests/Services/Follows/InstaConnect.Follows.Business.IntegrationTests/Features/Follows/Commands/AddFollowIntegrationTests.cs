@@ -1,12 +1,12 @@
 ﻿using Bogus;
 using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.IntegrationTests.Utilities;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Commands;
 public class AddFollowIntegrationTests : BaseFollowIntegrationTest
@@ -92,7 +92,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         // Arrange
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var command = new AddFollowCommand(
-            InvalidUserId,
+            FollowTestUtilities.InvalidUserId,
             existingFollowingId);
 
         // Act
@@ -109,7 +109,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var command = new AddFollowCommand(
             existingFollowerId,
-            InvalidUserId);
+            FollowTestUtilities.InvalidUserId);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);

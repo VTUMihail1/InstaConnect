@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
 using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.PostComment;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.PostComment;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Commands.UpdatePostComment;
@@ -25,9 +26,9 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var command = new UpdatePostCommentCommand(
-            InvalidId,
-            ValidPostCommentCurrentUserId,
-            ValidContent
+            PostCommentTestUtilities.InvalidId,
+            PostCommentTestUtilities.ValidPostCommentCurrentUserId,
+            PostCommentTestUtilities.ValidContent
         );
 
         // Act
@@ -42,9 +43,9 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var command = new UpdatePostCommentCommand(
-            ValidId,
-            ValidCurrentUserId,
-            ValidContent
+            PostCommentTestUtilities.ValidId,
+            PostCommentTestUtilities.ValidCurrentUserId,
+            PostCommentTestUtilities.ValidContent
         );
 
         // Act
@@ -59,9 +60,9 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var command = new UpdatePostCommentCommand(
-            ValidId,
-            ValidPostCommentCurrentUserId,
-            ValidContent
+            PostCommentTestUtilities.ValidId,
+            PostCommentTestUtilities.ValidPostCommentCurrentUserId,
+            PostCommentTestUtilities.ValidContent
         );
 
         // Act
@@ -70,7 +71,7 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         // Assert
         await PostCommentWriteRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(PostCommentTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
@@ -78,9 +79,9 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var command = new UpdatePostCommentCommand(
-            ValidId,
-            ValidPostCommentCurrentUserId,
-            ValidContent
+            PostCommentTestUtilities.ValidId,
+            PostCommentTestUtilities.ValidPostCommentCurrentUserId,
+            PostCommentTestUtilities.ValidContent
         );
 
         // Act
@@ -89,9 +90,9 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         // Assert
         PostCommentWriteRepository
             .Received(1)
-            .Update(Arg.Is<PostComment>(m => m.Id == ValidId &&
-                                      m.UserId == ValidPostCommentCurrentUserId &&
-                                      m.Content == ValidContent));
+            .Update(Arg.Is<PostComment>(m => m.Id == PostCommentTestUtilities.ValidId &&
+                                      m.UserId == PostCommentTestUtilities.ValidPostCommentCurrentUserId &&
+                                      m.Content == PostCommentTestUtilities.ValidContent));
     }
 
     [Fact]
@@ -99,9 +100,9 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var command = new UpdatePostCommentCommand(
-            ValidId,
-            ValidPostCommentCurrentUserId,
-            ValidContent
+            PostCommentTestUtilities.ValidId,
+            PostCommentTestUtilities.ValidPostCommentCurrentUserId,
+            PostCommentTestUtilities.ValidContent
         );
 
         // Act

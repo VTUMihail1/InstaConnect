@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Posts;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Posts;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Commands.DeletePost;
@@ -24,8 +25,8 @@ public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new DeletePostCommand(
-            InvalidId,
-            ValidPostCurrentUserId
+            PostTestUtilities.InvalidId,
+            PostTestUtilities.ValidPostCurrentUserId
         );
 
         // Act
@@ -40,8 +41,8 @@ public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new DeletePostCommand(
-            ValidId,
-            ValidCurrentUserId
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -56,8 +57,8 @@ public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new DeletePostCommand(
-            ValidId,
-            ValidPostCurrentUserId
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidPostCurrentUserId
         );
 
         // Act
@@ -66,7 +67,7 @@ public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
         // Assert
         await PostWriteRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(PostTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
@@ -74,8 +75,8 @@ public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new DeletePostCommand(
-            ValidId,
-            ValidPostCurrentUserId
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidPostCurrentUserId
         );
 
         // Act
@@ -84,10 +85,10 @@ public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
         // Assert
         PostWriteRepository
             .Received(1)
-            .Delete(Arg.Is<Post>(m => m.Id == ValidId &&
-                                      m.UserId == ValidPostCurrentUserId &&
-                                      m.Title == ValidTitle &&
-                                      m.Content == ValidContent));
+            .Delete(Arg.Is<Post>(m => m.Id == PostTestUtilities.ValidId &&
+                                      m.UserId == PostTestUtilities.ValidPostCurrentUserId &&
+                                      m.Title == PostTestUtilities.ValidTitle &&
+                                      m.Content == PostTestUtilities.ValidContent));
     }
 
     [Fact]
@@ -95,8 +96,8 @@ public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new DeletePostCommand(
-            ValidId,
-            ValidPostCurrentUserId
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidPostCurrentUserId
         );
 
         // Act

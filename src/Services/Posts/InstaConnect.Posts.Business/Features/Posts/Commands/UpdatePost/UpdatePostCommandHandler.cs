@@ -1,8 +1,8 @@
 ﻿using InstaConnect.Posts.Business.Features.Posts.Models;
 using InstaConnect.Posts.Data.Features.Posts.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Exceptions.Posts;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Posts;
+using InstaConnect.Shared.Common.Exceptions.User;
 using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;

@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Web.Features.PostComments.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
@@ -43,7 +43,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(InvalidId), CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(PostCommentTestUtilities.InvalidId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
@@ -83,10 +83,10 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
         postCommentViewResponse
             .Should()
             .Match<PostCommentQueryResponse>(m => m.Id == existingPostCommentId &&
-                                 m.Content == ValidContent &&
+                                 m.Content == PostCommentTestUtilities.ValidContent &&
                                  m.UserId == existingUserId &&
-                                 m.UserName == ValidUserName &&
-                                 m.UserProfileImage == ValidUserProfileImage &&
+                                 m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                 m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                  m.PostId == existingPostId);
     }
 
@@ -109,10 +109,10 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
         postCommentViewResponse
             .Should()
             .Match<PostCommentQueryResponse>(m => m.Id == existingPostCommentId &&
-                                 m.Content == ValidContent &&
+                                 m.Content == PostCommentTestUtilities.ValidContent &&
                                  m.UserId == existingUserId &&
-                                 m.UserName == ValidUserName &&
-                                 m.UserProfileImage == ValidUserProfileImage &&
+                                 m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                 m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                  m.PostId == existingPostId);
     }
 }

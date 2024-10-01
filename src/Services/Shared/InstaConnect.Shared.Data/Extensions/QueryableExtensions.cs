@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
+using InstaConnect.Shared.Common.Models.Enums;
 using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Models.Enums;
 using InstaConnect.Shared.Data.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 

@@ -2,6 +2,7 @@
 using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Filters;
 using NSubstitute;
 
@@ -23,9 +24,9 @@ public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetAllMessagesQuery(
-            ValidMessageCurrentUserId,
-            ValidMessageReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidMessageCurrentUserId,
+            MessageTestUtilities.ValidMessageReceiverId,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -38,9 +39,9 @@ public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
         await MessageReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<MessageCollectionReadQuery>(m =>
-                                                                        m.CurrentUserId == ValidMessageCurrentUserId &&
-                                                                        m.ReceiverId == ValidMessageReceiverId &&
-                                                                        m.ReceiverName == ValidUserName &&
+                                                                        m.CurrentUserId == MessageTestUtilities.ValidMessageCurrentUserId &&
+                                                                        m.ReceiverId == MessageTestUtilities.ValidMessageReceiverId &&
+                                                                        m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&
@@ -52,9 +53,9 @@ public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetAllMessagesQuery(
-            ValidMessageCurrentUserId,
-            ValidMessageReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidMessageCurrentUserId,
+            MessageTestUtilities.ValidMessageReceiverId,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -66,14 +67,14 @@ public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
         // Assert
         response
             .Should()
-            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
-                                                           m.SenderId == ValidMessageCurrentUserId &&
-                                                           m.SenderName == ValidUserName &&
-                                                           m.SenderProfileImage == ValidUserProfileImage &&
-                                                           m.ReceiverId == ValidMessageReceiverId &&
-                                                           m.ReceiverName == ValidUserName &&
-                                                           m.ReceiverProfileImage == ValidUserProfileImage &&
-                                                           m.Content == ValidContent) &&
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == MessageTestUtilities.ValidId &&
+                                                           m.SenderId == MessageTestUtilities.ValidMessageCurrentUserId &&
+                                                           m.SenderName == MessageTestUtilities.ValidUserName &&
+                                                           m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+                                                           m.ReceiverId == MessageTestUtilities.ValidMessageReceiverId &&
+                                                           m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                                           m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+                                                           m.Content == MessageTestUtilities.ValidContent) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
                                                            mc.TotalCount == ValidTotalCountValue &&

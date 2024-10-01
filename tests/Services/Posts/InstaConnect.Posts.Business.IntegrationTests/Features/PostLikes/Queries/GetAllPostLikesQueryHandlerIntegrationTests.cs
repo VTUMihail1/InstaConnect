@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostLikes.Models;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Utilities;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Queries;
 
@@ -26,7 +26,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             Faker.Random.AlphaNumeric(length),
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -76,7 +76,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingUserId,
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             Faker.Random.AlphaNumeric(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -99,7 +99,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingUserId,
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             null!,
@@ -122,7 +122,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingUserId,
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
@@ -148,7 +148,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingUserId,
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
@@ -173,7 +173,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingUserId,
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -198,7 +198,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingUserId,
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -221,7 +221,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             null!,
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -236,8 +236,8 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             .Should()
             .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLikeId &&
                                                                     m.UserId == existingUserId &&
-                                                                    m.UserName == ValidUserName &&
-                                                                    m.UserProfileImage == ValidUserProfileImage &&
+                                                                    m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                                    m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
@@ -255,7 +255,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             string.Empty,
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -270,8 +270,8 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             .Should()
             .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLikeId &&
                                                                     m.UserId == existingUserId &&
-                                                                    m.UserName == ValidUserName &&
-                                                                    m.UserProfileImage == ValidUserProfileImage &&
+                                                                    m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                                    m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
@@ -289,7 +289,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             GetNonCaseMatchingString(existingUserId),
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -304,8 +304,8 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             .Should()
             .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLikeId &&
                                                                     m.UserId == existingUserId &&
-                                                                    m.UserName == ValidUserName &&
-                                                                    m.UserProfileImage == ValidUserProfileImage &&
+                                                                    m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                                    m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
@@ -338,8 +338,8 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             .Should()
             .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLikeId &&
                                                                     m.UserId == existingUserId &&
-                                                                    m.UserName == ValidUserName &&
-                                                                    m.UserProfileImage == ValidUserProfileImage &&
+                                                                    m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                                    m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
@@ -372,8 +372,8 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             .Should()
             .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLikeId &&
                                                                     m.UserId == existingUserId &&
-                                                                    m.UserName == ValidUserName &&
-                                                                    m.UserProfileImage == ValidUserProfileImage &&
+                                                                    m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                                    m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
@@ -391,7 +391,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingUserId,
-            GetNonCaseMatchingString(ValidUserName),
+            GetNonCaseMatchingString(PostLikeTestUtilities.ValidUserName),
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -406,8 +406,8 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             .Should()
             .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLikeId &&
                                                                     m.UserId == existingUserId &&
-                                                                    m.UserName == ValidUserName &&
-                                                                    m.UserProfileImage == ValidUserProfileImage &&
+                                                                    m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                                    m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
@@ -425,7 +425,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingUserId,
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             null!,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -440,8 +440,8 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             .Should()
             .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLikeId &&
                                                                     m.UserId == existingUserId &&
-                                                                    m.UserName == ValidUserName &&
-                                                                    m.UserProfileImage == ValidUserProfileImage &&
+                                                                    m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                                    m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
@@ -459,7 +459,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingUserId,
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             string.Empty,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -474,8 +474,8 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             .Should()
             .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLikeId &&
                                                                     m.UserId == existingUserId &&
-                                                                    m.UserName == ValidUserName &&
-                                                                    m.UserProfileImage == ValidUserProfileImage &&
+                                                                    m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                                    m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
@@ -493,7 +493,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingUserId,
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             GetNonCaseMatchingString(existingPostId),
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -508,8 +508,8 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             .Should()
             .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLikeId &&
                                                                     m.UserId == existingUserId &&
-                                                                    m.UserName == ValidUserName &&
-                                                                    m.UserProfileImage == ValidUserProfileImage &&
+                                                                    m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                                    m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
@@ -527,7 +527,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingUserId,
-            ValidUserName,
+            PostLikeTestUtilities.ValidUserName,
             existingPostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -542,8 +542,8 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             .Should()
             .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLikeId &&
                                                                     m.UserId == existingUserId &&
-                                                                    m.UserName == ValidUserName &&
-                                                                    m.UserProfileImage == ValidUserProfileImage &&
+                                                                    m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                                    m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&

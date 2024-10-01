@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.Features.Users.Mappings;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Users.Abstract;
 using InstaConnect.Messages.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Business.Helpers;

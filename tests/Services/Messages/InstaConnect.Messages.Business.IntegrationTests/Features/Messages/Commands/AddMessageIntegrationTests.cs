@@ -1,12 +1,12 @@
 ﻿using Bogus;
 using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Commands;
 public class AddMessageIntegrationTests : BaseMessageIntegrationTest
@@ -23,7 +23,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var command = new AddMessageCommand(
             null!,
             existingReceiverId,
-            ValidAddContent
+            MessageTestUtilities.ValidAddContent
         );
 
         // Act
@@ -44,7 +44,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var command = new AddMessageCommand(
             Faker.Random.AlphaNumeric(length),
             existingReceiverId,
-            ValidAddContent
+            MessageTestUtilities.ValidAddContent
         );
 
         // Act
@@ -62,7 +62,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var command = new AddMessageCommand(
             existingSenderId,
             null!,
-            ValidAddContent
+            MessageTestUtilities.ValidAddContent
         );
 
         // Act
@@ -83,7 +83,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var command = new AddMessageCommand(
             existingSenderId,
             Faker.Random.AlphaNumeric(length),
-            ValidAddContent
+            MessageTestUtilities.ValidAddContent
         );
 
         // Act
@@ -140,9 +140,9 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
-            InvalidUserId,
+            MessageTestUtilities.InvalidUserId,
             existingReceiverId,
-            ValidAddContent
+            MessageTestUtilities.ValidAddContent
         );
 
         // Act
@@ -159,8 +159,8 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
             existingSenderId,
-            InvalidUserId,
-            ValidAddContent
+            MessageTestUtilities.InvalidUserId,
+            MessageTestUtilities.ValidAddContent
         );
 
         // Act
@@ -179,7 +179,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var command = new AddMessageCommand(
             existingSenderId,
             existingReceiverId,
-            ValidAddContent
+            MessageTestUtilities.ValidAddContent
         );
 
         // Act
@@ -192,6 +192,6 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
             .Match<Message>(m => m.Id == response.Id &&
                                  m.SenderId == existingSenderId &&
                                  m.ReceiverId == existingReceiverId &&
-                                 m.Content == ValidAddContent);
+                                 m.Content == MessageTestUtilities.ValidAddContent);
     }
 }

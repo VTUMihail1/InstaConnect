@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Commands.UpdatePost;
 
@@ -20,9 +20,9 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
         // Arrange
         var command = new UpdatePostCommand(
             null!,
-            ValidCurrentUserId,
-            ValidTitle,
-            ValidContent
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent
         );
 
         // Act
@@ -41,9 +41,9 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
         // Arrange
         var command = new UpdatePostCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidCurrentUserId,
-            ValidTitle,
-            ValidContent
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent
         );
 
         // Act
@@ -58,10 +58,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new UpdatePostCommand(
-            ValidId,
+            PostTestUtilities.ValidId,
             null!,
-            ValidTitle,
-            ValidContent
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent
         );
 
         // Act
@@ -79,10 +79,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new UpdatePostCommand(
-            ValidId,
+            PostTestUtilities.ValidId,
             Faker.Random.AlphaNumeric(length),
-            ValidTitle,
-            ValidContent
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent
         );
 
         // Act
@@ -97,10 +97,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new UpdatePostCommand(
-            ValidId,
-            ValidCurrentUserId,
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidCurrentUserId,
             null!,
-            ValidContent
+            PostTestUtilities.ValidContent
         );
 
         // Act
@@ -118,10 +118,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new UpdatePostCommand(
-            ValidId,
-            ValidCurrentUserId,
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length),
-            ValidContent
+            PostTestUtilities.ValidContent
         );
 
         // Act
@@ -136,9 +136,9 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new UpdatePostCommand(
-            ValidId,
-            ValidCurrentUserId,
-            ValidTitle,
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidTitle,
             null!
         );
 
@@ -157,9 +157,9 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new UpdatePostCommand(
-            ValidId,
-            ValidCurrentUserId,
-            ValidTitle,
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidTitle,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -175,10 +175,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new UpdatePostCommand(
-            ValidId,
-            ValidCurrentUserId,
-            ValidTitle,
-            ValidContent
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent
         );
 
         // Act

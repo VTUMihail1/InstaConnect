@@ -4,8 +4,7 @@ using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComme
 using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Web.Features.PostComments.Mappings;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
@@ -18,13 +17,6 @@ namespace InstaConnect.Posts.Web.UnitTests.Features.PostComments.Utilities;
 
 public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
 {
-    protected readonly string ValidId;
-    protected readonly string ValidContent;
-    protected readonly string ValidPostId;
-    protected readonly string ValidCurrentUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidUserProfileImage;
-
     public BasePostCommentUnitTest() : base(
         Substitute.For<IInstaConnectSender>(),
         Substitute.For<ICurrentUserContext>(),
@@ -36,23 +28,17 @@ public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
                     cfg.AddProfile<PostCommentQueryProfile>();
                 }))))
     {
-        ValidId = GetAverageString(PostCommentBusinessConfigurations.ID_MAX_LENGTH, PostCommentBusinessConfigurations.ID_MIN_LENGTH);
-        ValidContent = GetAverageString(PostBusinessConfigurations.CONTENT_MAX_LENGTH, PostBusinessConfigurations.CONTENT_MIN_LENGTH);
-        ValidPostId = GetAverageString(PostCommentBusinessConfigurations.POST_ID_MAX_LENGTH, PostCommentBusinessConfigurations.POST_ID_MIN_LENGTH);
-        ValidCurrentUserId = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
 
         var existingPostCommentQueryViewModel = new PostCommentQueryViewModel(
-            ValidId,
-            ValidContent,
-            ValidPostId,
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidUserProfileImage);
+            PostCommentTestUtilities.ValidId,
+            PostCommentTestUtilities.ValidContent,
+            PostCommentTestUtilities.ValidPostId,
+            PostCommentTestUtilities.ValidCurrentUserId,
+            PostCommentTestUtilities.ValidUserName,
+            PostCommentTestUtilities.ValidUserProfileImage);
 
-        var existingPostCommentCommandViewModel = new PostCommentCommandViewModel(ValidId);
-        var existingCurrentUserModel = new CurrentUserModel(ValidCurrentUserId, ValidUserName);
+        var existingPostCommentCommandViewModel = new PostCommentCommandViewModel(PostCommentTestUtilities.ValidId);
+        var existingCurrentUserModel = new CurrentUserModel(PostCommentTestUtilities.ValidCurrentUserId, PostCommentTestUtilities.ValidUserName);
         var existingPostCommentPaginationCollectionModel = new PostCommentPaginationQueryViewModel(
             [existingPostCommentQueryViewModel],
             ValidPageValue,

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.Features.Users.Mappings;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Data.Features.Users.Abstractions;
 using InstaConnect.Follows.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Business.Helpers;

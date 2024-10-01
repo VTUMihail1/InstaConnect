@@ -1,8 +1,8 @@
 ﻿using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Data.Features.PostComments.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Exceptions.PostComment;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.PostComment;
+using InstaConnect.Shared.Common.Exceptions.User;
 using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;

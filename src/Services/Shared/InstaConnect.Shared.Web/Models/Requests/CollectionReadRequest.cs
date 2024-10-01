@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Data.Models.Enums;
+﻿using InstaConnect.Shared.Common.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Shared.Web.Models.Requests;

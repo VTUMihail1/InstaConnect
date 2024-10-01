@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
 using InstaConnect.Identity.Business.Features.Users.Commands.ResetUserPassword;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Token;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Token;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.ResetUserPassword;
@@ -26,10 +27,10 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            InvalidId,
-            ValidForgotPasswordTokenValue,
-            ValidPassword,
-            ValidPassword);
+            UserTestUtilities.InvalidId,
+            UserTestUtilities.ValidForgotPasswordTokenValue,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -43,10 +44,10 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            ValidId,
-            InvalidForgotPasswordTokenValue,
-            ValidPassword,
-            ValidPassword);
+            UserTestUtilities.ValidId,
+            UserTestUtilities.InvalidForgotPasswordTokenValue,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -60,10 +61,10 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            ValidId,
-            ValidForgotPasswordTokenValueWithTokenUser,
-            ValidPassword,
-            ValidPassword);
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidForgotPasswordTokenValueWithTokenUser,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -77,10 +78,10 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            ValidId,
-            ValidForgotPasswordTokenValue,
-            ValidPassword,
-            ValidPassword);
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidForgotPasswordTokenValue,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -88,7 +89,7 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(UserTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
@@ -96,10 +97,10 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            ValidId,
-            ValidForgotPasswordTokenValue,
-            ValidPassword,
-            ValidPassword);
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidForgotPasswordTokenValue,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -107,7 +108,7 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         PasswordHasher
             .Received(1)
-            .Hash(ValidPassword);
+            .Hash(UserTestUtilities.ValidPassword);
     }
 
     [Fact]
@@ -115,10 +116,10 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            ValidId,
-            ValidForgotPasswordTokenValue,
-            ValidPassword,
-            ValidPassword);
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidForgotPasswordTokenValue,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -126,7 +127,7 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await ForgotPasswordTokenWriteRepository
             .Received(1)
-            .GetByValueAsync(ValidForgotPasswordTokenValue, CancellationToken);
+            .GetByValueAsync(UserTestUtilities.ValidForgotPasswordTokenValue, CancellationToken);
     }
 
     [Fact]
@@ -134,10 +135,10 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            ValidId,
-            ValidForgotPasswordTokenValue,
-            ValidPassword,
-            ValidPassword);
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidForgotPasswordTokenValue,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -145,9 +146,9 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         ForgotPasswordTokenWriteRepository
             .Received(1)
-            .Delete(Arg.Is<ForgotPasswordToken>(ec => ec.Value == ValidForgotPasswordTokenValue &&
-                                                         ec.ValidUntil == ValidUntil &&
-                                                         ec.UserId == ValidId));
+            .Delete(Arg.Is<ForgotPasswordToken>(ec => ec.Value == UserTestUtilities.ValidForgotPasswordTokenValue &&
+                                                         ec.ValidUntil == UserTestUtilities.ValidUntil &&
+                                                         ec.UserId == UserTestUtilities.ValidId));
     }
 
     [Fact]
@@ -155,10 +156,10 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            ValidId,
-            ValidForgotPasswordTokenValue,
-            ValidPassword,
-            ValidPassword);
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidForgotPasswordTokenValue,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -166,7 +167,7 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .ResetPasswordAsync(ValidId, ValidPasswordHash, CancellationToken);
+            .ResetPasswordAsync(UserTestUtilities.ValidId, UserTestUtilities.ValidPasswordHash, CancellationToken);
     }
 
     [Fact]
@@ -174,10 +175,10 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            ValidId,
-            ValidForgotPasswordTokenValue,
-            ValidPassword,
-            ValidPassword);
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidForgotPasswordTokenValue,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

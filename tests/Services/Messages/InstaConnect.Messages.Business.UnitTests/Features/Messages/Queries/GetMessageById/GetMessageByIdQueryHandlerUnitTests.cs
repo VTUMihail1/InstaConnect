@@ -2,8 +2,9 @@
 using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Message;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Shared.Common.Exceptions.Message;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Queries.GetMessageById;
@@ -24,8 +25,8 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetMessageByIdQuery(
-            InvalidId,
-            ValidMessageCurrentUserId
+            MessageTestUtilities.InvalidId,
+            MessageTestUtilities.ValidMessageCurrentUserId
         );
 
         // Act
@@ -40,8 +41,8 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetMessageByIdQuery(
-            ValidId,
-            ValidCurrentUserId
+            MessageTestUtilities.ValidId,
+            MessageTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -56,8 +57,8 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetMessageByIdQuery(
-            ValidId,
-            ValidMessageCurrentUserId
+            MessageTestUtilities.ValidId,
+            MessageTestUtilities.ValidMessageCurrentUserId
         );
 
         // Act
@@ -66,7 +67,7 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await MessageReadRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(MessageTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
@@ -74,8 +75,8 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetMessageByIdQuery(
-            ValidId,
-            ValidMessageCurrentUserId
+            MessageTestUtilities.ValidId,
+            MessageTestUtilities.ValidMessageCurrentUserId
         );
 
         // Act
@@ -84,12 +85,12 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
         // Assert
         response
             .Should()
-            .Match<MessageQueryViewModel>(m => m.Id == ValidId &&
-                                          m.SenderId == ValidMessageCurrentUserId &&
-                                          m.SenderName == ValidUserName &&
-                                          m.SenderProfileImage == ValidUserProfileImage &&
-                                          m.ReceiverId == ValidMessageReceiverId &&
-                                          m.ReceiverName == ValidUserName &&
-                                          m.ReceiverProfileImage == ValidUserProfileImage);
+            .Match<MessageQueryViewModel>(m => m.Id == MessageTestUtilities.ValidId &&
+                                          m.SenderId == MessageTestUtilities.ValidMessageCurrentUserId &&
+                                          m.SenderName == MessageTestUtilities.ValidUserName &&
+                                          m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+                                          m.ReceiverId == MessageTestUtilities.ValidMessageReceiverId &&
+                                          m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                          m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage);
     }
 }

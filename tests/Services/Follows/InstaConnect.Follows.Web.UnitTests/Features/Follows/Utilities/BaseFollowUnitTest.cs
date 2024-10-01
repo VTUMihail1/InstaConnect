@@ -3,7 +3,7 @@ using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
 using InstaConnect.Follows.Business.Features.Follows.Models;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.Features.Follows.Mappings;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
@@ -16,11 +16,6 @@ namespace InstaConnect.Follows.Web.UnitTests.Features.Follows.Utilities;
 
 public abstract class BaseFollowUnitTest : BaseSharedUnitTest
 {
-    protected readonly string ValidId;
-    protected readonly string ValidFollowingId;
-    protected readonly string ValidCurrentUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidUserProfileImage;
 
     public BaseFollowUnitTest() : base(
         Substitute.For<IInstaConnectSender>(),
@@ -33,23 +28,18 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
                     cfg.AddProfile<FollowQueryProfile>();
                 }))))
     {
-        ValidId = GetAverageString(FollowBusinessConfigurations.ID_MAX_LENGTH, FollowBusinessConfigurations.ID_MIN_LENGTH);
-        ValidFollowingId = GetAverageString(FollowBusinessConfigurations.FOLLOWING_ID_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_ID_MIN_LENGTH);
-        ValidCurrentUserId = GetAverageString(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
 
         var existingMessageQueryViewModel = new FollowQueryViewModel(
-            ValidId,
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidUserProfileImage,
-            ValidFollowingId,
-            ValidUserName,
-            ValidUserProfileImage);
+            FollowTestUtilities.ValidId,
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidUserProfileImage,
+            FollowTestUtilities.ValidFollowingId,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidUserProfileImage);
 
-        var existingMessageCommandViewModel = new FollowCommandViewModel(ValidId);
-        var existingCurrentUserModel = new CurrentUserModel(ValidCurrentUserId, ValidUserName);
+        var existingMessageCommandViewModel = new FollowCommandViewModel(FollowTestUtilities.ValidId);
+        var existingCurrentUserModel = new CurrentUserModel(FollowTestUtilities.ValidCurrentUserId, FollowTestUtilities.ValidUserName);
         var existingMessagePaginationCollectionModel = new FollowPaginationQueryViewModel(
             [existingMessageQueryViewModel],
             ValidPageValue,

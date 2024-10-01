@@ -2,12 +2,12 @@
 using System.Net.Http.Json;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
-using InstaConnect.Shared.Business.Utilities;
-using InstaConnect.Shared.Data.Models.Enums;
+using InstaConnect.Shared.Common.Models.Enums;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 
@@ -30,7 +30,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             Faker.Random.AlphaNumeric(length),
-            ValidUserName,
+            PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -82,7 +82,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentLikeTestUtilities.ValidUserName,
             Faker.Random.AlphaNumeric(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -106,7 +106,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
@@ -132,7 +132,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
@@ -158,7 +158,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -186,7 +186,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -210,7 +210,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -234,7 +234,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -254,8 +254,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLikeId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
@@ -274,7 +274,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -294,8 +294,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLikeId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
@@ -314,7 +314,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             GetNonCaseMatchingString(existingUserId),
-            ValidUserName,
+            PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -334,8 +334,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLikeId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
@@ -354,7 +354,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetNonCaseMatchingString(ValidUserName),
+            GetNonCaseMatchingString(PostCommentLikeTestUtilities.ValidUserName),
             existingPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -374,8 +374,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLikeId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
@@ -394,7 +394,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            GetHalfStartString(ValidUserName),
+            GetHalfStartString(PostCommentLikeTestUtilities.ValidUserName),
             existingPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -414,8 +414,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLikeId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
@@ -434,7 +434,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
         var route = GetApiRoute(
             existingUserId,
-            ValidUserName,
+            PostCommentLikeTestUtilities.ValidUserName,
             GetNonCaseMatchingString(existingPostCommentId),
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -454,8 +454,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLikeId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
@@ -486,8 +486,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLikeId &&
                                                                m.UserId == existingUserId &&
-                                                               m.UserName == ValidUserName &&
-                                                               m.UserProfileImage == ValidUserProfileImage &&
+                                                               m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                                               m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&

@@ -5,6 +5,7 @@ using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
 using InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Web.Features.Posts.Controllers.v1;
 using InstaConnect.Posts.Web.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
@@ -31,9 +32,9 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new GetAllPostsRequest()
         {
-            UserId = ValidCurrentUserId,
-            UserName = ValidUserName,
-            Title = ValidTitle,
+            UserId = PostTestUtilities.ValidCurrentUserId,
+            UserName = PostTestUtilities.ValidUserName,
+            Title = PostTestUtilities.ValidTitle,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -56,9 +57,9 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new GetAllPostsRequest()
         {
-            UserId = ValidCurrentUserId,
-            UserName = ValidUserName,
-            Title = ValidTitle,
+            UserId = PostTestUtilities.ValidCurrentUserId,
+            UserName = PostTestUtilities.ValidUserName,
+            Title = PostTestUtilities.ValidTitle,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -76,12 +77,12 @@ public class PostControllerUnitTests : BasePostUnitTest
             .Value
             .Should()
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                                 m.Id == ValidId &&
-                                                                 m.Title == ValidTitle &&
-                                                                 m.Content == ValidContent &&
-                                                                 m.UserId == ValidCurrentUserId &&
-                                                                 m.UserName == ValidUserName &&
-                                                                 m.UserProfileImage == ValidUserProfileImage) &&
+                                                                 m.Id == PostTestUtilities.ValidId &&
+                                                                 m.Title == PostTestUtilities.ValidTitle &&
+                                                                 m.Content == PostTestUtilities.ValidContent &&
+                                                                 m.UserId == PostTestUtilities.ValidCurrentUserId &&
+                                                                 m.UserName == PostTestUtilities.ValidUserName &&
+                                                                 m.UserProfileImage == PostTestUtilities.ValidUserProfileImage) &&
                                                               mc.Page == ValidPageValue &&
                                                               mc.PageSize == ValidPageSizeValue &&
                                                               mc.TotalCount == ValidTotalCountValue &&
@@ -95,9 +96,9 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new GetAllPostsRequest()
         {
-            UserId = ValidCurrentUserId,
-            UserName = ValidUserName,
-            Title = ValidTitle,
+            UserId = PostTestUtilities.ValidCurrentUserId,
+            UserName = PostTestUtilities.ValidUserName,
+            Title = PostTestUtilities.ValidTitle,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -111,9 +112,9 @@ public class PostControllerUnitTests : BasePostUnitTest
         await InstaConnectSender
               .Received(1)
               .SendAsync(Arg.Is<GetAllPostsQuery>(m =>
-                  m.UserId == ValidCurrentUserId &&
-                  m.UserName == ValidUserName &&
-                  m.Title == ValidTitle &&
+                  m.UserId == PostTestUtilities.ValidCurrentUserId &&
+                  m.UserName == PostTestUtilities.ValidUserName &&
+                  m.Title == PostTestUtilities.ValidTitle &&
                   m.SortOrder == ValidSortOrderProperty &&
                   m.SortPropertyName == ValidSortPropertyName &&
                   m.Page == ValidPageValue &&
@@ -126,7 +127,7 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new GetPostByIdRequest()
         {
-            Id = ValidId
+            Id = PostTestUtilities.ValidId
         };
 
         // Act
@@ -145,7 +146,7 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new GetPostByIdRequest()
         {
-            Id = ValidId
+            Id = PostTestUtilities.ValidId
         };
 
         // Act
@@ -158,12 +159,12 @@ public class PostControllerUnitTests : BasePostUnitTest
             .Which
             .Value
             .Should()
-            .Match<PostQueryResponse>(m => m.Id == ValidId &&
-                                                 m.Title == ValidTitle &&
-                                                 m.Content == ValidContent &&
-                                                 m.UserId == ValidCurrentUserId &&
-                                                 m.UserName == ValidUserName &&
-                                                 m.UserProfileImage == ValidUserProfileImage);
+            .Match<PostQueryResponse>(m => m.Id == PostTestUtilities.ValidId &&
+                                                 m.Title == PostTestUtilities.ValidTitle &&
+                                                 m.Content == PostTestUtilities.ValidContent &&
+                                                 m.UserId == PostTestUtilities.ValidCurrentUserId &&
+                                                 m.UserName == PostTestUtilities.ValidUserName &&
+                                                 m.UserProfileImage == PostTestUtilities.ValidUserProfileImage);
     }
 
     [Fact]
@@ -171,7 +172,7 @@ public class PostControllerUnitTests : BasePostUnitTest
     {
         var request = new GetPostByIdRequest()
         {
-            Id = ValidId
+            Id = PostTestUtilities.ValidId
         };
 
         // Act
@@ -180,7 +181,7 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetPostByIdQuery>(m => m.Id == ValidId), CancellationToken);
+              .SendAsync(Arg.Is<GetPostByIdQuery>(m => m.Id == PostTestUtilities.ValidId), CancellationToken);
     }
 
     [Fact]
@@ -189,7 +190,7 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new AddPostRequest()
         {
-            AddPostBindingModel = new(ValidTitle, ValidContent)
+            AddPostBindingModel = new(PostTestUtilities.ValidTitle, PostTestUtilities.ValidContent)
         };
 
         // Act
@@ -208,7 +209,7 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new AddPostRequest()
         {
-            AddPostBindingModel = new(ValidTitle, ValidContent)
+            AddPostBindingModel = new(PostTestUtilities.ValidTitle, PostTestUtilities.ValidContent)
         };
 
         // Act
@@ -221,7 +222,7 @@ public class PostControllerUnitTests : BasePostUnitTest
             .Which
             .Value
             .Should()
-            .Match<PostCommandResponse>(m => m.Id == ValidId);
+            .Match<PostCommandResponse>(m => m.Id == PostTestUtilities.ValidId);
     }
 
     [Fact]
@@ -230,7 +231,7 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new AddPostRequest()
         {
-            AddPostBindingModel = new(ValidTitle, ValidContent)
+            AddPostBindingModel = new(PostTestUtilities.ValidTitle, PostTestUtilities.ValidContent)
         };
 
         // Act
@@ -239,9 +240,9 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<AddPostCommand>(m => m.CurrentUserId == ValidCurrentUserId &&
-                                                     m.Title == ValidTitle &&
-                                                     m.Content == ValidContent),
+            .SendAsync(Arg.Is<AddPostCommand>(m => m.CurrentUserId == PostTestUtilities.ValidCurrentUserId &&
+                                                     m.Title == PostTestUtilities.ValidTitle &&
+                                                     m.Content == PostTestUtilities.ValidContent),
                                                      CancellationToken);
     }
 
@@ -251,7 +252,7 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new AddPostRequest()
         {
-            AddPostBindingModel = new(ValidTitle, ValidContent)
+            AddPostBindingModel = new(PostTestUtilities.ValidTitle, PostTestUtilities.ValidContent)
         };
 
         // Act
@@ -269,8 +270,8 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new UpdatePostRequest()
         {
-            Id = ValidId,
-            UpdatePostBindingModel = new(ValidTitle, ValidContent)
+            Id = PostTestUtilities.ValidId,
+            UpdatePostBindingModel = new(PostTestUtilities.ValidTitle, PostTestUtilities.ValidContent)
         };
 
         // Act
@@ -289,8 +290,8 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new UpdatePostRequest()
         {
-            Id = ValidId,
-            UpdatePostBindingModel = new(ValidTitle, ValidContent)
+            Id = PostTestUtilities.ValidId,
+            UpdatePostBindingModel = new(PostTestUtilities.ValidTitle, PostTestUtilities.ValidContent)
         };
 
         // Act
@@ -303,7 +304,7 @@ public class PostControllerUnitTests : BasePostUnitTest
             .Which
             .Value
             .Should()
-            .Match<PostCommandResponse>(m => m.Id == ValidId);
+            .Match<PostCommandResponse>(m => m.Id == PostTestUtilities.ValidId);
     }
 
     [Fact]
@@ -312,8 +313,8 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new UpdatePostRequest()
         {
-            Id = ValidId,
-            UpdatePostBindingModel = new(ValidTitle, ValidContent)
+            Id = PostTestUtilities.ValidId,
+            UpdatePostBindingModel = new(PostTestUtilities.ValidTitle, PostTestUtilities.ValidContent)
         };
 
         // Act
@@ -322,10 +323,10 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<UpdatePostCommand>(m => m.Id == ValidId &&
-                                                      m.CurrentUserId == ValidCurrentUserId &&
-                                                      m.Title == ValidTitle &&
-                                                      m.Content == ValidContent),
+            .SendAsync(Arg.Is<UpdatePostCommand>(m => m.Id == PostTestUtilities.ValidId &&
+                                                      m.CurrentUserId == PostTestUtilities.ValidCurrentUserId &&
+                                                      m.Title == PostTestUtilities.ValidTitle &&
+                                                      m.Content == PostTestUtilities.ValidContent),
                                                     CancellationToken);
     }
 
@@ -335,8 +336,8 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new UpdatePostRequest()
         {
-            Id = ValidId,
-            UpdatePostBindingModel = new(ValidTitle, ValidContent)
+            Id = PostTestUtilities.ValidId,
+            UpdatePostBindingModel = new(PostTestUtilities.ValidTitle, PostTestUtilities.ValidContent)
         };
 
         // Act
@@ -354,7 +355,7 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new DeletePostRequest()
         {
-            Id = ValidId
+            Id = PostTestUtilities.ValidId
         };
 
         // Act
@@ -372,7 +373,7 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new DeletePostRequest()
         {
-            Id = ValidId
+            Id = PostTestUtilities.ValidId
         };
 
         // Act
@@ -381,8 +382,8 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<DeletePostCommand>(m => m.Id == ValidId &&
-                                                    m.CurrentUserId == ValidCurrentUserId),
+            .SendAsync(Arg.Is<DeletePostCommand>(m => m.Id == PostTestUtilities.ValidId &&
+                                                    m.CurrentUserId == PostTestUtilities.ValidCurrentUserId),
                                                     CancellationToken);
     }
 
@@ -392,7 +393,7 @@ public class PostControllerUnitTests : BasePostUnitTest
         // Arrange
         var request = new DeletePostRequest()
         {
-            Id = ValidId
+            Id = PostTestUtilities.ValidId
         };
 
         // Act

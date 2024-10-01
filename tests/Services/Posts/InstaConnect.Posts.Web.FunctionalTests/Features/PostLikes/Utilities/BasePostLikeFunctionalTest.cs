@@ -1,5 +1,4 @@
-﻿using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
+﻿using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Data;
 using InstaConnect.Posts.Data.Features.PostLikes.Abstract;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
@@ -18,19 +17,6 @@ namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostLikes.Utilities;
 public abstract class BasePostLikeFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {
     private const string API_ROUTE = "api/v1/post-likes";
-
-    protected readonly string InvalidId;
-    protected readonly string InvalidPostId;
-    protected readonly string ValidPostTitle;
-    protected readonly string ValidPostContent;
-    protected readonly string InvalidUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidAddUserName;
-    protected readonly string ValidUpdateUserName;
-    protected readonly string ValidUserFirstName;
-    protected readonly string ValidUserEmail;
-    protected readonly string ValidUserLastName;
-    protected readonly string ValidUserProfileImage;
 
 
     protected IPostLikeWriteRepository PostLikeWriteRepository
@@ -60,18 +46,6 @@ public abstract class BasePostLikeFunctionalTest : BaseSharedFunctionalTest, ICl
         functionalTestWebAppFactory.Services.CreateScope(),
         API_ROUTE)
     {
-        InvalidId = GetAverageString(PostLikeBusinessConfigurations.ID_MAX_LENGTH, PostLikeBusinessConfigurations.ID_MIN_LENGTH);
-        InvalidPostId = GetAverageString(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH, PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH);
-        ValidPostTitle = GetAverageString(PostBusinessConfigurations.TITLE_MAX_LENGTH, PostBusinessConfigurations.TITLE_MIN_LENGTH);
-        ValidPostContent = GetAverageString(PostBusinessConfigurations.CONTENT_MAX_LENGTH, PostBusinessConfigurations.CONTENT_MIN_LENGTH);
-        InvalidUserId = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidAddUserName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUpdateUserName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserFirstName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserLastName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserEmail = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
     }
 
     protected async Task<string> CreatePostLikeAsync(string userId, string postId, CancellationToken cancellationToken)
@@ -92,8 +66,8 @@ public abstract class BasePostLikeFunctionalTest : BaseSharedFunctionalTest, ICl
     protected async Task<string> CreatePostAsync(string userId, CancellationToken cancellationToken)
     {
         var post = new Post(
-            ValidPostTitle,
-            ValidPostContent,
+            PostLikeTestUtilities.ValidPostTitle,
+            PostLikeTestUtilities.ValidPostContent,
             userId);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
@@ -108,11 +82,11 @@ public abstract class BasePostLikeFunctionalTest : BaseSharedFunctionalTest, ICl
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage);
+            PostLikeTestUtilities.ValidUserFirstName,
+            PostLikeTestUtilities.ValidUserLastName,
+            PostLikeTestUtilities.ValidUserEmail,
+            PostLikeTestUtilities.ValidUserName,
+            PostLikeTestUtilities.ValidUserProfileImage);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();

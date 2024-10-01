@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Commands.DeleteMessage;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Shared.Business.Exceptions.Message;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Message;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Commands.DeleteMessage;
@@ -24,8 +25,8 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new DeleteMessageCommand(
-            InvalidId,
-            ValidMessageCurrentUserId
+            MessageTestUtilities.InvalidId,
+            MessageTestUtilities.ValidMessageCurrentUserId
         );
 
         // Act
@@ -40,8 +41,8 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new DeleteMessageCommand(
-            ValidId,
-            ValidCurrentUserId
+            MessageTestUtilities.ValidId,
+            MessageTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -56,8 +57,8 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new DeleteMessageCommand(
-            ValidId,
-            ValidMessageCurrentUserId
+            MessageTestUtilities.ValidId,
+            MessageTestUtilities.ValidMessageCurrentUserId
         );
 
         // Act
@@ -66,7 +67,7 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await MessageWriteRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(MessageTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
@@ -74,8 +75,8 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new DeleteMessageCommand(
-            ValidId,
-            ValidMessageCurrentUserId
+            MessageTestUtilities.ValidId,
+            MessageTestUtilities.ValidMessageCurrentUserId
         );
 
         // Act
@@ -84,10 +85,10 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         MessageWriteRepository
             .Received(1)
-            .Delete(Arg.Is<Message>(m => m.Id == ValidId &&
-                                         m.SenderId == ValidMessageCurrentUserId &&
-                                         m.ReceiverId == ValidMessageReceiverId &&
-                                         m.Content == ValidContent));
+            .Delete(Arg.Is<Message>(m => m.Id == MessageTestUtilities.ValidId &&
+                                         m.SenderId == MessageTestUtilities.ValidMessageCurrentUserId &&
+                                         m.ReceiverId == MessageTestUtilities.ValidMessageReceiverId &&
+                                         m.Content == MessageTestUtilities.ValidContent));
     }
 
     [Fact]
@@ -95,8 +96,8 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new DeleteMessageCommand(
-            ValidId,
-            ValidMessageCurrentUserId
+            MessageTestUtilities.ValidId,
+            MessageTestUtilities.ValidMessageCurrentUserId
         );
 
         // Act

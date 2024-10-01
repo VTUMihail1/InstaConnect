@@ -2,8 +2,9 @@
 using InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
 using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Commands.AddMessage;
@@ -27,9 +28,9 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            InvalidUserId,
-            ValidCurrentUserId,
-            ValidContent
+            MessageTestUtilities.InvalidUserId,
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidContent
         );
 
         // Act
@@ -44,9 +45,9 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
-            InvalidUserId,
-            ValidContent
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.InvalidUserId,
+            MessageTestUtilities.ValidContent
         );
 
         // Act
@@ -61,9 +62,9 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
-            ValidReceiverId,
-            ValidContent
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidContent
         );
 
         // Act
@@ -80,9 +81,9 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
-            ValidReceiverId,
-            ValidContent
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidContent
         );
 
         // Act
@@ -93,9 +94,9 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
             .Received(1)
             .Add(Arg.Is<Message>(m =>
                 !string.IsNullOrEmpty(m.Id) &&
-                m.SenderId == ValidCurrentUserId &&
-                m.ReceiverId == ValidReceiverId &&
-                m.Content == ValidContent));
+                m.SenderId == MessageTestUtilities.ValidCurrentUserId &&
+                m.ReceiverId == MessageTestUtilities.ValidReceiverId &&
+                m.Content == MessageTestUtilities.ValidContent));
     }
 
     [Fact]
@@ -103,9 +104,9 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
-            ValidReceiverId,
-            ValidContent
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidContent
         );
 
         // Act
@@ -115,8 +116,8 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
         await MessageSender
             .Received(1)
             .SendMessageToUserAsync(Arg.Is<MessageSendModel>(m =>
-                m.Content == ValidContent &&
-                m.ReceiverId == ValidReceiverId),
+                m.Content == MessageTestUtilities.ValidContent &&
+                m.ReceiverId == MessageTestUtilities.ValidReceiverId),
                 CancellationToken);
     }
 
@@ -125,9 +126,9 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
-            ValidReceiverId,
-            ValidContent
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidContent
         );
 
         // Act

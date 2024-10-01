@@ -2,7 +2,8 @@
 using InstaConnect.Posts.Business.Features.Posts.Models;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Posts;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Shared.Common.Exceptions.Posts;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Queries.GetPostById;
@@ -22,7 +23,7 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostUnitTest
     public async Task Handle_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var query = new GetPostByIdQuery(InvalidId);
+        var query = new GetPostByIdQuery(PostTestUtilities.InvalidId);
 
         // Act
         var action = async () => await _queryHandler.Handle(query, CancellationToken);
@@ -35,7 +36,7 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetByIdMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetPostByIdQuery(ValidId);
+        var query = new GetPostByIdQuery(PostTestUtilities.ValidId);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -43,14 +44,14 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostUnitTest
         // Assert
         await PostReadRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(PostTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldReturnPostViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetPostByIdQuery(ValidId);
+        var query = new GetPostByIdQuery(PostTestUtilities.ValidId);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -58,11 +59,11 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostUnitTest
         // Assert
         response
             .Should()
-            .Match<PostQueryViewModel>(m => m.Id == ValidId &&
-                                              m.UserId == ValidPostCurrentUserId &&
-                                              m.UserName == ValidUserName &&
-                                              m.UserProfileImage == ValidUserProfileImage &&
-                                              m.Title == ValidTitle &&
-                                              m.Content == ValidContent);
+            .Match<PostQueryViewModel>(m => m.Id == PostTestUtilities.ValidId &&
+                                              m.UserId == PostTestUtilities.ValidPostCurrentUserId &&
+                                              m.UserName == PostTestUtilities.ValidUserName &&
+                                              m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                              m.Title == PostTestUtilities.ValidTitle &&
+                                              m.Content == PostTestUtilities.ValidContent);
     }
 }

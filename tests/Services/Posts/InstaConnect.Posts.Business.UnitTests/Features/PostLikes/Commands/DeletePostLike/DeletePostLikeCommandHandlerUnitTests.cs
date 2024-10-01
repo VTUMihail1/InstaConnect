@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.DeletePostLike;
 using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.PostLike;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.PostLike;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Commands.DeletePostLike;
@@ -24,8 +25,8 @@ public class DeletePostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new DeletePostLikeCommand(
-            InvalidId,
-            ValidPostLikeCurrentUserId
+            PostLikeTestUtilities.InvalidId,
+            PostLikeTestUtilities.ValidPostLikeCurrentUserId
         );
 
         // Act
@@ -40,8 +41,8 @@ public class DeletePostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new DeletePostLikeCommand(
-            ValidId,
-            ValidCurrentUserId
+            PostLikeTestUtilities.ValidId,
+            PostLikeTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -56,8 +57,8 @@ public class DeletePostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new DeletePostLikeCommand(
-            ValidId,
-            ValidPostLikeCurrentUserId
+            PostLikeTestUtilities.ValidId,
+            PostLikeTestUtilities.ValidPostLikeCurrentUserId
         );
 
         // Act
@@ -66,7 +67,7 @@ public class DeletePostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
         // Assert
         await PostLikeWriteRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(PostLikeTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
@@ -74,8 +75,8 @@ public class DeletePostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new DeletePostLikeCommand(
-            ValidId,
-            ValidPostLikeCurrentUserId
+            PostLikeTestUtilities.ValidId,
+            PostLikeTestUtilities.ValidPostLikeCurrentUserId
         );
 
         // Act
@@ -84,9 +85,9 @@ public class DeletePostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
         // Assert
         PostLikeWriteRepository
             .Received(1)
-            .Delete(Arg.Is<PostLike>(m => m.Id == ValidId &&
-                                          m.UserId == ValidPostLikeCurrentUserId &&
-                                          m.PostId == ValidPostLikePostId));
+            .Delete(Arg.Is<PostLike>(m => m.Id == PostLikeTestUtilities.ValidId &&
+                                          m.UserId == PostLikeTestUtilities.ValidPostLikeCurrentUserId &&
+                                          m.PostId == PostLikeTestUtilities.ValidPostLikePostId));
     }
 
     [Fact]
@@ -94,8 +95,8 @@ public class DeletePostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new DeletePostLikeCommand(
-            ValidId,
-            ValidPostLikeCurrentUserId
+            PostLikeTestUtilities.ValidId,
+            PostLikeTestUtilities.ValidPostLikeCurrentUserId
         );
 
         // Act

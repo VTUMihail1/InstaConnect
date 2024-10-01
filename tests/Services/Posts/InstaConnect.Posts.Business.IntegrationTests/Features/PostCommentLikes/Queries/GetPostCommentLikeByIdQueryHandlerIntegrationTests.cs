@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.PostCommentLike;
+using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.PostCommentLike;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostCommentLikes.Queries;
 
@@ -60,7 +60,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
-        var query = new GetPostCommentLikeByIdQuery(InvalidId);
+        var query = new GetPostCommentLikeByIdQuery(PostCommentLikeTestUtilities.InvalidId);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -87,8 +87,8 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
             .Should()
             .Match<PostCommentLikeQueryViewModel>(m => m.Id == existingPostCommentLikeId &&
                                                   m.UserId == existingUserId &&
-                                                  m.UserName == ValidUserName &&
-                                                  m.UserProfileImage == ValidUserProfileImage &&
+                                                  m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                                  m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                   m.PostCommentId == existingPostCommentId);
     }
 
@@ -110,8 +110,8 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
             .Should()
             .Match<PostCommentLikeQueryViewModel>(m => m.Id == existingPostCommentLikeId &&
                                                   m.UserId == existingUserId &&
-                                                  m.UserName == ValidUserName &&
-                                                  m.UserProfileImage == ValidUserProfileImage &&
+                                                  m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                                  m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                   m.PostCommentId == existingPostCommentId);
     }
 }

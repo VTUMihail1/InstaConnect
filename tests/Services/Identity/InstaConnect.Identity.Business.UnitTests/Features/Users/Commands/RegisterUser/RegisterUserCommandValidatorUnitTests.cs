@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Identity.Business.Features.Users.Commands.RegisterUser;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.RegisterUser;
 
@@ -20,12 +20,12 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new RegisterUserCommand(
             null!,
-            ValidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -44,12 +44,12 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new RegisterUserCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -64,13 +64,13 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            ValidName,
+            UserTestUtilities.ValidName,
             null!,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -88,13 +88,13 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            ValidName,
+            UserTestUtilities.ValidName,
             Faker.Random.AlphaNumeric(length),
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -109,13 +109,13 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            ValidName,
-            ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
             null!,
             null!,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -134,13 +134,13 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var invalidPassword = Faker.Random.AlphaNumeric(length);
         var command = new RegisterUserCommand(
-            ValidName,
-            ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
             invalidPassword,
             invalidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -155,13 +155,13 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            ValidName,
-            ValidEmail,
-            ValidPassword,
-            InvalidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.InvalidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -176,13 +176,13 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            ValidName,
-            ValidEmail,
-            ValidPassword,
-            ValidPassword,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
             null!,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -200,13 +200,13 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            ValidName,
-            ValidEmail,
-            ValidPassword,
-            ValidPassword,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
             Faker.Random.AlphaNumeric(length),
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -221,13 +221,13 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            ValidName,
-            ValidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
             null!,
-            ValidFormFile
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -245,13 +245,13 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            ValidName,
-            ValidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
             Faker.Random.AlphaNumeric(length),
-            ValidFormFile
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -266,13 +266,13 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            ValidName,
-            ValidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -287,12 +287,12 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            ValidName,
-            ValidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
             null
         );
 

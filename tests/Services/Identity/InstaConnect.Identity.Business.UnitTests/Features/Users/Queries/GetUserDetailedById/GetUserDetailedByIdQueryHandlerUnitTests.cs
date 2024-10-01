@@ -2,7 +2,8 @@
 using InstaConnect.Identity.Business.Features.Users.Models;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserDetailedById;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Queries.GetUserDetailedById;
@@ -22,7 +23,7 @@ public class GetUserDetailedByIdQueryHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var query = new GetUserDetailedByIdQuery(InvalidId);
+        var query = new GetUserDetailedByIdQuery(UserTestUtilities.InvalidId);
 
         // Act
         var action = async () => await _queryHandler.Handle(query, CancellationToken);
@@ -35,7 +36,7 @@ public class GetUserDetailedByIdQueryHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetByIdMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetUserDetailedByIdQuery(ValidId);
+        var query = new GetUserDetailedByIdQuery(UserTestUtilities.ValidId);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -43,14 +44,14 @@ public class GetUserDetailedByIdQueryHandlerUnitTests : BaseUserUnitTest
         // Assert
         await UserReadRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(UserTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldReturnUserViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetUserDetailedByIdQuery(ValidId);
+        var query = new GetUserDetailedByIdQuery(UserTestUtilities.ValidId);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -58,11 +59,11 @@ public class GetUserDetailedByIdQueryHandlerUnitTests : BaseUserUnitTest
         // Assert
         response
             .Should()
-            .Match<UserDetailedQueryViewModel>(m => m.Id == ValidId &&
-                                            m.UserName == ValidName &&
-                                            m.FirstName == ValidFirstName &&
-                                            m.LastName == ValidLastName &&
-                                            m.Email == ValidEmail &&
-                                            m.ProfileImage == ValidProfileImage);
+            .Match<UserDetailedQueryViewModel>(m => m.Id == UserTestUtilities.ValidId &&
+                                            m.UserName == UserTestUtilities.ValidName &&
+                                            m.FirstName == UserTestUtilities.ValidFirstName &&
+                                            m.LastName == UserTestUtilities.ValidLastName &&
+                                            m.Email == UserTestUtilities.ValidEmail &&
+                                            m.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 }

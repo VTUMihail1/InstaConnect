@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Business.Features.PostLikes.Models;
 using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
 using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Filters;
 using NSubstitute;
 
@@ -23,9 +24,9 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var query = new GetAllPostLikesQuery(
-            ValidPostLikeCurrentUserId,
-            ValidUserName,
-            ValidPostLikePostId,
+            PostLikeTestUtilities.ValidPostLikeCurrentUserId,
+            PostLikeTestUtilities.ValidUserName,
+            PostLikeTestUtilities.ValidPostLikePostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -38,9 +39,9 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         await PostLikeReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<PostLikeCollectionReadQuery>(m =>
-                                                                        m.UserId == ValidPostLikeCurrentUserId &&
-                                                                        m.UserName == ValidUserName &&
-                                                                        m.PostId == ValidPostLikePostId &&
+                                                                        m.UserId == PostLikeTestUtilities.ValidPostLikeCurrentUserId &&
+                                                                        m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                                        m.PostId == PostLikeTestUtilities.ValidPostLikePostId &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
@@ -53,9 +54,9 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var query = new GetAllPostLikesQuery(
-            ValidPostLikeCurrentUserId,
-            ValidUserName,
-            ValidPostLikePostId,
+            PostLikeTestUtilities.ValidPostLikeCurrentUserId,
+            PostLikeTestUtilities.ValidUserName,
+            PostLikeTestUtilities.ValidPostLikePostId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -67,11 +68,11 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         // Assert
         response
             .Should()
-            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
-                                                           m.UserId == ValidPostLikeCurrentUserId &&
-                                                           m.UserName == ValidUserName &&
-                                                           m.UserProfileImage == ValidUserProfileImage &&
-                                                           m.PostId == ValidPostLikePostId) &&
+            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == PostLikeTestUtilities.ValidId &&
+                                                           m.UserId == PostLikeTestUtilities.ValidPostLikeCurrentUserId &&
+                                                           m.UserName == PostLikeTestUtilities.ValidUserName &&
+                                                           m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
+                                                           m.PostId == PostLikeTestUtilities.ValidPostLikePostId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
                                                            mc.TotalCount == ValidTotalCountValue &&

@@ -2,10 +2,11 @@
 using InstaConnect.Identity.Business.Features.Users.Commands.RegisterUser;
 using InstaConnect.Identity.Business.Features.Users.Models;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Contracts.Users;
-using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Models;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.RegisterUser;
@@ -31,13 +32,13 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            InvalidName,
-            ValidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.InvalidName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -52,13 +53,13 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            ValidName,
-            InvalidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.ValidName,
+            UserTestUtilities.InvalidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -73,12 +74,12 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            InvalidName,
-            InvalidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
+            UserTestUtilities.InvalidName,
+            UserTestUtilities.InvalidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
             null!
         );
 
@@ -96,13 +97,13 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            InvalidName,
-            InvalidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.InvalidName,
+            UserTestUtilities.InvalidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -111,7 +112,7 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await ImageHandler
             .Received(1)
-            .UploadAsync(Arg.Is<ImageUploadModel>(u => u.FormFile == ValidFormFile), CancellationToken);
+            .UploadAsync(Arg.Is<ImageUploadModel>(u => u.FormFile == UserTestUtilities.ValidFormFile), CancellationToken);
     }
 
     [Fact]
@@ -119,13 +120,13 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            InvalidName,
-            InvalidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.InvalidName,
+            UserTestUtilities.InvalidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -134,7 +135,7 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         PasswordHasher
             .Received(1)
-            .Hash(ValidPassword);
+            .Hash(UserTestUtilities.ValidPassword);
     }
 
     [Fact]
@@ -142,13 +143,13 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            InvalidName,
-            InvalidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.InvalidName,
+            UserTestUtilities.InvalidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -158,11 +159,11 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
         UserWriteRepository
             .Received(1)
             .Add(Arg.Is<User>(u => !string.IsNullOrEmpty(u.Id) &&
-                                   u.FirstName == ValidFirstName &&
-                                   u.LastName == ValidLastName &&
-                                   u.UserName == InvalidName &&
-                                   u.Email == InvalidEmail &&
-                                   u.ProfileImage == ValidProfileImage));
+                                   u.FirstName == UserTestUtilities.ValidFirstName &&
+                                   u.LastName == UserTestUtilities.ValidLastName &&
+                                   u.UserName == UserTestUtilities.InvalidName &&
+                                   u.Email == UserTestUtilities.InvalidEmail &&
+                                   u.ProfileImage == UserTestUtilities.ValidProfileImage));
     }
 
     [Fact]
@@ -170,13 +171,13 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            InvalidName,
-            InvalidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.InvalidName,
+            UserTestUtilities.InvalidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -185,12 +186,12 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await EventPublisher
             .Received(1)
-            .PublishAsync(Arg.Is<UserCreatedEvent>(u => !string.IsNullOrEmpty(ValidId) &&
-                                   u.FirstName == ValidFirstName &&
-                                   u.LastName == ValidLastName &&
-                                   u.UserName == InvalidName &&
-                                   u.Email == InvalidEmail &&
-                                   u.ProfileImage == ValidProfileImage), CancellationToken);
+            .PublishAsync(Arg.Is<UserCreatedEvent>(u => !string.IsNullOrEmpty(UserTestUtilities.ValidId) &&
+                                   u.FirstName == UserTestUtilities.ValidFirstName &&
+                                   u.LastName == UserTestUtilities.ValidLastName &&
+                                   u.UserName == UserTestUtilities.InvalidName &&
+                                   u.Email == UserTestUtilities.InvalidEmail &&
+                                   u.ProfileImage == UserTestUtilities.ValidProfileImage), CancellationToken);
     }
 
     [Fact]
@@ -198,13 +199,13 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            InvalidName,
-            InvalidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.InvalidName,
+            UserTestUtilities.InvalidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -215,7 +216,7 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
             .Received(1)
             .PublishEmailConfirmationTokenAsync(Arg.Is<CreateEmailConfirmationTokenModel>(u =>
                                    !string.IsNullOrEmpty(u.UserId) &&
-                                   u.Email == InvalidEmail), CancellationToken);
+                                   u.Email == UserTestUtilities.InvalidEmail), CancellationToken);
     }
 
     [Fact]
@@ -223,13 +224,13 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            InvalidName,
-            InvalidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.InvalidName,
+            UserTestUtilities.InvalidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -246,13 +247,13 @@ public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new RegisterUserCommand(
-            InvalidName,
-            InvalidEmail,
-            ValidPassword,
-            ValidPassword,
-            ValidFirstName,
-            ValidLastName,
-            ValidFormFile
+            UserTestUtilities.InvalidName,
+            UserTestUtilities.InvalidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act

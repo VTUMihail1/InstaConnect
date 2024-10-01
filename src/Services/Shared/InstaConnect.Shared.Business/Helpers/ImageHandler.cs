@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using CloudinaryDotNet;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Exceptions.Base;
 using InstaConnect.Shared.Business.Models;
+using InstaConnect.Shared.Common.Exceptions.Base;
 
 namespace InstaConnect.Shared.Business.Helpers;
 

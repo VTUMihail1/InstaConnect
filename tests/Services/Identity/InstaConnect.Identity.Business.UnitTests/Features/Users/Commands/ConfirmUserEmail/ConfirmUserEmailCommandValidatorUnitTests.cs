@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Identity.Business.Features.Users.Commands.ConfirmUserEmail;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.ConfirmUserEmail;
 
@@ -20,7 +20,7 @@ public class ConfirmUserEmailCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new ConfirmUserEmailCommand(
             null!,
-            ValidEmailConfirmationTokenValue);
+            UserTestUtilities.ValidEmailConfirmationTokenValue);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -38,7 +38,7 @@ public class ConfirmUserEmailCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new ConfirmUserEmailCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidEmailConfirmationTokenValue);
+            UserTestUtilities.ValidEmailConfirmationTokenValue);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -52,7 +52,7 @@ public class ConfirmUserEmailCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ConfirmUserEmailCommand(
-            ValidId,
+            UserTestUtilities.ValidId,
             null!);
 
         // Act
@@ -70,7 +70,7 @@ public class ConfirmUserEmailCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ConfirmUserEmailCommand(
-            ValidId,
+            UserTestUtilities.ValidId,
             Faker.Random.AlphaNumeric(length));
 
         // Act
@@ -85,8 +85,8 @@ public class ConfirmUserEmailCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ConfirmUserEmailCommand(
-            ValidId,
-            ValidEmailConfirmationTokenValue);
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidEmailConfirmationTokenValue);
 
         // Act
         var result = _commandValidator.TestValidate(command);

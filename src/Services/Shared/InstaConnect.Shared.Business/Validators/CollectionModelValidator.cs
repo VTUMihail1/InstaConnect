@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using InstaConnect.Shared.Business.Models.Filters;
-using InstaConnect.Shared.Business.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Shared.Business.Validators;
 

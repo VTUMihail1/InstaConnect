@@ -1,8 +1,8 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
-using InstaConnect.Shared.Business.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Queries.GetAllMessages;
 
@@ -21,8 +21,8 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var query = new GetAllMessagesQuery(
             null!,
-            ValidReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -44,8 +44,8 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var query = new GetAllMessagesQuery(
             Faker.Random.AlphaNumeric(length),
-            ValidReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -65,9 +65,9 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetAllMessagesQuery(
-            ValidCurrentUserId,
+            MessageTestUtilities.ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length),
-            ValidUserName,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -87,8 +87,8 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetAllMessagesQuery(
-            ValidCurrentUserId,
-            ValidReceiverId,
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
             Faker.Random.AlphaNumeric(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -107,9 +107,9 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetAllMessagesQuery(
-            ValidCurrentUserId,
-            ValidReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             null!,
             ValidPageValue,
@@ -127,9 +127,9 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetAllMessagesQuery(
-            ValidCurrentUserId,
-            ValidReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
             ValidPageValue,
@@ -150,9 +150,9 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetAllMessagesQuery(
-            ValidCurrentUserId,
-            ValidReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
             ValidPageValue,
@@ -172,9 +172,9 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetAllMessagesQuery(
-            ValidCurrentUserId,
-            ValidReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             value,
@@ -194,9 +194,9 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetAllMessagesQuery(
-            ValidCurrentUserId,
-            ValidReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -214,9 +214,9 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetAllMessagesQuery(
-            ValidCurrentUserId,
-            ValidReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

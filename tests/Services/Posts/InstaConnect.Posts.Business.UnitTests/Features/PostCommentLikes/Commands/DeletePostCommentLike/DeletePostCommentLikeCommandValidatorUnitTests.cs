@@ -1,8 +1,8 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.DeletePostCommentLike;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Commands.DeletePostCommentLike;
 
@@ -21,7 +21,7 @@ public class DeletePostCommentLikeCommandValidatorUnitTests : BasePostCommentLik
         // Arrange
         var command = new DeletePostCommentLikeCommand(
             null!,
-            ValidCurrentUserId
+            PostCommentLikeTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -40,7 +40,7 @@ public class DeletePostCommentLikeCommandValidatorUnitTests : BasePostCommentLik
         // Arrange
         var command = new DeletePostCommentLikeCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidCurrentUserId
+            PostCommentLikeTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -55,7 +55,7 @@ public class DeletePostCommentLikeCommandValidatorUnitTests : BasePostCommentLik
     {
         // Arrange
         var command = new DeletePostCommentLikeCommand(
-            ValidId,
+            PostCommentLikeTestUtilities.ValidId,
             null!
         );
 
@@ -74,7 +74,7 @@ public class DeletePostCommentLikeCommandValidatorUnitTests : BasePostCommentLik
     {
         // Arrange
         var command = new DeletePostCommentLikeCommand(
-            ValidId,
+            PostCommentLikeTestUtilities.ValidId,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -90,8 +90,8 @@ public class DeletePostCommentLikeCommandValidatorUnitTests : BasePostCommentLik
     {
         // Arrange
         var command = new DeletePostCommentLikeCommand(
-            ValidId,
-            ValidCurrentUserId
+            PostCommentLikeTestUtilities.ValidId,
+            PostCommentLikeTestUtilities.ValidCurrentUserId
         );
 
         // Act

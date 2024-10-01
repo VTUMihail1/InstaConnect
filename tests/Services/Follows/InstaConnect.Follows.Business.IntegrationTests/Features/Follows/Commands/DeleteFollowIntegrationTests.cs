@@ -1,12 +1,12 @@
 ﻿using Bogus;
 using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.Follow;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.Follow;
+using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Commands;
 
@@ -107,7 +107,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var command = new DeleteFollowCommand(
-            InvalidId,
+            FollowTestUtilities.InvalidId,
             existingFollowerId
         );
 

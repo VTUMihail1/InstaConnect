@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Commands.AddPost;
 
@@ -20,8 +20,8 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
         // Arrange
         var command = new AddPostCommand(
             null!,
-            ValidTitle,
-            ValidContent);
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -39,8 +39,8 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
         // Arrange
         var command = new AddPostCommand(
             Faker.Random.AlphaNumeric(length)!,
-            ValidTitle,
-            ValidContent);
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -54,9 +54,9 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new AddPostCommand(
-            ValidCurrentUserId,
+            PostTestUtilities.ValidCurrentUserId,
             null!,
-            ValidContent);
+            PostTestUtilities.ValidContent);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -73,9 +73,9 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new AddPostCommand(
-            ValidCurrentUserId,
+            PostTestUtilities.ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length)!,
-            ValidContent);
+            PostTestUtilities.ValidContent);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -89,8 +89,8 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new AddPostCommand(
-            ValidCurrentUserId,
-            ValidTitle,
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidTitle,
             null!);
 
         // Act
@@ -108,8 +108,8 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new AddPostCommand(
-            ValidCurrentUserId,
-            ValidTitle,
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidTitle,
             Faker.Random.AlphaNumeric(length)!);
 
         // Act
@@ -124,9 +124,9 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new AddPostCommand(
-            ValidCurrentUserId,
-            ValidTitle,
-            ValidContent
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent
         );
 
         // Act

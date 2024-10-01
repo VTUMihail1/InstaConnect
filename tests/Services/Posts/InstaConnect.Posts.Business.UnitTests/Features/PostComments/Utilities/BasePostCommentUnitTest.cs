@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Features.PostComments.Mappings;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Abstract;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Filters;
@@ -19,23 +18,6 @@ namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
 
 public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
 {
-    protected readonly string ValidId;
-    protected readonly string InvalidId;
-    protected readonly string ValidPostId;
-    protected readonly string InvalidPostId;
-    protected readonly string ValidPostTitle;
-    protected readonly string ValidPostContent;
-    protected readonly string ValidContent;
-    protected readonly string ValidCurrentUserId;
-    protected readonly string InvalidUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidUserFirstName;
-    protected readonly string ValidUserEmail;
-    protected readonly string ValidUserLastName;
-    protected readonly string ValidUserProfileImage;
-    protected readonly string ValidPostCommentPostId;
-    protected readonly string ValidPostCommentCurrentUserId;
-
     protected IUserWriteRepository UserWriteRepository { get; }
 
     protected IPostReadRepository PostReadRepository { get; }
@@ -57,23 +39,6 @@ public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
                 }))),
         new EntityPropertyValidator())
     {
-        ValidId = GetAverageString(PostCommentBusinessConfigurations.ID_MAX_LENGTH, PostCommentBusinessConfigurations.ID_MIN_LENGTH);
-        InvalidId = GetAverageString(PostCommentBusinessConfigurations.ID_MAX_LENGTH, PostCommentBusinessConfigurations.ID_MIN_LENGTH);
-        ValidPostId = GetAverageString(PostCommentBusinessConfigurations.POST_ID_MAX_LENGTH, PostCommentBusinessConfigurations.POST_ID_MIN_LENGTH);
-        InvalidPostId = GetAverageString(PostCommentBusinessConfigurations.POST_ID_MAX_LENGTH, PostCommentBusinessConfigurations.POST_ID_MIN_LENGTH);
-        ValidPostTitle = GetAverageString(PostBusinessConfigurations.TITLE_MAX_LENGTH, PostBusinessConfigurations.TITLE_MIN_LENGTH);
-        ValidPostContent = GetAverageString(PostBusinessConfigurations.CONTENT_MAX_LENGTH, PostBusinessConfigurations.CONTENT_MIN_LENGTH);
-        ValidContent = GetAverageString(PostCommentBusinessConfigurations.CONTENT_MAX_LENGTH, PostCommentBusinessConfigurations.CONTENT_MIN_LENGTH);
-        InvalidUserId = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserFirstName = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserLastName = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserEmail = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidCurrentUserId = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidPostCommentPostId = GetAverageString(PostCommentBusinessConfigurations.POST_ID_MAX_LENGTH, PostCommentBusinessConfigurations.POST_ID_MIN_LENGTH);
-        ValidPostCommentCurrentUserId = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         PostReadRepository = Substitute.For<IPostReadRepository>();
         PostWriteRepository = Substitute.For<IPostWriteRepository>();
@@ -81,47 +46,47 @@ public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
         PostCommentWriteRepository = Substitute.For<IPostCommentWriteRepository>();
 
         var existingUser = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            PostCommentTestUtilities.ValidUserFirstName,
+            PostCommentTestUtilities.ValidUserLastName,
+            PostCommentTestUtilities.ValidUserEmail,
+            PostCommentTestUtilities.ValidUserName,
+            PostCommentTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidCurrentUserId,
+            Id = PostCommentTestUtilities.ValidCurrentUserId,
         };
 
         var existingPostCommentUser = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            PostCommentTestUtilities.ValidUserFirstName,
+            PostCommentTestUtilities.ValidUserLastName,
+            PostCommentTestUtilities.ValidUserEmail,
+            PostCommentTestUtilities.ValidUserName,
+            PostCommentTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidPostCommentCurrentUserId,
+            Id = PostCommentTestUtilities.ValidPostCommentCurrentUserId,
         };
 
         var existingPost = new Post(
-            ValidPostTitle,
-            ValidPostContent,
-            ValidCurrentUserId)
+            PostCommentTestUtilities.ValidPostTitle,
+            PostCommentTestUtilities.ValidPostContent,
+            PostCommentTestUtilities.ValidCurrentUserId)
         {
-            Id = ValidPostId,
+            Id = PostCommentTestUtilities.ValidPostId,
         };
 
         var existingPostCommentPost = new Post(
-            ValidPostTitle,
-            ValidPostContent,
-            ValidCurrentUserId)
+            PostCommentTestUtilities.ValidPostTitle,
+            PostCommentTestUtilities.ValidPostContent,
+            PostCommentTestUtilities.ValidCurrentUserId)
         {
-            Id = ValidPostCommentPostId,
+            Id = PostCommentTestUtilities.ValidPostCommentPostId,
         };
 
         var existingPostComment = new PostComment(
-            ValidPostCommentCurrentUserId,
-            ValidPostCommentPostId,
-            ValidContent)
+            PostCommentTestUtilities.ValidPostCommentCurrentUserId,
+            PostCommentTestUtilities.ValidPostCommentPostId,
+            PostCommentTestUtilities.ValidContent)
         {
-            Id = ValidId,
+            Id = PostCommentTestUtilities.ValidId,
             User = existingPostCommentUser,
             Post = existingPostCommentPost
         };
@@ -133,50 +98,50 @@ public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
             ValidTotalCountValue);
 
         PostCommentReadRepository.GetByIdAsync(
-            ValidId,
+            PostCommentTestUtilities.ValidId,
             CancellationToken)
             .Returns(existingPostComment);
 
         PostCommentWriteRepository.GetByIdAsync(
-            ValidId,
+            PostCommentTestUtilities.ValidId,
             CancellationToken)
             .Returns(existingPostComment);
 
         UserWriteRepository.GetByIdAsync(
-            ValidCurrentUserId,
+            PostCommentTestUtilities.ValidCurrentUserId,
             CancellationToken)
             .Returns(existingUser);
 
         UserWriteRepository.GetByIdAsync(
-            ValidPostCommentCurrentUserId,
+            PostCommentTestUtilities.ValidPostCommentCurrentUserId,
             CancellationToken)
             .Returns(existingPostCommentUser);
 
         PostReadRepository.GetByIdAsync(
-            ValidPostId,
+            PostCommentTestUtilities.ValidPostId,
             CancellationToken)
             .Returns(existingPost);
 
         PostReadRepository.GetByIdAsync(
-            ValidPostCommentPostId,
+            PostCommentTestUtilities.ValidPostCommentPostId,
             CancellationToken)
             .Returns(existingPostCommentPost);
 
         PostWriteRepository.GetByIdAsync(
-            ValidPostId,
+            PostCommentTestUtilities.ValidPostId,
             CancellationToken)
             .Returns(existingPost);
 
         PostWriteRepository.GetByIdAsync(
-            ValidPostCommentPostId,
+            PostCommentTestUtilities.ValidPostCommentPostId,
             CancellationToken)
             .Returns(existingPostCommentPost);
 
         PostCommentReadRepository
             .GetAllAsync(Arg.Is<PostCommentCollectionReadQuery>(m =>
-                                                                        m.PostId == ValidPostCommentPostId &&
-                                                                        m.UserId == ValidPostCommentCurrentUserId &&
-                                                                        m.UserName == ValidUserName &&
+                                                                        m.PostId == PostCommentTestUtilities.ValidPostCommentPostId &&
+                                                                        m.UserId == PostCommentTestUtilities.ValidPostCommentCurrentUserId &&
+                                                                        m.UserName == PostCommentTestUtilities.ValidUserName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

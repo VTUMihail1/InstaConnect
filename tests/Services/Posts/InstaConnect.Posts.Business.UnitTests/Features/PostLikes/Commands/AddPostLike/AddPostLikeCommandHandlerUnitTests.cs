@@ -2,10 +2,11 @@
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.AddPostLike;
 using InstaConnect.Posts.Business.Features.PostLikes.Models;
 using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.Posts;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.Posts;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Commands.AddPostLike;
@@ -29,8 +30,8 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new AddPostLikeCommand(
-            InvalidUserId,
-            ValidPostId);
+            PostLikeTestUtilities.InvalidUserId,
+            PostLikeTestUtilities.ValidPostId);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -44,8 +45,8 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new AddPostLikeCommand(
-            ValidCurrentUserId,
-            InvalidPostId);
+            PostLikeTestUtilities.ValidCurrentUserId,
+            PostLikeTestUtilities.InvalidPostId);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -59,8 +60,8 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new AddPostLikeCommand(
-            ValidPostLikeCurrentUserId,
-            ValidPostLikePostId);
+            PostLikeTestUtilities.ValidPostLikeCurrentUserId,
+            PostLikeTestUtilities.ValidPostLikePostId);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -74,8 +75,8 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new AddPostLikeCommand(
-            ValidCurrentUserId,
-            ValidPostId);
+            PostLikeTestUtilities.ValidCurrentUserId,
+            PostLikeTestUtilities.ValidPostId);
 
         // Act
         var response = await _commandHandler.Handle(command, CancellationToken);
@@ -91,8 +92,8 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new AddPostLikeCommand(
-            ValidCurrentUserId,
-            ValidPostId);
+            PostLikeTestUtilities.ValidCurrentUserId,
+            PostLikeTestUtilities.ValidPostId);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -102,8 +103,8 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
             .Received(1)
             .Add(Arg.Is<PostLike>(m =>
                 !string.IsNullOrEmpty(m.Id) &&
-                m.UserId == ValidCurrentUserId &&
-                m.PostId == ValidPostId));
+                m.UserId == PostLikeTestUtilities.ValidCurrentUserId &&
+                m.PostId == PostLikeTestUtilities.ValidPostId));
     }
 
     [Fact]
@@ -111,8 +112,8 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var command = new AddPostLikeCommand(
-            ValidCurrentUserId,
-            ValidPostId);
+            PostLikeTestUtilities.ValidCurrentUserId,
+            PostLikeTestUtilities.ValidPostId);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

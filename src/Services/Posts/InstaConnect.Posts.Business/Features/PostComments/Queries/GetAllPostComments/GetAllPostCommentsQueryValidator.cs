@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Validators;

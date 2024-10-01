@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Shared.Business.Exceptions.Follow;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Follow;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.DeleteFollow;
@@ -24,8 +25,8 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new DeleteFollowCommand(
-            InvalidId,
-            ValidFollowCurrentUserId
+            FollowTestUtilities.InvalidId,
+            FollowTestUtilities.ValidFollowCurrentUserId
         );
 
         // Act
@@ -40,8 +41,8 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new DeleteFollowCommand(
-            ValidId,
-            ValidCurrentUserId
+            FollowTestUtilities.ValidId,
+            FollowTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -56,8 +57,8 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new DeleteFollowCommand(
-            ValidId,
-            ValidFollowCurrentUserId
+            FollowTestUtilities.ValidId,
+            FollowTestUtilities.ValidFollowCurrentUserId
         );
 
         // Act
@@ -66,7 +67,7 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
         // Assert
         await FollowWriteRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(FollowTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
@@ -74,8 +75,8 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new DeleteFollowCommand(
-            ValidId,
-            ValidFollowCurrentUserId
+            FollowTestUtilities.ValidId,
+            FollowTestUtilities.ValidFollowCurrentUserId
         );
 
         // Act
@@ -84,9 +85,9 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
         // Assert
         FollowWriteRepository
             .Received(1)
-            .Delete(Arg.Is<Follow>(m => m.Id == ValidId &&
-                                         m.FollowerId == ValidFollowCurrentUserId &&
-                                         m.FollowingId == ValidFollowFollowingId));
+            .Delete(Arg.Is<Follow>(m => m.Id == FollowTestUtilities.ValidId &&
+                                         m.FollowerId == FollowTestUtilities.ValidFollowCurrentUserId &&
+                                         m.FollowingId == FollowTestUtilities.ValidFollowFollowingId));
     }
 
     [Fact]
@@ -94,8 +95,8 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new DeleteFollowCommand(
-            ValidId,
-            ValidFollowCurrentUserId
+            FollowTestUtilities.ValidId,
+            FollowTestUtilities.ValidFollowCurrentUserId
         );
 
         // Act
