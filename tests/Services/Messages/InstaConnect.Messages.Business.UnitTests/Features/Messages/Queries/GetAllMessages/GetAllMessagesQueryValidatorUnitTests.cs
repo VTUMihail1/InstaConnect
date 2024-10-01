@@ -23,10 +23,10 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             null!,
             MessageTestUtilities.ValidReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -46,10 +46,10 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -68,10 +68,10 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             MessageTestUtilities.ValidCurrentUserId,
             SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -90,10 +90,10 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             MessageTestUtilities.ValidCurrentUserId,
             MessageTestUtilities.ValidReceiverId,
             SharedTestUtilities.GetString(length),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -110,10 +110,10 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             MessageTestUtilities.ValidCurrentUserId,
             MessageTestUtilities.ValidReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortOrderProperty,
             null!,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -130,10 +130,10 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             MessageTestUtilities.ValidCurrentUserId,
             MessageTestUtilities.ValidReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            InvalidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.InvalidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -153,10 +153,10 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             MessageTestUtilities.ValidCurrentUserId,
             MessageTestUtilities.ValidReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -175,10 +175,10 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             MessageTestUtilities.ValidCurrentUserId,
             MessageTestUtilities.ValidReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
             value,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var result = _queryValidator.TestValidate(query);
@@ -197,9 +197,9 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             MessageTestUtilities.ValidCurrentUserId,
             MessageTestUtilities.ValidReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
             value);
 
         // Act
@@ -217,10 +217,10 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             MessageTestUtilities.ValidCurrentUserId,
             MessageTestUtilities.ValidReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
         );
 
         // Act

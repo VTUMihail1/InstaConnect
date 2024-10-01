@@ -1,5 +1,4 @@
-﻿using Bogus;
-using FluentAssertions;
+﻿using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.DeletePostLike;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;

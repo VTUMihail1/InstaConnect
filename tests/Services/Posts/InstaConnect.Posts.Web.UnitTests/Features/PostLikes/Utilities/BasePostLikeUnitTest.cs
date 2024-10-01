@@ -39,9 +39,9 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
         var existingCurrentUserModel = new CurrentUserModel(PostLikeTestUtilities.ValidCurrentUserId, PostLikeTestUtilities.ValidUserName);
         var existingPostLikePaginationCollectionModel = new PostLikePaginationQueryViewModel(
             [existingPostLikeQueryViewModel],
-            ValidPageValue,
-            ValidPageSizeValue,
-            ValidTotalCountValue,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue,
+            PostLikeTestUtilities.ValidTotalCountValue,
             false,
             false);
 

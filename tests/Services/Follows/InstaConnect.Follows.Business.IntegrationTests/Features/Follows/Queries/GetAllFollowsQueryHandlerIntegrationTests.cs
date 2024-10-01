@@ -28,10 +28,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -53,10 +53,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             SharedTestUtilities.GetString(length),
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -78,10 +78,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -103,10 +103,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             SharedTestUtilities.GetString(length),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -127,10 +127,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortOrderProperty,
             null!,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -150,10 +150,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            InvalidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.InvalidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -176,10 +176,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -201,10 +201,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
             value,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -226,9 +226,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
             value);
 
         // Act
@@ -250,10 +250,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -268,9 +268,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -287,10 +287,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -305,9 +305,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -324,10 +324,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -342,9 +342,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -361,10 +361,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             null!,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -379,9 +379,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -398,10 +398,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             string.Empty,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -416,9 +416,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -435,10 +435,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -453,9 +453,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -472,10 +472,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -490,9 +490,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -509,10 +509,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             null!,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -527,9 +527,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -546,10 +546,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             string.Empty,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -564,9 +564,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -583,10 +583,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             SharedTestUtilities.GetNonCaseMatchingString(existingFollowingId),
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -601,9 +601,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -620,10 +620,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             null!,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -638,9 +638,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -657,10 +657,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             string.Empty,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -675,9 +675,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -694,10 +694,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -712,9 +712,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -731,10 +731,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -749,9 +749,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -768,10 +768,10 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             FollowTestUtilities.ValidUserName,
             existingFollowingId,
             FollowTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -786,9 +786,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
                                                                     m.FollowingId == existingFollowingId &&
                                                                     m.FollowingName == FollowTestUtilities.ValidUserName &&
                                                                     m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == FollowTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }

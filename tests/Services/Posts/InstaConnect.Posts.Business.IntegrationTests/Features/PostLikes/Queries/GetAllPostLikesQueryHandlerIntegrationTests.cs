@@ -28,10 +28,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             SharedTestUtilities.GetString(length),
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -53,10 +53,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             SharedTestUtilities.GetString(length),
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -78,10 +78,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             SharedTestUtilities.GetString(length),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -101,10 +101,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortOrderProperty,
             null!,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -124,10 +124,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            InvalidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.InvalidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -150,10 +150,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -175,10 +175,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
             value,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -200,9 +200,9 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
             value);
 
         // Act
@@ -223,10 +223,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             null!,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -239,9 +239,9 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
                                                                     m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                     m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -257,10 +257,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             string.Empty,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -273,9 +273,9 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
                                                                     m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                     m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -291,10 +291,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -307,9 +307,9 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
                                                                     m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                     m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -325,10 +325,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             null!,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -341,9 +341,9 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
                                                                     m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                     m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -359,10 +359,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             string.Empty,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -375,9 +375,9 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
                                                                     m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                     m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -393,10 +393,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             SharedTestUtilities.GetNonCaseMatchingString(PostLikeTestUtilities.ValidUserName),
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -409,9 +409,9 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
                                                                     m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                     m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -427,10 +427,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             null!,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -443,9 +443,9 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
                                                                     m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                     m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -461,10 +461,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             string.Empty,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -477,9 +477,9 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
                                                                     m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                     m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -495,10 +495,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             SharedTestUtilities.GetNonCaseMatchingString(existingPostId),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -511,9 +511,9 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
                                                                     m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                     m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -529,10 +529,10 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -545,9 +545,9 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
                                                                     m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                     m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                     m.PostId == existingPostId) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }

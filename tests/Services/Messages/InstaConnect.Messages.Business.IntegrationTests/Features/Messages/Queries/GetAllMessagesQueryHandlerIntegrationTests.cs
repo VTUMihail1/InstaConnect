@@ -24,10 +24,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             null!,
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -48,10 +48,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             SharedTestUtilities.GetString(length),
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -71,10 +71,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -95,10 +95,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             existingReceiverId,
             SharedTestUtilities.GetString(length),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -117,10 +117,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortOrderProperty,
             null!,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -139,10 +139,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            InvalidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.InvalidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -164,10 +164,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -188,10 +188,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
             value,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -212,9 +212,9 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
             value);
 
         // Act
@@ -235,10 +235,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             SharedTestUtilities.GetNonCaseMatchingString(existingSenderId),
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -254,9 +254,9 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
                                                                     m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                     m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -272,10 +272,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             null!,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -291,9 +291,9 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
                                                                     m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                     m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -309,10 +309,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             string.Empty,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -328,9 +328,9 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
                                                                     m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                     m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -346,10 +346,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             SharedTestUtilities.GetNonCaseMatchingString(existingReceiverId),
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -365,9 +365,9 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
                                                                     m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                     m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -383,10 +383,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             existingReceiverId,
             null!,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -402,9 +402,9 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
                                                                     m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                     m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -420,10 +420,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             existingReceiverId,
             string.Empty,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -439,9 +439,9 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
                                                                     m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                     m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -457,10 +457,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             existingReceiverId,
             SharedTestUtilities.GetNonCaseMatchingString(MessageTestUtilities.ValidUserName),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -476,9 +476,9 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
                                                                     m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                     m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -494,10 +494,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             existingReceiverId,
             SharedTestUtilities.GetHalfStartString(MessageTestUtilities.ValidUserName),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -513,9 +513,9 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
                                                                     m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                     m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }
@@ -531,10 +531,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingSenderId,
             existingReceiverId,
             MessageTestUtilities.ValidUserName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -550,9 +550,9 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
                                                                     m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                     m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
     }

@@ -27,10 +27,10 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
             PostLikeTestUtilities.ValidPostLikeCurrentUserId,
             PostLikeTestUtilities.ValidUserName,
             PostLikeTestUtilities.ValidPostLikePostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -42,11 +42,11 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
                                                                         m.UserId == PostLikeTestUtilities.ValidPostLikeCurrentUserId &&
                                                                         m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                         m.PostId == PostLikeTestUtilities.ValidPostLikePostId &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken);
+                                                                        m.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                                        m.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == PostLikeTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == PostLikeTestUtilities.ValidSortPropertyName), CancellationToken);
     }
 
     [Fact]
@@ -57,10 +57,10 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
             PostLikeTestUtilities.ValidPostLikeCurrentUserId,
             PostLikeTestUtilities.ValidUserName,
             PostLikeTestUtilities.ValidPostLikePostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -73,9 +73,9 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
                                                            m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                            m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                            m.PostId == PostLikeTestUtilities.ValidPostLikePostId) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
         ;

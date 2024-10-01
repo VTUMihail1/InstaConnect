@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Shared.Common.Models.Enums;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Common.Features.PostComments.Utilities;
@@ -25,4 +26,13 @@ public class PostCommentTestUtilities : SharedTestUtilities
     public static readonly string ValidUpdateUserName = GetAverageString(PostCommentBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostCommentBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
     public static readonly string ValidAddContent = GetAverageString(PostCommentBusinessConfigurations.CONTENT_MAX_LENGTH, PostCommentBusinessConfigurations.CONTENT_MIN_LENGTH);
     public static readonly string ValidUpdateContent = GetAverageString(PostCommentBusinessConfigurations.CONTENT_MAX_LENGTH, PostCommentBusinessConfigurations.CONTENT_MIN_LENGTH);
+
+    public static readonly int ValidPageValue = 1;
+    public static readonly int ValidPageSizeValue = 20;
+    public static readonly int ValidTotalCountValue = 1;
+
+    public static readonly string ValidSortPropertyName = "CreatedAt";
+    public static readonly string InvalidSortPropertyName = "CreatedAtt";
+
+    public static readonly SortOrder ValidSortOrderProperty = SortOrder.ASC;
 }

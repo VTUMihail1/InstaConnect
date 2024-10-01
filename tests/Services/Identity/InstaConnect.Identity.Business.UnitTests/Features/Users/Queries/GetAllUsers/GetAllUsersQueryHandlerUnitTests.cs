@@ -27,10 +27,10 @@ public class GetAllUsersQueryHandlerUnitTests : BaseUserUnitTest
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidFirstName,
             UserTestUtilities.ValidLastName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            UserTestUtilities.ValidSortOrderProperty,
+            UserTestUtilities.ValidSortPropertyName,
+            UserTestUtilities.ValidPageValue,
+            UserTestUtilities.ValidPageSizeValue);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -42,11 +42,11 @@ public class GetAllUsersQueryHandlerUnitTests : BaseUserUnitTest
                                                                         m.FirstName == UserTestUtilities.ValidFirstName &&
                                                                         m.LastName == UserTestUtilities.ValidLastName &&
                                                                         m.UserName == UserTestUtilities.ValidName &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken);
+                                                                        m.Page == UserTestUtilities.ValidPageValue &&
+                                                                        m.Page == UserTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == UserTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == UserTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == UserTestUtilities.ValidSortPropertyName), CancellationToken);
     }
 
     [Fact]
@@ -57,10 +57,10 @@ public class GetAllUsersQueryHandlerUnitTests : BaseUserUnitTest
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidFirstName,
             UserTestUtilities.ValidLastName,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            UserTestUtilities.ValidSortOrderProperty,
+            UserTestUtilities.ValidSortPropertyName,
+            UserTestUtilities.ValidPageValue,
+            UserTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -74,9 +74,9 @@ public class GetAllUsersQueryHandlerUnitTests : BaseUserUnitTest
                                                            m.ProfileImage == UserTestUtilities.ValidProfileImage &&
                                                            m.FirstName == UserTestUtilities.ValidFirstName &&
                                                            m.LastName == UserTestUtilities.ValidLastName) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == UserTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
         ;

@@ -27,10 +27,10 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
             PostCommentTestUtilities.ValidPostCommentCurrentUserId,
             PostCommentTestUtilities.ValidUserName,
             PostCommentTestUtilities.ValidPostCommentPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -42,11 +42,11 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
                                                                         m.UserId == PostCommentTestUtilities.ValidPostCommentCurrentUserId &&
                                                                         m.UserName == PostCommentTestUtilities.ValidUserName &&
                                                                         m.PostId == PostCommentTestUtilities.ValidPostCommentPostId &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken);
+                                                                        m.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                                        m.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == PostCommentTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == PostCommentTestUtilities.ValidSortPropertyName), CancellationToken);
     }
 
     [Fact]
@@ -57,10 +57,10 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
             PostCommentTestUtilities.ValidPostCommentCurrentUserId,
             PostCommentTestUtilities.ValidUserName,
             PostCommentTestUtilities.ValidPostCommentPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentTestUtilities.ValidSortOrderProperty,
+            PostCommentTestUtilities.ValidSortPropertyName,
+            PostCommentTestUtilities.ValidPageValue,
+            PostCommentTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -74,9 +74,9 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
                                                            m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                            m.PostId == PostCommentTestUtilities.ValidPostCommentPostId &&
                                                            m.Content == PostCommentTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
         ;

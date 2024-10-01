@@ -35,10 +35,10 @@ public class PostControllerUnitTests : BasePostUnitTest
             UserId = PostTestUtilities.ValidCurrentUserId,
             UserName = PostTestUtilities.ValidUserName,
             Title = PostTestUtilities.ValidTitle,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = PostTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = PostTestUtilities.ValidSortPropertyName,
+            Page = PostTestUtilities.ValidPageValue,
+            PageSize = PostTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -60,10 +60,10 @@ public class PostControllerUnitTests : BasePostUnitTest
             UserId = PostTestUtilities.ValidCurrentUserId,
             UserName = PostTestUtilities.ValidUserName,
             Title = PostTestUtilities.ValidTitle,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = PostTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = PostTestUtilities.ValidSortPropertyName,
+            Page = PostTestUtilities.ValidPageValue,
+            PageSize = PostTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -83,9 +83,9 @@ public class PostControllerUnitTests : BasePostUnitTest
                                                                  m.UserId == PostTestUtilities.ValidCurrentUserId &&
                                                                  m.UserName == PostTestUtilities.ValidUserName &&
                                                                  m.UserProfileImage == PostTestUtilities.ValidUserProfileImage) &&
-                                                              mc.Page == ValidPageValue &&
-                                                              mc.PageSize == ValidPageSizeValue &&
-                                                              mc.TotalCount == ValidTotalCountValue &&
+                                                              mc.Page == PostTestUtilities.ValidPageValue &&
+                                                              mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
+                                                              mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
                                                               !mc.HasNextPage &&
                                                               !mc.HasPreviousPage);
     }
@@ -99,10 +99,10 @@ public class PostControllerUnitTests : BasePostUnitTest
             UserId = PostTestUtilities.ValidCurrentUserId,
             UserName = PostTestUtilities.ValidUserName,
             Title = PostTestUtilities.ValidTitle,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = PostTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = PostTestUtilities.ValidSortPropertyName,
+            Page = PostTestUtilities.ValidPageValue,
+            PageSize = PostTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -115,10 +115,10 @@ public class PostControllerUnitTests : BasePostUnitTest
                   m.UserId == PostTestUtilities.ValidCurrentUserId &&
                   m.UserName == PostTestUtilities.ValidUserName &&
                   m.Title == PostTestUtilities.ValidTitle &&
-                  m.SortOrder == ValidSortOrderProperty &&
-                  m.SortPropertyName == ValidSortPropertyName &&
-                  m.Page == ValidPageValue &&
-                  m.PageSize == ValidPageSizeValue), CancellationToken);
+                  m.SortOrder == PostTestUtilities.ValidSortOrderProperty &&
+                  m.SortPropertyName == PostTestUtilities.ValidSortPropertyName &&
+                  m.Page == PostTestUtilities.ValidPageValue &&
+                  m.PageSize == PostTestUtilities.ValidPageSizeValue), CancellationToken);
     }
 
     [Fact]

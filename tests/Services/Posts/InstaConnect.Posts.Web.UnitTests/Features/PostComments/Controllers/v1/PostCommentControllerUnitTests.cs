@@ -35,10 +35,10 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
             UserId = PostCommentTestUtilities.ValidCurrentUserId,
             UserName = PostCommentTestUtilities.ValidUserName,
             PostId = PostCommentTestUtilities.ValidPostId,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = PostCommentTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = PostCommentTestUtilities.ValidSortPropertyName,
+            Page = PostCommentTestUtilities.ValidPageValue,
+            PageSize = PostCommentTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -60,10 +60,10 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
             UserId = PostCommentTestUtilities.ValidCurrentUserId,
             UserName = PostCommentTestUtilities.ValidUserName,
             PostId = PostCommentTestUtilities.ValidPostId,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = PostCommentTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = PostCommentTestUtilities.ValidSortPropertyName,
+            Page = PostCommentTestUtilities.ValidPageValue,
+            PageSize = PostCommentTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -83,9 +83,9 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
                                                                  m.UserId == PostCommentTestUtilities.ValidCurrentUserId &&
                                                                  m.UserName == PostCommentTestUtilities.ValidUserName &&
                                                                  m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage) &&
-                                                              mc.Page == ValidPageValue &&
-                                                              mc.PageSize == ValidPageSizeValue &&
-                                                              mc.TotalCount == ValidTotalCountValue &&
+                                                              mc.Page == PostCommentTestUtilities.ValidPageValue &&
+                                                              mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
+                                                              mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                               !mc.HasNextPage &&
                                                               !mc.HasPreviousPage);
     }
@@ -99,10 +99,10 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
             UserId = PostCommentTestUtilities.ValidCurrentUserId,
             UserName = PostCommentTestUtilities.ValidUserName,
             PostId = PostCommentTestUtilities.ValidPostId,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = PostCommentTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = PostCommentTestUtilities.ValidSortPropertyName,
+            Page = PostCommentTestUtilities.ValidPageValue,
+            PageSize = PostCommentTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -115,10 +115,10 @@ public class PostCommentControllerUnitTests : BasePostCommentUnitTest
                   m.UserId == PostCommentTestUtilities.ValidCurrentUserId &&
                   m.UserName == PostCommentTestUtilities.ValidUserName &&
                   m.PostId == PostCommentTestUtilities.ValidPostId &&
-                  m.SortOrder == ValidSortOrderProperty &&
-                  m.SortPropertyName == ValidSortPropertyName &&
-                  m.Page == ValidPageValue &&
-                  m.PageSize == ValidPageSizeValue), CancellationToken);
+                  m.SortOrder == PostCommentTestUtilities.ValidSortOrderProperty &&
+                  m.SortPropertyName == PostCommentTestUtilities.ValidSortPropertyName &&
+                  m.Page == PostCommentTestUtilities.ValidPageValue &&
+                  m.PageSize == PostCommentTestUtilities.ValidPageSizeValue), CancellationToken);
     }
 
     [Fact]

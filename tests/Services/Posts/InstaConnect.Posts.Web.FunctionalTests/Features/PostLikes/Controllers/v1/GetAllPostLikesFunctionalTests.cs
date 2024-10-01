@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using Bogus;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
@@ -31,10 +30,10 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             SharedTestUtilities.GetString(length),
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -56,10 +55,10 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             existingUserId,
             SharedTestUtilities.GetString(length),
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -81,10 +80,10 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             SharedTestUtilities.GetString(length),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -104,10 +103,10 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            InvalidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.InvalidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -129,10 +128,10 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -154,10 +153,10 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
             value,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -181,9 +180,9 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
             value);
 
         // Act
@@ -204,10 +203,10 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -227,10 +226,10 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -248,9 +247,9 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
                                                                m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -266,10 +265,10 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -287,9 +286,9 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
                                                                m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -305,10 +304,10 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
             PostLikeTestUtilities.ValidUserName,
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -326,9 +325,9 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
                                                                m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -344,10 +343,10 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             existingUserId,
             SharedTestUtilities.GetNonCaseMatchingString(PostLikeTestUtilities.ValidUserName),
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -365,9 +364,9 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
                                                                m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -383,10 +382,10 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             existingUserId,
             SharedTestUtilities.GetHalfStartString(PostLikeTestUtilities.ValidUserName),
             existingPostId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -404,9 +403,9 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
                                                                m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -422,10 +421,10 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             existingUserId,
             PostLikeTestUtilities.ValidUserName,
             SharedTestUtilities.GetNonCaseMatchingString(existingPostId),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostLikeTestUtilities.ValidSortOrderProperty,
+            PostLikeTestUtilities.ValidSortPropertyName,
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -443,9 +442,9 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
                                                                m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -474,9 +473,9 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
                                                                m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostId == existingPostId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }

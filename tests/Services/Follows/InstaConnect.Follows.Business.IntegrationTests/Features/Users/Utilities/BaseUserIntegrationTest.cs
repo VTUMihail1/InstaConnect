@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Follows.Business.IntegrationTests.Utilities;
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Data;
 using InstaConnect.Follows.Data.Features.Users.Abstractions;
@@ -13,7 +12,7 @@ namespace InstaConnect.Follows.Business.IntegrationTests.Features.Users.Utilitie
 
 public abstract class BaseUserIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
-    
+
 
     protected IUserWriteRepository UserWriteRepository
     {
@@ -29,7 +28,7 @@ public abstract class BaseUserIntegrationTest : BaseSharedIntegrationTest, IClas
     protected BaseUserIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
         : base(integrationTestWebAppFactory.Services.CreateScope())
     {
-        
+
     }
 
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)

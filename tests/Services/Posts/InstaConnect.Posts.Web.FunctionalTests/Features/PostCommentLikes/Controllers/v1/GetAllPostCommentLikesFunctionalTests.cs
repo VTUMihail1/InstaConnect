@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using Bogus;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Responses;
@@ -32,10 +31,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             SharedTestUtilities.GetString(length),
             PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.ValidSortPropertyName,
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -58,10 +57,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             existingUserId,
             SharedTestUtilities.GetString(length),
             existingPostCommentId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.ValidSortPropertyName,
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -84,10 +83,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             existingUserId,
             PostCommentLikeTestUtilities.ValidUserName,
             SharedTestUtilities.GetString(length),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.ValidSortPropertyName,
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -108,10 +107,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             existingUserId,
             PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
-            ValidSortOrderProperty,
-            InvalidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.InvalidSortPropertyName,
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -134,10 +133,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             existingUserId,
             PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
-            ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -160,10 +159,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             existingUserId,
             PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.ValidSortPropertyName,
             value,
-            ValidPageSizeValue);
+            PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -188,9 +187,9 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             existingUserId,
             PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.ValidSortPropertyName,
+            PostCommentLikeTestUtilities.ValidPageValue,
             value);
 
         // Act
@@ -212,10 +211,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             existingUserId,
             PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.ValidSortPropertyName,
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -236,10 +235,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             existingUserId,
             PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.ValidSortPropertyName,
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -257,9 +256,9 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
                                                                m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -276,10 +275,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             existingUserId,
             PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.ValidSortPropertyName,
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -297,9 +296,9 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
                                                                m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -316,10 +315,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
             PostCommentLikeTestUtilities.ValidUserName,
             existingPostCommentId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.ValidSortPropertyName,
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -337,9 +336,9 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
                                                                m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -356,10 +355,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             existingUserId,
             SharedTestUtilities.GetNonCaseMatchingString(PostCommentLikeTestUtilities.ValidUserName),
             existingPostCommentId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.ValidSortPropertyName,
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -377,9 +376,9 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
                                                                m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -396,10 +395,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             existingUserId,
             SharedTestUtilities.GetHalfStartString(PostCommentLikeTestUtilities.ValidUserName),
             existingPostCommentId,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.ValidSortPropertyName,
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -417,9 +416,9 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
                                                                m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -436,10 +435,10 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             existingUserId,
             PostCommentLikeTestUtilities.ValidUserName,
             SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentId),
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostCommentLikeTestUtilities.ValidSortOrderProperty,
+            PostCommentLikeTestUtilities.ValidSortPropertyName,
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await HttpClient.GetAsync(route, CancellationToken);
@@ -457,9 +456,9 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
                                                                m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }
@@ -489,9 +488,9 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
                                                                m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
                                                                m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                                                m.PostCommentId == existingPostCommentId) &&
-                                                               mc.Page == ValidPageValue &&
-                                                               mc.PageSize == ValidPageSizeValue &&
-                                                               mc.TotalCount == ValidTotalCountValue &&
+                                                               mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
+                                                               mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
+                                                               mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
     }

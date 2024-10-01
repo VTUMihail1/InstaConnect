@@ -1,5 +1,4 @@
-﻿using Bogus;
-using FluentAssertions;
+﻿using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
 using InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Utilities;

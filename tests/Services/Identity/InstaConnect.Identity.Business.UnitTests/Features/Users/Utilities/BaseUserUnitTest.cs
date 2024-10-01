@@ -143,9 +143,9 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
 
         var existingUserPaginationList = new PaginationList<User>(
             [existingUser],
-            ValidPageValue,
-            ValidPageSizeValue,
-            ValidTotalCountValue);
+            UserTestUtilities.ValidPageValue,
+            UserTestUtilities.ValidPageSizeValue,
+            UserTestUtilities.ValidTotalCountValue);
 
         UserWriteRepository.GetByIdAsync(UserTestUtilities.ValidId, CancellationToken)
             .Returns(existingUser);
@@ -222,10 +222,10 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
                                                                         m.FirstName == UserTestUtilities.ValidFirstName &&
                                                                         m.LastName == UserTestUtilities.ValidLastName &&
                                                                         m.UserName == UserTestUtilities.ValidName &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken)
+                                                                        m.Page == UserTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == UserTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == UserTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == UserTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(existingUserPaginationList);
     }
 }

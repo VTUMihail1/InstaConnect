@@ -94,9 +94,9 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
 
         var existingPostLikePaginationList = new PaginationList<PostLike>(
             [existingPostLike],
-            ValidPageValue,
-            ValidPageSizeValue,
-            ValidTotalCountValue);
+            PostLikeTestUtilities.ValidPageValue,
+            PostLikeTestUtilities.ValidPageSizeValue,
+            PostLikeTestUtilities.ValidTotalCountValue);
 
         UserWriteRepository.GetByIdAsync(
             PostLikeTestUtilities.ValidCurrentUserId,
@@ -149,10 +149,10 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
                                                                         m.PostId == PostLikeTestUtilities.ValidPostLikePostId &&
                                                                         m.UserId == PostLikeTestUtilities.ValidPostLikeCurrentUserId &&
                                                                         m.UserName == PostLikeTestUtilities.ValidUserName &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken)
+                                                                        m.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == PostLikeTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == PostLikeTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(existingPostLikePaginationList);
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System.Security.Claims;
-using Bogus;
-using InstaConnect.Shared.Common.Models.Enums;
 using MassTransit.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,14 +8,6 @@ public class BaseSharedFunctionalTest
 {
     protected readonly string ApiRoute;
 
-    protected readonly int ValidPageValue;
-    protected readonly int ValidPageSizeValue;
-    protected readonly int ValidTotalCountValue;
-
-    protected readonly string ValidSortPropertyName;
-    protected readonly string InvalidSortPropertyName;
-
-    protected readonly SortOrder ValidSortOrderProperty;
 
     protected HttpClient HttpClient { get; }
 
@@ -45,15 +35,6 @@ public class BaseSharedFunctionalTest
     {
         ApiRoute = apiRoute;
 
-        ValidPageValue = 1;
-        ValidPageSizeValue = 20;
-        ValidTotalCountValue = 1;
-
-        ValidSortPropertyName = "CreatedAt";
-        InvalidSortPropertyName = "CreatedAtt";
-
-        ValidSortOrderProperty = SortOrder.ASC;
-
         HttpClient = httpClient;
         ServiceScope = serviceScope;
         CancellationToken = new CancellationToken();
@@ -70,5 +51,5 @@ public class BaseSharedFunctionalTest
         return route;
     }
 
-    
+
 }

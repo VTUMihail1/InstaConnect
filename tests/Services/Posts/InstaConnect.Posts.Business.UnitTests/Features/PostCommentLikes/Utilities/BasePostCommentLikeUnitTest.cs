@@ -97,9 +97,9 @@ public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
 
         var existingPostCommentLikePaginationList = new PaginationList<PostCommentLike>(
             [existingPostCommentLike],
-            ValidPageValue,
-            ValidPageSizeValue,
-            ValidTotalCountValue);
+            PostCommentLikeTestUtilities.ValidPageValue,
+            PostCommentLikeTestUtilities.ValidPageSizeValue,
+            PostCommentLikeTestUtilities.ValidTotalCountValue);
 
         UserWriteRepository.GetByIdAsync(
             PostCommentLikeTestUtilities.ValidCurrentUserId,
@@ -152,10 +152,10 @@ public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
                                                                         m.PostCommentId == PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId &&
                                                                         m.UserId == PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId &&
                                                                         m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken)
+                                                                        m.Page == PostCommentLikeTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == PostCommentLikeTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == PostCommentLikeTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(existingPostCommentLikePaginationList);
     }
 }

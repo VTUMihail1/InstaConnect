@@ -16,7 +16,6 @@ namespace InstaConnect.Follows.Web.UnitTests.Features.Follows.Utilities;
 
 public abstract class BaseFollowUnitTest : BaseSharedUnitTest
 {
-
     public BaseFollowUnitTest() : base(
         Substitute.For<IInstaConnectSender>(),
         Substitute.For<ICurrentUserContext>(),
@@ -42,9 +41,9 @@ public abstract class BaseFollowUnitTest : BaseSharedUnitTest
         var existingCurrentUserModel = new CurrentUserModel(FollowTestUtilities.ValidCurrentUserId, FollowTestUtilities.ValidUserName);
         var existingMessagePaginationCollectionModel = new FollowPaginationQueryViewModel(
             [existingMessageQueryViewModel],
-            ValidPageValue,
-            ValidPageSizeValue,
-            ValidTotalCountValue,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue,
+            FollowTestUtilities.ValidTotalCountValue,
             false,
             false);
 

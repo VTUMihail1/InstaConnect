@@ -35,10 +35,10 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         {
             ReceiverId = MessageTestUtilities.ValidReceiverId,
             ReceiverName = MessageTestUtilities.ValidUserName,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -59,10 +59,10 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         {
             ReceiverId = MessageTestUtilities.ValidReceiverId,
             ReceiverName = MessageTestUtilities.ValidUserName,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -84,9 +84,9 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
                                                                  m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                  m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                  m.Content == MessageTestUtilities.ValidContent) &&
-                                                              mc.Page == ValidPageValue &&
-                                                              mc.PageSize == ValidPageSizeValue &&
-                                                              mc.TotalCount == ValidTotalCountValue &&
+                                                              mc.Page == MessageTestUtilities.ValidPageValue &&
+                                                              mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                              mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                               !mc.HasNextPage &&
                                                               !mc.HasPreviousPage);
     }
@@ -98,10 +98,10 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         {
             ReceiverId = MessageTestUtilities.ValidReceiverId,
             ReceiverName = MessageTestUtilities.ValidUserName,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
         };
 
         // Act
@@ -114,10 +114,10 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
                   m.CurrentUserId == MessageTestUtilities.ValidCurrentUserId &&
                   m.ReceiverId == MessageTestUtilities.ValidReceiverId &&
                   m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                  m.SortOrder == ValidSortOrderProperty &&
-                  m.SortPropertyName == ValidSortPropertyName &&
-                  m.Page == ValidPageValue &&
-                  m.PageSize == ValidPageSizeValue), CancellationToken);
+                  m.SortOrder == MessageTestUtilities.ValidSortOrderProperty &&
+                  m.SortPropertyName == MessageTestUtilities.ValidSortPropertyName &&
+                  m.Page == MessageTestUtilities.ValidPageValue &&
+                  m.PageSize == MessageTestUtilities.ValidPageSizeValue), CancellationToken);
     }
 
     [Fact]
@@ -127,10 +127,10 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         {
             ReceiverId = MessageTestUtilities.ValidReceiverId,
             ReceiverName = MessageTestUtilities.ValidUserName,
-            SortOrder = ValidSortOrderProperty,
-            SortPropertyName = ValidSortPropertyName,
-            Page = ValidPageValue,
-            PageSize = ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
         };
 
         // Act

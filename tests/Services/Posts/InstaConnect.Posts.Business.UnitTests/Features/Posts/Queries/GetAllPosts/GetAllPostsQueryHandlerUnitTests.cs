@@ -27,10 +27,10 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
             PostTestUtilities.ValidPostCurrentUserId,
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -42,11 +42,11 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
                                                                         m.UserId == PostTestUtilities.ValidPostCurrentUserId &&
                                                                         m.UserName == PostTestUtilities.ValidUserName &&
                                                                         m.Title == PostTestUtilities.ValidTitle &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken);
+                                                                        m.Page == PostTestUtilities.ValidPageValue &&
+                                                                        m.Page == PostTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == PostTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == PostTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == PostTestUtilities.ValidSortPropertyName), CancellationToken);
     }
 
     [Fact]
@@ -57,10 +57,10 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
             PostTestUtilities.ValidPostCurrentUserId,
             PostTestUtilities.ValidUserName,
             PostTestUtilities.ValidTitle,
-            ValidSortOrderProperty,
-            ValidSortPropertyName,
-            ValidPageValue,
-            ValidPageSizeValue);
+            PostTestUtilities.ValidSortOrderProperty,
+            PostTestUtilities.ValidSortPropertyName,
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -74,9 +74,9 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
                                                            m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
                                                            m.Title == PostTestUtilities.ValidTitle &&
                                                            m.Content == PostTestUtilities.ValidContent) &&
-                                                           mc.Page == ValidPageValue &&
-                                                           mc.PageSize == ValidPageSizeValue &&
-                                                           mc.TotalCount == ValidTotalCountValue &&
+                                                           mc.Page == PostTestUtilities.ValidPageValue &&
+                                                           mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
+                                                           mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
         ;

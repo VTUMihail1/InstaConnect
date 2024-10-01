@@ -95,9 +95,9 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
 
         var existingMessagePaginationList = new PaginationList<Message>(
             [existingMessage],
-            ValidPageValue,
-            ValidPageSizeValue,
-            ValidTotalCountValue);
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue,
+            MessageTestUtilities.ValidTotalCountValue);
 
         MessageReadRepository.GetByIdAsync(
             MessageTestUtilities.ValidId,
@@ -134,10 +134,10 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
                                                                         m.CurrentUserId == MessageTestUtilities.ValidMessageCurrentUserId &&
                                                                         m.ReceiverId == MessageTestUtilities.ValidMessageReceiverId &&
                                                                         m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                                        m.Page == ValidPageValue &&
-                                                                        m.PageSize == ValidPageSizeValue &&
-                                                                        m.SortOrder == ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == ValidSortPropertyName), CancellationToken)
+                                                                        m.Page == MessageTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == MessageTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == MessageTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == MessageTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(existingMessagePaginationList);
     }
 }

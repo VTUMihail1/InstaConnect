@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Security.Claims;
-using Bogus;
 using FluentAssertions;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
