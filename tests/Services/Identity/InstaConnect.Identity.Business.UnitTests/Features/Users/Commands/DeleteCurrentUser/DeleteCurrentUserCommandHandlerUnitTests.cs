@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
 using InstaConnect.Identity.Business.Features.Users.Commands.DeleteCurrentUser;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Contracts.Users;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.DeleteCurrentUser;
@@ -26,7 +27,7 @@ public class DeleteCurrentUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new DeleteCurrentUserCommand(
-            InvalidId
+            UserTestUtilities.InvalidId
         );
 
         // Act
@@ -41,7 +42,7 @@ public class DeleteCurrentUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new DeleteCurrentUserCommand(
-            ValidId
+            UserTestUtilities.ValidId
         );
 
         // Act
@@ -50,12 +51,12 @@ public class DeleteCurrentUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         UserWriteRepository
             .Received(1)
-            .Delete(Arg.Is<User>(u => u.Id == ValidId &&
-                                      u.FirstName == ValidFirstName &&
-                                      u.LastName == ValidLastName &&
-                                      u.UserName == ValidName &&
-                                      u.Email == ValidEmail &&
-                                      u.ProfileImage == ValidProfileImage));
+            .Delete(Arg.Is<User>(u => u.Id == UserTestUtilities.ValidId &&
+                                      u.FirstName == UserTestUtilities.ValidFirstName &&
+                                      u.LastName == UserTestUtilities.ValidLastName &&
+                                      u.UserName == UserTestUtilities.ValidName &&
+                                      u.Email == UserTestUtilities.ValidEmail &&
+                                      u.ProfileImage == UserTestUtilities.ValidProfileImage));
     }
 
     [Fact]
@@ -63,7 +64,7 @@ public class DeleteCurrentUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new DeleteCurrentUserCommand(
-            ValidId
+            UserTestUtilities.ValidId
         );
 
         // Act
@@ -72,7 +73,7 @@ public class DeleteCurrentUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await EventPublisher
             .Received(1)
-            .PublishAsync(Arg.Is<UserDeletedEvent>(u => u.Id == ValidId), CancellationToken);
+            .PublishAsync(Arg.Is<UserDeletedEvent>(u => u.Id == UserTestUtilities.ValidId), CancellationToken);
     }
 
     [Fact]
@@ -80,7 +81,7 @@ public class DeleteCurrentUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new DeleteCurrentUserCommand(
-            ValidId
+            UserTestUtilities.ValidId
         );
 
         // Act

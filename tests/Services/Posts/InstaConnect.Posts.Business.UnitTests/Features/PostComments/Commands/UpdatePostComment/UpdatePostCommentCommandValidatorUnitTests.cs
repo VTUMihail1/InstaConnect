@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Commands.UpdatePostComment;
 
@@ -20,8 +20,8 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         // Arrange
         var command = new UpdatePostCommentCommand(
             null!,
-            ValidCurrentUserId,
-            ValidContent
+            PostCommentTestUtilities.ValidCurrentUserId,
+            PostCommentTestUtilities.ValidContent
         );
 
         // Act
@@ -40,8 +40,8 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         // Arrange
         var command = new UpdatePostCommentCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidCurrentUserId,
-            ValidContent
+            PostCommentTestUtilities.ValidCurrentUserId,
+            PostCommentTestUtilities.ValidContent
         );
 
         // Act
@@ -56,9 +56,9 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
     {
         // Arrange
         var command = new UpdatePostCommentCommand(
-            ValidId,
+            PostCommentTestUtilities.ValidId,
             null!,
-            ValidContent
+            PostCommentTestUtilities.ValidContent
         );
 
         // Act
@@ -76,9 +76,9 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
     {
         // Arrange
         var command = new UpdatePostCommentCommand(
-            ValidId,
+            PostCommentTestUtilities.ValidId,
             Faker.Random.AlphaNumeric(length),
-            ValidContent
+            PostCommentTestUtilities.ValidContent
         );
 
         // Act
@@ -93,8 +93,8 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
     {
         // Arrange
         var command = new UpdatePostCommentCommand(
-            ValidId,
-            ValidCurrentUserId,
+            PostCommentTestUtilities.ValidId,
+            PostCommentTestUtilities.ValidCurrentUserId,
             null!
         );
 
@@ -113,8 +113,8 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
     {
         // Arrange
         var command = new UpdatePostCommentCommand(
-            ValidId,
-            ValidCurrentUserId,
+            PostCommentTestUtilities.ValidId,
+            PostCommentTestUtilities.ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -130,9 +130,9 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
     {
         // Arrange
         var command = new UpdatePostCommentCommand(
-            ValidId,
-            ValidCurrentUserId,
-            ValidContent
+            PostCommentTestUtilities.ValidId,
+            PostCommentTestUtilities.ValidCurrentUserId,
+            PostCommentTestUtilities.ValidContent
         );
 
         // Act

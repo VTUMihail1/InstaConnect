@@ -1,5 +1,5 @@
-﻿using InstaConnect.Follows.Business.Features.Follows.Utilities;
-using InstaConnect.Follows.Business.IntegrationTests.Utilities;
+﻿using InstaConnect.Follows.Business.IntegrationTests.Utilities;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Data;
 using InstaConnect.Follows.Data.Features.Users.Abstractions;
 using InstaConnect.Follows.Data.Features.Users.Models.Entities;

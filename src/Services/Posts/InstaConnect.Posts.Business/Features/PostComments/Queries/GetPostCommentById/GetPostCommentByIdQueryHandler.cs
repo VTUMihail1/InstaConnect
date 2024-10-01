@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Data.Features.PostComments.Abstract;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Exceptions.PostComment;
+using InstaConnect.Shared.Common.Exceptions.PostComment;
 
 namespace InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
 

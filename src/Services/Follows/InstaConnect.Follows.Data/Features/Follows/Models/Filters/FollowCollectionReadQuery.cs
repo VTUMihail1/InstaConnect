@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Data.Models.Enums;
+﻿using InstaConnect.Shared.Common.Models.Enums;
 
 namespace InstaConnect.Follows.Data.Features.Follows.Models.Filters;
 

@@ -2,9 +2,10 @@
 using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
 using InstaConnect.Follows.Business.Features.Follows.Models;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.AddFollow;
@@ -27,8 +28,8 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new AddFollowCommand(
-            InvalidUserId,
-            ValidCurrentUserId);
+            FollowTestUtilities.InvalidUserId,
+            FollowTestUtilities.ValidCurrentUserId);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -42,8 +43,8 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new AddFollowCommand(
-            ValidCurrentUserId,
-            InvalidUserId);
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.InvalidUserId);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -57,8 +58,8 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new AddFollowCommand(
-            ValidFollowCurrentUserId,
-            ValidFollowFollowingId);
+            FollowTestUtilities.ValidFollowCurrentUserId,
+            FollowTestUtilities.ValidFollowFollowingId);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -72,8 +73,8 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new AddFollowCommand(
-            ValidCurrentUserId,
-            ValidFollowingId);
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.ValidFollowingId);
 
         // Act
         var response = await _commandHandler.Handle(command, CancellationToken);
@@ -89,8 +90,8 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new AddFollowCommand(
-            ValidCurrentUserId,
-            ValidFollowingId);
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.ValidFollowingId);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -100,8 +101,8 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
             .Received(1)
             .Add(Arg.Is<Follow>(m =>
                 !string.IsNullOrEmpty(m.Id) &&
-                m.FollowerId == ValidCurrentUserId &&
-                m.FollowingId == ValidFollowingId));
+                m.FollowerId == FollowTestUtilities.ValidCurrentUserId &&
+                m.FollowingId == FollowTestUtilities.ValidFollowingId));
     }
 
     [Fact]
@@ -109,8 +110,8 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new AddFollowCommand(
-            ValidCurrentUserId,
-            ValidFollowingId);
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.ValidFollowingId);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
 
@@ -101,7 +101,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(GetIdRoute(InvalidId), CancellationToken);
+        var response = await HttpClient.DeleteAsync(GetIdRoute(PostCommentTestUtilities.InvalidId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);

@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Web.Features.Messages.Models.Binding;
 using InstaConnect.Messages.Web.Features.Messages.Models.Responses;
@@ -25,7 +25,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingSenderId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel(existingReceiverId, ValidAddContent);
+        var request = new AddMessageBindingModel(existingReceiverId, MessageTestUtilities.ValidAddContent);
 
         // Act
         var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
@@ -40,7 +40,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingSenderId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel(null!, ValidAddContent);
+        var request = new AddMessageBindingModel(null!, MessageTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -61,7 +61,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel(Faker.Random.AlphaNumeric(length), ValidAddContent);
+        var request = new AddMessageBindingModel(Faker.Random.AlphaNumeric(length), MessageTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -118,7 +118,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingSenderId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel(existingReceiverId, ValidAddContent);
+        var request = new AddMessageBindingModel(existingReceiverId, MessageTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
 
@@ -139,7 +139,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingSenderId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel(existingReceiverId, ValidAddContent);
+        var request = new AddMessageBindingModel(existingReceiverId, MessageTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = Faker.Random.AlphaNumeric(length);
 
@@ -157,9 +157,9 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingSenderId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel(existingReceiverId, ValidAddContent);
+        var request = new AddMessageBindingModel(existingReceiverId, MessageTestUtilities.ValidAddContent);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = InvalidUserId;
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = MessageTestUtilities.InvalidUserId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
@@ -175,7 +175,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingSenderId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel(InvalidUserId, ValidAddContent);
+        var request = new AddMessageBindingModel(MessageTestUtilities.InvalidUserId, MessageTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -193,7 +193,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel(existingReceiverId, ValidAddContent);
+        var request = new AddMessageBindingModel(existingReceiverId, MessageTestUtilities.ValidAddContent);
 
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
@@ -212,7 +212,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSenderId = await CreateUserAsync(CancellationToken);
         var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageBindingModel(existingReceiverId, ValidAddContent);
+        var request = new AddMessageBindingModel(existingReceiverId, MessageTestUtilities.ValidAddContent);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
 
@@ -230,7 +230,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         message
             .Should()
             .Match<Message>(m => m.Id == messageViewResponse.Id &&
-                                 m.Content == ValidAddContent &&
+                                 m.Content == MessageTestUtilities.ValidAddContent &&
                                  m.SenderId == existingSenderId &&
                                  m.ReceiverId == existingReceiverId);
     }

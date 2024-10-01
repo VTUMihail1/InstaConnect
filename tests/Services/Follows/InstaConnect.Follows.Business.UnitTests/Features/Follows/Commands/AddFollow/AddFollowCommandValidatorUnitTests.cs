@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.AddFollow;
 
@@ -20,7 +20,7 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
         // Arrange
         var command = new AddFollowCommand(
             null!,
-            ValidFollowingId);
+            FollowTestUtilities.ValidFollowingId);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -38,7 +38,7 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
         // Arrange
         var command = new AddFollowCommand(
             Faker.Random.AlphaNumeric(length)!,
-            ValidFollowingId);
+            FollowTestUtilities.ValidFollowingId);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -52,7 +52,7 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new AddFollowCommand(
-            ValidCurrentUserId,
+            FollowTestUtilities.ValidCurrentUserId,
             null!);
 
         // Act
@@ -70,7 +70,7 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new AddFollowCommand(
-            ValidCurrentUserId,
+            FollowTestUtilities.ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length));
 
         // Act
@@ -85,8 +85,8 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var command = new AddFollowCommand(
-            ValidCurrentUserId,
-            ValidFollowingId);
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.ValidFollowingId);
 
         // Act
         var result = _commandValidator.TestValidate(command);

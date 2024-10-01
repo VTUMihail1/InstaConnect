@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\InstaConnect.Shared.Common\InstaConnect.Shared.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Shared.Data\InstaConnect.Shared.Data.csproj" />
   </ItemGroup>
 

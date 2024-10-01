@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Commands.AddMessage;
 
@@ -20,8 +20,8 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var command = new AddMessageCommand(
             null!,
-            ValidReceiverId,
-            ValidContent
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidContent
         );
 
         // Act
@@ -40,8 +40,8 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var command = new AddMessageCommand(
             Faker.Random.AlphaNumeric(length)!,
-            ValidReceiverId,
-            ValidContent
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidContent
         );
 
         // Act
@@ -56,9 +56,9 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
+            MessageTestUtilities.ValidCurrentUserId,
             null!,
-            ValidContent
+            MessageTestUtilities.ValidContent
         );
 
         // Act
@@ -76,9 +76,9 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
+            MessageTestUtilities.ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length)!,
-            ValidContent
+            MessageTestUtilities.ValidContent
         );
 
         // Act
@@ -93,8 +93,8 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
-            ValidReceiverId,
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
             null!
         );
 
@@ -113,8 +113,8 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
-            ValidReceiverId,
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -130,9 +130,9 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new AddMessageCommand(
-            ValidCurrentUserId,
-            ValidReceiverId,
-            ValidContent);
+            MessageTestUtilities.ValidCurrentUserId,
+            MessageTestUtilities.ValidReceiverId,
+            MessageTestUtilities.ValidContent);
 
         // Act
         var result = _commandValidator.TestValidate(command);

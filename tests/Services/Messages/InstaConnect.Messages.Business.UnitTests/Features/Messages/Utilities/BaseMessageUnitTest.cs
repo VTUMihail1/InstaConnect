@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Business.Features.Messages.Abstractions;
 using InstaConnect.Messages.Business.Features.Messages.Mappings;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.Features.Users.Mappings;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Abstractions;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Filters;
@@ -18,20 +18,6 @@ namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
 
 public abstract class BaseMessageUnitTest : BaseSharedUnitTest
 {
-    protected readonly string ValidId;
-    protected readonly string InvalidId;
-    protected readonly string ValidContent;
-    protected readonly string ValidCurrentUserId;
-    protected readonly string ValidReceiverId;
-    protected readonly string InvalidUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidUserFirstName;
-    protected readonly string ValidUserEmail;
-    protected readonly string ValidUserLastName;
-    protected readonly string ValidUserProfileImage;
-    protected readonly string ValidMessageReceiverId;
-    protected readonly string ValidMessageCurrentUserId;
-
     protected IMessageSender MessageSender { get; }
 
     protected IUserWriteRepository UserWriteRepository { get; }
@@ -52,71 +38,57 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
                 }))),
         new EntityPropertyValidator())
     {
-        ValidId = GetAverageString(MessageBusinessConfigurations.ID_MAX_LENGTH, MessageBusinessConfigurations.ID_MIN_LENGTH);
-        InvalidId = GetAverageString(MessageBusinessConfigurations.ID_MAX_LENGTH, MessageBusinessConfigurations.ID_MIN_LENGTH);
-        ValidContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
-        ValidReceiverId = GetAverageString(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH);
-        InvalidUserId = GetAverageString(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUserFirstName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUserLastName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUserEmail = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidCurrentUserId = GetAverageString(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidMessageReceiverId = GetAverageString(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH);
-        ValidMessageCurrentUserId = GetAverageString(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         MessageSender = Substitute.For<IMessageSender>();
         MessageReadRepository = Substitute.For<IMessageReadRepository>();
         MessageWriteRepository = Substitute.For<IMessageWriteRepository>();
 
         var existingSender = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            MessageTestUtilities.ValidUserFirstName,
+            MessageTestUtilities.ValidUserLastName,
+            MessageTestUtilities.ValidUserEmail,
+            MessageTestUtilities.ValidUserName,
+            MessageTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidCurrentUserId,
+            Id = MessageTestUtilities.ValidCurrentUserId,
         };
 
         var existingMessageSender = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            MessageTestUtilities.ValidUserFirstName,
+            MessageTestUtilities.ValidUserLastName,
+            MessageTestUtilities.ValidUserEmail,
+            MessageTestUtilities.ValidUserName,
+            MessageTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidMessageCurrentUserId,
+            Id = MessageTestUtilities.ValidMessageCurrentUserId,
         };
 
         var existingReceiver = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            MessageTestUtilities.ValidUserFirstName,
+            MessageTestUtilities.ValidUserLastName,
+            MessageTestUtilities.ValidUserEmail,
+            MessageTestUtilities.ValidUserName,
+            MessageTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidReceiverId
+            Id = MessageTestUtilities.ValidReceiverId
         };
 
         var existingMessageReceiver = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            MessageTestUtilities.ValidUserFirstName,
+            MessageTestUtilities.ValidUserLastName,
+            MessageTestUtilities.ValidUserEmail,
+            MessageTestUtilities.ValidUserName,
+            MessageTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidMessageReceiverId
+            Id = MessageTestUtilities.ValidMessageReceiverId
         };
 
         var existingMessage = new Message(
-            ValidContent,
-            ValidMessageCurrentUserId,
-            ValidMessageReceiverId)
+            MessageTestUtilities.ValidContent,
+            MessageTestUtilities.ValidMessageCurrentUserId,
+            MessageTestUtilities.ValidMessageReceiverId)
         {
-            Id = ValidId,
+            Id = MessageTestUtilities.ValidId,
             Sender = existingMessageSender,
             Receiver = existingMessageReceiver
         };
@@ -128,40 +100,40 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
             ValidTotalCountValue);
 
         MessageReadRepository.GetByIdAsync(
-            ValidId,
+            MessageTestUtilities.ValidId,
             CancellationToken)
             .Returns(existingMessage);
 
         MessageWriteRepository.GetByIdAsync(
-            ValidId,
+            MessageTestUtilities.ValidId,
             CancellationToken)
             .Returns(existingMessage);
 
         UserWriteRepository.GetByIdAsync(
-            ValidCurrentUserId,
+            MessageTestUtilities.ValidCurrentUserId,
             CancellationToken)
             .Returns(existingSender);
 
         UserWriteRepository.GetByIdAsync(
-            ValidReceiverId,
+            MessageTestUtilities.ValidReceiverId,
             CancellationToken)
             .Returns(existingReceiver);
 
         UserWriteRepository.GetByIdAsync(
-            ValidMessageCurrentUserId,
+            MessageTestUtilities.ValidMessageCurrentUserId,
             CancellationToken)
             .Returns(existingMessageSender);
 
         UserWriteRepository.GetByIdAsync(
-            ValidMessageReceiverId,
+            MessageTestUtilities.ValidMessageReceiverId,
             CancellationToken)
             .Returns(existingMessageReceiver);
 
         MessageReadRepository
             .GetAllAsync(Arg.Is<MessageCollectionReadQuery>(m =>
-                                                                        m.CurrentUserId == ValidMessageCurrentUserId &&
-                                                                        m.ReceiverId == ValidMessageReceiverId &&
-                                                                        m.ReceiverName == ValidUserName &&
+                                                                        m.CurrentUserId == MessageTestUtilities.ValidMessageCurrentUserId &&
+                                                                        m.ReceiverId == MessageTestUtilities.ValidMessageReceiverId &&
+                                                                        m.ReceiverName == MessageTestUtilities.ValidUserName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Business.Features.Posts.Models;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Data.Features.Posts.Models.Filters;
 using NSubstitute;
 
@@ -23,9 +24,9 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var query = new GetAllPostsQuery(
-            ValidPostCurrentUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidPostCurrentUserId,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -38,9 +39,9 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
         await PostReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<PostCollectionReadQuery>(m =>
-                                                                        m.UserId == ValidPostCurrentUserId &&
-                                                                        m.UserName == ValidUserName &&
-                                                                        m.Title == ValidTitle &&
+                                                                        m.UserId == PostTestUtilities.ValidPostCurrentUserId &&
+                                                                        m.UserName == PostTestUtilities.ValidUserName &&
+                                                                        m.Title == PostTestUtilities.ValidTitle &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
@@ -53,9 +54,9 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var query = new GetAllPostsQuery(
-            ValidPostCurrentUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidPostCurrentUserId,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -67,12 +68,12 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
         // Assert
         response
             .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
-                                                           m.UserId == ValidPostCurrentUserId &&
-                                                           m.UserName == ValidUserName &&
-                                                           m.UserProfileImage == ValidUserProfileImage &&
-                                                           m.Title == ValidTitle &&
-                                                           m.Content == ValidContent) &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == PostTestUtilities.ValidId &&
+                                                           m.UserId == PostTestUtilities.ValidPostCurrentUserId &&
+                                                           m.UserName == PostTestUtilities.ValidUserName &&
+                                                           m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                           m.Title == PostTestUtilities.ValidTitle &&
+                                                           m.Content == PostTestUtilities.ValidContent) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
                                                            mc.TotalCount == ValidTotalCountValue &&

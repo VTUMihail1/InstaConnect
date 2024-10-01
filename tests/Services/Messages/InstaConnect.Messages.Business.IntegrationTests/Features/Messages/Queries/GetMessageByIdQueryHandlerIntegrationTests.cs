@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.Message;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.Message;
+using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Queries;
 
@@ -106,7 +106,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var query = new GetMessageByIdQuery(
-            InvalidId,
+            MessageTestUtilities.InvalidId,
             existingSenderId
         );
 
@@ -157,12 +157,12 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
             .Should()
             .Match<MessageQueryViewModel>(m => m.Id == existingMessageId &&
                                           m.SenderId == existingSenderId &&
-                                          m.SenderName == ValidUserName &&
-                                          m.SenderProfileImage == ValidUserProfileImage &&
+                                          m.SenderName == MessageTestUtilities.ValidUserName &&
+                                          m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                           m.ReceiverId == existingReceiverId &&
-                                          m.ReceiverName == ValidUserName &&
-                                          m.ReceiverProfileImage == ValidUserProfileImage &&
-                                          m.Content == ValidContent);
+                                          m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                          m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+                                          m.Content == MessageTestUtilities.ValidContent);
     }
 
     [Fact]
@@ -185,11 +185,11 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
             .Should()
             .Match<MessageQueryViewModel>(m => m.Id == existingMessageId &&
                                           m.SenderId == existingSenderId &&
-                                          m.SenderName == ValidUserName &&
-                                          m.SenderProfileImage == ValidUserProfileImage &&
+                                          m.SenderName == MessageTestUtilities.ValidUserName &&
+                                          m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                           m.ReceiverId == existingReceiverId &&
-                                          m.ReceiverName == ValidUserName &&
-                                          m.ReceiverProfileImage == ValidUserProfileImage &&
-                                          m.Content == ValidContent);
+                                          m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                          m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+                                          m.Content == MessageTestUtilities.ValidContent);
     }
 }

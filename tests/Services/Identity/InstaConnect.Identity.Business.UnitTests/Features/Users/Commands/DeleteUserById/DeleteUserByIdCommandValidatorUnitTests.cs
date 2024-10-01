@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Identity.Business.Features.Users.Commands.DeleteUserById;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.DeleteUserById;
 
@@ -47,7 +47,7 @@ public class DeleteUserByIdCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var command = new DeleteUserByIdCommand(ValidId);
+        var command = new DeleteUserByIdCommand(UserTestUtilities.ValidId);
 
         // Act
         var result = _commandValidator.TestValidate(command);

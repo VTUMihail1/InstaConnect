@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 using InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
 using NSubstitute;
 using NSubstitute.ReceivedExtensions;
@@ -24,9 +25,9 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
     {
         // Arrange
         var query = new GetAllPostCommentLikesQuery(
-            ValidPostCommentLikeCurrentUserId,
-            ValidUserName,
-            ValidPostCommentLikePostCommentId,
+            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
+            PostCommentLikeTestUtilities.ValidUserName,
+            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -39,9 +40,9 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
         await PostCommentLikeReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<PostCommentLikeCollectionReadQuery>(m =>
-                                                                        m.UserId == ValidPostCommentLikeCurrentUserId &&
-                                                                        m.UserName == ValidUserName &&
-                                                                        m.PostCommentId == ValidPostCommentLikePostCommentId &&
+                                                                        m.UserId == PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId &&
+                                                                        m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                                                        m.PostCommentId == PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&
@@ -53,9 +54,9 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
     {
         // Arrange
         var query = new GetAllPostCommentLikesQuery(
-            ValidPostCommentLikeCurrentUserId,
-            ValidUserName,
-            ValidPostCommentLikePostCommentId,
+            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
+            PostCommentLikeTestUtilities.ValidUserName,
+            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -67,11 +68,11 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
         // Assert
         response
             .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == ValidId &&
-                                                           m.UserId == ValidPostCommentLikeCurrentUserId &&
-                                                           m.UserName == ValidUserName &&
-                                                           m.UserProfileImage == ValidUserProfileImage &&
-                                                           m.PostCommentId == ValidPostCommentLikePostCommentId) &&
+            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == PostCommentLikeTestUtilities.ValidId &&
+                                                           m.UserId == PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId &&
+                                                           m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                                           m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
+                                                           m.PostCommentId == PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId) &&
                                                            mc.Page == ValidPageValue &&
                                                            mc.PageSize == ValidPageSizeValue &&
                                                            mc.TotalCount == ValidTotalCountValue &&

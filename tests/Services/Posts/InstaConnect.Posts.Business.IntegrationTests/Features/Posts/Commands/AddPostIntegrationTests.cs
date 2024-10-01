@@ -1,12 +1,12 @@
 ﻿using Bogus;
 using FluentAssertions;
 using InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.Posts.Commands;
 
@@ -24,8 +24,8 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
             null!,
-            ValidAddTitle,
-            ValidAddContent
+            PostTestUtilities.ValidAddTitle,
+            PostTestUtilities.ValidAddContent
         );
 
         // Act
@@ -45,8 +45,8 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidAddTitle,
-            ValidAddContent
+            PostTestUtilities.ValidAddTitle,
+            PostTestUtilities.ValidAddContent
         );
 
         // Act
@@ -64,7 +64,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var command = new AddPostCommand(
             existingUserId,
             null!,
-            ValidAddContent
+            PostTestUtilities.ValidAddContent
         );
 
         // Act
@@ -85,7 +85,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var command = new AddPostCommand(
             existingUserId,
             Faker.Random.AlphaNumeric(length),
-            ValidAddContent
+            PostTestUtilities.ValidAddContent
         );
 
         // Act
@@ -102,7 +102,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
             existingUserId,
-            ValidAddTitle,
+            PostTestUtilities.ValidAddTitle,
             null!
         );
 
@@ -124,7 +124,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var anotherExistingUserId = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
             existingUserId,
-            ValidAddTitle,
+            PostTestUtilities.ValidAddTitle,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -141,9 +141,9 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
-            InvalidUserId,
-            ValidAddTitle,
-            ValidAddContent
+            PostTestUtilities.InvalidUserId,
+            PostTestUtilities.ValidAddTitle,
+            PostTestUtilities.ValidAddContent
         );
 
         // Act
@@ -160,8 +160,8 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
             existingUserId,
-            ValidAddTitle,
-            ValidAddContent
+            PostTestUtilities.ValidAddTitle,
+            PostTestUtilities.ValidAddContent
         );
 
         // Act
@@ -173,7 +173,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<Post>(p => p.Id == response.Id &&
                               p.UserId == existingUserId &&
-                              p.Title == ValidAddTitle &&
-                              p.Content == ValidAddContent);
+                              p.Title == PostTestUtilities.ValidAddTitle &&
+                              p.Content == PostTestUtilities.ValidAddContent);
     }
 }

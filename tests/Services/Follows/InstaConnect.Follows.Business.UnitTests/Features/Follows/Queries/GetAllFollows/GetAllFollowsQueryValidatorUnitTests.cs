@@ -1,8 +1,8 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
-using InstaConnect.Shared.Business.Utilities;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFollows;
 
@@ -23,9 +23,9 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
         // Arrange
         var query = new GetAllFollowsQuery(
             Faker.Random.AlphaNumeric(length),
-            ValidUserName,
-            ValidFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidFollowingId,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -45,10 +45,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var query = new GetAllFollowsQuery(
-            ValidCurrentUserId,
+            FollowTestUtilities.ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length),
-            ValidFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidFollowingId,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -68,10 +68,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var query = new GetAllFollowsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.ValidUserName,
             Faker.Random.AlphaNumeric(length),
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -91,9 +91,9 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var query = new GetAllFollowsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidFollowingId,
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidFollowingId,
             Faker.Random.AlphaNumeric(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -112,10 +112,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var query = new GetAllFollowsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidFollowingId,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             null!,
             ValidPageValue,
@@ -133,10 +133,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var query = new GetAllFollowsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidFollowingId,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
             ValidPageValue,
@@ -157,10 +157,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var query = new GetAllFollowsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidFollowingId,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
             ValidPageValue,
@@ -180,10 +180,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var query = new GetAllFollowsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidFollowingId,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             value,
@@ -203,10 +203,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var query = new GetAllFollowsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidFollowingId,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -224,10 +224,10 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var query = new GetAllFollowsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidCurrentUserId,
+            FollowTestUtilities.ValidUserName,
+            FollowTestUtilities.ValidFollowingId,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
 using InstaConnect.Identity.Business.Features.Users.Commands.ConfirmUserEmail;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Token;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Token;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.ConfirmUserEmail;
@@ -25,8 +26,8 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ConfirmUserEmailCommand(
-            InvalidId,
-            ValidEmailConfirmationTokenValue);
+            UserTestUtilities.InvalidId,
+            UserTestUtilities.ValidEmailConfirmationTokenValue);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -40,8 +41,8 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ConfirmUserEmailCommand(
-            ValidId,
-            ValidEmailConfirmationTokenValue);
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidEmailConfirmationTokenValue);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -55,8 +56,8 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ConfirmUserEmailCommand(
-            ValidIdWithUnconfirmedEmail,
-            InvalidEmailConfirmationTokenValue);
+            UserTestUtilities.ValidIdWithUnconfirmedEmail,
+            UserTestUtilities.InvalidEmailConfirmationTokenValue);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -70,8 +71,8 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ConfirmUserEmailCommand(
-            ValidIdWithUnconfirmedEmail,
-            ValidEmailConfirmationTokenValueWithTokenUser);
+            UserTestUtilities.ValidIdWithUnconfirmedEmail,
+            UserTestUtilities.ValidEmailConfirmationTokenValueWithTokenUser);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -85,8 +86,8 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ConfirmUserEmailCommand(
-            ValidIdWithUnconfirmedEmail,
-            ValidEmailConfirmationTokenValue);
+            UserTestUtilities.ValidIdWithUnconfirmedEmail,
+            UserTestUtilities.ValidEmailConfirmationTokenValue);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -94,7 +95,7 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(ValidIdWithUnconfirmedEmail, CancellationToken);
+            .GetByIdAsync(UserTestUtilities.ValidIdWithUnconfirmedEmail, CancellationToken);
     }
 
     [Fact]
@@ -102,8 +103,8 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ConfirmUserEmailCommand(
-            ValidIdWithUnconfirmedEmail,
-            ValidEmailConfirmationTokenValue);
+            UserTestUtilities.ValidIdWithUnconfirmedEmail,
+            UserTestUtilities.ValidEmailConfirmationTokenValue);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -111,7 +112,7 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await EmailConfirmationTokenWriteRepository
             .Received(1)
-            .GetByValueAsync(ValidEmailConfirmationTokenValue, CancellationToken);
+            .GetByValueAsync(UserTestUtilities.ValidEmailConfirmationTokenValue, CancellationToken);
     }
 
     [Fact]
@@ -119,8 +120,8 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ConfirmUserEmailCommand(
-            ValidIdWithUnconfirmedEmail,
-            ValidEmailConfirmationTokenValue);
+            UserTestUtilities.ValidIdWithUnconfirmedEmail,
+            UserTestUtilities.ValidEmailConfirmationTokenValue);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -128,9 +129,9 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         EmailConfirmationTokenWriteRepository
             .Received(1)
-            .Delete(Arg.Is<EmailConfirmationToken>(ec => ec.Value == ValidEmailConfirmationTokenValue &&
-                                                         ec.ValidUntil == ValidUntil &&
-                                                         ec.UserId == ValidIdWithUnconfirmedEmail));
+            .Delete(Arg.Is<EmailConfirmationToken>(ec => ec.Value == UserTestUtilities.ValidEmailConfirmationTokenValue &&
+                                                         ec.ValidUntil == UserTestUtilities.ValidUntil &&
+                                                         ec.UserId == UserTestUtilities.ValidIdWithUnconfirmedEmail));
     }
 
     [Fact]
@@ -138,8 +139,8 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ConfirmUserEmailCommand(
-            ValidIdWithUnconfirmedEmail,
-            ValidEmailConfirmationTokenValue);
+            UserTestUtilities.ValidIdWithUnconfirmedEmail,
+            UserTestUtilities.ValidEmailConfirmationTokenValue);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -147,7 +148,7 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .ConfirmEmailAsync(ValidIdWithUnconfirmedEmail, CancellationToken);
+            .ConfirmEmailAsync(UserTestUtilities.ValidIdWithUnconfirmedEmail, CancellationToken);
     }
 
     [Fact]
@@ -155,8 +156,8 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ConfirmUserEmailCommand(
-            ValidIdWithUnconfirmedEmail,
-            ValidEmailConfirmationTokenValue);
+            UserTestUtilities.ValidIdWithUnconfirmedEmail,
+            UserTestUtilities.ValidEmailConfirmationTokenValue);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

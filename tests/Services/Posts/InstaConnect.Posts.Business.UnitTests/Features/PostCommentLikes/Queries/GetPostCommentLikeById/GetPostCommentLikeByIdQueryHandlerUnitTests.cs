@@ -2,7 +2,8 @@
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
 using InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Shared.Business.Exceptions.PostCommentLike;
+using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Shared.Common.Exceptions.PostCommentLike;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
@@ -22,7 +23,7 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeUn
     public async Task Handle_ShouldThrowPostCommentLikeNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var query = new GetPostCommentLikeByIdQuery(InvalidId);
+        var query = new GetPostCommentLikeByIdQuery(PostCommentLikeTestUtilities.InvalidId);
 
         // Act
         var action = async () => await _queryHandler.Handle(query, CancellationToken);
@@ -35,7 +36,7 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeUn
     public async Task Handle_ShouldCallRepositoryWithGetByIdMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetPostCommentLikeByIdQuery(ValidId);
+        var query = new GetPostCommentLikeByIdQuery(PostCommentLikeTestUtilities.ValidId);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -43,14 +44,14 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeUn
         // Assert
         await PostCommentLikeReadRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(PostCommentLikeTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldReturnPostCommentLikeViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetPostCommentLikeByIdQuery(ValidId);
+        var query = new GetPostCommentLikeByIdQuery(PostCommentLikeTestUtilities.ValidId);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -58,10 +59,10 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeUn
         // Assert
         response
             .Should()
-            .Match<PostCommentLikeQueryViewModel>(m => m.Id == ValidId &&
-                                              m.UserId == ValidPostCommentLikeCurrentUserId &&
-                                              m.UserName == ValidUserName &&
-                                              m.UserProfileImage == ValidUserProfileImage &&
-                                              m.PostCommentId == ValidPostCommentLikePostCommentId);
+            .Match<PostCommentLikeQueryViewModel>(m => m.Id == PostCommentLikeTestUtilities.ValidId &&
+                                              m.UserId == PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId &&
+                                              m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                              m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
+                                              m.PostCommentId == PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId);
     }
 }

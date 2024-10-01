@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
 

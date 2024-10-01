@@ -4,6 +4,7 @@ using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
 using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.Features.Follows.Controllers.v1;
 using InstaConnect.Follows.Web.Features.Follows.Models.Binding;
 using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
@@ -31,10 +32,10 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Arrange
         var request = new GetAllFollowsRequest()
         {
-            FollowerId = ValidCurrentUserId,
-            FollowerName = ValidUserName,
-            FollowingId = ValidCurrentUserId,
-            FollowingName = ValidUserName,
+            FollowerId = FollowTestUtilities.ValidCurrentUserId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = FollowTestUtilities.ValidCurrentUserId,
+            FollowingName = FollowTestUtilities.ValidUserName,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -57,10 +58,10 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Arrange
         var request = new GetAllFollowsRequest()
         {
-            FollowerId = ValidCurrentUserId,
-            FollowerName = ValidUserName,
-            FollowingId = ValidCurrentUserId,
-            FollowingName = ValidUserName,
+            FollowerId = FollowTestUtilities.ValidCurrentUserId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = FollowTestUtilities.ValidCurrentUserId,
+            FollowingName = FollowTestUtilities.ValidUserName,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -78,13 +79,13 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
             .Value
             .Should()
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                                 m.Id == ValidId &&
-                                                                 m.FollowerId == ValidCurrentUserId &&
-                                                                 m.FollowerName == ValidUserName &&
-                                                                 m.FollowerProfileImage == ValidUserProfileImage &&
-                                                                 m.FollowingId == ValidFollowingId &&
-                                                                 m.FollowingName == ValidUserName &&
-                                                                 m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                                 m.Id == FollowTestUtilities.ValidId &&
+                                                                 m.FollowerId == FollowTestUtilities.ValidCurrentUserId &&
+                                                                 m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                                                 m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
+                                                                 m.FollowingId == FollowTestUtilities.ValidFollowingId &&
+                                                                 m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                                                 m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
                                                               mc.Page == ValidPageValue &&
                                                               mc.PageSize == ValidPageSizeValue &&
                                                               mc.TotalCount == ValidTotalCountValue &&
@@ -98,10 +99,10 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Arrange
         var request = new GetAllFollowsRequest()
         {
-            FollowerId = ValidCurrentUserId,
-            FollowerName = ValidUserName,
-            FollowingId = ValidFollowingId,
-            FollowingName = ValidUserName,
+            FollowerId = FollowTestUtilities.ValidCurrentUserId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = FollowTestUtilities.ValidFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -115,10 +116,10 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         await InstaConnectSender
               .Received(1)
               .SendAsync(Arg.Is<GetAllFollowsQuery>(m =>
-                  m.FollowerId == ValidCurrentUserId &&
-                  m.FollowerName == ValidUserName &&
-                  m.FollowingId == ValidFollowingId &&
-                  m.FollowingName == ValidUserName &&
+                  m.FollowerId == FollowTestUtilities.ValidCurrentUserId &&
+                  m.FollowerName == FollowTestUtilities.ValidUserName &&
+                  m.FollowingId == FollowTestUtilities.ValidFollowingId &&
+                  m.FollowingName == FollowTestUtilities.ValidUserName &&
                   m.SortOrder == ValidSortOrderProperty &&
                   m.SortPropertyName == ValidSortPropertyName &&
                   m.Page == ValidPageValue &&
@@ -131,7 +132,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Arrange
         var request = new GetFollowByIdRequest()
         {
-            Id = ValidId
+            Id = FollowTestUtilities.ValidId
         };
 
         // Act
@@ -150,7 +151,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Arrange
         var request = new GetFollowByIdRequest()
         {
-            Id = ValidId
+            Id = FollowTestUtilities.ValidId
         };
 
         // Act
@@ -163,13 +164,13 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
             .Which
             .Value
             .Should()
-            .Match<FollowQueryResponse>(m => m.Id == ValidId &&
-                                                 m.FollowerId == ValidCurrentUserId &&
-                                                 m.FollowerName == ValidUserName &&
-                                                 m.FollowerProfileImage == ValidUserProfileImage &&
-                                                 m.FollowingId == ValidFollowingId &&
-                                                 m.FollowingName == ValidUserName &&
-                                                 m.FollowingProfileImage == ValidUserProfileImage);
+            .Match<FollowQueryResponse>(m => m.Id == FollowTestUtilities.ValidId &&
+                                                 m.FollowerId == FollowTestUtilities.ValidCurrentUserId &&
+                                                 m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                                 m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
+                                                 m.FollowingId == FollowTestUtilities.ValidFollowingId &&
+                                                 m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                                 m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage);
     }
 
     [Fact]
@@ -177,7 +178,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
     {
         var request = new GetFollowByIdRequest()
         {
-            Id = ValidId
+            Id = FollowTestUtilities.ValidId
         };
 
         // Act
@@ -186,7 +187,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetFollowByIdQuery>(m => m.Id == ValidId), CancellationToken);
+              .SendAsync(Arg.Is<GetFollowByIdQuery>(m => m.Id == FollowTestUtilities.ValidId), CancellationToken);
     }
 
     [Fact]
@@ -195,7 +196,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Arrange
         var request = new AddFollowRequest()
         {
-            AddFollowBindingModel = new AddFollowBindingModel(ValidFollowingId)
+            AddFollowBindingModel = new AddFollowBindingModel(FollowTestUtilities.ValidFollowingId)
         };
 
         // Act
@@ -214,7 +215,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Arrange
         var request = new AddFollowRequest()
         {
-            AddFollowBindingModel = new AddFollowBindingModel(ValidFollowingId)
+            AddFollowBindingModel = new AddFollowBindingModel(FollowTestUtilities.ValidFollowingId)
         };
 
         // Act
@@ -227,7 +228,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
             .Which
             .Value
             .Should()
-            .Match<FollowCommandResponse>(m => m.Id == ValidId);
+            .Match<FollowCommandResponse>(m => m.Id == FollowTestUtilities.ValidId);
     }
 
     [Fact]
@@ -236,7 +237,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Arrange
         var request = new AddFollowRequest()
         {
-            AddFollowBindingModel = new AddFollowBindingModel(ValidFollowingId)
+            AddFollowBindingModel = new AddFollowBindingModel(FollowTestUtilities.ValidFollowingId)
         };
 
         // Act
@@ -245,8 +246,8 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<AddFollowCommand>(m => m.CurrentUserId == ValidCurrentUserId &&
-                                                     m.FollowingId == ValidFollowingId),
+            .SendAsync(Arg.Is<AddFollowCommand>(m => m.CurrentUserId == FollowTestUtilities.ValidCurrentUserId &&
+                                                     m.FollowingId == FollowTestUtilities.ValidFollowingId),
                                                      CancellationToken);
     }
 
@@ -256,7 +257,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Arrange
         var request = new AddFollowRequest()
         {
-            AddFollowBindingModel = new AddFollowBindingModel(ValidFollowingId)
+            AddFollowBindingModel = new AddFollowBindingModel(FollowTestUtilities.ValidFollowingId)
         };
 
         // Act
@@ -274,7 +275,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Arrange
         var request = new DeleteFollowRequest()
         {
-            Id = ValidId
+            Id = FollowTestUtilities.ValidId
         };
 
         // Act
@@ -292,7 +293,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Arrange
         var request = new DeleteFollowRequest()
         {
-            Id = ValidId
+            Id = FollowTestUtilities.ValidId
         };
 
         // Act
@@ -301,8 +302,8 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<DeleteFollowCommand>(m => m.Id == ValidId &&
-                                                    m.CurrentUserId == ValidCurrentUserId),
+            .SendAsync(Arg.Is<DeleteFollowCommand>(m => m.Id == FollowTestUtilities.ValidId &&
+                                                    m.CurrentUserId == FollowTestUtilities.ValidCurrentUserId),
                                                     CancellationToken);
     }
 
@@ -312,7 +313,7 @@ public class FollowControllerUnitTests : BaseFollowUnitTest
         // Arrange
         var request = new DeleteFollowRequest()
         {
-            Id = ValidId
+            Id = FollowTestUtilities.ValidId
         };
 
         // Act

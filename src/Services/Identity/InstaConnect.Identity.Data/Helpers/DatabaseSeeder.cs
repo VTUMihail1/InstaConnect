@@ -3,8 +3,8 @@ using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Data.Features.Users.Abstractions;
 using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Data.Features.Users.Models.Options;
+using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 

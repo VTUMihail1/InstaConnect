@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Web.Features.Follows.Models.Binding;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
@@ -121,7 +121,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var request = new AddFollowBindingModel(existingFollowingId);
 
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = InvalidUserId;
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = FollowTestUtilities.InvalidUserId;
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
@@ -137,7 +137,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowBindingModel(InvalidUserId);
+        var request = new AddFollowBindingModel(FollowTestUtilities.InvalidUserId);
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 

@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Identity.Business.Features.Users.Commands.ResetUserPassword;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.ResetUserPassword;
 
@@ -20,9 +20,9 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new ResetUserPasswordCommand(
             null!,
-            ValidForgotPasswordTokenValue,
-            ValidPassword,
-            ValidPassword
+            UserTestUtilities.ValidForgotPasswordTokenValue,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword
         );
 
         // Act
@@ -41,9 +41,9 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new ResetUserPasswordCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidForgotPasswordTokenValue,
-            ValidPassword,
-            ValidPassword
+            UserTestUtilities.ValidForgotPasswordTokenValue,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword
         );
 
         // Act
@@ -58,10 +58,10 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            ValidName,
+            UserTestUtilities.ValidName,
             null!,
-            ValidPassword,
-            ValidPassword
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword
         );
 
         // Act
@@ -79,10 +79,10 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            ValidName,
+            UserTestUtilities.ValidName,
             Faker.Random.AlphaNumeric(length),
-            ValidPassword,
-            ValidPassword
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword
         );
 
         // Act
@@ -97,8 +97,8 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            ValidName,
-            ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
             null!,
             null!
         );
@@ -119,8 +119,8 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var invalidPassword = Faker.Random.AlphaNumeric(length);
         var command = new ResetUserPasswordCommand(
-            ValidName,
-            ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
             invalidPassword,
             invalidPassword
         );
@@ -137,10 +137,10 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            ValidName,
-            ValidEmail,
-            ValidPassword,
-            InvalidPassword
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.InvalidPassword
         );
 
         // Act
@@ -155,10 +155,10 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new ResetUserPasswordCommand(
-            ValidName,
-            ValidEmail,
-            ValidPassword,
-            ValidPassword
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidPassword,
+            UserTestUtilities.ValidPassword
         );
 
         // Act

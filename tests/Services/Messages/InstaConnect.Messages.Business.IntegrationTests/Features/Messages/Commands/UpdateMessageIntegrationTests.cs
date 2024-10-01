@@ -1,13 +1,13 @@
 ﻿using Bogus;
 using FluentAssertions;
 using InstaConnect.Messages.Business.Features.Messages.Commands.UpdateMessage;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.IntegrationTests.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.Message;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.Message;
+using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Commands;
 
@@ -26,7 +26,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new UpdateMessageCommand(
             null!,
-            ValidContent,
+            MessageTestUtilities.ValidContent,
             existingSenderId
         );
 
@@ -49,7 +49,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new UpdateMessageCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidContent,
+            MessageTestUtilities.ValidContent,
             existingSenderId
         );
 
@@ -69,7 +69,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new UpdateMessageCommand(
             existingMessageId,
-            ValidContent,
+            MessageTestUtilities.ValidContent,
             null!
         );
 
@@ -92,7 +92,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new UpdateMessageCommand(
             existingMessageId,
-            ValidContent,
+            MessageTestUtilities.ValidContent,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -154,8 +154,8 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var existingReceiverId = await CreateUserAsync(CancellationToken);
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new UpdateMessageCommand(
-            InvalidId,
-            ValidUpdateContent,
+            MessageTestUtilities.InvalidId,
+            MessageTestUtilities.ValidUpdateContent,
             existingSenderId
         );
 
@@ -176,7 +176,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var existingMessageId = await CreateMessageAsync(existingSenderMessageId, existingReceiverMessageId, CancellationToken);
         var command = new UpdateMessageCommand(
             existingMessageId,
-            ValidContent,
+            MessageTestUtilities.ValidContent,
             existingSenderId
         );
 
@@ -196,7 +196,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new UpdateMessageCommand(
             existingMessageId,
-            ValidUpdateContent,
+            MessageTestUtilities.ValidUpdateContent,
             existingSenderId
         );
 
@@ -210,7 +210,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
             .Match<Message>(m => m.Id == existingMessageId &&
                                  m.SenderId == existingSenderId &&
                                  m.ReceiverId == existingReceiverId &&
-                                 m.Content == ValidUpdateContent);
+                                 m.Content == MessageTestUtilities.ValidUpdateContent);
     }
 
     [Fact]
@@ -222,7 +222,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var command = new UpdateMessageCommand(
             GetNonCaseMatchingString(existingMessageId),
-            ValidUpdateContent,
+            MessageTestUtilities.ValidUpdateContent,
             existingSenderId
         );
 
@@ -236,6 +236,6 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
             .Match<Message>(m => m.Id == existingMessageId &&
                                  m.SenderId == existingSenderId &&
                                  m.ReceiverId == existingReceiverId &&
-                                 m.Content == ValidUpdateContent);
+                                 m.Content == MessageTestUtilities.ValidUpdateContent);
     }
 }

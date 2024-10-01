@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Models.Filters;
-using InstaConnect.Shared.Data.Models.Enums;
+using InstaConnect.Shared.Common.Models.Enums;
 
 namespace InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
 

@@ -5,6 +5,7 @@ using InstaConnect.Messages.Business.Features.Messages.Commands.DeleteMessage;
 using InstaConnect.Messages.Business.Features.Messages.Commands.UpdateMessage;
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.Features.Messages.Controllers.v1;
 using InstaConnect.Messages.Web.Features.Messages.Models.Binding;
 using InstaConnect.Messages.Web.Features.Messages.Models.Requests;
@@ -32,8 +33,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new GetAllMessagesRequest()
         {
-            ReceiverId = ValidReceiverId,
-            ReceiverName = ValidUserName,
+            ReceiverId = MessageTestUtilities.ValidReceiverId,
+            ReceiverName = MessageTestUtilities.ValidUserName,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -56,8 +57,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new GetAllMessagesRequest()
         {
-            ReceiverId = ValidReceiverId,
-            ReceiverName = ValidUserName,
+            ReceiverId = MessageTestUtilities.ValidReceiverId,
+            ReceiverName = MessageTestUtilities.ValidUserName,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -75,14 +76,14 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
             .Value
             .Should()
             .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
-                                                                 m.Id == ValidId &&
-                                                                 m.SenderId == ValidCurrentUserId &&
-                                                                 m.SenderName == ValidUserName &&
-                                                                 m.SenderProfileImage == ValidUserProfileImage &&
-                                                                 m.ReceiverId == ValidReceiverId &&
-                                                                 m.ReceiverName == ValidUserName &&
-                                                                 m.ReceiverProfileImage == ValidUserProfileImage &&
-                                                                 m.Content == ValidContent) &&
+                                                                 m.Id == MessageTestUtilities.ValidId &&
+                                                                 m.SenderId == MessageTestUtilities.ValidCurrentUserId &&
+                                                                 m.SenderName == MessageTestUtilities.ValidUserName &&
+                                                                 m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+                                                                 m.ReceiverId == MessageTestUtilities.ValidReceiverId &&
+                                                                 m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                                                 m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+                                                                 m.Content == MessageTestUtilities.ValidContent) &&
                                                               mc.Page == ValidPageValue &&
                                                               mc.PageSize == ValidPageSizeValue &&
                                                               mc.TotalCount == ValidTotalCountValue &&
@@ -95,8 +96,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
     {
         var request = new GetAllMessagesRequest()
         {
-            ReceiverId = ValidReceiverId,
-            ReceiverName = ValidUserName,
+            ReceiverId = MessageTestUtilities.ValidReceiverId,
+            ReceiverName = MessageTestUtilities.ValidUserName,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -110,9 +111,9 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         await InstaConnectSender
               .Received(1)
               .SendAsync(Arg.Is<GetAllMessagesQuery>(m =>
-                  m.CurrentUserId == ValidCurrentUserId &&
-                  m.ReceiverId == ValidReceiverId &&
-                  m.ReceiverName == ValidUserName &&
+                  m.CurrentUserId == MessageTestUtilities.ValidCurrentUserId &&
+                  m.ReceiverId == MessageTestUtilities.ValidReceiverId &&
+                  m.ReceiverName == MessageTestUtilities.ValidUserName &&
                   m.SortOrder == ValidSortOrderProperty &&
                   m.SortPropertyName == ValidSortPropertyName &&
                   m.Page == ValidPageValue &&
@@ -124,8 +125,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
     {
         var request = new GetAllMessagesRequest()
         {
-            ReceiverId = ValidReceiverId,
-            ReceiverName = ValidUserName,
+            ReceiverId = MessageTestUtilities.ValidReceiverId,
+            ReceiverName = MessageTestUtilities.ValidUserName,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -147,7 +148,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new GetMessageByIdRequest()
         {
-            Id = ValidId
+            Id = MessageTestUtilities.ValidId
         };
 
         // Act
@@ -166,7 +167,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new GetMessageByIdRequest()
         {
-            Id = ValidId
+            Id = MessageTestUtilities.ValidId
         };
 
         // Act
@@ -179,14 +180,14 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
             .Which
             .Value
             .Should()
-            .Match<MessageQueryViewResponse>(m => m.Id == ValidId &&
-                                                 m.SenderId == ValidCurrentUserId &&
-                                                 m.SenderName == ValidUserName &&
-                                                 m.SenderProfileImage == ValidUserProfileImage &&
-                                                 m.ReceiverId == ValidReceiverId &&
-                                                 m.ReceiverName == ValidUserName &&
-                                                 m.ReceiverProfileImage == ValidUserProfileImage &&
-                                                 m.Content == ValidContent);
+            .Match<MessageQueryViewResponse>(m => m.Id == MessageTestUtilities.ValidId &&
+                                                 m.SenderId == MessageTestUtilities.ValidCurrentUserId &&
+                                                 m.SenderName == MessageTestUtilities.ValidUserName &&
+                                                 m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+                                                 m.ReceiverId == MessageTestUtilities.ValidReceiverId &&
+                                                 m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                                 m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+                                                 m.Content == MessageTestUtilities.ValidContent);
     }
 
     [Fact]
@@ -194,7 +195,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
     {
         var request = new GetMessageByIdRequest()
         {
-            Id = ValidId
+            Id = MessageTestUtilities.ValidId
         };
 
         // Act
@@ -203,8 +204,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetMessageByIdQuery>(m => m.Id == ValidId &&
-                                                          m.CurrentUserId == ValidCurrentUserId), CancellationToken);
+              .SendAsync(Arg.Is<GetMessageByIdQuery>(m => m.Id == MessageTestUtilities.ValidId &&
+                                                          m.CurrentUserId == MessageTestUtilities.ValidCurrentUserId), CancellationToken);
     }
 
     [Fact]
@@ -212,7 +213,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
     {
         var request = new GetMessageByIdRequest()
         {
-            Id = ValidId
+            Id = MessageTestUtilities.ValidId
         };
 
         // Act
@@ -230,7 +231,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new AddMessageRequest()
         {
-            AddMessageBindingModel = new AddMessageBindingModel(ValidReceiverId, ValidContent)
+            AddMessageBindingModel = new AddMessageBindingModel(MessageTestUtilities.ValidReceiverId, MessageTestUtilities.ValidContent)
         };
 
         // Act
@@ -249,7 +250,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new AddMessageRequest()
         {
-            AddMessageBindingModel = new AddMessageBindingModel(ValidReceiverId, ValidContent)
+            AddMessageBindingModel = new AddMessageBindingModel(MessageTestUtilities.ValidReceiverId, MessageTestUtilities.ValidContent)
         };
 
         // Act
@@ -262,7 +263,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
             .Which
             .Value
             .Should()
-            .Match<MessageCommandViewResponse>(m => m.Id == ValidId);
+            .Match<MessageCommandViewResponse>(m => m.Id == MessageTestUtilities.ValidId);
     }
 
     [Fact]
@@ -271,7 +272,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new AddMessageRequest()
         {
-            AddMessageBindingModel = new AddMessageBindingModel(ValidReceiverId, ValidContent)
+            AddMessageBindingModel = new AddMessageBindingModel(MessageTestUtilities.ValidReceiverId, MessageTestUtilities.ValidContent)
         };
 
         // Act
@@ -280,9 +281,9 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<AddMessageCommand>(m => m.CurrentUserId == ValidCurrentUserId &&
-                                                 m.ReceiverId == ValidReceiverId &&
-                                                 m.Content == ValidContent),
+            .SendAsync(Arg.Is<AddMessageCommand>(m => m.CurrentUserId == MessageTestUtilities.ValidCurrentUserId &&
+                                                 m.ReceiverId == MessageTestUtilities.ValidReceiverId &&
+                                                 m.Content == MessageTestUtilities.ValidContent),
                                                  CancellationToken);
     }
 
@@ -292,7 +293,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new AddMessageRequest()
         {
-            AddMessageBindingModel = new AddMessageBindingModel(ValidReceiverId, ValidContent)
+            AddMessageBindingModel = new AddMessageBindingModel(MessageTestUtilities.ValidReceiverId, MessageTestUtilities.ValidContent)
         };
 
         // Act
@@ -310,8 +311,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new UpdateMessageRequest()
         {
-            Id = ValidId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(ValidContent)
+            Id = MessageTestUtilities.ValidId,
+            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidContent)
         };
 
         // Act
@@ -330,8 +331,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new UpdateMessageRequest()
         {
-            Id = ValidId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(ValidContent)
+            Id = MessageTestUtilities.ValidId,
+            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidContent)
         };
 
         // Act
@@ -344,7 +345,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
             .Which
             .Value
             .Should()
-            .Match<MessageCommandViewResponse>(m => m.Id == ValidId);
+            .Match<MessageCommandViewResponse>(m => m.Id == MessageTestUtilities.ValidId);
     }
 
     [Fact]
@@ -353,8 +354,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new UpdateMessageRequest()
         {
-            Id = ValidId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(ValidContent)
+            Id = MessageTestUtilities.ValidId,
+            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidContent)
         };
 
         // Act
@@ -363,9 +364,9 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<UpdateMessageCommand>(m => m.Id == ValidId &&
-                                                    m.CurrentUserId == ValidCurrentUserId &&
-                                                    m.Content == ValidContent),
+            .SendAsync(Arg.Is<UpdateMessageCommand>(m => m.Id == MessageTestUtilities.ValidId &&
+                                                    m.CurrentUserId == MessageTestUtilities.ValidCurrentUserId &&
+                                                    m.Content == MessageTestUtilities.ValidContent),
                                                     CancellationToken);
     }
 
@@ -375,8 +376,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new UpdateMessageRequest()
         {
-            Id = ValidId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(ValidContent)
+            Id = MessageTestUtilities.ValidId,
+            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidContent)
         };
 
         // Act
@@ -394,7 +395,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new DeleteMessageRequest()
         {
-            Id = ValidId
+            Id = MessageTestUtilities.ValidId
         };
 
         // Act
@@ -412,7 +413,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new DeleteMessageRequest()
         {
-            Id = ValidId
+            Id = MessageTestUtilities.ValidId
         };
 
         // Act
@@ -421,8 +422,8 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<DeleteMessageCommand>(m => m.Id == ValidId &&
-                                                    m.CurrentUserId == ValidCurrentUserId),
+            .SendAsync(Arg.Is<DeleteMessageCommand>(m => m.Id == MessageTestUtilities.ValidId &&
+                                                    m.CurrentUserId == MessageTestUtilities.ValidCurrentUserId),
                                                     CancellationToken);
     }
 
@@ -432,7 +433,7 @@ public class MessageControllerUnitTests : BaseMessageUnitTest
         // Arrange
         var request = new DeleteMessageRequest()
         {
-            Id = ValidId
+            Id = MessageTestUtilities.ValidId
         };
 
         // Act

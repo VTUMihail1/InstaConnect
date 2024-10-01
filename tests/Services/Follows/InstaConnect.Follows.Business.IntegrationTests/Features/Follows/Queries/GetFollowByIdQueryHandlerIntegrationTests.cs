@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
 using InstaConnect.Follows.Business.Features.Follows.Models;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.Follow;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.Follow;
 
 namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Queries;
 
@@ -57,7 +57,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetFollowByIdQuery(InvalidId);
+        var query = new GetFollowByIdQuery(FollowTestUtilities.InvalidId);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -83,11 +83,11 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             .Should()
             .Match<FollowQueryViewModel>(m => m.Id == existingFollowId &&
                                           m.FollowerId == existingFollowerId &&
-                                          m.FollowerName == ValidUserName &&
-                                          m.FollowerProfileImage == ValidUserProfileImage &&
+                                          m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                          m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
                                           m.FollowingId == existingFollowingId &&
-                                          m.FollowingName == ValidUserName &&
-                                          m.FollowingProfileImage == ValidUserProfileImage);
+                                          m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                          m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage);
     }
 
     [Fact]
@@ -107,10 +107,10 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
             .Should()
             .Match<FollowQueryViewModel>(m => m.Id == existingFollowId &&
                                           m.FollowerId == existingFollowerId &&
-                                          m.FollowerName == ValidUserName &&
-                                          m.FollowerProfileImage == ValidUserProfileImage &&
+                                          m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                          m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
                                           m.FollowingId == existingFollowingId &&
-                                          m.FollowingName == ValidUserName &&
-                                          m.FollowingProfileImage == ValidUserProfileImage);
+                                          m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                          m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage);
     }
 }

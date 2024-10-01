@@ -1,8 +1,8 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Shared.Business.Utilities;
+using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 
@@ -23,8 +23,8 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
         // Arrange
         var query = new GetAllPostCommentLikesQuery(
             Faker.Random.AlphaNumeric(length),
-            ValidUserName,
-            ValidPostCommentId,
+            PostCommentLikeTestUtilities.ValidUserName,
+            PostCommentLikeTestUtilities.ValidPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -44,9 +44,9 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     {
         // Arrange
         var query = new GetAllPostCommentLikesQuery(
-            ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length),
-            ValidPostCommentId,
+            PostCommentLikeTestUtilities.ValidPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -66,8 +66,8 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     {
         // Arrange
         var query = new GetAllPostCommentLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidUserName,
             Faker.Random.AlphaNumeric(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -86,9 +86,9 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     {
         // Arrange
         var query = new GetAllPostCommentLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidPostCommentId,
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidUserName,
+            PostCommentLikeTestUtilities.ValidPostCommentId,
             ValidSortOrderProperty,
             null!,
             ValidPageValue,
@@ -106,9 +106,9 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     {
         // Arrange
         var query = new GetAllPostCommentLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidPostCommentId,
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidUserName,
+            PostCommentLikeTestUtilities.ValidPostCommentId,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
             ValidPageValue,
@@ -129,9 +129,9 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     {
         // Arrange
         var query = new GetAllPostCommentLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidPostCommentId,
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidUserName,
+            PostCommentLikeTestUtilities.ValidPostCommentId,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
             ValidPageValue,
@@ -151,9 +151,9 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     {
         // Arrange
         var query = new GetAllPostCommentLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidPostCommentId,
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidUserName,
+            PostCommentLikeTestUtilities.ValidPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             value,
@@ -173,9 +173,9 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     {
         // Arrange
         var query = new GetAllPostCommentLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidPostCommentId,
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidUserName,
+            PostCommentLikeTestUtilities.ValidPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -193,9 +193,9 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     {
         // Arrange
         var query = new GetAllPostCommentLikesQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidPostCommentId,
+            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            PostCommentLikeTestUtilities.ValidUserName,
+            PostCommentLikeTestUtilities.ValidPostCommentId,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

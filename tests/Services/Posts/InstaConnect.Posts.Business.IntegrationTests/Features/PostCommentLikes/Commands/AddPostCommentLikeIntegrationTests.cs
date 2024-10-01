@@ -1,13 +1,13 @@
 ﻿using Bogus;
 using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.AddPostCommentLike;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
+using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.PostComment;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.PostComment;
+using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostCommentLikes.Commands;
 
@@ -108,7 +108,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var command = new AddPostCommentLikeCommand(
-            InvalidUserId,
+            PostCommentLikeTestUtilities.InvalidUserId,
             existingPostCommentId
         );
 
@@ -128,7 +128,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var command = new AddPostCommentLikeCommand(
             existingUserId,
-            InvalidPostCommentId
+            PostCommentLikeTestUtilities.InvalidPostCommentId
         );
 
         // Act

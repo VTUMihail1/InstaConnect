@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Identity.Business.Features.Users.Commands.EditCurrentUser;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.EditCurrentUser;
 
@@ -20,10 +20,10 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new EditCurrentUserCommand(
             null!,
-            ValidFirstName,
-            ValidLastName,
-            ValidName,
-            ValidFormFile
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -42,10 +42,10 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new EditCurrentUserCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidFirstName,
-            ValidLastName,
-            ValidName,
-            ValidFormFile
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -60,11 +60,11 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new EditCurrentUserCommand(
-            ValidId,
+            UserTestUtilities.ValidId,
             null!,
-            ValidLastName,
-            ValidName,
-            ValidFormFile
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -82,11 +82,11 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new EditCurrentUserCommand(
-            ValidId,
+            UserTestUtilities.ValidId,
             Faker.Random.AlphaNumeric(length),
-            ValidLastName,
-            ValidName,
-            ValidFormFile
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -101,11 +101,11 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new EditCurrentUserCommand(
-            ValidId,
-            ValidFirstName,
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidFirstName,
             null!,
-            ValidName,
-            ValidFormFile
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -123,11 +123,11 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new EditCurrentUserCommand(
-            ValidId,
-            ValidFirstName,
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidFirstName,
             Faker.Random.AlphaNumeric(length),
-            ValidName,
-            ValidFormFile
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -142,11 +142,11 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new EditCurrentUserCommand(
-            ValidId,
-            ValidFirstName,
-            ValidLastName,
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
             null!,
-            ValidFormFile
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -164,11 +164,11 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new EditCurrentUserCommand(
-            ValidId,
-            ValidFirstName,
-            ValidLastName,
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
             Faker.Random.AlphaNumeric(length),
-            ValidFormFile
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -183,11 +183,11 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new EditCurrentUserCommand(
-            ValidId,
-            ValidFirstName,
-            ValidLastName,
-            ValidName,
-            ValidFormFile
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidFormFile
         );
 
         // Act
@@ -202,10 +202,10 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new EditCurrentUserCommand(
-            ValidId,
-            ValidFirstName,
-            ValidLastName,
-            ValidName,
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidName,
             null
         );
 

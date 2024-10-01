@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Responses;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
@@ -45,7 +45,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(InvalidId), CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(PostCommentLikeTestUtilities.InvalidId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
@@ -88,8 +88,8 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
             .Should()
             .Match<PostCommentLikeQueryResponse>(m => m.Id == existingPostCommentLikeId &&
                                  m.UserId == existingUserId &&
-                                 m.UserName == ValidUserName &&
-                                 m.UserProfileImage == ValidUserProfileImage &&
+                                 m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                 m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                  m.PostCommentId == existingPostCommentId);
     }
 
@@ -114,8 +114,8 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
             .Should()
             .Match<PostCommentLikeQueryResponse>(m => m.Id == existingPostCommentLikeId &&
                                  m.UserId == existingUserId &&
-                                 m.UserName == ValidUserName &&
-                                 m.UserProfileImage == ValidUserProfileImage &&
+                                 m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                 m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
                                  m.PostCommentId == existingPostCommentId);
     }
 }

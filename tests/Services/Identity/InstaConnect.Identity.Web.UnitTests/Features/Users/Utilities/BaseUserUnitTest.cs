@@ -9,33 +9,19 @@ using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUserDetail
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserById;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserByName;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserDetailedById;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Web.Features.Users.Mappings;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Models.Users;
 using InstaConnect.Shared.Web.UnitTests.Utilities;
-using Microsoft.AspNetCore.Http;
 using NSubstitute;
 
 namespace InstaConnect.Identity.Web.UnitTests.Features.Users.Utilities;
 
 public abstract class BaseUserUnitTest : BaseSharedUnitTest
 {
-    protected readonly string ValidId;
-    protected readonly string ValidEmail;
-    protected readonly string ValidFirstName;
-    protected readonly string ValidLastName;
-    protected readonly string ValidName;
-    protected readonly string ValidProfileImage;
-    protected readonly string ValidEmailConfirmationToken;
-    protected readonly string ValidForgotPasswordToken;
-    protected readonly string ValidAccessToken;
-    protected readonly string ValidPassword;
-    protected readonly DateTime ValidUntil;
-    protected readonly IFormFile ValidFormFile;
-
     public BaseUserUnitTest() : base(
         Substitute.For<IInstaConnectSender>(),
         Substitute.For<ICurrentUserContext>(),
@@ -47,39 +33,26 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
                     cfg.AddProfile<UserQueryProfile>();
                 }))))
     {
-        ValidId = GetAverageString(UserBusinessConfigurations.ID_MAX_LENGTH, UserBusinessConfigurations.ID_MIN_LENGTH);
-        ValidName = GetAverageString(UserBusinessConfigurations.USER_NAME_MAX_LENGTH, UserBusinessConfigurations.USER_NAME_MIN_LENGTH);
-        ValidFirstName = GetAverageString(UserBusinessConfigurations.FIRST_NAME_MAX_LENGTH, UserBusinessConfigurations.FIRST_NAME_MIN_LENGTH);
-        ValidLastName = GetAverageString(UserBusinessConfigurations.LAST_NAME_MAX_LENGTH, UserBusinessConfigurations.LAST_NAME_MIN_LENGTH);
-        ValidEmail = GetAverageString(UserBusinessConfigurations.EMAIL_MAX_LENGTH, UserBusinessConfigurations.EMAIL_MIN_LENGTH);
-        ValidPassword = GetAverageString(UserBusinessConfigurations.PASSWORD_MAX_LENGTH, UserBusinessConfigurations.PASSWORD_MIN_LENGTH);
-        ValidProfileImage = Faker.Internet.Url();
-        ValidFormFile = Substitute.For<IFormFile>();
-        ValidUntil = Faker.Date.Recent();
-        ValidEmailConfirmationToken = Faker.Random.Guid().ToString();
-        ValidForgotPasswordToken = Faker.Random.Guid().ToString();
-        ValidAccessToken = Faker.Random.Guid().ToString();
-
         var existingUserQueryViewModel = new UserQueryViewModel(
-            ValidId,
-            ValidFirstName,
-            ValidLastName,
-            ValidName,
-            ValidProfileImage);
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
 
         var existingUserDetailedQueryViewModel = new UserDetailedQueryViewModel(
-            ValidId,
-            ValidFirstName,
-            ValidLastName,
-            ValidName,
-            ValidEmail,
-            ValidProfileImage);
+            UserTestUtilities.ValidId,
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidProfileImage);
 
-        var existingUserCommandViewModel = new UserCommandViewModel(ValidId);
+        var existingUserCommandViewModel = new UserCommandViewModel(UserTestUtilities.ValidId);
 
-        var existingUserTokenCommandViewModel = new UserTokenCommandViewModel(ValidAccessToken, ValidUntil);
+        var existingUserTokenCommandViewModel = new UserTokenCommandViewModel(UserTestUtilities.ValidAccessTokenValue, UserTestUtilities.ValidUntil);
 
-        var existingCurrentUserModel = new CurrentUserModel(ValidId, ValidName);
+        var existingCurrentUserModel = new CurrentUserModel(UserTestUtilities.ValidId, UserTestUtilities.ValidName);
 
         var existingUserPaginationCollectionModel = new UserPaginationQueryViewModel(
             [existingUserQueryViewModel],

@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Identity.Business.Features.Users.Commands.SendUserPasswordReset;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.SendUserPasswordReset;
 
@@ -47,7 +47,7 @@ public class SendUserPasswordResetCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var command = new SendUserPasswordResetCommand(ValidEmail);
+        var command = new SendUserPasswordResetCommand(UserTestUtilities.ValidEmail);
 
         // Act
         var result = _commandValidator.TestValidate(command);

@@ -1,5 +1,5 @@
 using FluentValidation;
-using InstaConnect.Shared.Business.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.Base;
 using MediatR;
 
 namespace InstaConnect.Shared.Business.PipelineBehaviors;

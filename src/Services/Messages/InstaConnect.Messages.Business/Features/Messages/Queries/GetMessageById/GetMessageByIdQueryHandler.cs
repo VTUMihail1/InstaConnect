@@ -1,8 +1,8 @@
 ﻿using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Messages.Data.Features.Messages.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Exceptions.Message;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Message;
+using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
 

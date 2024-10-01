@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using Bogus;
-using InstaConnect.Shared.Data.Models.Enums;
+using InstaConnect.Shared.Common.Models.Enums;
 using MassTransit.Testing;
 using Microsoft.Extensions.DependencyInjection;
 

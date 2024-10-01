@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Commands.DeletePost;
 
@@ -20,7 +20,7 @@ public class DeletePostCommandValidatorUnitTests : BasePostUnitTest
         // Arrange
         var command = new DeletePostCommand(
             null!,
-            ValidCurrentUserId
+            PostTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -39,7 +39,7 @@ public class DeletePostCommandValidatorUnitTests : BasePostUnitTest
         // Arrange
         var command = new DeletePostCommand(
             Faker.Random.AlphaNumeric(length),
-            ValidCurrentUserId
+            PostTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -54,7 +54,7 @@ public class DeletePostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new DeletePostCommand(
-            ValidId,
+            PostTestUtilities.ValidId,
             null!
         );
 
@@ -73,7 +73,7 @@ public class DeletePostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new DeletePostCommand(
-            ValidId,
+            PostTestUtilities.ValidId,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -89,8 +89,8 @@ public class DeletePostCommandValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new DeletePostCommand(
-            ValidId,
-            ValidCurrentUserId
+            PostTestUtilities.ValidId,
+            PostTestUtilities.ValidCurrentUserId
         );
 
         // Act

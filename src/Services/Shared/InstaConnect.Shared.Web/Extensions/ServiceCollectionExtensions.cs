@@ -2,8 +2,8 @@
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Asp.Versioning;
+using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Data.Models.Options;
-using InstaConnect.Shared.Data.Utilities;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.ExceptionHandlers;
 using InstaConnect.Shared.Web.Helpers;

@@ -2,7 +2,8 @@
 using InstaConnect.Identity.Business.Features.Users.Commands.ResendUserEmailConfirmation;
 using InstaConnect.Identity.Business.Features.Users.Models;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.ResendUserEmailConfirmation;
@@ -24,7 +25,7 @@ public class ResendUserEmailConfirmationCommandHandlerUnitTests : BaseUserUnitTe
     public async Task Handle_ShouldThrowUserNotFoundException_WhenEmailIsInvalid()
     {
         // Arrange
-        var command = new ResendUserEmailConfirmationCommand(InvalidEmail);
+        var command = new ResendUserEmailConfirmationCommand(UserTestUtilities.InvalidEmail);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -37,7 +38,7 @@ public class ResendUserEmailConfirmationCommandHandlerUnitTests : BaseUserUnitTe
     public async Task Handle_ShouldThrowUserEmailAlreadyConfirmedException_WhenEmailIsConfirmed()
     {
         // Arrange
-        var command = new ResendUserEmailConfirmationCommand(ValidEmail);
+        var command = new ResendUserEmailConfirmationCommand(UserTestUtilities.ValidEmail);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -50,7 +51,7 @@ public class ResendUserEmailConfirmationCommandHandlerUnitTests : BaseUserUnitTe
     public async Task Handle_ShouldCallTheEmailConfirmationTokenPublisher_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ResendUserEmailConfirmationCommand(ValidEmailWithUnconfirmedEmail);
+        var command = new ResendUserEmailConfirmationCommand(UserTestUtilities.ValidEmailWithUnconfirmedEmail);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -58,15 +59,15 @@ public class ResendUserEmailConfirmationCommandHandlerUnitTests : BaseUserUnitTe
         // Assert
         await EmailConfirmationTokenPublisher
             .Received(1)
-            .PublishEmailConfirmationTokenAsync(Arg.Is<CreateEmailConfirmationTokenModel>(uc => uc.UserId == ValidIdWithUnconfirmedEmail &&
-                                                                                          uc.Email == ValidEmailWithUnconfirmedEmail), CancellationToken);
+            .PublishEmailConfirmationTokenAsync(Arg.Is<CreateEmailConfirmationTokenModel>(uc => uc.UserId == UserTestUtilities.ValidIdWithUnconfirmedEmail &&
+                                                                                          uc.Email == UserTestUtilities.ValidEmailWithUnconfirmedEmail), CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldCallTheUnitOfWorkSaveChanges_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ResendUserEmailConfirmationCommand(ValidEmailWithUnconfirmedEmail);
+        var command = new ResendUserEmailConfirmationCommand(UserTestUtilities.ValidEmailWithUnconfirmedEmail);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

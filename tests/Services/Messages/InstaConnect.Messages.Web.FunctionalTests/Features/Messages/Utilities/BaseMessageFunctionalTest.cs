@@ -1,4 +1,4 @@
-﻿using InstaConnect.Messages.Business.Features.Messages.Utilities;
+﻿using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data;
 using InstaConnect.Messages.Data.Features.Messages.Abstractions;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
@@ -15,19 +15,6 @@ namespace InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Utilities;
 public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {
     private const string API_ROUTE = "api/v1/messages";
-
-    protected readonly string InvalidId;
-    protected readonly string ValidContent;
-    protected readonly string ValidAddContent;
-    protected readonly string ValidUpdateContent;
-    protected readonly string InvalidUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidAddUserName;
-    protected readonly string ValidUpdateUserName;
-    protected readonly string ValidUserFirstName;
-    protected readonly string ValidUserEmail;
-    protected readonly string ValidUserLastName;
-    protected readonly string ValidUserProfileImage;
 
 
     protected IMessageWriteRepository MessageWriteRepository
@@ -57,24 +44,12 @@ public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, ICla
         functionalTestWebAppFactory.Services.CreateScope(),
         API_ROUTE)
     {
-        InvalidId = GetAverageString(MessageBusinessConfigurations.ID_MAX_LENGTH, MessageBusinessConfigurations.ID_MIN_LENGTH);
-        ValidContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
-        ValidAddContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
-        ValidUpdateContent = GetAverageString(MessageBusinessConfigurations.CONTENT_MAX_LENGTH, MessageBusinessConfigurations.CONTENT_MIN_LENGTH);
-        InvalidUserId = GetAverageString(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidAddUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUpdateUserName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUserFirstName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUserLastName = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUserEmail = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH, MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH);
     }
 
     protected async Task<string> CreateMessageAsync(string senderId, string receiverId, CancellationToken cancellationToken)
     {
         var message = new Message(
-            ValidContent,
+            MessageTestUtilities.ValidContent,
             senderId,
             receiverId);
 
@@ -90,11 +65,11 @@ public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, ICla
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage);
+            MessageTestUtilities.ValidUserFirstName,
+            MessageTestUtilities.ValidUserLastName,
+            MessageTestUtilities.ValidUserEmail,
+            MessageTestUtilities.ValidUserName,
+            MessageTestUtilities.ValidUserProfileImage);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();

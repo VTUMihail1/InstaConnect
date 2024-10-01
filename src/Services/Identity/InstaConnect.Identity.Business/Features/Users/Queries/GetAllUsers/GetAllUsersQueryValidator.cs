@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Validators;

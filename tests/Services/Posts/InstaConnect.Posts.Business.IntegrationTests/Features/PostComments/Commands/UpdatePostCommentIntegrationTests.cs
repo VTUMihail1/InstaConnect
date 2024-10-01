@@ -1,13 +1,13 @@
 ﻿using Bogus;
 using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.PostComment;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.PostComment;
+using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Commands;
 
@@ -28,7 +28,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new UpdatePostCommentCommand(
             null!,
             existingUserId,
-            ValidUpdateContent
+            PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act
@@ -51,7 +51,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new UpdatePostCommentCommand(
             Faker.Random.AlphaNumeric(length),
             existingUserId,
-            ValidUpdateContent
+            PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act
@@ -71,7 +71,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new UpdatePostCommentCommand(
             existingPostCommentId,
             null!,
-            ValidUpdateContent
+            PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act
@@ -94,7 +94,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new UpdatePostCommentCommand(
             existingPostCommentId,
             Faker.Random.AlphaNumeric(length),
-            ValidUpdateContent
+            PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act
@@ -155,9 +155,9 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
         var command = new UpdatePostCommentCommand(
-            InvalidId,
+            PostCommentTestUtilities.InvalidId,
             existingUserId,
-            ValidUpdateContent
+            PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act
@@ -178,7 +178,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new UpdatePostCommentCommand(
             existingPostCommentId,
             existingUserId,
-            ValidUpdateContent
+            PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act
@@ -198,7 +198,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new UpdatePostCommentCommand(
             existingPostCommentId,
             existingUserId,
-            ValidUpdateContent
+            PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act
@@ -211,7 +211,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
             .Match<PostComment>(p => p.Id == existingPostCommentId &&
                                      p.UserId == existingUserId &&
                                      p.PostId == existingPostId &&
-                                     p.Content == ValidUpdateContent);
+                                     p.Content == PostCommentTestUtilities.ValidUpdateContent);
     }
 
     [Fact]
@@ -224,7 +224,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new UpdatePostCommentCommand(
             GetNonCaseMatchingString(existingPostCommentId),
             existingUserId,
-            ValidUpdateContent
+            PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act
@@ -237,6 +237,6 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
             .Match<PostComment>(p => p.Id == existingPostCommentId &&
                                      p.UserId == existingUserId &&
                                      p.PostId == existingPostId &&
-                                     p.Content == ValidUpdateContent);
+                                     p.Content == PostCommentTestUtilities.ValidUpdateContent);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Features.Posts.Mappings;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Data.Features.Posts.Abstract;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Data.Features.Posts.Models.Filters;
@@ -16,19 +16,6 @@ namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
 
 public abstract class BasePostUnitTest : BaseSharedUnitTest
 {
-    protected readonly string ValidId;
-    protected readonly string InvalidId;
-    protected readonly string ValidTitle;
-    protected readonly string ValidContent;
-    protected readonly string ValidCurrentUserId;
-    protected readonly string InvalidUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidUserFirstName;
-    protected readonly string ValidUserEmail;
-    protected readonly string ValidUserLastName;
-    protected readonly string ValidUserProfileImage;
-    protected readonly string ValidPostCurrentUserId;
-
     protected IUserWriteRepository UserWriteRepository { get; }
 
     protected IPostReadRepository PostReadRepository { get; }
@@ -46,49 +33,36 @@ public abstract class BasePostUnitTest : BaseSharedUnitTest
                 }))),
         new EntityPropertyValidator())
     {
-        ValidId = GetAverageString(PostBusinessConfigurations.ID_MAX_LENGTH, PostBusinessConfigurations.ID_MIN_LENGTH);
-        InvalidId = GetAverageString(PostBusinessConfigurations.ID_MAX_LENGTH, PostBusinessConfigurations.ID_MIN_LENGTH);
-        ValidTitle = GetAverageString(PostBusinessConfigurations.TITLE_MAX_LENGTH, PostBusinessConfigurations.TITLE_MIN_LENGTH);
-        ValidContent = GetAverageString(PostBusinessConfigurations.CONTENT_MAX_LENGTH, PostBusinessConfigurations.CONTENT_MIN_LENGTH);
-        InvalidUserId = GetAverageString(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserFirstName = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserLastName = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserEmail = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidCurrentUserId = GetAverageString(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidPostCurrentUserId = GetAverageString(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         PostReadRepository = Substitute.For<IPostReadRepository>();
         PostWriteRepository = Substitute.For<IPostWriteRepository>();
 
         var existingUser = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            PostTestUtilities.ValidUserFirstName,
+            PostTestUtilities.ValidUserLastName,
+            PostTestUtilities.ValidUserEmail,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidCurrentUserId,
+            Id = PostTestUtilities.ValidCurrentUserId,
         };
 
         var existingPostUser = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            PostTestUtilities.ValidUserFirstName,
+            PostTestUtilities.ValidUserLastName,
+            PostTestUtilities.ValidUserEmail,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidPostCurrentUserId,
+            Id = PostTestUtilities.ValidPostCurrentUserId,
         };
 
         var existingPost = new Post(
-            ValidTitle,
-            ValidContent,
-            ValidPostCurrentUserId)
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent,
+            PostTestUtilities.ValidPostCurrentUserId)
         {
-            Id = ValidId,
+            Id = PostTestUtilities.ValidId,
             User = existingPostUser,
         };
 
@@ -99,30 +73,30 @@ public abstract class BasePostUnitTest : BaseSharedUnitTest
             ValidTotalCountValue);
 
         PostReadRepository.GetByIdAsync(
-            ValidId,
+            PostTestUtilities.ValidId,
             CancellationToken)
             .Returns(existingPost);
 
         PostWriteRepository.GetByIdAsync(
-            ValidId,
+            PostTestUtilities.ValidId,
             CancellationToken)
             .Returns(existingPost);
 
         UserWriteRepository.GetByIdAsync(
-            ValidCurrentUserId,
+            PostTestUtilities.ValidCurrentUserId,
             CancellationToken)
             .Returns(existingUser);
 
         UserWriteRepository.GetByIdAsync(
-            ValidPostCurrentUserId,
+            PostTestUtilities.ValidPostCurrentUserId,
             CancellationToken)
             .Returns(existingPostUser);
 
         PostReadRepository
             .GetAllAsync(Arg.Is<PostCollectionReadQuery>(m =>
-                                                                        m.Title == ValidTitle &&
-                                                                        m.UserId == ValidPostCurrentUserId &&
-                                                                        m.UserName == ValidUserName &&
+                                                                        m.Title == PostTestUtilities.ValidTitle &&
+                                                                        m.UserId == PostTestUtilities.ValidPostCurrentUserId &&
+                                                                        m.UserName == PostTestUtilities.ValidUserName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

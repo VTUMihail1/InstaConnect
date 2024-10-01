@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Web.FunctionalTests.Utilities;
 
@@ -101,7 +101,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikeFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(GetIdRoute(InvalidId), CancellationToken);
+        var response = await HttpClient.DeleteAsync(GetIdRoute(PostLikeTestUtilities.InvalidId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Web\InstaConnect.Shared.Web.csproj" />
     <ProjectReference Include="..\InstaConnect.Posts.Business\InstaConnect.Posts.Business.csproj" />
+    <ProjectReference Include="..\InstaConnect.Posts.Common\InstaConnect.Posts.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

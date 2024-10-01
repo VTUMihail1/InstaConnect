@@ -2,7 +2,8 @@
 using InstaConnect.Follows.Business.Features.Follows.Models;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Follow;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Shared.Common.Exceptions.Follow;
 using NSubstitute;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetFollowById;
@@ -22,7 +23,7 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldThrowFollowNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var query = new GetFollowByIdQuery(InvalidId);
+        var query = new GetFollowByIdQuery(FollowTestUtilities.InvalidId);
 
         // Act
         var action = async () => await _queryHandler.Handle(query, CancellationToken);
@@ -35,7 +36,7 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetByIdMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetFollowByIdQuery(ValidId);
+        var query = new GetFollowByIdQuery(FollowTestUtilities.ValidId);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -43,14 +44,14 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
         // Assert
         await FollowReadRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(FollowTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetFollowByIdQuery(ValidId);
+        var query = new GetFollowByIdQuery(FollowTestUtilities.ValidId);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -58,12 +59,12 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
         // Assert
         response
             .Should()
-            .Match<FollowQueryViewModel>(m => m.Id == ValidId &&
-                                              m.FollowerId == ValidFollowCurrentUserId &&
-                                              m.FollowerName == ValidUserName &&
-                                              m.FollowerProfileImage == ValidUserProfileImage &&
-                                              m.FollowingId == ValidFollowFollowingId &&
-                                              m.FollowingName == ValidUserName &&
-                                              m.FollowingProfileImage == ValidUserProfileImage);
+            .Match<FollowQueryViewModel>(m => m.Id == FollowTestUtilities.ValidId &&
+                                              m.FollowerId == FollowTestUtilities.ValidFollowCurrentUserId &&
+                                              m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                              m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
+                                              m.FollowingId == FollowTestUtilities.ValidFollowFollowingId &&
+                                              m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                              m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage);
     }
 }

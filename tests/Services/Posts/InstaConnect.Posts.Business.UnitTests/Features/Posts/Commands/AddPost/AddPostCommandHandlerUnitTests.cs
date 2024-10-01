@@ -2,8 +2,9 @@
 using InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
 using InstaConnect.Posts.Business.Features.Posts.Models;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Commands.AddPost;
@@ -26,9 +27,9 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new AddPostCommand(
-            InvalidUserId,
-            ValidTitle,
-            ValidContent);
+            PostTestUtilities.InvalidUserId,
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -42,9 +43,9 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new AddPostCommand(
-            ValidCurrentUserId,
-            ValidTitle,
-            ValidContent);
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent);
 
         // Act
         var response = await _commandHandler.Handle(command, CancellationToken);
@@ -60,9 +61,9 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new AddPostCommand(
-            ValidCurrentUserId,
-            ValidTitle,
-            ValidContent);
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -72,9 +73,9 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
             .Received(1)
             .Add(Arg.Is<Post>(m =>
                 !string.IsNullOrEmpty(m.Id) &&
-                m.UserId == ValidCurrentUserId &&
-                m.Title == ValidTitle &&
-                m.Content == ValidContent));
+                m.UserId == PostTestUtilities.ValidCurrentUserId &&
+                m.Title == PostTestUtilities.ValidTitle &&
+                m.Content == PostTestUtilities.ValidContent));
     }
 
     [Fact]
@@ -82,9 +83,9 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
     {
         // Arrange
         var command = new AddPostCommand(
-            ValidCurrentUserId,
-            ValidTitle,
-            ValidContent);
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

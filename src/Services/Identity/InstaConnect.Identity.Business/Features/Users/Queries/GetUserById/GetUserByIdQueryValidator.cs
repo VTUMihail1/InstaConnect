@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
 
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 namespace InstaConnect.Identity.Business.Features.Users.Queries.GetUserById;
 
 public class GetUserByIdQueryValidator : AbstractValidator<GetUserByIdQuery>

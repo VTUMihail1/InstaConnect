@@ -2,12 +2,12 @@
 using System.Net.Http.Json;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.FunctionalTests.Utilities;
-using InstaConnect.Shared.Business.Utilities;
-using InstaConnect.Shared.Data.Models.Enums;
+using InstaConnect.Shared.Common.Models.Enums;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Controllers.v1;
 
@@ -29,9 +29,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             Faker.Random.AlphaNumeric(length),
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             existingFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -57,7 +57,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             existingFollowerId,
             Faker.Random.AlphaNumeric(length),
             existingFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -81,9 +81,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             existingFollowerId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             Faker.Random.AlphaNumeric(length),
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -107,7 +107,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             existingFollowerId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             existingFollowingId,
             Faker.Random.AlphaNumeric(length),
             ValidSortOrderProperty,
@@ -131,9 +131,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             existingFollowerId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             existingFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
             ValidPageValue,
@@ -157,9 +157,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             existingFollowerId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             existingFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
             ValidPageValue,
@@ -183,9 +183,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             existingFollowerId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             existingFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             value,
@@ -211,9 +211,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             existingFollowerId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             existingFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -235,9 +235,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             existingFollowerId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             existingFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -259,9 +259,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             GetNonCaseMatchingString(existingFollowerId),
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             existingFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -280,11 +280,11 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == ValidUserName &&
-                                                               m.FollowerProfileImage == ValidUserProfileImage &&
+                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
                                                                m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == ValidUserName &&
-                                                               m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -301,9 +301,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             existingFollowerId,
-            GetNonCaseMatchingString(ValidUserName),
+            GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
             existingFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -322,11 +322,11 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == ValidUserName &&
-                                                               m.FollowerProfileImage == ValidUserProfileImage &&
+                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
                                                                m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == ValidUserName &&
-                                                               m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -343,9 +343,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             existingFollowerId,
-            GetHalfStartString(ValidUserName),
+            GetHalfStartString(FollowTestUtilities.ValidUserName),
             existingFollowingId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -364,11 +364,11 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == ValidUserName &&
-                                                               m.FollowerProfileImage == ValidUserProfileImage &&
+                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
                                                                m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == ValidUserName &&
-                                                               m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -385,9 +385,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             existingFollowerId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             GetNonCaseMatchingString(existingFollowingId),
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -406,11 +406,11 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == ValidUserName &&
-                                                               m.FollowerProfileImage == ValidUserProfileImage &&
+                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
                                                                m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == ValidUserName &&
-                                                               m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -427,9 +427,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             existingFollowerId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             existingFollowingId,
-            GetNonCaseMatchingString(ValidUserName),
+            GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -448,11 +448,11 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == ValidUserName &&
-                                                               m.FollowerProfileImage == ValidUserProfileImage &&
+                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
                                                                m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == ValidUserName &&
-                                                               m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -469,9 +469,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
         var route = GetApiRoute(
             existingFollowerId,
-            ValidUserName,
+            FollowTestUtilities.ValidUserName,
             existingFollowingId,
-            GetHalfStartString(ValidUserName),
+            GetHalfStartString(FollowTestUtilities.ValidUserName),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -490,11 +490,11 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == ValidUserName &&
-                                                               m.FollowerProfileImage == ValidUserProfileImage &&
+                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
                                                                m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == ValidUserName &&
-                                                               m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -523,11 +523,11 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == ValidUserName &&
-                                                               m.FollowerProfileImage == ValidUserProfileImage &&
+                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
                                                                m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == ValidUserName &&
-                                                               m.FollowingProfileImage == ValidUserProfileImage) &&
+                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&

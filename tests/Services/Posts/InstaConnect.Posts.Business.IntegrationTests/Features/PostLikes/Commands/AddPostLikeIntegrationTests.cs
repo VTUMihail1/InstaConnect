@@ -1,13 +1,13 @@
 ﻿using Bogus;
 using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostLikes.Commands.AddPostLike;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.Posts;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.Posts;
+using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Commands;
 
@@ -103,7 +103,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var command = new AddPostLikeCommand(
-            InvalidUserId,
+            PostLikeTestUtilities.InvalidUserId,
             existingPostId
         );
 
@@ -122,7 +122,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var command = new AddPostLikeCommand(
             existingUserId,
-            InvalidPostId
+            PostLikeTestUtilities.InvalidPostId
         );
 
         // Act

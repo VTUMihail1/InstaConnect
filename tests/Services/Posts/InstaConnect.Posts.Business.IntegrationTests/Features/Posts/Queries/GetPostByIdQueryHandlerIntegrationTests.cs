@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Business.Features.Posts.Models;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.Posts;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.Posts;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.Posts.Queries;
 
@@ -54,7 +54,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var query = new GetPostByIdQuery(InvalidId);
+        var query = new GetPostByIdQuery(PostTestUtilities.InvalidId);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -79,10 +79,10 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostQueryViewModel>(m => m.Id == existingPostId &&
                                           m.UserId == existingUserId &&
-                                          m.UserName == ValidUserName &&
-                                          m.UserProfileImage == ValidUserProfileImage &&
-                                          m.Title == ValidTitle &&
-                                          m.Content == ValidContent);
+                                          m.UserName == PostTestUtilities.ValidUserName &&
+                                          m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                          m.Title == PostTestUtilities.ValidTitle &&
+                                          m.Content == PostTestUtilities.ValidContent);
     }
 
     [Fact]
@@ -101,9 +101,9 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostQueryViewModel>(m => m.Id == existingPostId &&
                                           m.UserId == existingUserId &&
-                                          m.UserName == ValidUserName &&
-                                          m.UserProfileImage == ValidUserProfileImage &&
-                                          m.Title == ValidTitle &&
-                                          m.Content == ValidContent);
+                                          m.UserName == PostTestUtilities.ValidUserName &&
+                                          m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                          m.Title == PostTestUtilities.ValidTitle &&
+                                          m.Content == PostTestUtilities.ValidContent);
     }
 }

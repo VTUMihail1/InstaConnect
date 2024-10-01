@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Data\InstaConnect.Shared.Data.csproj" />
+    <ProjectReference Include="..\InstaConnect.Identity.Common\InstaConnect.Identity.Common.csproj" />
   </ItemGroup>
 
 </Project>

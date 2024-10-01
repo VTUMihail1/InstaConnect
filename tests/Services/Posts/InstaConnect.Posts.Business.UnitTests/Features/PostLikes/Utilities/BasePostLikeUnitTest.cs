@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Business.Features.PostLikes.Mappings;
-using InstaConnect.Posts.Business.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Data.Features.PostLikes.Abstract;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
 using InstaConnect.Posts.Data.Features.PostLikes.Models.Filters;
@@ -19,22 +18,6 @@ namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
 
 public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
 {
-    protected readonly string ValidId;
-    protected readonly string InvalidId;
-    protected readonly string ValidPostId;
-    protected readonly string InvalidPostId;
-    protected readonly string ValidPostTitle;
-    protected readonly string ValidPostContent;
-    protected readonly string ValidCurrentUserId;
-    protected readonly string InvalidUserId;
-    protected readonly string ValidUserName;
-    protected readonly string ValidUserFirstName;
-    protected readonly string ValidUserEmail;
-    protected readonly string ValidUserLastName;
-    protected readonly string ValidUserProfileImage;
-    protected readonly string ValidPostLikePostId;
-    protected readonly string ValidPostLikeCurrentUserId;
-
     protected IUserWriteRepository UserWriteRepository { get; }
 
     protected IPostReadRepository PostReadRepository { get; }
@@ -56,22 +39,6 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
                 }))),
         new EntityPropertyValidator())
     {
-        ValidId = GetAverageString(PostLikeBusinessConfigurations.ID_MAX_LENGTH, PostLikeBusinessConfigurations.ID_MIN_LENGTH);
-        InvalidId = GetAverageString(PostLikeBusinessConfigurations.ID_MAX_LENGTH, PostLikeBusinessConfigurations.ID_MIN_LENGTH);
-        ValidPostId = GetAverageString(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH, PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH);
-        InvalidPostId = GetAverageString(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH, PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH);
-        ValidPostTitle = GetAverageString(PostBusinessConfigurations.TITLE_MAX_LENGTH, PostBusinessConfigurations.TITLE_MIN_LENGTH);
-        ValidPostContent = GetAverageString(PostBusinessConfigurations.CONTENT_MAX_LENGTH, PostBusinessConfigurations.CONTENT_MIN_LENGTH);
-        InvalidUserId = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidUserName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserFirstName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserLastName = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserEmail = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidUserProfileImage = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-        ValidCurrentUserId = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-        ValidPostLikePostId = GetAverageString(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH, PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH);
-        ValidPostLikeCurrentUserId = GetAverageString(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         PostReadRepository = Substitute.For<IPostReadRepository>();
         PostWriteRepository = Substitute.For<IPostWriteRepository>();
@@ -79,48 +46,48 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
         PostLikeWriteRepository = Substitute.For<IPostLikeWriteRepository>();
 
         var existingUser = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            PostLikeTestUtilities.ValidUserFirstName,
+            PostLikeTestUtilities.ValidUserLastName,
+            PostLikeTestUtilities.ValidUserEmail,
+            PostLikeTestUtilities.ValidUserName,
+            PostLikeTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidCurrentUserId,
+            Id = PostLikeTestUtilities.ValidCurrentUserId,
         };
 
         var existingPostLikeUser = new User(
-            ValidUserFirstName,
-            ValidUserLastName,
-            ValidUserEmail,
-            ValidUserName,
-            ValidUserProfileImage)
+            PostLikeTestUtilities.ValidUserFirstName,
+            PostLikeTestUtilities.ValidUserLastName,
+            PostLikeTestUtilities.ValidUserEmail,
+            PostLikeTestUtilities.ValidUserName,
+            PostLikeTestUtilities.ValidUserProfileImage)
         {
-            Id = ValidPostLikeCurrentUserId,
+            Id = PostLikeTestUtilities.ValidPostLikeCurrentUserId,
         };
 
         var existingPost = new Post(
-            ValidPostTitle,
-            ValidPostContent,
-            ValidPostLikeCurrentUserId)
+            PostLikeTestUtilities.ValidPostTitle,
+            PostLikeTestUtilities.ValidPostContent,
+            PostLikeTestUtilities.ValidPostLikeCurrentUserId)
         {
-            Id = ValidPostId,
+            Id = PostLikeTestUtilities.ValidPostId,
             User = existingPostLikeUser,
         };
 
         var existingPostLikePost = new Post(
-            ValidPostTitle,
-            ValidPostContent,
-            ValidPostLikeCurrentUserId)
+            PostLikeTestUtilities.ValidPostTitle,
+            PostLikeTestUtilities.ValidPostContent,
+            PostLikeTestUtilities.ValidPostLikeCurrentUserId)
         {
-            Id = ValidPostLikePostId,
+            Id = PostLikeTestUtilities.ValidPostLikePostId,
             User = existingPostLikeUser,
         };
 
         var existingPostLike = new PostLike(
-            ValidPostLikePostId,
-            ValidPostLikeCurrentUserId)
+            PostLikeTestUtilities.ValidPostLikePostId,
+            PostLikeTestUtilities.ValidPostLikeCurrentUserId)
         {
-            Id = ValidId,
+            Id = PostLikeTestUtilities.ValidId,
             User = existingPostLikeUser,
             Post = existingPostLikePost,
         };
@@ -132,56 +99,56 @@ public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
             ValidTotalCountValue);
 
         UserWriteRepository.GetByIdAsync(
-            ValidCurrentUserId,
+            PostLikeTestUtilities.ValidCurrentUserId,
             CancellationToken)
             .Returns(existingUser);
 
         UserWriteRepository.GetByIdAsync(
-            ValidPostLikeCurrentUserId,
+            PostLikeTestUtilities.ValidPostLikeCurrentUserId,
             CancellationToken)
             .Returns(existingPostLikeUser);
 
         PostReadRepository.GetByIdAsync(
-            ValidPostId,
+            PostLikeTestUtilities.ValidPostId,
             CancellationToken)
             .Returns(existingPost);
 
         PostWriteRepository.GetByIdAsync(
-            ValidPostId,
+            PostLikeTestUtilities.ValidPostId,
             CancellationToken)
             .Returns(existingPost);
 
         PostReadRepository.GetByIdAsync(
-            ValidPostLikePostId,
+            PostLikeTestUtilities.ValidPostLikePostId,
             CancellationToken)
             .Returns(existingPostLikePost);
 
         PostWriteRepository.GetByIdAsync(
-            ValidPostLikePostId,
+            PostLikeTestUtilities.ValidPostLikePostId,
             CancellationToken)
             .Returns(existingPostLikePost);
 
         PostLikeReadRepository.GetByIdAsync(
-            ValidId,
+            PostLikeTestUtilities.ValidId,
             CancellationToken)
             .Returns(existingPostLike);
 
         PostLikeWriteRepository.GetByIdAsync(
-            ValidId,
+            PostLikeTestUtilities.ValidId,
             CancellationToken)
             .Returns(existingPostLike);
 
         PostLikeWriteRepository.GetByUserIdAndPostIdAsync(
-            ValidPostLikeCurrentUserId,
-            ValidPostLikePostId,
+            PostLikeTestUtilities.ValidPostLikeCurrentUserId,
+            PostLikeTestUtilities.ValidPostLikePostId,
             CancellationToken)
             .Returns(existingPostLike);
 
         PostLikeReadRepository
             .GetAllAsync(Arg.Is<PostLikeCollectionReadQuery>(m =>
-                                                                        m.PostId == ValidPostLikePostId &&
-                                                                        m.UserId == ValidPostLikeCurrentUserId &&
-                                                                        m.UserName == ValidUserName &&
+                                                                        m.PostId == PostLikeTestUtilities.ValidPostLikePostId &&
+                                                                        m.UserId == PostLikeTestUtilities.ValidPostLikeCurrentUserId &&
+                                                                        m.UserName == PostLikeTestUtilities.ValidUserName &&
                                                                         m.Page == ValidPageValue &&
                                                                         m.PageSize == ValidPageSizeValue &&
                                                                         m.SortOrder == ValidSortOrderProperty &&

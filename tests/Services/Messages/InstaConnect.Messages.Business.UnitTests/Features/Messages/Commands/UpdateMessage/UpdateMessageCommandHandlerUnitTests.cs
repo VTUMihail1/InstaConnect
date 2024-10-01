@@ -2,9 +2,10 @@
 using InstaConnect.Messages.Business.Features.Messages.Commands.UpdateMessage;
 using InstaConnect.Messages.Business.Features.Messages.Models;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Shared.Business.Exceptions.Message;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Message;
+using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Commands.UpdateMessage;
@@ -26,9 +27,9 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new UpdateMessageCommand(
-            InvalidId,
-            ValidContent,
-            ValidMessageCurrentUserId
+            MessageTestUtilities.InvalidId,
+            MessageTestUtilities.ValidContent,
+            MessageTestUtilities.ValidMessageCurrentUserId
         );
 
         // Act
@@ -43,9 +44,9 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new UpdateMessageCommand(
-            ValidId,
-            ValidContent,
-            ValidCurrentUserId
+            MessageTestUtilities.ValidId,
+            MessageTestUtilities.ValidContent,
+            MessageTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -60,9 +61,9 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new UpdateMessageCommand(
-            ValidId,
-            ValidContent,
-            ValidMessageCurrentUserId
+            MessageTestUtilities.ValidId,
+            MessageTestUtilities.ValidContent,
+            MessageTestUtilities.ValidMessageCurrentUserId
         );
 
         // Act
@@ -71,7 +72,7 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         response
             .Should()
-            .Match<MessageCommandViewModel>(m => m.Id == ValidId);
+            .Match<MessageCommandViewModel>(m => m.Id == MessageTestUtilities.ValidId);
     }
 
     [Fact]
@@ -79,9 +80,9 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new UpdateMessageCommand(
-            ValidId,
-            ValidContent,
-            ValidMessageCurrentUserId
+            MessageTestUtilities.ValidId,
+            MessageTestUtilities.ValidContent,
+            MessageTestUtilities.ValidMessageCurrentUserId
         );
 
         // Act
@@ -90,7 +91,7 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await MessageWriteRepository
             .Received(1)
-            .GetByIdAsync(ValidId, CancellationToken);
+            .GetByIdAsync(MessageTestUtilities.ValidId, CancellationToken);
     }
 
     [Fact]
@@ -98,9 +99,9 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new UpdateMessageCommand(
-            ValidId,
-            ValidContent,
-            ValidMessageCurrentUserId
+            MessageTestUtilities.ValidId,
+            MessageTestUtilities.ValidContent,
+            MessageTestUtilities.ValidMessageCurrentUserId
         );
 
         // Act
@@ -109,10 +110,10 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         MessageWriteRepository
             .Received(1)
-            .Update(Arg.Is<Message>(m => m.Id == ValidId &&
-                                         m.SenderId == ValidMessageCurrentUserId &&
-                                         m.ReceiverId == ValidMessageReceiverId &&
-                                         m.Content == ValidContent));
+            .Update(Arg.Is<Message>(m => m.Id == MessageTestUtilities.ValidId &&
+                                         m.SenderId == MessageTestUtilities.ValidMessageCurrentUserId &&
+                                         m.ReceiverId == MessageTestUtilities.ValidMessageReceiverId &&
+                                         m.Content == MessageTestUtilities.ValidContent));
     }
 
     [Fact]
@@ -120,9 +121,9 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var command = new UpdateMessageCommand(
-            ValidId,
-            ValidContent,
-            ValidMessageCurrentUserId
+            MessageTestUtilities.ValidId,
+            MessageTestUtilities.ValidContent,
+            MessageTestUtilities.ValidMessageCurrentUserId
         );
 
         // Act

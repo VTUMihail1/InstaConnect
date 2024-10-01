@@ -4,8 +4,8 @@ using InstaConnect.Identity.Data.Features.Users.Abstractions;
 using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Users;
-using InstaConnect.Shared.Business.Exceptions.User;
 using InstaConnect.Shared.Business.Models;
+using InstaConnect.Shared.Common.Exceptions.User;
 using InstaConnect.Shared.Data.Abstractions;
 
 namespace InstaConnect.Identity.Business.Features.Users.Commands.RegisterUser;

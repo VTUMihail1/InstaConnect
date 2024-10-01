@@ -1,6 +1,6 @@
 ﻿using Bogus;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Data.Models.Enums;
+using InstaConnect.Shared.Common.Models.Enums;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Shared.Business.IntegrationTests.Utilities;

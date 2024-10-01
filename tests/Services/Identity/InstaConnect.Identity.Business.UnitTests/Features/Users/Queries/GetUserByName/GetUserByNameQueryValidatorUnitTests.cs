@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserByName;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Queries.GetUserByName;
 
@@ -47,7 +47,7 @@ public class GetUserByNameQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var query = new GetUserByNameQuery(ValidName);
+        var query = new GetUserByNameQuery(UserTestUtilities.ValidName);
 
         // Act
         var result = _validator.TestValidate(query);

@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.Features.Messages.Models.Responses;
 using InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.FunctionalTests.Utilities;
@@ -104,7 +104,7 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
 
         // Act
         HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetIdRoute(InvalidId), CancellationToken);
+        var response = await HttpClient.GetAsync(GetIdRoute(MessageTestUtilities.InvalidId), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
@@ -169,13 +169,13 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
         messageViewResponse
             .Should()
             .Match<MessageQueryViewResponse>(m => m.Id == existingMessageId &&
-                                 m.Content == ValidContent &&
+                                 m.Content == MessageTestUtilities.ValidContent &&
                                  m.SenderId == existingSenderId &&
-                                 m.SenderName == ValidUserName &&
-                                 m.SenderProfileImage == ValidUserProfileImage &&
+                                 m.SenderName == MessageTestUtilities.ValidUserName &&
+                                 m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                  m.ReceiverId == existingReceiverId &&
-                                 m.ReceiverName == ValidUserName &&
-                                 m.ReceiverProfileImage == ValidUserProfileImage);
+                                 m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                 m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage);
     }
 
     [Fact]
@@ -200,12 +200,12 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
         messageViewResponse
             .Should()
             .Match<MessageQueryViewResponse>(m => m.Id == existingMessageId &&
-                                 m.Content == ValidContent &&
+                                 m.Content == MessageTestUtilities.ValidContent &&
                                  m.SenderId == existingSenderId &&
-                                 m.SenderName == ValidUserName &&
-                                 m.SenderProfileImage == ValidUserProfileImage &&
+                                 m.SenderName == MessageTestUtilities.ValidUserName &&
+                                 m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                  m.ReceiverId == existingReceiverId &&
-                                 m.ReceiverName == ValidUserName &&
-                                 m.ReceiverProfileImage == ValidUserProfileImage);
+                                 m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                 m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage);
     }
 }

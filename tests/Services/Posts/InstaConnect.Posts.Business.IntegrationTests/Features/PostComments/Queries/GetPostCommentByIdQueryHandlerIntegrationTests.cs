@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostComments.Models;
 using InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.PostComment;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.PostComment;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Queries;
 
@@ -57,7 +57,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentInt
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var query = new GetPostCommentByIdQuery(InvalidId);
+        var query = new GetPostCommentByIdQuery(PostCommentTestUtilities.InvalidId);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -83,10 +83,10 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentQueryViewModel>(m => m.Id == existingPostCommentId &&
                                                   m.UserId == existingUserId &&
-                                                  m.UserName == ValidUserName &&
-                                                  m.UserProfileImage == ValidUserProfileImage &&
+                                                  m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                                  m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                   m.PostId == existingPostId &&
-                                                  m.Content == ValidContent);
+                                                  m.Content == PostCommentTestUtilities.ValidContent);
     }
 
     [Fact]
@@ -106,9 +106,9 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentQueryViewModel>(m => m.Id == existingPostCommentId &&
                                                   m.UserId == existingUserId &&
-                                                  m.UserName == ValidUserName &&
-                                                  m.UserProfileImage == ValidUserProfileImage &&
+                                                  m.UserName == PostCommentTestUtilities.ValidUserName &&
+                                                  m.UserProfileImage == PostCommentTestUtilities.ValidUserProfileImage &&
                                                   m.PostId == existingPostId &&
-                                                  m.Content == ValidContent);
+                                                  m.Content == PostCommentTestUtilities.ValidContent);
     }
 }

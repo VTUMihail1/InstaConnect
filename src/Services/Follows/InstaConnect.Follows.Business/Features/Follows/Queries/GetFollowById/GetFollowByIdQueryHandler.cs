@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Follows.Business.Features.Follows.Models;
 using InstaConnect.Follows.Data.Features.Follows.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Exceptions.Follow;
+using InstaConnect.Shared.Common.Exceptions.Follow;
 
 namespace InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
 

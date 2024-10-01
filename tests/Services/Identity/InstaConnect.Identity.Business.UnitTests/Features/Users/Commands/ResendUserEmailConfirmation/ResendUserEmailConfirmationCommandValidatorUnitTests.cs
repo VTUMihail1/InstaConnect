@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Identity.Business.Features.Users.Commands.ResendUserEmailConfirmation;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
 using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.ResendUserEmailConfirmation;
 
@@ -47,7 +47,7 @@ public class ResendUserEmailConfirmationCommandValidatorUnitTests : BaseUserUnit
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var command = new ResendUserEmailConfirmationCommand(ValidEmail);
+        var command = new ResendUserEmailConfirmationCommand(UserTestUtilities.ValidEmail);
 
         // Act
         var result = _commandValidator.TestValidate(command);

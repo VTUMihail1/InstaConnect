@@ -15,6 +15,7 @@ using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUserDetail
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserById;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserByName;
 using InstaConnect.Identity.Business.Features.Users.Queries.GetUserDetailedById;
+using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Web.Features.Users.Controllers.v1;
 using InstaConnect.Identity.Web.Features.Users.Models.Requests;
 using InstaConnect.Identity.Web.Features.Users.Models.Responses;
@@ -41,9 +42,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new GetAllUsersRequest()
         {
-            FirstName = ValidFirstName,
-            LastName = ValidLastName,
-            UserName = ValidName,
+            FirstName = UserTestUtilities.ValidFirstName,
+            LastName = UserTestUtilities.ValidLastName,
+            UserName = UserTestUtilities.ValidName,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -66,9 +67,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new GetAllUsersRequest()
         {
-            FirstName = ValidFirstName,
-            LastName = ValidLastName,
-            UserName = ValidName,
+            FirstName = UserTestUtilities.ValidFirstName,
+            LastName = UserTestUtilities.ValidLastName,
+            UserName = UserTestUtilities.ValidName,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -86,11 +87,11 @@ public class UserControllerUnitTests : BaseUserUnitTest
             .Value
             .Should()
             .Match<UserPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                                 m.Id == ValidId &&
-                                                                 m.FirstName == ValidFirstName &&
-                                                                 m.LastName == ValidLastName &&
-                                                                 m.UserName == ValidName &&
-                                                                 m.ProfileImage == ValidProfileImage) &&
+                                                                 m.Id == UserTestUtilities.ValidId &&
+                                                                 m.FirstName == UserTestUtilities.ValidFirstName &&
+                                                                 m.LastName == UserTestUtilities.ValidLastName &&
+                                                                 m.UserName == UserTestUtilities.ValidName &&
+                                                                 m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                               mc.Page == ValidPageValue &&
                                                               mc.PageSize == ValidPageSizeValue &&
                                                               mc.TotalCount == ValidTotalCountValue &&
@@ -104,9 +105,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new GetAllUsersRequest()
         {
-            FirstName = ValidFirstName,
-            LastName = ValidLastName,
-            UserName = ValidName,
+            FirstName = UserTestUtilities.ValidFirstName,
+            LastName = UserTestUtilities.ValidLastName,
+            UserName = UserTestUtilities.ValidName,
             SortOrder = ValidSortOrderProperty,
             SortPropertyName = ValidSortPropertyName,
             Page = ValidPageValue,
@@ -120,9 +121,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
         await InstaConnectSender
               .Received(1)
               .SendAsync(Arg.Is<GetAllUsersQuery>(m =>
-                  m.FirstName == ValidFirstName &&
-                  m.LastName == ValidLastName &&
-                  m.UserName == ValidName &&
+                  m.FirstName == UserTestUtilities.ValidFirstName &&
+                  m.LastName == UserTestUtilities.ValidLastName &&
+                  m.UserName == UserTestUtilities.ValidName &&
                   m.SortOrder == ValidSortOrderProperty &&
                   m.SortPropertyName == ValidSortPropertyName &&
                   m.Page == ValidPageValue &&
@@ -135,7 +136,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new GetUserByIdRequest()
         {
-            Id = ValidId
+            Id = UserTestUtilities.ValidId
         };
 
         // Act
@@ -154,7 +155,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new GetUserByIdRequest()
         {
-            Id = ValidId
+            Id = UserTestUtilities.ValidId
         };
 
         // Act
@@ -167,11 +168,11 @@ public class UserControllerUnitTests : BaseUserUnitTest
             .Which
             .Value
             .Should()
-            .Match<UserQueryResponse>(m => m.Id == ValidId &&
-                                           m.FirstName == ValidFirstName &&
-                                           m.LastName == ValidLastName &&
-                                           m.UserName == ValidName &&
-                                           m.ProfileImage == ValidProfileImage);
+            .Match<UserQueryResponse>(m => m.Id == UserTestUtilities.ValidId &&
+                                           m.FirstName == UserTestUtilities.ValidFirstName &&
+                                           m.LastName == UserTestUtilities.ValidLastName &&
+                                           m.UserName == UserTestUtilities.ValidName &&
+                                           m.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 
     [Fact]
@@ -180,7 +181,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new GetUserByIdRequest()
         {
-            Id = ValidId
+            Id = UserTestUtilities.ValidId
         };
 
         // Act
@@ -189,7 +190,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetUserByIdQuery>(m => m.Id == ValidId), CancellationToken);
+              .SendAsync(Arg.Is<GetUserByIdQuery>(m => m.Id == UserTestUtilities.ValidId), CancellationToken);
     }
 
     [Fact]
@@ -198,7 +199,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new GetUserDetailedByIdRequest()
         {
-            Id = ValidId
+            Id = UserTestUtilities.ValidId
         };
 
         // Act
@@ -217,7 +218,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new GetUserDetailedByIdRequest()
         {
-            Id = ValidId
+            Id = UserTestUtilities.ValidId
         };
 
         // Act
@@ -230,12 +231,12 @@ public class UserControllerUnitTests : BaseUserUnitTest
             .Which
             .Value
             .Should()
-            .Match<UserDetailedQueryResponse>(m => m.Id == ValidId &&
-                                           m.FirstName == ValidFirstName &&
-                                           m.LastName == ValidLastName &&
-                                           m.UserName == ValidName &&
-                                           m.Email == ValidEmail &&
-                                           m.ProfileImage == ValidProfileImage);
+            .Match<UserDetailedQueryResponse>(m => m.Id == UserTestUtilities.ValidId &&
+                                           m.FirstName == UserTestUtilities.ValidFirstName &&
+                                           m.LastName == UserTestUtilities.ValidLastName &&
+                                           m.UserName == UserTestUtilities.ValidName &&
+                                           m.Email == UserTestUtilities.ValidEmail &&
+                                           m.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 
     [Fact]
@@ -244,7 +245,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new GetUserDetailedByIdRequest()
         {
-            Id = ValidId
+            Id = UserTestUtilities.ValidId
         };
 
         // Act
@@ -253,7 +254,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetUserDetailedByIdQuery>(m => m.Id == ValidId), CancellationToken);
+              .SendAsync(Arg.Is<GetUserDetailedByIdQuery>(m => m.Id == UserTestUtilities.ValidId), CancellationToken);
     }
 
     [Fact]
@@ -262,7 +263,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new GetUserByNameRequest()
         {
-            UserName = ValidName
+            UserName = UserTestUtilities.ValidName
         };
 
         // Act
@@ -281,7 +282,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new GetUserByNameRequest()
         {
-            UserName = ValidName
+            UserName = UserTestUtilities.ValidName
         };
 
         // Act
@@ -294,11 +295,11 @@ public class UserControllerUnitTests : BaseUserUnitTest
             .Which
             .Value
             .Should()
-            .Match<UserQueryResponse>(m => m.Id == ValidId &&
-                                           m.FirstName == ValidFirstName &&
-                                           m.LastName == ValidLastName &&
-                                           m.UserName == ValidName &&
-                                           m.ProfileImage == ValidProfileImage);
+            .Match<UserQueryResponse>(m => m.Id == UserTestUtilities.ValidId &&
+                                           m.FirstName == UserTestUtilities.ValidFirstName &&
+                                           m.LastName == UserTestUtilities.ValidLastName &&
+                                           m.UserName == UserTestUtilities.ValidName &&
+                                           m.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 
     [Fact]
@@ -307,7 +308,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new GetUserByNameRequest()
         {
-            UserName = ValidName
+            UserName = UserTestUtilities.ValidName
         };
 
         // Act
@@ -316,7 +317,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetUserByNameQuery>(m => m.UserName == ValidName), CancellationToken);
+              .SendAsync(Arg.Is<GetUserByNameQuery>(m => m.UserName == UserTestUtilities.ValidName), CancellationToken);
     }
 
     [Fact]
@@ -345,11 +346,11 @@ public class UserControllerUnitTests : BaseUserUnitTest
             .Which
             .Value
             .Should()
-            .Match<UserQueryResponse>(m => m.Id == ValidId &&
-                                           m.FirstName == ValidFirstName &&
-                                           m.LastName == ValidLastName &&
-                                           m.UserName == ValidName &&
-                                           m.ProfileImage == ValidProfileImage);
+            .Match<UserQueryResponse>(m => m.Id == UserTestUtilities.ValidId &&
+                                           m.FirstName == UserTestUtilities.ValidFirstName &&
+                                           m.LastName == UserTestUtilities.ValidLastName &&
+                                           m.UserName == UserTestUtilities.ValidName &&
+                                           m.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 
     [Fact]
@@ -402,12 +403,12 @@ public class UserControllerUnitTests : BaseUserUnitTest
             .Which
             .Value
             .Should()
-            .Match<UserDetailedQueryResponse>(m => m.Id == ValidId &&
-                                           m.FirstName == ValidFirstName &&
-                                           m.LastName == ValidLastName &&
-                                           m.UserName == ValidName &&
-                                           m.Email == ValidEmail &&
-                                           m.ProfileImage == ValidProfileImage);
+            .Match<UserDetailedQueryResponse>(m => m.Id == UserTestUtilities.ValidId &&
+                                           m.FirstName == UserTestUtilities.ValidFirstName &&
+                                           m.LastName == UserTestUtilities.ValidLastName &&
+                                           m.UserName == UserTestUtilities.ValidName &&
+                                           m.Email == UserTestUtilities.ValidEmail &&
+                                           m.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 
     [Fact]
@@ -441,13 +442,13 @@ public class UserControllerUnitTests : BaseUserUnitTest
         var request = new RegisterUserRequest()
         {
             RegisterUserBindingModel = new(
-                ValidName,
-                ValidEmail,
-                ValidPassword,
-                ValidPassword,
-                ValidFirstName,
-                ValidLastName,
-                ValidFormFile)
+                UserTestUtilities.ValidName,
+                UserTestUtilities.ValidEmail,
+                UserTestUtilities.ValidPassword,
+                UserTestUtilities.ValidPassword,
+                UserTestUtilities.ValidFirstName,
+                UserTestUtilities.ValidLastName,
+                UserTestUtilities.ValidFormFile)
         };
 
         // Act
@@ -467,13 +468,13 @@ public class UserControllerUnitTests : BaseUserUnitTest
         var request = new RegisterUserRequest()
         {
             RegisterUserBindingModel = new(
-                ValidName,
-                ValidEmail,
-                ValidPassword,
-                ValidPassword,
-                ValidFirstName,
-                ValidLastName,
-                ValidFormFile)
+                UserTestUtilities.ValidName,
+                UserTestUtilities.ValidEmail,
+                UserTestUtilities.ValidPassword,
+                UserTestUtilities.ValidPassword,
+                UserTestUtilities.ValidFirstName,
+                UserTestUtilities.ValidLastName,
+                UserTestUtilities.ValidFormFile)
         };
 
         // Act
@@ -486,7 +487,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
             .Which
             .Value
             .Should()
-            .Match<UserCommandResponse>(m => m.Id == ValidId);
+            .Match<UserCommandResponse>(m => m.Id == UserTestUtilities.ValidId);
     }
 
     [Fact]
@@ -496,13 +497,13 @@ public class UserControllerUnitTests : BaseUserUnitTest
         var request = new RegisterUserRequest()
         {
             RegisterUserBindingModel = new(
-                ValidName,
-                ValidEmail,
-                ValidPassword,
-                ValidPassword,
-                ValidFirstName,
-                ValidLastName,
-                ValidFormFile)
+                UserTestUtilities.ValidName,
+                UserTestUtilities.ValidEmail,
+                UserTestUtilities.ValidPassword,
+                UserTestUtilities.ValidPassword,
+                UserTestUtilities.ValidFirstName,
+                UserTestUtilities.ValidLastName,
+                UserTestUtilities.ValidFormFile)
         };
 
         // Act
@@ -511,13 +512,13 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<RegisterUserCommand>(m => m.Email == ValidEmail &&
-                                                                m.Password == ValidPassword &&
-                                                                m.ConfirmPassword == ValidPassword &&
-                                                                m.UserName == ValidName &&
-                                                                m.FirstName == ValidFirstName &&
-                                                                m.LastName == ValidLastName &&
-                                                                m.ProfileImage == ValidFormFile), CancellationToken);
+              .SendAsync(Arg.Is<RegisterUserCommand>(m => m.Email == UserTestUtilities.ValidEmail &&
+                                                                m.Password == UserTestUtilities.ValidPassword &&
+                                                                m.ConfirmPassword == UserTestUtilities.ValidPassword &&
+                                                                m.UserName == UserTestUtilities.ValidName &&
+                                                                m.FirstName == UserTestUtilities.ValidFirstName &&
+                                                                m.LastName == UserTestUtilities.ValidLastName &&
+                                                                m.ProfileImage == UserTestUtilities.ValidFormFile), CancellationToken);
     }
 
     [Fact]
@@ -526,7 +527,11 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new EditCurrentUserRequest()
         {
-            EditCurrentUserBindingModel = new(ValidName, ValidFirstName, ValidLastName, ValidFormFile)
+            EditCurrentUserBindingModel = new(
+                UserTestUtilities.ValidName,
+                UserTestUtilities.ValidFirstName,
+                UserTestUtilities.ValidLastName,
+                UserTestUtilities.ValidFormFile)
         };
 
         // Act
@@ -545,7 +550,11 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new EditCurrentUserRequest()
         {
-            EditCurrentUserBindingModel = new(ValidName, ValidFirstName, ValidLastName, ValidFormFile)
+            EditCurrentUserBindingModel = new(
+                UserTestUtilities.ValidName,
+                UserTestUtilities.ValidFirstName,
+                UserTestUtilities.ValidLastName,
+                UserTestUtilities.ValidFormFile)
         };
 
         // Act
@@ -558,7 +567,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
             .Which
             .Value
             .Should()
-            .Match<UserCommandResponse>(m => m.Id == ValidId);
+            .Match<UserCommandResponse>(m => m.Id == UserTestUtilities.ValidId);
     }
 
     [Fact]
@@ -567,7 +576,11 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new EditCurrentUserRequest()
         {
-            EditCurrentUserBindingModel = new(ValidName, ValidFirstName, ValidLastName, ValidFormFile)
+            EditCurrentUserBindingModel = new(
+                UserTestUtilities.ValidName,
+                UserTestUtilities.ValidFirstName,
+                UserTestUtilities.ValidLastName,
+                UserTestUtilities.ValidFormFile)
         };
 
         // Act
@@ -576,11 +589,11 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<EditCurrentUserCommand>(m => m.CurrentUserId == ValidId &&
-                                                                m.UserName == ValidName &&
-                                                                m.FirstName == ValidFirstName &&
-                                                                m.LastName == ValidLastName &&
-                                                                m.ProfileImage == ValidFormFile), CancellationToken);
+              .SendAsync(Arg.Is<EditCurrentUserCommand>(m => m.CurrentUserId == UserTestUtilities.ValidId &&
+                                                                m.UserName == UserTestUtilities.ValidName &&
+                                                                m.FirstName == UserTestUtilities.ValidFirstName &&
+                                                                m.LastName == UserTestUtilities.ValidLastName &&
+                                                                m.ProfileImage == UserTestUtilities.ValidFormFile), CancellationToken);
     }
 
     [Fact]
@@ -589,7 +602,11 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new EditCurrentUserRequest()
         {
-            EditCurrentUserBindingModel = new(ValidName, ValidFirstName, ValidLastName, ValidFormFile)
+            EditCurrentUserBindingModel = new(
+                UserTestUtilities.ValidName,
+                UserTestUtilities.ValidFirstName,
+                UserTestUtilities.ValidLastName,
+                UserTestUtilities.ValidFormFile)
         };
 
         // Act
@@ -607,7 +624,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new LoginUserRequest()
         {
-            LoginUserBindingModel = new(ValidEmail, ValidPassword)
+            LoginUserBindingModel = new(
+                UserTestUtilities.ValidEmail,
+                UserTestUtilities.ValidPassword)
         };
 
         // Act
@@ -626,7 +645,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new LoginUserRequest()
         {
-            LoginUserBindingModel = new(ValidEmail, ValidPassword)
+            LoginUserBindingModel = new(
+                UserTestUtilities.ValidEmail,
+                UserTestUtilities.ValidPassword)
         };
 
         // Act
@@ -639,8 +660,8 @@ public class UserControllerUnitTests : BaseUserUnitTest
             .Which
             .Value
             .Should()
-            .Match<UserTokenCommandResponse>(m => m.Value == ValidAccessToken &&
-                                                     m.ValidUntil == ValidUntil);
+            .Match<UserTokenCommandResponse>(m => m.Value == UserTestUtilities.ValidAccessTokenValue &&
+                                                     m.ValidUntil == UserTestUtilities.ValidUntil);
     }
 
     [Fact]
@@ -649,7 +670,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new LoginUserRequest()
         {
-            LoginUserBindingModel = new(ValidEmail, ValidPassword)
+            LoginUserBindingModel = new(
+                UserTestUtilities.ValidEmail,
+                UserTestUtilities.ValidPassword)
         };
 
         // Act
@@ -658,8 +681,8 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<LoginUserCommand>(m => m.Email == ValidEmail &&
-                                                          m.Password == ValidPassword), CancellationToken);
+              .SendAsync(Arg.Is<LoginUserCommand>(m => m.Email == UserTestUtilities.ValidEmail &&
+                                                          m.Password == UserTestUtilities.ValidPassword), CancellationToken);
     }
 
     [Fact]
@@ -668,7 +691,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new DeleteUserByIdRequest()
         {
-            Id = ValidId
+            Id = UserTestUtilities.ValidId
         };
 
         // Act
@@ -686,7 +709,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new DeleteUserByIdRequest()
         {
-            Id = ValidId
+            Id = UserTestUtilities.ValidId
         };
 
         // Act
@@ -695,7 +718,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<DeleteUserByIdCommand>(m => m.Id == ValidId), CancellationToken);
+              .SendAsync(Arg.Is<DeleteUserByIdCommand>(m => m.Id == UserTestUtilities.ValidId), CancellationToken);
     }
 
     [Fact]
@@ -719,7 +742,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<DeleteCurrentUserCommand>(m => m.CurrentUserId == ValidId), CancellationToken);
+              .SendAsync(Arg.Is<DeleteCurrentUserCommand>(m => m.CurrentUserId == UserTestUtilities.ValidId), CancellationToken);
     }
 
     [Fact]
@@ -740,8 +763,8 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new ConfirmUserEmailRequest()
         {
-            Token = ValidEmailConfirmationToken,
-            UserId = ValidId
+            Token = UserTestUtilities.ValidEmailConfirmationTokenValue,
+            UserId = UserTestUtilities.ValidId
         };
 
         // Act
@@ -759,8 +782,8 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new ConfirmUserEmailRequest()
         {
-            Token = ValidEmailConfirmationToken,
-            UserId = ValidId
+            Token = UserTestUtilities.ValidEmailConfirmationTokenValue,
+            UserId = UserTestUtilities.ValidId
         };
 
         // Act
@@ -769,8 +792,8 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<ConfirmUserEmailCommand>(m => m.Token == ValidEmailConfirmationToken &&
-                                                                 m.UserId == ValidId), CancellationToken);
+              .SendAsync(Arg.Is<ConfirmUserEmailCommand>(m => m.Token == UserTestUtilities.ValidEmailConfirmationTokenValue &&
+                                                                 m.UserId == UserTestUtilities.ValidId), CancellationToken);
     }
 
     [Fact]
@@ -779,8 +802,11 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new ResetUserPasswordRequest()
         {
-            Token = ValidEmailConfirmationToken,
-            UserId = ValidId
+            Token = UserTestUtilities.ValidEmailConfirmationTokenValue,
+            UserId = UserTestUtilities.ValidId,
+            ResetUserPasswordBindingModel = new(
+                UserTestUtilities.ValidPassword,
+                UserTestUtilities.ValidPassword)
         };
 
         // Act
@@ -798,9 +824,11 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new ResetUserPasswordRequest()
         {
-            Token = ValidEmailConfirmationToken,
-            UserId = ValidId,
-            ResetUserPasswordBindingModel = new(ValidPassword, ValidPassword)
+            Token = UserTestUtilities.ValidEmailConfirmationTokenValue,
+            UserId = UserTestUtilities.ValidId,
+            ResetUserPasswordBindingModel = new(
+                UserTestUtilities.ValidPassword,
+                UserTestUtilities.ValidPassword)
         };
 
         // Act
@@ -809,10 +837,10 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<ResetUserPasswordCommand>(m => m.Token == ValidEmailConfirmationToken &&
-                                                                 m.UserId == ValidId &&
-                                                                 m.Password == ValidPassword &&
-                                                                 m.ConfirmPassword == ValidPassword), CancellationToken);
+              .SendAsync(Arg.Is<ResetUserPasswordCommand>(m => m.Token == UserTestUtilities.ValidEmailConfirmationTokenValue &&
+                                                                 m.UserId == UserTestUtilities.ValidId &&
+                                                                 m.Password == UserTestUtilities.ValidPassword &&
+                                                                 m.ConfirmPassword == UserTestUtilities.ValidPassword), CancellationToken);
     }
 
     [Fact]
@@ -821,7 +849,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new ResendUserConfirmEmailRequest()
         {
-            Email = ValidEmail
+            Email = UserTestUtilities.ValidEmail
         };
 
         // Act
@@ -839,7 +867,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new ResendUserConfirmEmailRequest()
         {
-            Email = ValidEmail
+            Email = UserTestUtilities.ValidEmail
         };
 
         // Act
@@ -848,7 +876,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<ResendUserEmailConfirmationCommand>(m => m.Email == ValidEmail), CancellationToken);
+              .SendAsync(Arg.Is<ResendUserEmailConfirmationCommand>(m => m.Email == UserTestUtilities.ValidEmail), CancellationToken);
     }
 
     [Fact]
@@ -857,7 +885,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new SendUserPasswordResetRequest()
         {
-            Email = ValidEmail
+            Email = UserTestUtilities.ValidEmail
         };
 
         // Act
@@ -875,7 +903,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new SendUserPasswordResetRequest()
         {
-            Email = ValidEmail
+            Email = UserTestUtilities.ValidEmail
         };
 
         // Act
@@ -884,6 +912,6 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<SendUserPasswordResetCommand>(m => m.Email == ValidEmail), CancellationToken);
+              .SendAsync(Arg.Is<SendUserPasswordResetCommand>(m => m.Email == UserTestUtilities.ValidEmail), CancellationToken);
     }
 }

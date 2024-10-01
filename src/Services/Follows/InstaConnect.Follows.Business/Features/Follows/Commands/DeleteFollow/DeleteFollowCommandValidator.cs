@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using InstaConnect.Follows.Business.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Follows.Utilities;
 
 namespace InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
 public class DeleteFollowCommandValidator : AbstractValidator<DeleteFollowCommand>

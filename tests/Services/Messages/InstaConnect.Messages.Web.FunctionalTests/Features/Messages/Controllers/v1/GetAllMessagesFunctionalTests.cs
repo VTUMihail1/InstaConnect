@@ -3,12 +3,12 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using Bogus;
 using FluentAssertions;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.Features.Messages.Models.Responses;
 using InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Web.FunctionalTests.Utilities;
-using InstaConnect.Shared.Business.Utilities;
-using InstaConnect.Shared.Data.Models.Enums;
+using InstaConnect.Shared.Common.Models.Enums;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Controllers.v1;
 
@@ -28,7 +28,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -50,7 +50,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -77,7 +77,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             Faker.Random.AlphaNumeric(length),
-            ValidUserName,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -129,7 +129,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
             ValidPageValue,
@@ -156,7 +156,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
             ValidPageValue,
@@ -183,7 +183,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             value,
@@ -212,7 +212,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -237,7 +237,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -262,7 +262,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -283,13 +283,13 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             .Should()
             .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
-                                                               m.Content == ValidContent &&
+                                                               m.Content == MessageTestUtilities.ValidContent &&
                                                                m.SenderId == existingSenderId &&
-                                                               m.SenderName == ValidUserName &&
-                                                               m.SenderProfileImage == ValidUserProfileImage &&
+                                                               m.SenderName == MessageTestUtilities.ValidUserName &&
+                                                               m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                m.ReceiverId == existingReceiverId &&
-                                                               m.ReceiverName == ValidUserName &&
-                                                               m.ReceiverProfileImage == ValidUserProfileImage) &&
+                                                               m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                                               m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -306,7 +306,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            ValidUserName,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -327,13 +327,13 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             .Should()
             .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
-                                                               m.Content == ValidContent &&
+                                                               m.Content == MessageTestUtilities.ValidContent &&
                                                                m.SenderId == existingSenderId &&
-                                                               m.SenderName == ValidUserName &&
-                                                               m.SenderProfileImage == ValidUserProfileImage &&
+                                                               m.SenderName == MessageTestUtilities.ValidUserName &&
+                                                               m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                m.ReceiverId == existingReceiverId &&
-                                                               m.ReceiverName == ValidUserName &&
-                                                               m.ReceiverProfileImage == ValidUserProfileImage) &&
+                                                               m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                                               m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -350,7 +350,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             GetNonCaseMatchingString(existingReceiverId),
-            ValidUserName,
+            MessageTestUtilities.ValidUserName,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -371,13 +371,13 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             .Should()
             .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
-                                                               m.Content == ValidContent &&
+                                                               m.Content == MessageTestUtilities.ValidContent &&
                                                                m.SenderId == existingSenderId &&
-                                                               m.SenderName == ValidUserName &&
-                                                               m.SenderProfileImage == ValidUserProfileImage &&
+                                                               m.SenderName == MessageTestUtilities.ValidUserName &&
+                                                               m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                m.ReceiverId == existingReceiverId &&
-                                                               m.ReceiverName == ValidUserName &&
-                                                               m.ReceiverProfileImage == ValidUserProfileImage) &&
+                                                               m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                                               m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -394,7 +394,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            GetNonCaseMatchingString(ValidUserName),
+            GetNonCaseMatchingString(MessageTestUtilities.ValidUserName),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -415,13 +415,13 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             .Should()
             .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
-                                                               m.Content == ValidContent &&
+                                                               m.Content == MessageTestUtilities.ValidContent &&
                                                                m.SenderId == existingSenderId &&
-                                                               m.SenderName == ValidUserName &&
-                                                               m.SenderProfileImage == ValidUserProfileImage &&
+                                                               m.SenderName == MessageTestUtilities.ValidUserName &&
+                                                               m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                m.ReceiverId == existingReceiverId &&
-                                                               m.ReceiverName == ValidUserName &&
-                                                               m.ReceiverProfileImage == ValidUserProfileImage) &&
+                                                               m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                                               m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -438,7 +438,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
         var route = GetApiRoute(
             existingReceiverId,
-            GetHalfStartString(ValidUserName),
+            GetHalfStartString(MessageTestUtilities.ValidUserName),
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -459,13 +459,13 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             .Should()
             .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
-                                                               m.Content == ValidContent &&
+                                                               m.Content == MessageTestUtilities.ValidContent &&
                                                                m.SenderId == existingSenderId &&
-                                                               m.SenderName == ValidUserName &&
-                                                               m.SenderProfileImage == ValidUserProfileImage &&
+                                                               m.SenderName == MessageTestUtilities.ValidUserName &&
+                                                               m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                m.ReceiverId == existingReceiverId &&
-                                                               m.ReceiverName == ValidUserName &&
-                                                               m.ReceiverProfileImage == ValidUserProfileImage) &&
+                                                               m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                                               m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&
@@ -496,13 +496,13 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             .Should()
             .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
-                                                               m.Content == ValidContent &&
+                                                               m.Content == MessageTestUtilities.ValidContent &&
                                                                m.SenderId == existingSenderId &&
-                                                               m.SenderName == ValidUserName &&
-                                                               m.SenderProfileImage == ValidUserProfileImage &&
+                                                               m.SenderName == MessageTestUtilities.ValidUserName &&
+                                                               m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
                                                                m.ReceiverId == existingReceiverId &&
-                                                               m.ReceiverName == ValidUserName &&
-                                                               m.ReceiverProfileImage == ValidUserProfileImage) &&
+                                                               m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                                               m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
                                                                mc.Page == ValidPageValue &&
                                                                mc.PageSize == ValidPageSizeValue &&
                                                                mc.TotalCount == ValidTotalCountValue &&

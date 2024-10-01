@@ -1,4 +1,4 @@
-﻿using InstaConnect.Messages.Business.Features.Messages.Utilities;
+﻿using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data;
 using InstaConnect.Messages.Data.Features.Users.Abstract;
 using InstaConnect.Messages.Data.Features.Users.Models.Entities;

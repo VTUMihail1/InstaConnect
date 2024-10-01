@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
-using InstaConnect.Messages.Business.Features.Messages.Utilities;
 using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
 
 namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Queries.GetMessageById;
 
@@ -20,7 +20,7 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var query = new GetMessageByIdQuery(
             null!,
-            ValidCurrentUserId
+            MessageTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -39,7 +39,7 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var query = new GetMessageByIdQuery(
             Faker.Random.AlphaNumeric(length),
-            ValidCurrentUserId
+            MessageTestUtilities.ValidCurrentUserId
         );
 
         // Act
@@ -54,7 +54,7 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetMessageByIdQuery(
-            ValidId,
+            MessageTestUtilities.ValidId,
             null!
         );
 
@@ -73,7 +73,7 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetMessageByIdQuery(
-            ValidId,
+            MessageTestUtilities.ValidId,
             Faker.Random.AlphaNumeric(length)
         );
 
@@ -89,8 +89,8 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var query = new GetMessageByIdQuery(
-            ValidId,
-            ValidCurrentUserId
+            MessageTestUtilities.ValidId,
+            MessageTestUtilities.ValidCurrentUserId
         );
 
         // Act

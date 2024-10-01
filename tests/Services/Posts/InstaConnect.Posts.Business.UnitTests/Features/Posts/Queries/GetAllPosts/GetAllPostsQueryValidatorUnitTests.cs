@@ -1,8 +1,8 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
-using InstaConnect.Posts.Business.Features.Posts.Utilities;
 using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
-using InstaConnect.Shared.Business.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Queries.GetAllPosts;
 
@@ -23,8 +23,8 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         // Arrange
         var query = new GetAllPostsQuery(
             Faker.Random.AlphaNumeric(length),
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -44,9 +44,9 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var query = new GetAllPostsQuery(
-            ValidCurrentUserId,
+            PostTestUtilities.ValidCurrentUserId,
             Faker.Random.AlphaNumeric(length),
-            ValidTitle,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -66,8 +66,8 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var query = new GetAllPostsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidUserName,
             Faker.Random.AlphaNumeric(length),
             ValidSortOrderProperty,
             ValidSortPropertyName,
@@ -86,9 +86,9 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var query = new GetAllPostsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             null!,
             ValidPageValue,
@@ -106,9 +106,9 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var query = new GetAllPostsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             InvalidSortPropertyName,
             ValidPageValue,
@@ -129,9 +129,9 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var query = new GetAllPostsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             Faker.Random.AlphaNumeric(length),
             ValidPageValue,
@@ -151,9 +151,9 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var query = new GetAllPostsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             value,
@@ -173,9 +173,9 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var query = new GetAllPostsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,
@@ -193,9 +193,9 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var query = new GetAllPostsQuery(
-            ValidCurrentUserId,
-            ValidUserName,
-            ValidTitle,
+            PostTestUtilities.ValidCurrentUserId,
+            PostTestUtilities.ValidUserName,
+            PostTestUtilities.ValidTitle,
             ValidSortOrderProperty,
             ValidSortPropertyName,
             ValidPageValue,

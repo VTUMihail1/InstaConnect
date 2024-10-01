@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Emails.Business.Features.Emails.Abstractions;
 using InstaConnect.Emails.Business.Features.Emails.Utilities;
 using InstaConnect.Shared.Business.Contracts.Emails;
-using InstaConnect.Shared.Business.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.Base;
 using MassTransit;
 
 namespace InstaConnect.Emails.Business.Features.Emails.Consumers;

@@ -1,13 +1,13 @@
 ﻿using Bogus;
 using FluentAssertions;
 using InstaConnect.Posts.Business.Features.PostComments.Commands.AddPostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Business.IntegrationTests.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Shared.Business.Exceptions.Base;
-using InstaConnect.Shared.Business.Exceptions.Posts;
-using InstaConnect.Shared.Business.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.Posts;
+using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Commands;
 
@@ -27,7 +27,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new AddPostCommentCommand(
             null!,
             existingPostId,
-            ValidAddContent
+            PostCommentTestUtilities.ValidAddContent
         );
 
         // Act
@@ -49,7 +49,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new AddPostCommentCommand(
             Faker.Random.AlphaNumeric(length),
             existingPostId,
-            ValidAddContent
+            PostCommentTestUtilities.ValidAddContent
         );
 
         // Act
@@ -68,7 +68,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new AddPostCommentCommand(
             existingUserId,
             null!,
-            ValidAddContent
+            PostCommentTestUtilities.ValidAddContent
         );
 
         // Act
@@ -90,7 +90,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new AddPostCommentCommand(
             existingUserId,
             Faker.Random.AlphaNumeric(length),
-            ValidAddContent
+            PostCommentTestUtilities.ValidAddContent
         );
 
         // Act
@@ -149,9 +149,9 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var command = new AddPostCommentCommand(
-            InvalidUserId,
+            PostCommentTestUtilities.InvalidUserId,
             existingPostId,
-            ValidAddContent
+            PostCommentTestUtilities.ValidAddContent
         );
 
         // Act
@@ -169,8 +169,8 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
         var command = new AddPostCommentCommand(
             existingUserId,
-            InvalidPostId,
-            ValidAddContent
+            PostCommentTestUtilities.InvalidPostId,
+            PostCommentTestUtilities.ValidAddContent
         );
 
         // Act
@@ -189,7 +189,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new AddPostCommentCommand(
             existingUserId,
             existingPostId,
-            ValidAddContent
+            PostCommentTestUtilities.ValidAddContent
         );
 
         // Act
@@ -202,6 +202,6 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
             .Match<PostComment>(p => p.Id == response.Id &&
                                      p.UserId == existingUserId &&
                                      p.PostId == existingPostId &&
-                                     p.Content == ValidAddContent);
+                                     p.Content == PostCommentTestUtilities.ValidAddContent);
     }
 }

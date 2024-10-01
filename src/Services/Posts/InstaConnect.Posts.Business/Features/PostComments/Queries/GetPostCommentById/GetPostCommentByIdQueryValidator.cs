@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using InstaConnect.Posts.Business.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 
 namespace InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
 
