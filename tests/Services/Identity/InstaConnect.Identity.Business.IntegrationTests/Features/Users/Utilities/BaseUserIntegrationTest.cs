@@ -1,11 +1,12 @@
-﻿using InstaConnect.Identity.Business.Features.Users.Models.Options;
-using InstaConnect.Identity.Business.IntegrationTests.Utilities;
+﻿using InstaConnect.Identity.Business.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Data;
 using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
+using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Options;
 using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Abstractions;
 using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites;
+using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Options;
 using InstaConnect.Identity.Data.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Data.Features.Users.Abstractions;
@@ -101,13 +102,17 @@ public abstract class BaseUserIntegrationTest : BaseSharedIntegrationTest, IClas
 
     protected IPasswordHasher PasswordHasher { get; }
 
-    protected GatewayOptions GatewayOptions { get; }
+    protected EmailConfirmationOptions EmailConfirmationOptions { get; }
+
+    protected ForgotPasswordOptions ForgotPasswordOptions { get; }
+
 
     protected BaseUserIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
         : base(integrationTestWebAppFactory.Services.CreateScope())
     {
         PasswordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
-        GatewayOptions = ServiceScope.ServiceProvider.GetRequiredService<IOptions<GatewayOptions>>().Value;
+        EmailConfirmationOptions = ServiceScope.ServiceProvider.GetRequiredService<IOptions<EmailConfirmationOptions>>().Value;
+        ForgotPasswordOptions = ServiceScope.ServiceProvider.GetRequiredService<IOptions<ForgotPasswordOptions>>().Value;
     }
 
     protected async Task<string> CreateUserAsync(bool isEmailConfirmed, CancellationToken cancellationToken)

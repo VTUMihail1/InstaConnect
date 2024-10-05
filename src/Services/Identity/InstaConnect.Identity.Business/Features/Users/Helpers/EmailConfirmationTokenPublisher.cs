@@ -1,33 +1,27 @@
 ﻿using InstaConnect.Identity.Business.Features.Users.Abstractions;
 using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Business.Features.Users.Models.Options;
 using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Contracts.Emails;
-using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Business.Features.Users.Helpers;
 
 internal class EmailConfirmationTokenPublisher : IEmailConfirmationTokenPublisher
 {
-    private readonly GatewayOptions _gatewayOptions;
     private readonly IEventPublisher _eventPublisher;
-    private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IEmailConfirmationTokenFactory _emailConfirmationTokenFactory;
     private readonly IEmailConfirmationTokenWriteRepository _emailConfirmationTokenWriteRepository;
+    private readonly IUserConfirmEmailTokenCreatedEventFactory _userConfirmEmailTokenCreatedEventFactory;
 
     public EmailConfirmationTokenPublisher(
-        IOptions<GatewayOptions> gatewayOptions,
         IEventPublisher eventPublisher,
-        IInstaConnectMapper instaConnectMapper,
         IEmailConfirmationTokenFactory emailConfirmationTokenFactory,
-        IEmailConfirmationTokenWriteRepository emailConfirmationTokenWriteRepository)
+        IEmailConfirmationTokenWriteRepository emailConfirmationTokenWriteRepository,
+        IUserConfirmEmailTokenCreatedEventFactory userConfirmEmailTokenCreatedEventFactory)
     {
-        _gatewayOptions = gatewayOptions.Value;
         _eventPublisher = eventPublisher;
-        _instaConnectMapper = instaConnectMapper;
         _emailConfirmationTokenFactory = emailConfirmationTokenFactory;
         _emailConfirmationTokenWriteRepository = emailConfirmationTokenWriteRepository;
+        _userConfirmEmailTokenCreatedEventFactory = userConfirmEmailTokenCreatedEventFactory;
     }
 
     public async Task PublishEmailConfirmationTokenAsync(
@@ -37,8 +31,10 @@ internal class EmailConfirmationTokenPublisher : IEmailConfirmationTokenPublishe
         var emailConfirmationToken = _emailConfirmationTokenFactory.GetEmailConfirmationToken(createEmailConfirmationTokenModel.UserId);
         _emailConfirmationTokenWriteRepository.Add(emailConfirmationToken);
 
-        var userConfirmEmailTokenCreatedEvent = _instaConnectMapper
-            .Map<UserConfirmEmailTokenCreatedEvent>((emailConfirmationToken, createEmailConfirmationTokenModel, _gatewayOptions));
+        var userConfirmEmailTokenCreatedEvent = _userConfirmEmailTokenCreatedEventFactory.GetUserConfirmEmailTokenCreatedEvent(
+            createEmailConfirmationTokenModel.UserId,
+            createEmailConfirmationTokenModel.Email,
+            emailConfirmationToken.Value);
         await _eventPublisher.PublishAsync(userConfirmEmailTokenCreatedEvent, cancellationToken);
     }
 }

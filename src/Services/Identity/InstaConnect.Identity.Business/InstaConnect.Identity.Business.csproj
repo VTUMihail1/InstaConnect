@@ -31,4 +31,8 @@
   	</AssemblyAttribute>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Users\Models\Options\" />
+  </ItemGroup>
+
 </Project>
