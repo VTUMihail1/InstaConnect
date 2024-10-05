@@ -17,8 +17,8 @@ internal static class ServiceCollectionExtensions
             .ValidateOnStart();
 
         serviceCollection
-            .AddScoped<IUserWriteRepository, UserWriteRepository>()
-            .AddScoped<IUserReadRepository, UserReadRepository>()
+            .AddTransient<IUserWriteRepository, UserWriteRepository>()
+            .AddTransient<IUserReadRepository, UserReadRepository>()
             .AddScoped<IPasswordHasher, PasswordHasher>();
 
         return serviceCollection;

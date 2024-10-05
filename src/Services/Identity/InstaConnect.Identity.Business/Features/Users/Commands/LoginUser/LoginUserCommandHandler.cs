@@ -48,6 +48,11 @@ public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, UserTok
             throw new UserInvalidDetailsException();
         }
 
+        if (!existingUser.IsEmailConfirmed)
+        {
+            throw new UserEmailNotConfirmedException();
+        }
+
         var filteredCollectionQuery = _instaConnectMapper.Map<UserClaimCollectionWriteQuery>(existingUser);
         var userClaims = await _userClaimWriteRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
 

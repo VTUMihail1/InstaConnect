@@ -17,8 +17,8 @@ internal static class ServiceCollectionExtensions
             .ValidateOnStart();
 
         serviceCollection
-            .AddScoped<IForgotPasswordTokenWriteRepository, ForgotPasswordTokenWriteRepository>()
-            .AddScoped<IForgotPasswordTokenFactory, ForgotPasswordTokenFactory>();
+            .AddTransient<IForgotPasswordTokenWriteRepository, ForgotPasswordTokenWriteRepository>()
+            .AddTransient<IForgotPasswordTokenFactory, ForgotPasswordTokenFactory>();
 
         return serviceCollection;
     }

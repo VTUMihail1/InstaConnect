@@ -17,6 +17,8 @@ internal class UserWriteRepository : IUserWriteRepository
     {
         var entity = await _identityContext
             .Users
+            .Include(u => u.EmailConfirmationTokens)
+            .Include(u => u.ForgotPasswordTokens)
             .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
         return entity;
@@ -38,18 +40,18 @@ internal class UserWriteRepository : IUserWriteRepository
             .Add(entity);
     }
 
-    public void Update(User entity)
+    public void Update(User user)
     {
         _identityContext
             .Users
-            .Update(entity);
+            .Update(user);
     }
 
-    public void Delete(User entity)
+    public void Delete(User user)
     {
         _identityContext
             .Users
-            .Remove(entity);
+            .Remove(user);
     }
 
     public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)

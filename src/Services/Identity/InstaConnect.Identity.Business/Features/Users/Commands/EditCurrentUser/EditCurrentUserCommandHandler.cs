@@ -50,7 +50,7 @@ public class EditCurrentUserCommandHandler : ICommandHandler<EditCurrentUserComm
 
         _instaConnectMapper.Map(request, existingUserById);
 
-        if (request.ProfileImage != null)
+        if (request.ProfileImageFile != null)
         {
             var imageUploadModel = _instaConnectMapper.Map<ImageUploadModel>(request);
             var imageUploadResult = await _imageHandler.UploadAsync(imageUploadModel, cancellationToken);

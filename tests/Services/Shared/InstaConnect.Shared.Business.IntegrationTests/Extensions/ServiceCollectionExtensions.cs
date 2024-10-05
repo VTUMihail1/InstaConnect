@@ -1,5 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentAssertions.Common;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 namespace InstaConnect.Shared.Business.IntegrationTests.Extensions;
 
@@ -16,6 +20,20 @@ public static class ServiceCollectionExtensions
         }
 
         serviceCollection.AddDbContext<TContext>(options => optionsAction?.Invoke(options));
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddTestRedisCache(this IServiceCollection serviceCollection, Action<RedisCacheOptions>? optionsAction = null!)
+    {
+        var descriptor = serviceCollection.SingleOrDefault(s => s.ServiceType == typeof(IDistributedCache));
+
+        if (descriptor != null)
+        {
+            serviceCollection.Remove(descriptor);
+        }
+
+        serviceCollection.AddStackExchangeRedisCache(options => optionsAction?.Invoke(options));
 
         return serviceCollection;
     }

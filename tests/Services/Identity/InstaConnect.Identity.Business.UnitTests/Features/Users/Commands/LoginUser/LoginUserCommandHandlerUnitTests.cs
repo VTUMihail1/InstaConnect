@@ -57,6 +57,22 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
     }
 
     [Fact]
+    public async Task Handle_ShouldThrowUserEmailNotConfirmedException_WhenEmailIsNotConfirmed()
+    {
+        // Arrange
+        var command = new LoginUserCommand(
+            UserTestUtilities.ValidEmailWithUnconfirmedEmail,
+            UserTestUtilities.ValidPassword
+        );
+
+        // Act
+        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<UserEmailNotConfirmedException>();
+    }
+
+    [Fact]
     public async Task Handle_ShouldCallTheUserClaimsRepository_WhenRequestIsValid()
     {
         // Arrange

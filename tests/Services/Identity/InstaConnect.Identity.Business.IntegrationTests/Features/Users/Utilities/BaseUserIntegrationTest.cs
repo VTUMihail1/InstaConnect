@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Business.IntegrationTests.Utilities;
+﻿using InstaConnect.Identity.Business.Features.Users.Models.Options;
+using InstaConnect.Identity.Business.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Data;
 using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Abstractions;
@@ -12,14 +13,25 @@ using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Business.IntegrationTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Data.Abstractions;
+using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Business.IntegrationTests.Features.Users.Utilities;
 
 public abstract class BaseUserIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
+    protected ITestHarness TestHarness
+    {
+        get
+        {
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var testHarness = serviceScope.ServiceProvider.GetTestHarness();
 
+            return testHarness;
+        }
+    }
 
     protected IEmailConfirmationTokenWriteRepository EmailConfirmationTokenWriteRepository
     {
@@ -76,11 +88,26 @@ public abstract class BaseUserIntegrationTest : BaseSharedIntegrationTest, IClas
         }
     }
 
+    protected ICacheHandler CacheHandler
+    {
+        get
+        {
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var cacheHandlerRepository = serviceScope.ServiceProvider.GetRequiredService<ICacheHandler>();
+
+            return cacheHandlerRepository;
+        }
+    }
+
+    protected IPasswordHasher PasswordHasher { get; }
+
+    protected GatewayOptions GatewayOptions { get; }
+
     protected BaseUserIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
         : base(integrationTestWebAppFactory.Services.CreateScope())
     {
-
-
+        PasswordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+        GatewayOptions = ServiceScope.ServiceProvider.GetRequiredService<IOptions<GatewayOptions>>().Value;
     }
 
     protected async Task<string> CreateUserAsync(bool isEmailConfirmed, CancellationToken cancellationToken)
@@ -97,6 +124,56 @@ public abstract class BaseUserIntegrationTest : BaseSharedIntegrationTest, IClas
             UserTestUtilities.ValidProfileImage)
         {
             IsEmailConfirmed = isEmailConfirmed,
+        };
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+
+        userWriteRepository.Add(user);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return user.Id;
+    }
+
+    protected async Task<string> CreateUserAsync(string email, string name, bool isEmailConfirmed, CancellationToken cancellationToken)
+    {
+        var passwordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+        var passwordHash = passwordHasher.Hash(UserTestUtilities.ValidPassword).PasswordHash;
+
+        var user = new User(
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            email,
+            name,
+            passwordHash,
+            UserTestUtilities.ValidProfileImage)
+        {
+            IsEmailConfirmed = isEmailConfirmed,
+        };
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+
+        userWriteRepository.Add(user);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return user.Id;
+    }
+
+    protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
+    {
+        var passwordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+        var passwordHash = passwordHasher.Hash(UserTestUtilities.ValidPassword).PasswordHash;
+
+        var user = new User(
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            passwordHash,
+            UserTestUtilities.ValidProfileImage)
+        {
+            IsEmailConfirmed = true,
         };
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
@@ -158,34 +235,34 @@ public abstract class BaseUserIntegrationTest : BaseSharedIntegrationTest, IClas
 
     public async Task InitializeAsync()
     {
-        await EnsureDatabaseIsEmpty();
+        await EnsureDatabaseIsEmptyAsync();
     }
 
     public async Task DisposeAsync()
     {
-        await EnsureDatabaseIsEmpty();
+        await EnsureDatabaseIsEmptyAsync();
     }
 
-    private async Task EnsureDatabaseIsEmpty()
+    private async Task EnsureDatabaseIsEmptyAsync()
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<IdentityContext>();
 
-        if (dbContext.EmailConfirmationTokens.Any())
+        if (await dbContext.EmailConfirmationTokens.AnyAsync(CancellationToken))
         {
             await dbContext.EmailConfirmationTokens.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.ForgotPasswordTokens.Any())
+        if (await dbContext.ForgotPasswordTokens.AnyAsync(CancellationToken))
         {
             await dbContext.ForgotPasswordTokens.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.UserClaims.Any())
+        if (await dbContext.UserClaims.AnyAsync(CancellationToken))
         {
             await dbContext.UserClaims.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }
