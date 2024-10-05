@@ -3,14 +3,10 @@ using CloudinaryDotNet.Actions;
 using InstaConnect.Identity.Business.Features.Users.Commands.EditCurrentUser;
 using InstaConnect.Identity.Business.Features.Users.Commands.RegisterUser;
 using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Business.Features.Users.Models.Options;
-using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
-using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites;
 using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Data.Features.UserClaims.Models.Filters;
 using InstaConnect.Identity.Data.Features.Users.Models;
 using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Business.Contracts.Emails;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Business.Models;
 
@@ -36,20 +32,6 @@ internal class UserCommandProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.Ignore());
 
         CreateMap<AccessTokenResult, UserTokenCommandViewModel>();
-
-        CreateMap<(EmailConfirmationToken, CreateEmailConfirmationTokenModel, GatewayOptions), UserConfirmEmailTokenCreatedEvent>()
-            .ConstructUsing(src => new(
-                src.Item2.Email,
-                src.Item2.UserId,
-                src.Item1.Value,
-                src.Item3.UrlTemplate));
-
-        CreateMap<(ForgotPasswordToken, CreateForgotPasswordTokenModel, GatewayOptions), UserForgotPasswordTokenCreatedEvent>()
-            .ConstructUsing(src => new(
-                src.Item2.Email,
-                src.Item2.UserId,
-                src.Item1.Value,
-                src.Item3.UrlTemplate));
 
         CreateMap<User, UserCreatedEvent>();
 

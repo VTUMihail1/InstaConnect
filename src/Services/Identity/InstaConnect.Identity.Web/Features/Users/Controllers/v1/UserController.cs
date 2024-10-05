@@ -142,8 +142,8 @@ public class UserController : ControllerBase
         return Ok(response);
     }
 
-    // GET: api/users/confirm-email/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
-    [HttpGet("confirm-email/by-user/{userId}/by-token/{token}")]
+    // GET: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/confirm-email/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
+    [HttpGet("{userId}/confirm-email/{token}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> ConfirmEmailAsync(
@@ -156,8 +156,8 @@ public class UserController : ControllerBase
         return NoContent();
     }
 
-    // GET: api/users/resend-confirm-email/by-email/user@example.com
-    [HttpGet("resend-confirm-email/by-email/{email}")]
+    // GET: api/users/by-email/user@example.com/confirm-email
+    [HttpGet("by-email/{email}/confirm-email")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> ResendConfirmEmailAsync(
@@ -170,8 +170,8 @@ public class UserController : ControllerBase
         return NoContent();
     }
 
-    // GET: api/users/send-reset-password/by-email/user@example.com
-    [HttpGet("send-reset-password/by-email/{email}")]
+    // GET: api/users/by-email/user@example.com/reset-password
+    [HttpGet("/by-email/{email}/reset-password")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> SendResetPasswordAsync(
@@ -215,8 +215,8 @@ public class UserController : ControllerBase
         return Ok(response);
     }
 
-    // POST: api/users/reset-password/by-user/5f0f2dd0-e957-4d72-8141-767a36fc6e95/by-token/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
-    [HttpPost("reset-password/by-user/{userId}/by-token/{token}")]
+    // POST: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/reset-password/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
+    [HttpPost("{userId}/reset-password/{token}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> ResetPasswordAsync(
@@ -264,7 +264,7 @@ public class UserController : ControllerBase
 
     // DELETE: api/users/admin/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [Authorize(AppPolicies.AdminPolicy)]
-    [HttpDelete("admin/{id}")]
+    [HttpDelete("{id}/admin")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteByIdAsync(

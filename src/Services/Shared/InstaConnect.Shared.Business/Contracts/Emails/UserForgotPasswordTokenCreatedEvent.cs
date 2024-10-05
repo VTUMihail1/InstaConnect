@@ -1,15 +1,3 @@
 ﻿namespace InstaConnect.Shared.Business.Contracts.Emails;
 
-public class UserForgotPasswordTokenCreatedEvent
-{
-    public UserForgotPasswordTokenCreatedEvent(string email, string userId, string token, string urlTemplate)
-    {
-        Email = email;
-        RedirectUrl = string.Format(urlTemplate, userId, token);
-    }
-
-    public string Email { get; }
-
-    public string RedirectUrl { get; }
-}
-
+public record UserForgotPasswordTokenCreatedEvent(string Email, string RedirectUrl);

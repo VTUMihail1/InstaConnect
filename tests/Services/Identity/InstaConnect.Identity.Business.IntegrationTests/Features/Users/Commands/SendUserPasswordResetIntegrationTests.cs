@@ -91,7 +91,7 @@ public class SendUserPasswordResetIntegrationTests : BaseUserIntegrationTest
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
         var user = await UserWriteRepository.GetByIdAsync(existingUserId, CancellationToken);
-        var url = string.Format(GatewayOptions.UrlTemplate, user!.Id, user.EmailConfirmationTokens.FirstOrDefault());
+        var url = string.Format(ForgotPasswordOptions.UrlTemplate, user!.Id, user.ForgotPasswordTokens.FirstOrDefault()!.Value);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserForgotPasswordTokenCreatedEvent>(m =>

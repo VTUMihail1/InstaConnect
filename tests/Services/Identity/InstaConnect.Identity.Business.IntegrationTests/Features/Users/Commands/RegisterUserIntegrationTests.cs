@@ -473,7 +473,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
         var user = await UserWriteRepository.GetByIdAsync(response.Id, CancellationToken);
-        var url = string.Format(GatewayOptions.UrlTemplate, user!.Id, user.EmailConfirmationTokens.FirstOrDefault());
+        var url = string.Format(EmailConfirmationOptions.UrlTemplate, user!.Id, user.EmailConfirmationTokens.FirstOrDefault()!.Value);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserConfirmEmailTokenCreatedEvent>(m =>
