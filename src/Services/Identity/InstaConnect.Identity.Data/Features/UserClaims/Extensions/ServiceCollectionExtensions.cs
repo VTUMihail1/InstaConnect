@@ -9,7 +9,7 @@ internal static class ServiceCollectionExtensions
     internal static IServiceCollection AddUserClaimServices(this IServiceCollection serviceCollection)
     {
         serviceCollection
-            .AddScoped<IUserClaimWriteRepository, UserClaimWriteRepository>();
+            .AddTransient<IUserClaimWriteRepository, UserClaimWriteRepository>();
 
         return serviceCollection;
     }

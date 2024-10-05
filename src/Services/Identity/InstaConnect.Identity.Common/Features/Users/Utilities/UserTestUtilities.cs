@@ -35,10 +35,13 @@ public abstract class UserTestUtilities : SharedTestUtilities
     public static readonly string InvalidForgotPasswordTokenValue = GetGuid();
     public static readonly string ValidAccessTokenValue = GetGuid();
     public static readonly string ValidPassword = GetAverageString(UserBusinessConfigurations.PASSWORD_MAX_LENGTH, UserBusinessConfigurations.PASSWORD_MIN_LENGTH);
+    public static readonly string ValidAddPassword = GetAverageString(UserBusinessConfigurations.PASSWORD_MAX_LENGTH, UserBusinessConfigurations.PASSWORD_MIN_LENGTH);
+    public static readonly string ValidUpdatePassword = GetAverageString(UserBusinessConfigurations.PASSWORD_MAX_LENGTH, UserBusinessConfigurations.PASSWORD_MIN_LENGTH);
     public static readonly string InvalidPassword = GetAverageString(UserBusinessConfigurations.PASSWORD_MAX_LENGTH, UserBusinessConfigurations.PASSWORD_MIN_LENGTH);
     public static readonly string ValidPasswordHash = GetAverageString(UserBusinessConfigurations.PASSWORD_MAX_LENGTH, UserBusinessConfigurations.PASSWORD_MIN_LENGTH);
 
     public static readonly string ValidAddEmail = GetAverageString(UserBusinessConfigurations.EMAIL_MAX_LENGTH, UserBusinessConfigurations.EMAIL_MIN_LENGTH);
+    public static readonly string ValidUpdateEmail = GetAverageString(UserBusinessConfigurations.EMAIL_MAX_LENGTH, UserBusinessConfigurations.EMAIL_MIN_LENGTH);
     public static readonly string ValidAddName = GetAverageString(UserBusinessConfigurations.USER_NAME_MAX_LENGTH, UserBusinessConfigurations.USER_NAME_MIN_LENGTH);
     public static readonly string ValidUpdateName = GetAverageString(UserBusinessConfigurations.USER_NAME_MAX_LENGTH, UserBusinessConfigurations.USER_NAME_MIN_LENGTH);
     public static readonly string ValidAddFirstName = GetAverageString(UserBusinessConfigurations.FIRST_NAME_MAX_LENGTH, UserBusinessConfigurations.FIRST_NAME_MIN_LENGTH);

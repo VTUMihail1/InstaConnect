@@ -17,8 +17,8 @@ internal static class ServiceCollectionExtensions
 
         serviceCollection
             .AddScoped<IAccessTokenGenerator, AccessTokenGenerator>()
-            .AddScoped<IEmailConfirmationTokenPublisher, EmailConfirmationTokenPublisher>()
-            .AddScoped<IForgotPasswordTokenPublisher, ForgotPasswordTokenPublisher>();
+            .AddTransient<IEmailConfirmationTokenPublisher, EmailConfirmationTokenPublisher>()
+            .AddTransient<IForgotPasswordTokenPublisher, ForgotPasswordTokenPublisher>();
 
         return serviceCollection;
     }

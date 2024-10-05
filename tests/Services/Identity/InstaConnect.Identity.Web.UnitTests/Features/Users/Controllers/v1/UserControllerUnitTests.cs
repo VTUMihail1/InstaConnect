@@ -593,7 +593,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
                                                                 m.UserName == UserTestUtilities.ValidName &&
                                                                 m.FirstName == UserTestUtilities.ValidFirstName &&
                                                                 m.LastName == UserTestUtilities.ValidLastName &&
-                                                                m.ProfileImage == UserTestUtilities.ValidFormFile), CancellationToken);
+                                                                m.ProfileImageFile == UserTestUtilities.ValidFormFile), CancellationToken);
     }
 
     [Fact]

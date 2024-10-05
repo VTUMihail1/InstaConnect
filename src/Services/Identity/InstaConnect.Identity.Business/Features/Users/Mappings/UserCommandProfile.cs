@@ -37,17 +37,17 @@ internal class UserCommandProfile : Profile
 
         CreateMap<AccessTokenResult, UserTokenCommandViewModel>();
 
-        CreateMap<(EmailConfirmationToken, User, GatewayOptions), UserConfirmEmailTokenCreatedEvent>()
+        CreateMap<(EmailConfirmationToken, CreateEmailConfirmationTokenModel, GatewayOptions), UserConfirmEmailTokenCreatedEvent>()
             .ConstructUsing(src => new(
                 src.Item2.Email,
-                src.Item2.Id,
+                src.Item2.UserId,
                 src.Item1.Value,
                 src.Item3.UrlTemplate));
 
-        CreateMap<(ForgotPasswordToken, User, GatewayOptions), UserForgotPasswordTokenCreatedEvent>()
+        CreateMap<(ForgotPasswordToken, CreateForgotPasswordTokenModel, GatewayOptions), UserForgotPasswordTokenCreatedEvent>()
             .ConstructUsing(src => new(
                 src.Item2.Email,
-                src.Item2.Id,
+                src.Item2.UserId,
                 src.Item1.Value,
                 src.Item3.UrlTemplate));
 
@@ -74,7 +74,7 @@ internal class UserCommandProfile : Profile
             .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => src.ImageUri));
 
         CreateMap<EditCurrentUserCommand, ImageUploadModel>()
-            .ConstructUsing(src => new(src.ProfileImage!));
+            .ConstructUsing(src => new(src.ProfileImageFile!));
 
         CreateMap<RegisterUserCommand, ImageUploadModel>()
             .ConstructUsing(src => new(src.ProfileImage!));
