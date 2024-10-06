@@ -126,8 +126,8 @@ public class UserController : ControllerBase
         return Ok(response);
     }
 
-    // GET: api/users/by-username/example
-    [HttpGet("by-username/{username}")]
+    // GET: api/users/by-name/example
+    [HttpGet("by-name/{username}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<UserQueryResponse>> GetByNameAsync(
@@ -142,8 +142,8 @@ public class UserController : ControllerBase
         return Ok(response);
     }
 
-    // GET: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/confirm-email/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
-    [HttpGet("{userId}/confirm-email/{token}")]
+    // POST: api/users/5f0f2dd0-e957-4d72-8141-767a36fc6e95/confirm-email/Q2ZESjhBTS9wV1d6MW9KS2hVZzBWd1oydStIellLdmhPU0VaNGl5zmtkltuvbahvcxqzsdg
+    [HttpPost("{userId}/confirm-email/{token}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> ConfirmEmailAsync(
@@ -171,7 +171,7 @@ public class UserController : ControllerBase
     }
 
     // GET: api/users/by-email/user@example.com/reset-password
-    [HttpGet("/by-email/{email}/reset-password")]
+    [HttpGet("by-email/{email}/reset-password")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> SendResetPasswordAsync(
@@ -264,7 +264,7 @@ public class UserController : ControllerBase
 
     // DELETE: api/users/admin/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [Authorize(AppPolicies.AdminPolicy)]
-    [HttpDelete("{id}/admin")]
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteByIdAsync(

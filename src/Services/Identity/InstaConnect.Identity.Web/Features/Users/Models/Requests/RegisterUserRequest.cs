@@ -5,6 +5,6 @@ namespace InstaConnect.Identity.Web.Features.Users.Models.Requests;
 
 public class RegisterUserRequest
 {
-    [FromForm]
+    [FromForm(Name = "")]
     public RegisterUserBindingModel RegisterUserBindingModel { get; set; } = new(string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, null!);
 }

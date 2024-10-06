@@ -1,10 +1,35 @@
-﻿using Bogus;
+﻿using System.Text;
+using Bogus;
+using Microsoft.AspNetCore.Http;
+using NSubstitute;
 
 namespace InstaConnect.Shared.Common.Utilities;
 
 public class SharedTestUtilities
 {
+    private const int DefaultStringLength = 100;
+
     private static readonly Faker _faker = new();
+
+    public static IFormFile GetFile(string name)
+    {
+        var formFile = Substitute.For<IFormFile>();
+
+        var fileContent = Encoding.UTF8.GetBytes("This is a test file.");
+        var stream = new MemoryStream(fileContent)
+        {
+            Position = 0
+        };
+
+        formFile.OpenReadStream().Returns(stream);
+        formFile.Name.Returns(name);
+        formFile.FileName.Returns(name);
+        formFile.ContentType.Returns("text/plain");
+        formFile.Length.Returns(stream.Length);
+
+        return formFile;
+
+    }
 
     public static string GetGuid()
     {
@@ -27,7 +52,7 @@ public class SharedTestUtilities
         return result;
     }
 
-    public static string GetString(int length)
+    public static string GetString(int length = DefaultStringLength)
     {
         var result = _faker.Random.AlphaNumeric(length);
 
