@@ -313,6 +313,35 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     }
 
     [Fact]
+    public async Task SendAsync_ShouldEditCurrentUser_WhenUserIsValidAndNameIsTheSame()
+    {
+        // Arrange
+        var existingUserId = await CreateUserAsync(CancellationToken);
+        var command = new EditCurrentUserCommand(
+            existingUserId,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidName,
+            null
+        );
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var user = await UserWriteRepository.GetByIdAsync(response.Id, CancellationToken);
+
+        // Assert
+        user
+            .Should()
+            .Match<User>(p => p.Id == response.Id &&
+                              p.FirstName == UserTestUtilities.ValidUpdateFirstName &&
+                              p.LastName == UserTestUtilities.ValidUpdateLastName &&
+                              p.UserName == UserTestUtilities.ValidName &&
+                              p.Email == UserTestUtilities.ValidEmail &&
+                              PasswordHasher.Verify(UserTestUtilities.ValidPassword, p.PasswordHash) &&
+                              p.ProfileImage == UserTestUtilities.ValidProfileImage);
+    }
+
+    [Fact]
     public async Task SendAsync_ShouldPublishUserUpdateEvent_WhenUserIsValid()
     {
         // Arrange

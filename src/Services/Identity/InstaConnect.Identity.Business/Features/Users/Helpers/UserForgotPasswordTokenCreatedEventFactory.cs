@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Identity.Business.Features.Users.Abstractions;
-using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Options;
 using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Options;
 using InstaConnect.Shared.Business.Contracts.Emails;
 using Microsoft.Extensions.Options;

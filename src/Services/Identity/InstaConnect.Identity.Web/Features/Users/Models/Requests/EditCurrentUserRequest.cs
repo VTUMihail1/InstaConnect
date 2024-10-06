@@ -5,6 +5,6 @@ namespace InstaConnect.Identity.Web.Features.Users.Models.Requests;
 
 public class EditCurrentUserRequest
 {
-    [FromBody]
+    [FromForm(Name = "")]
     public EditCurrentUserBindingModel EditCurrentUserBindingModel { get; set; } = new(string.Empty, string.Empty, string.Empty, null);
 }

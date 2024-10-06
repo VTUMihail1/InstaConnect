@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Shared.Common.Models.Enums;
 using InstaConnect.Shared.Common.Utilities;
 using Microsoft.AspNetCore.Http;
-using NSubstitute;
 
 namespace InstaConnect.Identity.Common.Features.Users.Utilities;
 
@@ -50,9 +49,12 @@ public abstract class UserTestUtilities : SharedTestUtilities
     public static readonly string ValidUpdateLastName = GetAverageString(UserBusinessConfigurations.LAST_NAME_MAX_LENGTH, UserBusinessConfigurations.LAST_NAME_MIN_LENGTH);
     public static readonly string ValidAddProfileImage = GetUrl();
     public static readonly string ValidUpdateProfileImage = GetUrl();
-    public static readonly IFormFile ValidFormFile = Substitute.For<IFormFile>();
-    public static readonly IFormFile ValidAddFormFile = Substitute.For<IFormFile>();
-    public static readonly IFormFile ValidUpdateFormFile = Substitute.For<IFormFile>();
+    public static readonly string ValidFormFileName = GetString();
+    public static readonly string ValidAddFormFileName = GetString();
+    public static readonly string ValidUpdateFormFileName = GetString();
+    public static readonly IFormFile ValidFormFile = GetFile(ValidFormFileName);
+    public static readonly IFormFile ValidAddFormFile = GetFile(ValidAddFormFileName);
+    public static readonly IFormFile ValidUpdateFormFile = GetFile(ValidUpdateFormFileName);
     public static readonly DateTime ValidUntil = GetMaxDate();
 
     public static readonly int ValidPageValue = 1;
