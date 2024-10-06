@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "users-svc": "StartDebugging",
+        "posts-svc": "StartDebugging",
+        "messages-svc": "StartDebugging",
+        "follows-svc": "StartDebugging",
+        "gateway-svc": "StartDebugging"
+      }
+    }
+  }
+}
