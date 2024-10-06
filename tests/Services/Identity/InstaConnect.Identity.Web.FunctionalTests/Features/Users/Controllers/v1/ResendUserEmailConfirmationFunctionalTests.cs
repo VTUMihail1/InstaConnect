@@ -50,7 +50,7 @@ public class ResendUserEmailConfirmationFunctionalTests : BaseUserFunctionalTest
         var existingUserId = await CreateUserAsync(CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(GetApiRoute(UserTestUtilities.InvalidEmail), CancellationToken);
+        var response = await HttpClient.GetAsync(GetApiRoute(UserTestUtilities.ValidEmail), CancellationToken);
 
         // Assert
         response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
