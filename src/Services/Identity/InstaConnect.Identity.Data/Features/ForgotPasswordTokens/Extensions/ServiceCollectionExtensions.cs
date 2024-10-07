@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Helpers;
 using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Options;
 using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,8 +16,7 @@ internal static class ServiceCollectionExtensions
             .ValidateOnStart();
 
         serviceCollection
-            .AddTransient<IForgotPasswordTokenWriteRepository, ForgotPasswordTokenWriteRepository>()
-            .AddTransient<IForgotPasswordTokenFactory, ForgotPasswordTokenFactory>();
+            .AddTransient<IForgotPasswordTokenWriteRepository, ForgotPasswordTokenWriteRepository>();
 
         return serviceCollection;
     }
