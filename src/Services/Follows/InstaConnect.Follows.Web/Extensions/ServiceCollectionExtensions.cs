@@ -22,6 +22,7 @@ public static class ServiceCollectionExtensions
             .AddSwagger()
             .AddRateLimiterPolicies()
             .AddVersioning()
+            .AddApiEndpoints()
             .AddCurrentUserContext()
             .AddExceptionHandler();
 

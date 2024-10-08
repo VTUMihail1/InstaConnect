@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Asp.Versioning;
+using FastEndpoints;
 using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Data.Models.Options;
 using InstaConnect.Shared.Web.Abstractions;
@@ -79,6 +80,15 @@ public static class ServiceCollectionExtensions
 
         return serviceCollection;
     }
+
+    public static IServiceCollection AddApiEndpoints(this IServiceCollection serviceCollection)
+    {
+        serviceCollection
+            .AddFastEndpoints();
+
+        return serviceCollection;
+    }
+
 
     public static IServiceCollection ConfigureApiBehaviorOptions(this IServiceCollection serviceCollection)
     {
