@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
@@ -12,7 +13,6 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
 {
     public DeleteFollowFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
     {
-
     }
 
     [Fact]
@@ -23,31 +23,44 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
+        var request = new DeleteFollowRequest
+        {
+            Id = existingFollowId
+        };
+
         // Act
-        var response = await HttpClient.DeleteAsync(GetIdRoute(existingFollowId), CancellationToken);
+        var statusCode = await FollowsClient.DeleteStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Unauthorized);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.Unauthorized);
     }
 
     [Theory]
     [InlineData(FollowBusinessConfigurations.ID_MIN_LENGTH - 1)]
     [InlineData(FollowBusinessConfigurations.ID_MAX_LENGTH + 1)]
-    public async Task DeleteAsync_ShouldReturnBadRequestResponse_WhenIdIsInvalid(int length)
+    public async Task DeleteAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
+        var request = new DeleteFollowRequest
+        {
+            Id = SharedTestUtilities.GetString(length)
+        };
+
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(GetIdRoute(SharedTestUtilities.GetString(length)), CancellationToken);
+        var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
@@ -58,14 +71,20 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
+        var request = new DeleteFollowRequest
+        {
+            Id = existingFollowId
+        };
+
         ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(GetIdRoute(existingFollowId), CancellationToken);
+        var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -79,14 +98,20 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
+        var request = new DeleteFollowRequest
+        {
+            Id = existingFollowId
+        };
+
         ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(GetIdRoute(existingFollowId), CancellationToken);
+        var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
@@ -97,33 +122,45 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
+        var request = new DeleteFollowRequest
+        {
+            Id = FollowTestUtilities.InvalidId
+        };
+
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(GetIdRoute(FollowTestUtilities.InvalidId), CancellationToken);
+        var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
-    public async Task DeleteAsync_ShouldReturnForbiddenResponse_WhenCurrentUserIdDoesNotOwnTheFollowIdInvalid()
+    public async Task DeleteAsync_ShouldReturnForbiddenResponse_WhenCurrentUserIdDoesNotOwnTheFollow()
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowFollowerId, existingFollowFollowingId, CancellationToken);
+        var otherFollowerId = await CreateUserAsync(CancellationToken);
+        var otherFollowingId = await CreateUserAsync(CancellationToken);
+        var otherFollowId = await CreateFollowAsync(otherFollowerId, otherFollowingId, CancellationToken);
+
+        var request = new DeleteFollowRequest
+        {
+            Id = otherFollowId
+        };
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(GetIdRoute(existingFollowId), CancellationToken);
+        var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Forbidden);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.Forbidden);
     }
 
     [Fact]
@@ -134,14 +171,44 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
+        var request = new DeleteFollowRequest
+        {
+            Id = existingFollowId
+        };
+
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.DeleteAsync(GetIdRoute(existingFollowId), CancellationToken);
+        var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NoContent);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.NoContent);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldReturnNoContentResponse_WhenRequestIsValidAndIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+
+        var request = new DeleteFollowRequest
+        {
+            Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollowId)
+        };
+
+        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
+
+        // Act
+        var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, ValidJwtConfig);
+
+        // Assert
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.NoContent);
     }
 
     [Fact]
@@ -152,12 +219,15 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
+        var request = new DeleteFollowRequest
+        {
+            Id = existingFollowId
+        };
+
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        await HttpClient.DeleteAsync(GetIdRoute(existingFollowId), CancellationToken);
-
+        await FollowsClient.DeleteAsync(request, ValidJwtConfig);
         var follow = await FollowWriteRepository.GetByIdAsync(existingFollowId, CancellationToken);
 
         // Assert
@@ -174,12 +244,15 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
+        var request = new DeleteFollowRequest
+        {
+            Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollowId)
+        };
+
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        await HttpClient.DeleteAsync(GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingFollowId)), CancellationToken);
-
+        await FollowsClient.DeleteAsync(request, ValidJwtConfig);
         var follow = await FollowWriteRepository.GetByIdAsync(existingFollowId, CancellationToken);
 
         // Assert

@@ -4,6 +4,9 @@ using InstaConnect.Follows.Data.Features.Follows.Abstractions;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Data.Features.Users.Abstractions;
 using InstaConnect.Follows.Data.Features.Users.Models.Entities;
+using InstaConnect.Follows.Web.Features.Follows.Utilities;
+using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Abstractions;
+using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Helpers;
 using InstaConnect.Follows.Web.FunctionalTests.Utilities;
 using InstaConnect.Shared.Data.Abstractions;
 using InstaConnect.Shared.Web.FunctionalTests.Utilities;
@@ -39,11 +42,14 @@ public abstract class BaseFollowFunctionalTest : BaseSharedFunctionalTest, IClas
         }
     }
 
+    protected IFollowsClient FollowsClient { get; }
+
     protected BaseFollowFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(
         functionalTestWebAppFactory.CreateClient(),
         functionalTestWebAppFactory.Services.CreateScope(),
         API_ROUTE)
     {
+        FollowsClient = new FollowsClient(functionalTestWebAppFactory.CreateClient());
     }
 
     protected async Task<string> CreateFollowAsync(string followerId, string followingId, CancellationToken cancellationToken)

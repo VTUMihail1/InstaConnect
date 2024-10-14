@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.FunctionalTests.Utilities;
@@ -25,12 +26,16 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var request = new GetFollowByIdRequest
+        {
+            Id = SharedTestUtilities.GetString(length)
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetString(length)), CancellationToken);
+        var response = await FollowsClient.GetByIdStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response.Should().Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
@@ -40,12 +45,16 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var request = new GetFollowByIdRequest
+        {
+            Id = FollowTestUtilities.InvalidId
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(FollowTestUtilities.InvalidId), CancellationToken);
+        var response = await FollowsClient.GetByIdStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
+        response.Should().Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
@@ -55,12 +64,35 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var request = new GetFollowByIdRequest
+        {
+            Id = existingFollowId
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(existingFollowId), CancellationToken);
+        var response = await FollowsClient.GetByIdStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        response.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_ShouldReturnOkResponse_WhenRequestIsValidAndIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var request = new GetFollowByIdRequest
+        {
+            Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollowId)
+        };
+
+        // Act
+        var response = await FollowsClient.GetByIdStatusCodeAsync(request);
+
+        // Assert
+        response.Should().Be(HttpStatusCode.OK);
     }
 
     [Fact]
@@ -70,16 +102,16 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var request = new GetFollowByIdRequest
+        {
+            Id = existingFollowId
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(existingFollowId), CancellationToken);
-
-        var followQueryResponse = await response
-            .Content
-            .ReadFromJsonAsync<FollowQueryResponse>();
+        var response = await FollowsClient.GetByIdAsync(request);
 
         // Assert
-        followQueryResponse
+        response
             .Should()
             .Match<FollowQueryResponse>(m => m.Id == existingFollowId &&
                                  m.FollowerId == existingFollowerId &&
@@ -97,16 +129,16 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var request = new GetFollowByIdRequest
+        {
+            Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollowId)
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingFollowId)), CancellationToken);
-
-        var followQueryResponse = await response
-            .Content
-            .ReadFromJsonAsync<FollowQueryResponse>();
+        var response = await FollowsClient.GetByIdAsync(request);
 
         // Assert
-        followQueryResponse
+        response
             .Should()
             .Match<FollowQueryResponse>(m => m.Id == existingFollowId &&
                                  m.FollowerId == existingFollowerId &&

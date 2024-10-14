@@ -5,6 +5,7 @@ using FluentAssertions;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Web.Features.Follows.Models.Binding;
+using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.FunctionalTests.Utilities;
@@ -25,13 +26,18 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowBindingModel(existingFollowingId);
+        var request = new AddFollowRequest
+        {
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+        };
 
         // Act
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var statusCode = await FollowsClient.AddStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Unauthorized);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.Unauthorized);
     }
 
     [Fact]
@@ -40,16 +46,20 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowBindingModel(null!);
+        var request = new AddFollowRequest
+        {
+            AddFollowBindingModel = new AddFollowBindingModel(null!)
+        };
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var statusCode = await FollowsClient.AddStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -59,37 +69,44 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowBindingModel(SharedTestUtilities.GetString(length));
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var request = new AddFollowRequest
+        {
+            AddFollowBindingModel = new AddFollowBindingModel(SharedTestUtilities.GetString(length))
+        };
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var statusCode = await FollowsClient.AddStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
-
 
     [Fact]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowBindingModel(existingFollowingId);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var request = new AddFollowRequest
+        {
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+        };
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var statusCode = await FollowsClient.AddStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -99,36 +116,44 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowBindingModel(existingFollowingId);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var request = new AddFollowRequest
+        {
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+        };
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var statusCode = await FollowsClient.AddStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowBindingModel(existingFollowingId);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var request = new AddFollowRequest
+        {
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+        };
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = FollowTestUtilities.InvalidUserId;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var statusCode = await FollowsClient.AddStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
@@ -137,16 +162,20 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowBindingModel(FollowTestUtilities.InvalidUserId);
+        var request = new AddFollowRequest
+        {
+            AddFollowBindingModel = new AddFollowBindingModel(FollowTestUtilities.InvalidUserId)
+        };
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var statusCode = await FollowsClient.AddStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
@@ -155,17 +184,21 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var request = new AddFollowBindingModel(existingFollowingId);
+        await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var request = new AddFollowRequest
+        {
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+        };
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var statusCode = await FollowsClient.AddStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
@@ -174,17 +207,20 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowBindingModel(existingFollowingId);
-
+        var request = new AddFollowRequest
+        {
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+        };
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var statusCode = await FollowsClient.AddStatusCodeAsync(request, ValidJwtConfig);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        statusCode
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
@@ -193,24 +229,21 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowBindingModel(existingFollowingId);
+        var request = new AddFollowRequest
+        {
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+        };
 
         ValidJwtConfig[ClaimTypes.NameIdentifier] = existingFollowerId;
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
-
-        var followCommandResponse = await response
-            .Content
-            .ReadFromJsonAsync<FollowCommandResponse>();
-
-        var message = await FollowWriteRepository.GetByIdAsync(followCommandResponse!.Id, CancellationToken);
+        var response = await FollowsClient.AddAsync(request, ValidJwtConfig);
+        var message = await FollowWriteRepository.GetByIdAsync(response!.Id, CancellationToken);
 
         // Assert
         message
             .Should()
-            .Match<Follow>(m => m.Id == followCommandResponse.Id &&
+            .Match<Follow>(m => m.Id == response.Id &&
                                  m.FollowerId == existingFollowerId &&
                                  m.FollowingId == existingFollowingId);
     }

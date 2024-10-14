@@ -5,6 +5,7 @@ using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
 using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
+using InstaConnect.Follows.Web.Features.Follows.Utilities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.Utilities;
@@ -16,7 +17,7 @@ namespace InstaConnect.Follows.Web.Features.Follows.Controllers.v1;
 
 [ApiController]
 [ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/follows")]
+[Route(FollowRoutes.Prefix)]
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class FollowController : ControllerBase
 {
@@ -35,7 +36,7 @@ public class FollowController : ControllerBase
     }
 
     // GET: api/follows
-    [HttpGet]
+    [HttpGet(FollowRoutes.Default)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<FollowPaginationQueryResponse>> GetAllAsync(
@@ -50,7 +51,7 @@ public class FollowController : ControllerBase
     }
 
     // GET: api/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpGet("{id}")]
+    [HttpGet(FollowRoutes.Id)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<FollowQueryResponse>> GetByIdAsync(
@@ -65,7 +66,7 @@ public class FollowController : ControllerBase
     }
 
     // POST: api/follows
-    [HttpPost]
+    [HttpPost(FollowRoutes.Default)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -83,7 +84,7 @@ public class FollowController : ControllerBase
     }
 
     //DELETE: api/follows/5f0f2dd0-e957-4d72-8141-767a36fc6e95
-    [HttpDelete("{id}")]
+    [HttpDelete(FollowRoutes.Id)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]

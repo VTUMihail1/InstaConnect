@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Web.FunctionalTests.Utilities;
@@ -26,21 +27,24 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            SharedTestUtilities.GetString(length),
-            FollowTestUtilities.ValidUserName,
-            existingFollowingId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue);
+
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = SharedTestUtilities.GetString(length),
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response.Should().Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -52,21 +56,24 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            existingFollowerId,
-            SharedTestUtilities.GetString(length),
-            existingFollowingId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue);
+
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = SharedTestUtilities.GetString(length),
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response.Should().Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -78,21 +85,24 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            existingFollowerId,
-            FollowTestUtilities.ValidUserName,
-            SharedTestUtilities.GetString(length),
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue);
+
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = SharedTestUtilities.GetString(length),
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response.Should().Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -104,21 +114,24 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            existingFollowerId,
-            FollowTestUtilities.ValidUserName,
-            existingFollowingId,
-            SharedTestUtilities.GetString(length),
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue);
+
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = existingFollowingId,
+            FollowingName = SharedTestUtilities.GetString(length),
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response.Should().Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
@@ -128,21 +141,24 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            existingFollowerId,
-            FollowTestUtilities.ValidUserName,
-            existingFollowingId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.InvalidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue);
+
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.InvalidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response.Should().Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -154,21 +170,24 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            existingFollowerId,
-            FollowTestUtilities.ValidUserName,
-            existingFollowingId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue);
+
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = SharedTestUtilities.GetString(length),
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response.Should().Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -180,24 +199,25 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            existingFollowerId,
-            FollowTestUtilities.ValidUserName,
-            existingFollowingId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            value,
-            FollowTestUtilities.ValidPageSizeValue);
+
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = value,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response.Should().Be(HttpStatusCode.BadRequest);
     }
-
-
 
     [Theory]
     [InlineData(SharedBusinessConfigurations.PAGE_SIZE_MIN_VALUE - 1)]
@@ -208,87 +228,223 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            existingFollowerId,
-            FollowTestUtilities.ValidUserName,
-            existingFollowingId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            value);
+
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = value
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response.Should().Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldReturnOkResponse_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnOkResponse_WhenValidRequest()
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            existingFollowerId,
-            FollowTestUtilities.ValidUserName,
-            existingFollowingId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue);
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        response.Should().Be(HttpStatusCode.OK);
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValidAndFollowerIdCaseDoesNotMatch()
+    public async Task GetAllAsync_ShouldOkStatusCodeResponse_WhenRequestIsValidAndFollowerNameCaseDoesNotMatch()
     {
         // Arrange
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollowerId),
-            FollowTestUtilities.ValidUserName,
-            existingFollowingId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue);
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var followPaginationQueryResponse = await response
-            .Content
-            .ReadFromJsonAsync<FollowPaginationQueryResponse>();
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
 
         // Assert
-        followPaginationQueryResponse
+        response.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task GetAllAsync_ShouldOkStatusCodeResponse_WhenRequestIsValidAndFollowerNameIsNotFull()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
+
+        // Act
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+
+        // Assert
+        response.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task GetAllAsync_ShouldOkStatusCodeResponse_WhenRequestIsValidAndFollowingIdCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
+
+        // Act
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+
+        // Assert
+        response.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task GetAllAsync_ShouldOkStatusCodeResponse_WhenRequestIsValidAndFollowingNameCaseDoesNotMatch()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = existingFollowingId,
+            FollowingName = SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
+
+        // Act
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+
+        // Assert
+        response.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task GetAllAsync_ShouldOkStatusCodeResponse_WhenRequestIsValidAndFollowingNameIsNotFull()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = existingFollowingId,
+            FollowingName = SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
+
+        // Act
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+
+        // Assert
+        response.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task GetAllAsync_ShouldOkStatusCodeResponse_WhenRouteHasNoParameters()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+
+        // Act
+        var response = await FollowsClient.GetAllStatusCodeAsync();
+
+        // Assert
+        response
             .Should()
-            .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingFollowId &&
-                                                               m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
-                                                               m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
-                                                               mc.Page == FollowTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
+            .Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task GetAllAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValid()
+    {
+        // Arrange
+        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
+
+        // Act
+        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+
+        // Assert
+        response.Should().Be(HttpStatusCode.OK);
     }
 
     [Fact]
@@ -298,25 +454,23 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            existingFollowerId,
-            SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
-            existingFollowingId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue);
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var followPaginationQueryResponse = await response
-            .Content
-            .ReadFromJsonAsync<FollowPaginationQueryResponse>();
+        var response = await FollowsClient.GetAllAsync(request);
 
         // Assert
-        followPaginationQueryResponse
+        response
             .Should()
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
@@ -340,25 +494,23 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            existingFollowerId,
-            SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
-            existingFollowingId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue);
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var followPaginationQueryResponse = await response
-            .Content
-            .ReadFromJsonAsync<FollowPaginationQueryResponse>();
+        var response = await FollowsClient.GetAllAsync(request);
 
         // Assert
-        followPaginationQueryResponse
+        response
             .Should()
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
@@ -382,25 +534,23 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            existingFollowerId,
-            FollowTestUtilities.ValidUserName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollowingId),
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue);
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            FollowingId = existingFollowingId,
+            FollowingName = FollowTestUtilities.ValidUserName,
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var followPaginationQueryResponse = await response
-            .Content
-            .ReadFromJsonAsync<FollowPaginationQueryResponse>();
+        var response = await FollowsClient.GetAllAsync(request);
 
         // Assert
-        followPaginationQueryResponse
+        response
             .Should()
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
@@ -424,25 +574,23 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            existingFollowerId,
-            FollowTestUtilities.ValidUserName,
-            existingFollowingId,
-            SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue);
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = existingFollowingId,
+            FollowingName = SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var followPaginationQueryResponse = await response
-            .Content
-            .ReadFromJsonAsync<FollowPaginationQueryResponse>();
+        var response = await FollowsClient.GetAllAsync(request);
 
         // Assert
-        followPaginationQueryResponse
+        response
             .Should()
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
@@ -466,25 +614,23 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var route = GetApiRoute(
-            existingFollowerId,
-            FollowTestUtilities.ValidUserName,
-            existingFollowingId,
-            SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue);
+        var request = new GetAllFollowsRequest
+        {
+            FollowerId = existingFollowerId,
+            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowingId = existingFollowingId,
+            FollowingName = SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
+            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
+            Page = FollowTestUtilities.ValidPageValue,
+            PageSize = FollowTestUtilities.ValidPageSizeValue
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var followPaginationQueryResponse = await response
-            .Content
-            .ReadFromJsonAsync<FollowPaginationQueryResponse>();
+        var response = await FollowsClient.GetAllAsync(request);
 
         // Assert
-        followPaginationQueryResponse
+        response
             .Should()
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
@@ -508,16 +654,12 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-
         // Act
-        var response = await HttpClient.GetAsync(ApiRoute, CancellationToken);
 
-        var followPaginationQueryResponse = await response
-            .Content
-            .ReadFromJsonAsync<FollowPaginationQueryResponse>();
+        var response = await FollowsClient.GetAllAsync();
 
         // Assert
-        followPaginationQueryResponse
+        response
             .Should()
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
@@ -532,24 +674,5 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
                                                                mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
-    }
-
-    private string GetApiRoute(string followerId, string followerName, string followingId, string followingName, SortOrder sortOrder, string sortPropertyName, int page, int pageSize)
-    {
-        var routeTemplate = "{0}?followerId={1}&followerName={2}&followingId={3}&followingName={4}&sortOrder={5}&sortPropertyName={6}&page={7}&pageSize={8}";
-
-        var route = string.Format(
-            routeTemplate,
-            ApiRoute,
-            followerId,
-            followerName,
-            followingId,
-            followingName,
-            sortOrder,
-            sortPropertyName,
-            page,
-            pageSize);
-
-        return route;
     }
 }
