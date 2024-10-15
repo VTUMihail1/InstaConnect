@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Follows.Business.Features.Follows.Extensions;
-using InstaConnect.Follows.Business.Features.Users.Extensions;
 using InstaConnect.Shared.Business.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,8 +12,7 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
-            .AddFollowServices()
-            .AddUserServices();
+            .AddFollowServices();
 
         serviceCollection
             .AddMediatR(currentAssembly)

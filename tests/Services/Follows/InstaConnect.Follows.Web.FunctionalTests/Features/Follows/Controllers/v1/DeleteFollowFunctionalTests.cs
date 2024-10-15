@@ -11,7 +11,7 @@ namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Controllers.
 
 public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
 {
-    public DeleteFollowFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public DeleteFollowFunctionalTests(FollowsFunctionalTestWebAppFactory followsFunctionalTestWebAppFactory) : base(followsFunctionalTestWebAppFactory)
     {
     }
 
@@ -38,8 +38,8 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Theory]
-    [InlineData(FollowBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(FollowConfigurations.IdMinLength - 1)]
+    [InlineData(FollowConfigurations.IdMaxLength + 1)]
     public async Task DeleteAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -89,8 +89,8 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(FollowConfigurations.IdMinLength - 1)]
+    [InlineData(FollowConfigurations.IdMaxLength + 1)]
     public async Task DeleteAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange

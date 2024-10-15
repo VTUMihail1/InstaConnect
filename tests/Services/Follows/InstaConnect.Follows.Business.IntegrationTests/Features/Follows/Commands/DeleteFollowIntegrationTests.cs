@@ -12,7 +12,7 @@ namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Comman
 
 public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
 {
-    public DeleteFollowIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public DeleteFollowIntegrationTests(FollowsIntegrationTestWebAppFactory followIntegrationTestWebAppFactory) : base(followIntegrationTestWebAppFactory)
     {
 
     }
@@ -38,8 +38,8 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(FollowBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(FollowConfigurations.IdMinLength - 1)]
+    [InlineData(FollowConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -79,8 +79,8 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(FollowConfigurations.IdMinLength - 1)]
+    [InlineData(FollowConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange

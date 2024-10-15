@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
@@ -13,14 +14,14 @@ namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Controllers.
 
 public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
 {
-    public GetAllFollowsFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetAllFollowsFunctionalTests(FollowsFunctionalTestWebAppFactory followsFunctionalTestWebAppFactory) : base(followsFunctionalTestWebAppFactory)
     {
 
     }
 
     [Theory]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(FollowConfigurations.IdMinLength - 1)]
+    [InlineData(FollowConfigurations.IdMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenFollowerIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -31,9 +32,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = SharedTestUtilities.GetString(length),
-            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowerName = UserTestUtilities.ValidName,
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -48,8 +49,8 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Theory]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenFollowerNameLengthIsInvalid(int length)
     {
         // Arrange
@@ -62,7 +63,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             FollowerId = existingFollowerId,
             FollowerName = SharedTestUtilities.GetString(length),
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -77,8 +78,8 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Theory]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -89,9 +90,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowerName = UserTestUtilities.ValidName,
             FollowingId = SharedTestUtilities.GetString(length),
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -106,8 +107,8 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
     }
 
     [Theory]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenFollowingNameLengthIsInvalid(int length)
     {
         // Arrange
@@ -118,7 +119,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowerName = UserTestUtilities.ValidName,
             FollowingId = existingFollowingId,
             FollowingName = SharedTestUtilities.GetString(length),
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
@@ -145,9 +146,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowerName = UserTestUtilities.ValidName,
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.InvalidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -174,9 +175,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowerName = UserTestUtilities.ValidName,
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = SharedTestUtilities.GetString(length),
             Page = FollowTestUtilities.ValidPageValue,
@@ -203,9 +204,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowerName = UserTestUtilities.ValidName,
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = value,
@@ -232,9 +233,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowerName = UserTestUtilities.ValidName,
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -258,9 +259,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowerName = UserTestUtilities.ValidName,
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -284,9 +285,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            FollowerName = SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -310,9 +311,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
+            FollowerName = SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -336,9 +337,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            FollowerName = SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -362,9 +363,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowerName = UserTestUtilities.ValidName,
             FollowingId = existingFollowingId,
-            FollowingName = SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            FollowingName = SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -388,9 +389,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowerName = UserTestUtilities.ValidName,
             FollowingId = existingFollowingId,
-            FollowingName = SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
+            FollowingName = SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -431,9 +432,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowerName = UserTestUtilities.ValidName,
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -457,9 +458,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            FollowerName = SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -475,11 +476,11 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
+                                                               m.FollowerName == UserTestUtilities.ValidName &&
+                                                               m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
+                                                               m.FollowingName == UserTestUtilities.ValidName &&
+                                                               m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                                mc.Page == FollowTestUtilities.ValidPageValue &&
                                                                mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
@@ -497,9 +498,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
+            FollowerName = SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -515,11 +516,11 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
+                                                               m.FollowerName == UserTestUtilities.ValidName &&
+                                                               m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
+                                                               m.FollowingName == UserTestUtilities.ValidName &&
+                                                               m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                                mc.Page == FollowTestUtilities.ValidPageValue &&
                                                                mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
@@ -537,9 +538,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            FollowerName = SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
             FollowingId = existingFollowingId,
-            FollowingName = FollowTestUtilities.ValidUserName,
+            FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -555,11 +556,11 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
+                                                               m.FollowerName == UserTestUtilities.ValidName &&
+                                                               m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
+                                                               m.FollowingName == UserTestUtilities.ValidName &&
+                                                               m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                                mc.Page == FollowTestUtilities.ValidPageValue &&
                                                                mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
@@ -577,9 +578,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowerName = UserTestUtilities.ValidName,
             FollowingId = existingFollowingId,
-            FollowingName = SharedTestUtilities.GetNonCaseMatchingString(FollowTestUtilities.ValidUserName),
+            FollowingName = SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -595,11 +596,11 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
+                                                               m.FollowerName == UserTestUtilities.ValidName &&
+                                                               m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
+                                                               m.FollowingName == UserTestUtilities.ValidName &&
+                                                               m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                                mc.Page == FollowTestUtilities.ValidPageValue &&
                                                                mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
@@ -617,9 +618,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
-            FollowerName = FollowTestUtilities.ValidUserName,
+            FollowerName = UserTestUtilities.ValidName,
             FollowingId = existingFollowingId,
-            FollowingName = SharedTestUtilities.GetHalfStartString(FollowTestUtilities.ValidUserName),
+            FollowingName = SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
             Page = FollowTestUtilities.ValidPageValue,
@@ -635,11 +636,11 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
+                                                               m.FollowerName == UserTestUtilities.ValidName &&
+                                                               m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
+                                                               m.FollowingName == UserTestUtilities.ValidName &&
+                                                               m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                                mc.Page == FollowTestUtilities.ValidPageValue &&
                                                                mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
@@ -664,11 +665,11 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingFollowId &&
                                                                m.FollowerId == existingFollowerId &&
-                                                               m.FollowerName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
+                                                               m.FollowerName == UserTestUtilities.ValidName &&
+                                                               m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.FollowingId == existingFollowingId &&
-                                                               m.FollowingName == FollowTestUtilities.ValidUserName &&
-                                                               m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
+                                                               m.FollowingName == UserTestUtilities.ValidName &&
+                                                               m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                                mc.Page == FollowTestUtilities.ValidPageValue &&
                                                                mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&

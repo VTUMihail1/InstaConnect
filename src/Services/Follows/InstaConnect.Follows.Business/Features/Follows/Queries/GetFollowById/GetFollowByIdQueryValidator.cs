@@ -8,7 +8,7 @@ public class GetFollowByIdQueryValidator : AbstractValidator<GetFollowByIdQuery>
     {
         RuleFor(q => q.Id)
             .NotEmpty()
-            .MinimumLength(FollowBusinessConfigurations.ID_MIN_LENGTH)
-            .MaximumLength(FollowBusinessConfigurations.ID_MAX_LENGTH);
+            .MinimumLength(FollowConfigurations.IdMinLength)
+            .MaximumLength(FollowConfigurations.IdMaxLength);
     }
 }

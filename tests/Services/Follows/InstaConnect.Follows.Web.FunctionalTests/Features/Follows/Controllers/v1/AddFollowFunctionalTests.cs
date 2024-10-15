@@ -15,7 +15,7 @@ namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Controllers.
 
 public class AddFollowFunctionalTests : BaseFollowFunctionalTest
 {
-    public AddFollowFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public AddFollowFunctionalTests(FollowsFunctionalTestWebAppFactory followsFunctionalTestWebAppFactory) : base(followsFunctionalTestWebAppFactory)
     {
 
     }
@@ -64,8 +64,8 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -111,8 +111,8 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(FollowConfigurations.IdMinLength - 1)]
+    [InlineData(FollowConfigurations.IdMaxLength + 1)]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange

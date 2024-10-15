@@ -11,7 +11,7 @@ using InstaConnect.Shared.Common.Utilities;
 namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Commands;
 public class AddFollowIntegrationTests : BaseFollowIntegrationTest
 {
-    public AddFollowIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public AddFollowIntegrationTests(FollowsIntegrationTestWebAppFactory followIntegrationTestWebAppFactory) : base(followIntegrationTestWebAppFactory)
     {
 
     }
@@ -34,8 +34,8 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(FollowConfigurations.IdMinLength - 1)]
+    [InlineData(FollowConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -69,8 +69,8 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange

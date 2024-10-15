@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
@@ -12,14 +13,14 @@ namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Controllers.
 
 public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
 {
-    public GetFollowByIdFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetFollowByIdFunctionalTests(FollowsFunctionalTestWebAppFactory followsFunctionalTestWebAppFactory) : base(followsFunctionalTestWebAppFactory)
     {
 
     }
 
     [Theory]
-    [InlineData(FollowBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(FollowConfigurations.IdMinLength - 1)]
+    [InlineData(FollowConfigurations.IdMaxLength + 1)]
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -115,11 +116,11 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
             .Should()
             .Match<FollowQueryResponse>(m => m.Id == existingFollowId &&
                                  m.FollowerId == existingFollowerId &&
-                                 m.FollowerName == FollowTestUtilities.ValidUserName &&
-                                 m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
+                                 m.FollowerName == UserTestUtilities.ValidName &&
+                                 m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
                                  m.FollowingId == existingFollowingId &&
-                                 m.FollowingName == FollowTestUtilities.ValidUserName &&
-                                 m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage);
+                                 m.FollowingName == UserTestUtilities.ValidName &&
+                                 m.FollowingProfileImage == UserTestUtilities.ValidProfileImage);
     }
 
     [Fact]
@@ -142,10 +143,10 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
             .Should()
             .Match<FollowQueryResponse>(m => m.Id == existingFollowId &&
                                  m.FollowerId == existingFollowerId &&
-                                 m.FollowerName == FollowTestUtilities.ValidUserName &&
-                                 m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
+                                 m.FollowerName == UserTestUtilities.ValidName &&
+                                 m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
                                  m.FollowingId == existingFollowingId &&
-                                 m.FollowingName == FollowTestUtilities.ValidUserName &&
-                                 m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage);
+                                 m.FollowingName == UserTestUtilities.ValidName &&
+                                 m.FollowingProfileImage == UserTestUtilities.ValidProfileImage);
     }
 }

@@ -1,12 +1,12 @@
-﻿using InstaConnect.Follows.Business.Features.Users.Consumers;
-using InstaConnect.Follows.Business.UnitTests.Features.Users.Utilities;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
+﻿using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Data.Features.Users.Models.Entities;
+using InstaConnect.Follows.Web.Features.Users.Consumers;
+using InstaConnect.Follows.Web.UnitTests.Features.Users.Utilities;
 using InstaConnect.Shared.Business.Contracts.Users;
 using MassTransit;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Users.Consumers;
+namespace InstaConnect.Follows.Web.UnitTests.Features.Users.Consumers;
 
 public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
 {
@@ -27,13 +27,14 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldCallGetByIdAsyncMethod_WhenUserIdIsInvalid()
     {
         // Arrange
+        var existingUserId = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
-            UserTestUtilities.ValidCurrentUserId,
-            UserTestUtilities.ValidUserName,
-            UserTestUtilities.ValidUserEmail,
-            UserTestUtilities.ValidUserFirstName,
-            UserTestUtilities.ValidUserLastName,
-            UserTestUtilities.ValidUserProfileImage);
+            existingUserId,
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -43,20 +44,21 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(UserTestUtilities.ValidCurrentUserId, CancellationToken);
+            .GetByIdAsync(existingUserId, CancellationToken);
     }
 
     [Fact]
     public async Task Consume_ShouldNotAddMethod_WhenUserIdIsInvalid()
     {
         // Arrange
+        var existingUserId = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
-            UserTestUtilities.ValidCurrentUserId,
-            UserTestUtilities.ValidUserName,
-            UserTestUtilities.ValidUserEmail,
-            UserTestUtilities.ValidUserFirstName,
-            UserTestUtilities.ValidUserLastName,
-            UserTestUtilities.ValidUserProfileImage);
+            existingUserId,
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -73,13 +75,14 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldNotCallSaveChangesAsync_WhenUserIdIsInvalid()
     {
         // Arrange
+        var existingUserId = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
-            UserTestUtilities.ValidCurrentUserId,
-            UserTestUtilities.ValidUserName,
-            UserTestUtilities.ValidUserEmail,
-            UserTestUtilities.ValidUserFirstName,
-            UserTestUtilities.ValidUserLastName,
-            UserTestUtilities.ValidUserProfileImage);
+            existingUserId,
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -96,13 +99,14 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldGetById_WhenUserDeletedEventIsValid()
     {
         // Arrange
+        var existingUserId = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
-            UserTestUtilities.InvalidUserId,
-            UserTestUtilities.ValidUserName,
-            UserTestUtilities.ValidUserEmail,
-            UserTestUtilities.ValidUserFirstName,
-            UserTestUtilities.ValidUserLastName,
-            UserTestUtilities.ValidUserProfileImage);
+            UserTestUtilities.InvalidId,
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -112,20 +116,21 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(UserTestUtilities.InvalidUserId, CancellationToken);
+            .GetByIdAsync(UserTestUtilities.InvalidId, CancellationToken);
     }
 
     [Fact]
     public async Task Consume_ShouldAddUserToRepository_WhenUserDeletedEventIsValid()
     {
         // Arrange
+        var existingUserId = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
-            UserTestUtilities.InvalidUserId,
-            UserTestUtilities.ValidUserName,
-            UserTestUtilities.ValidUserEmail,
-            UserTestUtilities.ValidUserFirstName,
-            UserTestUtilities.ValidUserLastName,
-            UserTestUtilities.ValidUserProfileImage);
+            UserTestUtilities.InvalidId,
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 
@@ -135,25 +140,26 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         UserWriteRepository
             .Received(1)
-            .Add(Arg.Is<User>(m => m.Id == UserTestUtilities.InvalidUserId &&
-                                   m.UserName == UserTestUtilities.ValidUserName &&
-                                   m.FirstName == UserTestUtilities.ValidUserFirstName &&
-                                   m.LastName == UserTestUtilities.ValidUserLastName &&
-                                   m.Email == UserTestUtilities.ValidUserEmail &&
-                                   m.ProfileImage == UserTestUtilities.ValidUserProfileImage));
+            .Add(Arg.Is<User>(m => m.Id == UserTestUtilities.InvalidId &&
+                                   m.UserName == UserTestUtilities.ValidAddName &&
+                                   m.FirstName == UserTestUtilities.ValidAddFirstName &&
+                                   m.LastName == UserTestUtilities.ValidAddLastName &&
+                                   m.Email == UserTestUtilities.ValidAddEmail &&
+                                   m.ProfileImage == UserTestUtilities.ValidAddProfileImage));
     }
 
     [Fact]
     public async Task Consume_ShouldCallSaveChangesAsync_WhenUserDeletedEventIsValid()
     {
         // Arrange
+        var existingUserId = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
-            UserTestUtilities.InvalidUserId,
-            UserTestUtilities.ValidUserName,
-            UserTestUtilities.ValidUserEmail,
-            UserTestUtilities.ValidUserFirstName,
-            UserTestUtilities.ValidUserLastName,
-            UserTestUtilities.ValidUserProfileImage);
+            UserTestUtilities.InvalidId,
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddProfileImage);
 
         _userCreatedEventConsumeContext.Message.Returns(userCreatedEvent);
 

@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Data;
 using InstaConnect.Follows.Data.Features.Follows.Abstractions;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
@@ -10,15 +11,30 @@ using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Helpers;
 using InstaConnect.Follows.Web.FunctionalTests.Utilities;
 using InstaConnect.Shared.Data.Abstractions;
 using InstaConnect.Shared.Web.FunctionalTests.Utilities;
+using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
 
-public abstract class BaseFollowFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
+public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsFunctionalTestWebAppFactory>, IAsyncLifetime
 {
-    private const string API_ROUTE = "api/v1/follows";
+    protected CancellationToken CancellationToken { get; }
 
+    protected Dictionary<string, object> ValidJwtConfig { get; }
+
+    protected IServiceScope ServiceScope { get; }
+
+    protected ITestHarness TestHarness
+    {
+        get
+        {
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var testHarness = serviceScope.ServiceProvider.GetTestHarness();
+
+            return testHarness;
+        }
+    }
 
     protected IFollowWriteRepository FollowWriteRepository
     {
@@ -44,11 +60,11 @@ public abstract class BaseFollowFunctionalTest : BaseSharedFunctionalTest, IClas
 
     protected IFollowsClient FollowsClient { get; }
 
-    protected BaseFollowFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(
-        functionalTestWebAppFactory.CreateClient(),
-        functionalTestWebAppFactory.Services.CreateScope(),
-        API_ROUTE)
+    protected BaseFollowFunctionalTest(FollowsFunctionalTestWebAppFactory functionalTestWebAppFactory)
     {
+        ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
+        CancellationToken = new();
+        ValidJwtConfig = [];
         FollowsClient = new FollowsClient(functionalTestWebAppFactory.CreateClient());
     }
 
@@ -70,11 +86,11 @@ public abstract class BaseFollowFunctionalTest : BaseSharedFunctionalTest, IClas
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            FollowTestUtilities.ValidUserFirstName,
-            FollowTestUtilities.ValidUserLastName,
-            FollowTestUtilities.ValidUserEmail,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidUserProfileImage);
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();

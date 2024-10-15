@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Follows.Business.Features.Users.Extensions;
+namespace InstaConnect.Follows.Web.Features.Users.Extensions;
 
 public static class ServiceCollectionExtensions
 {

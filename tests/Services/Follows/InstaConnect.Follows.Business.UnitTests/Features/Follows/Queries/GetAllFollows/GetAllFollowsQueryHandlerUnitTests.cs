@@ -3,6 +3,7 @@ using InstaConnect.Follows.Business.Features.Follows.Models;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
 using NSubstitute;
 
@@ -23,11 +24,14 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetAllFollowsQuery(
-            FollowTestUtilities.ValidFollowCurrentUserId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidFollowFollowingId,
-            FollowTestUtilities.ValidUserName,
+            existingFollowerId,
+            UserTestUtilities.ValidName,
+            existingFollowingId,
+            UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -40,10 +44,10 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
         await FollowReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m =>
-                                                                        m.FollowerId == FollowTestUtilities.ValidFollowCurrentUserId &&
-                                                                        m.FollowerName == FollowTestUtilities.ValidUserName &&
-                                                                        m.FollowingId == FollowTestUtilities.ValidFollowFollowingId &&
-                                                                        m.FollowingName == FollowTestUtilities.ValidUserName &&
+                                                                        m.FollowerId == existingFollowerId &&
+                                                                        m.FollowerName == UserTestUtilities.ValidName &&
+                                                                        m.FollowingId == existingFollowingId &&
+                                                                        m.FollowingName == UserTestUtilities.ValidName &&
                                                                         m.Page == FollowTestUtilities.ValidPageValue &&
                                                                         m.PageSize == FollowTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == FollowTestUtilities.ValidSortOrderProperty &&
@@ -54,11 +58,14 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetAllFollowsQuery(
-            FollowTestUtilities.ValidFollowCurrentUserId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidFollowFollowingId,
-            FollowTestUtilities.ValidUserName,
+            existingFollowerId,
+            UserTestUtilities.ValidName,
+            existingFollowingId,
+            UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -70,13 +77,13 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == FollowTestUtilities.ValidId &&
-                                                           m.FollowerId == FollowTestUtilities.ValidFollowCurrentUserId &&
-                                                           m.FollowerName == FollowTestUtilities.ValidUserName &&
-                                                           m.FollowerProfileImage == FollowTestUtilities.ValidUserProfileImage &&
-                                                           m.FollowingId == FollowTestUtilities.ValidFollowFollowingId &&
-                                                           m.FollowingName == FollowTestUtilities.ValidUserName &&
-                                                           m.FollowingProfileImage == FollowTestUtilities.ValidUserProfileImage) &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
+                                                           m.FollowerId == existingFollowerId &&
+                                                           m.FollowerName == UserTestUtilities.ValidName &&
+                                                           m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                           m.FollowingId == existingFollowingId &&
+                                                           m.FollowingName == UserTestUtilities.ValidName &&
+                                                           m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
                                                            mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&

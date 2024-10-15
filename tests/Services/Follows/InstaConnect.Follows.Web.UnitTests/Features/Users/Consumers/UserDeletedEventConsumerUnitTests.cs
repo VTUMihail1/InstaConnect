@@ -1,12 +1,12 @@
-﻿using InstaConnect.Follows.Business.Features.Users.Consumers;
-using InstaConnect.Follows.Business.UnitTests.Features.Users.Utilities;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
+﻿using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Data.Features.Users.Models.Entities;
+using InstaConnect.Follows.Web.Features.Users.Consumers;
+using InstaConnect.Follows.Web.UnitTests.Features.Users.Utilities;
 using InstaConnect.Shared.Business.Contracts.Users;
 using MassTransit;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Users.Consumers;
+namespace InstaConnect.Follows.Web.UnitTests.Features.Users.Consumers;
 
 public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
 {
@@ -26,7 +26,8 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldCallGetUserByIdAsyncMethod_WhenUserIdIsInvalid()
     {
         // Arrange
-        var userDeletedEvent = new UserDeletedEvent(UserTestUtilities.InvalidUserId);
+        var existingUserId = CreateUser();
+        var userDeletedEvent = new UserDeletedEvent(UserTestUtilities.InvalidId);
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 
@@ -36,14 +37,15 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(UserTestUtilities.InvalidUserId, CancellationToken);
+            .GetByIdAsync(UserTestUtilities.InvalidId, CancellationToken);
     }
 
     [Fact]
     public async Task Consume_ShouldNotDeleteMethod_WhenUserIdIsInvalid()
     {
         // Arrange
-        var userDeletedEvent = new UserDeletedEvent(UserTestUtilities.InvalidUserId);
+        var existingUserId = CreateUser();
+        var userDeletedEvent = new UserDeletedEvent(UserTestUtilities.InvalidId);
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 
@@ -60,7 +62,8 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldNotCallSaveChangesAsync_WhenUserIdIsInvalid()
     {
         // Arrange
-        var userDeletedEvent = new UserDeletedEvent(UserTestUtilities.InvalidUserId);
+        var existingUserId = CreateUser();
+        var userDeletedEvent = new UserDeletedEvent(UserTestUtilities.InvalidId);
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 
@@ -77,7 +80,8 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldGetUserById_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var userDeletedEvent = new UserDeletedEvent(UserTestUtilities.ValidCurrentUserId);
+        var existingUserId = CreateUser();
+        var userDeletedEvent = new UserDeletedEvent(existingUserId);
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 
@@ -87,14 +91,15 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(UserTestUtilities.ValidCurrentUserId, CancellationToken);
+            .GetByIdAsync(existingUserId, CancellationToken);
     }
 
     [Fact]
     public async Task Consume_ShouldAddUserToRepository_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var userDeletedEvent = new UserDeletedEvent(UserTestUtilities.ValidCurrentUserId);
+        var existingUserId = CreateUser();
+        var userDeletedEvent = new UserDeletedEvent(existingUserId);
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 
@@ -104,19 +109,20 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         UserWriteRepository
             .Received(1)
-            .Delete(Arg.Is<User>(m => m.Id == UserTestUtilities.ValidCurrentUserId &&
-                                   m.UserName == UserTestUtilities.ValidUserName &&
-                                   m.FirstName == UserTestUtilities.ValidUserFirstName &&
-                                   m.LastName == UserTestUtilities.ValidUserLastName &&
-                                   m.Email == UserTestUtilities.ValidUserEmail &&
-                                   m.ProfileImage == UserTestUtilities.ValidUserProfileImage));
+            .Delete(Arg.Is<User>(m => m.Id == existingUserId &&
+                                   m.UserName == UserTestUtilities.ValidName &&
+                                   m.FirstName == UserTestUtilities.ValidFirstName &&
+                                   m.LastName == UserTestUtilities.ValidLastName &&
+                                   m.Email == UserTestUtilities.ValidEmail &&
+                                   m.ProfileImage == UserTestUtilities.ValidProfileImage));
     }
 
     [Fact]
     public async Task Consume_ShouldCallSaveChangesAsync_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var userDeletedEvent = new UserDeletedEvent(UserTestUtilities.ValidCurrentUserId);
+        var existingUserId = CreateUser();
+        var userDeletedEvent = new UserDeletedEvent(existingUserId);
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 

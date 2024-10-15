@@ -19,6 +19,9 @@ public class GetFollowByIdQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetFollowByIdQuery(null!);
 
         // Act
@@ -30,11 +33,14 @@ public class GetFollowByIdQueryValidatorUnitTests : BaseFollowUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(FollowBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(FollowConfigurations.IdMinLength - 1)]
+    [InlineData(FollowConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetFollowByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -48,7 +54,10 @@ public class GetFollowByIdQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var query = new GetFollowByIdQuery(FollowTestUtilities.ValidId);
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var query = new GetFollowByIdQuery(existingFollowId);
 
         // Act
         var result = _validator.TestValidate(query);

@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Follows.Business.Features.Follows.Extensions;
 using InstaConnect.Follows.Web.Features.Follows.Extensions;
+using InstaConnect.Follows.Web.Features.Users.Extensions;
 using InstaConnect.Shared.Web.Extensions;
 
 namespace InstaConnect.Follows.Web.Extensions;
@@ -11,7 +12,8 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
-            .AddFollowServices();
+            .AddFollowServices()
+            .AddUserServices();
 
         serviceCollection
             .AddJwtBearer(configuration)

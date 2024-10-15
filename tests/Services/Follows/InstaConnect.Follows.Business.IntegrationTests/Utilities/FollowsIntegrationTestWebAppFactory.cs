@@ -1,5 +1,4 @@
-﻿using InstaConnect.Follows.Business.Features.Users.Consumers;
-using InstaConnect.Follows.Data;
+﻿using InstaConnect.Follows.Data;
 using InstaConnect.Shared.Business.IntegrationTests.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;
@@ -10,11 +9,11 @@ using Testcontainers.MsSql;
 
 namespace InstaConnect.Follows.Business.IntegrationTests.Utilities;
 
-public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
+public class FollowsIntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly MsSqlContainer _msSqlContainer;
 
-    public IntegrationTestWebAppFactory()
+    public FollowsIntegrationTestWebAppFactory()
     {
         _msSqlContainer = new MsSqlBuilder()
         .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
@@ -28,12 +27,7 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
         {
             serviceCollection.AddTestDbContext<FollowsContext>(opt => opt.UseSqlServer(_msSqlContainer.GetConnectionString()));
 
-            serviceCollection.AddMassTransitTestHarness(cfg =>
-            {
-                cfg.AddConsumer<UserCreatedEventConsumer>();
-                cfg.AddConsumer<UserUpdatedEventConsumer>();
-                cfg.AddConsumer<UserDeletedEventConsumer>();
-            });
+            serviceCollection.AddMassTransitTestHarness();
         });
     }
 

@@ -3,7 +3,7 @@ using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Data.Abstractions;
 using MassTransit;
 
-namespace InstaConnect.Follows.Business.Features.Users.Consumers;
+namespace InstaConnect.Follows.Web.Features.Users.Consumers;
 
 internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
 {

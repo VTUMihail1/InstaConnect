@@ -1,18 +1,19 @@
 ﻿using InstaConnect.Follows.Data.Features.Users.Abstractions;
+using InstaConnect.Follows.Data.Features.Users.Models.Entities;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Contracts.Users;
 using InstaConnect.Shared.Data.Abstractions;
 using MassTransit;
 
-namespace InstaConnect.Follows.Business.Features.Users.Consumers;
+namespace InstaConnect.Follows.Web.Features.Users.Consumers;
 
-internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEvent>
+internal class UserCreatedEventConsumer : IConsumer<UserCreatedEvent>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
 
-    public UserUpdatedEventConsumer(
+    public UserCreatedEventConsumer(
         IUnitOfWork unitOfWork,
         IInstaConnectMapper instaConnectMapper,
         IUserWriteRepository userWriteRepository)
@@ -22,17 +23,17 @@ internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEvent>
         _userWriteRepository = userWriteRepository;
     }
 
-    public async Task Consume(ConsumeContext<UserUpdatedEvent> context)
+    public async Task Consume(ConsumeContext<UserCreatedEvent> context)
     {
         var existingUser = await _userWriteRepository.GetByIdAsync(context.Message.Id, context.CancellationToken);
 
-        if (existingUser == null)
+        if (existingUser != null)
         {
             return;
         }
 
-        _instaConnectMapper.Map(context.Message, existingUser);
-        _userWriteRepository.Update(existingUser);
+        var user = _instaConnectMapper.Map<User>(context.Message);
+        _userWriteRepository.Add(user);
 
         await _unitOfWork.SaveChangesAsync(context.CancellationToken);
     }

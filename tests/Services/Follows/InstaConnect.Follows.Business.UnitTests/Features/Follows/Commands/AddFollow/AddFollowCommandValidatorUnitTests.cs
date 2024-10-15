@@ -19,9 +19,11 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
         var command = new AddFollowCommand(
             null!,
-            FollowTestUtilities.ValidFollowingId);
+            existingFollowingId);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -32,14 +34,16 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(FollowConfigurations.IdMinLength - 1)]
+    [InlineData(FollowConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
         var command = new AddFollowCommand(
             SharedTestUtilities.GetString(length)!,
-            FollowTestUtilities.ValidFollowingId);
+            existingFollowingId);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -52,8 +56,10 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForFollowingId_WhenFollowingIdIsNull()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
         var command = new AddFollowCommand(
-            FollowTestUtilities.ValidCurrentUserId,
+            existingFollowerId,
             null!);
 
         // Act
@@ -65,13 +71,15 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForFollwingId_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
         var command = new AddFollowCommand(
-            FollowTestUtilities.ValidCurrentUserId,
+            existingFollowerId,
             SharedTestUtilities.GetString(length));
 
         // Act
@@ -85,9 +93,11 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
         var command = new AddFollowCommand(
-            FollowTestUtilities.ValidCurrentUserId,
-            FollowTestUtilities.ValidFollowingId);
+            existingFollowerId,
+            existingFollowingId);
 
         // Act
         var result = _commandValidator.TestValidate(command);

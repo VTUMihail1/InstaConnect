@@ -1,67 +1,128 @@
 ﻿using AutoMapper;
 using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
+using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
 using InstaConnect.Follows.Business.Features.Follows.Models;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Users.Utilities;
+using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
+using InstaConnect.Follows.Data.Features.Users.Models.Entities;
 using InstaConnect.Follows.Web.Features.Follows.Mappings;
 using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.Helpers;
 using InstaConnect.Shared.Web.Abstractions;
+using InstaConnect.Shared.Web.Helpers;
 using InstaConnect.Shared.Web.Models.Users;
 using InstaConnect.Shared.Web.UnitTests.Utilities;
+using MassTransit.DependencyInjection;
 using NSubstitute;
 
 namespace InstaConnect.Follows.Web.UnitTests.Features.Follows.Utilities;
 
-public abstract class BaseFollowUnitTest : BaseSharedUnitTest
+public abstract class BaseFollowUnitTest
 {
-    public BaseFollowUnitTest() : base(
-        Substitute.For<IInstaConnectSender>(),
-        Substitute.For<ICurrentUserContext>(),
-        new InstaConnectMapper(
+    protected CancellationToken CancellationToken { get; }
+
+    protected IInstaConnectSender InstaConnectSender { get; }
+
+    protected ICurrentUserContext CurrentUserContext { get; }
+
+    protected IInstaConnectMapper InstaConnectMapper { get; }
+
+    public BaseFollowUnitTest()
+    {
+
+        CancellationToken = new();
+        InstaConnectSender = Substitute.For<IInstaConnectSender>();
+        CurrentUserContext = Substitute.For<ICurrentUserContext>();
+        InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
                 new MapperConfiguration(cfg =>
                 {
                     cfg.AddProfile<FollowCommandProfile>();
                     cfg.AddProfile<FollowQueryProfile>();
-                }))))
+                })));
+    }
+
+    public string CreateCurrentUser()
     {
+        var user = new User(
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
 
-        var existingMessageQueryViewModel = new FollowQueryViewModel(
-            FollowTestUtilities.ValidId,
-            FollowTestUtilities.ValidCurrentUserId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidUserProfileImage,
-            FollowTestUtilities.ValidFollowingId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidUserProfileImage);
+        var existingCurrentUserModel = new CurrentUserModel(
+            user.Id, 
+            UserTestUtilities.ValidName);
 
-        var existingMessageCommandViewModel = new FollowCommandViewModel(FollowTestUtilities.ValidId);
-        var existingCurrentUserModel = new CurrentUserModel(FollowTestUtilities.ValidCurrentUserId, FollowTestUtilities.ValidUserName);
-        var existingMessagePaginationCollectionModel = new FollowPaginationQueryViewModel(
-            [existingMessageQueryViewModel],
+        CurrentUserContext
+            .GetCurrentUser()
+            .Returns(existingCurrentUserModel);
+
+        return user.Id;
+    }
+
+    public string CreateUser()
+    {
+        var user = new User(
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
+
+        return user.Id;
+    }
+
+    public string CreateFollow(string followerId, string followingId)
+    {
+        var follow = new Follow(followerId, followingId);
+
+        var followCommandViewModel = new FollowCommandViewModel(follow.Id);
+
+        var followQueryViewModel = new FollowQueryViewModel(
+            follow.Id,
+            followerId,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage,
+            followingId,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
+
+        var followPaginationCollectionModel = new FollowPaginationQueryViewModel(
+            [followQueryViewModel],
             FollowTestUtilities.ValidPageValue,
             FollowTestUtilities.ValidPageSizeValue,
             FollowTestUtilities.ValidTotalCountValue,
             false,
             false);
 
-
-        CurrentUserContext
-            .GetCurrentUser()
-            .Returns(existingCurrentUserModel);
+        InstaConnectSender
+            .SendAsync(Arg.Is<GetAllFollowsQuery>(m =>
+                  m.FollowerId == followerId &&
+                  m.FollowerName == UserTestUtilities.ValidName &&
+                  m.FollowingId == followingId &&
+                  m.FollowingName == UserTestUtilities.ValidName &&
+                  m.SortOrder == FollowTestUtilities.ValidSortOrderProperty &&
+                  m.SortPropertyName == FollowTestUtilities.ValidSortPropertyName &&
+                  m.Page == FollowTestUtilities.ValidPageValue &&
+                  m.PageSize == FollowTestUtilities.ValidPageSizeValue), CancellationToken)
+            .Returns(followPaginationCollectionModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<GetAllFollowsQuery>(), CancellationToken)
-            .Returns(existingMessagePaginationCollectionModel);
+            .SendAsync(Arg.Is<GetFollowByIdQuery>(m => m.Id == follow.Id),
+                                                    CancellationToken)
+            .Returns(followQueryViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<GetFollowByIdQuery>(), CancellationToken)
-            .Returns(existingMessageQueryViewModel);
+            .SendAsync(Arg.Is<AddFollowCommand>(m => m.CurrentUserId == followerId &&
+                                                     m.FollowingId == followingId),
+                                                     CancellationToken)
+            .Returns(followCommandViewModel);
 
-        InstaConnectSender
-            .SendAsync(Arg.Any<AddFollowCommand>(), CancellationToken)
-            .Returns(existingMessageCommandViewModel);
+        return follow.Id;
     }
 }

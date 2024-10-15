@@ -1,10 +1,12 @@
 ﻿using InstaConnect.Follows.Business.IntegrationTests.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Data;
 using InstaConnect.Follows.Data.Features.Follows.Abstractions;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Data.Features.Users.Abstractions;
 using InstaConnect.Follows.Data.Features.Users.Models.Entities;
+using InstaConnect.Shared.Business.Abstractions;
 using InstaConnect.Shared.Business.IntegrationTests.Utilities;
 using InstaConnect.Shared.Data.Abstractions;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +14,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Utilities;
 
-public abstract class BaseFollowIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
+public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsIntegrationTestWebAppFactory>, IAsyncLifetime
 {
+    protected IServiceScope ServiceScope { get; }
+
+    protected CancellationToken CancellationToken { get; }
+
+    protected IInstaConnectSender InstaConnectSender { get; }
+
     protected IUserWriteRepository UserWriteRepository
     {
         get
@@ -47,10 +55,11 @@ public abstract class BaseFollowIntegrationTest : BaseSharedIntegrationTest, ICl
         }
     }
 
-    protected BaseFollowIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
-        : base(integrationTestWebAppFactory.Services.CreateScope())
+    protected BaseFollowIntegrationTest(FollowsIntegrationTestWebAppFactory integrationTestWebAppFactory)
     {
-
+        ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
+        CancellationToken = new CancellationToken();
+        InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
     }
 
     protected async Task<string> CreateFollowAsync(string followerId, string followingId, CancellationToken cancellationToken)
@@ -71,11 +80,11 @@ public abstract class BaseFollowIntegrationTest : BaseSharedIntegrationTest, ICl
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            FollowTestUtilities.ValidUserFirstName,
-            FollowTestUtilities.ValidUserLastName,
-            FollowTestUtilities.ValidUserEmail,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidUserProfileImage);
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();

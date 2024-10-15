@@ -8,12 +8,12 @@ public class AddFollowCommandValidator : AbstractValidator<AddFollowCommand>
     {
         RuleFor(c => c.CurrentUserId)
             .NotEmpty()
-            .MinimumLength(FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH)
-            .MaximumLength(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH);
+            .MinimumLength(UserConfigurations.IdMinLength)
+            .MaximumLength(UserConfigurations.IdMaxLength);
 
         RuleFor(c => c.FollowingId)
             .NotEmpty()
-            .MinimumLength(FollowBusinessConfigurations.FOLLOWING_ID_MIN_LENGTH)
-            .MaximumLength(FollowBusinessConfigurations.FOLLOWING_ID_MAX_LENGTH);
+            .MinimumLength(UserConfigurations.IdMinLength)
+            .MaximumLength(UserConfigurations.IdMaxLength);
     }
 }

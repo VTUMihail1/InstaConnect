@@ -8,12 +8,12 @@ public class DeleteFollowCommandValidator : AbstractValidator<DeleteFollowComman
     {
         RuleFor(q => q.Id)
             .NotEmpty()
-            .MinimumLength(FollowBusinessConfigurations.ID_MIN_LENGTH)
-            .MaximumLength(FollowBusinessConfigurations.ID_MAX_LENGTH);
+            .MinimumLength(FollowConfigurations.IdMinLength)
+            .MaximumLength(FollowConfigurations.IdMaxLength);
 
         RuleFor(c => c.CurrentUserId)
             .NotEmpty()
-            .MinimumLength(FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH)
-            .MaximumLength(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH);
+            .MinimumLength(UserConfigurations.IdMinLength)
+            .MaximumLength(UserConfigurations.IdMaxLength);
     }
 }

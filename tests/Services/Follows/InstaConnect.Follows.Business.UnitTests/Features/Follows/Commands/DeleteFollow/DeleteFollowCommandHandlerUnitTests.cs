@@ -2,6 +2,7 @@
 using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
 using InstaConnect.Shared.Common.Exceptions.Follow;
 using InstaConnect.Shared.Common.Exceptions.User;
@@ -24,9 +25,12 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldThrowFollowNotFoundException_WhenFollowIdIsInvalid()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var command = new DeleteFollowCommand(
             FollowTestUtilities.InvalidId,
-            FollowTestUtilities.ValidFollowCurrentUserId
+            existingFollowerId
         );
 
         // Act
@@ -40,9 +44,13 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowerFollowId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var command = new DeleteFollowCommand(
-            FollowTestUtilities.ValidId,
-            FollowTestUtilities.ValidCurrentUserId
+            existingFollowId,
+            UserTestUtilities.InvalidId
         );
 
         // Act
@@ -56,9 +64,12 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldGetFollowByIdFromRepository_WhenFollowIdIsValid()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var command = new DeleteFollowCommand(
-            FollowTestUtilities.ValidId,
-            FollowTestUtilities.ValidFollowCurrentUserId
+            existingFollowId,
+            existingFollowerId
         );
 
         // Act
@@ -67,16 +78,19 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
         // Assert
         await FollowWriteRepository
             .Received(1)
-            .GetByIdAsync(FollowTestUtilities.ValidId, CancellationToken);
+            .GetByIdAsync(existingFollowId, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldDeleteFollowFromRepository_WhenFollowIdIsValid()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var command = new DeleteFollowCommand(
-            FollowTestUtilities.ValidId,
-            FollowTestUtilities.ValidFollowCurrentUserId
+            existingFollowId,
+            existingFollowerId
         );
 
         // Act
@@ -85,18 +99,21 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
         // Assert
         FollowWriteRepository
             .Received(1)
-            .Delete(Arg.Is<Follow>(m => m.Id == FollowTestUtilities.ValidId &&
-                                         m.FollowerId == FollowTestUtilities.ValidFollowCurrentUserId &&
-                                         m.FollowingId == FollowTestUtilities.ValidFollowFollowingId));
+            .Delete(Arg.Is<Follow>(m => m.Id == existingFollowId &&
+                                         m.FollowerId == existingFollowerId &&
+                                         m.FollowingId == existingFollowingId));
     }
 
     [Fact]
     public async Task Handle_ShouldCallSaveChangesAsync_WhenFollowIdIsValid()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var command = new DeleteFollowCommand(
-            FollowTestUtilities.ValidId,
-            FollowTestUtilities.ValidFollowCurrentUserId
+            existingFollowId,
+            existingFollowerId
         );
 
         // Act

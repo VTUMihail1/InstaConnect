@@ -4,13 +4,24 @@ using InstaConnect.Shared.Common.Utilities;
 namespace InstaConnect.Follows.Common.Features.Users.Utilities;
 public class UserTestUtilities : SharedTestUtilities
 {
-    public static readonly string ValidCurrentUserId = GetAverageString(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-    public static readonly string InvalidUserId = GetAverageString(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-    public static readonly string ValidUserName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-    public static readonly string ValidAddUserName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-    public static readonly string ValidUpdateUserName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-    public static readonly string ValidUserFirstName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-    public static readonly string ValidUserLastName = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-    public static readonly string ValidUserEmail = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
-    public static readonly string ValidUserProfileImage = GetAverageString(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH, FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH);
+    public static readonly string InvalidId = GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
+
+    public static readonly string ValidName = GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength);
+    public static readonly string ValidAddName = GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength);
+    public static readonly string ValidUpdateName = GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength);
+
+    public static readonly string ValidFirstName = GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength);
+    public static readonly string ValidAddFirstName = GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength);
+    public static readonly string ValidUpdateFirstName = GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength);
+
+    public static readonly string ValidLastName = GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength);
+    public static readonly string ValidAddLastName = GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength);
+    public static readonly string ValidUpdateLastName = GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength);
+
+    public static readonly string ValidEmail = GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength);
+    public static readonly string ValidAddEmail = GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength);
+
+    public static readonly string ValidProfileImage = GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength);
+    public static readonly string ValidAddProfileImage = GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength);
+    public static readonly string ValidUpdateProfileImage = GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength);
 }

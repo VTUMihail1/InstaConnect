@@ -2,6 +2,7 @@
 using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
 using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFollows;
@@ -16,16 +17,19 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     }
 
     [Theory]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(FollowConfigurations.IdMinLength - 1)]
+    [InlineData(FollowConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForFollowerId_WhenFollowerIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetAllFollowsQuery(
             SharedTestUtilities.GetString(length),
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidFollowingId,
-            FollowTestUtilities.ValidUserName,
+            UserTestUtilities.ValidName,
+            existingFollowingId,
+            UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -39,16 +43,19 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     }
 
     [Theory]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForFollowerName_WhenFollowerNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetAllFollowsQuery(
-            FollowTestUtilities.ValidCurrentUserId,
+            existingFollowerId,
             SharedTestUtilities.GetString(length),
-            FollowTestUtilities.ValidFollowingId,
-            FollowTestUtilities.ValidUserName,
+            existingFollowingId,
+            UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -62,16 +69,19 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     }
 
     [Theory]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_ID_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForFollowingId_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetAllFollowsQuery(
-            FollowTestUtilities.ValidCurrentUserId,
-            FollowTestUtilities.ValidUserName,
+            existingFollowerId,
+            UserTestUtilities.ValidName,
             SharedTestUtilities.GetString(length),
-            FollowTestUtilities.ValidUserName,
+            UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -85,15 +95,18 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     }
 
     [Theory]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_NAME_MIN_LENGTH - 1)]
-    [InlineData(FollowBusinessConfigurations.FOLLOWING_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForFollowingName_WhenFollowingNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetAllFollowsQuery(
-            FollowTestUtilities.ValidCurrentUserId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidFollowingId,
+            existingFollowerId,
+            UserTestUtilities.ValidName,
+            existingFollowingId,
             SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -111,11 +124,14 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetAllFollowsQuery(
-            FollowTestUtilities.ValidCurrentUserId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidFollowingId,
-            FollowTestUtilities.ValidUserName,
+            existingFollowerId,
+            UserTestUtilities.ValidName,
+            existingFollowingId,
+            UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             null!,
             FollowTestUtilities.ValidPageValue,
@@ -132,11 +148,14 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetAllFollowsQuery(
-            FollowTestUtilities.ValidCurrentUserId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidFollowingId,
-            FollowTestUtilities.ValidUserName,
+            existingFollowerId,
+            UserTestUtilities.ValidName,
+            existingFollowingId,
+            UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.InvalidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -156,11 +175,14 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetAllFollowsQuery(
-            FollowTestUtilities.ValidCurrentUserId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidFollowingId,
-            FollowTestUtilities.ValidUserName,
+            existingFollowerId,
+            UserTestUtilities.ValidName,
+            existingFollowingId,
+            UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidPageValue,
@@ -179,11 +201,14 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetAllFollowsQuery(
-            FollowTestUtilities.ValidCurrentUserId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidFollowingId,
-            FollowTestUtilities.ValidUserName,
+            existingFollowerId,
+            UserTestUtilities.ValidName,
+            existingFollowingId,
+            UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             value,
@@ -202,11 +227,14 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetAllFollowsQuery(
-            FollowTestUtilities.ValidCurrentUserId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidFollowingId,
-            FollowTestUtilities.ValidUserName,
+            existingFollowerId,
+            UserTestUtilities.ValidName,
+            existingFollowingId,
+            UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -223,11 +251,14 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
+        var existingFollowerId = CreateUser();
+        var existingFollowingId = CreateUser();
+        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
         var query = new GetAllFollowsQuery(
-            FollowTestUtilities.ValidCurrentUserId,
-            FollowTestUtilities.ValidUserName,
-            FollowTestUtilities.ValidFollowingId,
-            FollowTestUtilities.ValidUserName,
+            existingFollowerId,
+            UserTestUtilities.ValidName,
+            existingFollowingId,
+            UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,

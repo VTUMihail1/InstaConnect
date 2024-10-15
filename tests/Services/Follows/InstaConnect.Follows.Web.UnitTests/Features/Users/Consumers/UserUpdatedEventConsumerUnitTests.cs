@@ -1,12 +1,12 @@
-﻿using InstaConnect.Follows.Business.Features.Users.Consumers;
-using InstaConnect.Follows.Business.UnitTests.Features.Users.Utilities;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
+﻿using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Data.Features.Users.Models.Entities;
+using InstaConnect.Follows.Web.Features.Users.Consumers;
+using InstaConnect.Follows.Web.UnitTests.Features.Users.Utilities;
 using InstaConnect.Shared.Business.Contracts.Users;
 using MassTransit;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Users.Consumers;
+namespace InstaConnect.Follows.Web.UnitTests.Features.Users.Consumers;
 
 public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
 {
@@ -27,13 +27,14 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldCallGetUserByIdAsyncMethod_WhenUserIdIsInvalid()
     {
         // Arrange
+        var existingUserId = CreateUser();
         var userUpdatedEvent = new UserUpdatedEvent(
-            UserTestUtilities.InvalidUserId,
-            UserTestUtilities.ValidUserName,
-            UserTestUtilities.ValidUserEmail,
-            UserTestUtilities.ValidUserFirstName,
-            UserTestUtilities.ValidUserLastName,
-            UserTestUtilities.ValidUserProfileImage);
+            UserTestUtilities.InvalidId,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateProfileImage);
 
         _userUpdatedEventConsumeContext.Message.Returns(userUpdatedEvent);
 
@@ -43,20 +44,21 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(UserTestUtilities.InvalidUserId, CancellationToken);
+            .GetByIdAsync(UserTestUtilities.InvalidId, CancellationToken);
     }
 
     [Fact]
     public async Task Consume_ShouldNotAddMethod_WhenUserIdIsInvalid()
     {
         // Arrange
+        var existingUserId = CreateUser();
         var userUpdatedEvent = new UserUpdatedEvent(
-            UserTestUtilities.InvalidUserId,
-            UserTestUtilities.ValidUserName,
-            UserTestUtilities.ValidUserEmail,
-            UserTestUtilities.ValidUserFirstName,
-            UserTestUtilities.ValidUserLastName,
-            UserTestUtilities.ValidUserProfileImage);
+            UserTestUtilities.InvalidId,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateProfileImage);
 
         _userUpdatedEventConsumeContext.Message.Returns(userUpdatedEvent);
 
@@ -73,13 +75,14 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldNotCallSaveChangesAsync_WhenUserIdIsInvalid()
     {
         // Arrange
+        var existingUserId = CreateUser();
         var userUpdatedEvent = new UserUpdatedEvent(
-            UserTestUtilities.InvalidUserId,
-            UserTestUtilities.ValidUserName,
-            UserTestUtilities.ValidUserEmail,
-            UserTestUtilities.ValidUserFirstName,
-            UserTestUtilities.ValidUserLastName,
-            UserTestUtilities.ValidUserProfileImage);
+            UserTestUtilities.InvalidId,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateProfileImage);
 
         _userUpdatedEventConsumeContext.Message.Returns(userUpdatedEvent);
 
@@ -96,13 +99,14 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldGetUserById_WhenUserUpdatedEventIsValid()
     {
         // Arrange
+        var existingUserId = CreateUser();
         var userUpdatedEvent = new UserUpdatedEvent(
-            UserTestUtilities.ValidCurrentUserId,
-            UserTestUtilities.ValidUserName,
-            UserTestUtilities.ValidUserEmail,
-            UserTestUtilities.ValidUserFirstName,
-            UserTestUtilities.ValidUserLastName,
-            UserTestUtilities.ValidUserProfileImage);
+            existingUserId,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateProfileImage);
 
         _userUpdatedEventConsumeContext.Message.Returns(userUpdatedEvent);
 
@@ -112,20 +116,21 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(UserTestUtilities.ValidCurrentUserId, CancellationToken);
+            .GetByIdAsync(existingUserId, CancellationToken);
     }
 
     [Fact]
     public async Task Consume_ShouldUpdateUserToRepository_WhenUserUpdatedEventIsValid()
     {
         // Arrange
+        var existingUserId = CreateUser();
         var userUpdatedEvent = new UserUpdatedEvent(
-            UserTestUtilities.ValidCurrentUserId,
-            UserTestUtilities.ValidUserName,
-            UserTestUtilities.ValidUserEmail,
-            UserTestUtilities.ValidUserFirstName,
-            UserTestUtilities.ValidUserLastName,
-            UserTestUtilities.ValidUserProfileImage);
+            existingUserId,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateProfileImage);
 
         _userUpdatedEventConsumeContext.Message.Returns(userUpdatedEvent);
 
@@ -135,25 +140,26 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         UserWriteRepository
             .Received(1)
-            .Update(Arg.Is<User>(m => m.Id == UserTestUtilities.ValidCurrentUserId &&
-                                   m.FirstName == UserTestUtilities.ValidUserFirstName &&
-                                   m.LastName == UserTestUtilities.ValidUserLastName &&
-                                   m.UserName == UserTestUtilities.ValidUserName &&
-                                   m.Email == UserTestUtilities.ValidUserEmail &&
-                                   m.ProfileImage == UserTestUtilities.ValidUserProfileImage));
+            .Update(Arg.Is<User>(m => m.Id == existingUserId &&
+                                   m.FirstName == UserTestUtilities.ValidUpdateFirstName &&
+                                   m.LastName == UserTestUtilities.ValidUpdateLastName &&
+                                   m.UserName == UserTestUtilities.ValidUpdateName &&
+                                   m.Email == UserTestUtilities.ValidEmail &&
+                                   m.ProfileImage == UserTestUtilities.ValidUpdateProfileImage));
     }
 
     [Fact]
     public async Task Consume_ShouldCallSaveChangesAsync_WhenUserDeletedEventIsValid()
     {
         // Arrange
+        var existingUserId = CreateUser();
         var userUpdatedEvent = new UserUpdatedEvent(
-            UserTestUtilities.ValidCurrentUserId,
-            UserTestUtilities.ValidUserName,
-            UserTestUtilities.ValidUserEmail,
-            UserTestUtilities.ValidUserFirstName,
-            UserTestUtilities.ValidUserLastName,
-            UserTestUtilities.ValidUserProfileImage);
+            existingUserId,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateProfileImage);
 
         _userUpdatedEventConsumeContext.Message.Returns(userUpdatedEvent);
 
