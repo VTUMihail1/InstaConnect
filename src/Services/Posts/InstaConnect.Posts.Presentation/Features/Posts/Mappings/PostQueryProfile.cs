@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Features.Posts.Models;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
-using InstaConnect.Posts.Web.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
+using InstaConnect.Posts.Application.Features.Posts.Models;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllPosts;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetPostById;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 
-namespace InstaConnect.Posts.Web.Features.Posts.Mappings;
+namespace InstaConnect.Posts.Presentation.Features.Posts.Mappings;
 
 internal class PostQueryProfile : Profile
 {

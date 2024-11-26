@@ -1,12 +1,11 @@
-﻿using InstaConnect.Posts.Business.Features.Posts.Models;
-using InstaConnect.Posts.Data.Features.Posts.Abstract;
-using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Data.Features.Users.Abstract;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Posts.Application.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Abstract;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Users.Abstract;
+using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Data.Abstractions;
 
-namespace InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
+namespace InstaConnect.Posts.Application.Features.Posts.Commands.AddPost;
 
 internal class AddPostCommandHandler : ICommandHandler<AddPostCommand, PostCommandViewModel>
 {

@@ -1,6 +1,6 @@
-﻿using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Follows.Application.Features.Follows.Models;
+using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
+namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetFollowById;
 
 public record GetFollowByIdQuery(string Id) : IQuery<FollowQueryViewModel>;

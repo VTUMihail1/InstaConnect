@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-namespace InstaConnect.Follows.Web.Features.Follows.Utilities;
+﻿namespace InstaConnect.Follows.Presentation.Features.Follows.Utilities;
 
 public class FollowRoutes
 {

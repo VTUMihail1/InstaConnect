@@ -1,11 +1,10 @@
-﻿using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Data.Features.Users.Abstractions;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
+using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Token;
 using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Data.Abstractions;
 
-namespace InstaConnect.Identity.Business.Features.Users.Commands.ResetUserPassword;
+namespace InstaConnect.Identity.Application.Features.Users.Commands.ResetUserPassword;
 
 public class ResetUserPasswordCommandHandler : ICommandHandler<ResetUserPasswordCommand>
 {

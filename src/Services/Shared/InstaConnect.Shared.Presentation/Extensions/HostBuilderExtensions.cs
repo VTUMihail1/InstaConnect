@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace InstaConnect.Shared.Web.Extensions;
+namespace InstaConnect.Shared.Presentation.Extensions;
 
 public static class HostBuilderExtensions
 {

@@ -1,8 +1,8 @@
 ﻿using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Data;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.IntegrationTests.Extensions;
-using InstaConnect.Shared.Business.Models;
+using InstaConnect.Identity.Infrastructure;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.IntegrationTests.Extensions;
+using InstaConnect.Shared.Application.Models;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -13,7 +13,7 @@ using NSubstitute;
 using Testcontainers.MsSql;
 using Testcontainers.Redis;
 
-namespace InstaConnect.Identity.Business.IntegrationTests.Utilities;
+namespace InstaConnect.Identity.Application.IntegrationTests.Utilities;
 
 public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {

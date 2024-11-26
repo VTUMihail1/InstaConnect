@@ -1,14 +1,7 @@
-﻿using FluentAssertions;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Data.Features.Users.Models.Entities;
-using InstaConnect.Follows.Web.Features.Users.Consumers;
-using InstaConnect.Follows.Web.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Follows.Web.FunctionalTests.Utilities;
-using InstaConnect.Shared.Business.Contracts.Users;
-using InstaConnect.Shared.Common.Utilities;
-using MassTransit.Testing;
+﻿using InstaConnect.Follows.Presentation.FunctionalTests.Features.Users.Utilities;
+using InstaConnect.Follows.Presentation.FunctionalTests.Utilities;
 
-namespace InstaConnect.Follows.Web.FunctionalTests.Features.Users.Consumers;
+namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Users.Consumers;
 
 public class UserDeletedEventConsumerFunctionalTests : BaseUserFunctionalTest
 {

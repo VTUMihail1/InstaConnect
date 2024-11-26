@@ -1,6 +1,6 @@
-﻿using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
+﻿using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 
-namespace InstaConnect.Identity.Data.Features.Users.Abstractions;
+namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
 public interface IUserWriteRepository
 {
     void Add(User entity);

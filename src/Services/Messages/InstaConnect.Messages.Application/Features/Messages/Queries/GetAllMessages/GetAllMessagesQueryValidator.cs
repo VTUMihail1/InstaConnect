@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Validators;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Validators;
 
-namespace InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
+namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
 
 public class GetAllMessagesQueryValidator : AbstractValidator<GetAllMessagesQuery>
 {

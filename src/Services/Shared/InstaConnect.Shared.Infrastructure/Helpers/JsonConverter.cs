@@ -1,7 +1,7 @@
-﻿using InstaConnect.Shared.Data.Abstractions;
+﻿using InstaConnect.Shared.Application.Abstractions;
 using Newtonsoft.Json;
 
-namespace InstaConnect.Shared.Data.Helpers;
+namespace InstaConnect.Shared.Infrastructure.Helpers;
 
 internal class JsonConverter : IJsonConverter
 {

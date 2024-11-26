@@ -1,19 +1,19 @@
 ﻿using System.Net;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
-using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
-using InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
+using InstaConnect.Posts.Application.Features.Posts.Commands.AddPost;
+using InstaConnect.Posts.Application.Features.Posts.Commands.DeletePost;
+using InstaConnect.Posts.Application.Features.Posts.Commands.UpdatePost;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllPosts;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetPostById;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Web.Features.Posts.Controllers.v1;
-using InstaConnect.Posts.Web.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
-using InstaConnect.Posts.Web.UnitTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Presentation.Features.Posts.Controllers.v1;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
+using InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Web.UnitTests.Features.Posts.Controllers.v1;
+namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Controllers.v1;
 public class PostControllerUnitTests : BasePostUnitTest
 {
     private readonly PostController _postController;

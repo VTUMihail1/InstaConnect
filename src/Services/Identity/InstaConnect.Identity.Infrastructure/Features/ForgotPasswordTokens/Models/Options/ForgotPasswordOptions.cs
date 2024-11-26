@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Options;
+namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Models.Options;
 
 public class ForgotPasswordOptions
 {

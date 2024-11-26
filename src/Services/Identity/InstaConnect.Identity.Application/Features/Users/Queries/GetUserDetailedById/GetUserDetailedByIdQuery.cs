@@ -1,6 +1,6 @@
-﻿using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Identity.Business.Features.Users.Queries.GetUserDetailedById;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetUserDetailedById;
 
 public record GetUserDetailedByIdQuery(string Id) : IQuery<UserDetailedQueryViewModel>;

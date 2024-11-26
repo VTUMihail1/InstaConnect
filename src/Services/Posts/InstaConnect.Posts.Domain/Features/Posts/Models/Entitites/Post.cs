@@ -1,9 +1,9 @@
-﻿using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
-using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Data.Models.Base;
+﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Shared.Domain.Models.Base;
 
-namespace InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
+namespace InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 
 public class Post : BaseEntity
 {

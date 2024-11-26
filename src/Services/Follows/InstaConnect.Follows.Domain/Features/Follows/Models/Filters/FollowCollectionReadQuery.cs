@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Common.Models.Enums;
 
-namespace InstaConnect.Follows.Data.Features.Follows.Models.Filters;
+namespace InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
 
 public record FollowCollectionReadQuery(
     string FollowerId,

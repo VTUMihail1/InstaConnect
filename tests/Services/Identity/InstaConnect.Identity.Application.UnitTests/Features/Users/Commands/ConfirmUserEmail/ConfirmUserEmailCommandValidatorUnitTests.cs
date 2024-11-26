@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Identity.Business.Features.Users.Commands.ConfirmUserEmail;
-using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Application.Features.Users.Commands.ConfirmUserEmail;
+using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.ConfirmUserEmail;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.ConfirmUserEmail;
 
 public class ConfirmUserEmailCommandValidatorUnitTests : BaseUserUnitTest
 {

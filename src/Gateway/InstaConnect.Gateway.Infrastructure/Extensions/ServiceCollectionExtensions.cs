@@ -1,8 +1,8 @@
-﻿using InstaConnect.Shared.Data.Extensions;
+﻿using InstaConnect.Shared.Infrastructure.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Gateway.Web.Extensions;
+namespace InstaConnect.Gateway.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {

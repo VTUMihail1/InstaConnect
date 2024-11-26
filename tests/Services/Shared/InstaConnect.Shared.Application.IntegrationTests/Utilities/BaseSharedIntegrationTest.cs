@@ -1,7 +1,7 @@
-﻿using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Shared.Application.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Shared.Business.IntegrationTests.Utilities;
+namespace InstaConnect.Shared.Application.IntegrationTests.Utilities;
 
 public class BaseSharedIntegrationTest
 {

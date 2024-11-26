@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Messages.Web.Features.Messages.Models.Binding;
+﻿namespace InstaConnect.Messages.Presentation.Features.Messages.Models.Binding;
 
 public class UpdateMessageBindingModel
 {

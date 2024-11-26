@@ -1,7 +1,6 @@
-﻿using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Data.Abstractions;
+﻿using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Shared.Business.UnitTests.Utilities;
+namespace InstaConnect.Shared.Application.UnitTests.Utilities;
 
 public class BaseSharedUnitTest
 {

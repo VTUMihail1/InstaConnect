@@ -1,18 +1,18 @@
-﻿using InstaConnect.Posts.Business.IntegrationTests.Utilities;
+﻿using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Data;
-using InstaConnect.Posts.Data.Features.PostComments.Abstract;
-using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Data.Features.Posts.Abstract;
-using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Data.Features.Users.Abstract;
-using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Data.Abstractions;
+using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Posts.Abstract;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Users.Abstract;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Posts.Infrastructure;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.IntegrationTests.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostComments.Utilities;
+namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Utilities;
 
 public abstract class BasePostCommentIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {

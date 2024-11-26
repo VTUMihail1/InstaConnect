@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Emails.Business.Features.Emails.Utilities;
+﻿namespace InstaConnect.Emails.Infrastructure.Features.Emails.Utilities;
 
 public class EmailConstants
 {

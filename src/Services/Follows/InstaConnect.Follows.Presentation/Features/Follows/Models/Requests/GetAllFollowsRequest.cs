@@ -1,7 +1,7 @@
-﻿using InstaConnect.Shared.Web.Models.Requests;
+﻿using InstaConnect.Shared.Presentation.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Follows.Web.Features.Follows.Models.Requests;
+namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 
 public class GetAllFollowsRequest : CollectionReadRequest
 {

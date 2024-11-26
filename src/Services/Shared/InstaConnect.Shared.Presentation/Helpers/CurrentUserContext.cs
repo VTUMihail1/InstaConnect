@@ -1,9 +1,9 @@
-﻿using InstaConnect.Shared.Web.Abstractions;
-using InstaConnect.Shared.Web.Extensions;
-using InstaConnect.Shared.Web.Models.Users;
+﻿using InstaConnect.Shared.Presentation.Abstractions;
+using InstaConnect.Shared.Presentation.Extensions;
+using InstaConnect.Shared.Presentation.Models.Users;
 using Microsoft.AspNetCore.Http;
 
-namespace InstaConnect.Shared.Web.Helpers;
+namespace InstaConnect.Shared.Presentation.Helpers;
 
 public class CurrentUserContext : ICurrentUserContext
 {

@@ -1,7 +1,7 @@
-using InstaConnect.Emails.Business.Extensions;
-using InstaConnect.Emails.Web.Extensions;
-using InstaConnect.Shared.Web.Extensions;
-using InstaConnect.Shared.Web.Utilities;
+using InstaConnect.Emails.Infrastructure.Extensions;
+using InstaConnect.Emails.Presentation.Extensions;
+using InstaConnect.Shared.Presentation.Extensions;
+using InstaConnect.Shared.Presentation.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 

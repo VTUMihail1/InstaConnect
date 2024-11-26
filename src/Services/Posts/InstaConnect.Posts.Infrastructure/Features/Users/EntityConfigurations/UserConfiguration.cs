@@ -1,8 +1,8 @@
-﻿using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
+﻿using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InstaConnect.Posts.Data.Features.Users.EntityConfigurations;
+namespace InstaConnect.Posts.Infrastructure.Features.Users.EntityConfigurations;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {

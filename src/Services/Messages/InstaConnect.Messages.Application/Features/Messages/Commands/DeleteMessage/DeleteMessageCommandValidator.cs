@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 
-namespace InstaConnect.Messages.Business.Features.Messages.Commands.DeleteMessage;
+namespace InstaConnect.Messages.Application.Features.Messages.Commands.DeleteMessage;
 
 public class DeleteMessageCommandValidator : AbstractValidator<DeleteMessageCommand>
 {

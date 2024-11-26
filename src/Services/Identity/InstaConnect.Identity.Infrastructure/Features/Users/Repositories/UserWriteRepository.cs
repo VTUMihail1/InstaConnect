@@ -1,8 +1,8 @@
-﻿using InstaConnect.Identity.Data.Features.Users.Abstractions;
-using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
+﻿using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Identity.Data.Features.Users.Repositories;
+namespace InstaConnect.Identity.Infrastructure.Features.Users.Repositories;
 
 internal class UserWriteRepository : IUserWriteRepository
 {

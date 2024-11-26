@@ -1,6 +1,6 @@
-﻿using InstaConnect.Follows.Data.Features.Users.Models.Entities;
+﻿using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 
-namespace InstaConnect.Follows.Data.Features.Users.Abstractions;
+namespace InstaConnect.Follows.Domain.Features.Users.Abstractions;
 public interface IUserWriteRepository
 {
     void Add(User user);

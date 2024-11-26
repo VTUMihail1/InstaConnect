@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Emails.Business.Features.Emails.Models.Options;
+namespace InstaConnect.Emails.Infrastructure.Features.Emails.Models.Options;
 
 public class EmailOptions
 {

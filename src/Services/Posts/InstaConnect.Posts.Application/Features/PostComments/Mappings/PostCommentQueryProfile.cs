@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Features.PostComments.Models;
-using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
-using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Data.Features.PostComments.Models.Filters;
-using InstaConnect.Shared.Data.Models.Pagination;
+using InstaConnect.Posts.Application.Features.PostComments.Models;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllPostComments;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
+using InstaConnect.Shared.Domain.Models.Pagination;
 
-namespace InstaConnect.Posts.Business.Features.PostComments.Mappings;
+namespace InstaConnect.Posts.Application.Features.PostComments.Mappings;
 
 public class PostCommentQueryProfile : Profile
 {

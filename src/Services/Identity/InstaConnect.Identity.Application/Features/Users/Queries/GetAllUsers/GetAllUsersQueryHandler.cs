@@ -1,9 +1,9 @@
-﻿using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Data.Features.Users.Abstractions;
-using InstaConnect.Identity.Data.Features.Users.Models.Filters;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
+using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAllUsers;
 
 public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, UserPaginationQueryViewModel>
 {

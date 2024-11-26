@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Shared.Data.Models.Options;
+namespace InstaConnect.Shared.Infrastructure.Models.Options;
 
 public class DatabaseOptions
 {

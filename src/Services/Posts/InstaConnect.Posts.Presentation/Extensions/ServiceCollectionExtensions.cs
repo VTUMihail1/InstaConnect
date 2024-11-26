@@ -1,15 +1,12 @@
-﻿using InstaConnect.Follows.Web.Features.Users.Extensions;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Extensions;
-using InstaConnect.Posts.Business.Features.PostComments.Extensions;
-using InstaConnect.Posts.Business.Features.PostLikes.Extensions;
-using InstaConnect.Posts.Web.Features.PostCommentLikes.Extensions;
-using InstaConnect.Posts.Web.Features.PostComments.Extensions;
-using InstaConnect.Posts.Web.Features.PostLikes.Extensions;
-using InstaConnect.Posts.Web.Features.Posts.Extensions;
-using InstaConnect.Shared.Business.Extensions;
-using InstaConnect.Shared.Web.Extensions;
+﻿using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Extensions;
+using InstaConnect.Posts.Presentation.Features.PostComments.Extensions;
+using InstaConnect.Posts.Presentation.Features.PostLikes.Extensions;
+using InstaConnect.Posts.Presentation.Features.Posts.Extensions;
+using InstaConnect.Posts.Presentation.Features.Users.Extensions;
+using InstaConnect.Shared.Application.Extensions;
+using InstaConnect.Shared.Presentation.Extensions;
 
-namespace InstaConnect.Posts.Web.Extensions;
+namespace InstaConnect.Posts.Presentation.Extensions;
 
 public static class ServiceCollectionExtensions
 {

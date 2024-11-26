@@ -1,19 +1,18 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Business.Features.Messages.Abstractions;
-using InstaConnect.Messages.Business.Features.Messages.Mappings;
+using InstaConnect.Messages.Application.Features.Messages.Mappings;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Data.Features.Messages.Abstractions;
-using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Messages.Data.Features.Messages.Models.Filters;
-using InstaConnect.Messages.Data.Features.Users.Abstract;
-using InstaConnect.Messages.Data.Features.Users.Models.Entities;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Business.UnitTests.Utilities;
-using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Models.Pagination;
+using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
+using InstaConnect.Messages.Domain.Features.Users.Abstract;
+using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Application.UnitTests.Utilities;
+using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
+namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 
 public abstract class BaseMessageUnitTest : BaseSharedUnitTest
 {

@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostLikes.Models;
-using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
-using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Application.Features.PostLikes.Models;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllPostLikes;
+using InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Data.Features.PostLikes.Models.Filters;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Queries.GetAllPostLikes;
+namespace InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Queries.GetAllPostLikes;
 
 public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
 {

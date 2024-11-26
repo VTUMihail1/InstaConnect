@@ -1,10 +1,9 @@
-﻿using InstaConnect.Emails.Business.Features.Emails.Extensions;
-using InstaConnect.Shared.Business.Extensions;
-using InstaConnect.Shared.Data.Extensions;
+﻿using InstaConnect.Emails.Infrastructure.Features.Emails.Extensions;
+using InstaConnect.Shared.Infrastructure.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Emails.Business.Extensions;
+namespace InstaConnect.Emails.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -16,7 +15,7 @@ public static class ServiceCollectionExtensions
             .AddEmailServices(configuration);
 
         serviceCollection
-            .AddMessageBroker(configuration, currentAssembly)
+            .AddRabbitMQ(configuration, currentAssembly)
             .AddJwtBearer(configuration);
 
         return serviceCollection;

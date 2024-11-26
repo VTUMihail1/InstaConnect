@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Identity.Business.Features.Users.Extensions;
+namespace InstaConnect.Identity.Application.Features.Users.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

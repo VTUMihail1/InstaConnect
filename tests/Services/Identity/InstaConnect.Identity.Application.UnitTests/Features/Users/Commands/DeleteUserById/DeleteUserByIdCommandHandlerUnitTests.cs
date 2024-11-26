@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Business.Features.Users.Commands.DeleteUserById;
-using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Application.Features.Users.Commands.DeleteUserById;
+using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Business.Contracts.Users;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Shared.Application.Contracts.Users;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.DeleteUserById;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.DeleteUserById;
 
 public class DeleteUserByIdCommandHandlerUnitTests : BaseUserUnitTest
 {

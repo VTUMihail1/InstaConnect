@@ -1,7 +1,7 @@
-﻿using InstaConnect.Messages.Business.Features.Messages.Models;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Messages.Application.Features.Messages.Models;
+using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
+namespace InstaConnect.Messages.Application.Features.Messages.Commands.AddMessage;
 
 public record AddMessageCommand(
     string CurrentUserId,

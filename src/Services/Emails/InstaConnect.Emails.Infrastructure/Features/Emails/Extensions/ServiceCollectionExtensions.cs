@@ -1,12 +1,12 @@
 ﻿using System.Net;
 using System.Net.Mail;
-using InstaConnect.Emails.Business.Features.Emails.Abstractions;
-using InstaConnect.Emails.Business.Features.Emails.Helpers;
-using InstaConnect.Emails.Business.Features.Emails.Models.Options;
+using InstaConnect.Emails.Application.Features.Emails.Abstractions;
+using InstaConnect.Emails.Infrastructure.Features.Emails.Helpers;
+using InstaConnect.Emails.Infrastructure.Features.Emails.Models.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Emails.Business.Features.Emails.Extensions;
+namespace InstaConnect.Emails.Infrastructure.Features.Emails.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

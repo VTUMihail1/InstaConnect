@@ -1,8 +1,8 @@
-﻿using InstaConnect.Shared.Data.Abstractions;
+﻿using InstaConnect.Shared.Application.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace InstaConnect.Shared.Web.Extensions;
+namespace InstaConnect.Shared.Presentation.Extensions;
 
 public static class HostExtensions
 {

@@ -1,7 +1,7 @@
-﻿using InstaConnect.Messages.Business.Features.Messages.Abstractions;
-using InstaConnect.Messages.Business.Features.Messages.Helpers;
+﻿using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Messages.Presentation.Features.Messages.Helpers;
 
-namespace InstaConnect.Messages.Web.Features.Messages.Extensions;
+namespace InstaConnect.Messages.Presentation.Features.Messages.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

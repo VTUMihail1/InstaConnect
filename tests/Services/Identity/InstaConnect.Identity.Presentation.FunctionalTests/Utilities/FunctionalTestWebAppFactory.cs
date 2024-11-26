@@ -1,8 +1,8 @@
 ﻿using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Data;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Models;
-using InstaConnect.Shared.Web.FunctionalTests.Extensions;
+using InstaConnect.Identity.Infrastructure;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Models;
+using InstaConnect.Shared.Presentation.FunctionalTests.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -13,7 +13,7 @@ using NSubstitute;
 using Testcontainers.MsSql;
 using Testcontainers.Redis;
 
-namespace InstaConnect.Identity.Web.FunctionalTests.Utilities;
+namespace InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
 
 public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {

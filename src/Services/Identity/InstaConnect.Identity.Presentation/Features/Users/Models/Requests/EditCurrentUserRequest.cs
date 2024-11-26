@@ -1,7 +1,7 @@
-﻿using InstaConnect.Identity.Web.Features.Users.Models.Bindings;
+﻿using InstaConnect.Identity.Presentation.Features.Users.Models.Bindings;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Identity.Web.Features.Users.Models.Requests;
+namespace InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 
 public class EditCurrentUserRequest
 {

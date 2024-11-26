@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 
-namespace InstaConnect.Identity.Business.Features.Users.Commands.LoginUser;
+namespace InstaConnect.Identity.Application.Features.Users.Commands.LoginUser;
 public class LoginUserCommandValidator : AbstractValidator<LoginUserCommand>
 {
     public LoginUserCommandValidator()

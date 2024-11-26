@@ -1,12 +1,11 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
-using InstaConnect.Follows.Web.Features.Follows.Utilities;
-using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Abstractions;
-using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
+using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
+using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
+using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Abstractions;
+using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
 
-namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Helpers;
+namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Helpers;
 public class FollowsClient : IFollowsClient
 {
     private readonly HttpClient _httpClient;

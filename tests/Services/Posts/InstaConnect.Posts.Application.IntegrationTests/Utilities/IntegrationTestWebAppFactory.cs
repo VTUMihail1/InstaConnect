@@ -1,6 +1,5 @@
-﻿using InstaConnect.Follows.Web.Features.Users.Consumers;
-using InstaConnect.Posts.Data;
-using InstaConnect.Shared.Business.IntegrationTests.Extensions;
+﻿using InstaConnect.Posts.Infrastructure;
+using InstaConnect.Shared.Application.IntegrationTests.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -8,7 +7,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.MsSql;
 
-namespace InstaConnect.Posts.Business.IntegrationTests.Utilities;
+namespace InstaConnect.Posts.Application.IntegrationTests.Utilities;
 
 public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {

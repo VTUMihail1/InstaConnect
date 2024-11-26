@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostComments.Commands.DeletePostComment;
-using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.DeletePostComment;
+using InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.PostComment;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Commands.DeletePostComment;
+namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Commands.DeletePostComment;
 
 public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
 {

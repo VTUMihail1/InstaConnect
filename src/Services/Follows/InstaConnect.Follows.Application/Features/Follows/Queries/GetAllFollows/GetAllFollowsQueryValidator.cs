@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Validators;
+using InstaConnect.Follows.Common.Features.Users.Utilities;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Validators;
 
-namespace InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
+namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAllFollows;
 public class GetAllFollowsQueryValidator : AbstractValidator<GetAllFollowsQuery>
 {
     public GetAllFollowsQueryValidator(

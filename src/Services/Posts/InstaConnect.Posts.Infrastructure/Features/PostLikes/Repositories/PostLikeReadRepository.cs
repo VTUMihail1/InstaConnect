@@ -1,11 +1,11 @@
-﻿using InstaConnect.Posts.Data.Features.PostLikes.Abstract;
-using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
-using InstaConnect.Posts.Data.Features.PostLikes.Models.Filters;
-using InstaConnect.Shared.Data.Extensions;
-using InstaConnect.Shared.Data.Models.Pagination;
+﻿using InstaConnect.Posts.Domain.Features.PostLikes.Abstract;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
+using InstaConnect.Shared.Domain.Models.Pagination;
+using InstaConnect.Shared.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Posts.Data.Features.PostLikes.Repositories;
+namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Repositories;
 
 public class PostLikeReadRepository : IPostLikeReadRepository
 {

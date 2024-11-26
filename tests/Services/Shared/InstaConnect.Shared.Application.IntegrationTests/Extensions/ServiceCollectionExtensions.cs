@@ -3,7 +3,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Shared.Business.IntegrationTests.Extensions;
+namespace InstaConnect.Shared.Application.IntegrationTests.Extensions;
 
 public static class ServiceCollectionExtensions
 {

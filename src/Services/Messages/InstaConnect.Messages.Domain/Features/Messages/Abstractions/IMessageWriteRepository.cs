@@ -1,6 +1,6 @@
-﻿using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
+﻿using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 
-namespace InstaConnect.Messages.Data.Features.Messages.Abstractions;
+namespace InstaConnect.Messages.Domain.Features.Messages.Abstractions;
 public interface IMessageWriteRepository
 {
     void Add(Message message);

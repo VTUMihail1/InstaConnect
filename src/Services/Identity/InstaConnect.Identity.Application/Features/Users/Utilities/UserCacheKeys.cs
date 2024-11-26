@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Identity.Business.Features.Users.Utilities;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Utilities;
 public class UserCacheKeys
 {
     public const string GetCurrentUser = "get-current-user-{0}";

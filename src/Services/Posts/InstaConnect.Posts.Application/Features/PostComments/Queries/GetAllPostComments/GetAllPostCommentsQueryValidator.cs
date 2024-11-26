@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Validators;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Validators;
 
-namespace InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
+namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllPostComments;
 
 public class GetAllPostCommentsQueryValidator : AbstractValidator<GetAllPostCommentsQuery>
 {

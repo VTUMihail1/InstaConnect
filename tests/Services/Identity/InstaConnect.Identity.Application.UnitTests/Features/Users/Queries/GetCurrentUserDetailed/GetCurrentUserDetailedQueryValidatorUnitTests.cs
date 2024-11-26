@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUserDetailed;
-using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUserDetailed;
+using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Queries.GetCurrentUserDetailed;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetCurrentUserDetailed;
 
 public class GetCurrentUserDetailedQueryValidatorUnitTests : BaseUserUnitTest
 {

@@ -1,8 +1,8 @@
 ﻿using System.Net;
-using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
+using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
+using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 
-namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Abstractions;
+namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Abstractions;
 public interface IFollowsClient
 {
     Task<HttpStatusCode> AddStatusCodeAsync(AddFollowRequest request, Dictionary<string, object>? jwtConfig = null);

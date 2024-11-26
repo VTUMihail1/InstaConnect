@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Data.Models.Pagination;
+﻿namespace InstaConnect.Shared.Domain.Models.Pagination;
 
 public record PaginationList<T>(ICollection<T> Items, int Page, int PageSize, int TotalCount)
 {

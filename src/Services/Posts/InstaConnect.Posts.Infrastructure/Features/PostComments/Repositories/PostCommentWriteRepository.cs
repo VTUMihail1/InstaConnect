@@ -1,8 +1,8 @@
-﻿using InstaConnect.Posts.Data.Features.PostComments.Abstract;
-using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
+﻿using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Posts.Data.Features.PostComments.Repositories;
+namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Repositories;
 
 internal class PostCommentWriteRepository : IPostCommentWriteRepository
 {

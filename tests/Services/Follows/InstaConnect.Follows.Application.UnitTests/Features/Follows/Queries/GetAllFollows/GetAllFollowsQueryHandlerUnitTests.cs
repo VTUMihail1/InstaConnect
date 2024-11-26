@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
-using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
+using InstaConnect.Follows.Application.Features.Follows.Models;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllFollows;
+using InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetAllFollows;
+namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Queries.GetAllFollows;
 
 public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
 {

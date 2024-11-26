@@ -1,9 +1,9 @@
-﻿using InstaConnect.Identity.Business.Features.Users.Abstractions;
-using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Contracts.Emails;
+﻿using InstaConnect.Identity.Application.Features.Users.Abstractions;
+using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Contracts.Emails;
 
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers;
 

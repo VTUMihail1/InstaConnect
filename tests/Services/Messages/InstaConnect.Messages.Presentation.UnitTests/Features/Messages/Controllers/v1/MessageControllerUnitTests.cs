@@ -1,20 +1,20 @@
 ﻿using System.Net;
 using FluentAssertions;
-using InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
-using InstaConnect.Messages.Business.Features.Messages.Commands.DeleteMessage;
-using InstaConnect.Messages.Business.Features.Messages.Commands.UpdateMessage;
-using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
-using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
+using InstaConnect.Messages.Application.Features.Messages.Commands.AddMessage;
+using InstaConnect.Messages.Application.Features.Messages.Commands.DeleteMessage;
+using InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetMessageById;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Web.Features.Messages.Controllers.v1;
-using InstaConnect.Messages.Web.Features.Messages.Models.Binding;
-using InstaConnect.Messages.Web.Features.Messages.Models.Requests;
-using InstaConnect.Messages.Web.Features.Messages.Models.Responses;
-using InstaConnect.Messages.Web.UnitTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Presentation.Features.Messages.Controllers.v1;
+using InstaConnect.Messages.Presentation.Features.Messages.Models.Binding;
+using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
+using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
+using InstaConnect.Messages.Presentation.UnitTests.Features.Messages.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Web.UnitTests.Features.Messages.Controllers.v1;
+namespace InstaConnect.Messages.Presentation.UnitTests.Features.Messages.Controllers.v1;
 public class MessageControllerUnitTests : BaseMessageUnitTest
 {
     private readonly MessageController _messageController;

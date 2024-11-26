@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Business.Features.Posts.Models;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
-using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Application.Features.Posts.Models;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllPosts;
+using InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Data.Features.Posts.Models.Filters;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Queries.GetAllPosts;
+namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetAllPosts;
 
 public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
 {

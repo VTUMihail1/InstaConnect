@@ -1,6 +1,6 @@
-﻿using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
+﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
 
-namespace InstaConnect.Follows.Data.Features.Follows.Abstractions;
+namespace InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 public interface IFollowWriteRepository
 {
     void Add(Follow follow);

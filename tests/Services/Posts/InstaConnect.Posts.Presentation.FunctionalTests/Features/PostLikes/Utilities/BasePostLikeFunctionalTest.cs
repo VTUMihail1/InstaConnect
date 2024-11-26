@@ -1,18 +1,18 @@
 ﻿using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Data;
-using InstaConnect.Posts.Data.Features.PostLikes.Abstract;
-using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
-using InstaConnect.Posts.Data.Features.Posts.Abstract;
-using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Data.Features.Users.Abstract;
-using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
-using InstaConnect.Posts.Web.FunctionalTests.Utilities;
-using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Web.FunctionalTests.Utilities;
+using InstaConnect.Posts.Domain.Features.PostLikes.Abstract;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Posts.Abstract;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Users.Abstract;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Posts.Infrastructure;
+using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Presentation.FunctionalTests.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostLikes.Utilities;
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Utilities;
 
 public abstract class BasePostLikeFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {

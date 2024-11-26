@@ -1,9 +1,9 @@
-﻿using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Options;
-using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Repositories;
+﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
+using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Models.Options;
+using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Extensions;
+namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

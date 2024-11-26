@@ -1,20 +1,20 @@
-﻿using InstaConnect.Posts.Business.IntegrationTests.Utilities;
+﻿using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Data;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Abstract;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Posts.Data.Features.PostComments.Abstract;
-using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Data.Features.Posts.Abstract;
-using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Data.Features.Users.Abstract;
-using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Data.Abstractions;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Posts.Abstract;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Users.Abstract;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Posts.Infrastructure;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.IntegrationTests.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostCommentLikes.Utilities;
+namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Utilities;
 
 public abstract class BasePostCommentLikeIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
@@ -90,17 +90,17 @@ public abstract class BasePostCommentLikeIntegrationTest : BaseSharedIntegration
 
     protected async Task<string> CreatePostCommentLikeAsync(string userId, string postCommentId, CancellationToken cancellationToken)
     {
-        var PostCommentLike = new PostCommentLike(
+        var postCommentLike = new PostCommentLike(
             postCommentId,
             userId);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var PostCommentLikeWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostCommentLikeWriteRepository>();
 
-        PostCommentLikeWriteRepository.Add(PostCommentLike);
+        PostCommentLikeWriteRepository.Add(postCommentLike);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return PostCommentLike.Id;
+        return postCommentLike.Id;
     }
 
     protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)

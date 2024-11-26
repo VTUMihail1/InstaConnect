@@ -1,12 +1,11 @@
-﻿using InstaConnect.Posts.Business.Features.PostCommentLikes.Extensions;
-using InstaConnect.Posts.Business.Features.PostComments.Extensions;
-using InstaConnect.Posts.Business.Features.PostLikes.Extensions;
-using InstaConnect.Posts.Business.Features.Posts.Extensions;
-using InstaConnect.Shared.Business.Extensions;
-using Microsoft.Extensions.Configuration;
+﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Extensions;
+using InstaConnect.Posts.Application.Features.PostComments.Extensions;
+using InstaConnect.Posts.Application.Features.PostLikes.Extensions;
+using InstaConnect.Posts.Application.Features.Posts.Extensions;
+using InstaConnect.Shared.Application.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Posts.Business.Extensions;
+namespace InstaConnect.Posts.Application.Extensions;
 
 public static class ServiceCollectionExtensions
 {

@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
+using InstaConnect.Follows.Application.Features.Follows.Commands.DeleteFollow;
+using InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.DeleteFollow;
+namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Commands.DeleteFollow;
 
 public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
 {

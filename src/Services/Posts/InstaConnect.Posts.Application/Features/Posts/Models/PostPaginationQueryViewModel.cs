@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Business.Features.Posts.Models;
+﻿namespace InstaConnect.Posts.Application.Features.Posts.Models;
 
 public record PostPaginationQueryViewModel(
     ICollection<PostQueryViewModel> Items,

@@ -1,8 +1,8 @@
-﻿using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Data.Features.PostComments.Models.Filters;
-using InstaConnect.Shared.Data.Models.Pagination;
+﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
+using InstaConnect.Shared.Domain.Models.Pagination;
 
-namespace InstaConnect.Posts.Data.Features.PostComments.Abstract;
+namespace InstaConnect.Posts.Domain.Features.PostComments.Abstract;
 public interface IPostCommentReadRepository
 {
     Task<PaginationList<PostComment>> GetAllAsync(PostCommentCollectionReadQuery query, CancellationToken cancellationToken);

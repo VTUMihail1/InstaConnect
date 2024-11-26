@@ -1,7 +1,7 @@
-﻿using InstaConnect.Posts.Web.Features.PostComments.Models.Binding;
+﻿using InstaConnect.Posts.Presentation.Features.PostComments.Models.Binding;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Posts.Web.Features.PostComments.Models.Requests;
+namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 
 public class UpdatePostCommentRequest
 {

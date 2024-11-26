@@ -1,6 +1,6 @@
-﻿using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
+using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.AddPostCommentLike;
+namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.AddPostCommentLike;
 
 public record AddPostCommentLikeCommand(string CurrentUserId, string PostCommentId) : ICommand<PostCommentLikeCommandViewModel>;

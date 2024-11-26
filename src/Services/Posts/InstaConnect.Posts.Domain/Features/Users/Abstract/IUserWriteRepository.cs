@@ -1,6 +1,6 @@
-﻿using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
+﻿using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 
-namespace InstaConnect.Posts.Data.Features.Users.Abstract;
+namespace InstaConnect.Posts.Domain.Features.Users.Abstract;
 public interface IUserWriteRepository
 {
     void Add(User user);

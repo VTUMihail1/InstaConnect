@@ -1,11 +1,10 @@
-﻿using InstaConnect.Posts.Business.Features.Posts.Models;
-using InstaConnect.Posts.Data.Features.Posts.Abstract;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Posts.Application.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Abstract;
+using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Posts;
 using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Data.Abstractions;
 
-namespace InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;
+namespace InstaConnect.Posts.Application.Features.Posts.Commands.UpdatePost;
 
 public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, PostCommandViewModel>
 {

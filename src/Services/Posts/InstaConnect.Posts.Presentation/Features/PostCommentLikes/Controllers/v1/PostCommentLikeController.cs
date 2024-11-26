@@ -1,19 +1,19 @@
 ﻿using Asp.Versioning;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.AddPostCommentLike;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.DeletePostCommentLike;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
-using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Responses;
-using InstaConnect.Posts.Web.Features.PostComments.Models.Responses;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Web.Abstractions;
-using InstaConnect.Shared.Web.Utilities;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.AddPostCommentLike;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.DeletePostCommentLike;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
+using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
+using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
+using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Presentation.Abstractions;
+using InstaConnect.Shared.Presentation.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Posts.Web.Features.PostCommentLikes.Controllers.v1;
+namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Controllers.v1;
 
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/post-comment-likes")]

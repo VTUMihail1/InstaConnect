@@ -1,5 +1,5 @@
-﻿using InstaConnect.Messages.Data;
-using InstaConnect.Shared.Web.FunctionalTests.Extensions;
+﻿using InstaConnect.Messages.Infrastructure;
+using InstaConnect.Shared.Presentation.FunctionalTests.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.MsSql;
 
-namespace InstaConnect.Messages.Web.FunctionalTests.Utilities;
+namespace InstaConnect.Messages.Presentation.FunctionalTests.Utilities;
 
 public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {

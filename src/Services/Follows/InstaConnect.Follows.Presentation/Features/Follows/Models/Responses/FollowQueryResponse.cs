@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Follows.Web.Features.Follows.Models.Responses;
+﻿namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 
 public record FollowQueryResponse(
     string Id,

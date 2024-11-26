@@ -1,7 +1,7 @@
 ﻿using System.Net.Mail;
-using InstaConnect.Emails.Business.Features.Emails.Abstractions;
+using InstaConnect.Emails.Application.Features.Emails.Abstractions;
 
-namespace InstaConnect.Emails.Business.Features.Emails.Helpers;
+namespace InstaConnect.Emails.Infrastructure.Features.Emails.Helpers;
 
 internal class EmailSender : IEmailSender
 {

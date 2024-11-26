@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 
-namespace InstaConnect.Identity.Business.Features.Users.Commands.DeleteCurrentUser;
+namespace InstaConnect.Identity.Application.Features.Users.Commands.DeleteCurrentUser;
 public class DeleteCurrentUserCommandValidator : AbstractValidator<DeleteCurrentUserCommand>
 {
     public DeleteCurrentUserCommandValidator()

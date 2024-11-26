@@ -1,6 +1,6 @@
-﻿using InstaConnect.Posts.Business.Features.PostLikes.Models;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Posts.Application.Features.PostLikes.Models;
+using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Posts.Business.Features.PostLikes.Queries.GetPostLikeById;
+namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetPostLikeById;
 
 public record GetPostLikeByIdQuery(string Id) : IQuery<PostLikeQueryViewModel>;

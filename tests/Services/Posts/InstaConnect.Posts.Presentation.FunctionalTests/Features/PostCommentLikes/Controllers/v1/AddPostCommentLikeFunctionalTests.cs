@@ -3,14 +3,14 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Binding;
-using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Responses;
-using InstaConnect.Posts.Web.FunctionalTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
+using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Binding;
+using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
+using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 
 public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTest
 {

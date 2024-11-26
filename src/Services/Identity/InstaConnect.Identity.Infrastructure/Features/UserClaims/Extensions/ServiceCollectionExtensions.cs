@@ -1,8 +1,8 @@
-﻿using InstaConnect.Identity.Data.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Data.Features.UserClaims.Repositories;
+﻿using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
+using InstaConnect.Identity.Infrastructure.Features.UserClaims.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Identity.Data.Features.UserClaims.Extensions;
+namespace InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Business.Abstractions;
+﻿namespace InstaConnect.Shared.Application.Abstractions;
 
 public interface IEventPublisher
 {

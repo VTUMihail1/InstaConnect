@@ -1,11 +1,11 @@
-﻿using InstaConnect.Follows.Data.Features.Follows.Abstractions;
-using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
-using InstaConnect.Shared.Data.Extensions;
-using InstaConnect.Shared.Data.Models.Pagination;
+﻿using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
+using InstaConnect.Shared.Domain.Models.Pagination;
+using InstaConnect.Shared.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Follows.Data.Features.Follows.Repositories;
+namespace InstaConnect.Follows.Infrastructure.Features.Follows.Repositories;
 
 internal class FollowReadRepository : IFollowReadRepository
 {

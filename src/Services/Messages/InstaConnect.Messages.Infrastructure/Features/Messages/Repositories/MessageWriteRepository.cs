@@ -1,8 +1,8 @@
-﻿using InstaConnect.Messages.Data.Features.Messages.Abstractions;
-using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
+﻿using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Messages.Data.Features.Messages.Repositories;
+namespace InstaConnect.Messages.Infrastructure.Features.Messages.Repositories;
 
 internal class MessageWriteRepository : IMessageWriteRepository
 {

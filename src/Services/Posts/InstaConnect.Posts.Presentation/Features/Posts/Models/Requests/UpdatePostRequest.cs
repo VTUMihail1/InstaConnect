@@ -1,7 +1,7 @@
-﻿using InstaConnect.Posts.Web.Features.Posts.Models.Binding;
+﻿using InstaConnect.Posts.Presentation.Features.Posts.Models.Binding;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Posts.Web.Features.Posts.Models.Requests;
+namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 public class UpdatePostRequest
 {

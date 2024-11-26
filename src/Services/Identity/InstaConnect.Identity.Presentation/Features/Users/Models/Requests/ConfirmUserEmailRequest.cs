@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Identity.Web.Features.Users.Models.Requests;
+namespace InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 
 public class ConfirmUserEmailRequest
 {

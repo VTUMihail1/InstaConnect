@@ -1,12 +1,12 @@
-﻿using InstaConnect.Follows.Data.Features.Follows.Extensions;
-using InstaConnect.Follows.Data.Features.Users.Extensions;
-using InstaConnect.Follows.Data.Helpers;
-using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Extensions;
+﻿using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
+using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
+using InstaConnect.Follows.Infrastructure.Helpers;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Infrastructure.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Follows.Data.Extensions;
+namespace InstaConnect.Follows.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -24,7 +24,7 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
             .AddUnitOfWork<FollowsContext>()
-            .AddMessageBroker(configuration, currentAssembly)
+            .AddRabbitMQ(configuration, currentAssembly)
             .AddJwtBearer(configuration);
 
         return serviceCollection;

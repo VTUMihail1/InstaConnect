@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Data.Abstractions;
+﻿namespace InstaConnect.Shared.Application.Abstractions;
 
 public interface IDatabaseSeeder
 {

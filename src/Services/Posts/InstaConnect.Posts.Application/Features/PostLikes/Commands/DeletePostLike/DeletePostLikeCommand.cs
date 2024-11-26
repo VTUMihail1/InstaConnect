@@ -1,5 +1,5 @@
-﻿using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Posts.Business.Features.PostLikes.Commands.DeletePostLike;
+namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.DeletePostLike;
 
 public record DeletePostLikeCommand(string Id, string CurrentUserId) : ICommand;

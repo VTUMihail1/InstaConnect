@@ -1,6 +1,6 @@
-﻿using InstaConnect.Shared.Data.Abstractions;
+﻿using InstaConnect.Shared.Domain.Abstractions;
 
-namespace InstaConnect.Shared.Data.Models.Base;
+namespace InstaConnect.Shared.Domain.Models.Base;
 
 public abstract class BaseEntity : IBaseEntity
 {

@@ -1,9 +1,9 @@
-﻿using InstaConnect.Messages.Business.Features.Messages.Abstractions;
-using InstaConnect.Messages.Business.Features.Messages.Helpers.Hubs;
-using InstaConnect.Messages.Business.Features.Messages.Models;
+﻿using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Messages.Domain.Features.Messages.Models;
+using InstaConnect.Messages.Presentation.Features.Messages.Helpers.Hubs;
 using Microsoft.AspNetCore.SignalR;
 
-namespace InstaConnect.Messages.Business.Features.Messages.Helpers;
+namespace InstaConnect.Messages.Presentation.Features.Messages.Helpers;
 
 internal class MessageSender : IMessageSender
 {

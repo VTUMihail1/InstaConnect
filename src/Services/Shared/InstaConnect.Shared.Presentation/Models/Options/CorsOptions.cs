@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Shared.Web.Models.Options;
+namespace InstaConnect.Shared.Presentation.Models.Options;
 
 public class CorsOptions
 {

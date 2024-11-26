@@ -1,14 +1,14 @@
-﻿using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Messages.Data;
-using InstaConnect.Messages.Data.Features.Users.Abstract;
-using InstaConnect.Messages.Data.Features.Users.Models.Entities;
-using InstaConnect.Messages.Web.FunctionalTests.Utilities;
-using InstaConnect.Shared.Data.Abstractions;
+﻿using InstaConnect.Messages.Common.Features.Users.Utilities;
+using InstaConnect.Messages.Domain.Features.Users.Abstract;
+using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
+using InstaConnect.Messages.Infrastructure;
+using InstaConnect.Messages.Presentation.FunctionalTests.Utilities;
+using InstaConnect.Shared.Application.Abstractions;
 using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Follows.Web.FunctionalTests.Features.Users.Utilities;
+namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Users.Utilities;
 
 public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {

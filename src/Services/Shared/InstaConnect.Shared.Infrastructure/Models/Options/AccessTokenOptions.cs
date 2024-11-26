@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace InstaConnect.Shared.Data.Models.Options;
+namespace InstaConnect.Shared.Infrastructure.Models.Options;
 
 public class AccessTokenOptions
 {

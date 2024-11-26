@@ -2,12 +2,12 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
-using InstaConnect.Posts.Web.FunctionalTests.Features.Posts.Utilities;
-using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
+using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Posts.Web.FunctionalTests.Features.Posts.Controllers.v1;
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class GetPostByIdFunctionalTests : BasePostFunctionalTest
 {

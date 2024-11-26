@@ -1,6 +1,6 @@
-﻿using InstaConnect.Identity.Business.Features.Users.Abstractions;
-using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Options;
+﻿using InstaConnect.Identity.Application.Features.Users.Abstractions;
+using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Models.Options;
 using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers;

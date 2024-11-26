@@ -1,15 +1,15 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Business.Features.Users.Commands.ResetUserPassword;
-using InstaConnect.Identity.Business.IntegrationTests.Features.Users.Utilities;
-using InstaConnect.Identity.Business.IntegrationTests.Utilities;
+using InstaConnect.Identity.Application.Features.Users.Commands.ResetUserPassword;
+using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
+using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Token;
 using InstaConnect.Shared.Common.Exceptions.User;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Business.IntegrationTests.Features.Users.Commands;
+namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
 
 public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
 {

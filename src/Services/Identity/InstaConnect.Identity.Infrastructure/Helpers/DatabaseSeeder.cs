@@ -1,14 +1,14 @@
-﻿using InstaConnect.Identity.Data.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
-using InstaConnect.Identity.Data.Features.Users.Abstractions;
-using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Data.Features.Users.Models.Options;
+﻿using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Identity.Infrastructure.Features.Users.Models.Options;
+using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;
-using InstaConnect.Shared.Data.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace InstaConnect.Identity.Data.Helpers;
+namespace InstaConnect.Identity.Infrastructure.Helpers;
 
 internal class DatabaseSeeder : IDatabaseSeeder
 {

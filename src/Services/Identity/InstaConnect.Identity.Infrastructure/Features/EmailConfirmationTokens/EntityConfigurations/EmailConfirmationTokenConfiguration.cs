@@ -1,8 +1,8 @@
-﻿using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
+﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InstaConnect.Identity.Data.Features.EmailConfirmationTokens.EntityConfigurations;
+namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.EntityConfigurations;
 
 public class EmailConfirmationTokenConfiguration : IEntityTypeConfiguration<EmailConfirmationToken>
 {

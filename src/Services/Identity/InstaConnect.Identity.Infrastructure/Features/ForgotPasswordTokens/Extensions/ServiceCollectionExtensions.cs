@@ -1,9 +1,9 @@
-﻿using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Options;
-using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Repositories;
+﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
+using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Models.Options;
+using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Extensions;
+namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

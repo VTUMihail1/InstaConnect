@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Validators;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Validators;
 
-namespace InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAllUsers;
 
 public class GetAllUsersQueryValidator : AbstractValidator<GetAllUsersQuery>
 {

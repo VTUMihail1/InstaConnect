@@ -1,7 +1,7 @@
 ﻿using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 
-namespace InstaConnect.Shared.Business.Abstractions;
+namespace InstaConnect.Shared.Infrastructure.Abstractions;
 
 public interface IImageUploadFactory
 {

@@ -1,6 +1,6 @@
-﻿using InstaConnect.Identity.Business.Features.Users.Models;
+﻿using InstaConnect.Identity.Application.Features.Users.Models;
 
-namespace InstaConnect.Identity.Web.Features.Users.Models.Responses;
+namespace InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 
 public record UserPaginationQueryResponse(
     ICollection<UserQueryViewModel> Items,

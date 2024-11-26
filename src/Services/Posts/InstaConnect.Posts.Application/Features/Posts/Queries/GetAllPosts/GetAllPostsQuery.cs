@@ -1,9 +1,9 @@
-﻿using InstaConnect.Posts.Business.Features.Posts.Models;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Models.Filters;
+﻿using InstaConnect.Posts.Application.Features.Posts.Models;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Models.Filters;
 using InstaConnect.Shared.Common.Models.Enums;
 
-namespace InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
+namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAllPosts;
 
 public record GetAllPostsQuery(
     string UserId,

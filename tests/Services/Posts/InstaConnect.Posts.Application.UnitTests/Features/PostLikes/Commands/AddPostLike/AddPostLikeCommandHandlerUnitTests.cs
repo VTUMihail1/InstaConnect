@@ -1,15 +1,15 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostLikes.Commands.AddPostLike;
-using InstaConnect.Posts.Business.Features.PostLikes.Models;
-using InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.AddPostLike;
+using InstaConnect.Posts.Application.Features.PostLikes.Models;
+using InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Posts;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.PostLikes.Commands.AddPostLike;
+namespace InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Commands.AddPostLike;
 
 public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
 {

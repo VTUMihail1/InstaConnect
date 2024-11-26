@@ -1,16 +1,16 @@
 ﻿using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Data;
-using InstaConnect.Messages.Data.Features.Messages.Abstractions;
-using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Messages.Data.Features.Users.Abstract;
-using InstaConnect.Messages.Data.Features.Users.Models.Entities;
-using InstaConnect.Messages.Web.FunctionalTests.Utilities;
-using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Web.FunctionalTests.Utilities;
+using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
+using InstaConnect.Messages.Domain.Features.Users.Abstract;
+using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
+using InstaConnect.Messages.Infrastructure;
+using InstaConnect.Messages.Presentation.FunctionalTests.Utilities;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Presentation.FunctionalTests.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Utilities;
+namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Utilities;
 
 public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {

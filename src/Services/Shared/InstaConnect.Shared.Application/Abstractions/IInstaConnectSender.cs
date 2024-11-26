@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace InstaConnect.Shared.Business.Abstractions;
+namespace InstaConnect.Shared.Application.Abstractions;
 public interface IInstaConnectSender
 {
     Task SendAsync<TRequest>(TRequest request, CancellationToken cancellationToken) where TRequest : IRequest;

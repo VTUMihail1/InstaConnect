@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
-using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
-using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
-using InstaConnect.Shared.Web.Models.Users;
+using InstaConnect.Follows.Application.Features.Follows.Commands.AddFollow;
+using InstaConnect.Follows.Application.Features.Follows.Commands.DeleteFollow;
+using InstaConnect.Follows.Application.Features.Follows.Models;
+using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
+using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
+using InstaConnect.Shared.Presentation.Models.Users;
 
-namespace InstaConnect.Follows.Web.Features.Follows.Mappings;
+namespace InstaConnect.Follows.Presentation.Features.Follows.Mappings;
 
 internal class FollowCommandProfile : Profile
 {

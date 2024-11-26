@@ -1,2 +1,2 @@
-﻿namespace InstaConnect.Shared.Business.Contracts.Users;
+﻿namespace InstaConnect.Shared.Application.Contracts.Users;
 public record UserDeletedEvent(string Id);

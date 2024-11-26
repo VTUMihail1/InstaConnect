@@ -1,5 +1,5 @@
-﻿using InstaConnect.Follows.Data;
-using InstaConnect.Shared.Business.IntegrationTests.Extensions;
+﻿using InstaConnect.Follows.Infrastructure;
+using InstaConnect.Shared.Application.IntegrationTests.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.MsSql;
 
-namespace InstaConnect.Follows.Business.IntegrationTests.Utilities;
+namespace InstaConnect.Follows.Application.IntegrationTests.Utilities;
 
 public class FollowsIntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {

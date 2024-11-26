@@ -1,9 +1,9 @@
-﻿using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Abstract;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
+using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
+namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 
 internal class GetAllPostCommentLikesQueryHandler : IQueryHandler<GetAllPostCommentLikesQuery, PostCommentLikePaginationQueryViewModel>
 {

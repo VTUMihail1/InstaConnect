@@ -1,11 +1,10 @@
-﻿using InstaConnect.Follows.Data.Features.Users.Abstractions;
-using InstaConnect.Follows.Data.Features.Users.Models.Entities;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Contracts.Users;
-using InstaConnect.Shared.Data.Abstractions;
+﻿using InstaConnect.Follows.Domain.Features.Users.Abstractions;
+using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Contracts.Users;
 using MassTransit;
 
-namespace InstaConnect.Follows.Web.Features.Users.Consumers;
+namespace InstaConnect.Follows.Presentation.Features.Users.Consumers;
 
 internal class UserCreatedEventConsumer : IConsumer<UserCreatedEvent>
 {

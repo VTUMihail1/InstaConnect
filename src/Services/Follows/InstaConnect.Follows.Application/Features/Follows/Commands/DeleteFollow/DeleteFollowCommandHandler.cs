@@ -1,10 +1,9 @@
-﻿using InstaConnect.Follows.Data.Features.Follows.Abstractions;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
+using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Follow;
 using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Data.Abstractions;
 
-namespace InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
+namespace InstaConnect.Follows.Application.Features.Follows.Commands.DeleteFollow;
 
 internal class DeleteFollowCommandHandler : ICommandHandler<DeleteFollowCommand>
 {

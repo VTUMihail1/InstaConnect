@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Follows.Business.Features.Follows.Models;
+﻿namespace InstaConnect.Follows.Application.Features.Follows.Models;
 
 public record FollowQueryViewModel(
     string Id,

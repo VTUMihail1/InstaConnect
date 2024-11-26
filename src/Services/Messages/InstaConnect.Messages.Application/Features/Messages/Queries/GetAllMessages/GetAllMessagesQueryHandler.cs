@@ -1,9 +1,9 @@
-﻿using InstaConnect.Messages.Business.Features.Messages.Models;
-using InstaConnect.Messages.Data.Features.Messages.Abstractions;
-using InstaConnect.Messages.Data.Features.Messages.Models.Filters;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Messages.Application.Features.Messages.Models;
+using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
+using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
+namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
 
 internal class GetAllMessagesQueryHandler : IQueryHandler<GetAllMessagesQuery, MessagePaginationQueryViewModel>
 {

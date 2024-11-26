@@ -2,7 +2,7 @@
 using MassTransit.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Shared.Web.FunctionalTests.Utilities;
+namespace InstaConnect.Shared.Presentation.FunctionalTests.Utilities;
 
 public class BaseSharedFunctionalTest
 {

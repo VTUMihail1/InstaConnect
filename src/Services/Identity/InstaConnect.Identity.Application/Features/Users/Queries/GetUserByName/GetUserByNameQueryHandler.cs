@@ -1,9 +1,9 @@
-﻿using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Data.Features.Users.Abstractions;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Identity.Business.Features.Users.Queries.GetUserByName;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetUserByName;
 
 public class GetUserByNameQueryHandler : IQueryHandler<GetUserByNameQuery, UserQueryViewModel>
 {

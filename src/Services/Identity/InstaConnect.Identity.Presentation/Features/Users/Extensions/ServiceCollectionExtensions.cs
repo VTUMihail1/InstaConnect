@@ -1,7 +1,7 @@
-﻿using InstaConnect.Shared.Data.Models.Options;
+﻿using InstaConnect.Shared.Infrastructure.Models.Options;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace InstaConnect.Identity.Web.Features.Users.Extensions;
+namespace InstaConnect.Identity.Presentation.Features.Users.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

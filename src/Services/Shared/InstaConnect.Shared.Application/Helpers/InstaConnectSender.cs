@@ -1,7 +1,7 @@
-﻿using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Shared.Application.Abstractions;
 using MediatR;
 
-namespace InstaConnect.Shared.Business.Helpers;
+namespace InstaConnect.Shared.Application.Helpers;
 
 internal class InstaConnectSender : IInstaConnectSender
 {

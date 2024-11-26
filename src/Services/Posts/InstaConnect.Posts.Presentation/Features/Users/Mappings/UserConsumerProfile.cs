@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Business.Contracts.Users;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Shared.Application.Contracts.Users;
 
-namespace InstaConnect.Follows.Web.Features.Users.Mappings;
+namespace InstaConnect.Posts.Presentation.Features.Users.Mappings;
 internal class UserConsumerProfile : Profile
 {
     public UserConsumerProfile()

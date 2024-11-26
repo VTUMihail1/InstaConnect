@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
-using InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
+using InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
 using NSubstitute;
 using NSubstitute.ReceivedExtensions;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
+namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 
 public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUnitTest
 {

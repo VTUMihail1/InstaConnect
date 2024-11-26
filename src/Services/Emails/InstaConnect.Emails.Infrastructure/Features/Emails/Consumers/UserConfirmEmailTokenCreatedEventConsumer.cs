@@ -1,10 +1,10 @@
-﻿using InstaConnect.Emails.Business.Features.Emails.Abstractions;
-using InstaConnect.Emails.Business.Features.Emails.Utilities;
-using InstaConnect.Shared.Business.Contracts.Emails;
+﻿using InstaConnect.Emails.Application.Features.Emails.Abstractions;
+using InstaConnect.Emails.Infrastructure.Features.Emails.Utilities;
+using InstaConnect.Shared.Application.Contracts.Emails;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using MassTransit;
 
-namespace InstaConnect.Emails.Business.Features.Emails.Consumers;
+namespace InstaConnect.Emails.Infrastructure.Features.Emails.Consumers;
 
 public class UserConfirmEmailTokenCreatedEventConsumer : IConsumer<UserConfirmEmailTokenCreatedEvent>
 {

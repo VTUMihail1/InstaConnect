@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostComments.Models;
-using InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
-using InstaConnect.Posts.Business.UnitTests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Application.Features.PostComments.Models;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetPostCommentById;
+using InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Shared.Common.Exceptions.PostComment;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.PostComments.Queries.GetPostCommentById;
+namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Queries.GetPostCommentById;
 
 public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentUnitTest
 {

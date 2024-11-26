@@ -1,18 +1,18 @@
 ﻿using System.Net;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostLikes.Commands.AddPostLike;
-using InstaConnect.Posts.Business.Features.PostLikes.Commands.DeletePostLike;
-using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
-using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetPostLikeById;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.AddPostLike;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.DeletePostLike;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllPostLikes;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetPostLikeById;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Web.Features.PostLikes.Controllers.v1;
-using InstaConnect.Posts.Web.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
-using InstaConnect.Posts.Web.UnitTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
+using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
+using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
+using InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Web.UnitTests.Features.PostLikes.Controllers.v1;
+namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Controllers.v1;
 
 public class PostLikeControllerUnitTests : BasePostLikeUnitTest
 {

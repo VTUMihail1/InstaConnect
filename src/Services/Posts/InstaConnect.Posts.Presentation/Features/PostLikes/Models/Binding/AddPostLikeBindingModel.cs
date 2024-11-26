@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Web.Features.PostLikes.Models.Binding;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostLikes.Models.Binding;
 
 public class AddPostLikeBindingModel
 {

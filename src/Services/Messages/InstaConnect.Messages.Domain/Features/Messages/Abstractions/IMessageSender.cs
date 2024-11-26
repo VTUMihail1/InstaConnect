@@ -1,6 +1,6 @@
-﻿using InstaConnect.Messages.Business.Features.Messages.Models;
+﻿using InstaConnect.Messages.Domain.Features.Messages.Models;
 
-namespace InstaConnect.Messages.Business.Features.Messages.Abstractions;
+namespace InstaConnect.Messages.Domain.Features.Messages.Abstractions;
 
 public interface IMessageSender
 {

@@ -1,11 +1,10 @@
-﻿using InstaConnect.Identity.Business.Features.Users.Abstractions;
-using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Data.Features.Users.Abstractions;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Identity.Application.Features.Users.Abstractions;
+using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Data.Abstractions;
 
-namespace InstaConnect.Identity.Business.Features.Users.Commands.ResendUserEmailConfirmation;
+namespace InstaConnect.Identity.Application.Features.Users.Commands.ResendUserEmailConfirmation;
 
 public class ResendUserEmailConfirmationCommandHandler : ICommandHandler<ResendUserEmailConfirmationCommand>
 {

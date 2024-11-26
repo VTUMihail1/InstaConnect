@@ -1,11 +1,10 @@
-﻿using InstaConnect.Posts.Business.Features.PostComments.Models;
-using InstaConnect.Posts.Data.Features.PostComments.Abstract;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Posts.Application.Features.PostComments.Models;
+using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
+using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.PostComment;
 using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Data.Abstractions;
 
-namespace InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
+namespace InstaConnect.Posts.Application.Features.PostComments.Commands.UpdatePostComment;
 
 internal class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommand, PostCommentCommandViewModel>
 {

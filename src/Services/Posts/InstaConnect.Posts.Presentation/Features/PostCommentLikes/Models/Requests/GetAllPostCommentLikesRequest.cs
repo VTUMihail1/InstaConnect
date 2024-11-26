@@ -1,7 +1,7 @@
-﻿using InstaConnect.Shared.Web.Models.Requests;
+﻿using InstaConnect.Shared.Presentation.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Requests;
+namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 
 public class GetAllPostCommentLikesRequest : CollectionReadRequest
 {

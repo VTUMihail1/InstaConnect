@@ -1,9 +1,9 @@
-﻿using InstaConnect.Messages.Data.Features.Users.Abstract;
-using InstaConnect.Shared.Business.Contracts.Users;
-using InstaConnect.Shared.Data.Abstractions;
+﻿using InstaConnect.Messages.Domain.Features.Users.Abstract;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Contracts.Users;
 using MassTransit;
 
-namespace InstaConnect.Follows.Web.Features.Users.Consumers;
+namespace InstaConnect.Messages.Presentation.Features.Users.Consumers;
 
 internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
 {

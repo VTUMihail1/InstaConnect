@@ -1,6 +1,6 @@
-﻿using InstaConnect.Identity.Business.Features.Users.Models;
+﻿using InstaConnect.Identity.Application.Features.Users.Models;
 
-namespace InstaConnect.Identity.Business.Features.Users.Abstractions;
+namespace InstaConnect.Identity.Application.Features.Users.Abstractions;
 public interface IForgotPasswordTokenGenerator
 {
     GenerateForgotPasswordTokenResponse GenerateForgotPasswordToken(string userId, string email);

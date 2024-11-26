@@ -2,11 +2,11 @@
 using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Utilities;
-using InstaConnect.Messages.Web.FunctionalTests.Utilities;
+using InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Messages.Web.FunctionalTests.Features.Messages.Controllers.v1;
+namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Controllers.v1;
 
 public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 {

@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Data.Features.Users.Abstractions;
-using InstaConnect.Follows.Data.Features.Users.Models.Entities;
-using InstaConnect.Follows.Web.Features.Users.Mappings;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Data.Abstractions;
+using InstaConnect.Follows.Domain.Features.Users.Abstractions;
+using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+using InstaConnect.Follows.Presentation.Features.Users.Mappings;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Helpers;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Web.UnitTests.Features.Users.Utilities;
+namespace InstaConnect.Follows.Presentation.UnitTests.Features.Users.Utilities;
 
 public abstract class BaseUserUnitTest
 {

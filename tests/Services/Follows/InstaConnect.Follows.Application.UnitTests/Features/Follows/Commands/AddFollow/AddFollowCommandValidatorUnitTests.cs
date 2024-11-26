@@ -1,10 +1,11 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
+using InstaConnect.Follows.Application.Features.Follows.Commands.AddFollow;
+using InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Commands.AddFollow;
+namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Commands.AddFollow;
 
 public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
 {

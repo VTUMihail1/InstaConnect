@@ -1,8 +1,8 @@
-﻿using InstaConnect.Messages.Data.Features.Messages.Abstractions;
-using InstaConnect.Messages.Data.Features.Messages.Repositories;
+﻿using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Messages.Infrastructure.Features.Messages.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Data.Features.Users.Extensions;
+namespace InstaConnect.Messages.Infrastructure.Features.Users.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

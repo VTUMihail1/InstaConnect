@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Business.Features.Users.Commands.ResendUserEmailConfirmation;
-using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Application.Features.Users.Commands.ResendUserEmailConfirmation;
+using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Commands.ResendUserEmailConfirmation;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.ResendUserEmailConfirmation;
 
 public class ResendUserEmailConfirmationCommandHandlerUnitTests : BaseUserUnitTest
 {

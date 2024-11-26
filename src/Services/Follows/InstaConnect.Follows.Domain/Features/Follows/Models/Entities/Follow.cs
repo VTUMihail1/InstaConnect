@@ -1,7 +1,7 @@
-﻿using InstaConnect.Follows.Data.Features.Users.Models.Entities;
-using InstaConnect.Shared.Data.Models.Base;
+﻿using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+using InstaConnect.Shared.Domain.Models.Base;
 
-namespace InstaConnect.Follows.Data.Features.Follows.Models.Entities;
+namespace InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
 
 public class Follow : BaseEntity
 {

@@ -1,29 +1,28 @@
 ﻿using AutoMapper;
-using InstaConnect.Identity.Business.Features.Users.Abstractions;
-using InstaConnect.Identity.Business.Features.Users.Mappings;
-using InstaConnect.Identity.Business.Features.Users.Models;
+using InstaConnect.Identity.Application.Features.Users.Abstractions;
+using InstaConnect.Identity.Application.Features.Users.Mappings;
+using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
-using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites;
-using InstaConnect.Identity.Data.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
-using InstaConnect.Identity.Data.Features.UserClaims.Models.Filters;
-using InstaConnect.Identity.Data.Features.Users.Abstractions;
-using InstaConnect.Identity.Data.Features.Users.Models;
-using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Data.Features.Users.Models.Filters;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Business.Models;
-using InstaConnect.Shared.Business.UnitTests.Utilities;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
+using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Identity.Domain.Features.Users.Models;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Application.Models;
+using InstaConnect.Shared.Application.UnitTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
-using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Models.Pagination;
+using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
 
-namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 
 public abstract class BaseUserUnitTest : BaseSharedUnitTest
 {

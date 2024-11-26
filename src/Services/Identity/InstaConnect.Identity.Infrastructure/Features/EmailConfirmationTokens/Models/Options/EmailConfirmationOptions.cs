@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Options;
+namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Models.Options;
 
 public class EmailConfirmationOptions
 {

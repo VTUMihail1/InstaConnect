@@ -1,8 +1,8 @@
-using InstaConnect.Identity.Business.Extensions;
-using InstaConnect.Identity.Data.Extensions;
-using InstaConnect.Identity.Web.Extensions;
-using InstaConnect.Shared.Web.Extensions;
-using InstaConnect.Shared.Web.Utilities;
+using InstaConnect.Identity.Application.Extensions;
+using InstaConnect.Identity.Infrastructure.Extensions;
+using InstaConnect.Identity.Presentation.Extensions;
+using InstaConnect.Shared.Presentation.Extensions;
+using InstaConnect.Shared.Presentation.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 

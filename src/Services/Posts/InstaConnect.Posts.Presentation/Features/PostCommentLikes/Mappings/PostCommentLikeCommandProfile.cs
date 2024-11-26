@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.AddPostCommentLike;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Commands.DeletePostCommentLike;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
-using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Responses;
-using InstaConnect.Shared.Web.Models.Users;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.AddPostCommentLike;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.DeletePostCommentLike;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
+using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
+using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
+using InstaConnect.Shared.Presentation.Models.Users;
 
-namespace InstaConnect.Posts.Web.Features.PostCommentLikes.Mappings;
+namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Mappings;
 
 internal class PostCommentLikeCommandProfile : Profile
 {

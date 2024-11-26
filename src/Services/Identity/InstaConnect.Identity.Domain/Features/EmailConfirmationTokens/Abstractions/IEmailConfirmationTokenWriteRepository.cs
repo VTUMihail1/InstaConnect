@@ -1,6 +1,6 @@
-﻿using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
+﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
 
-namespace InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Abstractions;
+namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 public interface IEmailConfirmationTokenWriteRepository
 {
     void Add(EmailConfirmationToken emailConfirmationToken);

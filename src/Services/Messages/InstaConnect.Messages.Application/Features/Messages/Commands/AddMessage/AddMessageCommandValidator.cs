@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 
-namespace InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
+namespace InstaConnect.Messages.Application.Features.Messages.Commands.AddMessage;
 public class AddMessageCommandValidator : AbstractValidator<AddMessageCommand>
 {
     public AddMessageCommandValidator()

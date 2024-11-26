@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
-using InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;
-using InstaConnect.Posts.Business.Features.Posts.Models;
-using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
+using InstaConnect.Posts.Application.Features.Posts.Commands.AddPost;
+using InstaConnect.Posts.Application.Features.Posts.Commands.UpdatePost;
+using InstaConnect.Posts.Application.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 
-namespace InstaConnect.Posts.Business.Features.Posts.Mappings;
+namespace InstaConnect.Posts.Application.Features.Posts.Mappings;
 
 public class PostCommandProfile : Profile
 {

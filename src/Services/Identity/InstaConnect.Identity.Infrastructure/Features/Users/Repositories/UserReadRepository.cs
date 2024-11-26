@@ -1,11 +1,11 @@
-﻿using InstaConnect.Identity.Data.Features.Users.Abstractions;
-using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Data.Features.Users.Models.Filters;
-using InstaConnect.Shared.Data.Extensions;
-using InstaConnect.Shared.Data.Models.Pagination;
+﻿using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
+using InstaConnect.Shared.Domain.Models.Pagination;
+using InstaConnect.Shared.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Identity.Data.Features.Users.Repositories;
+namespace InstaConnect.Identity.Infrastructure.Features.Users.Repositories;
 
 internal class UserReadRepository : IUserReadRepository
 {

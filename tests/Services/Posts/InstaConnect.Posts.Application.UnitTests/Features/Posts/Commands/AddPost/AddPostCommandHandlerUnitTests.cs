@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
-using InstaConnect.Posts.Business.Features.Posts.Models;
-using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Application.Features.Posts.Commands.AddPost;
+using InstaConnect.Posts.Application.Features.Posts.Models;
+using InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Commands.AddPost;
+namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.AddPost;
 
 public class AddPostCommandHandlerUnitTests : BasePostUnitTest
 {

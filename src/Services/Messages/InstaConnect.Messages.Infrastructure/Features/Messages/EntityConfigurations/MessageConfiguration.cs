@@ -1,8 +1,8 @@
-﻿using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
+﻿using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InstaConnect.Messages.Data.Features.Messages.EntityConfigurations;
+namespace InstaConnect.Messages.Infrastructure.Features.Messages.EntityConfigurations;
 
 internal class MessageConfiguration : IEntityTypeConfiguration<Message>
 {

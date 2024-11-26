@@ -1,6 +1,6 @@
-﻿using InstaConnect.Shared.Web.Extensions;
+﻿using InstaConnect.Shared.Presentation.Extensions;
 
-namespace InstaConnect.Gateway.Web.Extensions;
+namespace InstaConnect.Gateway.Presentation.Extensions;
 
 public static class ServiceCollectionExtensions
 {

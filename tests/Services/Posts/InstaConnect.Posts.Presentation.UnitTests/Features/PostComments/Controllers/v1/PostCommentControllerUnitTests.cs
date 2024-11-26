@@ -1,19 +1,19 @@
 ﻿using System.Net;
 using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostComments.Commands.AddPostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Commands.DeletePostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
-using InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.AddPostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.DeletePostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.UpdatePostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllPostComments;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetPostCommentById;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Web.Features.PostComments.Controllers.v1;
-using InstaConnect.Posts.Web.Features.PostComments.Models.Requests;
-using InstaConnect.Posts.Web.Features.PostComments.Models.Responses;
-using InstaConnect.Posts.Web.UnitTests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1;
+using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
+using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
+using InstaConnect.Posts.Presentation.UnitTests.Features.PostComments.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Web.UnitTests.Features.PostComments.Controllers.v1;
+namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostComments.Controllers.v1;
 public class PostCommentControllerUnitTests : BasePostCommentUnitTest
 {
     private readonly PostCommentController _postCommentController;

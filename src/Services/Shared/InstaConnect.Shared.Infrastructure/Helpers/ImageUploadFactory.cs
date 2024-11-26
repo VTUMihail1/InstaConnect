@@ -1,9 +1,9 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
-using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Infrastructure.Abstractions;
 using Microsoft.AspNetCore.Http;
 
-namespace InstaConnect.Shared.Business.Helpers;
+namespace InstaConnect.Shared.Infrastructure.Helpers;
 
 internal class ImageUploadFactory : IImageUploadFactory
 {

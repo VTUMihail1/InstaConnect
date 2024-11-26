@@ -1,6 +1,6 @@
 ﻿using System.Net.Mail;
 
-namespace InstaConnect.Emails.Business.Features.Emails.Abstractions;
+namespace InstaConnect.Emails.Application.Features.Emails.Abstractions;
 
 public interface IEmailSender
 {

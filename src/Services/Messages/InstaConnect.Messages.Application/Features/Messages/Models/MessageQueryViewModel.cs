@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Messages.Business.Features.Messages.Models;
+﻿namespace InstaConnect.Messages.Application.Features.Messages.Models;
 
 public record MessageQueryViewModel(
     string Id,

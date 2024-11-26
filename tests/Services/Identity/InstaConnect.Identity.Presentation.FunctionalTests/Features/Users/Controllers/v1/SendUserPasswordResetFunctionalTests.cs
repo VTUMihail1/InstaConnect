@@ -1,12 +1,12 @@
 ﻿using System.Net;
 using FluentAssertions;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Web.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Identity.Web.FunctionalTests.Utilities;
-using InstaConnect.Shared.Business.Contracts.Emails;
+using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
+using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
+using InstaConnect.Shared.Application.Contracts.Emails;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Web.FunctionalTests.Features.Users.Controllers.v1;
+namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
 
 public class SendUserPasswordResetFunctionalTests : BaseUserFunctionalTest
 {

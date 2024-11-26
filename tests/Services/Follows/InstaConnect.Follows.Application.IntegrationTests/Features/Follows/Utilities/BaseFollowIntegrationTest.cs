@@ -1,18 +1,15 @@
-﻿using InstaConnect.Follows.Business.IntegrationTests.Utilities;
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
+﻿using InstaConnect.Follows.Application.IntegrationTests.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Data;
-using InstaConnect.Follows.Data.Features.Follows.Abstractions;
-using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Data.Features.Users.Abstractions;
-using InstaConnect.Follows.Data.Features.Users.Models.Entities;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Data.Abstractions;
+using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+using InstaConnect.Follows.Domain.Features.Users.Abstractions;
+using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+using InstaConnect.Follows.Infrastructure;
+using InstaConnect.Shared.Application.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Follows.Business.IntegrationTests.Features.Follows.Utilities;
+namespace InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Utilities;
 
 public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsIntegrationTestWebAppFactory>, IAsyncLifetime
 {

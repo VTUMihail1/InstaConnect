@@ -1,10 +1,11 @@
 ﻿using System.Net;
 using CloudinaryDotNet;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Models;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Models;
 using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Infrastructure.Abstractions;
 
-namespace InstaConnect.Shared.Business.Helpers;
+namespace InstaConnect.Shared.Infrastructure.Helpers;
 
 internal class ImageHandler : IImageHandler
 {

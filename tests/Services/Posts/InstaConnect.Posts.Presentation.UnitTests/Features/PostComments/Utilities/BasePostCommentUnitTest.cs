@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Features.PostComments.Commands.AddPostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Models;
-using InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
-using InstaConnect.Posts.Business.Features.PostComments.Queries.GetPostCommentById;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.AddPostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.UpdatePostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Models;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllPostComments;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetPostCommentById;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Web.Features.PostComments.Mappings;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Web.Abstractions;
-using InstaConnect.Shared.Web.Models.Users;
-using InstaConnect.Shared.Web.UnitTests.Utilities;
+using InstaConnect.Posts.Presentation.Features.PostComments.Mappings;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Presentation.Abstractions;
+using InstaConnect.Shared.Presentation.Models.Users;
+using InstaConnect.Shared.Presentation.UnitTests.Utilities;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Web.UnitTests.Features.PostComments.Utilities;
+namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostComments.Utilities;
 
 public abstract class BasePostCommentUnitTest : BaseSharedUnitTest
 {

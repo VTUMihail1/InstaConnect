@@ -1,8 +1,8 @@
-﻿using InstaConnect.Shared.Data.Abstractions;
+﻿using InstaConnect.Shared.Application.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace InstaConnect.Shared.Data;
+namespace InstaConnect.Shared.Infrastructure;
 
 internal class UnitOfWork : IUnitOfWork
 {

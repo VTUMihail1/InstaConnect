@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 
-namespace InstaConnect.Identity.Business.Features.Users.Commands.EditCurrentUser;
+namespace InstaConnect.Identity.Application.Features.Users.Commands.EditCurrentUser;
 public class EditCurrentUserCommandValidator : AbstractValidator<EditCurrentUserCommand>
 {
     public EditCurrentUserCommandValidator()

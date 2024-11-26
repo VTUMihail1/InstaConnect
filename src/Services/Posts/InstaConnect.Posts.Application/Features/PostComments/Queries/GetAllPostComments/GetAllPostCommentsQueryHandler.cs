@@ -1,9 +1,9 @@
-﻿using InstaConnect.Posts.Business.Features.PostComments.Models;
-using InstaConnect.Posts.Data.Features.PostComments.Abstract;
-using InstaConnect.Posts.Data.Features.PostComments.Models.Filters;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Posts.Application.Features.PostComments.Models;
+using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
+using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Posts.Business.Features.PostComments.Queries.GetAllPostComments;
+namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllPostComments;
 
 internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostCommentsQuery, PostCommentPaginationQueryViewModel>
 {

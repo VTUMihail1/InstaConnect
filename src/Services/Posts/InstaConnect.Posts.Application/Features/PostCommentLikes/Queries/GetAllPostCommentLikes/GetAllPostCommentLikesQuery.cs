@@ -1,9 +1,9 @@
-﻿using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Models.Filters;
+﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Models.Filters;
 using InstaConnect.Shared.Common.Models.Enums;
 
-namespace InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
+namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 
 public record GetAllPostCommentLikesQuery(
     string UserId,

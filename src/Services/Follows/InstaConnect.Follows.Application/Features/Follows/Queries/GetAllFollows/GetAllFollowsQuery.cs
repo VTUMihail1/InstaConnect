@@ -1,9 +1,9 @@
-﻿using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Models.Filters;
+﻿using InstaConnect.Follows.Application.Features.Follows.Models;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Models.Filters;
 using InstaConnect.Shared.Common.Models.Enums;
 
-namespace InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
+namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAllFollows;
 
 public record GetAllFollowsQuery(
     string FollowerId,

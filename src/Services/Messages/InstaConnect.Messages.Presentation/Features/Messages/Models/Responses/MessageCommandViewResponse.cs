@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Messages.Web.Features.Messages.Models.Responses;
+﻿namespace InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
 
 public record MessageCommandViewResponse(string Id);

@@ -1,6 +1,6 @@
-﻿using InstaConnect.Shared.Web.Models.Users;
+﻿using InstaConnect.Shared.Presentation.Models.Users;
 
-namespace InstaConnect.Shared.Web.Abstractions;
+namespace InstaConnect.Shared.Presentation.Abstractions;
 
 public interface ICurrentUserContext
 {

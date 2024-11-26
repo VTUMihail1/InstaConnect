@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace InstaConnect.Shared.Business.PipelineBehaviors;
+namespace InstaConnect.Shared.Application.PipelineBehaviors;
 
 internal class LoggingPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest

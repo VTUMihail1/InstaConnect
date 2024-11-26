@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
-using InstaConnect.Identity.Business.Features.Users.Commands.ConfirmUserEmail;
-using InstaConnect.Identity.Business.Features.Users.Commands.DeleteCurrentUser;
-using InstaConnect.Identity.Business.Features.Users.Commands.DeleteUserById;
-using InstaConnect.Identity.Business.Features.Users.Commands.EditCurrentUser;
-using InstaConnect.Identity.Business.Features.Users.Commands.LoginUser;
-using InstaConnect.Identity.Business.Features.Users.Commands.RegisterUser;
-using InstaConnect.Identity.Business.Features.Users.Commands.ResendUserEmailConfirmation;
-using InstaConnect.Identity.Business.Features.Users.Commands.ResetUserPassword;
-using InstaConnect.Identity.Business.Features.Users.Commands.SendUserPasswordReset;
-using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Web.Features.Users.Models.Requests;
-using InstaConnect.Identity.Web.Features.Users.Models.Responses;
-using InstaConnect.Shared.Web.Models.Users;
+using InstaConnect.Identity.Application.Features.Users.Commands.ConfirmUserEmail;
+using InstaConnect.Identity.Application.Features.Users.Commands.DeleteCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.DeleteUserById;
+using InstaConnect.Identity.Application.Features.Users.Commands.EditCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.LoginUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.RegisterUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.ResendUserEmailConfirmation;
+using InstaConnect.Identity.Application.Features.Users.Commands.ResetUserPassword;
+using InstaConnect.Identity.Application.Features.Users.Commands.SendUserPasswordReset;
+using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
+using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
+using InstaConnect.Shared.Presentation.Models.Users;
 
-namespace InstaConnect.Identity.Web.Features.Users.Mappings;
+namespace InstaConnect.Identity.Presentation.Features.Users.Mappings;
 
 internal class UserCommandProfile : Profile
 {

@@ -1,15 +1,15 @@
-﻿using InstaConnect.Posts.Data.Features.PostCommentLikes.Extensions;
-using InstaConnect.Posts.Data.Features.PostComments.Extensions;
-using InstaConnect.Posts.Data.Features.PostLikes.Extensions;
-using InstaConnect.Posts.Data.Features.Posts.Extensions;
-using InstaConnect.Posts.Data.Features.Users.Extensions;
-using InstaConnect.Posts.Data.Helpers;
-using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Extensions;
+﻿using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
+using InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
+using InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
+using InstaConnect.Posts.Infrastructure.Features.Posts.Extensions;
+using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
+using InstaConnect.Posts.Infrastructure.Helpers;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Infrastructure.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Posts.Data.Extensions;
+namespace InstaConnect.Posts.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -30,7 +30,7 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
             .AddUnitOfWork<PostsContext>()
-            .AddMessageBroker(configuration, currentAssembly)
+            .AddRabbitMQ(configuration, currentAssembly)
             .AddJwtBearer(configuration);
 
         return serviceCollection;

@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
-using InstaConnect.Messages.Business.Features.Messages.Commands.UpdateMessage;
-using InstaConnect.Messages.Business.Features.Messages.Models;
-using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
+using InstaConnect.Messages.Application.Features.Messages.Commands.AddMessage;
+using InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
+using InstaConnect.Messages.Application.Features.Messages.Models;
+using InstaConnect.Messages.Domain.Features.Messages.Models;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 
-namespace InstaConnect.Messages.Business.Features.Messages.Mappings;
+namespace InstaConnect.Messages.Application.Features.Messages.Mappings;
 
 internal class MessageCommandProfile : Profile
 {

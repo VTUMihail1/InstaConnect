@@ -1,18 +1,18 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Features.PostLikes.Commands.AddPostLike;
-using InstaConnect.Posts.Business.Features.PostLikes.Models;
-using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetAllPostLikes;
-using InstaConnect.Posts.Business.Features.PostLikes.Queries.GetPostLikeById;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.AddPostLike;
+using InstaConnect.Posts.Application.Features.PostLikes.Models;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllPostLikes;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetPostLikeById;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Web.Features.PostLikes.Mappings;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Web.Abstractions;
-using InstaConnect.Shared.Web.Models.Users;
-using InstaConnect.Shared.Web.UnitTests.Utilities;
+using InstaConnect.Posts.Presentation.Features.PostLikes.Mappings;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Presentation.Abstractions;
+using InstaConnect.Shared.Presentation.Models.Users;
+using InstaConnect.Shared.Presentation.UnitTests.Utilities;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Web.UnitTests.Features.PostLikes.Utilities;
+namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Utilities;
 
 public abstract class BasePostLikeUnitTest : BaseSharedUnitTest
 {

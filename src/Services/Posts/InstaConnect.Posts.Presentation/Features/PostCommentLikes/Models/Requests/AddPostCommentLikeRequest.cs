@@ -1,7 +1,7 @@
-﻿using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Binding;
+﻿using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Binding;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Requests;
+namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 
 public class AddPostCommentLikeRequest
 {

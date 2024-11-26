@@ -1,20 +1,20 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
-using InstaConnect.Messages.Business.Features.Messages.Commands.UpdateMessage;
-using InstaConnect.Messages.Business.Features.Messages.Models;
-using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
-using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
+using InstaConnect.Messages.Application.Features.Messages.Commands.AddMessage;
+using InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
+using InstaConnect.Messages.Application.Features.Messages.Models;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetMessageById;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Web.Abstractions;
-using InstaConnect.Shared.Web.Models.Users;
-using InstaConnect.Shared.Web.UnitTests.Utilities;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Presentation.Abstractions;
+using InstaConnect.Shared.Presentation.Models.Users;
+using InstaConnect.Shared.Presentation.UnitTests.Utilities;
 using NSubstitute;
-using MessageCommandProfile = InstaConnect.Messages.Web.Features.Messages.Mappings.MessagesCommandProfile;
-using MessageQueryProfile = InstaConnect.Messages.Web.Features.Messages.Mappings.MessagesQueryProfile;
+using MessageCommandProfile = InstaConnect.Messages.Presentation.Features.Messages.Mappings.MessagesCommandProfile;
+using MessageQueryProfile = InstaConnect.Messages.Presentation.Features.Messages.Mappings.MessagesQueryProfile;
 
-namespace InstaConnect.Messages.Web.UnitTests.Features.Messages.Utilities;
+namespace InstaConnect.Messages.Presentation.UnitTests.Features.Messages.Utilities;
 
 public abstract class BaseMessageUnitTest : BaseSharedUnitTest
 {

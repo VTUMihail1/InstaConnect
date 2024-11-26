@@ -2,11 +2,11 @@
 using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Web.FunctionalTests.Features.PostComments.Utilities;
-using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Posts.Web.FunctionalTests.Features.PostComments.Controllers.v1;
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Controllers.v1;
 
 public class DeletePostCommentFunctionalTests : BasePostCommentFunctionalTest
 {

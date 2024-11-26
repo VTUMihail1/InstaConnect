@@ -1,6 +1,6 @@
-﻿using InstaConnect.Posts.Data.Features.Posts.Models.Entitites;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 
-namespace InstaConnect.Posts.Data.Features.Posts.Abstract;
+namespace InstaConnect.Posts.Domain.Features.Posts.Abstract;
 public interface IPostWriteRepository
 {
     void Add(Post post);

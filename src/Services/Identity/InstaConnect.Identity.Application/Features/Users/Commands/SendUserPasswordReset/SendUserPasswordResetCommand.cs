@@ -1,5 +1,5 @@
-﻿using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Identity.Business.Features.Users.Commands.SendUserPasswordReset;
+namespace InstaConnect.Identity.Application.Features.Users.Commands.SendUserPasswordReset;
 
 public record SendUserPasswordResetCommand(string Email) : ICommand;

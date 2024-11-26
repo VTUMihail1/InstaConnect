@@ -1,9 +1,8 @@
-﻿using InstaConnect.Follows.Business.Features.Follows.Extensions;
-using InstaConnect.Shared.Business.Extensions;
-using Microsoft.Extensions.Configuration;
+﻿using InstaConnect.Follows.Application.Features.Follows.Extensions;
+using InstaConnect.Shared.Application.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Follows.Business.Extensions;
+namespace InstaConnect.Follows.Application.Extensions;
 
 public static class ServiceCollectionExtensions
 {

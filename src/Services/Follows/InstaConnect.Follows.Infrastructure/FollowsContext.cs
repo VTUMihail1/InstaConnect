@@ -1,8 +1,8 @@
-﻿using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Data.Features.Users.Models.Entities;
+﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Follows.Data;
+namespace InstaConnect.Follows.Infrastructure;
 
 public class FollowsContext : DbContext
 {

@@ -2,7 +2,7 @@ using FluentValidation;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using MediatR;
 
-namespace InstaConnect.Shared.Business.PipelineBehaviors;
+namespace InstaConnect.Shared.Application.PipelineBehaviors;
 
 internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>

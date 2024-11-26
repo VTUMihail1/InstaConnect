@@ -1,20 +1,20 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Mappings;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Mappings;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Abstract;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
-using InstaConnect.Posts.Data.Features.PostComments.Abstract;
-using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Data.Features.Users.Abstract;
-using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Business.UnitTests.Utilities;
-using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Models.Pagination;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
+using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Users.Abstract;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Application.UnitTests.Utilities;
+using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.PostCommentLikes.Utilities;
+namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Utilities;
 
 public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
 {

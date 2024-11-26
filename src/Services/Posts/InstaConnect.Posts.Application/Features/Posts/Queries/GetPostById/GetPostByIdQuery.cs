@@ -1,6 +1,6 @@
-﻿using InstaConnect.Posts.Business.Features.Posts.Models;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Posts.Application.Features.Posts.Models;
+using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Posts.Business.Features.Posts.Queries.GetPostById;
+namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetPostById;
 
 public record GetPostByIdQuery(string Id) : IQuery<PostQueryViewModel>;

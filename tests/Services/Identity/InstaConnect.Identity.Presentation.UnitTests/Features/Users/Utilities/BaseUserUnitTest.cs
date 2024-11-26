@@ -1,24 +1,24 @@
 ﻿using AutoMapper;
-using InstaConnect.Identity.Business.Features.Users.Commands.EditCurrentUser;
-using InstaConnect.Identity.Business.Features.Users.Commands.LoginUser;
-using InstaConnect.Identity.Business.Features.Users.Commands.RegisterUser;
-using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUser;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUserDetailed;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetUserById;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetUserByName;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetUserDetailedById;
+using InstaConnect.Identity.Application.Features.Users.Commands.EditCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.LoginUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.RegisterUser;
+using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetAllUsers;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUserDetailed;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetUserById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetUserByName;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetUserDetailedById;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Web.Features.Users.Mappings;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Web.Abstractions;
-using InstaConnect.Shared.Web.Models.Users;
-using InstaConnect.Shared.Web.UnitTests.Utilities;
+using InstaConnect.Identity.Presentation.Features.Users.Mappings;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Presentation.Abstractions;
+using InstaConnect.Shared.Presentation.Models.Users;
+using InstaConnect.Shared.Presentation.UnitTests.Utilities;
 using NSubstitute;
 
-namespace InstaConnect.Identity.Web.UnitTests.Features.Users.Utilities;
+namespace InstaConnect.Identity.Presentation.UnitTests.Features.Users.Utilities;
 
 public abstract class BaseUserUnitTest : BaseSharedUnitTest
 {

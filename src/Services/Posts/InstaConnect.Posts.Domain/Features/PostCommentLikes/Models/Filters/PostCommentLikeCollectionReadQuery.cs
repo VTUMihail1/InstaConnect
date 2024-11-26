@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Shared.Common.Models.Enums;
 
-namespace InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Filters;
+namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
 
 public record PostCommentLikeCollectionReadQuery(
     string UserId,

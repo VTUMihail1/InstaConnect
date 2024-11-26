@@ -1,6 +1,6 @@
-﻿using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
+﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
 
-namespace InstaConnect.Posts.Data.Features.PostCommentLikes.Abstract;
+namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
 public interface IPostCommentLikeWriteRepository
 {
     void Add(PostCommentLike postCommentLike);

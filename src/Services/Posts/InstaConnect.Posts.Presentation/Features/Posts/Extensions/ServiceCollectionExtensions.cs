@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Web.Features.Posts.Extensions;
+﻿namespace InstaConnect.Posts.Presentation.Features.Posts.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

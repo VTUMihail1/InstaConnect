@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
-using InstaConnect.Messages.Business.Features.Messages.Models;
-using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
-using InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Utilities;
-using InstaConnect.Messages.Business.IntegrationTests.Utilities;
+using InstaConnect.Messages.Application.Features.Messages.Models;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
+using InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Application.IntegrationTests.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Queries;
+namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Queries;
 
 public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegrationTest
 {

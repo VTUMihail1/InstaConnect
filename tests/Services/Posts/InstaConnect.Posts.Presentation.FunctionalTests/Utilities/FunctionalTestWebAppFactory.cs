@@ -1,6 +1,6 @@
-﻿using InstaConnect.Follows.Web.Features.Users.Consumers;
-using InstaConnect.Posts.Data;
-using InstaConnect.Shared.Web.FunctionalTests.Extensions;
+﻿using InstaConnect.Posts.Infrastructure;
+using InstaConnect.Posts.Presentation.Features.Users.Consumers;
+using InstaConnect.Shared.Presentation.FunctionalTests.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.MsSql;
 
-namespace InstaConnect.Posts.Web.FunctionalTests.Utilities;
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 
 public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {

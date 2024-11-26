@@ -1,24 +1,20 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
-using InstaConnect.Follows.Business.Features.Follows.Commands.DeleteFollow;
-using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
+using InstaConnect.Follows.Application.Features.Follows.Commands.AddFollow;
+using InstaConnect.Follows.Application.Features.Follows.Models;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllFollows;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetFollowById;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Data.Features.Users.Models.Entities;
-using InstaConnect.Follows.Web.Features.Follows.Mappings;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Web.Abstractions;
-using InstaConnect.Shared.Web.Helpers;
-using InstaConnect.Shared.Web.Models.Users;
-using InstaConnect.Shared.Web.UnitTests.Utilities;
-using MassTransit.DependencyInjection;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+using InstaConnect.Follows.Presentation.Features.Follows.Mappings;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Presentation.Abstractions;
+using InstaConnect.Shared.Presentation.Models.Users;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Web.UnitTests.Features.Follows.Utilities;
+namespace InstaConnect.Follows.Presentation.UnitTests.Features.Follows.Utilities;
 
 public abstract class BaseFollowUnitTest
 {
@@ -55,7 +51,7 @@ public abstract class BaseFollowUnitTest
             UserTestUtilities.ValidProfileImage);
 
         var existingCurrentUserModel = new CurrentUserModel(
-            user.Id, 
+            user.Id,
             UserTestUtilities.ValidName);
 
         CurrentUserContext

@@ -1,12 +1,12 @@
-﻿using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Web.Features.Users.Consumers;
-using InstaConnect.Follows.Web.UnitTests.Features.Users.Utilities;
-using InstaConnect.Posts.Data.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Business.Contracts.Users;
+﻿using InstaConnect.Posts.Common.Features.Users.Utilities;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Posts.Presentation.Features.Users.Consumers;
+using InstaConnect.Posts.Presentation.UnitTests.Features.Users.Utilities;
+using InstaConnect.Shared.Application.Contracts.Users;
 using MassTransit;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Web.UnitTests.Features.Users.Consumers;
+namespace InstaConnect.Posts.Presentation.UnitTests.Features.Users.Consumers;
 
 public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
 {

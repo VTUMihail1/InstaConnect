@@ -1,8 +1,8 @@
-﻿using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites;
+﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Repositories;
+namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Repositories;
 
 internal class ForgotPasswordTokenWriteRepository : IForgotPasswordTokenWriteRepository
 {

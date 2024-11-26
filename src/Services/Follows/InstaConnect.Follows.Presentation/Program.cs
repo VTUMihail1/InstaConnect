@@ -1,8 +1,8 @@
-using InstaConnect.Follows.Business.Extensions;
-using InstaConnect.Follows.Data.Extensions;
-using InstaConnect.Follows.Web.Extensions;
-using InstaConnect.Shared.Web.Extensions;
-using InstaConnect.Shared.Web.Utilities;
+using InstaConnect.Follows.Application.Extensions;
+using InstaConnect.Follows.Infrastructure.Extensions;
+using InstaConnect.Follows.Presentation.Extensions;
+using InstaConnect.Shared.Presentation.Extensions;
+using InstaConnect.Shared.Presentation.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 

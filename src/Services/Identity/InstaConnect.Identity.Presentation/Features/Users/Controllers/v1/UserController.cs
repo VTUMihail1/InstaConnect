@@ -1,29 +1,29 @@
 ﻿using Asp.Versioning;
-using InstaConnect.Identity.Business.Features.Users.Commands.ConfirmUserEmail;
-using InstaConnect.Identity.Business.Features.Users.Commands.DeleteCurrentUser;
-using InstaConnect.Identity.Business.Features.Users.Commands.DeleteUserById;
-using InstaConnect.Identity.Business.Features.Users.Commands.EditCurrentUser;
-using InstaConnect.Identity.Business.Features.Users.Commands.LoginUser;
-using InstaConnect.Identity.Business.Features.Users.Commands.RegisterUser;
-using InstaConnect.Identity.Business.Features.Users.Commands.ResendUserEmailConfirmation;
-using InstaConnect.Identity.Business.Features.Users.Commands.ResetUserPassword;
-using InstaConnect.Identity.Business.Features.Users.Commands.SendUserPasswordReset;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUser;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUserDetailed;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetUserById;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetUserByName;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetUserDetailedById;
-using InstaConnect.Identity.Web.Features.Users.Models.Requests;
-using InstaConnect.Identity.Web.Features.Users.Models.Responses;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Web.Abstractions;
-using InstaConnect.Shared.Web.Utilities;
+using InstaConnect.Identity.Application.Features.Users.Commands.ConfirmUserEmail;
+using InstaConnect.Identity.Application.Features.Users.Commands.DeleteCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.DeleteUserById;
+using InstaConnect.Identity.Application.Features.Users.Commands.EditCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.LoginUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.RegisterUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.ResendUserEmailConfirmation;
+using InstaConnect.Identity.Application.Features.Users.Commands.ResetUserPassword;
+using InstaConnect.Identity.Application.Features.Users.Commands.SendUserPasswordReset;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetAllUsers;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUserDetailed;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetUserById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetUserByName;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetUserDetailedById;
+using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
+using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Presentation.Abstractions;
+using InstaConnect.Shared.Presentation.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Identity.Web.Features.Users.Controllers.v1;
+namespace InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
 
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/users")]

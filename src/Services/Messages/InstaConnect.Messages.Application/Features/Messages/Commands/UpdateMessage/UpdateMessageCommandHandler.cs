@@ -1,11 +1,10 @@
-﻿using InstaConnect.Messages.Business.Features.Messages.Models;
-using InstaConnect.Messages.Data.Features.Messages.Abstractions;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Messages.Application.Features.Messages.Models;
+using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Message;
 using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Data.Abstractions;
 
-namespace InstaConnect.Messages.Business.Features.Messages.Commands.UpdateMessage;
+namespace InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
 
 internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageCommand, MessageCommandViewModel>
 {

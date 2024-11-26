@@ -1,9 +1,9 @@
-﻿using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Follows.Data.Features.Follows.Abstractions;
-using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Follows.Application.Features.Follows.Models;
+using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
+using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
+namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAllFollows;
 
 internal class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQuery, FollowPaginationQueryViewModel>
 {

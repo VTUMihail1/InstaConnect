@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Business.Features.Messages.Models;
-using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
-using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
-using InstaConnect.Messages.Web.Features.Messages.Models.Requests;
-using InstaConnect.Messages.Web.Features.Messages.Models.Responses;
-using InstaConnect.Shared.Web.Models.Users;
+using InstaConnect.Messages.Application.Features.Messages.Models;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetMessageById;
+using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
+using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
+using InstaConnect.Shared.Presentation.Models.Users;
 
-namespace InstaConnect.Messages.Web.Features.Messages.Mappings;
+namespace InstaConnect.Messages.Presentation.Features.Messages.Mappings;
 
 internal class MessagesQueryProfile : Profile
 {

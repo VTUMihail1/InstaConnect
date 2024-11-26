@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Follows.Common.Features.Follows.Utilities;
+﻿namespace InstaConnect.Follows.Common.Features.Users.Utilities;
 
 public class UserConfigurations
 {

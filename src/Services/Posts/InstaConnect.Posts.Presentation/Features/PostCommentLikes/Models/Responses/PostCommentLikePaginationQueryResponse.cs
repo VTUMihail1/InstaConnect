@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Responses;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
 
 public record PostCommentLikePaginationQueryResponse(
     ICollection<PostCommentLikeQueryResponse> Items,

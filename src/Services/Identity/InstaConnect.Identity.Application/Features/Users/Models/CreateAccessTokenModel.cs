@@ -1,6 +1,6 @@
-﻿using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
+﻿using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
 
-namespace InstaConnect.Identity.Business.Features.Users.Models;
+namespace InstaConnect.Identity.Application.Features.Users.Models;
 
 public record CreateAccessTokenModel(
         string UserId,

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace InstaConnect.Shared.Business.Models;
+namespace InstaConnect.Shared.Application.Models;
 
 public record ImageUploadModel(IFormFile FormFile);

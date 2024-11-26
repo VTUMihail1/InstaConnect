@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Business.Features.Messages.Models;
-using InstaConnect.Messages.Business.Features.Messages.Queries.GetAllMessages;
-using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Messages.Data.Features.Messages.Models.Filters;
-using InstaConnect.Shared.Data.Models.Pagination;
+using InstaConnect.Messages.Application.Features.Messages.Models;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
+using InstaConnect.Shared.Domain.Models.Pagination;
 
-namespace InstaConnect.Messages.Business.Features.Messages.Mappings;
+namespace InstaConnect.Messages.Application.Features.Messages.Mappings;
 
 internal class MessageQueryProfile : Profile
 {

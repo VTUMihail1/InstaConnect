@@ -1,16 +1,16 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Business.Features.Users.Commands.EditCurrentUser;
-using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Business.IntegrationTests.Features.Users.Utilities;
-using InstaConnect.Identity.Business.IntegrationTests.Utilities;
+using InstaConnect.Identity.Application.Features.Users.Commands.EditCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
+using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Business.Contracts.Users;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Shared.Application.Contracts.Users;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.User;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Business.IntegrationTests.Features.Users.Commands;
+namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
 
 public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
 {

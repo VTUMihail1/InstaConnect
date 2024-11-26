@@ -1,9 +1,9 @@
-﻿using InstaConnect.Follows.Web.Features.Users.Extensions;
-using InstaConnect.Messages.Web.Features.Messages.Extensions;
-using InstaConnect.Shared.Business.Extensions;
-using InstaConnect.Shared.Web.Extensions;
+﻿using InstaConnect.Messages.Presentation.Features.Messages.Extensions;
+using InstaConnect.Messages.Presentation.Features.Users.Extensions;
+using InstaConnect.Shared.Application.Extensions;
+using InstaConnect.Shared.Presentation.Extensions;
 
-namespace InstaConnect.Messages.Web.Extensions;
+namespace InstaConnect.Messages.Presentation.Extensions;
 
 public static class ServiceCollectionExtensions
 {

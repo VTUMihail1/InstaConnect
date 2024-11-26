@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
-using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
+using InstaConnect.Follows.Application.Features.Follows.Models;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetFollowById;
+using InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Follow;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetFollowById;
+namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Queries.GetFollowById;
 
 public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
 {

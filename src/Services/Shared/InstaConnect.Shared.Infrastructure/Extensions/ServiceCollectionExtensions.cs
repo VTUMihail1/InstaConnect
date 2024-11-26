@@ -1,10 +1,9 @@
 ﻿using System.Reflection;
 using CloudinaryDotNet;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Helpers;
-using InstaConnect.Shared.Data.Models.Options;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Infrastructure.Abstractions;
+using InstaConnect.Shared.Infrastructure.Extensions;
+using InstaConnect.Shared.Infrastructure.Helpers;
 using InstaConnect.Shared.Infrastructure.Models.Options;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace InstaConnect.Shared.Data.Extensions;
+namespace InstaConnect.Shared.Infrastructure.Extensions;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddUnitOfWork<TContext>(this IServiceCollection serviceCollection)
@@ -61,7 +60,7 @@ public static class ServiceCollectionExtensions
         return serviceCollection;
     }
 
-    public static IServiceCollection AddCaching(
+    public static IServiceCollection AddRedisCaching(
         this IServiceCollection serviceCollection,
         IConfiguration configuration
         )
@@ -90,7 +89,7 @@ public static class ServiceCollectionExtensions
         return serviceCollection;
     }
 
-    public static IServiceCollection AddMessageBroker(
+    public static IServiceCollection AddRabbitMQ(
         this IServiceCollection serviceCollection,
         IConfiguration configuration,
         Assembly currentAssembly,
@@ -166,7 +165,7 @@ public static class ServiceCollectionExtensions
         return serviceCollection;
     }
 
-    public static IServiceCollection AddImageHandler(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static IServiceCollection AddCloudinary(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
             .AddOptions<ImageUploadOptions>()

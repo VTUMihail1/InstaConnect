@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Follows.Web.Features.Follows.Models.Binding;
+﻿namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Binding;
 
 public class AddFollowBindingModel
 {

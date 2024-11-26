@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
-using InstaConnect.Messages.Business.Features.Messages.Commands.DeleteMessage;
-using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Application.Features.Messages.Commands.DeleteMessage;
+using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Shared.Common.Exceptions.Message;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Commands.DeleteMessage;
+namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Commands.DeleteMessage;
 
 public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
 {

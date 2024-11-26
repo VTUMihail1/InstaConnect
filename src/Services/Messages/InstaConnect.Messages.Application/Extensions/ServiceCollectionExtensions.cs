@@ -1,9 +1,8 @@
-﻿using InstaConnect.Messages.Business.Features.Messages.Extensions;
-using InstaConnect.Shared.Business.Extensions;
-using Microsoft.Extensions.Configuration;
+﻿using InstaConnect.Messages.Application.Features.Messages.Extensions;
+using InstaConnect.Shared.Application.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Business.Extensions;
+namespace InstaConnect.Messages.Application.Extensions;
 
 public static class ServiceCollectionExtensions
 {

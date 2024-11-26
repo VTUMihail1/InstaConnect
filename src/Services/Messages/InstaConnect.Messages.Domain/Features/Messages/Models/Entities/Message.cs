@@ -1,7 +1,7 @@
-﻿using InstaConnect.Messages.Data.Features.Users.Models.Entities;
-using InstaConnect.Shared.Data.Models.Base;
+﻿using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
+using InstaConnect.Shared.Domain.Models.Base;
 
-namespace InstaConnect.Messages.Data.Features.Messages.Models.Entities;
+namespace InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 
 public class Message : BaseEntity
 {

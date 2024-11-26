@@ -1,6 +1,6 @@
-﻿using InstaConnect.Identity.Data.Features.Users.Models;
+﻿using InstaConnect.Identity.Domain.Features.Users.Models;
 
-namespace InstaConnect.Identity.Data.Features.Users.Abstractions;
+namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
 public interface IPasswordHasher
 {
     PasswordHashResultModel Hash(string password);

@@ -1,14 +1,14 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
-using InstaConnect.Posts.Business.IntegrationTests.Features.Posts.Utilities;
-using InstaConnect.Posts.Business.IntegrationTests.Utilities;
+using InstaConnect.Posts.Application.Features.Posts.Commands.DeletePost;
+using InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Posts;
 using InstaConnect.Shared.Common.Exceptions.User;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Posts.Business.IntegrationTests.Features.Posts.Commands;
+namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Commands;
 
 public class DeletePostIntegrationTests : BasePostIntegrationTest
 {

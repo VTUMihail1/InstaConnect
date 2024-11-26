@@ -1,9 +1,9 @@
-﻿using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Data.Features.Users.Abstractions;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUserDetailed;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUserDetailed;
 
 public class GetCurrentUserDetailedQueryHandler : IQueryHandler<GetCurrentUserDetailedQuery, UserDetailedQueryViewModel>
 {

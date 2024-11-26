@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Features.PostComments.Commands.AddPostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Models;
-using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.AddPostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.UpdatePostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Models;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
 
-namespace InstaConnect.Posts.Business.Features.PostComments.Mappings;
+namespace InstaConnect.Posts.Application.Features.PostComments.Mappings;
 
 public class PostCommentCommandProfile : Profile
 {

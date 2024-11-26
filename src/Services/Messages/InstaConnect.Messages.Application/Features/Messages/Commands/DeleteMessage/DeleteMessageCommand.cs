@@ -1,6 +1,6 @@
-﻿using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Messages.Business.Features.Messages.Commands.DeleteMessage;
+namespace InstaConnect.Messages.Application.Features.Messages.Commands.DeleteMessage;
 
 public record DeleteMessageCommand(string Id, string CurrentUserId) : ICommand
 {

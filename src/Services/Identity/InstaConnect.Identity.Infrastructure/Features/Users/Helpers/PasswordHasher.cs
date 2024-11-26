@@ -1,7 +1,7 @@
-﻿using InstaConnect.Identity.Data.Features.Users.Abstractions;
-using InstaConnect.Identity.Data.Features.Users.Models;
+﻿using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Identity.Domain.Features.Users.Models;
 
-namespace InstaConnect.Identity.Data.Features.Users.Helpers;
+namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers;
 
 internal class PasswordHasher : IPasswordHasher
 {

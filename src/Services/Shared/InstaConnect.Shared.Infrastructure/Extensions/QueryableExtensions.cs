@@ -1,10 +1,10 @@
 ﻿using System.Linq.Expressions;
 using InstaConnect.Shared.Common.Models.Enums;
-using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Models.Pagination;
+using InstaConnect.Shared.Domain.Abstractions;
+using InstaConnect.Shared.Domain.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Shared.Data.Extensions;
+namespace InstaConnect.Shared.Infrastructure.Extensions;
 
 public static class QueryableExtensions
 {

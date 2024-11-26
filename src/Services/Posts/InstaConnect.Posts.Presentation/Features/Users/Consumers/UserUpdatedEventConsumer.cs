@@ -1,10 +1,9 @@
-﻿using InstaConnect.Posts.Data.Features.Users.Abstract;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Contracts.Users;
-using InstaConnect.Shared.Data.Abstractions;
+﻿using InstaConnect.Posts.Domain.Features.Users.Abstract;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Contracts.Users;
 using MassTransit;
 
-namespace InstaConnect.Follows.Web.Features.Users.Consumers;
+namespace InstaConnect.Posts.Presentation.Features.Users.Consumers;
 
 internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEvent>
 {

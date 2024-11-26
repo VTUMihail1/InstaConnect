@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Identity.Web.Features.Users.Models.Bindings;
+﻿namespace InstaConnect.Identity.Presentation.Features.Users.Models.Bindings;
 
 public class LoginUserBindingModel
 {

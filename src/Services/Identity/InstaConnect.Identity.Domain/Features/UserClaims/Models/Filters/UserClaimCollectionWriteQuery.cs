@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Identity.Data.Features.UserClaims.Models.Filters;
+﻿namespace InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
 
 public record UserClaimCollectionWriteQuery(string UserId);

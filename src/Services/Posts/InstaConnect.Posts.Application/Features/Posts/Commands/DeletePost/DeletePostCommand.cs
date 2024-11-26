@@ -1,5 +1,5 @@
-﻿using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
+namespace InstaConnect.Posts.Application.Features.Posts.Commands.DeletePost;
 
 public record DeletePostCommand(string Id, string CurrentUserId) : ICommand;

@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
-using InstaConnect.Posts.Business.IntegrationTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Business.IntegrationTests.Utilities;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
+using InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostCommentLikes.Queries;
+namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Queries;
 
 public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommentLikeIntegrationTest
 {

@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Messages.Business.Features.Messages.Queries.GetMessageById;
-using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetMessageById;
+using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Queries.GetMessageById;
+namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Queries.GetMessageById;
 
 public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
 {

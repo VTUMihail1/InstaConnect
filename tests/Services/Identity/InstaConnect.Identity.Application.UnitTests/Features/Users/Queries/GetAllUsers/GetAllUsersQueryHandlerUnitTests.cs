@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
-using InstaConnect.Identity.Business.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetAllUsers;
+using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Data.Features.Users.Models.Filters;
+using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
 using NSubstitute;
 
-namespace InstaConnect.Identity.Business.UnitTests.Features.Users.Queries.GetAllUsers;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetAllUsers;
 
 public class GetAllUsersQueryHandlerUnitTests : BaseUserUnitTest
 {

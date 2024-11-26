@@ -1,8 +1,8 @@
-﻿using InstaConnect.Follows.Data.Features.Users.Abstractions;
-using InstaConnect.Follows.Data.Features.Users.Repositories;
+﻿using InstaConnect.Follows.Domain.Features.Users.Abstractions;
+using InstaConnect.Follows.Infrastructure.Features.Users.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Follows.Data.Features.Users.Extensions;
+namespace InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
 internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddUserServices(this IServiceCollection serviceCollection)

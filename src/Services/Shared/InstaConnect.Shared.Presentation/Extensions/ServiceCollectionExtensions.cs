@@ -3,11 +3,11 @@ using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Asp.Versioning;
 using InstaConnect.Shared.Common.Utilities;
-using InstaConnect.Shared.Web.Abstractions;
-using InstaConnect.Shared.Web.ExceptionHandlers;
-using InstaConnect.Shared.Web.Helpers;
-using InstaConnect.Shared.Web.Models.Options;
-using InstaConnect.Shared.Web.Utilities;
+using InstaConnect.Shared.Presentation.Abstractions;
+using InstaConnect.Shared.Presentation.ExceptionHandlers;
+using InstaConnect.Shared.Presentation.Helpers;
+using InstaConnect.Shared.Presentation.Models.Options;
+using InstaConnect.Shared.Presentation.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -17,7 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace InstaConnect.Shared.Web.Extensions;
+namespace InstaConnect.Shared.Presentation.Extensions;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddAuthorizationPolicies(this IServiceCollection serviceCollection)

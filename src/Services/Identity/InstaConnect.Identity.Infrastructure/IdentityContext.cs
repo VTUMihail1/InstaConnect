@@ -1,11 +1,11 @@
-﻿using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Models.Entitites;
-using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites;
-using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
-using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Data.Extensions;
+﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Shared.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Identity.Data;
+namespace InstaConnect.Identity.Infrastructure;
 
 public class IdentityContext : DbContext
 {

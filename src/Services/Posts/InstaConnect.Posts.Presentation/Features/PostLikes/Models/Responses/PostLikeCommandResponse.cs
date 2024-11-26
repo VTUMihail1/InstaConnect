@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Posts.Web.Features.PostLikes.Models.Responses;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
 
 public record PostLikeCommandResponse(string Id);

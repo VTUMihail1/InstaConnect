@@ -1,7 +1,7 @@
-﻿using InstaConnect.Follows.Web.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Posts.Web.FunctionalTests.Utilities;
+﻿using InstaConnect.Posts.Presentation.FunctionalTests.Features.Users.Utilities;
+using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 
-namespace InstaConnect.Follows.Web.FunctionalTests.Features.Users.Consumers;
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Users.Consumers;
 
 public class UserUpdatedEventConsumerFunctionalTests : BaseUserFunctionalTest
 {

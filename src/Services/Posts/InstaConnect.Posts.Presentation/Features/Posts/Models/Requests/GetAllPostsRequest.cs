@@ -1,7 +1,7 @@
-﻿using InstaConnect.Shared.Web.Models.Requests;
+﻿using InstaConnect.Shared.Presentation.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Posts.Web.Features.Posts.Models.Requests;
+namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 public class GetAllPostsRequest : CollectionReadRequest
 {

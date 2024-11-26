@@ -1,7 +1,7 @@
-﻿using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Data.Models.Base;
+﻿using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Shared.Domain.Models.Base;
 
-namespace InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Models.Entitites;
+namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
 
 public class ForgotPasswordToken : BaseEntity
 {

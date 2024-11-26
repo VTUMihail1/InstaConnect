@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetAllFollows;
-using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
-using InstaConnect.Shared.Data.Models.Pagination;
+using InstaConnect.Follows.Application.Features.Follows.Models;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllFollows;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
+using InstaConnect.Shared.Domain.Models.Pagination;
 
-namespace InstaConnect.Follows.Business.Features.Follows.Mappings;
+namespace InstaConnect.Follows.Application.Features.Follows.Mappings;
 
 internal class FollowQueryProfile : Profile
 {

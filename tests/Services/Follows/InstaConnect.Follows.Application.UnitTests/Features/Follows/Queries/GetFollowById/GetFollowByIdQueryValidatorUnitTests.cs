@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
-using InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetFollowById;
+using InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Queries.GetFollowById;
+namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Queries.GetFollowById;
 
 public class GetFollowByIdQueryValidatorUnitTests : BaseFollowUnitTest
 {

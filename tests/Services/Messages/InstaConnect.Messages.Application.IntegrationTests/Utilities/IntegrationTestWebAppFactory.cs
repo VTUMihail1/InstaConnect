@@ -1,6 +1,6 @@
-﻿using InstaConnect.Messages.Business.Features.Messages.Abstractions;
-using InstaConnect.Messages.Data;
-using InstaConnect.Shared.Business.IntegrationTests.Extensions;
+﻿using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Messages.Infrastructure;
+using InstaConnect.Shared.Application.IntegrationTests.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using Testcontainers.MsSql;
 
-namespace InstaConnect.Messages.Business.IntegrationTests.Utilities;
+namespace InstaConnect.Messages.Application.IntegrationTests.Utilities;
 
 public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {

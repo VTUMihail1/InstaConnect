@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Posts.Business.Features.PostLikes.Extensions;
+namespace InstaConnect.Posts.Application.Features.PostLikes.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

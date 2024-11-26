@@ -1,7 +1,7 @@
-﻿using InstaConnect.Shared.Business.Extensions;
-using InstaConnect.Shared.Web.Extensions;
+﻿using InstaConnect.Shared.Application.Extensions;
+using InstaConnect.Shared.Presentation.Extensions;
 
-namespace InstaConnect.Emails.Web.Extensions;
+namespace InstaConnect.Emails.Presentation.Extensions;
 
 public static class ServiceCollectionExtensions
 {

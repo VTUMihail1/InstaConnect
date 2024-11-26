@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Web.Features.Posts.Models.Binding;
+﻿namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Binding;
 
 public class UpdatePostBindingModel
 {

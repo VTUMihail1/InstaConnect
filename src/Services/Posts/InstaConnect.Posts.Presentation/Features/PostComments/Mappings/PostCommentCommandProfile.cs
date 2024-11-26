@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Features.PostComments.Commands.AddPostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Commands.DeletePostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Commands.UpdatePostComment;
-using InstaConnect.Posts.Business.Features.PostComments.Models;
-using InstaConnect.Posts.Web.Features.PostComments.Models.Requests;
-using InstaConnect.Posts.Web.Features.PostComments.Models.Responses;
-using InstaConnect.Shared.Web.Models.Users;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.AddPostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.DeletePostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.UpdatePostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Models;
+using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
+using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
+using InstaConnect.Shared.Presentation.Models.Users;
 
-namespace InstaConnect.Posts.Web.Features.PostComments.Mappings;
+namespace InstaConnect.Posts.Presentation.Features.PostComments.Mappings;
 
 internal class PostCommentCommandProfile : Profile
 {

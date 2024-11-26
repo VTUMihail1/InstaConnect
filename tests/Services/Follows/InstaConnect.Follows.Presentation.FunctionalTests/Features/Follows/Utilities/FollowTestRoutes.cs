@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
+﻿namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
 public class FollowTestRoutes
 {
     public const string Default = "api/v1/follows";

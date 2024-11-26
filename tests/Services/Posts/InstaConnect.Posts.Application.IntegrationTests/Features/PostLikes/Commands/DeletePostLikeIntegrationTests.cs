@@ -1,14 +1,14 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Business.Features.PostLikes.Commands.DeletePostLike;
-using InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Business.IntegrationTests.Utilities;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.DeletePostLike;
+using InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.PostLike;
 using InstaConnect.Shared.Common.Exceptions.User;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Posts.Business.IntegrationTests.Features.PostLikes.Commands;
+namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Commands;
 
 public class DeletePostLikeIntegrationTests : BasePostLikeIntegrationTest
 {

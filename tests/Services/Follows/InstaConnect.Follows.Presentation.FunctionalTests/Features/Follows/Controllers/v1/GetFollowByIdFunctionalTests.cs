@@ -1,15 +1,14 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
-using InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Web.FunctionalTests.Utilities;
+using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
+using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
+using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
+using InstaConnect.Follows.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Follows.Web.FunctionalTests.Features.Follows.Controllers.v1;
+namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Controllers.v1;
 
 public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
 {

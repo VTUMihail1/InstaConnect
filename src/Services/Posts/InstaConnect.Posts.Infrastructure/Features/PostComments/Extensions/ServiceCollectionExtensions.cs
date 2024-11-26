@@ -1,8 +1,8 @@
-﻿using InstaConnect.Posts.Data.Features.PostComments.Abstract;
-using InstaConnect.Posts.Data.Features.PostComments.Repositories;
+﻿using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
+using InstaConnect.Posts.Infrastructure.Features.PostComments.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Posts.Data.Features.PostComments.Extensions;
+namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

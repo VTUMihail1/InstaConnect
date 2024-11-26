@@ -1,8 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using InstaConnect.Identity.Business.Features.Users.Abstractions;
-using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Shared.Data.Models.Options;
+using InstaConnect.Identity.Application.Features.Users.Abstractions;
+using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Shared.Infrastructure.Models.Options;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

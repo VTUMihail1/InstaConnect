@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
-using InstaConnect.Identity.Data.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Data.Features.Users.Models.Filters;
-using InstaConnect.Shared.Data.Models.Pagination;
+using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetAllUsers;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
+using InstaConnect.Shared.Domain.Models.Pagination;
 
-namespace InstaConnect.Identity.Business.Features.Users.Mappings;
+namespace InstaConnect.Identity.Application.Features.Users.Mappings;
 
 internal class UserQueryProfile : Profile
 {

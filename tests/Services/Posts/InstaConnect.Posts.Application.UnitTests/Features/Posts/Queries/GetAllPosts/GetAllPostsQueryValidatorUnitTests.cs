@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Business.Features.Posts.Queries.GetAllPosts;
-using InstaConnect.Posts.Business.UnitTests.Features.Posts.Utilities;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllPosts;
+using InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Posts.Business.UnitTests.Features.Posts.Queries.GetAllPosts;
+namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetAllPosts;
 
 public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
 {

@@ -1,7 +1,7 @@
-﻿using InstaConnect.Follows.Web.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Messages.Web.FunctionalTests.Utilities;
+﻿using InstaConnect.Messages.Presentation.FunctionalTests.Features.Users.Utilities;
+using InstaConnect.Messages.Presentation.FunctionalTests.Utilities;
 
-namespace InstaConnect.Follows.Web.FunctionalTests.Features.Users.Consumers;
+namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Users.Consumers;
 
 public class UserCreatedEventConsumerFunctionalTests : BaseUserFunctionalTest
 {

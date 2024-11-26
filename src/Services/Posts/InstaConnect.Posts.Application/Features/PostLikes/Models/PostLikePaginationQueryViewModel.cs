@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Business.Features.PostLikes.Models;
+﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Models;
 
 public record PostLikePaginationQueryViewModel(
     ICollection<PostLikeQueryViewModel> Items,

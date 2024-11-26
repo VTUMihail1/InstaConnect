@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Features.Posts.Commands.AddPost;
-using InstaConnect.Posts.Business.Features.Posts.Commands.DeletePost;
-using InstaConnect.Posts.Business.Features.Posts.Commands.UpdatePost;
-using InstaConnect.Posts.Business.Features.Posts.Models;
-using InstaConnect.Posts.Web.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Web.Features.Posts.Models.Responses;
-using InstaConnect.Shared.Web.Models.Users;
+using InstaConnect.Posts.Application.Features.Posts.Commands.AddPost;
+using InstaConnect.Posts.Application.Features.Posts.Commands.DeletePost;
+using InstaConnect.Posts.Application.Features.Posts.Commands.UpdatePost;
+using InstaConnect.Posts.Application.Features.Posts.Models;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
+using InstaConnect.Shared.Presentation.Models.Users;
 
-namespace InstaConnect.Posts.Web.Features.Posts.Mappings;
+namespace InstaConnect.Posts.Presentation.Features.Posts.Mappings;
 
 internal class PostCommandProfile : Profile
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InstaConnect.Identity.Data.Features.Users.Models.Options;
+namespace InstaConnect.Identity.Infrastructure.Features.Users.Models.Options;
 
 internal class AdminOptions
 {

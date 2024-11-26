@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Models;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
-using InstaConnect.Posts.Business.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
-using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.Posts.Web.Features.PostCommentLikes.Models.Responses;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
+using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
+using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
 
-namespace InstaConnect.Posts.Web.Features.PostCommentLikes.Mappings;
+namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Mappings;
 
 internal class PostCommentLikeQueryProfile : Profile
 {

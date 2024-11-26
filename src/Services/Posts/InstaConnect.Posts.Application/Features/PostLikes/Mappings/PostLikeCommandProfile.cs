@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Business.Features.PostLikes.Commands.AddPostLike;
-using InstaConnect.Posts.Business.Features.PostLikes.Models;
-using InstaConnect.Posts.Data.Features.PostLikes.Models.Entitites;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.AddPostLike;
+using InstaConnect.Posts.Application.Features.PostLikes.Models;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
 
-namespace InstaConnect.Posts.Business.Features.PostLikes.Mappings;
+namespace InstaConnect.Posts.Application.Features.PostLikes.Mappings;
 
 public class PostLikeCommandProfile : Profile
 {

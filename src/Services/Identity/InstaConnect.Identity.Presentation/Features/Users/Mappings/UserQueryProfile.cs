@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
-using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetAllUsers;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUser;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUserDetailed;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetUserById;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetUserByName;
-using InstaConnect.Identity.Business.Features.Users.Queries.GetUserDetailedById;
-using InstaConnect.Identity.Web.Features.Users.Models.Requests;
-using InstaConnect.Identity.Web.Features.Users.Models.Responses;
-using InstaConnect.Shared.Web.Models.Users;
+using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetAllUsers;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUserDetailed;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetUserById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetUserByName;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetUserDetailedById;
+using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
+using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
+using InstaConnect.Shared.Presentation.Models.Users;
 
-namespace InstaConnect.Identity.Web.Features.Users.Mappings;
+namespace InstaConnect.Identity.Presentation.Features.Users.Mappings;
 
 internal class UserQueryProfile : Profile
 {

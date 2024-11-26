@@ -1,8 +1,8 @@
-﻿using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
+﻿using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InstaConnect.Identity.Data.Features.UserClaims.EntityConfigurations;
+namespace InstaConnect.Identity.Infrastructure.Features.UserClaims.EntityConfigurations;
 
 public class UserClaimConfiguration : IEntityTypeConfiguration<UserClaim>
 {

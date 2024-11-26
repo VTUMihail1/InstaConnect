@@ -1,7 +1,6 @@
-﻿using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Follows.Common.Features.Users.Utilities;
+namespace InstaConnect.Messages.Common.Features.Users.Utilities;
 public class UserTestUtilities : SharedTestUtilities
 {
     public static readonly string InvalidId = GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);

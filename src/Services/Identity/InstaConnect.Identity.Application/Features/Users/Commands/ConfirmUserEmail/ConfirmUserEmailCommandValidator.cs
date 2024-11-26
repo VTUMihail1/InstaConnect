@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 
-namespace InstaConnect.Identity.Business.Features.Users.Commands.ConfirmUserEmail;
+namespace InstaConnect.Identity.Application.Features.Users.Commands.ConfirmUserEmail;
 
 public class ConfirmUserEmailCommandValidator : AbstractValidator<ConfirmUserEmailCommand>
 {

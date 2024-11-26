@@ -1,17 +1,15 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Follows.Business.Features.Follows.Queries.GetFollowById;
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
+﻿using FluentAssertions;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetFollowById;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Web.Features.Follows.Controllers.v1;
-using InstaConnect.Follows.Web.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Web.Features.Follows.Models.Responses;
-using InstaConnect.Follows.Web.UnitTests.Features.Follows.Utilities;
+using InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
+using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
+using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
+using InstaConnect.Follows.Presentation.UnitTests.Features.Follows.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Web.UnitTests.Features.Follows.Controllers.v1;
+namespace InstaConnect.Follows.Presentation.UnitTests.Features.Follows.Controllers.v1;
 
 public class GetFollowByIdUnitTests : BaseFollowUnitTest
 {

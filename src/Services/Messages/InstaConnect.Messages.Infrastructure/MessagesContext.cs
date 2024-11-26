@@ -1,8 +1,8 @@
-﻿using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Messages.Data.Features.Users.Models.Entities;
+﻿using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
+using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Messages.Data;
+namespace InstaConnect.Messages.Infrastructure;
 
 public class MessagesContext : DbContext
 {

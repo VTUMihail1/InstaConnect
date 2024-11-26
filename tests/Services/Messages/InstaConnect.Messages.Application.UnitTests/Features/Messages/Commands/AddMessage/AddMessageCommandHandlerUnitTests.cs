@@ -1,13 +1,14 @@
 ﻿using FluentAssertions;
-using InstaConnect.Messages.Business.Features.Messages.Commands.AddMessage;
-using InstaConnect.Messages.Business.Features.Messages.Models;
-using InstaConnect.Messages.Business.UnitTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Application.Features.Messages.Commands.AddMessage;
+using InstaConnect.Messages.Application.Features.Messages.Models;
+using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
+using InstaConnect.Messages.Domain.Features.Messages.Models;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Business.UnitTests.Features.Messages.Commands.AddMessage;
+namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Commands.AddMessage;
 
 public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
 {

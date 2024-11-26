@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace InstaConnect.Shared.Data.Abstractions;
+namespace InstaConnect.Shared.Application.Abstractions;
 
 public interface IUnitOfWork
 {

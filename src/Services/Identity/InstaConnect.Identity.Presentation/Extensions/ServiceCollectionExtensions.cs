@@ -1,9 +1,8 @@
-﻿using InstaConnect.Identity.Business.Features.Users.Extensions;
-using InstaConnect.Identity.Web.Features.Users.Extensions;
-using InstaConnect.Shared.Business.Extensions;
-using InstaConnect.Shared.Web.Extensions;
+﻿using InstaConnect.Identity.Presentation.Features.Users.Extensions;
+using InstaConnect.Shared.Application.Extensions;
+using InstaConnect.Shared.Presentation.Extensions;
 
-namespace InstaConnect.Identity.Web.Extensions;
+namespace InstaConnect.Identity.Presentation.Extensions;
 
 public static class ServiceCollectionExtensions
 {

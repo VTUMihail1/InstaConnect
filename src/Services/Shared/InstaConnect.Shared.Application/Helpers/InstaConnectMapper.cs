@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using InstaConnect.Shared.Business.Abstractions;
+using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Shared.Business.Helpers;
+namespace InstaConnect.Shared.Application.Helpers;
 
 public class InstaConnectMapper : IInstaConnectMapper
 {

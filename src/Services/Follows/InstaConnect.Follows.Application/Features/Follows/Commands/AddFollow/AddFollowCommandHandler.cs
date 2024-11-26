@@ -1,13 +1,12 @@
-﻿using InstaConnect.Follows.Business.Features.Follows.Models;
-using InstaConnect.Follows.Data.Features.Follows.Abstractions;
-using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Data.Features.Users.Abstractions;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Follows.Application.Features.Follows.Models;
+using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+using InstaConnect.Follows.Domain.Features.Users.Abstractions;
+using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Data.Abstractions;
 
-namespace InstaConnect.Follows.Business.Features.Follows.Commands.AddFollow;
+namespace InstaConnect.Follows.Application.Features.Follows.Commands.AddFollow;
 
 internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand, FollowCommandViewModel>
 {

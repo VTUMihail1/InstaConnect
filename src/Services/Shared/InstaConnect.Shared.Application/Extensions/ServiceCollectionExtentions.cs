@@ -1,11 +1,12 @@
 ﻿using System.Reflection;
 using FluentValidation;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Business.PipelineBehaviors;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Extensions;
+using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Application.PipelineBehaviors;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Shared.Business.Extensions;
+namespace InstaConnect.Shared.Application.Extensions;
 public static class ServiceCollectionExtentions
 {
     public static IServiceCollection AddMediatR(this IServiceCollection serviceCollection, Assembly assembly)

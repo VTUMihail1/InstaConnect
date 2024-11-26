@@ -1,9 +1,9 @@
-﻿using InstaConnect.Shared.Data.Abstractions;
+﻿using InstaConnect.Shared.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace InstaConnect.Shared.Data.Extensions;
+namespace InstaConnect.Shared.Infrastructure.Extensions;
 
 public class AuditableEntityInterceptor : SaveChangesInterceptor
 {

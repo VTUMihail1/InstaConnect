@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Identity.Data.Features.Users.Models;
+﻿namespace InstaConnect.Identity.Domain.Features.Users.Models;
 
 public record PasswordHashResultModel(string PasswordHash);

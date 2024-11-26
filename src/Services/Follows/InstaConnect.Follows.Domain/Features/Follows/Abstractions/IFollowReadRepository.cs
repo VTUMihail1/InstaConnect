@@ -1,8 +1,8 @@
-﻿using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
-using InstaConnect.Shared.Data.Models.Pagination;
+﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
+using InstaConnect.Shared.Domain.Models.Pagination;
 
-namespace InstaConnect.Follows.Data.Features.Follows.Abstractions;
+namespace InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 public interface IFollowReadRepository
 {
     Task<PaginationList<Follow>> GetAllAsync(FollowCollectionReadQuery query, CancellationToken cancellationToken);

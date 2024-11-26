@@ -1,7 +1,7 @@
-﻿using InstaConnect.Messages.Web.Features.Messages.Models.Binding;
+﻿using InstaConnect.Messages.Presentation.Features.Messages.Models.Binding;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Messages.Web.Features.Messages.Models.Requests;
+namespace InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
 
 public class UpdateMessageRequest
 {

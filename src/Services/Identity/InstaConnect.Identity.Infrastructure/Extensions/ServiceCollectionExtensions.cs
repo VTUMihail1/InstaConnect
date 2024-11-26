@@ -1,16 +1,14 @@
-﻿using InstaConnect.Identity.Data.Features.EmailConfirmationTokens.Extensions;
-using InstaConnect.Identity.Data.Features.ForgotPasswordTokens.Extensions;
-using InstaConnect.Identity.Data.Features.UserClaims.Extensions;
-using InstaConnect.Identity.Data.Features.Users.Extensions;
-using InstaConnect.Identity.Data.Helpers;
-using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Extensions;
+﻿using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
+using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
+using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
+using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
+using InstaConnect.Identity.Infrastructure.Helpers;
+using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Infrastructure.Extensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Identity.Data.Extensions;
+namespace InstaConnect.Identity.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -29,11 +27,11 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
-            .AddCaching(configuration)
+            .AddRedisCaching(configuration)
             .AddUnitOfWork<IdentityContext>()
             .AddJwtBearer(configuration)
-            .AddImageHandler(configuration)
-            .AddMessageBroker(configuration, currentAssembly, busConfigurator =>
+            .AddCloudinary(configuration)
+            .AddRabbitMQ(configuration, currentAssembly, busConfigurator =>
                 busConfigurator.AddTransactionalOutbox<IdentityContext>());
 
         return serviceCollection;

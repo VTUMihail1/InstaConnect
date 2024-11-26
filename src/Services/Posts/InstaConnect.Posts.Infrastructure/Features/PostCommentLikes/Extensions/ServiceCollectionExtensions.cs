@@ -1,8 +1,8 @@
-﻿using InstaConnect.Posts.Data.Features.PostCommentLikes.Abstract;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Repositories;
+﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
+using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Posts.Data.Features.PostCommentLikes.Extensions;
+namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

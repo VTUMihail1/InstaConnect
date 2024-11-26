@@ -1,12 +1,12 @@
-﻿using InstaConnect.Identity.Business.Features.Users.Abstractions;
-using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Data.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Data.Features.UserClaims.Models.Filters;
-using InstaConnect.Identity.Data.Features.Users.Abstractions;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Identity.Application.Features.Users.Abstractions;
+using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
+using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Identity.Business.Features.Users.Commands.LoginUser;
+namespace InstaConnect.Identity.Application.Features.Users.Commands.LoginUser;
 
 public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, UserTokenCommandViewModel>
 {

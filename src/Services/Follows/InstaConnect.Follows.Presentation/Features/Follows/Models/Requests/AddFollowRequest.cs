@@ -1,7 +1,7 @@
-﻿using InstaConnect.Follows.Web.Features.Follows.Models.Binding;
+﻿using InstaConnect.Follows.Presentation.Features.Follows.Models.Binding;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Follows.Web.Features.Follows.Models.Requests;
+namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 
 public class AddFollowRequest
 {

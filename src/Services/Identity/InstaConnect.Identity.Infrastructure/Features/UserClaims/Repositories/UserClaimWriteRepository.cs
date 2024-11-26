@@ -1,9 +1,9 @@
-﻿using InstaConnect.Identity.Data.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Data.Features.UserClaims.Models.Entitites;
-using InstaConnect.Identity.Data.Features.UserClaims.Models.Filters;
+﻿using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Identity.Data.Features.UserClaims.Repositories;
+namespace InstaConnect.Identity.Infrastructure.Features.UserClaims.Repositories;
 
 internal class UserClaimWriteRepository : IUserClaimWriteRepository
 {

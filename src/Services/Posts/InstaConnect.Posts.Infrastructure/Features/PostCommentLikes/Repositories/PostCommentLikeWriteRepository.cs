@@ -1,8 +1,8 @@
-﻿using InstaConnect.Posts.Data.Features.PostCommentLikes.Abstract;
-using InstaConnect.Posts.Data.Features.PostCommentLikes.Models.Entitites;
+﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
 using Microsoft.EntityFrameworkCore;
 
-namespace InstaConnect.Posts.Data.Features.PostCommentLikes.Repositories;
+namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Repositories;
 
 internal class PostCommentLikeWriteRepository : IPostCommentLikeWriteRepository
 {

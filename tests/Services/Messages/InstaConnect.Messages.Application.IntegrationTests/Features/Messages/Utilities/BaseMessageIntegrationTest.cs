@@ -1,16 +1,16 @@
-﻿using InstaConnect.Messages.Business.IntegrationTests.Utilities;
+﻿using InstaConnect.Messages.Application.IntegrationTests.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Data;
-using InstaConnect.Messages.Data.Features.Messages.Abstractions;
-using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
-using InstaConnect.Messages.Data.Features.Users.Abstract;
-using InstaConnect.Messages.Data.Features.Users.Models.Entities;
-using InstaConnect.Shared.Business.IntegrationTests.Utilities;
-using InstaConnect.Shared.Data.Abstractions;
+using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
+using InstaConnect.Messages.Domain.Features.Users.Abstract;
+using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
+using InstaConnect.Messages.Infrastructure;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.IntegrationTests.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Business.IntegrationTests.Features.Messages.Utilities;
+namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
 
 public abstract class BaseMessageIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {

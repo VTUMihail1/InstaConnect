@@ -1,6 +1,6 @@
-﻿using InstaConnect.Shared.Business.Models;
+﻿using InstaConnect.Shared.Application.Models;
 
-namespace InstaConnect.Shared.Business.Abstractions;
+namespace InstaConnect.Shared.Application.Abstractions;
 
 public interface IImageHandler
 {

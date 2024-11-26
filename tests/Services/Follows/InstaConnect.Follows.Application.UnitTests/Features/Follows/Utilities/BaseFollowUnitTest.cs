@@ -1,20 +1,18 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Business.Features.Follows.Mappings;
+using InstaConnect.Follows.Application.Features.Follows.Mappings;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Data.Features.Follows.Abstractions;
-using InstaConnect.Follows.Data.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Data.Features.Follows.Models.Filters;
-using InstaConnect.Follows.Data.Features.Users.Abstractions;
-using InstaConnect.Follows.Data.Features.Users.Models.Entities;
-using InstaConnect.Shared.Business.Abstractions;
-using InstaConnect.Shared.Business.Helpers;
-using InstaConnect.Shared.Business.UnitTests.Utilities;
-using InstaConnect.Shared.Data.Abstractions;
-using InstaConnect.Shared.Data.Models.Pagination;
+using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
+using InstaConnect.Follows.Domain.Features.Users.Abstractions;
+using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Business.UnitTests.Features.Follows.Utilities;
+namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
 
 public abstract class BaseFollowUnitTest
 {
@@ -106,7 +104,7 @@ public abstract class BaseFollowUnitTest
             .Returns(follow);
 
         FollowReadRepository
-            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m =>  m.FollowerId == followerId &&
+            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m => m.FollowerId == followerId &&
                                                                  m.FollowerName == UserTestUtilities.ValidName &&
                                                                  m.FollowingId == followingId &&
                                                                  m.FollowingName == UserTestUtilities.ValidName &&

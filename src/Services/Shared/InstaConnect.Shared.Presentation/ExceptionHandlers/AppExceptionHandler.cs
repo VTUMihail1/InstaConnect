@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace InstaConnect.Shared.Web.ExceptionHandlers;
+namespace InstaConnect.Shared.Presentation.ExceptionHandlers;
 
 public sealed class AppExceptionHandler : IExceptionHandler
 {

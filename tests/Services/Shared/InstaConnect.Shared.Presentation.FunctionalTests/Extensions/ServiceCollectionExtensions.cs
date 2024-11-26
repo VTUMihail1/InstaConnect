@@ -4,7 +4,7 @@ using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
 using WebMotions.Fake.Authentication.JwtBearer;
 
-namespace InstaConnect.Shared.Web.FunctionalTests.Extensions;
+namespace InstaConnect.Shared.Presentation.FunctionalTests.Extensions;
 
 public static class ServiceCollectionExtensions
 {

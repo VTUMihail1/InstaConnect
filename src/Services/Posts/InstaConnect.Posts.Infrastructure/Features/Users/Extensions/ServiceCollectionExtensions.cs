@@ -1,8 +1,8 @@
-﻿using InstaConnect.Posts.Data.Features.Users.Abstract;
-using InstaConnect.Posts.Data.Features.Users.Repositories;
+﻿using InstaConnect.Posts.Domain.Features.Users.Abstract;
+using InstaConnect.Posts.Infrastructure.Features.Users.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Posts.Data.Features.Users.Extensions;
+namespace InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

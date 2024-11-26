@@ -1,8 +1,8 @@
-﻿using InstaConnect.Identity.Business.Features.Users.Models;
-using InstaConnect.Identity.Business.Features.Users.Utilities;
-using InstaConnect.Shared.Business.Abstractions;
+﻿using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Identity.Application.Features.Users.Utilities;
+using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Identity.Business.Features.Users.Queries.GetCurrentUserDetailed;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUserDetailed;
 
 public record GetCurrentUserDetailedQuery(string CurrentUserId) : IQuery<UserDetailedQueryViewModel>, ICachable
 {

@@ -1,6 +1,6 @@
-﻿using InstaConnect.Posts.Data.Features.PostComments.Models.Entitites;
+﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
 
-namespace InstaConnect.Posts.Data.Features.PostComments.Abstract;
+namespace InstaConnect.Posts.Domain.Features.PostComments.Abstract;
 public interface IPostCommentWriteRepository
 {
     void Add(PostComment postComment);
