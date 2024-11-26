@@ -7,7 +7,7 @@ namespace InstaConnect.Follows.Business.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddBusinessServices(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
     {
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
@@ -17,8 +17,7 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddMediatR(currentAssembly)
             .AddMapper(currentAssembly)
-            .AddValidators(currentAssembly)
-            .AddMessageBroker(configuration, currentAssembly);
+            .AddValidators(currentAssembly);
 
         return serviceCollection;
     }

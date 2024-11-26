@@ -7,7 +7,7 @@ namespace InstaConnect.Follows.Web.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWebServices(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static IServiceCollection AddPresentation(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
@@ -16,7 +16,6 @@ public static class ServiceCollectionExtensions
             .AddUserServices();
 
         serviceCollection
-            .AddJwtBearer(configuration)
             .AddApiControllers()
             .AddAutoMapper(currentAssembly)
             .AddAuthorizationPolicies()

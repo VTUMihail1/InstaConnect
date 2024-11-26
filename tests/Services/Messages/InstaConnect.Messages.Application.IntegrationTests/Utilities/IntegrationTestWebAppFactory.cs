@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Messages.Business.Features.Messages.Abstractions;
-using InstaConnect.Messages.Business.Features.Users.Consumers;
 using InstaConnect.Messages.Data;
 using InstaConnect.Shared.Business.IntegrationTests.Extensions;
 using MassTransit;
@@ -31,12 +30,7 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
         {
             serviceCollection.AddTestDbContext<MessagesContext>(opt => opt.UseSqlServer(_msSqlContainer.GetConnectionString()));
 
-            serviceCollection.AddMassTransitTestHarness(cfg =>
-            {
-                cfg.AddConsumer<UserCreatedEventConsumer>();
-                cfg.AddConsumer<UserUpdatedEventConsumer>();
-                cfg.AddConsumer<UserDeletedEventConsumer>();
-            });
+            serviceCollection.AddMassTransitTestHarness();
 
             var descriptor = serviceCollection.SingleOrDefault(s => s.ServiceType == typeof(IMessageSender));
 

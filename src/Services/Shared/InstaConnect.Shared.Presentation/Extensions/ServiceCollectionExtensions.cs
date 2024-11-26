@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Asp.Versioning;
 using InstaConnect.Shared.Common.Utilities;
-using InstaConnect.Shared.Data.Models.Options;
 using InstaConnect.Shared.Web.Abstractions;
 using InstaConnect.Shared.Web.ExceptionHandlers;
 using InstaConnect.Shared.Web.Helpers;
@@ -16,45 +15,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace InstaConnect.Shared.Web.Extensions;
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddJwtBearer(this IServiceCollection serviceCollection, IConfiguration configuration)
-    {
-        serviceCollection
-        .AddOptions<AccessTokenOptions>()
-        .BindConfiguration(nameof(AccessTokenOptions))
-        .ValidateDataAnnotations()
-        .ValidateOnStart();
-
-        var tokenOptions = configuration
-            .GetSection(nameof(AccessTokenOptions))
-            .Get<AccessTokenOptions>()!;
-
-        serviceCollection
-            .AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(opt =>
-            {
-                opt.RequireHttpsMetadata = false;
-                opt.SaveToken = true;
-                opt.TokenValidationParameters = new TokenValidationParameters
-                {
-                    IssuerSigningKey = new SymmetricSecurityKey(tokenOptions.SecurityKeyByteArray),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
-
-        return serviceCollection;
-    }
-
     public static IServiceCollection AddAuthorizationPolicies(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddAuthorizationBuilder()

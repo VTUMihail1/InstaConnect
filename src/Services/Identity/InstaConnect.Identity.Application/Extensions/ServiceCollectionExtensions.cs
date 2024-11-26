@@ -8,7 +8,7 @@ namespace InstaConnect.Identity.Business.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddBusinessServices(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
     {
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
@@ -18,10 +18,7 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddValidators(currentAssembly)
             .AddMediatR(currentAssembly)
-            .AddMapper(currentAssembly)
-            .AddImageHandler(configuration)
-            .AddMessageBroker(configuration, currentAssembly, busConfigurator =>
-                busConfigurator.AddTransactionalOutbox<IdentityContext>());
+            .AddMapper(currentAssembly);
 
         return serviceCollection;
     }

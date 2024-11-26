@@ -1,4 +1,7 @@
-﻿namespace InstaConnect.Messages.Web.Features.Messages.Extensions;
+﻿using InstaConnect.Messages.Business.Features.Messages.Abstractions;
+using InstaConnect.Messages.Business.Features.Messages.Helpers;
+
+namespace InstaConnect.Messages.Web.Features.Messages.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
@@ -6,6 +9,9 @@ internal static class ServiceCollectionExtensions
     {
         serviceCollection
             .AddSignalR();
+
+        serviceCollection
+            .AddScoped<IMessageSender, MessageSender>();
 
         return serviceCollection;
     }

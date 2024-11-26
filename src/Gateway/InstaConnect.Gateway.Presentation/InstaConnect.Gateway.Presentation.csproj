@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Services\Shared\InstaConnect.Shared.Presentation\InstaConnect.Shared.Presentation.csproj" />
+    <ProjectReference Include="..\InstaConnect.Gateway.Infrastructure\InstaConnect.Gateway.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

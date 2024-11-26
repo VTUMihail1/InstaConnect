@@ -125,17 +125,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Shared.Present
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Shared.Presentation.UnitTests", "tests\Services\Shared\InstaConnect.Shared.Presentation.UnitTests\InstaConnect.Shared.Presentation.UnitTests.csproj", "{437AA89F-A264-4A83-9005-782BC77CDF09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Emails.Infrastructure", "src\Services\Emails\InstaConnect.Emails.Infrastructure\InstaConnect.Emails.Infrastructure.csproj", "{E134AFFD-8875-4879-B94E-E0435DBC9D6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Emails.Infrastructure", "src\Services\Emails\InstaConnect.Emails.Infrastructure\InstaConnect.Emails.Infrastructure.csproj", "{E134AFFD-8875-4879-B94E-E0435DBC9D6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Shared.Infrastructure", "src\Services\Shared\InstaConnect.Shared.Infrastructure\InstaConnect.Shared.Infrastructure.csproj", "{6252841B-FBD2-465E-BA83-DDB89DE68A50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Shared.Infrastructure", "src\Services\Shared\InstaConnect.Shared.Infrastructure\InstaConnect.Shared.Infrastructure.csproj", "{6252841B-FBD2-465E-BA83-DDB89DE68A50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Follows.Infrastructure", "src\Services\Follows\InstaConnect.Follows.Infrastructure\InstaConnect.Follows.Infrastructure.csproj", "{4AB04821-952F-4241-BC95-2458709DD33D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Follows.Infrastructure", "src\Services\Follows\InstaConnect.Follows.Infrastructure\InstaConnect.Follows.Infrastructure.csproj", "{4AB04821-952F-4241-BC95-2458709DD33D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Identity.Infrastructure", "src\Services\Identity\InstaConnect.Identity.Infrastructure\InstaConnect.Identity.Infrastructure.csproj", "{B4F327E9-E09A-4659-8541-C9E85E1AE240}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Identity.Infrastructure", "src\Services\Identity\InstaConnect.Identity.Infrastructure\InstaConnect.Identity.Infrastructure.csproj", "{B4F327E9-E09A-4659-8541-C9E85E1AE240}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Messages.Infrastructure", "src\Services\Messages\InstaConnect.Messages.Infrastructure\InstaConnect.Messages.Infrastructure.csproj", "{3D460CCF-67F6-4A31-9053-C8533D904AAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Messages.Infrastructure", "src\Services\Messages\InstaConnect.Messages.Infrastructure\InstaConnect.Messages.Infrastructure.csproj", "{3D460CCF-67F6-4A31-9053-C8533D904AAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Posts.Infrastructure", "src\Services\Posts\InstaConnect.Posts.Infrastructure\InstaConnect.Posts.Infrastructure.csproj", "{23DAFFC6-A3D7-49A4-AD28-93EEDAA57850}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Posts.Infrastructure", "src\Services\Posts\InstaConnect.Posts.Infrastructure\InstaConnect.Posts.Infrastructure.csproj", "{23DAFFC6-A3D7-49A4-AD28-93EEDAA57850}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Gateway.Infrastructure", "src\Gateway\InstaConnect.Gateway.Infrastructure\InstaConnect.Gateway.Infrastructure.csproj", "{16BA4B39-93C7-4428-8B64-C0810E100FFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -343,6 +345,10 @@ Global
 		{23DAFFC6-A3D7-49A4-AD28-93EEDAA57850}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23DAFFC6-A3D7-49A4-AD28-93EEDAA57850}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23DAFFC6-A3D7-49A4-AD28-93EEDAA57850}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16BA4B39-93C7-4428-8B64-C0810E100FFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16BA4B39-93C7-4428-8B64-C0810E100FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16BA4B39-93C7-4428-8B64-C0810E100FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16BA4B39-93C7-4428-8B64-C0810E100FFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -411,6 +417,7 @@ Global
 		{B4F327E9-E09A-4659-8541-C9E85E1AE240} = {8E8BC1F8-B409-457F-A009-4B7EB511812D}
 		{3D460CCF-67F6-4A31-9053-C8533D904AAB} = {7FE8F3FE-E3F1-46BD-B1A5-788D3E987AEB}
 		{23DAFFC6-A3D7-49A4-AD28-93EEDAA57850} = {BB218D91-B7C7-4865-9A44-68EFCEBF744C}
+		{16BA4B39-93C7-4428-8B64-C0810E100FFC} = {6DD65F98-A141-4DFD-B0E1-D4BC7CC2CAAA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74CDCE11-9171-4345-A1A8-63E51F48297C}

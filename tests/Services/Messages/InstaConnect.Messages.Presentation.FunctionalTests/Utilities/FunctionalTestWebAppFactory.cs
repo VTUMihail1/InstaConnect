@@ -1,5 +1,4 @@
-﻿using InstaConnect.Messages.Business.Features.Users.Consumers;
-using InstaConnect.Messages.Data;
+﻿using InstaConnect.Messages.Data;
 using InstaConnect.Shared.Web.FunctionalTests.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;
@@ -29,12 +28,7 @@ public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyn
             serviceCollection.AddTestDbContext<MessagesContext>(opt => opt.UseSqlServer(_msSqlContainer.GetConnectionString()));
             serviceCollection.AddTestJwtAuth();
 
-            serviceCollection.AddMassTransitTestHarness(cfg =>
-            {
-                cfg.AddConsumer<UserCreatedEventConsumer>();
-                cfg.AddConsumer<UserUpdatedEventConsumer>();
-                cfg.AddConsumer<UserDeletedEventConsumer>();
-            });
+            serviceCollection.AddMassTransitTestHarness();
         });
     }
 

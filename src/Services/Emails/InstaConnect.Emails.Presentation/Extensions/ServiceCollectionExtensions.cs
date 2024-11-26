@@ -10,7 +10,6 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
-            .AddJwtBearer(configuration)
             .AddApiControllers()
             .AddMapper(currentAssembly)
             .AddAuthorizationPolicies()

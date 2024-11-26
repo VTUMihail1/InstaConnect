@@ -1,16 +1,27 @@
-﻿using InstaConnect.Posts.Common.Features.Posts.Utilities;
+﻿using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Posts.Common.Features.Users.Utilities;
+namespace InstaConnect.Follows.Common.Features.Users.Utilities;
 public class UserTestUtilities : SharedTestUtilities
 {
-    public static readonly string ValidCurrentUserId = GetAverageString(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-    public static readonly string InvalidUserId = GetAverageString(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH);
-    public static readonly string ValidUserName = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-    public static readonly string ValidAddUserName = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-    public static readonly string ValidUpdateUserName = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-    public static readonly string ValidUserFirstName = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-    public static readonly string ValidUserLastName = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-    public static readonly string ValidUserEmail = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
-    public static readonly string ValidUserProfileImage = GetAverageString(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH, PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH);
+    public static readonly string InvalidId = GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
+
+    public static readonly string ValidName = GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength);
+    public static readonly string ValidAddName = GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength);
+    public static readonly string ValidUpdateName = GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength);
+
+    public static readonly string ValidFirstName = GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength);
+    public static readonly string ValidAddFirstName = GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength);
+    public static readonly string ValidUpdateFirstName = GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength);
+
+    public static readonly string ValidLastName = GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength);
+    public static readonly string ValidAddLastName = GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength);
+    public static readonly string ValidUpdateLastName = GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength);
+
+    public static readonly string ValidEmail = GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength);
+    public static readonly string ValidAddEmail = GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength);
+
+    public static readonly string ValidProfileImage = GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength);
+    public static readonly string ValidAddProfileImage = GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength);
+    public static readonly string ValidUpdateProfileImage = GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength);
 }

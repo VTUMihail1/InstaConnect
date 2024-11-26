@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Follows.Data;
 using InstaConnect.Follows.Web.Features.Users.Consumers;
-using InstaConnect.Shared.Business.Models.Options;
 using InstaConnect.Shared.Web.FunctionalTests.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;

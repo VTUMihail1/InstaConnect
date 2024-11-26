@@ -2,7 +2,6 @@
 using InstaConnect.Posts.Business.Features.PostComments.Extensions;
 using InstaConnect.Posts.Business.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Business.Features.Posts.Extensions;
-using InstaConnect.Posts.Business.Features.Users.Extensions;
 using InstaConnect.Shared.Business.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,12 +10,11 @@ namespace InstaConnect.Posts.Business.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddBusinessServices(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
     {
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
-            .AddUserServices()
             .AddPostServices()
             .AddPostLikeServices()
             .AddPostCommentServices()
@@ -25,8 +23,7 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddMediatR(currentAssembly)
             .AddMapper(currentAssembly)
-            .AddValidators(currentAssembly)
-            .AddMessageBroker(configuration, currentAssembly);
+            .AddValidators(currentAssembly);
 
         return serviceCollection;
     }

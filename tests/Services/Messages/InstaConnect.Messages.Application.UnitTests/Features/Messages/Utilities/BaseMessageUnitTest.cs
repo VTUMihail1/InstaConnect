@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Business.Features.Messages.Abstractions;
 using InstaConnect.Messages.Business.Features.Messages.Mappings;
-using InstaConnect.Messages.Business.Features.Users.Mappings;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Data.Features.Messages.Abstractions;
 using InstaConnect.Messages.Data.Features.Messages.Models.Entities;
@@ -34,7 +33,6 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
                 {
                     cfg.AddProfile<MessageQueryProfile>();
                     cfg.AddProfile<MessageCommandProfile>();
-                    cfg.AddProfile<UserConsumerProfile>();
                 }))),
         new EntityPropertyValidator())
     {

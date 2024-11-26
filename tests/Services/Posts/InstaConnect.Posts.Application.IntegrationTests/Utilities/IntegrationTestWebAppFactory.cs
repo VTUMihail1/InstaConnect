@@ -1,4 +1,4 @@
-﻿using InstaConnect.Posts.Business.Features.Users.Consumers;
+﻿using InstaConnect.Follows.Web.Features.Users.Consumers;
 using InstaConnect.Posts.Data;
 using InstaConnect.Shared.Business.IntegrationTests.Extensions;
 using MassTransit;
@@ -28,12 +28,7 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
         {
             serviceCollection.AddTestDbContext<PostsContext>(opt => opt.UseSqlServer(_msSqlContainer.GetConnectionString()));
 
-            serviceCollection.AddMassTransitTestHarness(cfg =>
-            {
-                cfg.AddConsumer<UserCreatedEventConsumer>();
-                cfg.AddConsumer<UserUpdatedEventConsumer>();
-                cfg.AddConsumer<UserDeletedEventConsumer>();
-            });
+            serviceCollection.AddMassTransitTestHarness();
         });
     }
 

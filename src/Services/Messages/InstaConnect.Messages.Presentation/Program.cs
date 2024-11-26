@@ -8,9 +8,9 @@ using InstaConnect.Shared.Web.Utilities;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddDataServices(builder.Configuration)
-    .AddBusinessServices(builder.Configuration)
-    .AddWebServices(builder.Configuration);
+    .AddApplication()
+    .AddInfrastructure(builder.Configuration)
+    .AddPresentation(builder.Configuration);
 
 builder.Host.AddSerilog();
 

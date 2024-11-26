@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Business.Features.PostCommentLikes.Extensions;
+﻿using InstaConnect.Follows.Web.Features.Users.Extensions;
+using InstaConnect.Posts.Business.Features.PostCommentLikes.Extensions;
 using InstaConnect.Posts.Business.Features.PostComments.Extensions;
 using InstaConnect.Posts.Business.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Web.Features.PostCommentLikes.Extensions;
@@ -12,18 +13,18 @@ namespace InstaConnect.Posts.Web.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWebServices(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static IServiceCollection AddPresentation(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
+            .AddUserServices()
             .AddPostServices()
             .AddPostLikeServices()
             .AddPostCommentServices()
             .AddPostCommentLikeServices();
 
         serviceCollection
-            .AddJwtBearer(configuration)
             .AddApiControllers()
             .AddMapper(currentAssembly)
             .AddAuthorizationPolicies()

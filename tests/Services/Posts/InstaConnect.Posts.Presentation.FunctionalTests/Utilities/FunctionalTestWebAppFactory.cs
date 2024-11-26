@@ -1,4 +1,4 @@
-﻿using InstaConnect.Posts.Business.Features.Users.Consumers;
+﻿using InstaConnect.Follows.Web.Features.Users.Consumers;
 using InstaConnect.Posts.Data;
 using InstaConnect.Shared.Web.FunctionalTests.Extensions;
 using MassTransit;
