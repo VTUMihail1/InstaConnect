@@ -19,8 +19,7 @@ public class GetFollowByIdUnitTests : BaseFollowUnitTest
     {
         _followController = new(
             InstaConnectMapper,
-            InstaConnectSender,
-            CurrentUserContext);
+            InstaConnectSender);
     }
 
     [Fact]

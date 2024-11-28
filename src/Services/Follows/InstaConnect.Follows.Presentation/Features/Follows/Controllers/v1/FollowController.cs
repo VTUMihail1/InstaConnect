@@ -23,16 +23,13 @@ public class FollowController : ControllerBase
 {
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IInstaConnectSender _instaConnectSender;
-    private readonly ICurrentUserContext _currentUserContext;
 
     public FollowController(
         IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender,
-        ICurrentUserContext currentUserContext)
+        IInstaConnectSender instaConnectSender)
     {
         _instaConnectMapper = instaConnectMapper;
         _instaConnectSender = instaConnectSender;
-        _currentUserContext = currentUserContext;
     }
 
     // GET: api/follows
@@ -75,8 +72,7 @@ public class FollowController : ControllerBase
         AddFollowRequest request,
         CancellationToken cancellationToken)
     {
-        var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<AddFollowCommand>((currentUser, request));
+        var commandRequest = _instaConnectMapper.Map<AddFollowCommand>(request);
         var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
         var response = _instaConnectMapper.Map<FollowCommandResponse>(commandResponse);
 
@@ -89,10 +85,11 @@ public class FollowController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> DeleteAsync(DeleteFollowRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult> DeleteAsync(
+        DeleteFollowRequest request, 
+        CancellationToken cancellationToken)
     {
-        var currentUser = _currentUserContext.GetCurrentUser();
-        var commandRequest = _instaConnectMapper.Map<DeleteFollowCommand>((currentUser, request));
+        var commandRequest = _instaConnectMapper.Map<DeleteFollowCommand>(request);
         await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();

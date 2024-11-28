@@ -1,4 +1,6 @@
 ﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace InstaConnect.Shared.Presentation.Extensions;
 
@@ -14,3 +16,5 @@ internal static class ClaimsPrincipalExtensions
         return principal?.FindFirstValue(ClaimTypes.Name)!;
     }
 }
+
+

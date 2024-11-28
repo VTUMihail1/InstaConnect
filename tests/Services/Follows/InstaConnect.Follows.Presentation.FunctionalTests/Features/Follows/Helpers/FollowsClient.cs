@@ -1,8 +1,10 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
+using System.Security.Claims;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Abstractions;
+using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Models;
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
 
 namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Helpers;
@@ -15,89 +17,129 @@ public class FollowsClient : IFollowsClient
         _httpClient = httpClient;
     }
 
-    public async Task<HttpStatusCode> GetAllStatusCodeAsync(GetAllFollowsRequest? request = null)
+    public async Task<HttpStatusCode> GetAllStatusCodeAsync(
+        GetAllFollowsClientRequest request,
+        CancellationToken cancellationToken)
     {
-        var route = GetAllRoute(request);
-        var response = await _httpClient.GetAsync(route);
+        var getAllFollowsRequest = request.GetAllFollowsRequest;
+        var route = GetAllRoute(getAllFollowsRequest);
+        var response = await _httpClient.GetAsync(route, cancellationToken);
 
         return response.StatusCode;
     }
 
-    public async Task<FollowPaginationQueryResponse> GetAllAsync(GetAllFollowsRequest? request = null)
+    public async Task<FollowPaginationQueryResponse> GetAllAsync(
+        GetAllFollowsClientRequest request,
+        CancellationToken cancellationToken)
     {
-        var route = GetAllRoute(request);
-        var response = await _httpClient.GetFromJsonAsync<FollowPaginationQueryResponse>(route);
+        var getAllFollowsRequest = request.GetAllFollowsRequest;
+        var route = GetAllRoute(getAllFollowsRequest);
+        var response = await _httpClient
+            .GetFromJsonAsync<FollowPaginationQueryResponse>(route, cancellationToken);
 
         return response!;
     }
 
-    public async Task<HttpStatusCode> GetByIdStatusCodeAsync(GetFollowByIdRequest request)
+    public async Task<HttpStatusCode> GetByIdStatusCodeAsync(
+        GetFollowByIdClientRequest request,
+        CancellationToken cancellationToken)
     {
-        var route = IdRoute(request.Id);
-        var response = await _httpClient.GetAsync(route);
+        var getFollowByIdRequest = request.GetFollowByIdRequest;
+        var route = IdRoute(getFollowByIdRequest.Id);
+        var response = await _httpClient.GetAsync(route, cancellationToken);
 
         return response.StatusCode;
     }
 
-    public async Task<FollowQueryResponse> GetByIdAsync(GetFollowByIdRequest request)
+    public async Task<FollowQueryResponse> GetByIdAsync(
+        GetFollowByIdClientRequest request,
+        CancellationToken cancellationToken)
     {
-        var route = IdRoute(request.Id);
-        var response = await _httpClient.GetFromJsonAsync<FollowQueryResponse>(route);
+        var getFollowByIdRequest = request.GetFollowByIdRequest;
+        var route = IdRoute(getFollowByIdRequest.Id);
+        var response = await _httpClient
+            .GetFromJsonAsync<FollowQueryResponse>(route, cancellationToken);
 
         return response!;
     }
 
-    public async Task<HttpStatusCode> AddStatusCodeAsync(AddFollowRequest request, Dictionary<string, object>? jwtConfig = null)
+    public async Task<HttpStatusCode> AddStatusCodeAsync(
+        AddFollowClientRequest request,
+        CancellationToken cancellationToken)
     {
-        if (jwtConfig != null)
+        var addFollowRequest = request.AddFollowRequest;
+
+        if (request.IsAuthenticated)
         {
-            _httpClient.SetFakeJwtBearerToken(jwtConfig);
+            _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
+            {
+                { ClaimTypes.NameIdentifier, addFollowRequest.CurrentUserId }
+            });
         }
 
-        var response = await _httpClient.PostAsJsonAsync(FollowTestRoutes.Default, request.AddFollowBindingModel);
-
-        var c = await response.Content.ReadAsStringAsync();
+        var response = await _httpClient
+            .PostAsJsonAsync(FollowTestRoutes.Default, addFollowRequest, cancellationToken);
 
         return response.StatusCode;
     }
 
-    public async Task<FollowCommandResponse> AddAsync(AddFollowRequest request, Dictionary<string, object>? jwtConfig = null)
+    public async Task<FollowCommandResponse> AddAsync(
+        AddFollowClientRequest request,
+        CancellationToken cancellationToken)
     {
-        if (jwtConfig != null)
+        var addFollowRequest = request.AddFollowRequest;
+        
+        if (request.IsAuthenticated)
         {
-            _httpClient.SetFakeJwtBearerToken(jwtConfig);
+            _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
+            {
+                { ClaimTypes.NameIdentifier, addFollowRequest.CurrentUserId }
+            });
         }
 
-        var httpResponseMessage = await _httpClient.PostAsJsonAsync(FollowTestRoutes.Default, request.AddFollowBindingModel);
+        var httpResponseMessage = await _httpClient
+            .PostAsJsonAsync(FollowTestRoutes.Default, addFollowRequest, cancellationToken);
         var response = await httpResponseMessage.Content.ReadFromJsonAsync<FollowCommandResponse>();
 
         return response!;
     }
 
-    public async Task<HttpStatusCode> DeleteStatusCodeAsync(DeleteFollowRequest request, Dictionary<string, object>? jwtConfig = null)
+    public async Task<HttpStatusCode> DeleteStatusCodeAsync(
+        DeleteFollowClientRequest request,
+        CancellationToken cancellationToken)
     {
-        var route = IdRoute(request.Id);
+        var deleteFollowRequest = request.DeleteFollowRequest;
+        var route = IdRoute(deleteFollowRequest.Id);
 
-        if (jwtConfig != null)
+        if (request.IsAuthenticated)
         {
-            _httpClient.SetFakeJwtBearerToken(jwtConfig);
+            _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>() 
+            { 
+                { ClaimTypes.NameIdentifier, deleteFollowRequest.CurrentUserId } 
+            });
         }
 
-        var response = await _httpClient.DeleteAsync(route);
+        var response = await _httpClient.DeleteAsync(route, cancellationToken);
 
         return response.StatusCode;
     }
 
-    public async Task DeleteAsync(DeleteFollowRequest request, Dictionary<string, object>? jwtConfig = null)
+    public async Task DeleteAsync(
+        DeleteFollowClientRequest request,
+        CancellationToken cancellationToken)
     {
-        var route = IdRoute(request.Id);
+        var deleteFollowRequest = request.DeleteFollowRequest;
+        var route = IdRoute(deleteFollowRequest.Id);
 
-        if (jwtConfig != null)
+        if (request.IsAuthenticated)
         {
-            _httpClient.SetFakeJwtBearerToken(jwtConfig);
+            _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
+            {
+                { ClaimTypes.NameIdentifier, deleteFollowRequest.Id }
+            });
         }
 
-        await _httpClient.DeleteAsync(route);
+        await _httpClient.DeleteAsync(route, cancellationToken);
     }
 
     private string GetAllRoute(GetAllFollowsRequest? request)

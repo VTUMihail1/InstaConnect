@@ -22,8 +22,6 @@ public abstract class BaseFollowUnitTest
 
     protected IInstaConnectSender InstaConnectSender { get; }
 
-    protected ICurrentUserContext CurrentUserContext { get; }
-
     protected IInstaConnectMapper InstaConnectMapper { get; }
 
     public BaseFollowUnitTest()
@@ -31,7 +29,6 @@ public abstract class BaseFollowUnitTest
 
         CancellationToken = new();
         InstaConnectSender = Substitute.For<IInstaConnectSender>();
-        CurrentUserContext = Substitute.For<ICurrentUserContext>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
                 new MapperConfiguration(cfg =>
@@ -49,14 +46,6 @@ public abstract class BaseFollowUnitTest
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidProfileImage);
-
-        var existingCurrentUserModel = new CurrentUserModel(
-            user.Id,
-            UserTestUtilities.ValidName);
-
-        CurrentUserContext
-            .GetCurrentUser()
-            .Returns(existingCurrentUserModel);
 
         return user.Id;
     }

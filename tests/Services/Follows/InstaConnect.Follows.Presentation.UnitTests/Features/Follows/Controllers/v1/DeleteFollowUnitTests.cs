@@ -17,8 +17,7 @@ public class DeleteFollowUnitTests : BaseFollowUnitTest
     {
         _followController = new(
             InstaConnectMapper,
-            InstaConnectSender,
-            CurrentUserContext);
+            InstaConnectSender);
     }
 
     [Fact]
@@ -30,7 +29,8 @@ public class DeleteFollowUnitTests : BaseFollowUnitTest
         var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
         var request = new DeleteFollowRequest()
         {
-            Id = existingFollowId
+            Id = existingFollowId,
+            CurrentUserId = existingCurrentUserId
         };
 
         // Act
@@ -51,7 +51,8 @@ public class DeleteFollowUnitTests : BaseFollowUnitTest
         var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
         var request = new DeleteFollowRequest()
         {
-            Id = existingFollowId
+            Id = existingFollowId,
+            CurrentUserId = existingCurrentUserId
         };
 
         // Act
@@ -63,26 +64,5 @@ public class DeleteFollowUnitTests : BaseFollowUnitTest
             .SendAsync(Arg.Is<DeleteFollowCommand>(m => m.Id == existingFollowId &&
                                                     m.CurrentUserId == existingCurrentUserId),
                                                     CancellationToken);
-    }
-
-    [Fact]
-    public async Task DeleteAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
-    {
-        // Arrange
-        var existingCurrentUserId = CreateCurrentUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
-        var request = new DeleteFollowRequest()
-        {
-            Id = existingFollowId
-        };
-
-        // Act
-        await _followController.DeleteAsync(request, CancellationToken);
-
-        // Assert
-        CurrentUserContext
-            .Received(1)
-            .GetCurrentUser();
     }
 }

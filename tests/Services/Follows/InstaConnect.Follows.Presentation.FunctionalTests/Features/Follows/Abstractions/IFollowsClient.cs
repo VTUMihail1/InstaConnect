@@ -1,16 +1,41 @@
 ﻿using System.Net;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
+using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Models;
 
 namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Abstractions;
 public interface IFollowsClient
 {
-    Task<HttpStatusCode> AddStatusCodeAsync(AddFollowRequest request, Dictionary<string, object>? jwtConfig = null);
-    Task<FollowCommandResponse> AddAsync(AddFollowRequest request, Dictionary<string, object>? jwtConfig = null);
-    Task<HttpStatusCode> DeleteStatusCodeAsync(DeleteFollowRequest request, Dictionary<string, object>? jwtConfig = null);
-    Task DeleteAsync(DeleteFollowRequest request, Dictionary<string, object>? jwtConfig = null);
-    Task<FollowPaginationQueryResponse> GetAllAsync(GetAllFollowsRequest? request = null);
-    Task<HttpStatusCode> GetAllStatusCodeAsync(GetAllFollowsRequest? request = null);
-    Task<FollowQueryResponse> GetByIdAsync(GetFollowByIdRequest request);
-    Task<HttpStatusCode> GetByIdStatusCodeAsync(GetFollowByIdRequest request);
+    Task<HttpStatusCode> AddStatusCodeAsync(
+        AddFollowClientRequest request,
+        CancellationToken cancellationToken);
+
+    Task<FollowCommandResponse> AddAsync(
+        AddFollowClientRequest request,
+        CancellationToken cancellationToken);
+
+    Task<HttpStatusCode> DeleteStatusCodeAsync(
+        DeleteFollowClientRequest request,
+        CancellationToken cancellationToken);
+
+    Task DeleteAsync(
+        DeleteFollowClientRequest request,
+        CancellationToken cancellationToken);
+
+    Task<FollowPaginationQueryResponse> GetAllAsync(
+        GetAllFollowsClientRequest request,
+        CancellationToken cancellationToken);
+
+    Task<HttpStatusCode> GetAllStatusCodeAsync(
+        GetAllFollowsClientRequest request,
+        CancellationToken cancellationToken);
+
+    Task<FollowQueryResponse> GetByIdAsync(
+        GetFollowByIdClientRequest request,
+        CancellationToken cancellationToken);
+
+    Task<HttpStatusCode> GetByIdStatusCodeAsync(
+        GetFollowByIdClientRequest request,
+        CancellationToken cancellationToken);
+
 }

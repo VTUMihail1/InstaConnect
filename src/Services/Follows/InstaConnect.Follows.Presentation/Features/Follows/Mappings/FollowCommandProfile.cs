@@ -12,15 +12,15 @@ internal class FollowCommandProfile : Profile
 {
     public FollowCommandProfile()
     {
-        CreateMap<(CurrentUserModel, AddFollowRequest), AddFollowCommand>()
+        CreateMap<AddFollowRequest, AddFollowCommand>()
             .ConstructUsing(src => new(
-                src.Item1.Id,
-                src.Item2.AddFollowBindingModel.FollowingId));
+                src.CurrentUserId,
+                src.AddFollowBindingModel.FollowingId));
 
-        CreateMap<(CurrentUserModel, DeleteFollowRequest), DeleteFollowCommand>()
+        CreateMap<DeleteFollowRequest, DeleteFollowCommand>()
             .ConstructUsing(src => new(
-                src.Item2.Id,
-                src.Item1.Id));
+                src.Id,
+                src.CurrentUserId));
 
         CreateMap<FollowCommandViewModel, FollowCommandResponse>();
     }

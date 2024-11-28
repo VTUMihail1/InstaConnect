@@ -4,6 +4,7 @@ using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
+using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Models;
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
@@ -27,7 +28,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = SharedTestUtilities.GetString(length),
             FollowerName = UserTestUtilities.ValidName,
@@ -38,9 +39,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.BadRequest);
@@ -56,7 +58,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = SharedTestUtilities.GetString(length),
@@ -67,9 +69,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.BadRequest);
@@ -85,7 +88,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = UserTestUtilities.ValidName,
@@ -96,9 +99,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.BadRequest);
@@ -114,7 +118,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = UserTestUtilities.ValidName,
@@ -125,9 +129,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.BadRequest);
@@ -141,7 +146,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = UserTestUtilities.ValidName,
@@ -152,9 +157,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.BadRequest);
@@ -170,7 +176,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = UserTestUtilities.ValidName,
@@ -181,9 +187,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.BadRequest);
@@ -199,7 +206,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = UserTestUtilities.ValidName,
@@ -210,9 +217,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = value,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.BadRequest);
@@ -228,7 +236,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
 
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = UserTestUtilities.ValidName,
@@ -239,9 +247,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = value
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.BadRequest);
@@ -254,7 +263,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = UserTestUtilities.ValidName,
@@ -265,9 +274,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.OK);
@@ -280,7 +290,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
@@ -291,9 +301,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.OK);
@@ -306,7 +317,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
@@ -317,9 +328,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.OK);
@@ -332,7 +344,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
@@ -343,9 +355,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.OK);
@@ -358,7 +371,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = UserTestUtilities.ValidName,
@@ -369,9 +382,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.OK);
@@ -384,7 +398,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = UserTestUtilities.ValidName,
@@ -395,9 +409,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.OK);
@@ -410,9 +425,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var request = new GetAllFollowsClientRequest();
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync();
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -427,7 +443,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = UserTestUtilities.ValidName,
@@ -438,9 +454,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request);
+        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response.Should().Be(HttpStatusCode.OK);
@@ -453,7 +470,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
@@ -464,9 +481,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllAsync(request);
+        var response = await FollowsClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -493,7 +511,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
@@ -504,9 +522,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllAsync(request);
+        var response = await FollowsClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -533,7 +552,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
@@ -544,9 +563,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllAsync(request);
+        var response = await FollowsClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -573,7 +593,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = UserTestUtilities.ValidName,
@@ -584,9 +604,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest(getAllFollowsRequest);
 
         // Act
-        var response = await FollowsClient.GetAllAsync(request);
+        var response = await FollowsClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -613,7 +634,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var request = new GetAllFollowsRequest
+        var getAllFollowsRequest = new GetAllFollowsRequest
         {
             FollowerId = existingFollowerId,
             FollowerName = UserTestUtilities.ValidName,
@@ -624,9 +645,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             Page = FollowTestUtilities.ValidPageValue,
             PageSize = FollowTestUtilities.ValidPageSizeValue
         };
+        var request = new GetAllFollowsClientRequest();
 
         // Act
-        var response = await FollowsClient.GetAllAsync(request);
+        var response = await FollowsClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -653,9 +675,10 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        // Act
+        var request = new GetAllFollowsClientRequest();
 
-        var response = await FollowsClient.GetAllAsync();
+        // Act
+        var response = await FollowsClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response

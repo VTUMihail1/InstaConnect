@@ -4,6 +4,7 @@ using System.Threading.RateLimiting;
 using Asp.Versioning;
 using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Presentation.Abstractions;
+using InstaConnect.Shared.Presentation.Binders.FromClaim;
 using InstaConnect.Shared.Presentation.ExceptionHandlers;
 using InstaConnect.Shared.Presentation.Helpers;
 using InstaConnect.Shared.Presentation.Models.Options;
@@ -35,7 +36,9 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApiControllers(this IServiceCollection serviceCollection)
     {
         serviceCollection
-            .AddControllers()
+            .AddControllers(options => options
+                  .ModelBinderProviders
+                  .Insert(0, new FromClaimModelBinderProvider()))
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;

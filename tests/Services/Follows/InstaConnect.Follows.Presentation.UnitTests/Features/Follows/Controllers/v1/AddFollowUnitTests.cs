@@ -19,8 +19,7 @@ public class AddFollowUnitTests : BaseFollowUnitTest
     {
         _followController = new(
             InstaConnectMapper,
-            InstaConnectSender,
-            CurrentUserContext);
+            InstaConnectSender);
     }
 
     [Fact]
@@ -29,9 +28,9 @@ public class AddFollowUnitTests : BaseFollowUnitTest
         // Arrange
         var existingCurrentUserId = CreateCurrentUser();
         var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
         var request = new AddFollowRequest()
         {
+            CurrentUserId = existingCurrentUserId,
             AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
         };
 
@@ -54,6 +53,7 @@ public class AddFollowUnitTests : BaseFollowUnitTest
         var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
         var request = new AddFollowRequest()
         {
+            CurrentUserId = existingCurrentUserId,
             AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
         };
 
@@ -76,9 +76,9 @@ public class AddFollowUnitTests : BaseFollowUnitTest
         // Arrange
         var existingCurrentUserId = CreateCurrentUser();
         var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
         var request = new AddFollowRequest()
         {
+            CurrentUserId = existingCurrentUserId,
             AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
         };
 
@@ -91,26 +91,5 @@ public class AddFollowUnitTests : BaseFollowUnitTest
             .SendAsync(Arg.Is<AddFollowCommand>(m => m.CurrentUserId == existingCurrentUserId &&
                                                      m.FollowingId == existingFollowingId),
                                                      CancellationToken);
-    }
-
-    [Fact]
-    public async Task AddAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
-    {
-        // Arrange
-        var existingCurrentUserId = CreateCurrentUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
-        var request = new AddFollowRequest()
-        {
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
-        };
-
-        // Act
-        await _followController.AddAsync(request, CancellationToken);
-
-        // Assert
-        CurrentUserContext
-            .Received(1)
-            .GetCurrentUser();
     }
 }
