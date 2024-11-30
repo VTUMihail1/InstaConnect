@@ -36,7 +36,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApiControllers(this IServiceCollection serviceCollection)
     {
         serviceCollection
-            .AddControllers(options => 
+            .AddControllers(options =>
                 options.ValueProviderFactories.Add(new FromClaimValueProviderFactory()))
             .AddJsonOptions(options =>
             {

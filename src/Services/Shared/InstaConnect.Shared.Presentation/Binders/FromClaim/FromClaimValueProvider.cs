@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace InstaConnect.Shared.Presentation.Binders.FromClaim;
 
@@ -22,7 +22,7 @@ public class FromClaimValueProvider : BindingSourceValueProvider
     public override ValueProviderResult GetValue(string key)
     {
         var claimValue = _claimsPrincipal.FindFirstValue(key);
-        
+
         return claimValue != null ? new ValueProviderResult(claimValue) : ValueProviderResult.None;
     }
 }

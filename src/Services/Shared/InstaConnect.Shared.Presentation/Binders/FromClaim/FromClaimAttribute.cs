@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace InstaConnect.Shared.Presentation.Binders.FromClaim;
