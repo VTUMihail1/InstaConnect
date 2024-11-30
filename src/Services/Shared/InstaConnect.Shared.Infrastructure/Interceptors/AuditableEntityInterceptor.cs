@@ -1,12 +1,20 @@
-﻿using InstaConnect.Shared.Domain.Abstractions;
+﻿using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace InstaConnect.Shared.Infrastructure.Extensions;
+namespace InstaConnect.Shared.Infrastructure.Interceptors;
 
 public class AuditableEntityInterceptor : SaveChangesInterceptor
 {
+    private readonly IDateTimeProvider _dateTimeProvider;
+
+    public AuditableEntityInterceptor(IDateTimeProvider dateTimeProvider)
+    {
+        _dateTimeProvider = dateTimeProvider;
+    }
+
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(
         DbContextEventData eventData,
         InterceptionResult<int> result,
@@ -32,7 +40,7 @@ public class AuditableEntityInterceptor : SaveChangesInterceptor
         foreach (var entry in entries)
         {
             var entity = entry.Entity;
-            var currentTime = DateTime.UtcNow;
+            var currentTime = _dateTimeProvider.GetCurrentUtc();
             entity.CreatedAt = currentTime;
             entity.UpdatedAt = currentTime;
         }
@@ -47,7 +55,7 @@ public class AuditableEntityInterceptor : SaveChangesInterceptor
         foreach (var entry in entries)
         {
             var entity = entry.Entity;
-            var currentTime = DateTime.UtcNow;
+            var currentTime = _dateTimeProvider.GetCurrentUtc();
             entity.UpdatedAt = currentTime;
         }
     }

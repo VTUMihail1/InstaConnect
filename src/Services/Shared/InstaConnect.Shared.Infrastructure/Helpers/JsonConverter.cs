@@ -12,7 +12,7 @@ internal class JsonConverter : IJsonConverter
         return obj;
     }
 
-    public string Serialize(object obj)
+    public string Serialize(object? obj)
     {
         var value = JsonConvert.SerializeObject(obj);
 

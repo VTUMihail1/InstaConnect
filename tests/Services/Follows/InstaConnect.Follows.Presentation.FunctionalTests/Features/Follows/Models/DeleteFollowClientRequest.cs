@@ -3,5 +3,5 @@
 namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Models;
 
 public record DeleteFollowClientRequest(
-    DeleteFollowRequest DeleteFollowRequest, 
+    DeleteFollowRequest DeleteFollowRequest,
     bool IsAuthenticated = true);

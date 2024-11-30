@@ -1,18 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace InstaConnect.Shared.Presentation.Binders.FromClaim;
 
-[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-public class FromClaimAttribute : Attribute, IBindingSourceMetadata
+[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
+public class FromClaimAttribute : Attribute, IBindingSourceMetadata, IModelNameProvider
 {
-    public string ClaimType { get; }
-
-    public FromClaimAttribute(string claimType)
+    public FromClaimAttribute(string name)
     {
-        ClaimType = claimType;
+        Name = name;
     }
 
-    public BindingSource BindingSource => BindingSource.Custom;
+    public BindingSource BindingSource => FromClaimBindingSource.Claim;
+
+    public string Name { get; }
 }
-
-

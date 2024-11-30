@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Models;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace InstaConnect.Shared.Infrastructure.Helpers;
@@ -15,11 +16,14 @@ internal class CacheHandler : ICacheHandler
         _distributedCache = distributedCache;
     }
 
-    public async Task SetAsync(string key, object obj, CancellationToken cancellationToken)
+    public async Task SetAsync(CacheRequest cacheRequest, CancellationToken cancellationToken)
     {
-        var value = _jsonConverter.Serialize(obj) ?? string.Empty;
-
-        await _distributedCache.SetStringAsync(key, value, cancellationToken);
+        var value = _jsonConverter.Serialize(cacheRequest.Data) ?? string.Empty;
+        await _distributedCache.SetStringAsync(
+            cacheRequest.Key,
+            value,
+            cacheRequest.Expiration,
+            cancellationToken);
     }
 
     public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken)
@@ -32,3 +36,24 @@ internal class CacheHandler : ICacheHandler
 
     }
 }
+
+internal static class DistributedCacheExtensions
+{
+    public static async Task SetStringAsync(
+        this IDistributedCache distributedCache,
+        string key,
+        string value,
+        DateTime expiration,
+        CancellationToken cancellationToken)
+    {
+        await distributedCache.SetStringAsync(
+            key,
+            value,
+            new DistributedCacheEntryOptions
+            {
+                AbsoluteExpiration = expiration,
+            },
+            cancellationToken);
+    }
+}
+

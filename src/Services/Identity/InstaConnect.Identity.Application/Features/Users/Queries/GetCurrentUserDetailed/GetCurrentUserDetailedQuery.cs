@@ -6,9 +6,9 @@ namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUse
 
 public record GetCurrentUserDetailedQuery(string CurrentUserId) : IQuery<UserDetailedQueryViewModel>, ICachable
 {
-    private const int CACHE_EXPIRATION_AMOUNT = 15;
+    private const int EXPIRATION_SECONDS = 1500;
 
     public string Key => string.Format(UserCacheKeys.GetCurrentDetailedUser, CurrentUserId);
 
-    public DateTimeOffset Expiration => DateTimeOffset.UtcNow.AddMinutes(CACHE_EXPIRATION_AMOUNT);
+    public int ExpirationSeconds => EXPIRATION_SECONDS;
 }

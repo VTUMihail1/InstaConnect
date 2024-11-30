@@ -9,13 +9,16 @@ internal class CachingPipelineBehavior<TRequest, TResponse>
     where TRequest : IQuery<TResponse>, ICachable
 {
     private readonly ICacheHandler _cacheHandler;
+    private readonly ICacheRequestFactory _cacheRequestFactory;
     private readonly ILogger<CachingPipelineBehavior<TRequest, TResponse>> _logger;
 
     public CachingPipelineBehavior(
         ICacheHandler cacheHandler,
+        ICacheRequestFactory cacheRequestFactory,
         ILogger<CachingPipelineBehavior<TRequest, TResponse>> logger)
     {
         _cacheHandler = cacheHandler;
+        _cacheRequestFactory = cacheRequestFactory;
         _logger = logger;
     }
 
@@ -24,20 +27,21 @@ internal class CachingPipelineBehavior<TRequest, TResponse>
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        var requestName = typeof(TRequest).Name;
-        var cachedResult = await _cacheHandler.GetAsync<TResponse>(request.Key, cancellationToken);
+        var requestKey = request.Key;
+        var cachedResult = await _cacheHandler.GetAsync<TResponse>(requestKey, cancellationToken);
 
         if (cachedResult != null)
         {
-            _logger.LogInformation("Cache hit for {RequestName}", requestName);
+            _logger.LogInformation("Cache hit for key {RequestKey}", requestKey);
 
             return cachedResult;
         }
 
-        _logger.LogInformation("Cache miss for {RequestName}", requestName);
+        _logger.LogInformation("Cache miss for {RequestKey}", requestKey);
 
         var data = await next();
-        await _cacheHandler.SetAsync(request.Key, data!, cancellationToken);
+        var cacheRequest = _cacheRequestFactory.Get(requestKey, request.ExpirationSeconds, data);
+        await _cacheHandler.SetAsync(cacheRequest, cancellationToken);
 
         return data;
     }

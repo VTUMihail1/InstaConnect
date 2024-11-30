@@ -3,5 +3,5 @@
 public interface IJsonConverter
 {
     T? Deserialize<T>(string value);
-    string Serialize(object obj);
+    string Serialize(object? obj);
 }

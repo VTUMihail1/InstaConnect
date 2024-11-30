@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
@@ -70,7 +69,6 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
         var existingFollowerId = await CreateUserAsync(CancellationToken);
         var addFollowRequest = new AddFollowRequest
         {
@@ -162,7 +160,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         var addFollowRequest = new AddFollowRequest
         {
             CurrentUserId = existingFollowerId,
-            AddFollowBindingModel = new AddFollowBindingModel(FollowTestUtilities.InvalidUserId)
+            AddFollowBindingModel = new AddFollowBindingModel(FollowTestUtilities.InvalidId)
         };
         var request = new AddFollowClientRequest(addFollowRequest);
 

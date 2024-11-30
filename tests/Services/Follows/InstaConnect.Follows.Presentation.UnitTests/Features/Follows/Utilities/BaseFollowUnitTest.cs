@@ -10,8 +10,6 @@ using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 using InstaConnect.Follows.Presentation.Features.Follows.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Presentation.Abstractions;
-using InstaConnect.Shared.Presentation.Models.Users;
 using NSubstitute;
 
 namespace InstaConnect.Follows.Presentation.UnitTests.Features.Follows.Utilities;

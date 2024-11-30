@@ -2,6 +2,8 @@
 using System.Security.Claims;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Models;
+using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Infrastructure.Abstractions;
 using InstaConnect.Shared.Infrastructure.Models.Options;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -10,17 +12,26 @@ namespace InstaConnect.Identity.Infrastructure.Features.Users.Helpers;
 
 internal class AccessTokenGenerator : IAccessTokenGenerator
 {
+    private readonly IEncoder _encoder;
+    private readonly IDateTimeProvider _dateTimeProvider;
     private readonly AccessTokenOptions _accessTokenOptions;
 
-    public AccessTokenGenerator(IOptions<AccessTokenOptions> options)
+    public AccessTokenGenerator(
+        IEncoder encoder,
+        IDateTimeProvider dateTimeProvider,
+        IOptions<AccessTokenOptions> options)
     {
+        _encoder = encoder;
+        _dateTimeProvider = dateTimeProvider;
         _accessTokenOptions = options.Value;
     }
 
     public AccessTokenResult GenerateAccessToken(CreateAccessTokenModel createAccessTokenModel)
     {
-        var validUntil = DateTime.Now.AddSeconds(_accessTokenOptions.LifetimeSeconds);
-        var signingKey = new SymmetricSecurityKey(_accessTokenOptions.SecurityKeyByteArray);
+        var securityKeyByteArray = _encoder.GetBytesUTF8(_accessTokenOptions.SecurityKey);
+        var validUntil = _dateTimeProvider.GetCurrentUtc(_accessTokenOptions.LifetimeSeconds);
+        var signingKey = new SymmetricSecurityKey(securityKeyByteArray);
+
         var claimsIdentity = new ClaimsIdentity(
             [new(ClaimTypes.NameIdentifier, createAccessTokenModel.UserId),
              new(ClaimTypes.Email, createAccessTokenModel.Email),

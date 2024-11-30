@@ -14,7 +14,7 @@ public class GetCurrentUserDetailedQueryValidator : AbstractValidator<GetCurrent
         RuleFor(q => q.Key)
             .NotEmpty();
 
-        RuleFor(q => q.Expiration)
+        RuleFor(q => q.ExpirationSeconds)
             .NotEmpty();
     }
 }

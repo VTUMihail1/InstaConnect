@@ -25,7 +25,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
             .AddUnitOfWork<FollowsContext>()
             .AddRabbitMQ(configuration, currentAssembly)
-            .AddJwtBearer(configuration);
+            .AddJwtBearer(configuration)
+            .AddDateTimeProvider();
 
         return serviceCollection;
     }

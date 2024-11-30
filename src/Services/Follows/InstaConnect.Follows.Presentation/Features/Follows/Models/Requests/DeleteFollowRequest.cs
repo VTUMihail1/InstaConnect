@@ -1,5 +1,5 @@
-﻿using InstaConnect.Shared.Presentation.Binders.FromClaim;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using InstaConnect.Shared.Presentation.Binders.FromClaim;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;

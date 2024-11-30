@@ -1,9 +1,11 @@
 ﻿using System.Reflection;
 using CloudinaryDotNet;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Infrastructure.Abstractions;
 using InstaConnect.Shared.Infrastructure.Extensions;
 using InstaConnect.Shared.Infrastructure.Helpers;
+using InstaConnect.Shared.Infrastructure.Interceptors;
 using InstaConnect.Shared.Infrastructure.Models.Options;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
 namespace InstaConnect.Shared.Infrastructure.Extensions;
-public static class ServiceCollectionExtensions
+public static partial class ServiceCollectionExtensions
 {
     public static IServiceCollection AddUnitOfWork<TContext>(this IServiceCollection serviceCollection)
     where TContext : DbContext
@@ -30,6 +32,8 @@ public static class ServiceCollectionExtensions
         Action<DbContextOptionsBuilder>? optionsAction = null)
     where TContext : DbContext
     {
+        serviceCollection.AddScoped<AuditableEntityInterceptor>();
+
         serviceCollection
             .AddOptions<DatabaseOptions>()
             .BindConfiguration(nameof(DatabaseOptions))
@@ -40,9 +44,13 @@ public static class ServiceCollectionExtensions
                     .GetSection(nameof(DatabaseOptions))
                     .Get<DatabaseOptions>()!;
 
-        serviceCollection.AddDbContext<TContext>(options =>
+
+
+        serviceCollection.AddDbContext<TContext>((sp, options) =>
         {
-            options.AddInterceptors(new AuditableEntityInterceptor());
+            var auditableEntityInterceptor = sp.GetRequiredService<AuditableEntityInterceptor>();
+
+            options.AddInterceptors(auditableEntityInterceptor);
 
             options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
@@ -77,7 +85,8 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddScoped<IJsonConverter, JsonConverter>()
-            .AddScoped<ICacheHandler, CacheHandler>();
+            .AddScoped<ICacheHandler, CacheHandler>()
+            .AddScoped<ICacheRequestFactory, CacheRequestFactory>();
 
         serviceCollection.AddStackExchangeRedisCache(redisOptions =>
             redisOptions.Configuration = cacheOptions.ConnectionString);
@@ -134,13 +143,15 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddJwtBearer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
+        serviceCollection.AddScoped<IEncoder, Encoder>();
+
         serviceCollection
         .AddOptions<AccessTokenOptions>()
         .BindConfiguration(nameof(AccessTokenOptions))
         .ValidateDataAnnotations()
         .ValidateOnStart();
 
-        var tokenOptions = configuration
+        var accessTokenOptions = configuration
             .GetSection(nameof(AccessTokenOptions))
             .Get<AccessTokenOptions>()!;
 
@@ -152,11 +163,15 @@ public static class ServiceCollectionExtensions
             })
             .AddJwtBearer(opt =>
             {
+                var encoder = serviceCollection
+                                 .BuildServiceProvider()
+                                 .GetRequiredService<IEncoder>();
+
                 opt.RequireHttpsMetadata = false;
                 opt.SaveToken = true;
                 opt.TokenValidationParameters = new TokenValidationParameters
                 {
-                    IssuerSigningKey = new SymmetricSecurityKey(tokenOptions.SecurityKeyByteArray),
+                    IssuerSigningKey = new SymmetricSecurityKey(encoder.GetBytesUTF8(accessTokenOptions.SecurityKey)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
@@ -185,6 +200,14 @@ public static class ServiceCollectionExtensions
         serviceCollection
             .AddScoped<IImageUploadFactory, ImageUploadFactory>()
             .AddScoped<IImageHandler, ImageHandler>();
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddDateTimeProvider(this IServiceCollection serviceCollection)
+    {
+        serviceCollection
+            .AddScoped<IDateTimeProvider, DateTimeProvider>();
 
         return serviceCollection;
     }

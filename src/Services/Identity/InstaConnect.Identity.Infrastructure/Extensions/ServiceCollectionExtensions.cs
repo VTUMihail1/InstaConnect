@@ -4,6 +4,7 @@ using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Identity.Infrastructure.Helpers;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Infrastructure.Abstractions;
 using InstaConnect.Shared.Infrastructure.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +33,8 @@ public static class ServiceCollectionExtensions
             .AddJwtBearer(configuration)
             .AddCloudinary(configuration)
             .AddRabbitMQ(configuration, currentAssembly, busConfigurator =>
-                busConfigurator.AddTransactionalOutbox<IdentityContext>());
+                busConfigurator.AddTransactionalOutbox<IdentityContext>())
+            .AddDateTimeProvider();
 
         return serviceCollection;
     }

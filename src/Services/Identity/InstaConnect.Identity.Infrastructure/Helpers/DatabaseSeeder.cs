@@ -15,6 +15,7 @@ internal class DatabaseSeeder : IDatabaseSeeder
     private readonly IUnitOfWork _unitOfWork;
     private readonly AdminOptions _adminOptions;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly IdentityContext _identityContext;
     private readonly IUserWriteRepository _userWriteRepository;
     private readonly IUserClaimWriteRepository _userClaimWriteRepository;
 
@@ -22,12 +23,14 @@ internal class DatabaseSeeder : IDatabaseSeeder
         IUnitOfWork unitOfWork,
         IOptions<AdminOptions> options,
         IPasswordHasher passwordHasher,
+        IdentityContext identityContext,
         IUserWriteRepository userWriteRepository,
         IUserClaimWriteRepository userClaimWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _adminOptions = options.Value;
         _passwordHasher = passwordHasher;
+        _identityContext = identityContext;
         _userWriteRepository = userWriteRepository;
         _userClaimWriteRepository = userClaimWriteRepository;
     }
@@ -39,11 +42,11 @@ internal class DatabaseSeeder : IDatabaseSeeder
 
     public async Task ApplyPendingMigrationsAsync(CancellationToken cancellationToken)
     {
-        var pendingMigrations = await _unitOfWork.Database.GetPendingMigrationsAsync(cancellationToken);
+        var pendingMigrations = await _identityContext.Database.GetPendingMigrationsAsync(cancellationToken);
 
         if (pendingMigrations.Any())
         {
-            await _unitOfWork.Database.MigrateAsync(cancellationToken);
+            await _identityContext.Database.MigrateAsync(cancellationToken);
         }
     }
 

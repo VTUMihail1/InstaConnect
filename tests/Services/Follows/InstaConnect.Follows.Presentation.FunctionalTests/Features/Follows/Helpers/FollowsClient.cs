@@ -78,7 +78,7 @@ public class FollowsClient : IFollowsClient
         }
 
         var response = await _httpClient
-            .PostAsJsonAsync(FollowTestRoutes.Default, addFollowRequest, cancellationToken);
+            .PostAsJsonAsync(FollowTestRoutes.Default, addFollowRequest.AddFollowBindingModel, cancellationToken);
 
         return response.StatusCode;
     }
@@ -88,7 +88,7 @@ public class FollowsClient : IFollowsClient
         CancellationToken cancellationToken)
     {
         var addFollowRequest = request.AddFollowRequest;
-        
+
         if (request.IsAuthenticated)
         {
             _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
@@ -98,8 +98,8 @@ public class FollowsClient : IFollowsClient
         }
 
         var httpResponseMessage = await _httpClient
-            .PostAsJsonAsync(FollowTestRoutes.Default, addFollowRequest, cancellationToken);
-        var response = await httpResponseMessage.Content.ReadFromJsonAsync<FollowCommandResponse>();
+            .PostAsJsonAsync(FollowTestRoutes.Default, addFollowRequest.AddFollowBindingModel, cancellationToken);
+        var response = await httpResponseMessage.Content.ReadFromJsonAsync<FollowCommandResponse>(cancellationToken);
 
         return response!;
     }
@@ -113,9 +113,9 @@ public class FollowsClient : IFollowsClient
 
         if (request.IsAuthenticated)
         {
-            _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>() 
-            { 
-                { ClaimTypes.NameIdentifier, deleteFollowRequest.CurrentUserId } 
+            _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
+            {
+                { ClaimTypes.NameIdentifier, deleteFollowRequest.CurrentUserId }
             });
         }
 
@@ -135,7 +135,7 @@ public class FollowsClient : IFollowsClient
         {
             _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
             {
-                { ClaimTypes.NameIdentifier, deleteFollowRequest.Id }
+                { ClaimTypes.NameIdentifier, deleteFollowRequest.CurrentUserId }
             });
         }
 

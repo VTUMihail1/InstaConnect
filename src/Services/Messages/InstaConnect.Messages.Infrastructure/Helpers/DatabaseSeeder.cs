@@ -5,12 +5,11 @@ namespace InstaConnect.Messages.Infrastructure.Helpers;
 
 internal class DatabaseSeeder : IDatabaseSeeder
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly MessagesContext _messagesContext;
 
-    public DatabaseSeeder(
-        IUnitOfWork unitOfWork)
+    public DatabaseSeeder(MessagesContext messagesContext)
     {
-        _unitOfWork = unitOfWork;
+        _messagesContext = messagesContext;
     }
 
     public Task SeedAsync(CancellationToken cancellationToken)
@@ -20,11 +19,11 @@ internal class DatabaseSeeder : IDatabaseSeeder
 
     public async Task ApplyPendingMigrationsAsync(CancellationToken cancellationToken)
     {
-        var pendingMigrations = await _unitOfWork.Database.GetPendingMigrationsAsync(cancellationToken);
+        var pendingMigrations = await _messagesContext.Database.GetPendingMigrationsAsync(cancellationToken);
 
         if (pendingMigrations.Any())
         {
-            await _unitOfWork.Database.MigrateAsync(cancellationToken);
+            await _messagesContext.Database.MigrateAsync(cancellationToken);
         }
     }
 }

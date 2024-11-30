@@ -36,9 +36,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApiControllers(this IServiceCollection serviceCollection)
     {
         serviceCollection
-            .AddControllers(options => options
-                  .ModelBinderProviders
-                  .Insert(0, new FromClaimModelBinderProvider()))
+            .AddControllers(options => 
+                options.ValueProviderFactories.Add(new FromClaimValueProviderFactory()))
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;

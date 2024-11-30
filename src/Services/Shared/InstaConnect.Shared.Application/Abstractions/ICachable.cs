@@ -3,5 +3,5 @@ public interface ICachable
 {
     public string Key { get; }
 
-    public DateTimeOffset Expiration { get; }
+    public int ExpirationSeconds { get; }
 }

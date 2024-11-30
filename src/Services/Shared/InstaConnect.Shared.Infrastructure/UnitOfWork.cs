@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Shared.Application.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace InstaConnect.Shared.Infrastructure;
 
@@ -12,8 +11,6 @@ internal class UnitOfWork : IUnitOfWork
     {
         _dbContext = dbContext;
     }
-
-    public DatabaseFacade Database => _dbContext.Database;
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {

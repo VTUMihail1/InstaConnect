@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace InstaConnect.Shared.Infrastructure.Models.Options;
 
@@ -13,8 +12,6 @@ public class AccessTokenOptions
 
     [Required]
     public string SecurityKey { get; set; } = string.Empty;
-
-    public byte[] SecurityKeyByteArray => Encoding.UTF8.GetBytes(SecurityKey);
 
     [Required]
     public int LifetimeSeconds { get; set; } = 0;

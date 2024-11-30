@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
@@ -103,8 +102,8 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
 
         var deleteFollowRequest = new DeleteFollowRequest
         {
-            Id = SharedTestUtilities.GetString(length),
-            CurrentUserId = existingFollowerId
+            Id = existingFollowId,
+            CurrentUserId = SharedTestUtilities.GetString(length)
         };
         var request = new DeleteFollowClientRequest(deleteFollowRequest);
 
