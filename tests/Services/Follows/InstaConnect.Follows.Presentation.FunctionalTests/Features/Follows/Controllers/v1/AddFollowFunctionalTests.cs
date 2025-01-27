@@ -23,12 +23,12 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     public async Task AddAsync_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
     {
         // Arrange
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollowing = await CreateUserAsync(CancellationToken);
+        var existingFollower = await CreateUserAsync(CancellationToken);
         var addFollowRequest = new AddFollowRequest
         {
-            CurrentUserId = existingFollowerId,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+            CurrentUserId = existingFollower.Id,
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollowing.Id)
         };
         var request = new AddFollowClientRequest(addFollowRequest, false);
 
@@ -45,10 +45,10 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenFollowingIdIsNull()
     {
         // Arrange
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowing = await CreateUserAsync(CancellationToken);
         var addFollowRequest = new AddFollowRequest
         {
-            CurrentUserId = existingFollowingId,
+            CurrentUserId = existingFollowing.Id,
             AddFollowBindingModel = new AddFollowBindingModel(null!)
         };
         var request = new AddFollowClientRequest(addFollowRequest);
@@ -69,10 +69,10 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollower = await CreateUserAsync(CancellationToken);
         var addFollowRequest = new AddFollowRequest
         {
-            CurrentUserId = existingFollowerId,
+            CurrentUserId = existingFollower.Id,
             AddFollowBindingModel = new AddFollowBindingModel(SharedTestUtilities.GetString(length))
         };
         var request = new AddFollowClientRequest(addFollowRequest);
@@ -90,11 +90,11 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowing = await CreateUserAsync(CancellationToken);
         var addFollowRequest = new AddFollowRequest
         {
             CurrentUserId = null!,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollowing.Id)
         };
         var request = new AddFollowClientRequest(addFollowRequest);
 
@@ -114,11 +114,11 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowing = await CreateUserAsync(CancellationToken);
         var addFollowRequest = new AddFollowRequest
         {
             CurrentUserId = SharedTestUtilities.GetString(length),
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollowing.Id)
         };
         var request = new AddFollowClientRequest(addFollowRequest);
 
@@ -135,11 +135,11 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollowing = await CreateUserAsync(CancellationToken);
         var addFollowRequest = new AddFollowRequest
         {
             CurrentUserId = FollowTestUtilities.InvalidUserId,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollowing.Id)
         };
         var request = new AddFollowClientRequest(addFollowRequest);
 
@@ -156,10 +156,10 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenFollowingIdIsInvalid()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
+        var existingFollower = await CreateUserAsync(CancellationToken);
         var addFollowRequest = new AddFollowRequest
         {
-            CurrentUserId = existingFollowerId,
+            CurrentUserId = existingFollower.Id,
             AddFollowBindingModel = new AddFollowBindingModel(FollowTestUtilities.InvalidId)
         };
         var request = new AddFollowClientRequest(addFollowRequest);
@@ -177,13 +177,11 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenFollowAlreadyExists()
     {
         // Arrange
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var addFollowRequest = new AddFollowRequest
         {
-            CurrentUserId = existingFollowerId,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+            CurrentUserId = existingFollow.FollowerId,
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollow.FollowingId)
         };
         var request = new AddFollowClientRequest(addFollowRequest);
 
@@ -200,12 +198,12 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     public async Task AddAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollower = await CreateUserAsync(CancellationToken);
+        var existingFollowing = await CreateUserAsync(CancellationToken);
         var addFollowRequest = new AddFollowRequest
         {
-            CurrentUserId = existingFollowerId,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+            CurrentUserId = existingFollower.Id,
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollowing.Id)
         };
         var request = new AddFollowClientRequest(addFollowRequest);
 
@@ -222,12 +220,12 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     public async Task AddAsync_ShouldAddFollow_WhenRequestIsValid()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollower = await CreateUserAsync(CancellationToken);
+        var existingFollowing = await CreateUserAsync(CancellationToken);
         var addFollowRequest = new AddFollowRequest
         {
-            CurrentUserId = existingFollowerId,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+            CurrentUserId = existingFollower.Id,
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollowing.Id)
         };
         var request = new AddFollowClientRequest(addFollowRequest);
 
@@ -239,7 +237,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         message
             .Should()
             .Match<Follow>(m => m.Id == response.Id &&
-                                 m.FollowerId == existingFollowerId &&
-                                 m.FollowingId == existingFollowingId);
+                                 m.FollowerId == existingFollower.Id &&
+                                 m.FollowingId == existingFollowing.Id);
     }
 }

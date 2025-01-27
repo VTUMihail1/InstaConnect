@@ -24,9 +24,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var getFollowByIdRequest = new GetFollowByIdRequest
         {
             Id = SharedTestUtilities.GetString(length)
@@ -44,9 +42,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var getFollowByIdRequest = new GetFollowByIdRequest
         {
             Id = FollowTestUtilities.InvalidId
@@ -64,12 +60,10 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     public async Task GetByIdAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var getFollowByIdRequest = new GetFollowByIdRequest
         {
-            Id = existingFollowId
+            Id = existingFollow.Id
         };
         var request = new GetFollowByIdClientRequest(getFollowByIdRequest);
 
@@ -84,12 +78,10 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     public async Task GetByIdAsync_ShouldReturnOkResponse_WhenRequestIsValidAndIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var getFollowByIdRequest = new GetFollowByIdRequest
         {
-            Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollowId)
+            Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id)
         };
         var request = new GetFollowByIdClientRequest(getFollowByIdRequest);
 
@@ -104,12 +96,10 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     public async Task GetByIdAsync_ShouldReturnFollowQueryResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var getFollowByIdRequest = new GetFollowByIdRequest
         {
-            Id = existingFollowId
+            Id = existingFollow.Id
         };
         var request = new GetFollowByIdClientRequest(getFollowByIdRequest);
 
@@ -119,11 +109,11 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         // Assert
         response
             .Should()
-            .Match<FollowQueryResponse>(m => m.Id == existingFollowId &&
-                                 m.FollowerId == existingFollowerId &&
+            .Match<FollowQueryResponse>(m => m.Id == existingFollow.Id &&
+                                 m.FollowerId == existingFollow.FollowerId &&
                                  m.FollowerName == UserTestUtilities.ValidName &&
                                  m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                 m.FollowingId == existingFollowingId &&
+                                 m.FollowingId == existingFollow.FollowingId &&
                                  m.FollowingName == UserTestUtilities.ValidName &&
                                  m.FollowingProfileImage == UserTestUtilities.ValidProfileImage);
     }
@@ -132,12 +122,10 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     public async Task GetByIdAsync_ShouldReturnFollowQueryResponse_WhenRequestIsValidAndIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var getFollowByIdRequest = new GetFollowByIdRequest
         {
-            Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollowId)
+            Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id)
         };
         var request = new GetFollowByIdClientRequest(getFollowByIdRequest);
 
@@ -147,11 +135,11 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         // Assert
         response
             .Should()
-            .Match<FollowQueryResponse>(m => m.Id == existingFollowId &&
-                                 m.FollowerId == existingFollowerId &&
+            .Match<FollowQueryResponse>(m => m.Id == existingFollow.Id &&
+                                 m.FollowerId == existingFollow.FollowerId &&
                                  m.FollowerName == UserTestUtilities.ValidName &&
                                  m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                 m.FollowingId == existingFollowingId &&
+                                 m.FollowingId == existingFollow.FollowingId &&
                                  m.FollowingName == UserTestUtilities.ValidName &&
                                  m.FollowingProfileImage == UserTestUtilities.ValidProfileImage);
     }

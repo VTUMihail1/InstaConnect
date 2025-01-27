@@ -47,7 +47,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FollowsFunctionalTe
         ValidJwtConfig = [];
     }
 
-    protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
             UserTestUtilities.ValidFirstName,
@@ -62,7 +62,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FollowsFunctionalTe
         userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return user.Id;
+        return user;
     }
 
     public async Task InitializeAsync()

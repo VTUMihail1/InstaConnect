@@ -59,11 +59,13 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsIntegrati
         InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
     }
 
-    protected async Task<string> CreateFollowAsync(string followerId, string followingId, CancellationToken cancellationToken)
+    protected async Task<Follow> CreateFollowAsync(CancellationToken cancellationToken)
     {
+        var follower = await CreateUserAsync(cancellationToken);
+        var following = await CreateUserAsync(cancellationToken);
         var follow = new Follow(
-            followerId,
-            followingId);
+            follower.Id,
+            following.Id);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var followWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IFollowWriteRepository>();
@@ -71,10 +73,10 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsIntegrati
         followWriteRepository.Add(follow);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return follow.Id;
+        return follow;
     }
 
-    protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
             UserTestUtilities.ValidFirstName,
@@ -89,7 +91,7 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsIntegrati
         userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return user.Id;
+        return user;
     }
 
     public async Task InitializeAsync()

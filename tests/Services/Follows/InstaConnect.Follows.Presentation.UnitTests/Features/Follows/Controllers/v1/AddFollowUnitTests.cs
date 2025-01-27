@@ -26,12 +26,11 @@ public class AddFollowUnitTests : BaseFollowUnitTest
     public async Task AddAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var existingCurrentUserId = CreateCurrentUser();
-        var existingFollowingId = CreateUser();
+        var existingFollow = CreateFollow();
         var request = new AddFollowRequest()
         {
-            CurrentUserId = existingCurrentUserId,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+            CurrentUserId = existingFollow.FollowerId,
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollow.FollowingId)
         };
 
         // Act
@@ -48,13 +47,11 @@ public class AddFollowUnitTests : BaseFollowUnitTest
     public async Task AddAsync_ShouldReturnFollowViewModel_WhenRequestIsValid()
     {
         // Arrange
-        var existingCurrentUserId = CreateCurrentUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var request = new AddFollowRequest()
         {
-            CurrentUserId = existingCurrentUserId,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+            CurrentUserId = existingFollow.FollowerId,
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollow.FollowingId)
         };
 
         // Act
@@ -67,19 +64,18 @@ public class AddFollowUnitTests : BaseFollowUnitTest
             .Which
             .Value
             .Should()
-            .Match<FollowCommandResponse>(m => m.Id == existingFollowId);
+            .Match<FollowCommandResponse>(m => m.Id == existingFollow.Id);
     }
 
     [Fact]
     public async Task AddAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var existingCurrentUserId = CreateCurrentUser();
-        var existingFollowingId = CreateUser();
+        var existingFollow = CreateFollow();
         var request = new AddFollowRequest()
         {
-            CurrentUserId = existingCurrentUserId,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowingId)
+            CurrentUserId = existingFollow.FollowerId,
+            AddFollowBindingModel = new AddFollowBindingModel(existingFollow.FollowingId)
         };
 
         // Act
@@ -88,8 +84,8 @@ public class AddFollowUnitTests : BaseFollowUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<AddFollowCommand>(m => m.CurrentUserId == existingCurrentUserId &&
-                                                     m.FollowingId == existingFollowingId),
+            .SendAsync(Arg.Is<AddFollowCommand>(m => m.CurrentUserId == existingFollow.FollowerId &&
+                                                     m.FollowingId == existingFollow.FollowingId),
                                                      CancellationToken);
     }
 }

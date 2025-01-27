@@ -27,9 +27,9 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldCallGetByIdAsyncMethod_WhenUserIdIsInvalid()
     {
         // Arrange
-        var existingUserId = CreateUser();
+        var existingUser = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddFirstName,
@@ -44,16 +44,16 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(existingUserId, CancellationToken);
+            .GetByIdAsync(existingUser.Id, CancellationToken);
     }
 
     [Fact]
     public async Task Consume_ShouldNotAddMethod_WhenUserIdIsInvalid()
     {
         // Arrange
-        var existingUserId = CreateUser();
+        var existingUser = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddFirstName,
@@ -75,9 +75,9 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldNotCallSaveChangesAsync_WhenUserIdIsInvalid()
     {
         // Arrange
-        var existingUserId = CreateUser();
+        var existingUser = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddFirstName,

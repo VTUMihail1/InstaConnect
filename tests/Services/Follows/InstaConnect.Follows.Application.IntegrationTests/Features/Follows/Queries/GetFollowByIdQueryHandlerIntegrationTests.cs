@@ -21,9 +21,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetFollowByIdQuery(null!);
 
         // Act
@@ -40,9 +38,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetFollowByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -56,9 +52,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowFollowNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetFollowByIdQuery(FollowTestUtilities.InvalidId);
 
         // Act
@@ -72,10 +66,8 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetFollowByIdQuery(existingFollowId);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
+        var query = new GetFollowByIdQuery(existingFollow.Id);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -83,11 +75,11 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowQueryViewModel>(m => m.Id == existingFollowId &&
-                                          m.FollowerId == existingFollowerId &&
+            .Match<FollowQueryViewModel>(m => m.Id == existingFollow.Id &&
+                                          m.FollowerId == existingFollow.FollowerId &&
                                           m.FollowerName == UserTestUtilities.ValidName &&
                                           m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                          m.FollowingId == existingFollowingId &&
+                                          m.FollowingId == existingFollow.FollowingId &&
                                           m.FollowingName == UserTestUtilities.ValidName &&
                                           m.FollowingProfileImage == UserTestUtilities.ValidProfileImage);
     }
@@ -96,10 +88,8 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenQueryIsValidAndCaseDoesNotMatch()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
-        var query = new GetFollowByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingFollowId));
+        var existingFollow = await CreateFollowAsync(CancellationToken);
+        var query = new GetFollowByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -107,11 +97,11 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowQueryViewModel>(m => m.Id == existingFollowId &&
-                                          m.FollowerId == existingFollowerId &&
+            .Match<FollowQueryViewModel>(m => m.Id == existingFollow.Id &&
+                                          m.FollowerId == existingFollow.FollowerId &&
                                           m.FollowerName == UserTestUtilities.ValidName &&
                                           m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                          m.FollowingId == existingFollowingId &&
+                                          m.FollowingId == existingFollow.FollowingId &&
                                           m.FollowingName == UserTestUtilities.ValidName &&
                                           m.FollowingProfileImage == UserTestUtilities.ValidProfileImage);
     }

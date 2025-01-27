@@ -11,11 +11,19 @@ public class Follow : BaseEntity
         FollowingId = followingId;
     }
 
+    public Follow(User follower, User following)
+    {
+        Follower = follower;
+        FollowerId = follower.Id;
+        Following = following;
+        FollowingId = following.Id;
+    }
+
     public string FollowingId { get; }
 
-    public User? Following { get; set; }
+    public User? Following { get; }
 
     public string FollowerId { get; }
 
-    public User? Follower { get; set; }
+    public User? Follower { get; }
 }

@@ -7,6 +7,6 @@ public static class FromClaimBindingSource
     public static readonly BindingSource Claim = new(
       "Claim",
       "BindingSource_Claim",
-      isGreedy: false,
-      isFromRequest: true);
+      false,
+      true);
 }

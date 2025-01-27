@@ -22,12 +22,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -47,12 +46,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             SharedTestUtilities.GetString(length),
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -72,10 +70,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowBadRequestException_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidName,
@@ -97,12 +94,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowBadRequestException_WhenFollowingNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -121,12 +117,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameIsNull()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             null!,
@@ -144,12 +139,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowBadRequestException_WhenMessageDoesNotContaintSortPropertyName()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.InvalidSortPropertyName,
@@ -170,12 +164,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
@@ -195,12 +188,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -220,12 +212,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -243,13 +234,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
             null!,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -262,11 +251,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -280,13 +269,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenCurrentUserIdIsEmpty()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
             string.Empty,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -299,11 +286,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -317,13 +304,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenCurrentUserIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollowerId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.FollowerId),
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -336,11 +321,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -354,13 +339,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenCurrentUserNameIsNull()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             null!,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -373,11 +356,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -391,13 +374,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenCurrentUserNameIsEmpty()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             string.Empty,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -410,11 +391,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -428,13 +409,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenCurrentUserNameCaseDoesNotMatch()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -447,11 +426,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -465,13 +444,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenCurrentUserIsNotFull()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -484,11 +461,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -502,11 +479,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenFollowingIdIsNull()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
             null!,
             UserTestUtilities.ValidName,
@@ -521,11 +496,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -539,11 +514,9 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenFollowingIdIsEmpty()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
             string.Empty,
             UserTestUtilities.ValidName,
@@ -558,11 +531,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -576,13 +549,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenFollowingIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollowingId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.FollowingId),
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -595,11 +566,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -613,13 +584,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenFollowingNameIsNull()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             null!,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -632,11 +601,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -650,13 +619,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenFollowingNameIsEmpty()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             string.Empty,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -669,11 +636,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -687,13 +654,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenFollowingNameCaseDoesNotMatch()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -706,11 +671,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -724,13 +689,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenFollowingNameIsNotFull()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -743,11 +706,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -761,13 +724,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -780,11 +741,11 @@ public class GetAllFollowsQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                                    m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                                    m.FollowerId == existingFollow.FollowerId &&
                                                                     m.FollowerName == UserTestUtilities.ValidName &&
                                                                     m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.FollowingId == existingFollowingId &&
+                                                                    m.FollowingId == existingFollow.FollowingId &&
                                                                     m.FollowingName == UserTestUtilities.ValidName &&
                                                                     m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&

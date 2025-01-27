@@ -47,7 +47,7 @@ public abstract class BaseFollowUnitTest
         FollowWriteRepository = Substitute.For<IFollowWriteRepository>();
     }
 
-    public string CreateUser()
+    public User CreateUser()
     {
         var user = new User(
             UserTestUtilities.ValidFirstName,
@@ -59,32 +59,15 @@ public abstract class BaseFollowUnitTest
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
 
-        return user.Id;
+        return user;
     }
 
-    public string CreateFollow(string followerId, string followingId)
+    public Follow CreateFollow()
     {
-        var follow = new Follow(followerId, followingId)
-        {
-            Follower = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage)
-            {
-                Id = followerId
-            },
-            Following = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage)
-            {
-                Id = followingId
-            }
-        };
+        var follower = CreateUser();
+        var following = CreateUser();
+        var follow = new Follow(follower, following);
+
         var followPaginationList = new PaginationList<Follow>(
             [follow],
             FollowTestUtilities.ValidPageValue,
@@ -94,26 +77,26 @@ public abstract class BaseFollowUnitTest
         FollowWriteRepository.GetByIdAsync(follow.Id, CancellationToken)
             .Returns(follow);
 
-        FollowWriteRepository.GetByFollowerIdAndFollowingIdAsync(followerId, followingId, CancellationToken)
+        FollowWriteRepository.GetByFollowerIdAndFollowingIdAsync(follower.Id, following.Id, CancellationToken)
             .Returns(follow);
 
         FollowReadRepository.GetByIdAsync(follow.Id, CancellationToken)
             .Returns(follow);
 
-        FollowReadRepository.GetByFollowerIdAndFollowingIdAsync(followerId, followingId, CancellationToken)
+        FollowReadRepository.GetByFollowerIdAndFollowingIdAsync(follower.Id, following.Id, CancellationToken)
             .Returns(follow);
 
         FollowReadRepository
-            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m => m.FollowerId == followerId &&
-                                                                 m.FollowerName == UserTestUtilities.ValidName &&
-                                                                 m.FollowingId == followingId &&
-                                                                 m.FollowingName == UserTestUtilities.ValidName &&
+            .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m => m.FollowerId == follower.Id &&
+                                                                 m.FollowerName == follower.UserName &&
+                                                                 m.FollowingId == following.Id &&
+                                                                 m.FollowingName == following.UserName &&
                                                                  m.Page == FollowTestUtilities.ValidPageValue &&
                                                                  m.PageSize == FollowTestUtilities.ValidPageSizeValue &&
                                                                  m.SortOrder == FollowTestUtilities.ValidSortOrderProperty &&
                                                                  m.SortPropertyName == FollowTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(followPaginationList);
 
-        return follow.Id;
+        return follow;
     }
 }

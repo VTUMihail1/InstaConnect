@@ -20,11 +20,11 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
+        var existingFollower = CreateUser();
+        var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             null!,
-            existingFollowingId);
+            existingFollowing.Id);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -40,11 +40,11 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
+        var existingFollower = CreateUser();
+        var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             SharedTestUtilities.GetString(length)!,
-            existingFollowingId);
+            existingFollowing.Id);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -57,10 +57,10 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForFollowingId_WhenFollowingIdIsNull()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
+        var existingFollower = CreateUser();
+        var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
-            existingFollowerId,
+            existingFollower.Id,
             null!);
 
         // Act
@@ -77,10 +77,10 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForFollwingId_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
+        var existingFollower = CreateUser();
+        var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
-            existingFollowerId,
+            existingFollower.Id,
             SharedTestUtilities.GetString(length));
 
         // Act
@@ -94,11 +94,11 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
+        var existingFollower = CreateUser();
+        var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
-            existingFollowerId,
-            existingFollowingId);
+            existingFollower.Id,
+            existingFollowing.Id);
 
         // Act
         var result = _commandValidator.TestValidate(command);

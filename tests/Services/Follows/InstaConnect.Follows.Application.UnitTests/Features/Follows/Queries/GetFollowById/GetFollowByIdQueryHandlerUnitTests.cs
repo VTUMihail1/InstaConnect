@@ -24,9 +24,7 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldThrowFollowNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var query = new GetFollowByIdQuery(FollowTestUtilities.InvalidId);
 
         // Act
@@ -40,10 +38,8 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetByIdMethod_WhenQueryIsValid()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
-        var query = new GetFollowByIdQuery(existingFollowId);
+        var existingFollow = CreateFollow();
+        var query = new GetFollowByIdQuery(existingFollow.Id);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -51,17 +47,15 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
         // Assert
         await FollowReadRepository
             .Received(1)
-            .GetByIdAsync(existingFollowId, CancellationToken);
+            .GetByIdAsync(existingFollow.Id, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
-        var query = new GetFollowByIdQuery(existingFollowId);
+        var existingFollow = CreateFollow();
+        var query = new GetFollowByIdQuery(existingFollow.Id);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -69,11 +63,11 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
         // Assert
         response
             .Should()
-            .Match<FollowQueryViewModel>(m => m.Id == existingFollowId &&
-                                              m.FollowerId == existingFollowerId &&
+            .Match<FollowQueryViewModel>(m => m.Id == existingFollow.Id &&
+                                              m.FollowerId == existingFollow.FollowerId &&
                                               m.FollowerName == UserTestUtilities.ValidName &&
                                               m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                              m.FollowingId == existingFollowingId &&
+                                              m.FollowingId == existingFollow.FollowingId &&
                                               m.FollowingName == UserTestUtilities.ValidName &&
                                               m.FollowingProfileImage == UserTestUtilities.ValidProfileImage);
     }

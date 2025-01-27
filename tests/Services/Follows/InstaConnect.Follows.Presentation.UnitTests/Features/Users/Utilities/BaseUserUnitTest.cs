@@ -29,7 +29,7 @@ public abstract class BaseUserUnitTest
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
     }
 
-    public string CreateUser()
+    public User CreateUser()
     {
         var user = new User(
             UserTestUtilities.ValidFirstName,
@@ -43,6 +43,6 @@ public abstract class BaseUserUnitTest
             CancellationToken)
             .Returns(user);
 
-        return user.Id;
+        return user;
     }
 }

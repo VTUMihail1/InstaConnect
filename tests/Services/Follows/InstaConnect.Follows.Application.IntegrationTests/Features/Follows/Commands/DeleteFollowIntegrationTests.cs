@@ -21,12 +21,10 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var command = new DeleteFollowCommand(
             null!,
-            existingFollowerId
+            existingFollow.FollowerId
         );
 
         // Act
@@ -43,12 +41,10 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var command = new DeleteFollowCommand(
             SharedTestUtilities.GetString(length),
-            existingFollowerId
+            existingFollow.FollowerId
         );
 
         // Act
@@ -62,11 +58,9 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var command = new DeleteFollowCommand(
-            existingFollowId,
+            existingFollow.Id,
             null!
         );
 
@@ -84,11 +78,9 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var command = new DeleteFollowCommand(
-            existingFollowId,
+            existingFollow.Id,
             SharedTestUtilities.GetString(length)
         );
 
@@ -103,12 +95,10 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
     public async Task SendAsync_ShouldThrowFollowNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var command = new DeleteFollowCommand(
             FollowTestUtilities.InvalidId,
-            existingFollowerId
+            existingFollow.FollowerId
         );
 
         // Act
@@ -122,13 +112,11 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
     public async Task SendAsync_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowerFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowFollowerId, existingFollowerFollowingId, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var command = new DeleteFollowCommand(
-            existingFollowId,
-            existingFollowerId
+            existingFollow.Id,
+            existingUser.Id
         );
 
         // Act
@@ -142,19 +130,17 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
     public async Task SendAsync_ShouldDeleteMessage_WhenMessageIsValid()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var command = new DeleteFollowCommand(
-            existingFollowId,
-            existingFollowerId
+            existingFollow.Id,
+            existingFollow.FollowerId
         );
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        var follow = await FollowWriteRepository.GetByIdAsync(existingFollowId, CancellationToken);
+        var follow = await FollowWriteRepository.GetByIdAsync(existingFollow.Id, CancellationToken);
 
         follow
             .Should()
@@ -165,19 +151,17 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
     public async Task SendAsync_ShouldDeleteMessage_WhenMessageIsValidAndIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingFollowerId = await CreateUserAsync(CancellationToken);
-        var existingFollowingId = await CreateUserAsync(CancellationToken);
-        var existingFollowId = await CreateFollowAsync(existingFollowerId, existingFollowingId, CancellationToken);
+        var existingFollow = await CreateFollowAsync(CancellationToken);
         var command = new DeleteFollowCommand(
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollowId),
-            existingFollowerId
+            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id),
+            existingFollow.FollowerId
         );
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        var follow = await FollowWriteRepository.GetByIdAsync(existingFollowId, CancellationToken);
+        var follow = await FollowWriteRepository.GetByIdAsync(existingFollow.Id, CancellationToken);
 
         follow
             .Should()

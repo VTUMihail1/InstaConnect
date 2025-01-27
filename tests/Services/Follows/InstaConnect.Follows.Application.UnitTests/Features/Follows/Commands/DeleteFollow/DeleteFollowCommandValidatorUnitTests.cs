@@ -19,12 +19,10 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var command = new DeleteFollowCommand(
             null!,
-            existingFollowerId
+            existingFollow.FollowerId
         );
 
         // Act
@@ -41,12 +39,10 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var command = new DeleteFollowCommand(
             SharedTestUtilities.GetString(length),
-            existingFollowingId
+            existingFollow.FollowerId
         );
 
         // Act
@@ -60,11 +56,9 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var command = new DeleteFollowCommand(
-            existingFollowId,
+            existingFollow.Id,
             null!
         );
 
@@ -82,11 +76,9 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var command = new DeleteFollowCommand(
-            existingFollowId,
+            existingFollow.Id,
             SharedTestUtilities.GetString(length)
         );
 
@@ -101,12 +93,10 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var command = new DeleteFollowCommand(
-            existingFollowerId,
-            existingFollowingId);
+            existingFollow.Id,
+            existingFollow.FollowerId);
 
         // Act
         var result = _commandValidator.TestValidate(command);

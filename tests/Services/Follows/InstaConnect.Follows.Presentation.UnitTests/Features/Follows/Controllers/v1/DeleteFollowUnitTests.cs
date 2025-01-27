@@ -24,13 +24,11 @@ public class DeleteFollowUnitTests : BaseFollowUnitTest
     public async Task DeleteAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var existingCurrentUserId = CreateCurrentUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var request = new DeleteFollowRequest()
         {
-            Id = existingFollowId,
-            CurrentUserId = existingCurrentUserId
+            Id = existingFollow.Id,
+            CurrentUserId = existingFollow.FollowerId
         };
 
         // Act
@@ -46,13 +44,11 @@ public class DeleteFollowUnitTests : BaseFollowUnitTest
     public async Task DeleteAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var existingCurrentUserId = CreateCurrentUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var request = new DeleteFollowRequest()
         {
-            Id = existingFollowId,
-            CurrentUserId = existingCurrentUserId
+            Id = existingFollow.Id,
+            CurrentUserId = existingFollow.FollowerId
         };
 
         // Act
@@ -61,8 +57,8 @@ public class DeleteFollowUnitTests : BaseFollowUnitTest
         // Assert
         await InstaConnectSender
             .Received(1)
-            .SendAsync(Arg.Is<DeleteFollowCommand>(m => m.Id == existingFollowId &&
-                                                    m.CurrentUserId == existingCurrentUserId),
+            .SendAsync(Arg.Is<DeleteFollowCommand>(m => m.Id == existingFollow.Id &&
+                                                    m.CurrentUserId == existingFollow.FollowerId),
                                                     CancellationToken);
     }
 }

@@ -26,14 +26,12 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
     public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var existingCurrentUserId = CreateCurrentUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var request = new GetAllFollowsRequest()
         {
-            FollowerId = existingCurrentUserId,
+            FollowerId = existingFollow.FollowerId,
             FollowerName = UserTestUtilities.ValidName,
-            FollowingId = existingFollowingId,
+            FollowingId = existingFollow.FollowingId,
             FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
@@ -55,14 +53,12 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
     public async Task GetAllAsync_ShouldReturnFollowPaginationQueryResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingCurrentUserId = CreateCurrentUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var request = new GetAllFollowsRequest()
         {
-            FollowerId = existingCurrentUserId,
+            FollowerId = existingFollow.FollowerId,
             FollowerName = UserTestUtilities.ValidName,
-            FollowingId = existingFollowingId,
+            FollowingId = existingFollow.FollowingId,
             FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
@@ -81,11 +77,11 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
             .Value
             .Should()
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                                 m.Id == existingFollowId &&
-                                                                 m.FollowerId == existingCurrentUserId &&
+                                                                 m.Id == existingFollow.Id &&
+                                                                 m.FollowerId == existingFollow.FollowerId &&
                                                                  m.FollowerName == UserTestUtilities.ValidName &&
                                                                  m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                 m.FollowingId == existingFollowingId &&
+                                                                 m.FollowingId == existingFollow.FollowingId &&
                                                                  m.FollowingName == UserTestUtilities.ValidName &&
                                                                  m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                               mc.Page == FollowTestUtilities.ValidPageValue &&
@@ -99,14 +95,12 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
     public async Task GetAllAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var existingCurrentUserId = CreateCurrentUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var request = new GetAllFollowsRequest()
         {
-            FollowerId = existingCurrentUserId,
+            FollowerId = existingFollow.FollowerId,
             FollowerName = UserTestUtilities.ValidName,
-            FollowingId = existingFollowingId,
+            FollowingId = existingFollow.FollowingId,
             FollowingName = UserTestUtilities.ValidName,
             SortOrder = FollowTestUtilities.ValidSortOrderProperty,
             SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
@@ -121,9 +115,9 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
         await InstaConnectSender
               .Received(1)
               .SendAsync(Arg.Is<GetAllFollowsQuery>(m =>
-                  m.FollowerId == existingCurrentUserId &&
+                  m.FollowerId == existingFollow.FollowerId &&
                   m.FollowerName == UserTestUtilities.ValidName &&
-                  m.FollowingId == existingFollowingId &&
+                  m.FollowingId == existingFollow.FollowingId &&
                   m.FollowingName == UserTestUtilities.ValidName &&
                   m.SortOrder == FollowTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == FollowTestUtilities.ValidSortPropertyName &&

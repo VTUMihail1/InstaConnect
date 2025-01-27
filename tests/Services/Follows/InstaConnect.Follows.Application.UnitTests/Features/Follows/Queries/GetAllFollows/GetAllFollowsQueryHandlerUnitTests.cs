@@ -24,13 +24,11 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -44,9 +42,9 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
         await FollowReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m =>
-                                                                        m.FollowerId == existingFollowerId &&
+                                                                        m.FollowerId == existingFollow.FollowerId &&
                                                                         m.FollowerName == UserTestUtilities.ValidName &&
-                                                                        m.FollowingId == existingFollowingId &&
+                                                                        m.FollowingId == existingFollow.FollowingId &&
                                                                         m.FollowingName == UserTestUtilities.ValidName &&
                                                                         m.Page == FollowTestUtilities.ValidPageValue &&
                                                                         m.PageSize == FollowTestUtilities.ValidPageSizeValue &&
@@ -58,13 +56,11 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -77,11 +73,11 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
         // Assert
         response
             .Should()
-            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollowId &&
-                                                           m.FollowerId == existingFollowerId &&
+            .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
+                                                           m.FollowerId == existingFollow.FollowerId &&
                                                            m.FollowerName == UserTestUtilities.ValidName &&
                                                            m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                           m.FollowingId == existingFollowingId &&
+                                                           m.FollowingId == existingFollow.FollowingId &&
                                                            m.FollowingName == UserTestUtilities.ValidName &&
                                                            m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&

@@ -36,7 +36,7 @@ public abstract class BaseFollowUnitTest
                 })));
     }
 
-    public string CreateCurrentUser()
+    public User CreateUser()
     {
         var user = new User(
             UserTestUtilities.ValidFirstName,
@@ -45,35 +45,25 @@ public abstract class BaseFollowUnitTest
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidProfileImage);
 
-        return user.Id;
+        return user;
     }
 
-    public string CreateUser()
+    public Follow CreateFollow()
     {
-        var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
-
-        return user.Id;
-    }
-
-    public string CreateFollow(string followerId, string followingId)
-    {
-        var follow = new Follow(followerId, followingId);
+        var follower = CreateUser();
+        var following = CreateUser();
+        var follow = new Follow(follower, following);
 
         var followCommandViewModel = new FollowCommandViewModel(follow.Id);
 
         var followQueryViewModel = new FollowQueryViewModel(
             follow.Id,
-            followerId,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage,
-            followingId,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            follower.Id,
+            follower.UserName,
+            follower.ProfileImage,
+            following.Id,
+            following.UserName,
+            following.ProfileImage);
 
         var followPaginationCollectionModel = new FollowPaginationQueryViewModel(
             [followQueryViewModel],
@@ -85,10 +75,10 @@ public abstract class BaseFollowUnitTest
 
         InstaConnectSender
             .SendAsync(Arg.Is<GetAllFollowsQuery>(m =>
-                  m.FollowerId == followerId &&
-                  m.FollowerName == UserTestUtilities.ValidName &&
-                  m.FollowingId == followingId &&
-                  m.FollowingName == UserTestUtilities.ValidName &&
+                  m.FollowerId == follower.Id &&
+                  m.FollowerName == follower.UserName &&
+                  m.FollowingId == following.Id &&
+                  m.FollowingName == following.UserName &&
                   m.SortOrder == FollowTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == FollowTestUtilities.ValidSortPropertyName &&
                   m.Page == FollowTestUtilities.ValidPageValue &&
@@ -101,11 +91,11 @@ public abstract class BaseFollowUnitTest
             .Returns(followQueryViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Is<AddFollowCommand>(m => m.CurrentUserId == followerId &&
-                                                     m.FollowingId == followingId),
+            .SendAsync(Arg.Is<AddFollowCommand>(m => m.CurrentUserId == follower.Id &&
+                                                     m.FollowingId == following.Id),
                                                      CancellationToken)
             .Returns(followCommandViewModel);
 
-        return follow.Id;
+        return follow;
     }
 }

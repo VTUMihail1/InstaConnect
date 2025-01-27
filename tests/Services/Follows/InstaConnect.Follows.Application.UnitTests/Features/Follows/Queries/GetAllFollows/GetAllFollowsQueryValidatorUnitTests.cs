@@ -22,13 +22,11 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForFollowerId_WhenFollowerIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -48,13 +46,11 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForFollowerName_WhenFollowerNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             SharedTestUtilities.GetString(length),
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -74,11 +70,9 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForFollowingId_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidName,
@@ -100,13 +94,11 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForFollowingName_WhenFollowingNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             SharedTestUtilities.GetString(length),
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -124,13 +116,11 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             null!,
@@ -148,13 +138,11 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.InvalidSortPropertyName,
@@ -175,13 +163,11 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
@@ -201,13 +187,11 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -227,13 +211,11 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -251,13 +233,11 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
-            existingFollowerId,
+            existingFollow.FollowerId,
             UserTestUtilities.ValidName,
-            existingFollowingId,
+            existingFollow.FollowingId,
             UserTestUtilities.ValidName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,

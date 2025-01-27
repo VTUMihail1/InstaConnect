@@ -26,12 +26,10 @@ public class GetFollowByIdUnitTests : BaseFollowUnitTest
     public async Task GetByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var existingCurrentUserId = CreateCurrentUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var request = new GetFollowByIdRequest()
         {
-            Id = existingFollowId
+            Id = existingFollow.Id
         };
 
         // Act
@@ -48,12 +46,10 @@ public class GetFollowByIdUnitTests : BaseFollowUnitTest
     public async Task GetByIdAsync_ShouldReturnMessageViewModel_WhenRequestIsValid()
     {
         // Arrange
-        var existingCurrentUserId = CreateCurrentUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var request = new GetFollowByIdRequest()
         {
-            Id = existingFollowId
+            Id = existingFollow.Id
         };
 
         // Act
@@ -66,11 +62,11 @@ public class GetFollowByIdUnitTests : BaseFollowUnitTest
             .Which
             .Value
             .Should()
-            .Match<FollowQueryResponse>(m => m.Id == existingFollowId &&
-                                                 m.FollowerId == existingCurrentUserId &&
+            .Match<FollowQueryResponse>(m => m.Id == existingFollow.Id &&
+                                                 m.FollowerId == existingFollow.FollowerId &&
                                                  m.FollowerName == UserTestUtilities.ValidName &&
                                                  m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                 m.FollowingId == existingFollowingId &&
+                                                 m.FollowingId == existingFollow.FollowingId &&
                                                  m.FollowingName == UserTestUtilities.ValidName &&
                                                  m.FollowingProfileImage == UserTestUtilities.ValidProfileImage);
     }
@@ -79,12 +75,10 @@ public class GetFollowByIdUnitTests : BaseFollowUnitTest
     public async Task GetByIdAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var existingCurrentUserId = CreateCurrentUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingCurrentUserId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var request = new GetFollowByIdRequest()
         {
-            Id = existingFollowId
+            Id = existingFollow.Id
         };
 
         // Act
@@ -93,6 +87,6 @@ public class GetFollowByIdUnitTests : BaseFollowUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetFollowByIdQuery>(m => m.Id == existingFollowId), CancellationToken);
+              .SendAsync(Arg.Is<GetFollowByIdQuery>(m => m.Id == existingFollow.Id), CancellationToken);
     }
 }

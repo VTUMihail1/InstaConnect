@@ -25,12 +25,10 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldThrowFollowNotFoundException_WhenFollowIdIsInvalid()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollowId = CreateFollow();
         var command = new DeleteFollowCommand(
             FollowTestUtilities.InvalidId,
-            existingFollowerId
+            existingFollowId.FollowerId
         );
 
         // Act
@@ -44,13 +42,11 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowerFollowId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingUser = CreateUser();
+        var existingFollow = CreateFollow();
         var command = new DeleteFollowCommand(
-            existingFollowId,
-            UserTestUtilities.InvalidId
+            existingFollow.Id,
+            existingUser.Id
         );
 
         // Act
@@ -64,12 +60,10 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldGetFollowByIdFromRepository_WhenFollowIdIsValid()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var command = new DeleteFollowCommand(
-            existingFollowId,
-            existingFollowerId
+            existingFollow.Id,
+            existingFollow.FollowerId
         );
 
         // Act
@@ -78,19 +72,17 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
         // Assert
         await FollowWriteRepository
             .Received(1)
-            .GetByIdAsync(existingFollowId, CancellationToken);
+            .GetByIdAsync(existingFollow.Id, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldDeleteFollowFromRepository_WhenFollowIdIsValid()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var command = new DeleteFollowCommand(
-            existingFollowId,
-            existingFollowerId
+            existingFollow.Id,
+            existingFollow.FollowerId
         );
 
         // Act
@@ -99,21 +91,19 @@ public class DeleteFollowCommandHandlerUnitTests : BaseFollowUnitTest
         // Assert
         FollowWriteRepository
             .Received(1)
-            .Delete(Arg.Is<Follow>(m => m.Id == existingFollowId &&
-                                         m.FollowerId == existingFollowerId &&
-                                         m.FollowingId == existingFollowingId));
+            .Delete(Arg.Is<Follow>(m => m.Id == existingFollow.Id &&
+                                         m.FollowerId == existingFollow.FollowerId &&
+                                         m.FollowingId == existingFollow.FollowingId));
     }
 
     [Fact]
     public async Task Handle_ShouldCallSaveChangesAsync_WhenFollowIdIsValid()
     {
         // Arrange
-        var existingFollowerId = CreateUser();
-        var existingFollowingId = CreateUser();
-        var existingFollowId = CreateFollow(existingFollowerId, existingFollowingId);
+        var existingFollow = CreateFollow();
         var command = new DeleteFollowCommand(
-            existingFollowId,
-            existingFollowerId
+            existingFollow.Id,
+            existingFollow.FollowerId
         );
 
         // Act
