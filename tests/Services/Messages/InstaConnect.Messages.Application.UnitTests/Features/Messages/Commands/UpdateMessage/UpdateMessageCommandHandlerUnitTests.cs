@@ -26,10 +26,11 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowMessageNotFoundException_WhenMessageIdIsInvalid()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
             MessageTestUtilities.InvalidId,
-            MessageTestUtilities.ValidContent,
-            MessageTestUtilities.ValidMessageCurrentUserId
+            MessageTestUtilities.ValidUpdateContent,
+            existingMessage.SenderId
         );
 
         // Act
@@ -43,10 +44,12 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowAccountForbiddenException_WhenSenderIdIsInvalid()
     {
         // Arrange
+        var existingUser = CreateUser();
+        var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidContent,
-            MessageTestUtilities.ValidCurrentUserId
+            existingMessage.Id,
+            MessageTestUtilities.ValidUpdateContent,
+            existingUser.Id
         );
 
         // Act
@@ -60,10 +63,11 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldReturnMessageViewModel_WhenMessageIdIsValid()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidContent,
-            MessageTestUtilities.ValidMessageCurrentUserId
+            existingMessage.Id,
+            MessageTestUtilities.ValidUpdateContent,
+            existingMessage.SenderId
         );
 
         // Act
@@ -72,17 +76,18 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         response
             .Should()
-            .Match<MessageCommandViewModel>(m => m.Id == MessageTestUtilities.ValidId);
+            .Match<MessageCommandViewModel>(m => m.Id == existingMessage.Id);
     }
 
     [Fact]
     public async Task Handle_ShouldGetMessageByIdFromRepository_WhenMessageIdIsValid()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidContent,
-            MessageTestUtilities.ValidMessageCurrentUserId
+            existingMessage.Id,
+            MessageTestUtilities.ValidUpdateContent,
+            existingMessage.SenderId
         );
 
         // Act
@@ -91,17 +96,18 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await MessageWriteRepository
             .Received(1)
-            .GetByIdAsync(MessageTestUtilities.ValidId, CancellationToken);
+            .GetByIdAsync(existingMessage.Id, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldUpdateMessageInRepository_WhenMessageIdIsValid()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidContent,
-            MessageTestUtilities.ValidMessageCurrentUserId
+            existingMessage.Id,
+            MessageTestUtilities.ValidUpdateContent,
+            existingMessage.SenderId
         );
 
         // Act
@@ -110,20 +116,21 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         MessageWriteRepository
             .Received(1)
-            .Update(Arg.Is<Message>(m => m.Id == MessageTestUtilities.ValidId &&
-                                         m.SenderId == MessageTestUtilities.ValidMessageCurrentUserId &&
-                                         m.ReceiverId == MessageTestUtilities.ValidMessageReceiverId &&
-                                         m.Content == MessageTestUtilities.ValidContent));
+            .Update(Arg.Is<Message>(m => m.Id == existingMessage.Id &&
+                                         m.SenderId == existingMessage.SenderId &&
+                                         m.ReceiverId == existingMessage.ReceiverId &&
+                                         m.Content == MessageTestUtilities.ValidUpdateContent));
     }
 
     [Fact]
     public async Task Handle_ShouldCallSaveChangesAsync_WhenMessageIdIsValid()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidContent,
-            MessageTestUtilities.ValidMessageCurrentUserId
+            existingMessage.Id,
+            MessageTestUtilities.ValidUpdateContent,
+            existingMessage.SenderId
         );
 
         // Act

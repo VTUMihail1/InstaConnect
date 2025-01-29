@@ -4,7 +4,6 @@ using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
-using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Models;
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
@@ -25,11 +24,11 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var getFollowByIdRequest = new GetFollowByIdRequest
+        var request = new GetFollowByIdRequest
         {
             Id = SharedTestUtilities.GetString(length)
         };
-        var request = new GetFollowByIdClientRequest(getFollowByIdRequest);
+
 
         // Act
         var response = await FollowsClient.GetByIdStatusCodeAsync(request, CancellationToken);
@@ -43,11 +42,11 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var getFollowByIdRequest = new GetFollowByIdRequest
+        var request = new GetFollowByIdRequest
         {
             Id = FollowTestUtilities.InvalidId
         };
-        var request = new GetFollowByIdClientRequest(getFollowByIdRequest);
+
 
         // Act
         var response = await FollowsClient.GetByIdStatusCodeAsync(request, CancellationToken);
@@ -61,11 +60,11 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var getFollowByIdRequest = new GetFollowByIdRequest
+        var request = new GetFollowByIdRequest
         {
             Id = existingFollow.Id
         };
-        var request = new GetFollowByIdClientRequest(getFollowByIdRequest);
+
 
         // Act
         var response = await FollowsClient.GetByIdStatusCodeAsync(request, CancellationToken);
@@ -79,11 +78,11 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var getFollowByIdRequest = new GetFollowByIdRequest
+        var request = new GetFollowByIdRequest
         {
             Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id)
         };
-        var request = new GetFollowByIdClientRequest(getFollowByIdRequest);
+
 
         // Act
         var response = await FollowsClient.GetByIdStatusCodeAsync(request, CancellationToken);
@@ -97,11 +96,11 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var getFollowByIdRequest = new GetFollowByIdRequest
+        var request = new GetFollowByIdRequest
         {
             Id = existingFollow.Id
         };
-        var request = new GetFollowByIdClientRequest(getFollowByIdRequest);
+
 
         // Act
         var response = await FollowsClient.GetByIdAsync(request, CancellationToken);
@@ -123,11 +122,11 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var getFollowByIdRequest = new GetFollowByIdRequest
+        var request = new GetFollowByIdRequest
         {
             Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id)
         };
-        var request = new GetFollowByIdClientRequest(getFollowByIdRequest);
+
 
         // Act
         var response = await FollowsClient.GetByIdAsync(request, CancellationToken);

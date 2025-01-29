@@ -2,6 +2,7 @@
 using InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
 using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Commands.UpdateMessage;
@@ -19,10 +20,11 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
             null!,
-            MessageTestUtilities.ValidContent,
-            MessageTestUtilities.ValidCurrentUserId
+            MessageTestUtilities.ValidUpdateContent,
+            existingMessage.SenderId
         );
 
         // Act
@@ -34,15 +36,16 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(MessageConfigurations.IdMinLength - 1)]
+    [InlineData(MessageConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
             SharedTestUtilities.GetString(length),
-            MessageTestUtilities.ValidContent,
-            MessageTestUtilities.ValidCurrentUserId
+            MessageTestUtilities.ValidUpdateContent,
+            existingMessage.SenderId
         );
 
         // Act
@@ -56,9 +59,10 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidContent,
+            existingMessage.Id,
+            MessageTestUtilities.ValidUpdateContent,
             null!
         );
 
@@ -71,14 +75,15 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidContent,
+            existingMessage.Id,
+            MessageTestUtilities.ValidUpdateContent,
             SharedTestUtilities.GetString(length)
         );
 
@@ -93,10 +98,11 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForContent_WhenContentIsNull()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
-            MessageTestUtilities.ValidId,
+            existingMessage.Id,
             null!,
-            MessageTestUtilities.ValidCurrentUserId
+            existingMessage.SenderId
         );
 
         // Act
@@ -108,15 +114,16 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageBusinessConfigurations.CONTENT_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.CONTENT_MAX_LENGTH + 1)]
+    [InlineData(MessageConfigurations.ContentMinLength - 1)]
+    [InlineData(MessageConfigurations.ContentMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForContent_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
-            MessageTestUtilities.ValidId,
+            existingMessage.Id,
             SharedTestUtilities.GetString(length),
-            MessageTestUtilities.ValidCurrentUserId
+            existingMessage.SenderId
         );
 
         // Act
@@ -130,10 +137,11 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidContent,
-            MessageTestUtilities.ValidCurrentUserId
+            existingMessage.Id,
+            MessageTestUtilities.ValidUpdateContent,
+            existingMessage.SenderId
         );
 
         // Act

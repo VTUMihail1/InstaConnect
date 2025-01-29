@@ -12,6 +12,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{A69A3437-B98C-4657-945B-EFACA12E0C8A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Posts", "Posts", "{BB218D91-B7C7-4865-9A44-68EFCEBF744C}"
+	ProjectSection(SolutionItems) = preProject
+		src\Services\Messages\InstaConnect.Messages.Presentation\Features\Messages\Controllers\v1\MessageRoutes.cs = src\Services\Messages\InstaConnect.Messages.Presentation\Features\Messages\Controllers\v1\MessageRoutes.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messages", "Messages", "{7FE8F3FE-E3F1-46BD-B1A5-788D3E987AEB}"
 EndProject
@@ -137,7 +140,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Messages.Infra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Posts.Infrastructure", "src\Services\Posts\InstaConnect.Posts.Infrastructure\InstaConnect.Posts.Infrastructure.csproj", "{23DAFFC6-A3D7-49A4-AD28-93EEDAA57850}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstaConnect.Gateway.Infrastructure", "src\Gateway\InstaConnect.Gateway.Infrastructure\InstaConnect.Gateway.Infrastructure.csproj", "{16BA4B39-93C7-4428-8B64-C0810E100FFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstaConnect.Gateway.Infrastructure", "src\Gateway\InstaConnect.Gateway.Infrastructure\InstaConnect.Gateway.Infrastructure.csproj", "{16BA4B39-93C7-4428-8B64-C0810E100FFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

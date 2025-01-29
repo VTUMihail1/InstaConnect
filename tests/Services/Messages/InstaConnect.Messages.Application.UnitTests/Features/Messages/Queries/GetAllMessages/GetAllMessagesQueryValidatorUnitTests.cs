@@ -2,6 +2,7 @@
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
 using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Queries.GetAllMessages;
@@ -19,10 +20,11 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortOrder_WhenCurrentUserIdIsNull()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var query = new GetAllMessagesQuery(
             null!,
-            MessageTestUtilities.ValidReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -37,15 +39,16 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
+    [InlineData(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var query = new GetAllMessagesQuery(
             SharedTestUtilities.GetString(length),
-            MessageTestUtilities.ValidReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -59,15 +62,16 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     }
 
     [Theory]
-    [InlineData(MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + 1)]
+    [InlineData(MessageConfigurations.RECEIVER_ID_MIN_LENGTH - 1)]
+    [InlineData(MessageConfigurations.RECEIVER_ID_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForReceiverId_WhenReceiverIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var query = new GetAllMessagesQuery(
-            MessageTestUtilities.ValidCurrentUserId,
+            existingMessage.SenderId,
             SharedTestUtilities.GetString(length),
-            MessageTestUtilities.ValidUserName,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -81,14 +85,15 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     }
 
     [Theory]
-    [InlineData(MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForReceiverName_WhenReceiverNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var query = new GetAllMessagesQuery(
-            MessageTestUtilities.ValidCurrentUserId,
-            MessageTestUtilities.ValidReceiverId,
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
             SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
@@ -106,10 +111,11 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var query = new GetAllMessagesQuery(
-            MessageTestUtilities.ValidCurrentUserId,
-            MessageTestUtilities.ValidReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             null!,
             MessageTestUtilities.ValidPageValue,
@@ -126,10 +132,11 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var query = new GetAllMessagesQuery(
-            MessageTestUtilities.ValidCurrentUserId,
-            MessageTestUtilities.ValidReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.InvalidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -144,15 +151,16 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(SharedBusinessConfigurations.SORT_ORDER_MIN_LENGTH - 1)]
-    [InlineData(SharedBusinessConfigurations.SORT_ORDER_MAX_LENGTH + 1)]
+    [InlineData(SharedConfigurations.SortOrderMinLength - 1)]
+    [InlineData(SharedConfigurations.SortOrderMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var query = new GetAllMessagesQuery(
-            MessageTestUtilities.ValidCurrentUserId,
-            MessageTestUtilities.ValidReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidPageValue,
@@ -166,15 +174,16 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     }
 
     [Theory]
-    [InlineData(SharedBusinessConfigurations.PAGE_MIN_VALUE - 1)]
-    [InlineData(SharedBusinessConfigurations.PAGE_MAX_VALUE + 1)]
+    [InlineData(SharedConfigurations.PageMinValue - 1)]
+    [InlineData(SharedConfigurations.PageMaxValue + 1)]
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var query = new GetAllMessagesQuery(
-            MessageTestUtilities.ValidCurrentUserId,
-            MessageTestUtilities.ValidReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             value,
@@ -188,15 +197,16 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     }
 
     [Theory]
-    [InlineData(SharedBusinessConfigurations.PAGE_MIN_VALUE - 1)]
-    [InlineData(SharedBusinessConfigurations.PAGE_MAX_VALUE + 1)]
+    [InlineData(SharedConfigurations.PageMinValue - 1)]
+    [InlineData(SharedConfigurations.PageMaxValue + 1)]
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var query = new GetAllMessagesQuery(
-            MessageTestUtilities.ValidCurrentUserId,
-            MessageTestUtilities.ValidReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -213,10 +223,11 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var query = new GetAllMessagesQuery(
-            MessageTestUtilities.ValidCurrentUserId,
-            MessageTestUtilities.ValidReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,

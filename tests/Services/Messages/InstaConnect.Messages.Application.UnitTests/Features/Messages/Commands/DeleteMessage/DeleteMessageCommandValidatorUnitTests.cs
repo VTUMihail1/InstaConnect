@@ -2,6 +2,7 @@
 using InstaConnect.Messages.Application.Features.Messages.Commands.DeleteMessage;
 using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Commands.DeleteMessage;
@@ -19,9 +20,10 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new DeleteMessageCommand(
             null!,
-            MessageTestUtilities.ValidCurrentUserId
+            existingMessage.SenderId
         );
 
         // Act
@@ -33,14 +35,15 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(MessageConfigurations.IdMinLength - 1)]
+    [InlineData(MessageConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new DeleteMessageCommand(
             SharedTestUtilities.GetString(length),
-            MessageTestUtilities.ValidCurrentUserId
+            existingMessage.SenderId
         );
 
         // Act
@@ -54,8 +57,9 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new DeleteMessageCommand(
-            MessageTestUtilities.ValidId,
+            existingMessage.Id,
             null!
         );
 
@@ -68,13 +72,14 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new DeleteMessageCommand(
-            MessageTestUtilities.ValidId,
+            existingMessage.Id,
             SharedTestUtilities.GetString(length)
         );
 
@@ -89,9 +94,10 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new DeleteMessageCommand(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidCurrentUserId
+            existingMessage.Id,
+            existingMessage.SenderId
         );
 
         // Act

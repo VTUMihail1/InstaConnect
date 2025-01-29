@@ -37,8 +37,8 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(MessageConfigurations.IdMinLength - 1)]
+    [InlineData(MessageConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -78,8 +78,8 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
+    [InlineData(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange

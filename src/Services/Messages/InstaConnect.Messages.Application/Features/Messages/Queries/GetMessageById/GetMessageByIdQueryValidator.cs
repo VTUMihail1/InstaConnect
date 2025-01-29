@@ -9,12 +9,12 @@ public class GetMessageByIdQueryValidator : AbstractValidator<GetMessageByIdQuer
     {
         RuleFor(q => q.Id)
             .NotEmpty()
-            .MinimumLength(MessageBusinessConfigurations.ID_MIN_LENGTH)
-            .MaximumLength(MessageBusinessConfigurations.ID_MAX_LENGTH);
+            .MinimumLength(MessageConfigurations.IdMinLength)
+            .MaximumLength(MessageConfigurations.IdMaxLength);
 
         RuleFor(q => q.CurrentUserId)
             .NotEmpty()
-            .MinimumLength(MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH)
-            .MaximumLength(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH);
+            .MinimumLength(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH)
+            .MaximumLength(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH);
     }
 }

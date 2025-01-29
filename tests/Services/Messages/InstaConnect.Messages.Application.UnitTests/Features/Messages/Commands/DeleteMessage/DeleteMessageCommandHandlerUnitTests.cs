@@ -24,9 +24,10 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowMessageNotFoundException_WhenMessageIdIsInvalid()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new DeleteMessageCommand(
             MessageTestUtilities.InvalidId,
-            MessageTestUtilities.ValidMessageCurrentUserId
+            existingMessage.SenderId
         );
 
         // Act
@@ -40,9 +41,11 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowAccountForbiddenException_WhenSenderIdIsInvalid()
     {
         // Arrange
+        var existingUser = CreateUser();
+        var existingMessage = CreateMessage();
         var command = new DeleteMessageCommand(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidCurrentUserId
+            existingMessage.Id,
+            existingUser.Id
         );
 
         // Act
@@ -56,9 +59,10 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldGetMessageByIdFromRepository_WhenMessageIdIsValid()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new DeleteMessageCommand(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidMessageCurrentUserId
+            existingMessage.Id,
+            existingMessage.SenderId
         );
 
         // Act
@@ -67,16 +71,17 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         await MessageWriteRepository
             .Received(1)
-            .GetByIdAsync(MessageTestUtilities.ValidId, CancellationToken);
+            .GetByIdAsync(existingMessage.Id, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldDeleteMessageFromRepository_WhenMessageIdIsValid()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new DeleteMessageCommand(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidMessageCurrentUserId
+            existingMessage.Id,
+            existingMessage.SenderId
         );
 
         // Act
@@ -85,9 +90,9 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         MessageWriteRepository
             .Received(1)
-            .Delete(Arg.Is<Message>(m => m.Id == MessageTestUtilities.ValidId &&
-                                         m.SenderId == MessageTestUtilities.ValidMessageCurrentUserId &&
-                                         m.ReceiverId == MessageTestUtilities.ValidMessageReceiverId &&
+            .Delete(Arg.Is<Message>(m => m.Id == existingMessage.Id &&
+                                         m.SenderId == existingMessage.SenderId &&
+                                         m.ReceiverId == existingMessage.ReceiverId &&
                                          m.Content == MessageTestUtilities.ValidContent));
     }
 
@@ -95,9 +100,10 @@ public class DeleteMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldCallSaveChangesAsync_WhenMessageIdIsValid()
     {
         // Arrange
+        var existingMessage = CreateMessage();
         var command = new DeleteMessageCommand(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidMessageCurrentUserId
+            existingMessage.Id,
+            existingMessage.SenderId
         );
 
         // Act

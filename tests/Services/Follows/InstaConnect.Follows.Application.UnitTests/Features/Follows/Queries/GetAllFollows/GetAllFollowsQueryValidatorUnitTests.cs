@@ -158,8 +158,8 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(SharedBusinessConfigurations.SORT_ORDER_MIN_LENGTH - 1)]
-    [InlineData(SharedBusinessConfigurations.SORT_ORDER_MAX_LENGTH + 1)]
+    [InlineData(SharedConfigurations.SortOrderMinLength - 1)]
+    [InlineData(SharedConfigurations.SortOrderMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
@@ -182,8 +182,8 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     }
 
     [Theory]
-    [InlineData(SharedBusinessConfigurations.PAGE_MIN_VALUE - 1)]
-    [InlineData(SharedBusinessConfigurations.PAGE_MAX_VALUE + 1)]
+    [InlineData(SharedConfigurations.PageMinValue - 1)]
+    [InlineData(SharedConfigurations.PageMaxValue + 1)]
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
@@ -206,8 +206,8 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
     }
 
     [Theory]
-    [InlineData(SharedBusinessConfigurations.PAGE_MIN_VALUE - 1)]
-    [InlineData(SharedBusinessConfigurations.PAGE_MAX_VALUE + 1)]
+    [InlineData(SharedConfigurations.PageMinValue - 1)]
+    [InlineData(SharedConfigurations.PageMaxValue + 1)]
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange

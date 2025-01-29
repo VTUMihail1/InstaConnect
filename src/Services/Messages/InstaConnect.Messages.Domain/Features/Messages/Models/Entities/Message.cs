@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Domain.Models.Base;
+using MassTransit.Saga;
 
 namespace InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 
@@ -12,13 +13,22 @@ public class Message : BaseEntity
         ReceiverId = receiverId;
     }
 
-    public string Content { get; set; }
+    public Message(string content, User sender, User receiver)
+    {
+        Content = content;
+        SenderId = sender.Id;
+        ReceiverId = receiver.Id;
+        Sender = sender;
+        Receiver = receiver;
+    }
+
+    public string Content { get; }
 
     public string SenderId { get; }
 
-    public User? Sender { get; set; }
+    public User? Sender { get;  }
 
     public string ReceiverId { get; }
 
-    public User? Receiver { get; set; }
+    public User? Receiver { get; }
 }

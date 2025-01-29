@@ -108,8 +108,8 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
     }
 
     [Theory]
-    [InlineData(SharedBusinessConfigurations.SORT_PROPERTY_NAME_MIN_LENGTH - 1)]
-    [InlineData(SharedBusinessConfigurations.SORT_PROPERTY_NAME_MAX_LENGTH + 1)]
+    [InlineData(SharedConfigurations.SortPropertyMinLength - 1)]
+    [InlineData(SharedConfigurations.SortPropertyMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
@@ -131,8 +131,8 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
     }
 
     [Theory]
-    [InlineData(SharedBusinessConfigurations.PAGE_MIN_VALUE - 1)]
-    [InlineData(SharedBusinessConfigurations.PAGE_MAX_VALUE + 1)]
+    [InlineData(SharedConfigurations.PageMinValue - 1)]
+    [InlineData(SharedConfigurations.PageMaxValue + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageValueIsInvalid(int value)
     {
         // Arrange
@@ -156,8 +156,8 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
 
 
     [Theory]
-    [InlineData(SharedBusinessConfigurations.PAGE_SIZE_MIN_VALUE - 1)]
-    [InlineData(SharedBusinessConfigurations.PAGE_SIZE_MAX_VALUE + 1)]
+    [InlineData(SharedConfigurations.PageSizeMinValue - 1)]
+    [InlineData(SharedConfigurations.PageSizeMaxValue + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange

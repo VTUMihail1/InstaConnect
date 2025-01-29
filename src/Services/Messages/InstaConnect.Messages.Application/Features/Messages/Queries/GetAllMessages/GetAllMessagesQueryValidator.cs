@@ -14,17 +14,17 @@ public class GetAllMessagesQueryValidator : AbstractValidator<GetAllMessagesQuer
 
         RuleFor(q => q.CurrentUserId)
             .NotEmpty()
-            .MinimumLength(MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH)
-            .MaximumLength(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH);
+            .MinimumLength(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH)
+            .MaximumLength(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH);
 
         RuleFor(q => q.ReceiverId)
-            .MinimumLength(MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH)
-            .MaximumLength(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH)
+            .MinimumLength(MessageConfigurations.RECEIVER_ID_MIN_LENGTH)
+            .MaximumLength(MessageConfigurations.RECEIVER_ID_MAX_LENGTH)
             .When(q => !string.IsNullOrEmpty(q.ReceiverId));
 
         RuleFor(q => q.ReceiverName)
-            .MinimumLength(MessageBusinessConfigurations.RECEIVER_NAME_MIN_LENGTH)
-            .MaximumLength(MessageBusinessConfigurations.RECEIVER_NAME_MAX_LENGTH)
+            .MinimumLength(MessageConfigurations.RECEIVER_NAME_MIN_LENGTH)
+            .MaximumLength(MessageConfigurations.RECEIVER_NAME_MAX_LENGTH)
             .When(q => !string.IsNullOrEmpty(q.ReceiverName));
 
         RuleFor(q => q.SortPropertyName)

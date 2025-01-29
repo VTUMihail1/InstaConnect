@@ -33,8 +33,8 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
     }
 
     [Theory]
-    [InlineData(MessageBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(MessageConfigurations.IdMinLength - 1)]
+    [InlineData(MessageConfigurations.IdMaxLength + 1)]
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -72,8 +72,8 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
+    [InlineData(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange

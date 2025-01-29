@@ -16,7 +16,7 @@ namespace InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
 
 [ApiController]
 [ApiVersion("1.0")]
-[Route(FollowRoutes.Prefix)]
+[Route(FollowRoutes.Resource)]
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class FollowController : ControllerBase
 {
@@ -32,7 +32,7 @@ public class FollowController : ControllerBase
     }
 
     // GET: api/follows
-    [HttpGet(FollowRoutes.Default)]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<FollowPaginationQueryResponse>> GetAllAsync(
@@ -62,7 +62,7 @@ public class FollowController : ControllerBase
     }
 
     // POST: api/follows
-    [HttpPost(FollowRoutes.Default)]
+    [HttpPost]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

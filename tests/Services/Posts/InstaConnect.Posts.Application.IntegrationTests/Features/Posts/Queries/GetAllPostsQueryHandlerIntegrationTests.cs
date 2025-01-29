@@ -133,8 +133,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(SharedBusinessConfigurations.SORT_ORDER_MIN_LENGTH - 1)]
-    [InlineData(SharedBusinessConfigurations.SORT_ORDER_MAX_LENGTH + 1)]
+    [InlineData(SharedConfigurations.SortOrderMinLength - 1)]
+    [InlineData(SharedConfigurations.SortOrderMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
@@ -157,8 +157,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [InlineData(SharedBusinessConfigurations.PAGE_MIN_VALUE - 1)]
-    [InlineData(SharedBusinessConfigurations.PAGE_MAX_VALUE + 1)]
+    [InlineData(SharedConfigurations.PageMinValue - 1)]
+    [InlineData(SharedConfigurations.PageMaxValue + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPageValueIsInvalid(int value)
     {
         // Arrange
@@ -181,8 +181,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [InlineData(SharedBusinessConfigurations.PAGE_SIZE_MIN_VALUE - 1)]
-    [InlineData(SharedBusinessConfigurations.PAGE_SIZE_MAX_VALUE + 1)]
+    [InlineData(SharedConfigurations.PageSizeMinValue - 1)]
+    [InlineData(SharedConfigurations.PageSizeMaxValue + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange

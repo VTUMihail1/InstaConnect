@@ -54,8 +54,8 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageBusinessConfigurations.RECEIVER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.RECEIVER_ID_MAX_LENGTH + 1)]
+    [InlineData(MessageConfigurations.RECEIVER_ID_MIN_LENGTH - 1)]
+    [InlineData(MessageConfigurations.RECEIVER_ID_MAX_LENGTH + 1)]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenReceiverIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -93,8 +93,8 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageBusinessConfigurations.CONTENT_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.CONTENT_MAX_LENGTH + 1)]
+    [InlineData(MessageConfigurations.ContentMinLength - 1)]
+    [InlineData(MessageConfigurations.ContentMaxLength + 1)]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
@@ -132,8 +132,8 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
+    [InlineData(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange

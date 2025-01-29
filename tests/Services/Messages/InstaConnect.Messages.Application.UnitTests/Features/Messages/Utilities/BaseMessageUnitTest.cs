@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Application.Features.Messages.Mappings;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
@@ -40,101 +41,60 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
         MessageReadRepository = Substitute.For<IMessageReadRepository>();
         MessageWriteRepository = Substitute.For<IMessageWriteRepository>();
 
-        var existingSender = new User(
-            MessageTestUtilities.ValidUserFirstName,
-            MessageTestUtilities.ValidUserLastName,
-            MessageTestUtilities.ValidUserEmail,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidUserProfileImage)
-        {
-            Id = MessageTestUtilities.ValidCurrentUserId,
-        };
+        
+    }
 
-        var existingMessageSender = new User(
-            MessageTestUtilities.ValidUserFirstName,
-            MessageTestUtilities.ValidUserLastName,
-            MessageTestUtilities.ValidUserEmail,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidUserProfileImage)
-        {
-            Id = MessageTestUtilities.ValidMessageCurrentUserId,
-        };
+    public User CreateUser()
+    {
+        var user = new User(
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
 
-        var existingReceiver = new User(
-            MessageTestUtilities.ValidUserFirstName,
-            MessageTestUtilities.ValidUserLastName,
-            MessageTestUtilities.ValidUserEmail,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidUserProfileImage)
-        {
-            Id = MessageTestUtilities.ValidReceiverId
-        };
+        UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
+            .Returns(user);
 
-        var existingMessageReceiver = new User(
-            MessageTestUtilities.ValidUserFirstName,
-            MessageTestUtilities.ValidUserLastName,
-            MessageTestUtilities.ValidUserEmail,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidUserProfileImage)
-        {
-            Id = MessageTestUtilities.ValidMessageReceiverId
-        };
+        return user;
+    }
 
-        var existingMessage = new Message(
+    public Message CreateMessage()
+    {
+        var sender = CreateUser();
+        var receiver = CreateUser();
+        var message = new Message(
             MessageTestUtilities.ValidContent,
-            MessageTestUtilities.ValidMessageCurrentUserId,
-            MessageTestUtilities.ValidMessageReceiverId)
-        {
-            Id = MessageTestUtilities.ValidId,
-            Sender = existingMessageSender,
-            Receiver = existingMessageReceiver
-        };
+            sender,
+            receiver);
 
-        var existingMessagePaginationList = new PaginationList<Message>(
-            [existingMessage],
+        var messagePaginationList = new PaginationList<Message>(
+            [message],
             MessageTestUtilities.ValidPageValue,
             MessageTestUtilities.ValidPageSizeValue,
             MessageTestUtilities.ValidTotalCountValue);
 
         MessageReadRepository.GetByIdAsync(
-            MessageTestUtilities.ValidId,
+            message.Id,
             CancellationToken)
-            .Returns(existingMessage);
+            .Returns(message);
 
         MessageWriteRepository.GetByIdAsync(
-            MessageTestUtilities.ValidId,
+            message.Id,
             CancellationToken)
-            .Returns(existingMessage);
-
-        UserWriteRepository.GetByIdAsync(
-            MessageTestUtilities.ValidCurrentUserId,
-            CancellationToken)
-            .Returns(existingSender);
-
-        UserWriteRepository.GetByIdAsync(
-            MessageTestUtilities.ValidReceiverId,
-            CancellationToken)
-            .Returns(existingReceiver);
-
-        UserWriteRepository.GetByIdAsync(
-            MessageTestUtilities.ValidMessageCurrentUserId,
-            CancellationToken)
-            .Returns(existingMessageSender);
-
-        UserWriteRepository.GetByIdAsync(
-            MessageTestUtilities.ValidMessageReceiverId,
-            CancellationToken)
-            .Returns(existingMessageReceiver);
+            .Returns(message);
 
         MessageReadRepository
             .GetAllAsync(Arg.Is<MessageCollectionReadQuery>(m =>
-                                                                        m.CurrentUserId == MessageTestUtilities.ValidMessageCurrentUserId &&
-                                                                        m.ReceiverId == MessageTestUtilities.ValidMessageReceiverId &&
-                                                                        m.ReceiverName == MessageTestUtilities.ValidUserName &&
+                                                                        m.CurrentUserId == sender.Id &&
+                                                                        m.ReceiverId == receiver.Id &&
+                                                                        m.ReceiverName == UserTestUtilities.ValidName &&
                                                                         m.Page == MessageTestUtilities.ValidPageValue &&
                                                                         m.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == MessageTestUtilities.ValidSortOrderProperty &&
                                                                         m.SortPropertyName == MessageTestUtilities.ValidSortPropertyName), CancellationToken)
-            .Returns(existingMessagePaginationList);
+            .Returns(messagePaginationList);
+
+        return message;
     }
 }

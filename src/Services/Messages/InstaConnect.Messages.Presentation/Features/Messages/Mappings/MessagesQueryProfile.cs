@@ -12,20 +12,20 @@ internal class MessagesQueryProfile : Profile
 {
     public MessagesQueryProfile()
     {
-        CreateMap<(CurrentUserModel, GetAllMessagesRequest), GetAllMessagesQuery>()
+        CreateMap<GetAllMessagesRequest, GetAllMessagesQuery>()
             .ConstructUsing(src => new(
-                src.Item1.Id,
-                src.Item2.ReceiverId,
-                src.Item2.ReceiverName,
-                src.Item2.SortOrder,
-                src.Item2.SortPropertyName,
-                src.Item2.Page,
-                src.Item2.PageSize));
+                src.CurrentUserId,
+                src.ReceiverId,
+                src.ReceiverName,
+                src.SortOrder,
+                src.SortPropertyName,
+                src.Page,
+                src.PageSize));
 
-        CreateMap<(CurrentUserModel, GetMessageByIdRequest), GetMessageByIdQuery>()
+        CreateMap<GetMessageByIdRequest, GetMessageByIdQuery>()
             .ConstructUsing(src => new(
-                src.Item2.Id,
-                src.Item1.Id));
+                src.Id,
+                src.CurrentUserId));
 
         CreateMap<MessagePaginationQueryViewModel, MessagePaginationCollectionQueryResponse>();
 

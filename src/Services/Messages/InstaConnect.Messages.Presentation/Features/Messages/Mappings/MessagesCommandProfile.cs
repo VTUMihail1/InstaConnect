@@ -13,22 +13,22 @@ internal class MessagesCommandProfile : Profile
 {
     public MessagesCommandProfile()
     {
-        CreateMap<(CurrentUserModel, AddMessageRequest), AddMessageCommand>()
+        CreateMap<AddMessageRequest, AddMessageCommand>()
             .ConstructUsing(src => new(
-                src.Item1.Id,
-                src.Item2.AddMessageBindingModel.ReceiverId,
-                src.Item2.AddMessageBindingModel.Content));
+                src.CurrentUserId,
+                src.AddMessageBindingModel.ReceiverId,
+                src.AddMessageBindingModel.Content));
 
-        CreateMap<(CurrentUserModel, UpdateMessageRequest), UpdateMessageCommand>()
+        CreateMap<UpdateMessageRequest, UpdateMessageCommand>()
             .ConstructUsing(src => new(
-                src.Item2.Id,
-                src.Item2.UpdateMessageBindingModel.Content,
-                src.Item1.Id));
+                src.Id,
+                src.UpdateMessageBindingModel.Content,
+                src.CurrentUserId));
 
-        CreateMap<(CurrentUserModel, DeleteMessageRequest), DeleteMessageCommand>()
+        CreateMap<DeleteMessageRequest, DeleteMessageCommand>()
             .ConstructUsing(src => new(
-                src.Item2.Id,
-                src.Item1.Id));
+                src.Id,
+                src.CurrentUserId));
 
         CreateMap<MessageCommandViewModel, MessageCommandViewResponse>();
     }
