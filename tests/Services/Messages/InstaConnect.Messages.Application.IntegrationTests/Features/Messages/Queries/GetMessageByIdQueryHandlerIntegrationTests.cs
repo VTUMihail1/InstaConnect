@@ -4,6 +4,7 @@ using InstaConnect.Messages.Application.Features.Messages.Queries.GetMessageById
 using InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Application.IntegrationTests.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Message;
 using InstaConnect.Shared.Common.Exceptions.User;
@@ -21,12 +22,10 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetMessageByIdQuery(
             null!,
-            existingSenderId
+            existingMessage.SenderId
         );
 
         // Act
@@ -43,12 +42,10 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetMessageByIdQuery(
             SharedTestUtilities.GetString(length),
-            existingSenderId
+            existingMessage.SenderId
         );
 
         // Act
@@ -62,11 +59,9 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetMessageByIdQuery(
-            existingMessageId,
+            existingMessage.Id,
             null!
         );
 
@@ -79,16 +74,14 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetMessageByIdQuery(
-            existingMessageId,
+            existingMessage.Id,
             SharedTestUtilities.GetString(length)
         );
 
@@ -103,12 +96,10 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowMessageNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetMessageByIdQuery(
             MessageTestUtilities.InvalidId,
-            existingSenderId
+            existingMessage.SenderId
         );
 
         // Act
@@ -122,13 +113,11 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowAccountForbiddenException_WhenSenderIdDoesNotOwnMessage()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingMessageSenderId = await CreateUserAsync(CancellationToken);
-        var existingMessageReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingMessageSenderId, existingMessageReceiverId, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetMessageByIdQuery(
-            existingMessageId,
-            existingSenderId
+            existingMessage.Id,
+            existingUser.Id
         );
 
         // Act
@@ -142,12 +131,10 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetMessageByIdQuery(
-            existingMessageId,
-            existingSenderId
+            existingMessage.Id,
+            existingMessage.SenderId
         );
 
         // Act
@@ -156,13 +143,13 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         // Assert
         response
             .Should()
-            .Match<MessageQueryViewModel>(m => m.Id == existingMessageId &&
-                                          m.SenderId == existingSenderId &&
-                                          m.SenderName == MessageTestUtilities.ValidUserName &&
-                                          m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                          m.ReceiverId == existingReceiverId &&
-                                          m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                          m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+            .Match<MessageQueryViewModel>(m => m.Id == existingMessage.Id &&
+                                          m.SenderId == existingMessage.SenderId &&
+                                          m.SenderName == UserTestUtilities.ValidName &&
+                                          m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                          m.ReceiverId == existingMessage.ReceiverId &&
+                                          m.ReceiverName == UserTestUtilities.ValidName &&
+                                          m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
                                           m.Content == MessageTestUtilities.ValidContent);
     }
 
@@ -170,12 +157,10 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenQueryIsValidAndIdCaseDoesntMatch()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetMessageByIdQuery(
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessageId),
-            existingSenderId
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
+            existingMessage.SenderId
         );
 
         // Act
@@ -184,13 +169,13 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         // Assert
         response
             .Should()
-            .Match<MessageQueryViewModel>(m => m.Id == existingMessageId &&
-                                          m.SenderId == existingSenderId &&
-                                          m.SenderName == MessageTestUtilities.ValidUserName &&
-                                          m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                          m.ReceiverId == existingReceiverId &&
-                                          m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                          m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+            .Match<MessageQueryViewModel>(m => m.Id == existingMessage.Id &&
+                                          m.SenderId == existingMessage.SenderId &&
+                                          m.SenderName == UserTestUtilities.ValidName &&
+                                          m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                          m.ReceiverId == existingMessage.ReceiverId &&
+                                          m.ReceiverName == UserTestUtilities.ValidName &&
+                                          m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
                                           m.Content == MessageTestUtilities.ValidContent);
     }
 }

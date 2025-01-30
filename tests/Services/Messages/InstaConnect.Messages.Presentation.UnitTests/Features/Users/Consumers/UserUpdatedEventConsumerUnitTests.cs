@@ -1,12 +1,12 @@
-﻿using InstaConnect.Messages.Common.Features.Users.Utilities;
-using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
-using InstaConnect.Messages.Presentation.Features.Users.Consumers;
-using InstaConnect.Messages.Presentation.UnitTests.Features.Users.Utilities;
+﻿using InstaConnect.Follows.Common.Features.Users.Utilities;
+using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+using InstaConnect.Follows.Presentation.Features.Users.Consumers;
+using InstaConnect.Follows.Presentation.UnitTests.Features.Users.Utilities;
 using InstaConnect.Shared.Application.Contracts.Users;
 using MassTransit;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Presentation.UnitTests.Features.Users.Consumers;
+namespace InstaConnect.Follows.Presentation.UnitTests.Features.Users.Consumers;
 
 public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
 {
@@ -27,7 +27,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldCallGetUserByIdAsyncMethod_WhenUserIdIsInvalid()
     {
         // Arrange
-        var existingUserId = CreateUser();
+        var existingUser = CreateUser();
         var userUpdatedEvent = new UserUpdatedEvent(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateName,
@@ -51,7 +51,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldNotAddMethod_WhenUserIdIsInvalid()
     {
         // Arrange
-        var existingUserId = CreateUser();
+        var existingUser = CreateUser();
         var userUpdatedEvent = new UserUpdatedEvent(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateName,
@@ -75,7 +75,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldNotCallSaveChangesAsync_WhenUserIdIsInvalid()
     {
         // Arrange
-        var existingUserId = CreateUser();
+        var existingUser = CreateUser();
         var userUpdatedEvent = new UserUpdatedEvent(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateName,
@@ -99,9 +99,9 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldGetUserById_WhenUserUpdatedEventIsValid()
     {
         // Arrange
-        var existingUserId = CreateUser();
+        var existingUser = CreateUser();
         var userUpdatedEvent = new UserUpdatedEvent(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidUpdateFirstName,
@@ -116,16 +116,16 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(existingUserId, CancellationToken);
+            .GetByIdAsync(existingUser.Id, CancellationToken);
     }
 
     [Fact]
     public async Task Consume_ShouldUpdateUserToRepository_WhenUserUpdatedEventIsValid()
     {
         // Arrange
-        var existingUserId = CreateUser();
+        var existingUser = CreateUser();
         var userUpdatedEvent = new UserUpdatedEvent(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidUpdateFirstName,
@@ -140,7 +140,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         // Assert
         UserWriteRepository
             .Received(1)
-            .Update(Arg.Is<User>(m => m.Id == existingUserId &&
+            .Update(Arg.Is<User>(m => m.Id == existingUser.Id &&
                                    m.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                                    m.LastName == UserTestUtilities.ValidUpdateLastName &&
                                    m.UserName == UserTestUtilities.ValidUpdateName &&
@@ -152,9 +152,9 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldCallSaveChangesAsync_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var existingUserId = CreateUser();
+        var existingUser = CreateUser();
         var userUpdatedEvent = new UserUpdatedEvent(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidUpdateFirstName,

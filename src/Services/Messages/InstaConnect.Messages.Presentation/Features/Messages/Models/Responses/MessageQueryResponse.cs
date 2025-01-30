@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
 
-public record MessageQueryViewResponse(
+public record MessageQueryResponse(
     string Id,
     string SenderId,
     string SenderName,

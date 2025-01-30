@@ -3,6 +3,7 @@ using InstaConnect.Messages.Application.Features.Messages.Commands.DeleteMessage
 using InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Application.IntegrationTests.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Message;
 using InstaConnect.Shared.Common.Exceptions.User;
@@ -20,12 +21,10 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new DeleteMessageCommand(
             null!,
-            existingSenderId
+            existingMessage.SenderId
         );
 
         // Act
@@ -42,12 +41,10 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new DeleteMessageCommand(
             SharedTestUtilities.GetString(length),
-            existingSenderId
+            existingMessage.SenderId
         );
 
         // Act
@@ -61,11 +58,9 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new DeleteMessageCommand(
-            existingMessageId,
+            existingMessage.Id,
             null!
         );
 
@@ -78,16 +73,14 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new DeleteMessageCommand(
-            existingMessageId,
+            existingMessage.Id,
             SharedTestUtilities.GetString(length)
         );
 
@@ -102,12 +95,10 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowMessageNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new DeleteMessageCommand(
             MessageTestUtilities.InvalidId,
-            existingSenderId
+            existingMessage.SenderId
         );
 
         // Act
@@ -121,13 +112,11 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingMessageSenderId = await CreateUserAsync(CancellationToken);
-        var existingMessageReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingMessageSenderId, existingMessageReceiverId, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new DeleteMessageCommand(
-            existingMessageId,
-            existingSenderId
+            existingMessage.Id,
+            existingUser.Id
         );
 
         // Act
@@ -141,19 +130,17 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldDeleteMessage_WhenMessageIsValid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new DeleteMessageCommand(
-            existingMessageId,
-            existingSenderId
+            existingMessage.Id,
+            existingMessage.SenderId
         );
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        var message = await MessageWriteRepository.GetByIdAsync(existingMessageId, CancellationToken);
+        var message = await MessageWriteRepository.GetByIdAsync(existingMessage.Id, CancellationToken);
 
         message
             .Should()
@@ -164,19 +151,17 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldDeleteMessage_WhenMessageIsValidAndIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new DeleteMessageCommand(
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessageId),
-            existingSenderId
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
+            existingMessage.SenderId
         );
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        var message = await MessageWriteRepository.GetByIdAsync(existingMessageId, CancellationToken);
+        var message = await MessageWriteRepository.GetByIdAsync(existingMessage.Id, CancellationToken);
 
         message
             .Should()

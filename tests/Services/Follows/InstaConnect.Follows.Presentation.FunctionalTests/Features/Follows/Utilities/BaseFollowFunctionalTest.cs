@@ -18,9 +18,9 @@ public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsFunctional
 {
     protected CancellationToken CancellationToken { get; }
 
-    protected Dictionary<string, object> ValidJwtConfig { get; }
-
     protected IServiceScope ServiceScope { get; }
+
+    protected IFollowsClient FollowsClient { get; }
 
     protected ITestHarness TestHarness
     {
@@ -55,13 +55,10 @@ public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsFunctional
         }
     }
 
-    protected IFollowsClient FollowsClient { get; }
-
     protected BaseFollowFunctionalTest(FollowsFunctionalTestWebAppFactory functionalTestWebAppFactory)
     {
         ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
         CancellationToken = new();
-        ValidJwtConfig = [];
         FollowsClient = new FollowsClient(functionalTestWebAppFactory.CreateClient());
     }
 

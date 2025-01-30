@@ -1,9 +1,12 @@
 ﻿using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Domain.Features.Users.Abstract;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Messages.Infrastructure;
+using InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Abstractions;
+using InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Helpers;
 using InstaConnect.Messages.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Presentation.FunctionalTests.Utilities;
@@ -12,9 +15,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Utilities;
 
-public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
+public abstract class BaseMessageFunctionalTest : IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {
-    private const string API_ROUTE = "api/v1/messages";
+    protected CancellationToken CancellationToken { get; }
+
+    protected IServiceScope ServiceScope { get; }
+
+    protected IMessagesClient MessagesClient { get; }
 
 
     protected IMessageWriteRepository MessageWriteRepository
@@ -39,19 +46,21 @@ public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, ICla
         }
     }
 
-    protected BaseMessageFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(
-        functionalTestWebAppFactory.CreateClient(),
-        functionalTestWebAppFactory.Services.CreateScope(),
-        API_ROUTE)
+    protected BaseMessageFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
     {
+        ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
+        CancellationToken = new();
+        MessagesClient = new MessagesClient(functionalTestWebAppFactory.CreateClient());
     }
 
-    protected async Task<string> CreateMessageAsync(string senderId, string receiverId, CancellationToken cancellationToken)
+    protected async Task<Message> CreateMessageAsync(CancellationToken cancellationToken)
     {
+        var sender = await CreateUserAsync(cancellationToken);
+        var receiver = await CreateUserAsync(cancellationToken);
         var message = new Message(
             MessageTestUtilities.ValidContent,
-            senderId,
-            receiverId);
+            sender,
+            receiver);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var messageWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();
@@ -59,17 +68,17 @@ public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, ICla
         messageWriteRepository.Add(message);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return message.Id;
+        return message;
     }
 
-    protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            MessageTestUtilities.ValidUserFirstName,
-            MessageTestUtilities.ValidUserLastName,
-            MessageTestUtilities.ValidUserEmail,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidUserProfileImage);
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
@@ -77,7 +86,7 @@ public abstract class BaseMessageFunctionalTest : BaseSharedFunctionalTest, ICla
         userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return user.Id;
+        return user;
     }
 
     public async Task InitializeAsync()

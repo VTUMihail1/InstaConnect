@@ -242,11 +242,11 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
         // Assert
         var messageViewResponse = await response
             .Content
-            .ReadFromJsonAsync<MessageCommandViewResponse>();
+            .ReadFromJsonAsync<MessageCommandResponse>();
 
         messageViewResponse
             .Should()
-            .Match<MessageCommandViewResponse>(m => m.Id == existingMessageId);
+            .Match<MessageCommandResponse>(m => m.Id == existingMessageId);
     }
 
     [Fact]

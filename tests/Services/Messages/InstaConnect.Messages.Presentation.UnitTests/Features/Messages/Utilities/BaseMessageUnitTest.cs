@@ -5,6 +5,9 @@ using InstaConnect.Messages.Application.Features.Messages.Models;
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetMessageById;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
+using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Presentation.Abstractions;
@@ -16,58 +19,93 @@ using MessageQueryProfile = InstaConnect.Messages.Presentation.Features.Messages
 
 namespace InstaConnect.Messages.Presentation.UnitTests.Features.Messages.Utilities;
 
-public abstract class BaseMessageUnitTest : BaseSharedUnitTest
+public abstract class BaseMessageUnitTest
 {
-    public BaseMessageUnitTest() : base(
-        Substitute.For<IInstaConnectSender>(),
-        Substitute.For<ICurrentUserContext>(),
-        new InstaConnectMapper(
+    protected CancellationToken CancellationToken { get; }
+
+    protected IInstaConnectSender InstaConnectSender { get; }
+
+    protected IInstaConnectMapper InstaConnectMapper { get; }
+
+    public BaseMessageUnitTest()
+    {
+        CancellationToken = new();
+        InstaConnectSender = Substitute.For<IInstaConnectSender>();
+        InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
                 new MapperConfiguration(cfg =>
                 {
                     cfg.AddProfile<MessageCommandProfile>();
                     cfg.AddProfile<MessageQueryProfile>();
-                }))))
+                })));
+    }
+
+    public User CreateUser()
     {
-        var existingMessageQueryViewModel = new MessageQueryViewModel(
-            MessageTestUtilities.ValidId,
-            MessageTestUtilities.ValidCurrentUserId,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidUserProfileImage,
-            MessageTestUtilities.ValidReceiverId,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidUserProfileImage,
+        var user = new User(
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
+
+        return user;
+    }
+
+    public Message CreateMessage()
+    {
+        var sender = CreateUser();
+        var receiver = CreateUser();
+        var message = new Message(MessageTestUtilities.ValidContent, sender, receiver);
+
+        var messageQueryViewModel = new MessageQueryViewModel(
+            message.Id,
+            message.SenderId,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage,
+            message.ReceiverId,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage,
             MessageTestUtilities.ValidContent);
 
-        var existingMessageCommandViewModel = new MessageCommandViewModel(MessageTestUtilities.ValidId);
-        var existingCurrentUserModel = new CurrentUserModel(MessageTestUtilities.ValidCurrentUserId, MessageTestUtilities.ValidUserName);
-        var existingMessagePaginationCollectionModel = new MessagePaginationQueryViewModel(
-            [existingMessageQueryViewModel],
+        var messageCommandViewModel = new MessageCommandViewModel(message.Id);
+        var messagePaginationCollectionModel = new MessagePaginationQueryViewModel(
+            [messageQueryViewModel],
             MessageTestUtilities.ValidPageValue,
             MessageTestUtilities.ValidPageSizeValue,
             MessageTestUtilities.ValidTotalCountValue,
             false,
             false);
 
-
-        CurrentUserContext
-            .GetCurrentUser()
-            .Returns(existingCurrentUserModel);
+        InstaConnectSender
+            .SendAsync(Arg.Is<GetAllMessagesQuery>(m =>
+                  m.CurrentUserId == sender.Id &&
+                  m.ReceiverId == receiver.Id &&
+                  m.ReceiverName == UserTestUtilities.ValidName &&
+                  m.SortOrder == MessageTestUtilities.ValidSortOrderProperty &&
+                  m.SortPropertyName == MessageTestUtilities.ValidSortPropertyName &&
+                  m.Page == MessageTestUtilities.ValidPageValue &&
+                  m.PageSize == MessageTestUtilities.ValidPageSizeValue), CancellationToken)
+            .Returns(messagePaginationCollectionModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<GetAllMessagesQuery>(), CancellationToken)
-            .Returns(existingMessagePaginationCollectionModel);
+            .SendAsync(Arg.Is<GetMessageByIdQuery>(m => m.Id == message.Id), CancellationToken)
+            .Returns(messageQueryViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<GetMessageByIdQuery>(), CancellationToken)
-            .Returns(existingMessageQueryViewModel);
+            .SendAsync(Arg.Is<AddMessageCommand>(m => 
+                  m.CurrentUserId == sender.Id &&
+                  m.ReceiverId == receiver.Id &&
+                  m.Content == MessageTestUtilities.ValidAddContent), CancellationToken)
+            .Returns(messageCommandViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<AddMessageCommand>(), CancellationToken)
-            .Returns(existingMessageCommandViewModel);
+            .SendAsync(Arg.Is<UpdateMessageCommand>(m =>
+                  m.Id == message.Id &&
+                  m.CurrentUserId == sender.Id &&
+                  m.Content == MessageTestUtilities.ValidUpdateContent), CancellationToken)
+            .Returns(messageCommandViewModel);
 
-        InstaConnectSender
-            .SendAsync(Arg.Any<UpdateMessageCommand>(), CancellationToken)
-            .Returns(existingMessageCommandViewModel);
+        return message;
     }
 }

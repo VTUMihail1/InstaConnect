@@ -222,7 +222,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
 
         var messageViewResponse = await response
             .Content
-            .ReadFromJsonAsync<MessageCommandViewResponse>();
+            .ReadFromJsonAsync<MessageCommandResponse>();
 
         var message = await MessageWriteRepository.GetByIdAsync(messageViewResponse!.Id, CancellationToken);
 

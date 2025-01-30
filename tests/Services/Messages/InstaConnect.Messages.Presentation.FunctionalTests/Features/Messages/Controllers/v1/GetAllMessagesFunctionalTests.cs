@@ -275,12 +275,12 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
 
         var messagePaginationCollectionResponse = await response
             .Content
-            .ReadFromJsonAsync<MessagePaginationCollectionQueryResponse>();
+            .ReadFromJsonAsync<MessagePaginationQueryResponse>();
 
         // Assert
         messagePaginationCollectionResponse
             .Should()
-            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
+            .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
                                                                m.Content == MessageTestUtilities.ValidContent &&
                                                                m.SenderId == existingSenderId &&
@@ -319,12 +319,12 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
 
         var messagePaginationCollectionResponse = await response
             .Content
-            .ReadFromJsonAsync<MessagePaginationCollectionQueryResponse>();
+            .ReadFromJsonAsync<MessagePaginationQueryResponse>();
 
         // Assert
         messagePaginationCollectionResponse
             .Should()
-            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
+            .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
                                                                m.Content == MessageTestUtilities.ValidContent &&
                                                                m.SenderId == existingSenderId &&
@@ -363,12 +363,12 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
 
         var messagePaginationCollectionResponse = await response
             .Content
-            .ReadFromJsonAsync<MessagePaginationCollectionQueryResponse>();
+            .ReadFromJsonAsync<MessagePaginationQueryResponse>();
 
         // Assert
         messagePaginationCollectionResponse
             .Should()
-            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
+            .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
                                                                m.Content == MessageTestUtilities.ValidContent &&
                                                                m.SenderId == existingSenderId &&
@@ -407,12 +407,12 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
 
         var messagePaginationCollectionResponse = await response
             .Content
-            .ReadFromJsonAsync<MessagePaginationCollectionQueryResponse>();
+            .ReadFromJsonAsync<MessagePaginationQueryResponse>();
 
         // Assert
         messagePaginationCollectionResponse
             .Should()
-            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
+            .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
                                                                m.Content == MessageTestUtilities.ValidContent &&
                                                                m.SenderId == existingSenderId &&
@@ -451,12 +451,12 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
 
         var messagePaginationCollectionResponse = await response
             .Content
-            .ReadFromJsonAsync<MessagePaginationCollectionQueryResponse>();
+            .ReadFromJsonAsync<MessagePaginationQueryResponse>();
 
         // Assert
         messagePaginationCollectionResponse
             .Should()
-            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
+            .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
                                                                m.Content == MessageTestUtilities.ValidContent &&
                                                                m.SenderId == existingSenderId &&
@@ -488,12 +488,12 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
 
         var messagePaginationCollectionResponse = await response
             .Content
-            .ReadFromJsonAsync<MessagePaginationCollectionQueryResponse>();
+            .ReadFromJsonAsync<MessagePaginationQueryResponse>();
 
         // Assert
         messagePaginationCollectionResponse
             .Should()
-            .Match<MessagePaginationCollectionQueryResponse>(mc => mc.Items.All(m =>
+            .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessageId &&
                                                                m.Content == MessageTestUtilities.ValidContent &&
                                                                m.SenderId == existingSenderId &&

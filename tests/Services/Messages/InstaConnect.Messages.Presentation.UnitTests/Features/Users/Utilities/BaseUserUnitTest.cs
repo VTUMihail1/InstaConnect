@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Common.Features.Users.Utilities;
-using InstaConnect.Messages.Domain.Features.Users.Abstract;
-using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
-using InstaConnect.Messages.Presentation.Features.Users.Mappings;
+using InstaConnect.Follows.Common.Features.Users.Utilities;
+using InstaConnect.Follows.Domain.Features.Users.Abstractions;
+using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+using InstaConnect.Follows.Presentation.Features.Users.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Presentation.UnitTests.Features.Users.Utilities;
+namespace InstaConnect.Follows.Presentation.UnitTests.Features.Users.Utilities;
 
 public abstract class BaseUserUnitTest
 {
@@ -29,7 +29,7 @@ public abstract class BaseUserUnitTest
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
     }
 
-    public string CreateUser()
+    public User CreateUser()
     {
         var user = new User(
             UserTestUtilities.ValidFirstName,
@@ -43,6 +43,6 @@ public abstract class BaseUserUnitTest
             CancellationToken)
             .Returns(user);
 
-        return user.Id;
+        return user;
     }
 }

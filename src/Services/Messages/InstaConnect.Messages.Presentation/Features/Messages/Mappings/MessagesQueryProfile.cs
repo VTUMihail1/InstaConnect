@@ -27,8 +27,8 @@ internal class MessagesQueryProfile : Profile
                 src.Id,
                 src.CurrentUserId));
 
-        CreateMap<MessagePaginationQueryViewModel, MessagePaginationCollectionQueryResponse>();
+        CreateMap<MessagePaginationQueryViewModel, MessagePaginationQueryResponse>();
 
-        CreateMap<MessageQueryViewModel, MessageQueryViewResponse>();
+        CreateMap<MessageQueryViewModel, MessageQueryResponse>();
     }
 }

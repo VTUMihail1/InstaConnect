@@ -163,12 +163,12 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
 
         var messageViewResponse = await response
             .Content
-            .ReadFromJsonAsync<MessageQueryViewResponse>();
+            .ReadFromJsonAsync<MessageQueryResponse>();
 
         // Assert
         messageViewResponse
             .Should()
-            .Match<MessageQueryViewResponse>(m => m.Id == existingMessageId &&
+            .Match<MessageQueryResponse>(m => m.Id == existingMessageId &&
                                  m.Content == MessageTestUtilities.ValidContent &&
                                  m.SenderId == existingSenderId &&
                                  m.SenderName == MessageTestUtilities.ValidUserName &&
@@ -194,12 +194,12 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
 
         var messageViewResponse = await response
             .Content
-            .ReadFromJsonAsync<MessageQueryViewResponse>();
+            .ReadFromJsonAsync<MessageQueryResponse>();
 
         // Assert
         messageViewResponse
             .Should()
-            .Match<MessageQueryViewResponse>(m => m.Id == existingMessageId &&
+            .Match<MessageQueryResponse>(m => m.Id == existingMessageId &&
                                  m.Content == MessageTestUtilities.ValidContent &&
                                  m.SenderId == existingSenderId &&
                                  m.SenderName == MessageTestUtilities.ValidUserName &&

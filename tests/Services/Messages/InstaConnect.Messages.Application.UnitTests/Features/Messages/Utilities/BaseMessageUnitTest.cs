@@ -15,8 +15,16 @@ using NSubstitute;
 
 namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 
-public abstract class BaseMessageUnitTest : BaseSharedUnitTest
+public abstract class BaseMessageUnitTest
 {
+    protected IUnitOfWork UnitOfWork { get; }
+
+    protected CancellationToken CancellationToken { get; }
+
+    protected IInstaConnectMapper InstaConnectMapper { get; }
+
+    protected IEntityPropertyValidator EntityPropertyValidator { get; }
+
     protected IMessageSender MessageSender { get; }
 
     protected IUserWriteRepository UserWriteRepository { get; }
@@ -25,17 +33,18 @@ public abstract class BaseMessageUnitTest : BaseSharedUnitTest
 
     protected IMessageWriteRepository MessageWriteRepository { get; }
 
-    public BaseMessageUnitTest() : base(
-        Substitute.For<IUnitOfWork>(),
-        new InstaConnectMapper(
+    public BaseMessageUnitTest()
+    {
+        UnitOfWork = Substitute.For<IUnitOfWork>();
+        InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
                 new MapperConfiguration(cfg =>
                 {
                     cfg.AddProfile<MessageQueryProfile>();
                     cfg.AddProfile<MessageCommandProfile>();
-                }))),
-        new EntityPropertyValidator())
-    {
+                })));
+        CancellationToken = new CancellationToken();
+        EntityPropertyValidator = new EntityPropertyValidator();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         MessageSender = Substitute.For<IMessageSender>();
         MessageReadRepository = Substitute.For<IMessageReadRepository>();

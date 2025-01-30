@@ -3,6 +3,7 @@ using InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage
 using InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Application.IntegrationTests.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Message;
@@ -21,13 +22,11 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new UpdateMessageCommand(
             null!,
-            MessageTestUtilities.ValidContent,
-            existingSenderId
+            MessageTestUtilities.ValidUpdateContent,
+            existingMessage.SenderId
         );
 
         // Act
@@ -44,13 +43,11 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new UpdateMessageCommand(
             SharedTestUtilities.GetString(length),
-            MessageTestUtilities.ValidContent,
-            existingSenderId
+            MessageTestUtilities.ValidUpdateContent,
+            existingMessage.SenderId
         );
 
         // Act
@@ -64,12 +61,10 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new UpdateMessageCommand(
-            existingMessageId,
-            MessageTestUtilities.ValidContent,
+            existingMessage.Id,
+            MessageTestUtilities.ValidUpdateContent,
             null!
         );
 
@@ -82,17 +77,15 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new UpdateMessageCommand(
-            existingMessageId,
-            MessageTestUtilities.ValidContent,
+            existingMessage.Id,
+            MessageTestUtilities.ValidUpdateContent,
             SharedTestUtilities.GetString(length)
         );
 
@@ -107,13 +100,11 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenContentIsNull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new UpdateMessageCommand(
-            existingMessageId,
+            existingMessage.Id,
             null!,
-            existingSenderId
+            existingMessage.SenderId
         );
 
         // Act
@@ -130,13 +121,11 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new UpdateMessageCommand(
-            existingMessageId,
+            existingMessage.Id,
             SharedTestUtilities.GetString(length),
-            existingSenderId
+            existingMessage.SenderId
         );
 
         // Act
@@ -150,13 +139,11 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowMessageNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new UpdateMessageCommand(
             MessageTestUtilities.InvalidId,
             MessageTestUtilities.ValidUpdateContent,
-            existingSenderId
+            existingMessage.SenderId
         );
 
         // Act
@@ -170,14 +157,12 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingSenderMessageId = await CreateUserAsync(CancellationToken);
-        var existingReceiverMessageId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderMessageId, existingReceiverMessageId, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new UpdateMessageCommand(
-            existingMessageId,
-            MessageTestUtilities.ValidContent,
-            existingSenderId
+            existingMessage.Id,
+            MessageTestUtilities.ValidUpdateContent,
+            existingUser.Id
         );
 
         // Act
@@ -191,25 +176,23 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldUpdateMessage_WhenMessageIsValid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new UpdateMessageCommand(
-            existingMessageId,
+            existingMessage.Id,
             MessageTestUtilities.ValidUpdateContent,
-            existingSenderId
+            existingMessage.SenderId
         );
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var message = await MessageWriteRepository.GetByIdAsync(existingMessageId, CancellationToken);
+        var message = await MessageWriteRepository.GetByIdAsync(existingMessage.Id, CancellationToken);
 
         // Assert
         message
             .Should()
-            .Match<Message>(m => m.Id == existingMessageId &&
-                                 m.SenderId == existingSenderId &&
-                                 m.ReceiverId == existingReceiverId &&
+            .Match<Message>(m => m.Id == existingMessage.Id &&
+                                 m.SenderId == existingMessage.SenderId &&
+                                 m.ReceiverId == existingMessage.ReceiverId &&
                                  m.Content == MessageTestUtilities.ValidUpdateContent);
     }
 
@@ -217,25 +200,23 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
     public async Task SendAsync_ShouldUpdateMessage_WhenMessageIsValidAndIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new UpdateMessageCommand(
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessageId),
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
             MessageTestUtilities.ValidUpdateContent,
-            existingSenderId
+            existingMessage.SenderId
         );
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var message = await MessageWriteRepository.GetByIdAsync(existingMessageId, CancellationToken);
+        var message = await MessageWriteRepository.GetByIdAsync(existingMessage.Id, CancellationToken);
 
         // Assert
         message
             .Should()
-            .Match<Message>(m => m.Id == existingMessageId &&
-                                 m.SenderId == existingSenderId &&
-                                 m.ReceiverId == existingReceiverId &&
+            .Match<Message>(m => m.Id == existingMessage.Id &&
+                                 m.SenderId == existingMessage.SenderId &&
+                                 m.ReceiverId == existingMessage.ReceiverId &&
                                  m.Content == MessageTestUtilities.ValidUpdateContent);
     }
 }

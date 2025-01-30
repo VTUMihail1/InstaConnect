@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Messages.Application.IntegrationTests.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Domain.Features.Users.Abstract;
@@ -12,9 +13,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
 
-public abstract class BaseMessageIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
+public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
+    protected IServiceScope ServiceScope { get; }
 
+    protected CancellationToken CancellationToken { get; }
+
+    protected IInstaConnectSender InstaConnectSender { get; }
 
     protected IUserWriteRepository UserWriteRepository
     {
@@ -50,17 +55,20 @@ public abstract class BaseMessageIntegrationTest : BaseSharedIntegrationTest, IC
     }
 
     protected BaseMessageIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
-        : base(integrationTestWebAppFactory.Services.CreateScope())
     {
-
+        ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
+        CancellationToken = new CancellationToken();
+        InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
     }
 
-    protected async Task<string> CreateMessageAsync(string senderId, string receiverId, CancellationToken cancellationToken)
+    protected async Task<Message> CreateMessageAsync(CancellationToken cancellationToken)
     {
+        var sender = await CreateUserAsync(cancellationToken);
+        var receiver = await CreateUserAsync(cancellationToken);
         var message = new Message(
             MessageTestUtilities.ValidContent,
-            senderId,
-            receiverId);
+            sender.Id,
+            receiver.Id);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var messageWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();
@@ -68,17 +76,17 @@ public abstract class BaseMessageIntegrationTest : BaseSharedIntegrationTest, IC
         messageWriteRepository.Add(message);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return message.Id;
+        return message;
     }
 
-    protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            MessageTestUtilities.ValidUserFirstName,
-            MessageTestUtilities.ValidUserLastName,
-            MessageTestUtilities.ValidUserEmail,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidUserProfileImage);
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
@@ -86,7 +94,7 @@ public abstract class BaseMessageIntegrationTest : BaseSharedIntegrationTest, IC
         userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return user.Id;
+        return user;
     }
 
     public async Task InitializeAsync()

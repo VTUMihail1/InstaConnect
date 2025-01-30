@@ -4,6 +4,7 @@ using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages
 using InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Application.IntegrationTests.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Utilities;
 
@@ -19,11 +20,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
             null!,
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -38,16 +39,16 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
             SharedTestUtilities.GetString(length),
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -61,16 +62,16 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     }
 
     [Theory]
-    [InlineData(MessageConfigurations.RECEIVER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageConfigurations.RECEIVER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
+            existingMessage.Id,
             SharedTestUtilities.GetString(length),
-            MessageTestUtilities.ValidUserName,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -84,16 +85,15 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     }
 
     [Theory]
-    [InlineData(MessageConfigurations.RECEIVER_NAME_MIN_LENGTH - 1)]
-    [InlineData(MessageConfigurations.RECEIVER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
-            existingReceiverId,
+            existingMessage.Id,
+            existingMessage.ReceiverId,
             SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
@@ -111,12 +111,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameIsNull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.Id,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             null!,
             MessageTestUtilities.ValidPageValue,
@@ -133,12 +132,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenMessageDoesNotContaintSortPropertyName()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.Id,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.InvalidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -158,12 +156,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.Id,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidPageValue,
@@ -182,12 +179,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.Id,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             value,
@@ -206,12 +202,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.Id,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -228,13 +223,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenCurrentUserIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            SharedTestUtilities.GetNonCaseMatchingString(existingSenderId),
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -246,13 +239,13 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         // Assert
         response
             .Should()
-            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
-                                                                    m.SenderId == existingSenderId &&
-                                                                    m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                                    m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                                    m.ReceiverId == existingReceiverId &&
-                                                                    m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                                    m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
+                                                                    m.SenderId == existingMessage.Id &&
+                                                                    m.SenderName == UserTestUtilities.ValidName &&
+                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.ReceiverId == existingMessage.ReceiverId &&
+                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
+                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
@@ -265,13 +258,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenReceiverIdIsNull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
+            existingMessage.Id,
             null!,
-            MessageTestUtilities.ValidUserName,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -283,13 +274,13 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         // Assert
         response
             .Should()
-            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
-                                                                    m.SenderId == existingSenderId &&
-                                                                    m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                                    m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                                    m.ReceiverId == existingReceiverId &&
-                                                                    m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                                    m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
+                                                                    m.SenderId == existingMessage.Id &&
+                                                                    m.SenderName == UserTestUtilities.ValidName &&
+                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.ReceiverId == existingMessage.ReceiverId &&
+                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
+                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
@@ -302,13 +293,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenReceiverIdIsEmpty()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
+            existingMessage.Id,
             string.Empty,
-            MessageTestUtilities.ValidUserName,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -320,13 +309,13 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         // Assert
         response
             .Should()
-            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
-                                                                    m.SenderId == existingSenderId &&
-                                                                    m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                                    m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                                    m.ReceiverId == existingReceiverId &&
-                                                                    m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                                    m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
+                                                                    m.SenderId == existingMessage.Id &&
+                                                                    m.SenderName == UserTestUtilities.ValidName &&
+                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.ReceiverId == existingMessage.ReceiverId &&
+                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
+                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
@@ -339,13 +328,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenReceiverIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingReceiverId),
-            MessageTestUtilities.ValidUserName,
+            existingMessage.Id,
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.ReceiverId),
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -357,13 +344,13 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         // Assert
         response
             .Should()
-            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
-                                                                    m.SenderId == existingSenderId &&
-                                                                    m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                                    m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                                    m.ReceiverId == existingReceiverId &&
-                                                                    m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                                    m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
+                                                                    m.SenderId == existingMessage.Id &&
+                                                                    m.SenderName == UserTestUtilities.ValidName &&
+                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.ReceiverId == existingMessage.ReceiverId &&
+                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
+                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
@@ -376,12 +363,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenReceiverNameIsNull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
-            existingReceiverId,
+            existingMessage.Id,
+            existingMessage.ReceiverId,
             null!,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
@@ -394,13 +379,13 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         // Assert
         response
             .Should()
-            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
-                                                                    m.SenderId == existingSenderId &&
-                                                                    m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                                    m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                                    m.ReceiverId == existingReceiverId &&
-                                                                    m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                                    m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
+                                                                    m.SenderId == existingMessage.Id &&
+                                                                    m.SenderName == UserTestUtilities.ValidName &&
+                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.ReceiverId == existingMessage.ReceiverId &&
+                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
+                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
@@ -413,12 +398,10 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenReceiverNameIsEmpty()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
-            existingReceiverId,
+            existingMessage.Id,
+            existingMessage.ReceiverId,
             string.Empty,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
@@ -431,13 +414,13 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         // Assert
         response
             .Should()
-            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
-                                                                    m.SenderId == existingSenderId &&
-                                                                    m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                                    m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                                    m.ReceiverId == existingReceiverId &&
-                                                                    m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                                    m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
+                                                                    m.SenderId == existingMessage.Id &&
+                                                                    m.SenderName == UserTestUtilities.ValidName &&
+                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.ReceiverId == existingMessage.ReceiverId &&
+                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
+                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
@@ -450,13 +433,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenReceiverNameCaseDoesNotMatch()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
-            existingReceiverId,
-            SharedTestUtilities.GetNonCaseMatchingString(MessageTestUtilities.ValidUserName),
+            existingMessage.Id,
+            existingMessage.ReceiverId,
+            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -468,13 +449,13 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         // Assert
         response
             .Should()
-            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
-                                                                    m.SenderId == existingSenderId &&
-                                                                    m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                                    m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                                    m.ReceiverId == existingReceiverId &&
-                                                                    m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                                    m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
+                                                                    m.SenderId == existingMessage.Id &&
+                                                                    m.SenderName == UserTestUtilities.ValidName &&
+                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.ReceiverId == existingMessage.ReceiverId &&
+                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
+                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
@@ -487,13 +468,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenReceiverNameIsNotFull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
-            existingReceiverId,
-            SharedTestUtilities.GetHalfStartString(MessageTestUtilities.ValidUserName),
+            existingMessage.Id,
+            existingMessage.ReceiverId,
+            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -505,13 +484,13 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         // Assert
         response
             .Should()
-            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
-                                                                    m.SenderId == existingSenderId &&
-                                                                    m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                                    m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                                    m.ReceiverId == existingReceiverId &&
-                                                                    m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                                    m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
+                                                                    m.SenderId == existingMessage.Id &&
+                                                                    m.SenderName == UserTestUtilities.ValidName &&
+                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.ReceiverId == existingMessage.ReceiverId &&
+                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
+                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
@@ -524,13 +503,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     public async Task SendAsync_ShouldReturnMessageViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            existingSenderId,
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
+            existingMessage.Id,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -542,13 +519,13 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         // Assert
         response
             .Should()
-            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessageId &&
-                                                                    m.SenderId == existingSenderId &&
-                                                                    m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                                    m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                                    m.ReceiverId == existingReceiverId &&
-                                                                    m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                                    m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage &&
+            .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
+                                                                    m.SenderId == existingMessage.Id &&
+                                                                    m.SenderName == UserTestUtilities.ValidName &&
+                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.ReceiverId == existingMessage.ReceiverId &&
+                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
+                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Content == MessageTestUtilities.ValidContent) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&

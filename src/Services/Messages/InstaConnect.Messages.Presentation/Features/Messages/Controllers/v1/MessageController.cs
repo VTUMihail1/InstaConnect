@@ -37,13 +37,13 @@ public class MessageController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<MessagePaginationCollectionQueryResponse>> GetAllAsync(
+    public async Task<ActionResult<MessagePaginationQueryResponse>> GetAllAsync(
         GetAllMessagesRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllMessagesQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<MessagePaginationCollectionQueryResponse>(queryResponse);
+        var response = _instaConnectMapper.Map<MessagePaginationQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -52,13 +52,13 @@ public class MessageController : ControllerBase
     [HttpGet(MessageRoutes.Id)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<MessageQueryViewResponse>> GetByIdAsync(
+    public async Task<ActionResult<MessageQueryResponse>> GetByIdAsync(
         GetMessageByIdRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetMessageByIdQuery>(request);
         var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<MessageQueryViewResponse>(queryResponse);
+        var response = _instaConnectMapper.Map<MessageQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -68,13 +68,13 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<MessageCommandViewResponse>> AddAsync(
+    public async Task<ActionResult<MessageCommandResponse>> AddAsync(
         AddMessageRequest request, 
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<AddMessageCommand>(request);
         var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<MessageCommandViewResponse>(commandResponse);
+        var response = _instaConnectMapper.Map<MessageCommandResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -84,13 +84,13 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<MessageCommandViewResponse>> UpdateAsync(
+    public async Task<ActionResult<MessageCommandResponse>> UpdateAsync(
         UpdateMessageRequest request, 
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<UpdateMessageCommand>(request);
         var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<MessageCommandViewResponse>(commandResponse);
+        var response = _instaConnectMapper.Map<MessageCommandResponse>(commandResponse);
 
         return Ok(response);
     }
