@@ -158,13 +158,15 @@ public class MessagesClient : IMessagesClient
         UpdateMessageRequest request,
         CancellationToken cancellationToken)
     {
+        var route = IdRoute(request.Id);
+
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
             {
                 { ClaimTypes.NameIdentifier, request.CurrentUserId }
             });
 
         var response = await _httpClient
-            .PostAsJsonAsync(MessageTestRoutes.Default, request.UpdateMessageBindingModel, cancellationToken);
+            .PutAsJsonAsync(route, request.UpdateMessageBindingModel, cancellationToken);
 
         return response.StatusCode;
     }
@@ -173,8 +175,10 @@ public class MessagesClient : IMessagesClient
         UpdateMessageRequest request,
         CancellationToken cancellationToken)
     {
+        var route = IdRoute(request.Id);
+
         var response = await _httpClient
-            .PostAsJsonAsync(MessageTestRoutes.Default, request.UpdateMessageBindingModel, cancellationToken);
+            .PutAsJsonAsync(route, request.UpdateMessageBindingModel, cancellationToken);
 
         return response.StatusCode;
     }
@@ -183,13 +187,15 @@ public class MessagesClient : IMessagesClient
         UpdateMessageRequest request,
         CancellationToken cancellationToken)
     {
+        var route = IdRoute(request.Id);
+
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
         {
             { ClaimTypes.NameIdentifier, request.CurrentUserId }
         });
 
         var httpResponseMessage = await _httpClient
-            .PostAsJsonAsync(MessageTestRoutes.Default, request.UpdateMessageBindingModel, cancellationToken);
+            .PutAsJsonAsync(route, request.UpdateMessageBindingModel, cancellationToken);
         var response = await httpResponseMessage.Content.ReadFromJsonAsync<MessageCommandResponse>(cancellationToken);
 
         return response!;

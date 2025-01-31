@@ -26,6 +26,13 @@ public class FollowsClient : IFollowsClient
         return response.StatusCode;
     }
 
+    public async Task<HttpStatusCode> GetAllStatusCodeAsync(CancellationToken cancellationToken)
+    {
+        var response = await _httpClient.GetAsync(FollowTestRoutes.Default, cancellationToken);
+
+        return response.StatusCode;
+    }
+
     public async Task<FollowPaginationQueryResponse> GetAllAsync(
         GetAllFollowsRequest request,
         CancellationToken cancellationToken)
@@ -33,6 +40,14 @@ public class FollowsClient : IFollowsClient
         var route = GetAllRoute(request);
         var response = await _httpClient
             .GetFromJsonAsync<FollowPaginationQueryResponse>(route, cancellationToken);
+
+        return response!;
+    }
+
+    public async Task<FollowPaginationQueryResponse> GetAllAsync(CancellationToken cancellationToken)
+    {
+        var response = await _httpClient
+            .GetFromJsonAsync<FollowPaginationQueryResponse>(FollowTestRoutes.Default, cancellationToken);
 
         return response!;
     }
@@ -140,13 +155,8 @@ public class FollowsClient : IFollowsClient
         await _httpClient.DeleteAsync(route, cancellationToken);
     }
 
-    private string GetAllRoute(GetAllFollowsRequest? request)
+    private string GetAllRoute(GetAllFollowsRequest request)
     {
-        if (request == null)
-        {
-            return FollowTestRoutes.Default;
-        }
-
         var route = string.Format(
             FollowTestRoutes.GetAll,
             request.FollowerId,

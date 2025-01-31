@@ -37,7 +37,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
 
         // Act
-        var response = MessagesClient.GetAllStatusCodeUnauthorizedAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllStatusCodeUnauthorizedAsync(request, CancellationToken);
 
         // Assert
         response
@@ -62,7 +62,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
 
         // Act
-        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -89,7 +89,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
 
         // Act
-        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -116,7 +116,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
 
         // Act
-        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -141,7 +141,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
 
         // Act
-        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -168,7 +168,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
 
         // Act
-        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -195,7 +195,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
 
         // Act
-        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -224,7 +224,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
 
         // Act
-        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -249,7 +249,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
 
         // Act
-        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -274,7 +274,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
 
         // Act
-        var response = MessagesClient.GetAllAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -312,7 +312,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
         
         // Act
-        var response = MessagesClient.GetAllAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -350,7 +350,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
 
         // Act
-        var response = MessagesClient.GetAllAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -388,7 +388,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
 
         // Act
-        var response = MessagesClient.GetAllAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -426,7 +426,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         };
 
         // Act
-        var response = MessagesClient.GetAllAsync(request, CancellationToken);
+        var response = await MessagesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -454,7 +454,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessage = await CreateMessageAsync(CancellationToken);
 
         // Act
-        var response = MessagesClient.GetAllAsync(existingMessage.SenderId, CancellationToken);
+        var response = await MessagesClient.GetAllAsync(existingMessage.SenderId, CancellationToken);
 
         // Assert
         response

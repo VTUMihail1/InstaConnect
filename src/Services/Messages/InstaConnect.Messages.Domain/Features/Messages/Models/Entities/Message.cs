@@ -22,7 +22,7 @@ public class Message : BaseEntity
         Receiver = receiver;
     }
 
-    public string Content { get; }
+    public string Content { get; set; }
 
     public string SenderId { get; }
 

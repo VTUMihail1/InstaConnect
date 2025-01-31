@@ -272,7 +272,7 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new UpdateMessageRequest
         {
-            Id = existingMessage.Id,
+            Id = SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
             CurrentUserId = existingMessage.SenderId,
             UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
         };

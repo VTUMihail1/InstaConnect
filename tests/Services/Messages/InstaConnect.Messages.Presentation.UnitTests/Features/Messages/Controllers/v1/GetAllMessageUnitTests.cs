@@ -36,6 +36,7 @@ public class GetAllMessageUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var request = new GetAllMessagesRequest()
         {
+            CurrentUserId = existingMessage.SenderId,
             ReceiverId = existingMessage.ReceiverId,
             ReceiverName = UserTestUtilities.ValidName,
             SortOrder = MessageTestUtilities.ValidSortOrderProperty,
@@ -61,6 +62,7 @@ public class GetAllMessageUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var request = new GetAllMessagesRequest()
         {
+            CurrentUserId = existingMessage.SenderId,
             ReceiverId = existingMessage.ReceiverId,
             ReceiverName = UserTestUtilities.ValidName,
             SortOrder = MessageTestUtilities.ValidSortOrderProperty,
@@ -102,6 +104,7 @@ public class GetAllMessageUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var request = new GetAllMessagesRequest()
         {
+            CurrentUserId = existingMessage.SenderId,
             ReceiverId = existingMessage.ReceiverId,
             ReceiverName = UserTestUtilities.ValidName,
             SortOrder = MessageTestUtilities.ValidSortOrderProperty,

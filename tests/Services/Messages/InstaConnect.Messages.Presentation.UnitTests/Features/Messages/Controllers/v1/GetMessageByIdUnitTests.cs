@@ -56,7 +56,8 @@ public class GetMessageByIdUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var request = new GetMessageByIdRequest()
         {
-            Id = existingMessage.Id
+            Id = existingMessage.Id,
+            CurrentUserId = existingMessage.SenderId
         };
 
         // Act
@@ -86,7 +87,8 @@ public class GetMessageByIdUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var request = new GetMessageByIdRequest()
         {
-            Id = existingMessage.Id
+            Id = existingMessage.Id,
+            CurrentUserId = existingMessage.SenderId
         };
 
         // Act

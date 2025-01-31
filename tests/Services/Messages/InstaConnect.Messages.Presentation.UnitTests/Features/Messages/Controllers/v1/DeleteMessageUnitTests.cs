@@ -27,7 +27,8 @@ public class DeleteMessageUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var request = new DeleteMessageRequest()
         {
-            Id = existingMessage.Id
+            Id = existingMessage.Id,
+            CurrentUserId = existingMessage.SenderId,
         };
 
         // Act
@@ -46,7 +47,8 @@ public class DeleteMessageUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var request = new DeleteMessageRequest()
         {
-            Id = existingMessage.Id
+            Id = existingMessage.Id,
+            CurrentUserId = existingMessage.SenderId,
         };
 
         // Act

@@ -31,6 +31,7 @@ public class UpdateMessageUnitTests : BaseMessageUnitTest
         var request = new UpdateMessageRequest()
         {
             Id = existingMessage.Id,
+            CurrentUserId = existingMessage.SenderId,
             UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
         };
 
@@ -52,6 +53,7 @@ public class UpdateMessageUnitTests : BaseMessageUnitTest
         var request = new UpdateMessageRequest()
         {
             Id = existingMessage.Id,
+            CurrentUserId = existingMessage.SenderId,
             UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
         };
 
@@ -76,6 +78,7 @@ public class UpdateMessageUnitTests : BaseMessageUnitTest
         var request = new UpdateMessageRequest()
         {
             Id = existingMessage.Id,
+            CurrentUserId = existingMessage.SenderId,
             UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
         };
 

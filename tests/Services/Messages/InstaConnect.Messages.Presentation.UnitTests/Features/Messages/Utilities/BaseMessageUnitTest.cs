@@ -89,7 +89,9 @@ public abstract class BaseMessageUnitTest
             .Returns(messagePaginationCollectionModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Is<GetMessageByIdQuery>(m => m.Id == message.Id), CancellationToken)
+            .SendAsync(Arg.Is<GetMessageByIdQuery>(m => 
+                  m.Id == message.Id &&
+                  m.CurrentUserId == sender.Id), CancellationToken)
             .Returns(messageQueryViewModel);
 
         InstaConnectSender

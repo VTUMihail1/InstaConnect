@@ -36,6 +36,7 @@ public class AddMessageUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var request = new AddMessageRequest()
         {
+            CurrentUserId = existingMessage.SenderId,
             AddMessageBindingModel = new AddMessageBindingModel(existingMessage.ReceiverId, MessageTestUtilities.ValidAddContent)
         };
 
@@ -56,6 +57,7 @@ public class AddMessageUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var request = new AddMessageRequest()
         {
+            CurrentUserId = existingMessage.SenderId,
             AddMessageBindingModel = new AddMessageBindingModel(existingMessage.ReceiverId, MessageTestUtilities.ValidAddContent)
         };
 
@@ -79,6 +81,7 @@ public class AddMessageUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var request = new AddMessageRequest()
         {
+            CurrentUserId = existingMessage.SenderId,
             AddMessageBindingModel = new AddMessageBindingModel(existingMessage.ReceiverId, MessageTestUtilities.ValidAddContent)
         };
 

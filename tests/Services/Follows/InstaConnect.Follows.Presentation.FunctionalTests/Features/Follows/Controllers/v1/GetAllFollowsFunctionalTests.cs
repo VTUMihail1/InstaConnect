@@ -394,10 +394,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var request = new GetAllFollowsRequest();
 
         // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await FollowsClient.GetAllStatusCodeAsync(CancellationToken);
 
         // Assert
         response
@@ -628,10 +627,9 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var request = new GetAllFollowsRequest();
 
         // Act
-        var response = await FollowsClient.GetAllAsync(request, CancellationToken);
+        var response = await FollowsClient.GetAllAsync(CancellationToken);
 
         // Assert
         response

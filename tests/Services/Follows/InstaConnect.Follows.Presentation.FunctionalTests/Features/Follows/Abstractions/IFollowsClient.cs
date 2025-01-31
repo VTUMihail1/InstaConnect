@@ -12,7 +12,9 @@ public interface IFollowsClient
     Task<HttpStatusCode> DeleteStatusCodeAsync(DeleteFollowRequest request, CancellationToken cancellationToken);
     Task<HttpStatusCode> DeleteStatusCodeUnauthorizedAsync(DeleteFollowRequest request, CancellationToken cancellationToken);
     Task<FollowPaginationQueryResponse> GetAllAsync(GetAllFollowsRequest request, CancellationToken cancellationToken);
+    Task<FollowPaginationQueryResponse> GetAllAsync(CancellationToken cancellationToken);
     Task<HttpStatusCode> GetAllStatusCodeAsync(GetAllFollowsRequest request, CancellationToken cancellationToken);
+    Task<HttpStatusCode> GetAllStatusCodeAsync(CancellationToken cancellationToken);
     Task<FollowQueryResponse> GetByIdAsync(GetFollowByIdRequest request, CancellationToken cancellationToken);
     Task<HttpStatusCode> GetByIdStatusCodeAsync(GetFollowByIdRequest request, CancellationToken cancellationToken);
 }
