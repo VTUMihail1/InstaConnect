@@ -16,10 +16,25 @@ public class MessagesClient : IMessagesClient
         _httpClient = httpClient;
     }
 
+    public async Task<HttpStatusCode> GetAllStatusCodeUnauthorizedAsync(
+        GetAllMessagesRequest request,
+        CancellationToken cancellationToken)
+    {
+        var route = GetAllRoute(request);
+        var response = await _httpClient.GetAsync(route, cancellationToken);
+
+        return response.StatusCode;
+    }
+
     public async Task<HttpStatusCode> GetAllStatusCodeAsync(
         GetAllMessagesRequest request,
         CancellationToken cancellationToken)
     {
+        _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
+        {
+            { ClaimTypes.NameIdentifier, request.CurrentUserId }
+        });
+
         var route = GetAllRoute(request);
         var response = await _httpClient.GetAsync(route, cancellationToken);
 
@@ -30,9 +45,29 @@ public class MessagesClient : IMessagesClient
         GetAllMessagesRequest request,
         CancellationToken cancellationToken)
     {
+        _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
+        {
+            { ClaimTypes.NameIdentifier, request.CurrentUserId }
+        });
+
         var route = GetAllRoute(request);
         var response = await _httpClient
             .GetFromJsonAsync<MessagePaginationQueryResponse>(route, cancellationToken);
+
+        return response!;
+    }
+
+    public async Task<MessagePaginationQueryResponse> GetAllAsync(
+        string currentUserId,
+        CancellationToken cancellationToken)
+    {
+        _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
+        {
+            { ClaimTypes.NameIdentifier, currentUserId }
+        });
+
+        var response = await _httpClient
+            .GetFromJsonAsync<MessagePaginationQueryResponse>(MessageTestRoutes.Default, cancellationToken);
 
         return response!;
     }
@@ -41,6 +76,11 @@ public class MessagesClient : IMessagesClient
         GetMessageByIdRequest request,
         CancellationToken cancellationToken)
     {
+        _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
+        {
+            { ClaimTypes.NameIdentifier, request.CurrentUserId }
+        });
+
         var route = IdRoute(request.Id);
         var response = await _httpClient.GetAsync(route, cancellationToken);
 
@@ -51,11 +91,26 @@ public class MessagesClient : IMessagesClient
         GetMessageByIdRequest request,
         CancellationToken cancellationToken)
     {
+        _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
+        {
+            { ClaimTypes.NameIdentifier, request.CurrentUserId }
+        });
+
         var route = IdRoute(request.Id);
         var response = await _httpClient
             .GetFromJsonAsync<MessageQueryResponse>(route, cancellationToken);
 
         return response!;
+    }
+
+    public async Task<HttpStatusCode> GetByIdStatusCodeUnathorizedAsync(
+        GetMessageByIdRequest request,
+        CancellationToken cancellationToken)
+    {
+        var route = IdRoute(request.Id);
+        var response = await _httpClient.GetAsync(route, cancellationToken);
+
+        return response.StatusCode;
     }
 
     public async Task<HttpStatusCode> AddStatusCodeAsync(
@@ -181,13 +236,8 @@ public class MessagesClient : IMessagesClient
         await _httpClient.DeleteAsync(route, cancellationToken);
     }
 
-    private string GetAllRoute(GetAllMessagesRequest? request)
+    private string GetAllRoute(GetAllMessagesRequest request)
     {
-        if (request == null)
-        {
-            return MessageTestRoutes.Default;
-        }
-
         var route = string.Format(
             MessageTestRoutes.GetAll,
             request.ReceiverId,

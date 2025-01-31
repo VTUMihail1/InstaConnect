@@ -51,7 +51,7 @@ public class GetAllMessageUnitTests : BaseMessageUnitTest
         response
             .Result
             .Should()
-            .Match<OkObjectResult>(m => m.StatusCode == StatusCodes.Status200OK));
+            .Match<OkObjectResult>(m => m.StatusCode == StatusCodes.Status200OK);
     }
 
     [Fact]

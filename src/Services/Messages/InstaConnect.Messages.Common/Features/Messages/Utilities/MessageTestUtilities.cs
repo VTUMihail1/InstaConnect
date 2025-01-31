@@ -1,4 +1,5 @@
-﻿using InstaConnect.Shared.Common.Models.Enums;
+﻿using InstaConnect.Messages.Common.Features.Users.Utilities;
+using InstaConnect.Shared.Common.Models.Enums;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Messages.Common.Features.Messages.Utilities;
@@ -6,7 +7,7 @@ namespace InstaConnect.Messages.Common.Features.Messages.Utilities;
 public class MessageTestUtilities : SharedTestUtilities
 {
     public static readonly string InvalidId = GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength);
-    public static readonly string InvalidUserId = GetAverageString(MessageConfigurations.RECEIVER_ID_MAX_LENGTH, MessageConfigurations.RECEIVER_ID_MIN_LENGTH);
+    public static readonly string InvalidUserId = GetAverageString(UserConfigurations.IdMaxLength,  UserConfigurations.IdMinLength);
     
     public static readonly string ValidContent = GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength);
     public static readonly string ValidAddContent = GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength);

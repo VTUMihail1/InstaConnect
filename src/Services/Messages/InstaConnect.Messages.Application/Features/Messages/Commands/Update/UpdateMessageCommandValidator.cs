@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 
 namespace InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
 public class UpdateMessageCommandValidator : AbstractValidator<UpdateMessageCommand>
@@ -13,8 +14,8 @@ public class UpdateMessageCommandValidator : AbstractValidator<UpdateMessageComm
 
         RuleFor(c => c.CurrentUserId)
             .NotEmpty()
-            .MinimumLength(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH)
-            .MaximumLength(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH);
+            .MinimumLength(UserConfigurations.IdMinLength)
+            .MaximumLength(UserConfigurations.IdMaxLength);
 
         RuleFor(c => c.Content)
             .NotEmpty()

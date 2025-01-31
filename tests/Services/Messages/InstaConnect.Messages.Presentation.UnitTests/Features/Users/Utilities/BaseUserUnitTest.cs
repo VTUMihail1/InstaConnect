@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Domain.Features.Users.Abstractions;
-using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
-using InstaConnect.Follows.Presentation.Features.Users.Mappings;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
+using InstaConnect.Messages.Domain.Features.Users.Abstract;
+using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
+using InstaConnect.Messages.Presentation.Features.Users.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
 using NSubstitute;

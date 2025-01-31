@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 
 namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetMessageById;
 
@@ -14,7 +15,7 @@ public class GetMessageByIdQueryValidator : AbstractValidator<GetMessageByIdQuer
 
         RuleFor(q => q.CurrentUserId)
             .NotEmpty()
-            .MinimumLength(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH)
-            .MaximumLength(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH);
+            .MinimumLength(UserConfigurations.IdMinLength)
+            .MaximumLength(UserConfigurations.IdMaxLength);
     }
 }

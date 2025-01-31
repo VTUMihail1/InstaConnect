@@ -3,6 +3,8 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
+using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
 using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
 using InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Presentation.FunctionalTests.Utilities;
@@ -21,15 +23,20 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
     public async Task GetByIdAsync_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetMessageByIdRequest
+        {
+            Id = existingMessage.Id,
+            CurrentUserId = existingMessage.SenderId
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(existingMessageId), CancellationToken);
+        var response = await MessagesClient.GetByIdStatusCodeUnathorizedAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Unauthorized);
+        response
+            .Should()
+            .Be(HttpStatusCode.Unauthorized);
     }
 
     [Theory]
@@ -38,57 +45,63 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetMessageByIdRequest
+        {
+            Id = SharedTestUtilities.GetString(length),
+            CurrentUserId = existingMessage.SenderId
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetString(length)), CancellationToken);
+        var response = await MessagesClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIsNull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetMessageByIdRequest
+        {
+            Id = existingMessage.Id,
+            CurrentUserId = null!
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetIdRoute(existingMessageId), CancellationToken);
+        var response = await MessagesClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetMessageByIdRequest
+        {
+            Id = existingMessage.Id,
+            CurrentUserId = SharedTestUtilities.GetString(length)
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetIdRoute(existingMessageId), CancellationToken);
+        var response = await MessagesClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
 
@@ -96,116 +109,114 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetMessageByIdRequest
+        {
+            Id = MessageTestUtilities.InvalidId,
+            CurrentUserId = existingMessage.SenderId
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetIdRoute(MessageTestUtilities.InvalidId), CancellationToken);
+        var response = await MessagesClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
+        response
+            .Should()
+            .Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdCurrentUserIdDoesNotOwnMessage()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingMessageSenderId = await CreateUserAsync(CancellationToken);
-        var existingMessageReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingMessageSenderId, existingMessageReceiverId, CancellationToken);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetMessageByIdRequest
+        {
+            Id = existingMessage.Id,
+            CurrentUserId = existingUser.Id
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetIdRoute(existingMessageId), CancellationToken);
+        var response = await MessagesClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Forbidden);
+        response
+            .Should()
+            .Be(HttpStatusCode.Forbidden);
     }
 
     [Fact]
     public async Task GetByIdAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetMessageByIdRequest
+        {
+            Id = existingMessage.Id,
+            CurrentUserId = existingMessage.SenderId
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetIdRoute(existingMessageId), CancellationToken);
+        var response = await MessagesClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        response
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task GetByIdAsync_ShouldReturnMessageViewResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetMessageByIdRequest
+        {
+            Id = existingMessage.Id,
+            CurrentUserId = existingMessage.SenderId
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetIdRoute(existingMessageId), CancellationToken);
-
-        var messageViewResponse = await response
-            .Content
-            .ReadFromJsonAsync<MessageQueryResponse>();
+        var response = await MessagesClient.GetByIdAsync(request, CancellationToken);
 
         // Assert
-        messageViewResponse
+        response
             .Should()
-            .Match<MessageQueryResponse>(m => m.Id == existingMessageId &&
+            .Match<MessageQueryResponse>(m => m.Id == existingMessage.Id &&
                                  m.Content == MessageTestUtilities.ValidContent &&
-                                 m.SenderId == existingSenderId &&
-                                 m.SenderName == MessageTestUtilities.ValidUserName &&
-                                 m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                 m.ReceiverId == existingReceiverId &&
-                                 m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                 m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage);
+                                 m.SenderId == existingMessage.SenderId &&
+                                 m.SenderName == UserTestUtilities.ValidName &&
+                                 m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                 m.ReceiverId == existingMessage.ReceiverId &&
+                                 m.ReceiverName == UserTestUtilities.ValidName &&
+                                 m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage);
     }
 
     [Fact]
     public async Task GetByIdAsync_ShouldReturnMessageViewResponse_WhenRequestIsValidAndIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetMessageByIdRequest
+        {
+            Id = SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
+            CurrentUserId = existingMessage.SenderId
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingMessageId)), CancellationToken);
-
-        var messageViewResponse = await response
-            .Content
-            .ReadFromJsonAsync<MessageQueryResponse>();
+        var response = await MessagesClient.GetByIdAsync(request, CancellationToken);
 
         // Assert
-        messageViewResponse
+        response
             .Should()
-            .Match<MessageQueryResponse>(m => m.Id == existingMessageId &&
+            .Match<MessageQueryResponse>(m => m.Id == existingMessage.Id &&
                                  m.Content == MessageTestUtilities.ValidContent &&
-                                 m.SenderId == existingSenderId &&
-                                 m.SenderName == MessageTestUtilities.ValidUserName &&
-                                 m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                 m.ReceiverId == existingReceiverId &&
-                                 m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                 m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage);
+                                 m.SenderId == existingMessage.SenderId &&
+                                 m.SenderName == UserTestUtilities.ValidName &&
+                                 m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                 m.ReceiverId == existingMessage.ReceiverId &&
+                                 m.ReceiverName == UserTestUtilities.ValidName &&
+                                 m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage);
     }
 }

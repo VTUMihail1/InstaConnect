@@ -3,6 +3,8 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
+using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
 using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
 using InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Presentation.FunctionalTests.Utilities;
@@ -22,126 +24,129 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     public async Task GetAllAsync_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidSortOrderProperty,
-            MessageTestUtilities.ValidSortPropertyName,
-            MessageTestUtilities.ValidPageValue,
-            MessageTestUtilities.ValidPageSizeValue);
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = existingMessage.SenderId,
+            ReceiverId = existingMessage.ReceiverId,
+            ReceiverName = UserTestUtilities.ValidName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
+        };
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = MessagesClient.GetAllStatusCodeUnauthorizedAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Unauthorized);
+        response
+            .Should()
+            .Be(HttpStatusCode.Unauthorized);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIsNull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidSortOrderProperty,
-            MessageTestUtilities.ValidSortPropertyName,
-            MessageTestUtilities.ValidPageValue,
-            MessageTestUtilities.ValidPageSizeValue);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = null!,
+            ReceiverId = existingMessage.ReceiverId,
+            ReceiverName = UserTestUtilities.ValidName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
-    [InlineData(MessageConfigurations.RECEIVER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageConfigurations.RECEIVER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenReceiverIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            SharedTestUtilities.GetString(length),
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidSortOrderProperty,
-            MessageTestUtilities.ValidSortPropertyName,
-            MessageTestUtilities.ValidPageValue,
-            MessageTestUtilities.ValidPageSizeValue);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = existingMessage.SenderId,
+            ReceiverId = SharedTestUtilities.GetString(length),
+            ReceiverName = UserTestUtilities.ValidName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
-    [InlineData(MessageConfigurations.RECEIVER_NAME_MIN_LENGTH - 1)]
-    [InlineData(MessageConfigurations.RECEIVER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenReceiverNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            existingReceiverId,
-            SharedTestUtilities.GetString(length),
-            MessageTestUtilities.ValidSortOrderProperty,
-            MessageTestUtilities.ValidSortPropertyName,
-            MessageTestUtilities.ValidPageValue,
-            MessageTestUtilities.ValidPageSizeValue);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = existingMessage.SenderId,
+            ReceiverId = existingMessage.ReceiverId,
+            ReceiverName = SharedTestUtilities.GetString(length),
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenMessageDoesNotContainProperty()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidSortOrderProperty,
-            MessageTestUtilities.InvalidSortPropertyName,
-            MessageTestUtilities.ValidPageValue,
-            MessageTestUtilities.ValidPageSizeValue);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = existingMessage.SenderId,
+            ReceiverId = existingMessage.ReceiverId,
+            ReceiverName = UserTestUtilities.ValidName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.InvalidSortPropertyName
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -150,25 +155,25 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
-            MessageTestUtilities.ValidPageValue,
-            MessageTestUtilities.ValidPageSizeValue);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = existingMessage.SenderId,
+            ReceiverId = existingMessage.ReceiverId,
+            ReceiverName = UserTestUtilities.ValidName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = SharedTestUtilities.GetString(length)
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -177,25 +182,25 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidSortOrderProperty,
-            MessageTestUtilities.ValidSortPropertyName,
-            value,
-            MessageTestUtilities.ValidPageSizeValue);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = existingMessage.SenderId,
+            ReceiverId = existingMessage.ReceiverId,
+            ReceiverName = UserTestUtilities.ValidName,
+            Page = value,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
 
@@ -206,89 +211,83 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidSortOrderProperty,
-            MessageTestUtilities.ValidSortPropertyName,
-            MessageTestUtilities.ValidPageValue,
-            value);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = existingMessage.SenderId,
+            ReceiverId = existingMessage.ReceiverId,
+            ReceiverName = UserTestUtilities.ValidName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = value,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidSortOrderProperty,
-            MessageTestUtilities.ValidSortPropertyName,
-            MessageTestUtilities.ValidPageValue,
-            MessageTestUtilities.ValidPageSizeValue);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = existingMessage.SenderId,
+            ReceiverId = existingMessage.ReceiverId,
+            ReceiverName = UserTestUtilities.ValidName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        response
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidSortOrderProperty,
-            MessageTestUtilities.ValidSortPropertyName,
-            MessageTestUtilities.ValidPageValue,
-            MessageTestUtilities.ValidPageSizeValue);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = existingMessage.SenderId,
+            ReceiverId = existingMessage.ReceiverId,
+            ReceiverName = UserTestUtilities.ValidName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var messagePaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<MessagePaginationQueryResponse>();
+        var response = MessagesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        messagePaginationCollectionResponse
+        response
             .Should()
             .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingMessageId &&
+                                                               m.Id == existingMessage.Id &&
                                                                m.Content == MessageTestUtilities.ValidContent &&
-                                                               m.SenderId == existingSenderId &&
-                                                               m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                               m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                               m.ReceiverId == existingReceiverId &&
-                                                               m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                               m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
+                                                               m.SenderId == existingMessage.SenderId &&
+                                                               m.SenderName == UserTestUtilities.ValidName &&
+                                                               m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.ReceiverId == existingMessage.ReceiverId &&
+                                                               m.ReceiverName == UserTestUtilities.ValidName &&
+                                                               m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                                mc.Page == MessageTestUtilities.ValidPageValue &&
                                                                mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -300,39 +299,33 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     public async Task GetAllAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndCurrentUserIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            existingReceiverId,
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidSortOrderProperty,
-            MessageTestUtilities.ValidSortPropertyName,
-            MessageTestUtilities.ValidPageValue,
-            MessageTestUtilities.ValidPageSizeValue);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetNonCaseMatchingString(existingSenderId);
-
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = SharedTestUtilities.GetNonCaseMatchingString(existingMessage.SenderId),
+            ReceiverId = existingMessage.ReceiverId,
+            ReceiverName = UserTestUtilities.ValidName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
+        };
+        
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var messagePaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<MessagePaginationQueryResponse>();
+        var response = MessagesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        messagePaginationCollectionResponse
+        response
             .Should()
             .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingMessageId &&
+                                                               m.Id == existingMessage.Id &&
                                                                m.Content == MessageTestUtilities.ValidContent &&
-                                                               m.SenderId == existingSenderId &&
-                                                               m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                               m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                               m.ReceiverId == existingReceiverId &&
-                                                               m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                               m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
+                                                               m.SenderId == existingMessage.SenderId &&
+                                                               m.SenderName == UserTestUtilities.ValidName &&
+                                                               m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.ReceiverId == existingMessage.ReceiverId &&
+                                                               m.ReceiverName == UserTestUtilities.ValidName &&
+                                                               m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                                mc.Page == MessageTestUtilities.ValidPageValue &&
                                                                mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -344,39 +337,33 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     public async Task GetAllAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndReceiverIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            SharedTestUtilities.GetNonCaseMatchingString(existingReceiverId),
-            MessageTestUtilities.ValidUserName,
-            MessageTestUtilities.ValidSortOrderProperty,
-            MessageTestUtilities.ValidSortPropertyName,
-            MessageTestUtilities.ValidPageValue,
-            MessageTestUtilities.ValidPageSizeValue);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = existingMessage.SenderId,
+            ReceiverId = SharedTestUtilities.GetNonCaseMatchingString(existingMessage.ReceiverId),
+            ReceiverName = UserTestUtilities.ValidName,
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var messagePaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<MessagePaginationQueryResponse>();
+        var response = MessagesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        messagePaginationCollectionResponse
+        response
             .Should()
             .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingMessageId &&
+                                                               m.Id == existingMessage.Id &&
                                                                m.Content == MessageTestUtilities.ValidContent &&
-                                                               m.SenderId == existingSenderId &&
-                                                               m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                               m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                               m.ReceiverId == existingReceiverId &&
-                                                               m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                               m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
+                                                               m.SenderId == existingMessage.SenderId &&
+                                                               m.SenderName == UserTestUtilities.ValidName &&
+                                                               m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.ReceiverId == existingMessage.ReceiverId &&
+                                                               m.ReceiverName == UserTestUtilities.ValidName &&
+                                                               m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                                mc.Page == MessageTestUtilities.ValidPageValue &&
                                                                mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -388,39 +375,33 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     public async Task GetAllAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndReceiverNameCaseDoesNotMatch()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            existingReceiverId,
-            SharedTestUtilities.GetNonCaseMatchingString(MessageTestUtilities.ValidUserName),
-            MessageTestUtilities.ValidSortOrderProperty,
-            MessageTestUtilities.ValidSortPropertyName,
-            MessageTestUtilities.ValidPageValue,
-            MessageTestUtilities.ValidPageSizeValue);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = existingMessage.SenderId,
+            ReceiverId = existingMessage.ReceiverId,
+            ReceiverName = SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var messagePaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<MessagePaginationQueryResponse>();
+        var response = MessagesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        messagePaginationCollectionResponse
+        response
             .Should()
             .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingMessageId &&
+                                                               m.Id == existingMessage.Id &&
                                                                m.Content == MessageTestUtilities.ValidContent &&
-                                                               m.SenderId == existingSenderId &&
-                                                               m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                               m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                               m.ReceiverId == existingReceiverId &&
-                                                               m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                               m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
+                                                               m.SenderId == existingMessage.SenderId &&
+                                                               m.SenderName == UserTestUtilities.ValidName &&
+                                                               m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.ReceiverId == existingMessage.ReceiverId &&
+                                                               m.ReceiverName == UserTestUtilities.ValidName &&
+                                                               m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                                mc.Page == MessageTestUtilities.ValidPageValue &&
                                                                mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -432,39 +413,33 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     public async Task GetAllAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRequestIsValidAndReceiverNameIsNotFull()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-        var route = GetApiRoute(
-            existingReceiverId,
-            SharedTestUtilities.GetHalfStartString(MessageTestUtilities.ValidUserName),
-            MessageTestUtilities.ValidSortOrderProperty,
-            MessageTestUtilities.ValidSortPropertyName,
-            MessageTestUtilities.ValidPageValue,
-            MessageTestUtilities.ValidPageSizeValue);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
+        var request = new GetAllMessagesRequest
+        {
+            CurrentUserId = existingMessage.SenderId,
+            ReceiverId = existingMessage.ReceiverId,
+            ReceiverName = SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
+            Page = MessageTestUtilities.ValidPageValue,
+            PageSize = MessageTestUtilities.ValidPageSizeValue,
+            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
+            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
+        };
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var messagePaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<MessagePaginationQueryResponse>();
+        var response = MessagesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        messagePaginationCollectionResponse
+        response
             .Should()
             .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingMessageId &&
+                                                               m.Id == existingMessage.Id &&
                                                                m.Content == MessageTestUtilities.ValidContent &&
-                                                               m.SenderId == existingSenderId &&
-                                                               m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                               m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                               m.ReceiverId == existingReceiverId &&
-                                                               m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                               m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
+                                                               m.SenderId == existingMessage.SenderId &&
+                                                               m.SenderName == UserTestUtilities.ValidName &&
+                                                               m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.ReceiverId == existingMessage.ReceiverId &&
+                                                               m.ReceiverName == UserTestUtilities.ValidName &&
+                                                               m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                                mc.Page == MessageTestUtilities.ValidPageValue &&
                                                                mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -476,53 +451,27 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     public async Task GetAllAsync_ShouldReturnMessagePaginationCollectionResponse_WhenRouteHasNoParameters()
     {
         // Arrange
-        var existingSenderId = await CreateUserAsync(CancellationToken);
-        var existingReceiverId = await CreateUserAsync(CancellationToken);
-        var existingMessageId = await CreateMessageAsync(existingSenderId, existingReceiverId, CancellationToken);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingSenderId;
+        var existingMessage = await CreateMessageAsync(CancellationToken);
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(ApiRoute, CancellationToken);
-
-        var messagePaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<MessagePaginationQueryResponse>();
+        var response = MessagesClient.GetAllAsync(existingMessage.SenderId, CancellationToken);
 
         // Assert
-        messagePaginationCollectionResponse
+        response
             .Should()
             .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingMessageId &&
+                                                               m.Id == existingMessage.Id &&
                                                                m.Content == MessageTestUtilities.ValidContent &&
-                                                               m.SenderId == existingSenderId &&
-                                                               m.SenderName == MessageTestUtilities.ValidUserName &&
-                                                               m.SenderProfileImage == MessageTestUtilities.ValidUserProfileImage &&
-                                                               m.ReceiverId == existingReceiverId &&
-                                                               m.ReceiverName == MessageTestUtilities.ValidUserName &&
-                                                               m.ReceiverProfileImage == MessageTestUtilities.ValidUserProfileImage) &&
+                                                               m.SenderId == existingMessage.SenderId &&
+                                                               m.SenderName == UserTestUtilities.ValidName &&
+                                                               m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.ReceiverId == existingMessage.ReceiverId &&
+                                                               m.ReceiverName == UserTestUtilities.ValidName &&
+                                                               m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                                mc.Page == MessageTestUtilities.ValidPageValue &&
                                                                mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
-    }
-
-    private string GetApiRoute(string receiverId, string receiverName, SortOrder sortOrder, string sortPropertyName, int page, int pageSize)
-    {
-        var routeTemplate = "{0}?receiverId={1}&receiverName={2}&sortOrder={3}&sortPropertyName={4}&page={5}&pageSize={6}";
-
-        var route = string.Format(
-            routeTemplate,
-            ApiRoute,
-            receiverId,
-            receiverName,
-            sortOrder,
-            sortPropertyName,
-            page,
-            pageSize);
-
-        return route;
     }
 }

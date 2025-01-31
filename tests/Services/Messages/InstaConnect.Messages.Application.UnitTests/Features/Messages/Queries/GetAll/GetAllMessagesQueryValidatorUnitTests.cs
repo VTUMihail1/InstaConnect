@@ -39,8 +39,8 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(MessageConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -62,8 +62,8 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
     }
 
     [Theory]
-    [InlineData(MessageConfigurations.RECEIVER_ID_MIN_LENGTH - 1)]
-    [InlineData(MessageConfigurations.RECEIVER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForReceiverId_WhenReceiverIdLengthIsInvalid(int length)
     {
         // Arrange
