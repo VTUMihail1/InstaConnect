@@ -3,6 +3,7 @@ using InstaConnect.Follows.Application.Features.Follows.Commands.AddFollow;
 using InstaConnect.Follows.Application.Features.Follows.Models;
 using InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.User;
@@ -30,7 +31,7 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
         var existingFollower = CreateUser();
         var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
-            FollowTestUtilities.InvalidUserId,
+            UserTestUtilities.InvalidId,
             existingFollowing.Id);
 
         // Act
@@ -48,7 +49,7 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
         var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             existingFollower.Id,
-            FollowTestUtilities.InvalidUserId);
+            UserTestUtilities.InvalidId);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);

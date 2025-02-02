@@ -93,7 +93,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         // Arrange
         var existingFollowing = await CreateUserAsync(CancellationToken);
         var command = new AddFollowCommand(
-            FollowTestUtilities.InvalidUserId,
+            UserTestUtilities.InvalidId,
             existingFollowing.Id);
 
         // Act
@@ -110,7 +110,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         var existingFollower = await CreateUserAsync(CancellationToken);
         var command = new AddFollowCommand(
             existingFollower.Id,
-            FollowTestUtilities.InvalidUserId);
+            UserTestUtilities.InvalidId);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);

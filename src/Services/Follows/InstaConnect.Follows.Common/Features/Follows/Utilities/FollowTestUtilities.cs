@@ -7,7 +7,6 @@ namespace InstaConnect.Follows.Common.Features.Follows.Utilities;
 public class FollowTestUtilities : SharedTestUtilities
 {
     public static readonly string InvalidId = GetAverageString(FollowConfigurations.IdMaxLength, FollowConfigurations.IdMinLength);
-    public static readonly string InvalidUserId = GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
 
     public static readonly int ValidPageValue = 1;
     public static readonly int ValidPageSizeValue = 20;

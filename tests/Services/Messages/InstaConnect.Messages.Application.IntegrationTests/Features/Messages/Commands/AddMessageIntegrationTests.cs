@@ -141,7 +141,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         // Arrange
         var existingReceiver = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
-            MessageTestUtilities.InvalidUserId,
+            UserTestUtilities.InvalidId,
             existingReceiver.Id,
             MessageTestUtilities.ValidAddContent
         );
@@ -160,7 +160,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var existingSender = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
             existingSender.Id,
-            MessageTestUtilities.InvalidUserId,
+            UserTestUtilities.InvalidId,
             MessageTestUtilities.ValidAddContent
         );
 

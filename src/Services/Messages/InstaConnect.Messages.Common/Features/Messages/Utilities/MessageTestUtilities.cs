@@ -7,7 +7,6 @@ namespace InstaConnect.Messages.Common.Features.Messages.Utilities;
 public class MessageTestUtilities : SharedTestUtilities
 {
     public static readonly string InvalidId = GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength);
-    public static readonly string InvalidUserId = GetAverageString(UserConfigurations.IdMaxLength,  UserConfigurations.IdMinLength);
     
     public static readonly string ValidContent = GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength);
     public static readonly string ValidAddContent = GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength);

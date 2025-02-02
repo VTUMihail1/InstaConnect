@@ -185,7 +185,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         var existingSender = await CreateUserAsync(CancellationToken);
         var request = new AddMessageRequest
         {
-            CurrentUserId = MessageTestUtilities.InvalidUserId,
+            CurrentUserId = UserTestUtilities.InvalidId,
             AddMessageBindingModel = new AddMessageBindingModel(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
         };
 
@@ -207,7 +207,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         var request = new AddMessageRequest
         {
             CurrentUserId = existingSender.Id,
-            AddMessageBindingModel = new AddMessageBindingModel(MessageTestUtilities.InvalidUserId, MessageTestUtilities.ValidAddContent)
+            AddMessageBindingModel = new AddMessageBindingModel(UserTestUtilities.InvalidId, MessageTestUtilities.ValidAddContent)
         };
 
         // Act

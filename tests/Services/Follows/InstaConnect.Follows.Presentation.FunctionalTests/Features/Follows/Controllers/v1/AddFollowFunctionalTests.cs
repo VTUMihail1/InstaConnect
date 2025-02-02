@@ -132,7 +132,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollowing = await CreateUserAsync(CancellationToken);
         var request = new AddFollowRequest
         {
-            CurrentUserId = FollowTestUtilities.InvalidUserId,
+            CurrentUserId = UserTestUtilities.InvalidId,
             AddFollowBindingModel = new AddFollowBindingModel(existingFollowing.Id)
         };
 

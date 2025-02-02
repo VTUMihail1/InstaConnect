@@ -3,6 +3,7 @@ using InstaConnect.Messages.Application.Features.Messages.Commands.AddMessage;
 using InstaConnect.Messages.Application.Features.Messages.Models;
 using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Models;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Shared.Common.Exceptions.User;
@@ -30,7 +31,7 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Arrange
         var existingMessage = CreateMessage();
         var command = new AddMessageCommand(
-            MessageTestUtilities.InvalidUserId,
+            UserTestUtilities.InvalidId,
             existingMessage.ReceiverId,
             MessageTestUtilities.ValidAddContent
         );
@@ -49,7 +50,7 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var command = new AddMessageCommand(
             existingMessage.SenderId,
-            MessageTestUtilities.InvalidUserId,
+            UserTestUtilities.InvalidId,
             MessageTestUtilities.ValidAddContent
         );
 
