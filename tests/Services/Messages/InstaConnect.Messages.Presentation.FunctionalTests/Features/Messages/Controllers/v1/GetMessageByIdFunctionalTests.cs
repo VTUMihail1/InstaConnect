@@ -24,11 +24,10 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetMessageByIdRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new GetMessageByIdRequest(
+            existingMessage.Id,
+            existingMessage.SenderId
+        );
 
         // Act
         var response = await MessagesClient.GetByIdStatusCodeUnathorizedAsync(request, CancellationToken);
@@ -46,11 +45,10 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetMessageByIdRequest
-        {
-            Id = SharedTestUtilities.GetString(length),
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new GetMessageByIdRequest(
+            SharedTestUtilities.GetString(length),
+            existingMessage.SenderId
+        );
 
         // Act
         var response = await MessagesClient.GetByIdStatusCodeAsync(request, CancellationToken);
@@ -66,11 +64,10 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetMessageByIdRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = null!
-        };
+        var request = new GetMessageByIdRequest(
+            existingMessage.Id,
+            null!
+        );
 
         // Act
         var response = await MessagesClient.GetByIdStatusCodeAsync(request, CancellationToken);
@@ -89,11 +86,10 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetMessageByIdRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = SharedTestUtilities.GetString(length)
-        };
+        var request = new GetMessageByIdRequest(
+            existingMessage.Id,
+            SharedTestUtilities.GetString(length)
+        );
 
         // Act
         var response = await MessagesClient.GetByIdStatusCodeAsync(request, CancellationToken);
@@ -110,11 +106,10 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetMessageByIdRequest
-        {
-            Id = MessageTestUtilities.InvalidId,
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new GetMessageByIdRequest(
+            MessageTestUtilities.InvalidId,
+            existingMessage.SenderId
+        );
 
         // Act
         var response = await MessagesClient.GetByIdStatusCodeAsync(request, CancellationToken);
@@ -131,11 +126,10 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetMessageByIdRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingUser.Id
-        };
+        var request = new GetMessageByIdRequest(
+            existingMessage.Id,
+            existingUser.Id
+        );
 
         // Act
         var response = await MessagesClient.GetByIdStatusCodeAsync(request, CancellationToken);
@@ -151,11 +145,10 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetMessageByIdRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new GetMessageByIdRequest(
+            existingMessage.Id,
+            existingMessage.SenderId
+        );
 
         // Act
         var response = await MessagesClient.GetByIdStatusCodeAsync(request, CancellationToken);
@@ -171,11 +164,10 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetMessageByIdRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new GetMessageByIdRequest(
+            existingMessage.Id,
+            existingMessage.SenderId
+        );
 
         // Act
         var response = await MessagesClient.GetByIdAsync(request, CancellationToken);
@@ -198,11 +190,10 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetMessageByIdRequest
-        {
-            Id = SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new GetMessageByIdRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
+            existingMessage.SenderId
+        );
 
         // Act
         var response = await MessagesClient.GetByIdAsync(request, CancellationToken);

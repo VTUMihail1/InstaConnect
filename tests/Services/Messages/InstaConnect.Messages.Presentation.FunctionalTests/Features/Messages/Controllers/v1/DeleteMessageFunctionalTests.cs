@@ -22,11 +22,10 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new DeleteMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new DeleteMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId
+        );
 
         // Act
         var response = await MessagesClient.DeleteStatusCodeUnauthorizedAsync(request, CancellationToken);
@@ -44,11 +43,10 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new DeleteMessageRequest
-        {
-            Id = SharedTestUtilities.GetString(length),
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new DeleteMessageRequest(
+            SharedTestUtilities.GetString(length),
+            existingMessage.SenderId
+        );
 
         // Act
         var response = await MessagesClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -64,11 +62,10 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new DeleteMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = null!
-        };
+        var request = new DeleteMessageRequest(
+            existingMessage.Id,
+            null!
+        );
 
         // Act
         var response = await MessagesClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -87,11 +84,10 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new DeleteMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = SharedTestUtilities.GetString(length)
-        };
+        var request = new DeleteMessageRequest(
+            existingMessage.Id,
+            SharedTestUtilities.GetString(length)
+        );
 
         // Act
         var response = await MessagesClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -107,11 +103,10 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new DeleteMessageRequest
-        {
-            Id = MessageTestUtilities.InvalidId,
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new DeleteMessageRequest(
+            MessageTestUtilities.InvalidId,
+            existingMessage.SenderId
+        );
 
         // Act
         var response = await MessagesClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -128,11 +123,10 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new DeleteMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingUser.Id
-        };
+        var request = new DeleteMessageRequest(
+            existingMessage.Id,
+            existingUser.Id
+        );
 
         // Act
         var response = await MessagesClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -148,11 +142,10 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new DeleteMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new DeleteMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId
+        );
 
         // Act
         var response = await MessagesClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -168,11 +161,10 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new DeleteMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new DeleteMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId
+        );
 
         // Act
         await MessagesClient.DeleteAsync(request, CancellationToken);
@@ -190,11 +182,10 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new DeleteMessageRequest
-        {
-            Id = SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new DeleteMessageRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
+            existingMessage.SenderId
+        );
 
         // Act
         await MessagesClient.DeleteAsync(request, CancellationToken);

@@ -20,11 +20,9 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
 
-        var request = new DeleteFollowRequest
-        {
-            Id = existingFollow.Id,
-            CurrentUserId = existingFollow.FollowerId
-        };
+        var request = new DeleteFollowRequest(
+            existingFollow.Id,
+            existingFollow.FollowerId);
 
         // Act
         var statusCode = await FollowsClient.DeleteStatusCodeUnauthorizedAsync(request, CancellationToken);
@@ -43,11 +41,9 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
 
-        var request = new DeleteFollowRequest
-        {
-            Id = SharedTestUtilities.GetString(length),
-            CurrentUserId = existingFollow.FollowerId
-        };
+        var request = new DeleteFollowRequest(
+            SharedTestUtilities.GetString(length),
+            existingFollow.FollowerId);
 
         // Act
         var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -64,11 +60,9 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
 
-        var request = new DeleteFollowRequest
-        {
-            Id = existingFollow.Id,
-            CurrentUserId = null!
-        };
+        var request = new DeleteFollowRequest(
+            existingFollow.Id,
+            null!);
 
         // Act
         var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -88,11 +82,9 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
 
-        var request = new DeleteFollowRequest
-        {
-            Id = existingFollow.Id,
-            CurrentUserId = SharedTestUtilities.GetString(length)
-        };
+        var request = new DeleteFollowRequest(
+            existingFollow.Id,
+            SharedTestUtilities.GetString(length));
 
         // Act
         var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -109,11 +101,9 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollower = await CreateUserAsync(CancellationToken);
 
-        var request = new DeleteFollowRequest
-        {
-            Id = FollowTestUtilities.InvalidId,
-            CurrentUserId = existingFollower.Id
-        };
+        var request = new DeleteFollowRequest(
+            FollowTestUtilities.InvalidId,
+            existingFollower.Id);
 
         // Act
         var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -131,11 +121,9 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var existingFollow = await CreateFollowAsync(CancellationToken);
 
-        var request = new DeleteFollowRequest
-        {
-            Id = existingFollow.Id,
-            CurrentUserId = existingUser.Id
-        };
+        var request = new DeleteFollowRequest(
+            existingFollow.Id,
+            existingUser.Id);
 
         // Act
         var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -152,11 +140,9 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
 
-        var request = new DeleteFollowRequest
-        {
-            Id = existingFollow.Id,
-            CurrentUserId = existingFollow.FollowerId
-        };
+        var request = new DeleteFollowRequest(
+            existingFollow.Id,
+            existingFollow.FollowerId);
 
         // Act
         var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -173,11 +159,9 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
 
-        var request = new DeleteFollowRequest
-        {
-            Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id),
-            CurrentUserId = existingFollow.FollowerId
-        };
+        var request = new DeleteFollowRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id),
+            existingFollow.FollowerId);
 
         // Act
         var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -194,11 +178,9 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
 
-        var request = new DeleteFollowRequest
-        {
-            Id = existingFollow.Id,
-            CurrentUserId = existingFollow.FollowerId
-        };
+        var request = new DeleteFollowRequest(
+            existingFollow.Id,
+            existingFollow.FollowerId);
 
         // Act
         await FollowsClient.DeleteAsync(request, CancellationToken);
@@ -216,11 +198,9 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
 
-        var request = new DeleteFollowRequest
-        {
-            Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id),
-            CurrentUserId = existingFollow.FollowerId
-        };
+        var request = new DeleteFollowRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id),
+            existingFollow.FollowerId);
 
         // Act
         await FollowsClient.DeleteAsync(request, CancellationToken);

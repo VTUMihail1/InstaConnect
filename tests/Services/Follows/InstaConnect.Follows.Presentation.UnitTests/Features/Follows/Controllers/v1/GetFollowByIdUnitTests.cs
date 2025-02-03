@@ -27,10 +27,7 @@ public class GetFollowByIdUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollow = CreateFollow();
-        var request = new GetFollowByIdRequest()
-        {
-            Id = existingFollow.Id
-        };
+        var request = new GetFollowByIdRequest(existingFollow.Id);
 
         // Act
         var response = await _followController.GetByIdAsync(request, CancellationToken);
@@ -47,10 +44,7 @@ public class GetFollowByIdUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollow = CreateFollow();
-        var request = new GetFollowByIdRequest()
-        {
-            Id = existingFollow.Id
-        };
+        var request = new GetFollowByIdRequest(existingFollow.Id);
 
         // Act
         var response = await _followController.GetByIdAsync(request, CancellationToken);
@@ -76,10 +70,7 @@ public class GetFollowByIdUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollow = CreateFollow();
-        var request = new GetFollowByIdRequest()
-        {
-            Id = existingFollow.Id
-        };
+        var request = new GetFollowByIdRequest(existingFollow.Id);
 
         // Act
         await _followController.GetByIdAsync(request, CancellationToken);

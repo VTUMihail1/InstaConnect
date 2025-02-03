@@ -24,10 +24,9 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var request = new GetFollowByIdRequest
-        {
-            Id = SharedTestUtilities.GetString(length)
-        };
+        var request = new GetFollowByIdRequest(
+            SharedTestUtilities.GetString(length)
+        );
 
 
         // Act
@@ -42,10 +41,9 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var request = new GetFollowByIdRequest
-        {
-            Id = FollowTestUtilities.InvalidId
-        };
+        var request = new GetFollowByIdRequest(
+            FollowTestUtilities.InvalidId
+        );
 
 
         // Act
@@ -60,10 +58,9 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var request = new GetFollowByIdRequest
-        {
-            Id = existingFollow.Id
-        };
+        var request = new GetFollowByIdRequest(
+            existingFollow.Id
+        );
 
 
         // Act
@@ -78,10 +75,9 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var request = new GetFollowByIdRequest
-        {
-            Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id)
-        };
+        var request = new GetFollowByIdRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id)
+        );
 
 
         // Act
@@ -96,10 +92,9 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var request = new GetFollowByIdRequest
-        {
-            Id = existingFollow.Id
-        };
+        var request = new GetFollowByIdRequest(
+            existingFollow.Id
+        );
 
 
         // Act
@@ -122,10 +117,9 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var request = new GetFollowByIdRequest
-        {
-            Id = SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id)
-        };
+        var request = new GetFollowByIdRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id)
+        );
 
 
         // Act

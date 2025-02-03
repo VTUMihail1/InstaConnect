@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.RateLimiting;
 
 namespace InstaConnect.Messages.Presentation.Features.Messages.Controllers.v1;
 
-[ApiVersion("1.0")]
+[ApiVersion(MessageRoutes.Version1)]
 [Route(MessageRoutes.Resource)]
 [Authorize]
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]

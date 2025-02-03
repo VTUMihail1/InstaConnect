@@ -14,7 +14,7 @@ internal class FollowCommandProfile : Profile
         CreateMap<AddFollowRequest, AddFollowCommand>()
             .ConstructUsing(src => new(
                 src.CurrentUserId,
-                src.AddFollowBindingModel.FollowingId));
+                src.Body.FollowingId));
 
         CreateMap<DeleteFollowRequest, DeleteFollowCommand>()
             .ConstructUsing(src => new(

@@ -1,19 +1,16 @@
-﻿using InstaConnect.Shared.Presentation.Models.Requests;
+﻿using InstaConnect.Shared.Common.Models.Enums;
+using InstaConnect.Shared.Presentation.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 
-public class GetAllFollowsRequest : CollectionReadRequest
-{
-    [FromQuery(Name = "followerId")]
-    public string FollowerId { get; set; } = string.Empty;
-
-    [FromQuery(Name = "followerName")]
-    public string FollowerName { get; set; } = string.Empty;
-
-    [FromQuery(Name = "followingId")]
-    public string FollowingId { get; set; } = string.Empty;
-
-    [FromQuery(Name = "followingName")]
-    public string FollowingName { get; set; } = string.Empty;
-}
+public record GetAllFollowsRequest(
+    [FromQuery(Name = "followerId")] string FollowerId = "",
+    [FromQuery(Name = "followerName")] string FollowerName = "",
+    [FromQuery(Name = "followingId")] string FollowingId = "",
+    [FromQuery(Name = "followingName")] string FollowingName = "",
+    [FromQuery(Name = "sortOrder")] SortOrder SortOrder = SortOrder.ASC,
+    [FromQuery(Name = "sortPropertyName")] string SortPropertyName = "CreatedAt",
+    [FromQuery(Name = "page")] int Page = 1,
+    [FromQuery(Name = "pageSize")] int PageSize = 20
+);

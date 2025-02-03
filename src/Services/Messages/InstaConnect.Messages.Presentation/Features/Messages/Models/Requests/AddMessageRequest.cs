@@ -5,11 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
 
-public class AddMessageRequest
-{
-    [FromClaim(ClaimTypes.NameIdentifier)]
-    public string CurrentUserId { get; set; } = string.Empty;
-
-    [FromBody]
-    public AddMessageBindingModel AddMessageBindingModel { get; set; } = new(string.Empty, string.Empty);
-}
+public record AddMessageRequest(
+    [FromClaim(ClaimTypes.NameIdentifier)]  string CurrentUserId,
+    [FromBody] AddMessageBody Body);

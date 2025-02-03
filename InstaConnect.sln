@@ -12,9 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{A69A3437-B98C-4657-945B-EFACA12E0C8A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Posts", "Posts", "{BB218D91-B7C7-4865-9A44-68EFCEBF744C}"
-	ProjectSection(SolutionItems) = preProject
-		src\Services\Messages\InstaConnect.Messages.Presentation\Features\Messages\Controllers\v1\MessageRoutes.cs = src\Services\Messages\InstaConnect.Messages.Presentation\Features\Messages\Controllers\v1\MessageRoutes.cs
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messages", "Messages", "{7FE8F3FE-E3F1-46BD-B1A5-788D3E987AEB}"
 EndProject

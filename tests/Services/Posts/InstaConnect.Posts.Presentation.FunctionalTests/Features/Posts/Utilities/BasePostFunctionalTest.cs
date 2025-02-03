@@ -1,9 +1,12 @@
 ﻿using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Abstract;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Posts.Infrastructure;
+using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Abstractions;
+using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Helpers;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Presentation.FunctionalTests.Utilities;
@@ -12,9 +15,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Utilities;
 
-public abstract class BasePostFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
+public abstract class BasePostFunctionalTest : IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {
-    private const string API_ROUTE = "api/v1/posts";
+    protected CancellationToken CancellationToken { get; }
+
+    protected IServiceScope ServiceScope { get; }
+
+    protected IPostsClient PostsClient { get; }
+
 
     protected IPostWriteRepository PostWriteRepository
     {
@@ -38,37 +46,21 @@ public abstract class BasePostFunctionalTest : BaseSharedFunctionalTest, IClassF
         }
     }
 
-    protected BasePostFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(
-        functionalTestWebAppFactory.CreateClient(),
-        functionalTestWebAppFactory.Services.CreateScope(),
-        API_ROUTE)
+    protected BasePostFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
     {
+        ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
+        CancellationToken = new();
+        PostsClient = new PostsClient(functionalTestWebAppFactory.CreateClient());
     }
 
-    protected async Task<string> CreatePostAsync(string userId, CancellationToken cancellationToken)
-    {
-        var post = new Post(
-            PostTestUtilities.ValidTitle,
-            PostTestUtilities.ValidContent,
-            userId);
-
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var postWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostWriteRepository>();
-
-        postWriteRepository.Add(post);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return post.Id;
-    }
-
-    protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            PostTestUtilities.ValidUserFirstName,
-            PostTestUtilities.ValidUserLastName,
-            PostTestUtilities.ValidUserEmail,
-            PostTestUtilities.ValidUserName,
-            PostTestUtilities.ValidUserProfileImage);
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
@@ -76,7 +68,24 @@ public abstract class BasePostFunctionalTest : BaseSharedFunctionalTest, IClassF
         userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return user.Id;
+        return user;
+    }
+
+    protected async Task<Post> CreatePostAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(cancellationToken);
+        var post = new Post(
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent,
+            user);
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var postWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostWriteRepository>();
+
+        postWriteRepository.Add(post);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return post;
     }
 
     public async Task InitializeAsync()

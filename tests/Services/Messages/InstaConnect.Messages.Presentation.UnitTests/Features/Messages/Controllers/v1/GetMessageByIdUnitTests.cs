@@ -34,10 +34,10 @@ public class GetMessageByIdUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new GetMessageByIdRequest()
-        {
-            Id = existingMessage.Id
-        };
+        var request = new GetMessageByIdRequest(
+            existingMessage.Id,
+            existingMessage.SenderId
+        );
 
         // Act
         var response = await _messageController.GetByIdAsync(request, CancellationToken);
@@ -54,11 +54,10 @@ public class GetMessageByIdUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new GetMessageByIdRequest()
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new GetMessageByIdRequest(
+            existingMessage.Id,
+            existingMessage.SenderId
+        );
 
         // Act
         var response = await _messageController.GetByIdAsync(request, CancellationToken);
@@ -85,11 +84,10 @@ public class GetMessageByIdUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new GetMessageByIdRequest()
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId
-        };
+        var request = new GetMessageByIdRequest(
+            existingMessage.Id,
+            existingMessage.SenderId
+        );
 
         // Act
         await _messageController.GetByIdAsync(request, CancellationToken);

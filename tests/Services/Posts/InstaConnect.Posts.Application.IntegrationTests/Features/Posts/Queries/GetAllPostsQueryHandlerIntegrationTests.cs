@@ -4,6 +4,7 @@ using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllPosts;
 using InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Utilities;
 
@@ -16,16 +17,15 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             SharedTestUtilities.GetString(length),
-            PostTestUtilities.ValidUserName,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -40,15 +40,14 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
+            existingPost.UserId,
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
@@ -64,16 +63,15 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [InlineData(PostBusinessConfigurations.TITLE_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.TITLE_MAX_LENGTH + 1)]
+    [InlineData(PostConfigurations.TitleMinLength - 1)]
+    [InlineData(PostConfigurations.TitleMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenTitleLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -91,11 +89,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             null!,
@@ -113,11 +110,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenMessageDoesNotContaintSortPropertyName()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.InvalidSortPropertyName,
@@ -138,11 +134,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
@@ -162,11 +157,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -186,11 +180,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -208,11 +201,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenUserIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             null!,
-            PostTestUtilities.ValidUserName,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -225,10 +217,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Assert
         response
             .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
+                                                                    m.UserId == existingPost.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Title == PostTestUtilities.ValidTitle &&
                                                                     m.Content == PostTestUtilities.ValidContent) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -242,11 +234,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenUserIdIsEmpty()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             string.Empty,
-            PostTestUtilities.ValidUserName,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -259,10 +250,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Assert
         response
             .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
+                                                                    m.UserId == existingPost.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Title == PostTestUtilities.ValidTitle &&
                                                                     m.Content == PostTestUtilities.ValidContent) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -276,11 +267,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenUserIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
-            PostTestUtilities.ValidUserName,
+            SharedTestUtilities.GetNonCaseMatchingString(existingPost.UserId),
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -293,10 +283,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Assert
         response
             .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
+                                                                    m.UserId == existingPost.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Title == PostTestUtilities.ValidTitle &&
                                                                     m.Content == PostTestUtilities.ValidContent) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -310,10 +300,9 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenUserNameIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
+            existingPost.UserId,
             null!,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
@@ -327,10 +316,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Assert
         response
             .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
+                                                                    m.UserId == existingPost.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Title == PostTestUtilities.ValidTitle &&
                                                                     m.Content == PostTestUtilities.ValidContent) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -344,10 +333,9 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenUserNameIsEmpty()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
+            existingPost.UserId,
             string.Empty,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
@@ -361,10 +349,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Assert
         response
             .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
+                                                                    m.UserId == existingPost.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Title == PostTestUtilities.ValidTitle &&
                                                                     m.Content == PostTestUtilities.ValidContent) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -378,11 +366,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenUserNameCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
-            SharedTestUtilities.GetNonCaseMatchingString(PostTestUtilities.ValidUserName),
+            existingPost.UserId,
+            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -395,10 +382,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Assert
         response
             .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
+                                                                    m.UserId == existingPost.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Title == PostTestUtilities.ValidTitle &&
                                                                     m.Content == PostTestUtilities.ValidContent) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -412,11 +399,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenTitleIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             null!,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -429,10 +415,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Assert
         response
             .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
+                                                                    m.UserId == existingPost.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Title == PostTestUtilities.ValidTitle &&
                                                                     m.Content == PostTestUtilities.ValidContent) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -446,11 +432,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenTitleIsEmpty()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             string.Empty,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -463,10 +448,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Assert
         response
             .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
+                                                                    m.UserId == existingPost.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Title == PostTestUtilities.ValidTitle &&
                                                                     m.Content == PostTestUtilities.ValidContent) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -480,11 +465,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenTitleCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             SharedTestUtilities.GetNonCaseMatchingString(PostTestUtilities.ValidTitle),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -497,10 +481,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Assert
         response
             .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
+                                                                    m.UserId == existingPost.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Title == PostTestUtilities.ValidTitle &&
                                                                     m.Content == PostTestUtilities.ValidContent) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -514,11 +498,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenTitleIsNotFull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             SharedTestUtilities.GetHalfStartString(PostTestUtilities.ValidTitle),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -531,10 +514,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Assert
         response
             .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
+                                                                    m.UserId == existingPost.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Title == PostTestUtilities.ValidTitle &&
                                                                     m.Content == PostTestUtilities.ValidContent) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -548,11 +531,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -565,10 +547,10 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Assert
         response
             .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
+                                                                    m.UserId == existingPost.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.Title == PostTestUtilities.ValidTitle &&
                                                                     m.Content == PostTestUtilities.ValidContent) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&

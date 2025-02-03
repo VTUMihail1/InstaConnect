@@ -5,67 +5,101 @@ using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllPosts;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetPostById;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Posts.Presentation.Features.Posts.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Presentation.Abstractions;
-using InstaConnect.Shared.Presentation.Models.Users;
-using InstaConnect.Shared.Presentation.UnitTests.Utilities;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Utilities;
 
-public abstract class BasePostUnitTest : BaseSharedUnitTest
+public abstract class BasePostUnitTest
 {
-    public BasePostUnitTest() : base(
-        Substitute.For<IInstaConnectSender>(),
-        Substitute.For<ICurrentUserContext>(),
-        new InstaConnectMapper(
+    protected CancellationToken CancellationToken { get; }
+
+    protected IInstaConnectSender InstaConnectSender { get; }
+
+    protected IInstaConnectMapper InstaConnectMapper { get; }
+
+    public BasePostUnitTest()
+    {
+        CancellationToken = new();
+        InstaConnectSender = Substitute.For<IInstaConnectSender>();
+        InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
                 new MapperConfiguration(cfg =>
                 {
                     cfg.AddProfile<PostCommandProfile>();
                     cfg.AddProfile<PostQueryProfile>();
-                }))))
-    {
+                })));
+    }
 
-        var existingPostQueryViewModel = new PostQueryViewModel(
-            PostTestUtilities.ValidId,
+    public User CreateUser()
+    {
+        var user = new User(
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
+
+        return user;
+    }
+
+    public Post CreatePost()
+    {
+        var user = CreateUser();
+        var post = new Post(PostTestUtilities.ValidTitle, PostTestUtilities.ValidContent, user);
+
+        var postQueryViewModel = new PostQueryViewModel(
+            post.Id,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidContent,
-            PostTestUtilities.ValidCurrentUserId,
-            PostTestUtilities.ValidUserName,
-            PostTestUtilities.ValidUserProfileImage);
+            user.Id,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
 
-        var existingPostCommandViewModel = new PostCommandViewModel(PostTestUtilities.ValidId);
-        var existingCurrentUserModel = new CurrentUserModel(PostTestUtilities.ValidCurrentUserId, PostTestUtilities.ValidUserName);
-        var existingPostPaginationCollectionModel = new PostPaginationQueryViewModel(
-            [existingPostQueryViewModel],
+        var postCommandViewModel = new PostCommandViewModel(post.Id);
+        var postPaginationCollectionModel = new PostPaginationQueryViewModel(
+            [postQueryViewModel],
             PostTestUtilities.ValidPageValue,
             PostTestUtilities.ValidPageSizeValue,
             PostTestUtilities.ValidTotalCountValue,
             false,
             false);
 
-
-        CurrentUserContext
-            .GetCurrentUser()
-            .Returns(existingCurrentUserModel);
+        InstaConnectSender
+            .SendAsync(Arg.Is<GetAllPostsQuery>(m =>
+                  m.Title == post.Title &&
+                  m.UserId == user.Id &&
+                  m.UserName == UserTestUtilities.ValidName &&
+                  m.SortOrder == PostTestUtilities.ValidSortOrderProperty &&
+                  m.SortPropertyName == PostTestUtilities.ValidSortPropertyName &&
+                  m.Page == PostTestUtilities.ValidPageValue &&
+                  m.PageSize == PostTestUtilities.ValidPageSizeValue), CancellationToken)
+            .Returns(postPaginationCollectionModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<GetAllPostsQuery>(), CancellationToken)
-            .Returns(existingPostPaginationCollectionModel);
+            .SendAsync(Arg.Is<GetPostByIdQuery>(m => m.Id == post.Id), CancellationToken)
+            .Returns(postQueryViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<GetPostByIdQuery>(), CancellationToken)
-            .Returns(existingPostQueryViewModel);
+            .SendAsync(Arg.Is<AddPostCommand>(m =>
+                  m.CurrentUserId == user.Id &&
+                  m.Title == PostTestUtilities.ValidAddTitle &&
+                  m.Content == PostTestUtilities.ValidAddContent), CancellationToken)
+            .Returns(postCommandViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<AddPostCommand>(), CancellationToken)
-            .Returns(existingPostCommandViewModel);
+            .SendAsync(Arg.Is<UpdatePostCommand>(m =>
+                  m.Id == post.Id &&
+                  m.CurrentUserId == user.Id &&
+                  m.Title == PostTestUtilities.ValidUpdateTitle &&
+                  m.Content == PostTestUtilities.ValidUpdateContent), CancellationToken)
+            .Returns(postCommandViewModel);
 
-        InstaConnectSender
-            .SendAsync(Arg.Any<UpdatePostCommand>(), CancellationToken)
-            .Returns(existingPostCommandViewModel);
+        return post;
     }
 }

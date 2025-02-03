@@ -27,11 +27,10 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSender = await CreateUserAsync(CancellationToken);
         var existingReceiver = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageRequest
-        {
-            CurrentUserId = existingSender.Id,
-            AddMessageBindingModel = new AddMessageBindingModel(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
-        };
+        var request = new AddMessageRequest(
+            existingSender.Id,
+            new(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
+        );
 
         // Act
         var response = await MessagesClient.AddStatusCodeUnauthorizedAsync(request, CancellationToken);
@@ -48,11 +47,10 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSender = await CreateUserAsync(CancellationToken);
         var existingReceiver = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageRequest
-        {
-            CurrentUserId = existingSender.Id,
-            AddMessageBindingModel = new AddMessageBindingModel(null!, MessageTestUtilities.ValidAddContent)
-        };
+        var request = new AddMessageRequest(
+            existingSender.Id,
+            new(null!, MessageTestUtilities.ValidAddContent)
+        );
 
         // Act
         var response = await MessagesClient.AddStatusCodeAsync(request, CancellationToken);
@@ -72,11 +70,10 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSender = await CreateUserAsync(CancellationToken);
         var existingReceiver = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageRequest
-        {
-            CurrentUserId = existingSender.Id,
-            AddMessageBindingModel = new AddMessageBindingModel(SharedTestUtilities.GetString(length), MessageTestUtilities.ValidAddContent)
-        };
+        var request = new AddMessageRequest(
+            existingSender.Id,
+            new(SharedTestUtilities.GetString(length), MessageTestUtilities.ValidAddContent)
+        );
 
         // Act
         var response = await MessagesClient.AddStatusCodeAsync(request, CancellationToken);
@@ -93,11 +90,10 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSender = await CreateUserAsync(CancellationToken);
         var existingReceiver = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageRequest
-        {
-            CurrentUserId = existingSender.Id,
-            AddMessageBindingModel = new AddMessageBindingModel(existingReceiver.Id, null!)
-        };
+        var request = new AddMessageRequest(
+            existingSender.Id,
+            new(existingReceiver.Id, null!)
+        );
 
         // Act
         var response = await MessagesClient.AddStatusCodeAsync(request, CancellationToken);
@@ -117,11 +113,10 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSender = await CreateUserAsync(CancellationToken);
         var existingReceiver = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageRequest
-        {
-            CurrentUserId = existingSender.Id,
-            AddMessageBindingModel = new AddMessageBindingModel(existingReceiver.Id, SharedTestUtilities.GetString(length))
-        };
+        var request = new AddMessageRequest(
+            existingSender.Id,
+            new(existingReceiver.Id, SharedTestUtilities.GetString(length))
+        );
 
         // Act
         var response = await MessagesClient.AddStatusCodeAsync(request, CancellationToken);
@@ -138,11 +133,10 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingReceiver = await CreateUserAsync(CancellationToken);
         var existingSender = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageRequest
-        {
-            CurrentUserId = null!,
-            AddMessageBindingModel = new AddMessageBindingModel(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
-        };
+        var request = new AddMessageRequest(
+            null!,
+            new(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
+        );
 
         // Act
         var response = await MessagesClient.AddStatusCodeAsync(request, CancellationToken);
@@ -162,11 +156,10 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingReceiver = await CreateUserAsync(CancellationToken);
         var existingSender = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageRequest
-        {
-            CurrentUserId = SharedTestUtilities.GetString(length),
-            AddMessageBindingModel = new AddMessageBindingModel(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
-        };
+        var request = new AddMessageRequest(
+            SharedTestUtilities.GetString(length),
+            new(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
+        );
 
         // Act
         var response = await MessagesClient.AddStatusCodeAsync(request, CancellationToken);
@@ -183,11 +176,10 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingReceiver = await CreateUserAsync(CancellationToken);
         var existingSender = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageRequest
-        {
-            CurrentUserId = UserTestUtilities.InvalidId,
-            AddMessageBindingModel = new AddMessageBindingModel(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
-        };
+        var request = new AddMessageRequest(
+            UserTestUtilities.InvalidId,
+            new(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
+        );
 
         // Act
         var response = await MessagesClient.AddStatusCodeAsync(request, CancellationToken);
@@ -204,11 +196,10 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingReceiver = await CreateUserAsync(CancellationToken);
         var existingSender = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageRequest
-        {
-            CurrentUserId = existingSender.Id,
-            AddMessageBindingModel = new AddMessageBindingModel(UserTestUtilities.InvalidId, MessageTestUtilities.ValidAddContent)
-        };
+        var request = new AddMessageRequest(
+            existingSender.Id,
+            new(UserTestUtilities.InvalidId, MessageTestUtilities.ValidAddContent)
+        );
 
         // Act
         var response = await MessagesClient.AddStatusCodeAsync(request, CancellationToken);
@@ -225,11 +216,10 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSender = await CreateUserAsync(CancellationToken);
         var existingReceiver = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageRequest
-        {
-            CurrentUserId = existingSender.Id,
-            AddMessageBindingModel = new AddMessageBindingModel(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
-        };
+        var request = new AddMessageRequest(
+            existingSender.Id,
+            new(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
+        );
 
         // Act
         var response = await MessagesClient.AddStatusCodeAsync(request, CancellationToken);
@@ -246,11 +236,10 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingSender = await CreateUserAsync(CancellationToken);
         var existingReceiver = await CreateUserAsync(CancellationToken);
-        var request = new AddMessageRequest
-        {
-            CurrentUserId = existingSender.Id,
-            AddMessageBindingModel = new AddMessageBindingModel(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
-        };
+        var request = new AddMessageRequest(
+            existingSender.Id,
+            new(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
+        );
 
         // Act
         var response = await MessagesClient.AddAsync(request, CancellationToken);

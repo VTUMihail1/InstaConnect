@@ -25,11 +25,10 @@ public class DeleteFollowUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollow = CreateFollow();
-        var request = new DeleteFollowRequest()
-        {
-            Id = existingFollow.Id,
-            CurrentUserId = existingFollow.FollowerId
-        };
+        var request = new DeleteFollowRequest(
+            existingFollow.Id,
+            existingFollow.FollowerId
+        );
 
         // Act
         var response = await _followController.DeleteAsync(request, CancellationToken);
@@ -45,11 +44,10 @@ public class DeleteFollowUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollow = CreateFollow();
-        var request = new DeleteFollowRequest()
-        {
-            Id = existingFollow.Id,
-            CurrentUserId = existingFollow.FollowerId
-        };
+        var request = new DeleteFollowRequest(
+            existingFollow.Id,
+            existingFollow.FollowerId
+        );
 
         // Act
         await _followController.DeleteAsync(request, CancellationToken);

@@ -3,6 +3,7 @@ using InstaConnect.Posts.Application.Features.PostComments.Commands.DeletePostCo
 using InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Commands.DeletePostComment;
@@ -34,8 +35,8 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(PostConfigurations.IdMinLength - 1)]
+    [InlineData(PostConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -69,8 +70,8 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange

@@ -4,11 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
 
-public class GetMessageByIdRequest
-{
-    [FromRoute]
-    public string Id { get; set; } = string.Empty;
-
-    [FromClaim(ClaimTypes.NameIdentifier)]
-    public string CurrentUserId { get; set; } = string.Empty;
-}
+public record GetMessageByIdRequest(
+    [FromRoute] string Id,
+    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId);

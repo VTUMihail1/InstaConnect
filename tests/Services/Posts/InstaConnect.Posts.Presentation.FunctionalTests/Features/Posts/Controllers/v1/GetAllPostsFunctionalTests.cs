@@ -2,6 +2,8 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
@@ -18,16 +20,15 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
     }
 
     [Theory]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
             SharedTestUtilities.GetString(length),
-            PostTestUtilities.ValidUserName,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -35,22 +36,23 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            existingPost.UserId,
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
@@ -59,23 +61,24 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
-    [InlineData(PostBusinessConfigurations.TITLE_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.TITLE_MAX_LENGTH + 1)]
+    [InlineData(PostConfigurations.TitleMinLength - 1)]
+    [InlineData(PostConfigurations.TitleMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenTitleLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -83,21 +86,22 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPostDoesNotContainProperty()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.InvalidSortPropertyName,
@@ -105,10 +109,12 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -117,11 +123,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
@@ -129,10 +134,12 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -141,11 +148,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -153,10 +159,12 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
 
@@ -167,11 +175,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -179,21 +186,22 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             value);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -201,21 +209,22 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        response
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -223,20 +232,16 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var postPaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostPaginationQueryResponse>();
+        var response = await PostsClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        postPaginationCollectionResponse
+        response
             .Should()
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Id == existingPost.Id &&
+                                                               m.UserId == existingPost.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -250,11 +255,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
     public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndCurrentUserIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -262,20 +266,16 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var postPaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostPaginationQueryResponse>();
+        var response = await PostsClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        postPaginationCollectionResponse
+        response
             .Should()
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Id == existingPost.Id &&
+                                                               m.UserId == existingPost.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -289,11 +289,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
     public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndUserIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
-            PostTestUtilities.ValidUserName,
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingPost.UserId),
+            UserTestUtilities.ValidName,
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -301,20 +300,16 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var postPaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostPaginationQueryResponse>();
+        var response = await PostsClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        postPaginationCollectionResponse
+        response
             .Should()
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Id == existingPost.Id &&
+                                                               m.UserId == existingPost.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -328,11 +323,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
     public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndUserNameCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            SharedTestUtilities.GetNonCaseMatchingString(PostTestUtilities.ValidUserName),
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            existingPost.UserId,
+            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -340,20 +334,16 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var postPaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostPaginationQueryResponse>();
+        var response = await PostsClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        postPaginationCollectionResponse
+        response
             .Should()
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Id == existingPost.Id &&
+                                                               m.UserId == existingPost.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -367,11 +357,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
     public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndUserNameIsNotFull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            SharedTestUtilities.GetHalfStartString(PostTestUtilities.ValidUserName),
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            existingPost.UserId,
+            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -379,20 +368,16 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var postPaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostPaginationQueryResponse>();
+        var response = await PostsClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        postPaginationCollectionResponse
+        response
             .Should()
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Id == existingPost.Id &&
+                                                               m.UserId == existingPost.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -406,11 +391,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
     public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndTitleCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostTestUtilities.ValidUserName,
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            existingPost.UserId,
+            UserTestUtilities.ValidName,
             SharedTestUtilities.GetNonCaseMatchingString(PostTestUtilities.ValidTitle),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -418,20 +402,16 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var postPaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostPaginationQueryResponse>();
+        var response = await PostsClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        postPaginationCollectionResponse
+        response
             .Should()
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Id == existingPost.Id &&
+                                                               m.UserId == existingPost.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -445,11 +425,10 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
     public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndTitleIsNotFull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            SharedTestUtilities.GetHalfStartString(PostTestUtilities.ValidUserName),
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetAllPostsRequest(
+            existingPost.UserId,
+            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -457,20 +436,16 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var postPaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostPaginationQueryResponse>();
+        var response = await PostsClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        postPaginationCollectionResponse
+        response
             .Should()
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Id == existingPost.Id &&
+                                                               m.UserId == existingPost.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -484,24 +459,19 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
     public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRouteHasNoParameters()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(ApiRoute, CancellationToken);
-
-        var postPaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostPaginationQueryResponse>();
+        var response = await PostsClient.GetAllAsync(CancellationToken);
 
         // Assert
-        postPaginationCollectionResponse
+        response
             .Should()
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                                               m.Id == existingPost.Id &&
+                                                               m.UserId == existingPost.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.Title == PostTestUtilities.ValidTitle &&
                                                                m.Content == PostTestUtilities.ValidContent) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -509,23 +479,5 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
-    }
-
-    private string GetApiRoute(string userId, string userName, string title, SortOrder sortOrder, string sortPropertyName, int page, int pageSize)
-    {
-        var routeTemplate = "{0}?userId={1}&username={2}&title={3}&sortOrder={4}&sortPropertyName={5}&page={6}&pageSize={7}";
-
-        var route = string.Format(
-            routeTemplate,
-            ApiRoute,
-            userId,
-            userName,
-            title,
-            sortOrder,
-            sortPropertyName,
-            page,
-            pageSize);
-
-        return route;
     }
 }

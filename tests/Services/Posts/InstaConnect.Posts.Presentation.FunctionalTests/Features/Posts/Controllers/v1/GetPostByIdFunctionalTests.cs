@@ -2,6 +2,8 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
@@ -17,19 +19,23 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
     }
 
     [Theory]
-    [InlineData(PostBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(PostConfigurations.IdMinLength - 1)]
+    [InlineData(PostConfigurations.IdMaxLength + 1)]
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetPostByIdRequest(
+            SharedTestUtilities.GetString(length)
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetString(length)), CancellationToken);
+        var response = await PostsClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
 
@@ -37,52 +43,58 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetPostByIdRequest(
+            PostTestUtilities.InvalidId
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(PostTestUtilities.InvalidId), CancellationToken);
+        var response = await PostsClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
+        response
+            .Should()
+            .Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
     public async Task GetByIdAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetPostByIdRequest(
+            existingPost.Id
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(existingPostId), CancellationToken);
+        var response = await PostsClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        response
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task GetByIdAsync_ShouldReturnPostViewResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetPostByIdRequest(
+            existingPost.Id
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(existingPostId), CancellationToken);
-
-        var postViewResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostQueryResponse>();
+        var response = await PostsClient.GetByIdAsync(request, CancellationToken);
 
         // Assert
-        postViewResponse
+        response
             .Should()
-            .Match<PostQueryResponse>(m => m.Id == existingPostId &&
+            .Match<PostQueryResponse>(m => m.Id == existingPost.Id &&
                                  m.Content == PostTestUtilities.ValidContent &&
-                                 m.UserId == existingUserId &&
-                                 m.UserName == PostTestUtilities.ValidUserName &&
-                                 m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                 m.UserId == existingPost.UserId &&
+                                 m.UserName == UserTestUtilities.ValidName &&
+                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                  m.Title == PostTestUtilities.ValidTitle);
     }
 
@@ -90,24 +102,22 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
     public async Task GetByIdAsync_ShouldReturnPostViewResponse_WhenRequestIsValidAndIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
+        var request = new GetPostByIdRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingPost.Id)
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingPostId)), CancellationToken);
-
-        var postViewResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostQueryResponse>();
+        var response = await PostsClient.GetByIdAsync(request, CancellationToken);
 
         // Assert
-        postViewResponse
+        response
             .Should()
-            .Match<PostQueryResponse>(m => m.Id == existingPostId &&
+            .Match<PostQueryResponse>(m => m.Id == existingPost.Id &&
                                  m.Content == PostTestUtilities.ValidContent &&
-                                 m.UserId == existingUserId &&
-                                 m.UserName == PostTestUtilities.ValidUserName &&
-                                 m.UserProfileImage == PostTestUtilities.ValidUserProfileImage &&
+                                 m.UserId == existingPost.UserId &&
+                                 m.UserName == UserTestUtilities.ValidName &&
+                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                  m.Title == PostTestUtilities.ValidTitle);
     }
 }

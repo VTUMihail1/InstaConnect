@@ -3,6 +3,7 @@ using InstaConnect.Posts.Application.Features.Posts.Commands.AddPost;
 using InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.User;
@@ -21,7 +22,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
             null!,
             PostTestUtilities.ValidAddTitle,
@@ -37,12 +38,12 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidAddTitle,
@@ -60,9 +61,9 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenTitleIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
-            existingUserId,
+            existingUser.Id,
             null!,
             PostTestUtilities.ValidAddContent
         );
@@ -76,14 +77,14 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.TITLE_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.TITLE_MAX_LENGTH + 1)]
+    [InlineData(PostConfigurations.TitleMinLength - 1)]
+    [InlineData(PostConfigurations.TitleMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenTitleLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
-            existingUserId,
+            existingUser.Id,
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidAddContent
         );
@@ -99,9 +100,9 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenContentIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
-            existingUserId,
+            existingUser.Id,
             PostTestUtilities.ValidAddTitle,
             null!
         );
@@ -115,15 +116,15 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.CONTENT_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CONTENT_MAX_LENGTH + 1)]
+    [InlineData(PostConfigurations.ContentMinLength - 1)]
+    [InlineData(PostConfigurations.ContentMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var anotherExistingUserId = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
-            existingUserId,
+            existingUser.Id,
             PostTestUtilities.ValidAddTitle,
             SharedTestUtilities.GetString(length)
         );
@@ -139,9 +140,9 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
-            PostTestUtilities.InvalidUserId,
+            UserTestUtilities.InvalidId,
             PostTestUtilities.ValidAddTitle,
             PostTestUtilities.ValidAddContent
         );
@@ -157,9 +158,9 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldAddPost_WhenPostIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
-            existingUserId,
+            existingUser.Id,
             PostTestUtilities.ValidAddTitle,
             PostTestUtilities.ValidAddContent
         );
@@ -172,7 +173,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         post
             .Should()
             .Match<Post>(p => p.Id == response.Id &&
-                              p.UserId == existingUserId &&
+                              p.UserId == existingUser.Id &&
                               p.Title == PostTestUtilities.ValidAddTitle &&
                               p.Content == PostTestUtilities.ValidAddContent);
     }

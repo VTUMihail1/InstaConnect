@@ -25,16 +25,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = UserTestUtilities.ValidName,
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await MessagesClient.GetAllStatusCodeUnauthorizedAsync(request, CancellationToken);
@@ -50,16 +49,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = null!,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = UserTestUtilities.ValidName,
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
-        };
+        var request = new GetAllMessagesRequest(
+            null!,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
@@ -77,16 +75,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = SharedTestUtilities.GetString(length),
-            ReceiverName = UserTestUtilities.ValidName,
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            SharedTestUtilities.GetString(length),
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
@@ -104,16 +101,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = SharedTestUtilities.GetString(length),
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            SharedTestUtilities.GetString(length),
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
@@ -129,16 +125,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = UserTestUtilities.ValidName,
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.InvalidSortPropertyName
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.InvalidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
@@ -156,16 +151,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = UserTestUtilities.ValidName,
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = SharedTestUtilities.GetString(length)
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            SharedTestUtilities.GetString(length),
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
@@ -183,16 +177,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = UserTestUtilities.ValidName,
-            Page = value,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            value,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
@@ -212,16 +205,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = UserTestUtilities.ValidName,
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = value,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            value
+        );
 
         // Act
         var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
@@ -237,16 +229,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = UserTestUtilities.ValidName,
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await MessagesClient.GetAllStatusCodeAsync(request, CancellationToken);
@@ -262,16 +253,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = UserTestUtilities.ValidName,
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await MessagesClient.GetAllAsync(request, CancellationToken);
@@ -300,16 +290,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = SharedTestUtilities.GetNonCaseMatchingString(existingMessage.SenderId),
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = UserTestUtilities.ValidName,
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
-        };
+        var request = new GetAllMessagesRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.SenderId),
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
         
         // Act
         var response = await MessagesClient.GetAllAsync(request, CancellationToken);
@@ -338,16 +327,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = SharedTestUtilities.GetNonCaseMatchingString(existingMessage.ReceiverId),
-            ReceiverName = UserTestUtilities.ValidName,
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.ReceiverId),
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await MessagesClient.GetAllAsync(request, CancellationToken);
@@ -376,16 +364,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await MessagesClient.GetAllAsync(request, CancellationToken);
@@ -414,16 +401,15 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new GetAllMessagesRequest
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await MessagesClient.GetAllAsync(request, CancellationToken);

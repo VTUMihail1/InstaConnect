@@ -1,19 +1,25 @@
 ﻿using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Abstract;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.IntegrationTests.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Utilities;
 
-public abstract class BasePostIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
+public abstract class BasePostIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
+    protected IServiceScope ServiceScope { get; }
+
+    protected CancellationToken CancellationToken { get; }
+
+    protected IInstaConnectSender InstaConnectSender { get; }
+
     protected IUserWriteRepository UserWriteRepository
     {
         get
@@ -48,17 +54,19 @@ public abstract class BasePostIntegrationTest : BaseSharedIntegrationTest, IClas
     }
 
     protected BasePostIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
-        : base(integrationTestWebAppFactory.Services.CreateScope())
     {
-
+        ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
+        CancellationToken = new CancellationToken();
+        InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
     }
 
-    protected async Task<string> CreatePostAsync(string userId, CancellationToken cancellationToken)
+    protected async Task<Post> CreatePostAsync(CancellationToken cancellationToken)
     {
+        var user = await CreateUserAsync(CancellationToken);
         var post = new Post(
             PostTestUtilities.ValidTitle,
             PostTestUtilities.ValidContent,
-            userId);
+            user);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var postWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostWriteRepository>();
@@ -66,17 +74,17 @@ public abstract class BasePostIntegrationTest : BaseSharedIntegrationTest, IClas
         postWriteRepository.Add(post);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return post.Id;
+        return post;
     }
 
-    protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            PostTestUtilities.ValidUserFirstName,
-            PostTestUtilities.ValidUserLastName,
-            PostTestUtilities.ValidUserEmail,
-            PostTestUtilities.ValidUserName,
-            PostTestUtilities.ValidUserProfileImage);
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
@@ -84,7 +92,7 @@ public abstract class BasePostIntegrationTest : BaseSharedIntegrationTest, IClas
         userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return user.Id;
+        return user;
     }
 
     public async Task InitializeAsync()

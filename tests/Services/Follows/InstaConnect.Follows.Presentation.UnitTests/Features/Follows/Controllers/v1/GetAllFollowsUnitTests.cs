@@ -27,17 +27,16 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollow = CreateFollow();
-        var request = new GetAllFollowsRequest()
-        {
-            FollowerId = existingFollow.FollowerId,
-            FollowerName = UserTestUtilities.ValidName,
-            FollowingId = existingFollow.FollowingId,
-            FollowingName = UserTestUtilities.ValidName,
-            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
-            Page = FollowTestUtilities.ValidPageValue,
-            PageSize = FollowTestUtilities.ValidPageSizeValue,
-        };
+        var request = new GetAllFollowsRequest(
+            existingFollow.FollowerId,
+            UserTestUtilities.ValidName,
+            existingFollow.FollowingId,
+            UserTestUtilities.ValidName,
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await _followController.GetAllAsync(request, CancellationToken);
@@ -54,17 +53,16 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollow = CreateFollow();
-        var request = new GetAllFollowsRequest()
-        {
-            FollowerId = existingFollow.FollowerId,
-            FollowerName = UserTestUtilities.ValidName,
-            FollowingId = existingFollow.FollowingId,
-            FollowingName = UserTestUtilities.ValidName,
-            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
-            Page = FollowTestUtilities.ValidPageValue,
-            PageSize = FollowTestUtilities.ValidPageSizeValue,
-        };
+        var request = new GetAllFollowsRequest(
+            existingFollow.FollowerId,
+            UserTestUtilities.ValidName,
+            existingFollow.FollowingId,
+            UserTestUtilities.ValidName,
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await _followController.GetAllAsync(request, CancellationToken);
@@ -96,17 +94,16 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollow = CreateFollow();
-        var request = new GetAllFollowsRequest()
-        {
-            FollowerId = existingFollow.FollowerId,
-            FollowerName = UserTestUtilities.ValidName,
-            FollowingId = existingFollow.FollowingId,
-            FollowingName = UserTestUtilities.ValidName,
-            SortOrder = FollowTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = FollowTestUtilities.ValidSortPropertyName,
-            Page = FollowTestUtilities.ValidPageValue,
-            PageSize = FollowTestUtilities.ValidPageSizeValue,
-        };
+        var request = new GetAllFollowsRequest(
+            existingFollow.FollowerId,
+            UserTestUtilities.ValidName,
+            existingFollow.FollowingId,
+            UserTestUtilities.ValidName,
+            FollowTestUtilities.ValidSortOrderProperty,
+            FollowTestUtilities.ValidSortPropertyName,
+            FollowTestUtilities.ValidPageValue,
+            FollowTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await _followController.GetAllAsync(request, CancellationToken);

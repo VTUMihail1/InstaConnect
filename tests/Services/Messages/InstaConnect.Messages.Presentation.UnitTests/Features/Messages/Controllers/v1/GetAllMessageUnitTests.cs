@@ -34,16 +34,15 @@ public class GetAllMessageUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new GetAllMessagesRequest()
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = UserTestUtilities.ValidName,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName,
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await _messageController.GetAllAsync(request, CancellationToken);
@@ -60,16 +59,15 @@ public class GetAllMessageUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new GetAllMessagesRequest()
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = UserTestUtilities.ValidName,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName,
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await _messageController.GetAllAsync(request, CancellationToken);
@@ -102,16 +100,15 @@ public class GetAllMessageUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new GetAllMessagesRequest()
-        {
-            CurrentUserId = existingMessage.SenderId,
-            ReceiverId = existingMessage.ReceiverId,
-            ReceiverName = UserTestUtilities.ValidName,
-            SortOrder = MessageTestUtilities.ValidSortOrderProperty,
-            SortPropertyName = MessageTestUtilities.ValidSortPropertyName,
-            Page = MessageTestUtilities.ValidPageValue,
-            PageSize = MessageTestUtilities.ValidPageSizeValue,
-        };
+        var request = new GetAllMessagesRequest(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            UserTestUtilities.ValidName,
+            MessageTestUtilities.ValidSortOrderProperty,
+            MessageTestUtilities.ValidSortPropertyName,
+            MessageTestUtilities.ValidPageValue,
+            MessageTestUtilities.ValidPageSizeValue
+        );
 
         // Act
         var response = await _messageController.GetAllAsync(request, CancellationToken);

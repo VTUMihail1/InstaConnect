@@ -3,8 +3,10 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Binding;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
@@ -23,186 +25,202 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     public async Task AddAsync_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new AddPostRequest(
+            existingUser.Id,
+            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
+        );
 
         // Act
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostsClient.AddStatusCodeUnauthorizedAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Unauthorized);
+        response
+            .Should()
+            .Be(HttpStatusCode.Unauthorized);
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenTitleIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(null!, PostTestUtilities.ValidAddContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new AddPostRequest(
+            existingUser.Id,
+            new(null!, PostTestUtilities.ValidAddContent)
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.TITLE_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.TITLE_MAX_LENGTH + 1)]
+    [InlineData(PostConfigurations.TitleMinLength - 1)]
+    [InlineData(PostConfigurations.TitleMaxLength + 1)]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenTitleLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(SharedTestUtilities.GetString(length), PostTestUtilities.ValidAddContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new AddPostRequest(
+            existingUser.Id,
+            new(SharedTestUtilities.GetString(length), PostTestUtilities.ValidAddContent)
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenContentIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, null!);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new AddPostRequest(
+            existingUser.Id,
+            new(PostTestUtilities.ValidAddTitle, null!)
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.CONTENT_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CONTENT_MAX_LENGTH + 1)]
+    [InlineData(PostConfigurations.ContentMinLength - 1)]
+    [InlineData(PostConfigurations.ContentMaxLength + 1)]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, SharedTestUtilities.GetString(length));
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new AddPostRequest(
+            existingUser.Id,
+            new(PostTestUtilities.ValidAddTitle, SharedTestUtilities.GetString(length))
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new AddPostRequest(
+            null!,
+            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new AddPostRequest(
+            SharedTestUtilities.GetString(length),
+            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenCurrentUserIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = PostTestUtilities.InvalidUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new AddPostRequest(
+            UserTestUtilities.InvalidId,
+            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
+        response
+            .Should()
+            .Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent);
-
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new AddPostRequest(
+            existingUser.Id,
+            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        response
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task AddAsync_ShouldAddPost_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new AddPostBindingModel(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new AddPostRequest(
+            existingUser.Id,
+            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostsClient.AddAsync(request, CancellationToken);
 
-        var postViewResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostCommandResponse>();
-
-        var post = await PostWriteRepository.GetByIdAsync(postViewResponse!.Id, CancellationToken);
+        var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         post
             .Should()
-            .Match<Post>(m => m.Id == postViewResponse.Id &&
-                                 m.UserId == existingUserId &&
+            .Match<Post>(m => m.Id == response.Id &&
+                                 m.UserId == existingUser.Id &&
                                  m.Content == PostTestUtilities.ValidAddContent &&
                                  m.Title == PostTestUtilities.ValidAddTitle);
     }

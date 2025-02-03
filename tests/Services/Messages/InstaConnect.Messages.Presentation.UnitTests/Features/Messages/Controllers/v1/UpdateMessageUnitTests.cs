@@ -28,12 +28,11 @@ public class UpdateMessageUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new UpdateMessageRequest()
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
-        };
+        var request = new UpdateMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId,
+            new(MessageTestUtilities.ValidUpdateContent)
+        );
 
         // Act
         var response = await _messageController.UpdateAsync(request, CancellationToken);
@@ -50,12 +49,11 @@ public class UpdateMessageUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new UpdateMessageRequest()
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
-        };
+        var request = new UpdateMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId,
+            new(MessageTestUtilities.ValidUpdateContent)
+        );
 
         // Act
         var response = await _messageController.UpdateAsync(request, CancellationToken);
@@ -75,12 +73,11 @@ public class UpdateMessageUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new UpdateMessageRequest()
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
-        };
+        var request = new UpdateMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId,
+            new(MessageTestUtilities.ValidUpdateContent)
+        );
 
         // Act
         await _messageController.UpdateAsync(request, CancellationToken);

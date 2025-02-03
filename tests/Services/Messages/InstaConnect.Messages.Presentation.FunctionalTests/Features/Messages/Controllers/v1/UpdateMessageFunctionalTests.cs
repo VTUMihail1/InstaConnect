@@ -26,12 +26,11 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new UpdateMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
-        };
+        var request = new UpdateMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId,
+            new(MessageTestUtilities.ValidUpdateContent)
+        );
 
         // Act
         var response = await MessagesClient.UpdateStatusCodeUnauthorizedAsync(request, CancellationToken);
@@ -49,12 +48,11 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new UpdateMessageRequest
-        {
-            Id = SharedTestUtilities.GetString(length),
-            CurrentUserId = existingMessage.SenderId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
-        };
+        var request = new UpdateMessageRequest(
+            SharedTestUtilities.GetString(length),
+            existingMessage.SenderId,
+            new(MessageTestUtilities.ValidUpdateContent)
+        );
 
         // Act
         var response = await MessagesClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -70,12 +68,11 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new UpdateMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(null!)
-        };
+        var request = new UpdateMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId,
+            new(null!)
+        );
 
         // Act
         var response = await MessagesClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -94,12 +91,11 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new UpdateMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(SharedTestUtilities.GetString(length))
-        };
+        var request = new UpdateMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId,
+            new(SharedTestUtilities.GetString(length))
+        );
 
         // Act
         var response = await MessagesClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -115,12 +111,11 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new UpdateMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = null!,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
-        };
+        var request = new UpdateMessageRequest(
+            existingMessage.Id,
+            null!,
+            new(MessageTestUtilities.ValidUpdateContent)
+        );
 
         // Act
         var response = await MessagesClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -139,12 +134,11 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new UpdateMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = SharedTestUtilities.GetString(length),
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
-        };
+        var request = new UpdateMessageRequest(
+            existingMessage.Id,
+            SharedTestUtilities.GetString(length),
+            new(MessageTestUtilities.ValidUpdateContent)
+        );
 
         // Act
         var response = await MessagesClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -160,12 +154,11 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new UpdateMessageRequest
-        {
-            Id = MessageTestUtilities.InvalidId,
-            CurrentUserId = existingMessage.SenderId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
-        };
+        var request = new UpdateMessageRequest(
+            MessageTestUtilities.InvalidId,
+            existingMessage.SenderId,
+            new(MessageTestUtilities.ValidUpdateContent)
+        );
 
         // Act
         var response = await MessagesClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -182,12 +175,11 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new UpdateMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingUser.Id,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
-        };
+        var request = new UpdateMessageRequest(
+            existingMessage.Id,
+            existingUser.Id,
+            new(MessageTestUtilities.ValidUpdateContent)
+        );
 
         // Act
         var response = await MessagesClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -203,12 +195,11 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new UpdateMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
-        };
+        var request = new UpdateMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId,
+            new(MessageTestUtilities.ValidUpdateContent)
+        );
 
         // Act
         var response = await MessagesClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -224,12 +215,11 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new UpdateMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
-        };
+        var request = new UpdateMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId,
+            new(MessageTestUtilities.ValidUpdateContent)
+        );
 
         // Act
         var response = await MessagesClient.UpdateAsync(request, CancellationToken);
@@ -245,12 +235,11 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new UpdateMessageRequest
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
-        };
+        var request = new UpdateMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId,
+            new(MessageTestUtilities.ValidUpdateContent)
+        );
 
         // Act
         var response = await MessagesClient.UpdateAsync(request, CancellationToken);
@@ -270,12 +259,11 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
-        var request = new UpdateMessageRequest
-        {
-            Id = SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
-            CurrentUserId = existingMessage.SenderId,
-            UpdateMessageBindingModel = new UpdateMessageBindingModel(MessageTestUtilities.ValidUpdateContent)
-        };
+        var request = new UpdateMessageRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
+            existingMessage.SenderId,
+            new(MessageTestUtilities.ValidUpdateContent)
+        );
 
         // Act
         var response = await MessagesClient.UpdateAsync(request, CancellationToken);

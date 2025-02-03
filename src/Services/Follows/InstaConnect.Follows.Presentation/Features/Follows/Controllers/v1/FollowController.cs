@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.RateLimiting;
 namespace InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
 
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion(FollowRoutes.Version1)]
 [Route(FollowRoutes.Resource)]
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class FollowController : ControllerBase

@@ -25,11 +25,10 @@ public class DeleteMessageUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new DeleteMessageRequest()
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId,
-        };
+        var request = new DeleteMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId
+        );
 
         // Act
         var response = await _messageController.DeleteAsync(request, CancellationToken);
@@ -45,11 +44,10 @@ public class DeleteMessageUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new DeleteMessageRequest()
-        {
-            Id = existingMessage.Id,
-            CurrentUserId = existingMessage.SenderId,
-        };
+        var request = new DeleteMessageRequest(
+            existingMessage.Id,
+            existingMessage.SenderId
+        );
 
         // Act
         await _messageController.DeleteAsync(request, CancellationToken);

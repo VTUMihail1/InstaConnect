@@ -16,13 +16,13 @@ internal class MessagesCommandProfile : Profile
         CreateMap<AddMessageRequest, AddMessageCommand>()
             .ConstructUsing(src => new(
                 src.CurrentUserId,
-                src.AddMessageBindingModel.ReceiverId,
-                src.AddMessageBindingModel.Content));
+                src.Body.ReceiverId,
+                src.Body.Content));
 
         CreateMap<UpdateMessageRequest, UpdateMessageCommand>()
             .ConstructUsing(src => new(
                 src.Id,
-                src.UpdateMessageBindingModel.Content,
+                src.Body.Content,
                 src.CurrentUserId));
 
         CreateMap<DeleteMessageRequest, DeleteMessageCommand>()

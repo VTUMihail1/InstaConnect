@@ -83,7 +83,7 @@ public class FollowsClient : IFollowsClient
             });
 
         var response = await _httpClient
-            .PostAsJsonAsync(FollowTestRoutes.Default, request.AddFollowBindingModel, cancellationToken);
+            .PostAsJsonAsync(FollowTestRoutes.Default, request.Body, cancellationToken);
 
         return response.StatusCode;
     }
@@ -93,7 +93,7 @@ public class FollowsClient : IFollowsClient
         CancellationToken cancellationToken)
     {
         var response = await _httpClient
-            .PostAsJsonAsync(FollowTestRoutes.Default, request.AddFollowBindingModel, cancellationToken);
+            .PostAsJsonAsync(FollowTestRoutes.Default, request.Body, cancellationToken);
 
         return response.StatusCode;
     }
@@ -108,7 +108,7 @@ public class FollowsClient : IFollowsClient
         });
 
         var httpResponseMessage = await _httpClient
-            .PostAsJsonAsync(FollowTestRoutes.Default, request.AddFollowBindingModel, cancellationToken);
+            .PostAsJsonAsync(FollowTestRoutes.Default, request.Body, cancellationToken);
         var response = await httpResponseMessage.Content.ReadFromJsonAsync<FollowCommandResponse>(cancellationToken);
 
         return response!;

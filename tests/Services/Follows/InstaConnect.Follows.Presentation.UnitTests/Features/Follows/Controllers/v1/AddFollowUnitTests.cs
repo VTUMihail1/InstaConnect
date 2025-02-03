@@ -27,11 +27,10 @@ public class AddFollowUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollow = CreateFollow();
-        var request = new AddFollowRequest()
-        {
-            CurrentUserId = existingFollow.FollowerId,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollow.FollowingId)
-        };
+        var request = new AddFollowRequest(
+            existingFollow.FollowerId,
+            new(existingFollow.FollowingId)
+        );
 
         // Act
         var response = await _followController.AddAsync(request, CancellationToken);
@@ -48,11 +47,10 @@ public class AddFollowUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollow = CreateFollow();
-        var request = new AddFollowRequest()
-        {
-            CurrentUserId = existingFollow.FollowerId,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollow.FollowingId)
-        };
+        var request = new AddFollowRequest(
+            existingFollow.FollowerId,
+            new(existingFollow.FollowingId)
+        );
 
         // Act
         var response = await _followController.AddAsync(request, CancellationToken);
@@ -72,11 +70,10 @@ public class AddFollowUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollow = CreateFollow();
-        var request = new AddFollowRequest()
-        {
-            CurrentUserId = existingFollow.FollowerId,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollow.FollowingId)
-        };
+        var request = new AddFollowRequest(
+            existingFollow.FollowerId,
+            new(existingFollow.FollowingId)
+        );
 
         // Act
         await _followController.AddAsync(request, CancellationToken);

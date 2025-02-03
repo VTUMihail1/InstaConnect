@@ -1,13 +1,12 @@
-﻿using InstaConnect.Posts.Presentation.Features.Posts.Models.Binding;
+﻿using System.Security.Claims;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Binding;
+using InstaConnect.Shared.Presentation.Binders.FromClaim;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
-public class UpdatePostRequest
-{
-    [FromRoute]
-    public string Id { get; set; } = string.Empty;
-
-    [FromBody]
-    public UpdatePostBindingModel UpdatePostBindingModel { get; set; } = new(string.Empty, string.Empty);
-}
+public record UpdatePostRequest(
+    [FromRoute] string Id,
+    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
+    [FromBody] UpdatePostBody Body
+);

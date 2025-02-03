@@ -34,11 +34,10 @@ public class AddMessageUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new AddMessageRequest()
-        {
-            CurrentUserId = existingMessage.SenderId,
-            AddMessageBindingModel = new AddMessageBindingModel(existingMessage.ReceiverId, MessageTestUtilities.ValidAddContent)
-        };
+        var request = new AddMessageRequest(
+            existingMessage.SenderId,
+            new(existingMessage.ReceiverId, MessageTestUtilities.ValidAddContent)
+        );
 
         // Act
         var response = await _messageController.AddAsync(request, CancellationToken);
@@ -55,11 +54,10 @@ public class AddMessageUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new AddMessageRequest()
-        {
-            CurrentUserId = existingMessage.SenderId,
-            AddMessageBindingModel = new AddMessageBindingModel(existingMessage.ReceiverId, MessageTestUtilities.ValidAddContent)
-        };
+        var request = new AddMessageRequest(
+            existingMessage.SenderId,
+            new(existingMessage.ReceiverId, MessageTestUtilities.ValidAddContent)
+        );
 
         // Act
         var response = await _messageController.AddAsync(request, CancellationToken);
@@ -79,11 +77,10 @@ public class AddMessageUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingMessage = CreateMessage();
-        var request = new AddMessageRequest()
-        {
-            CurrentUserId = existingMessage.SenderId,
-            AddMessageBindingModel = new AddMessageBindingModel(existingMessage.ReceiverId, MessageTestUtilities.ValidAddContent)
-        };
+        var request = new AddMessageRequest(
+            existingMessage.SenderId,
+            new(existingMessage.ReceiverId, MessageTestUtilities.ValidAddContent)
+        );
 
         // Act
         await _messageController.AddAsync(request, CancellationToken);

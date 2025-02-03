@@ -123,7 +123,7 @@ public class MessagesClient : IMessagesClient
             });
 
         var response = await _httpClient
-            .PostAsJsonAsync(MessageTestRoutes.Default, request.AddMessageBindingModel, cancellationToken);
+            .PostAsJsonAsync(MessageTestRoutes.Default, request.Body, cancellationToken);
 
         return response.StatusCode;
     }
@@ -133,7 +133,7 @@ public class MessagesClient : IMessagesClient
         CancellationToken cancellationToken)
     {
         var response = await _httpClient
-            .PostAsJsonAsync(MessageTestRoutes.Default, request.AddMessageBindingModel, cancellationToken);
+            .PostAsJsonAsync(MessageTestRoutes.Default, request.Body, cancellationToken);
 
         return response.StatusCode;
     }
@@ -148,7 +148,7 @@ public class MessagesClient : IMessagesClient
         });
 
         var httpResponseMessage = await _httpClient
-            .PostAsJsonAsync(MessageTestRoutes.Default, request.AddMessageBindingModel, cancellationToken);
+            .PostAsJsonAsync(MessageTestRoutes.Default, request.Body, cancellationToken);
         var response = await httpResponseMessage.Content.ReadFromJsonAsync<MessageCommandResponse>(cancellationToken);
 
         return response!;
@@ -166,7 +166,7 @@ public class MessagesClient : IMessagesClient
             });
 
         var response = await _httpClient
-            .PutAsJsonAsync(route, request.UpdateMessageBindingModel, cancellationToken);
+            .PutAsJsonAsync(route, request.Body, cancellationToken);
 
         return response.StatusCode;
     }
@@ -178,7 +178,7 @@ public class MessagesClient : IMessagesClient
         var route = IdRoute(request.Id);
 
         var response = await _httpClient
-            .PutAsJsonAsync(route, request.UpdateMessageBindingModel, cancellationToken);
+            .PutAsJsonAsync(route, request.Body, cancellationToken);
 
         return response.StatusCode;
     }
@@ -195,7 +195,7 @@ public class MessagesClient : IMessagesClient
         });
 
         var httpResponseMessage = await _httpClient
-            .PutAsJsonAsync(route, request.UpdateMessageBindingModel, cancellationToken);
+            .PutAsJsonAsync(route, request.Body, cancellationToken);
         var response = await httpResponseMessage.Content.ReadFromJsonAsync<MessageCommandResponse>(cancellationToken);
 
         return response!;

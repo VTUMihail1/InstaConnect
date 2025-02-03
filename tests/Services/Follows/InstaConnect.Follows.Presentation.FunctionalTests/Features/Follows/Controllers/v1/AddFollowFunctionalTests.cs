@@ -24,11 +24,9 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollowing = await CreateUserAsync(CancellationToken);
         var existingFollower = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowRequest
-        {
-            CurrentUserId = existingFollower.Id,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowing.Id)
-        };
+        var request = new AddFollowRequest(
+            existingFollower.Id,
+            new(existingFollowing.Id));
 
         // Act
         var statusCode = await FollowsClient.AddStatusCodeUnauthorizedAsync(request, CancellationToken);
@@ -44,11 +42,9 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollowing = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowRequest
-        {
-            CurrentUserId = existingFollowing.Id,
-            AddFollowBindingModel = new AddFollowBindingModel(null!)
-        };
+        var request = new AddFollowRequest(
+            existingFollowing.Id,
+            new(null!));
 
         // Act
         var statusCode = await FollowsClient.AddStatusCodeAsync(request, CancellationToken);
@@ -67,11 +63,9 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollower = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowRequest
-        {
-            CurrentUserId = existingFollower.Id,
-            AddFollowBindingModel = new AddFollowBindingModel(SharedTestUtilities.GetString(length))
-        };
+        var request = new AddFollowRequest(
+            existingFollower.Id,
+            new(SharedTestUtilities.GetString(length)));
 
         // Act
         var statusCode = await FollowsClient.AddStatusCodeAsync(request, CancellationToken);
@@ -87,11 +81,9 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollowing = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowRequest
-        {
-            CurrentUserId = null!,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowing.Id)
-        };
+        var request = new AddFollowRequest(
+            null!,
+            new(existingFollowing.Id));
 
         // Act
         var statusCode = await FollowsClient.AddStatusCodeAsync(request, CancellationToken);
@@ -110,11 +102,9 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollowing = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowRequest
-        {
-            CurrentUserId = SharedTestUtilities.GetString(length),
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowing.Id)
-        };
+        var request = new AddFollowRequest(
+            SharedTestUtilities.GetString(length),
+            new(existingFollowing.Id));
 
         // Act
         var statusCode = await FollowsClient.AddStatusCodeAsync(request, CancellationToken);
@@ -130,11 +120,9 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollowing = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowRequest
-        {
-            CurrentUserId = UserTestUtilities.InvalidId,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowing.Id)
-        };
+        var request = new AddFollowRequest(
+            UserTestUtilities.InvalidId,
+            new(existingFollowing.Id));
 
         // Act
         var statusCode = await FollowsClient.AddStatusCodeAsync(request, CancellationToken);
@@ -150,11 +138,9 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollower = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowRequest
-        {
-            CurrentUserId = existingFollower.Id,
-            AddFollowBindingModel = new AddFollowBindingModel(FollowTestUtilities.InvalidId)
-        };
+        var request = new AddFollowRequest(
+            existingFollower.Id,
+            new(FollowTestUtilities.InvalidId));
 
         // Act
         var statusCode = await FollowsClient.AddStatusCodeAsync(request, CancellationToken);
@@ -170,11 +156,9 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var request = new AddFollowRequest
-        {
-            CurrentUserId = existingFollow.FollowerId,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollow.FollowingId)
-        };
+        var request = new AddFollowRequest(
+            existingFollow.FollowerId,
+            new(existingFollow.FollowingId));
 
         // Act
         var statusCode = await FollowsClient.AddStatusCodeAsync(request, CancellationToken);
@@ -191,11 +175,9 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollower = await CreateUserAsync(CancellationToken);
         var existingFollowing = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowRequest
-        {
-            CurrentUserId = existingFollower.Id,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowing.Id)
-        };
+        var request = new AddFollowRequest(
+            existingFollower.Id, 
+            new(existingFollowing.Id));
 
         // Act
         var statusCode = await FollowsClient.AddStatusCodeAsync(request, CancellationToken);
@@ -212,11 +194,9 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollower = await CreateUserAsync(CancellationToken);
         var existingFollowing = await CreateUserAsync(CancellationToken);
-        var request = new AddFollowRequest
-        {
-            CurrentUserId = existingFollower.Id,
-            AddFollowBindingModel = new AddFollowBindingModel(existingFollowing.Id)
-        };
+        var request = new AddFollowRequest(
+            existingFollower.Id, 
+            new(existingFollowing.Id));
 
         // Act
         var response = await FollowsClient.AddAsync(request, CancellationToken);

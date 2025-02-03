@@ -1,10 +1,11 @@
-﻿using InstaConnect.Posts.Presentation.Features.Posts.Models.Binding;
+﻿using System.Security.Claims;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Binding;
+using InstaConnect.Shared.Presentation.Binders.FromClaim;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
-public class AddPostRequest
-{
-    [FromBody]
-    public AddPostBindingModel AddPostBindingModel { get; set; } = new(string.Empty, string.Empty);
-}
+public record AddPostRequest(
+    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
+    [FromBody] AddPostBody Body
+);

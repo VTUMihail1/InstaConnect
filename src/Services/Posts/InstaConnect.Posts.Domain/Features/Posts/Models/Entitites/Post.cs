@@ -17,6 +17,17 @@ public class Post : BaseEntity
         UserId = userId;
     }
 
+    public Post(
+        string title,
+        string content,
+        User user)
+    {
+        Title = title;
+        Content = content;
+        User = user;
+        UserId = user.Id;
+    }
+
     public string Title { get; set; }
 
     public string Content { get; set; }
