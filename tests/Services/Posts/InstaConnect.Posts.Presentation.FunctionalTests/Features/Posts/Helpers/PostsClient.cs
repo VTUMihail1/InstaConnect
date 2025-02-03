@@ -40,7 +40,7 @@ public class PostsClient : IPostsClient
     public async Task<PostPaginationQueryResponse> GetAllAsync(CancellationToken cancellationToken)
     {
         var response = await _httpClient
-            .GetFromJsonAsync<PostPaginationQueryResponse>(PostTestRoutes.GetAll, cancellationToken);
+            .GetFromJsonAsync<PostPaginationQueryResponse>(PostTestRoutes.Default, cancellationToken);
 
         return response!;
     }
