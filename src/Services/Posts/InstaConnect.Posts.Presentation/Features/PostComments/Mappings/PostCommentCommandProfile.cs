@@ -13,14 +13,14 @@ internal class PostCommentCommandProfile : Profile
 {
     public PostCommentCommandProfile()
     {
-        CreateMap<(CurrentUserModel, AddPostCommentRequest), AddPostCommentCommand>()
-            .ConstructUsing(src => new(src.Item1.Id, src.Item2.AddPostCommentBindingModel.PostId, src.Item2.AddPostCommentBindingModel.Content));
+        CreateMap<AddPostCommentRequest, AddPostCommentCommand>()
+            .ConstructUsing(src => new(src.CurrentUserId, src.Body.PostId, src.Body.Content));
 
-        CreateMap<(CurrentUserModel, UpdatePostCommentRequest), UpdatePostCommentCommand>()
-            .ConstructUsing(src => new(src.Item2.Id, src.Item1.Id, src.Item2.UpdatePostCommentBindingModel.Content));
+        CreateMap<UpdatePostCommentRequest, UpdatePostCommentCommand>()
+            .ConstructUsing(src => new(src.Id, src.CurrentUserId, src.Body.Content));
 
-        CreateMap<(CurrentUserModel, DeletePostCommentRequest), DeletePostCommentCommand>()
-            .ConstructUsing(src => new(src.Item2.Id, src.Item1.Id));
+        CreateMap<DeletePostCommentRequest, DeletePostCommentCommand>()
+            .ConstructUsing(src => new(src.Id, src.CurrentUserId));
 
         CreateMap<PostCommentCommandViewModel, PostCommentCommandResponse>();
     }

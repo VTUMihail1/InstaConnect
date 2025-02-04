@@ -1,4 +1,7 @@
-﻿using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+﻿using InstaConnect.PostComments.Presentation.FunctionalTests.Features.PostComments.Helpers;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.Posts.Abstract;
@@ -6,6 +9,9 @@ using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Posts.Infrastructure;
+using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Abstractions;
+using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Abstractions;
+using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Helpers;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Presentation.FunctionalTests.Utilities;
@@ -14,10 +20,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Utilities;
 
-public abstract class BasePostCommentFunctionalTest : BaseSharedFunctionalTest, IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
+public abstract class BasePostCommentFunctionalTest : IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {
-    private const string API_ROUTE = "api/v1/post-comments";
+    protected CancellationToken CancellationToken { get; }
 
+    protected IServiceScope ServiceScope { get; }
+
+    protected IPostCommentsClient PostCommentsClient { get; }
 
     protected IPostCommentWriteRepository PostCommentWriteRepository
     {
@@ -41,18 +50,55 @@ public abstract class BasePostCommentFunctionalTest : BaseSharedFunctionalTest, 
         }
     }
 
-    protected BasePostCommentFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(
-        functionalTestWebAppFactory.CreateClient(),
-        functionalTestWebAppFactory.Services.CreateScope(),
-        API_ROUTE)
+    protected BasePostCommentFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
     {
+        ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
+        CancellationToken = new();
+        PostCommentsClient = new PostCommentsClient(functionalTestWebAppFactory.CreateClient());
     }
 
-    protected async Task<string> CreatePostCommentAsync(string userId, string postId, CancellationToken cancellationToken)
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
+        var user = new User(
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+
+        userWriteRepository.Add(user);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return user;
+    }
+
+    protected async Task<Post> CreatePostAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(CancellationToken);
+        var post = new Post(
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent,
+            user);
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var postWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostWriteRepository>();
+
+        postWriteRepository.Add(post);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return post;
+    }
+
+    protected async Task<PostComment> CreatePostCommentAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(cancellationToken);
+        var post = await CreatePostAsync(cancellationToken);
         var postComment = new PostComment(
-            userId,
-            postId,
+            user,
+            post,
             PostCommentTestUtilities.ValidContent);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
@@ -61,41 +107,7 @@ public abstract class BasePostCommentFunctionalTest : BaseSharedFunctionalTest, 
         postCommentWriteRepository.Add(postComment);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return postComment.Id;
-    }
-
-    protected async Task<string> CreatePostAsync(string userId, CancellationToken cancellationToken)
-    {
-        var post = new Post(
-            PostCommentTestUtilities.ValidPostTitle,
-            PostCommentTestUtilities.ValidPostContent,
-            userId);
-
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var postWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostWriteRepository>();
-
-        postWriteRepository.Add(post);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return post.Id;
-    }
-
-    protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
-    {
-        var user = new User(
-            PostCommentTestUtilities.ValidUserFirstName,
-            PostCommentTestUtilities.ValidUserLastName,
-            PostCommentTestUtilities.ValidUserEmail,
-            PostCommentTestUtilities.ValidUserName,
-            PostCommentTestUtilities.ValidUserProfileImage);
-
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-
-        userWriteRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return user.Id;
+        return postComment;
     }
 
     public async Task InitializeAsync()

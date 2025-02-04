@@ -17,6 +17,18 @@ public class PostComment : BaseEntity
         Content = content;
     }
 
+    public PostComment(
+        User user,
+        Post post,
+        string content)
+    {
+        User = user;
+        Post = post;
+        UserId = user.Id;
+        PostId = post.Id;
+        Content = content;
+    }
+
     public string UserId { get; }
 
     public string PostId { get; }

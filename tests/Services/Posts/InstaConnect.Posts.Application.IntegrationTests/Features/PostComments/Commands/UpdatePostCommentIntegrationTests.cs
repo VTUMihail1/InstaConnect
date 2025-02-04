@@ -3,6 +3,7 @@ using InstaConnect.Posts.Application.Features.PostComments.Commands.UpdatePostCo
 using InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.PostComment;
@@ -22,12 +23,10 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new UpdatePostCommentCommand(
             null!,
-            existingUserId,
+            existingPostComment.UserId,
             PostCommentTestUtilities.ValidUpdateContent
         );
 
@@ -40,17 +39,15 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostCommentBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentConfigurations.IdMinLength - 1)]
+    [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new UpdatePostCommentCommand(
             SharedTestUtilities.GetString(length),
-            existingUserId,
+            existingPostComment.UserId,
             PostCommentTestUtilities.ValidUpdateContent
         );
 
@@ -65,11 +62,9 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new UpdatePostCommentCommand(
-            existingPostCommentId,
+            existingPostComment.Id,
             null!,
             PostCommentTestUtilities.ValidUpdateContent
         );
@@ -83,16 +78,14 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostCommentBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new UpdatePostCommentCommand(
-            existingPostCommentId,
+            existingPostComment.Id,
             SharedTestUtilities.GetString(length),
             PostCommentTestUtilities.ValidUpdateContent
         );
@@ -108,12 +101,10 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenContentIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new UpdatePostCommentCommand(
-            existingPostCommentId,
-            existingUserId,
+            existingPostComment.Id,
+            existingPostComment.UserId,
             null!
         );
 
@@ -126,17 +117,15 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostCommentBusinessConfigurations.CONTENT_MIN_LENGTH - 1)]
-    [InlineData(PostCommentBusinessConfigurations.CONTENT_MAX_LENGTH + 1)]
+    [InlineData(PostCommentConfigurations.ContentMinLength - 1)]
+    [InlineData(PostCommentConfigurations.ContentMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new UpdatePostCommentCommand(
-            existingPostCommentId,
-            existingUserId,
+            existingPostComment.Id,
+            existingPostComment.UserId,
             SharedTestUtilities.GetString(length)
         );
 
@@ -151,12 +140,10 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
     public async Task SendAsync_ShouldThrowPostCommentNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new UpdatePostCommentCommand(
             PostCommentTestUtilities.InvalidId,
-            existingUserId,
+            existingPostComment.UserId,
             PostCommentTestUtilities.ValidUpdateContent
         );
 
@@ -171,13 +158,11 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
     public async Task SendAsync_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentUserId = await CreateUserAsync(CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingPostCommentUserId, existingPostId, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new UpdatePostCommentCommand(
-            existingPostCommentId,
-            existingUserId,
+            existingPostComment.Id,
+            existingUser.Id,
             PostCommentTestUtilities.ValidUpdateContent
         );
 
@@ -192,25 +177,23 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
     public async Task SendAsync_ShouldUpdatePostComment_WhenPostCommentIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new UpdatePostCommentCommand(
-            existingPostCommentId,
-            existingUserId,
+            existingPostComment.Id,
+            existingPostComment.UserId,
             PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var postComment = await PostCommentWriteRepository.GetByIdAsync(existingPostCommentId, CancellationToken);
+        var postComment = await PostCommentWriteRepository.GetByIdAsync(existingPostComment.Id, CancellationToken);
 
         // Assert
         postComment
             .Should()
-            .Match<PostComment>(p => p.Id == existingPostCommentId &&
-                                     p.UserId == existingUserId &&
-                                     p.PostId == existingPostId &&
+            .Match<PostComment>(p => p.Id == existingPostComment.Id &&
+                                     p.UserId == existingPostComment.UserId &&
+                                     p.PostId == existingPostComment.PostId &&
                                      p.Content == PostCommentTestUtilities.ValidUpdateContent);
     }
 
@@ -218,25 +201,23 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
     public async Task SendAsync_ShouldUpdatePostComment_WhenPostCommentIsValidAndIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new UpdatePostCommentCommand(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentId),
-            existingUserId,
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.Id),
+            existingPostComment.UserId,
             PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var postComment = await PostCommentWriteRepository.GetByIdAsync(existingPostCommentId, CancellationToken);
+        var postComment = await PostCommentWriteRepository.GetByIdAsync(existingPostComment.Id, CancellationToken);
 
         // Assert
         postComment
             .Should()
-            .Match<PostComment>(p => p.Id == existingPostCommentId &&
-                                     p.UserId == existingUserId &&
-                                     p.PostId == existingPostId &&
+            .Match<PostComment>(p => p.Id == existingPostComment.Id &&
+                                     p.UserId == existingPostComment.UserId &&
+                                     p.PostId == existingPostComment.PostId &&
                                      p.Content == PostCommentTestUtilities.ValidUpdateContent);
     }
 }

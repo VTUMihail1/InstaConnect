@@ -3,8 +3,10 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Binding;
+using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
@@ -23,260 +25,223 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
     public async Task UpdateAsync_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new UpdatePostCommentRequest(
+            existingPostComment.Id,
+            existingPostComment.UserId,
+            new(PostCommentTestUtilities.ValidUpdateContent));
 
         // Act
-        var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(existingPostCommentId),
-            request,
-            CancellationToken);
+        var response = await PostCommentsClient.UpdateStatusCodeUnauthorizedAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Unauthorized);
+        response
+            .Should()
+            .Be(HttpStatusCode.Unauthorized);
     }
 
     [Theory]
-    [InlineData(PostCommentBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentConfigurations.IdMinLength - 1)]
+    [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
     public async Task UpdateAsync_ShouldReturnBadRequestResponse_WhenIdIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new UpdatePostCommentRequest(
+            SharedTestUtilities.GetString(length),
+            existingPostComment.UserId,
+            new(PostCommentTestUtilities.ValidUpdateContent));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(SharedTestUtilities.GetString(length)),
-            request,
-            CancellationToken);
+        var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task UpdateAsync_ShouldReturnBadRequestResponse_WhenContentIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(null!);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new UpdatePostCommentRequest(
+            existingPostComment.Id,
+            existingPostComment.UserId,
+            new(null!));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(existingPostCommentId),
-            request,
-            CancellationToken);
+        var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostCommentBusinessConfigurations.CONTENT_MIN_LENGTH - 1)]
-    [InlineData(PostCommentBusinessConfigurations.CONTENT_MAX_LENGTH + 1)]
+    [InlineData(PostCommentConfigurations.ContentMinLength - 1)]
+    [InlineData(PostCommentConfigurations.ContentMaxLength + 1)]
     public async Task UpdateAsync_ShouldReturnBadRequestResponse_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(SharedTestUtilities.GetString(length));
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new UpdatePostCommentRequest(
+            existingPostComment.Id,
+            existingPostComment.UserId,
+            new(SharedTestUtilities.GetString(length)));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(existingPostCommentId),
-            request,
-            CancellationToken);
+        var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task UpdateAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new UpdatePostCommentRequest(
+            existingPostComment.Id,
+            null!,
+            new(PostCommentTestUtilities.ValidUpdateContent));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(existingPostCommentId),
-            request,
-            CancellationToken);
+        var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostCommentBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task UpdateAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new UpdatePostCommentRequest(
+            existingPostComment.Id,
+            SharedTestUtilities.GetString(length),
+            new(PostCommentTestUtilities.ValidUpdateContent));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(existingPostCommentId),
-            request,
-            CancellationToken);
+        var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task UpdateAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
-        // Arrange\
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        // Arrange
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new UpdatePostCommentRequest(
+            PostCommentTestUtilities.InvalidId,
+            existingPostComment.UserId,
+            new(PostCommentTestUtilities.ValidUpdateContent));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(PostCommentTestUtilities.InvalidId),
-            request,
-            CancellationToken);
+        var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
+        response
+            .Should()
+            .Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
     public async Task UpdateAsync_ShouldReturnForbiddenResponse_WhenCurrentUserIdDoesNotOwnThePostCommentIdInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostCommentUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingPostCommentUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new UpdatePostCommentRequest(
+            existingPostComment.Id,
+            existingUser.Id,
+            new(PostCommentTestUtilities.ValidUpdateContent));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(existingPostCommentId),
-            request,
-            CancellationToken);
+        var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Forbidden);
+        response
+            .Should()
+            .Be(HttpStatusCode.Forbidden);
     }
 
     [Fact]
     public async Task UpdateAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new UpdatePostCommentRequest(
+            existingPostComment.Id,
+            existingPostComment.UserId,
+            new(PostCommentTestUtilities.ValidUpdateContent));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(existingPostCommentId),
-            request,
-            CancellationToken);
+        var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        response
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task UpdateAsync_ShouldReturnPostCommentViewModel_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new UpdatePostCommentRequest(
+            existingPostComment.Id,
+            existingPostComment.UserId,
+            new(PostCommentTestUtilities.ValidUpdateContent));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(existingPostCommentId),
-            request,
-            CancellationToken);
+        var response = await PostCommentsClient.UpdateAsync(request, CancellationToken);
 
         // Assert
-        var postCommentViewResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostCommentCommandResponse>();
 
-        postCommentViewResponse
+        response
             .Should()
-            .Match<PostCommentCommandResponse>(m => m.Id == existingPostCommentId);
+            .Match<PostCommentCommandResponse>(m => m.Id == existingPostComment.Id);
     }
 
     [Fact]
     public async Task UpdateAsync_ShouldUpdatePostComment_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new UpdatePostCommentRequest(
+            existingPostComment.Id,
+            existingPostComment.UserId,
+            new(PostCommentTestUtilities.ValidUpdateContent));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(existingPostCommentId),
-            request,
-            CancellationToken);
+        var response = await PostCommentsClient.UpdateAsync(request, CancellationToken);
 
-        var postComment = await PostCommentWriteRepository.GetByIdAsync(existingPostCommentId, CancellationToken);
+        var postComment = await PostCommentWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Arrange
         postComment
             .Should()
-            .Match<PostComment>(m => m.Id == existingPostCommentId &&
-                                 m.UserId == existingUserId &&
-                                 m.PostId == existingPostId &&
+            .Match<PostComment>(m => m.Id == existingPostComment.Id &&
+                                 m.UserId == existingPostComment.UserId &&
+                                 m.PostId == existingPostComment.PostId &&
                                  m.Content == PostCommentTestUtilities.ValidUpdateContent);
     }
 
@@ -284,28 +249,22 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
     public async Task UpdateAsync_ShouldUpdatePostComment_WhenRequestIsValidAndIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new UpdatePostCommentBindingModel(PostCommentTestUtilities.ValidUpdateContent);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new UpdatePostCommentRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.Id),
+            existingPostComment.UserId,
+            new(PostCommentTestUtilities.ValidUpdateContent));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PutAsJsonAsync(
-            GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentId)),
-            request,
-            CancellationToken);
-
-        var postComment = await PostCommentWriteRepository.GetByIdAsync(existingPostCommentId, CancellationToken);
+        var response = await PostCommentsClient.UpdateAsync(request, CancellationToken);
+        var postComment = await PostCommentWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Arrange
         postComment
             .Should()
-            .Match<PostComment>(m => m.Id == existingPostCommentId &&
-                                 m.UserId == existingUserId &&
-                                 m.PostId == existingPostId &&
+            .Match<PostComment>(m => m.Id == existingPostComment.Id &&
+                                 m.UserId == existingPostComment.UserId &&
+                                 m.PostId == existingPostComment.PostId &&
                                  m.Content == PostCommentTestUtilities.ValidUpdateContent);
     }
 }

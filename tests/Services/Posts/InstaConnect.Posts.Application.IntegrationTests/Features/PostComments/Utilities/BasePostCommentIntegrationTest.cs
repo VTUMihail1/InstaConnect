@@ -1,5 +1,7 @@
 ﻿using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.Posts.Abstract;
@@ -14,8 +16,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Utilities;
 
-public abstract class BasePostCommentIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
+public abstract class BasePostCommentIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
+    protected IServiceScope ServiceScope { get; }
+
+    protected CancellationToken CancellationToken { get; }
+
+    protected IInstaConnectSender InstaConnectSender { get; }
 
     protected IUserWriteRepository UserWriteRepository
     {
@@ -51,16 +58,37 @@ public abstract class BasePostCommentIntegrationTest : BaseSharedIntegrationTest
     }
 
     protected BasePostCommentIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
-        : base(integrationTestWebAppFactory.Services.CreateScope())
     {
+        ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
+        CancellationToken = new CancellationToken();
+        InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
     }
 
-    protected async Task<string> CreatePostAsync(string userId, CancellationToken cancellationToken)
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
+        var user = new User(
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+
+        userWriteRepository.Add(user);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return user;
+    }
+
+    protected async Task<Post> CreatePostAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(cancellationToken);
         var post = new Post(
-            PostCommentTestUtilities.ValidPostTitle,
-            PostCommentTestUtilities.ValidPostContent,
-            userId);
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent,
+            user);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var postWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostWriteRepository>();
@@ -68,14 +96,16 @@ public abstract class BasePostCommentIntegrationTest : BaseSharedIntegrationTest
         postWriteRepository.Add(post);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return post.Id;
+        return post;
     }
 
-    protected async Task<string> CreatePostCommentAsync(string userId, string postId, CancellationToken cancellationToken)
+    protected async Task<PostComment> CreatePostCommentAsync(CancellationToken cancellationToken)
     {
+        var user = await CreateUserAsync(cancellationToken);
+        var post = await CreatePostAsync(cancellationToken);
         var postComment = new PostComment(
-            userId,
-            postId,
+            user,
+            post,
             PostCommentTestUtilities.ValidContent);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
@@ -84,25 +114,7 @@ public abstract class BasePostCommentIntegrationTest : BaseSharedIntegrationTest
         postCommentWriteRepository.Add(postComment);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return postComment.Id;
-    }
-
-    protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
-    {
-        var user = new User(
-            PostCommentTestUtilities.ValidUserFirstName,
-            PostCommentTestUtilities.ValidUserLastName,
-            PostCommentTestUtilities.ValidUserEmail,
-            PostCommentTestUtilities.ValidUserName,
-            PostCommentTestUtilities.ValidUserProfileImage);
-
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-
-        userWriteRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return user.Id;
+        return postComment;
     }
 
     public async Task InitializeAsync()

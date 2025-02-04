@@ -62,10 +62,10 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldThrowBadRequestException_WhenFollowAlreadyExists()
     {
         // Arrange
-        var existingFollowId = CreateFollow();
+        var existingFollow = CreateFollow();
         var command = new AddFollowCommand(
-            existingFollowId.FollowerId,
-            existingFollowId.FollowingId);
+            existingFollow.FollowerId,
+            existingFollow.FollowingId);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);

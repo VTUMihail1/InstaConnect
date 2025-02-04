@@ -29,10 +29,11 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenSenderIdIsInvalid()
     {
         // Arrange
-        var existingMessage = CreateMessage();
+        var existingSender = CreateUser();
+        var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
             UserTestUtilities.InvalidId,
-            existingMessage.ReceiverId,
+            existingReceiver.Id,
             MessageTestUtilities.ValidAddContent
         );
 
@@ -47,9 +48,10 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenReceiverIdIsInvalid()
     {
         // Arrange
-        var existingMessage = CreateMessage();
+        var existingSender = CreateUser();
+        var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
-            existingMessage.SenderId,
+            existingSender.Id,
             UserTestUtilities.InvalidId,
             MessageTestUtilities.ValidAddContent
         );
@@ -65,10 +67,11 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldReturnMessageViewModel_WhenMessageIsValid()
     {
         // Arrange
-        var existingMessage = CreateMessage();
+        var existingSender = CreateUser();
+        var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
-            existingMessage.SenderId,
-            existingMessage.ReceiverId,
+            existingSender.Id,
+            existingReceiver.Id,
             MessageTestUtilities.ValidAddContent
         );
 
@@ -85,10 +88,11 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldAddMessageToRepository_WhenMessageIsValid()
     {
         // Arrange
-        var existingMessage = CreateMessage();
+        var existingSender = CreateUser();
+        var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
-            existingMessage.SenderId,
-            existingMessage.ReceiverId,
+            existingSender.Id,
+            existingReceiver.Id,
             MessageTestUtilities.ValidAddContent
         );
 
@@ -100,8 +104,8 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
             .Received(1)
             .Add(Arg.Is<Message>(m =>
                 !string.IsNullOrEmpty(m.Id) &&
-                m.SenderId == existingMessage.SenderId &&
-                m.ReceiverId == existingMessage.ReceiverId &&
+                m.SenderId == existingSender.Id &&
+                m.ReceiverId == existingReceiver.Id &&
                 m.Content == MessageTestUtilities.ValidAddContent));
     }
 
@@ -109,10 +113,11 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldSendMessageFromSender_WhenMessageIsValid()
     {
         // Arrange
-        var existingMessage = CreateMessage();
+        var existingSender = CreateUser();
+        var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
-            existingMessage.SenderId,
-            existingMessage.ReceiverId,
+            existingSender.Id,
+            existingReceiver.Id,
             MessageTestUtilities.ValidAddContent
         );
 
@@ -124,7 +129,7 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
             .Received(1)
             .SendMessageToUserAsync(Arg.Is<MessageSendModel>(m =>
                 m.Content == MessageTestUtilities.ValidAddContent &&
-                m.ReceiverId == existingMessage.ReceiverId),
+                m.ReceiverId == existingReceiver.Id),
                 CancellationToken);
     }
 
@@ -132,10 +137,11 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldCallSaveChangesAsync_WhenMessageIsValid()
     {
         // Arrange
-        var existingMessage = CreateMessage();
+        var existingSender = CreateUser();
+        var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
-            existingMessage.SenderId,
-            existingMessage.ReceiverId,
+            existingSender.Id,
+            existingReceiver.Id,
             MessageTestUtilities.ValidAddContent
         );
 
