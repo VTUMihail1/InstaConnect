@@ -78,7 +78,7 @@ public abstract class BasePostCommentUnitTest
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidProfileImage);
 
-        var postCommentCommandViewModel = new PostCommentCommandViewModel(post.Id);
+        var postCommentCommandViewModel = new PostCommentCommandViewModel(postComment.Id);
         var postCommentPaginationCollectionModel = new PostCommentPaginationQueryViewModel(
             [postCommentQueryViewModel],
             PostCommentTestUtilities.ValidPageValue,
@@ -111,7 +111,7 @@ public abstract class BasePostCommentUnitTest
 
         InstaConnectSender
             .SendAsync(Arg.Is<UpdatePostCommentCommand>(m =>
-                  m.Id == post.Id &&
+                  m.Id == postComment.Id &&
                   m.CurrentUserId == user.Id &&
                   m.Content == PostCommentTestUtilities.ValidUpdateContent), CancellationToken)
             .Returns(postCommentCommandViewModel);

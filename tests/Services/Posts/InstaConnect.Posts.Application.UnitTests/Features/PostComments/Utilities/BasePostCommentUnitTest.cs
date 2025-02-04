@@ -63,6 +63,9 @@ public abstract class BasePostCommentUnitTest
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidProfileImage);
 
+        UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
+            .Returns(user);
+
         return user;
     }
 
@@ -74,6 +77,9 @@ public abstract class BasePostCommentUnitTest
             PostTestUtilities.ValidContent,
             user);
 
+        PostWriteRepository.GetByIdAsync(post.Id, CancellationToken)
+            .Returns(post);
+
         return post;
     }
 
@@ -83,8 +89,8 @@ public abstract class BasePostCommentUnitTest
         var post = CreatePost();
         var postComment = new PostComment(user, post, PostCommentTestUtilities.ValidContent);
 
-        var postCommentPaginationList = new PaginationList<Post>(
-        [post],
+        var postCommentPaginationList = new PaginationList<PostComment>(
+        [postComment],
         PostCommentTestUtilities.ValidPageValue,
         PostCommentTestUtilities.ValidPageSizeValue,
         PostCommentTestUtilities.ValidTotalCountValue);
@@ -97,13 +103,14 @@ public abstract class BasePostCommentUnitTest
 
         PostCommentReadRepository
             .GetAllAsync(Arg.Is<PostCommentCollectionReadQuery>(m =>
-                                                                        m.PostId == post.Id &&
                                                                         m.UserId == user.Id &&
                                                                         m.UserName == UserTestUtilities.ValidName &&
+                                                                        m.PostId == post.Id &&
                                                                         m.Page == PostCommentTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == PostCommentTestUtilities.ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == PostCommentTestUtilities.ValidSortPropertyName), CancellationToken);
+                                                                        m.SortPropertyName == PostCommentTestUtilities.ValidSortPropertyName), CancellationToken)
+            .Returns(postCommentPaginationList);
 
         return postComment;
     }
