@@ -1,8 +1,8 @@
 ﻿namespace InstaConnect.Posts.Presentation.Features.Posts.Utilities;
 
-public class PostRoutes
+public class PostLikeRoutes
 {
-    public const string Resource = "api/v{version:apiVersion}/posts";
+    public const string Resource = "api/v{version:apiVersion}/post-likes";
 
     public const string Id = "{id}";
 

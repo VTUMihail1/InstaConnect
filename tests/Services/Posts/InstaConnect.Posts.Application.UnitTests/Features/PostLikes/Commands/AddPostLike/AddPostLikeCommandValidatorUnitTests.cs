@@ -2,6 +2,8 @@
 using InstaConnect.Posts.Application.Features.PostLikes.Commands.AddPostLike;
 using InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Commands.AddPostLike;
@@ -19,9 +21,11 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
+        var existingUser = CreateUser();
+        var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             null!,
-            PostLikeTestUtilities.ValidPostId);
+            existingPost.Id);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -32,14 +36,16 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
+        var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             SharedTestUtilities.GetString(length)!,
-            PostLikeTestUtilities.ValidPostId);
+            existingPost.Id);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -52,8 +58,10 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdIsNull()
     {
         // Arrange
+        var existingUser = CreateUser();
+        var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
-            PostLikeTestUtilities.ValidCurrentUserId,
+            existingUser.Id,
             null!);
 
         // Act
@@ -65,13 +73,15 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH + 1)]
+    [InlineData(PostConfigurations.IdMinLength - 1)]
+    [InlineData(PostConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
+        var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
-            PostLikeTestUtilities.ValidCurrentUserId,
+            existingUser.Id,
             SharedTestUtilities.GetString(length));
 
         // Act
@@ -85,9 +95,11 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
+        var existingUser = CreateUser();
+        var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
-            PostLikeTestUtilities.ValidCurrentUserId,
-            PostLikeTestUtilities.ValidPostId);
+            existingUser.Id,
+            existingPost.Id);
 
         // Act
         var result = _commandValidator.TestValidate(command);

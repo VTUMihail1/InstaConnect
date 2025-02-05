@@ -2,6 +2,9 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
+using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
@@ -18,67 +21,65 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
     }
 
     [Theory]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
             SharedTestUtilities.GetString(length),
-            PostLikeTestUtilities.ValidUserName,
-            existingPostId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostLikesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
+            existingPostLike.UserId,
             SharedTestUtilities.GetString(length),
-            existingPostId,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostLikesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
-    [InlineData(PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH + 1)]
+    [InlineData(PostConfigurations.IdMinLength - 1)]
+    [InlineData(PostConfigurations.IdMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPostIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostLikeTestUtilities.ValidUserName,
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
             SharedTestUtilities.GetString(length),
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -86,33 +87,35 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostLikesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPostLikeDoesNotContainProperty()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostLikeTestUtilities.ValidUserName,
-            existingPostId,
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.InvalidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostLikesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -121,23 +124,23 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostLikeTestUtilities.ValidUserName,
-            existingPostId,
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostLikesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -146,23 +149,23 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostLikeTestUtilities.ValidUserName,
-            existingPostId,
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             value,
             PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostLikesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
 
@@ -173,80 +176,74 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostLikeTestUtilities.ValidUserName,
-            existingPostId,
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
             value);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostLikesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostLikeTestUtilities.ValidUserName,
-            existingPostId,
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
+        var response = await PostLikesClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        response
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnPostLikePaginationCollectionResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostLikeTestUtilities.ValidUserName,
-            existingPostId,
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var postLikePaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostLikePaginationQueryResponse>();
+        var response = await PostLikesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        postLikePaginationCollectionResponse
+        response
             .Should()
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostLikeId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostLikeTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
-                                                               m.PostId == existingPostId) &&
+                                                               m.Id == existingPostLike.Id &&
+                                                               m.UserId == existingPostLike.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
@@ -258,34 +255,28 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
     public async Task GetAllAsync_ShouldReturnPostLikePaginationCollectionResponse_WhenRequestIsValidAndCurrentUserIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostLikeTestUtilities.ValidUserName,
-            existingPostId,
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var postLikePaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostLikePaginationQueryResponse>();
+        var response = await PostLikesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        postLikePaginationCollectionResponse
+        response
             .Should()
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostLikeId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostLikeTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
-                                                               m.PostId == existingPostId) &&
+                                                               m.Id == existingPostLike.Id &&
+                                                               m.UserId == existingPostLike.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
@@ -297,34 +288,28 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
     public async Task GetAllAsync_ShouldReturnPostLikePaginationCollectionResponse_WhenRequestIsValidAndUserIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
-            SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
-            PostLikeTestUtilities.ValidUserName,
-            existingPostId,
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostLike.UserId),
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var postLikePaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostLikePaginationQueryResponse>();
+        var response = await PostLikesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        postLikePaginationCollectionResponse
+        response
             .Should()
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostLikeId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostLikeTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
-                                                               m.PostId == existingPostId) &&
+                                                               m.Id == existingPostLike.Id &&
+                                                               m.UserId == existingPostLike.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
@@ -336,34 +321,28 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
     public async Task GetAllAsync_ShouldReturnPostLikePaginationCollectionResponse_WhenRequestIsValidAndUserNameCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            SharedTestUtilities.GetNonCaseMatchingString(PostLikeTestUtilities.ValidUserName),
-            existingPostId,
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
+            existingPostLike.UserId,
+            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var postLikePaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostLikePaginationQueryResponse>();
+        var response = await PostLikesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        postLikePaginationCollectionResponse
+        response
             .Should()
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostLikeId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostLikeTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
-                                                               m.PostId == existingPostId) &&
+                                                               m.Id == existingPostLike.Id &&
+                                                               m.UserId == existingPostLike.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
@@ -375,34 +354,28 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
     public async Task GetAllAsync_ShouldReturnPostLikePaginationCollectionResponse_WhenRequestIsValidAndUserNameIsNotFull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            SharedTestUtilities.GetHalfStartString(PostLikeTestUtilities.ValidUserName),
-            existingPostId,
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
+            existingPostLike.UserId,
+            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var postLikePaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostLikePaginationQueryResponse>();
+        var response = await PostLikesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        postLikePaginationCollectionResponse
+        response
             .Should()
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostLikeId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostLikeTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
-                                                               m.PostId == existingPostId) &&
+                                                               m.Id == existingPostLike.Id &&
+                                                               m.UserId == existingPostLike.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
@@ -414,34 +387,28 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
     public async Task GetAllAsync_ShouldReturnPostLikePaginationCollectionResponse_WhenRequestIsValidAndPostIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
-        var route = GetApiRoute(
-            existingUserId,
-            PostLikeTestUtilities.ValidUserName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostId),
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetAllPostLikesRequest(
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostLike.PostId),
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await HttpClient.GetAsync(route, CancellationToken);
-
-        var postLikePaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostLikePaginationQueryResponse>();
+        var response = await PostLikesClient.GetAllAsync(request, CancellationToken);
 
         // Assert
-        postLikePaginationCollectionResponse
+        response
             .Should()
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostLikeId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostLikeTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
-                                                               m.PostId == existingPostId) &&
+                                                               m.Id == existingPostLike.Id &&
+                                                               m.UserId == existingPostLike.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
@@ -453,48 +420,24 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
     public async Task GetAllAsync_ShouldReturnPostLikePaginationCollectionResponse_WhenRouteHasNoParameters()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
 
         // Act
-        var response = await HttpClient.GetAsync(ApiRoute, CancellationToken);
-
-        var postLikePaginationCollectionResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostLikePaginationQueryResponse>();
+        var response = await PostLikesClient.GetAllAsync(CancellationToken);
 
         // Assert
-        postLikePaginationCollectionResponse
+        response
             .Should()
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostLikeId &&
-                                                               m.UserId == existingUserId &&
-                                                               m.UserName == PostLikeTestUtilities.ValidUserName &&
-                                                               m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
-                                                               m.PostId == existingPostId) &&
+                                                               m.Id == existingPostLike.Id &&
+                                                               m.UserId == existingPostLike.UserId &&
+                                                               m.UserName == UserTestUtilities.ValidName &&
+                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                                !mc.HasPreviousPage &&
                                                                !mc.HasNextPage);
-    }
-
-    private string GetApiRoute(string userId, string userName, string postId, SortOrder sortOrder, string sortPropertyName, int page, int pageSize)
-    {
-        var routeTemplate = "{0}?userId={1}&username={2}&postId={3}&sortOrder={4}&sortPropertyName={5}&page={6}&pageSize={7}";
-
-        var route = string.Format(
-            routeTemplate,
-            ApiRoute,
-            userId,
-            userName,
-            postId,
-            sortOrder,
-            sortPropertyName,
-            page,
-            pageSize);
-
-        return route;
     }
 }

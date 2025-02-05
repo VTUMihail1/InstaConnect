@@ -2,7 +2,10 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
+using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
@@ -17,20 +20,23 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
     }
 
     [Theory]
-    [InlineData(PostLikeBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(PostLikeBusinessConfigurations.IdMinLength - 1)]
+    [InlineData(PostLikeBusinessConfigurations.IdMaxLength + 1)]
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetPostLikeByIdRequest(
+            SharedTestUtilities.GetString(length)
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetString(length)), CancellationToken);
+        var response = await PostLikesClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
 
@@ -38,79 +44,79 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetPostLikeByIdRequest(
+            PostLikeTestUtilities.InvalidId
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(PostLikeTestUtilities.InvalidId), CancellationToken);
+        var response = await PostLikesClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
+        response
+            .Should()
+            .Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
     public async Task GetByIdAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetPostLikeByIdRequest(
+            existingPostLike.Id
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(existingPostLikeId), CancellationToken);
+        var response = await PostLikesClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        response
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task GetByIdAsync_ShouldReturnPostLikeViewResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetPostLikeByIdRequest(
+            existingPostLike.Id
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(existingPostLikeId), CancellationToken);
-
-        var postLikeViewResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostLikeQueryResponse>();
+        var response = await PostLikesClient.GetByIdAsync(request, CancellationToken);
 
         // Assert
-        postLikeViewResponse
+        response
             .Should()
-            .Match<PostLikeQueryResponse>(m => m.Id == existingPostLikeId &&
-                                 m.UserId == existingUserId &&
-                                 m.UserName == PostLikeTestUtilities.ValidUserName &&
-                                 m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
-                                 m.PostId == existingPostId);
+            .Match<PostLikeQueryResponse>(m => m.Id == existingPostLike.Id &&
+                                 m.UserId == existingPostLike.UserId &&
+                                 m.UserName == UserTestUtilities.ValidName &&
+                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                 m.PostId == existingPostLike.PostId);
     }
 
     [Fact]
     public async Task GetByIdAsync_ShouldReturnPostLikeViewResponse_WhenRequestIsValidAndIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
+        var request = new GetPostLikeByIdRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostLike.Id)
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetIdRoute(SharedTestUtilities.GetNonCaseMatchingString(existingPostLikeId)), CancellationToken);
-
-        var postLikeViewResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostLikeQueryResponse>();
+        var response = await PostLikesClient.GetByIdAsync(request, CancellationToken);
 
         // Assert
-        postLikeViewResponse
+        response
             .Should()
-            .Match<PostLikeQueryResponse>(m => m.Id == existingPostLikeId &&
-                                 m.UserId == existingUserId &&
-                                 m.UserName == PostLikeTestUtilities.ValidUserName &&
-                                 m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
-                                 m.PostId == existingPostId);
+            .Match<PostLikeQueryResponse>(m => m.Id == existingPostLike.Id &&
+                                 m.UserId == existingPostLike.UserId &&
+                                 m.UserName == UserTestUtilities.ValidName &&
+                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                 m.PostId == existingPostLike.PostId);
     }
 }

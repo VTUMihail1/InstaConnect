@@ -3,6 +3,7 @@ using InstaConnect.Posts.Application.Features.PostLikes.Models;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllPostLikes;
 using InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
 using NSubstitute;
 
@@ -23,10 +24,11 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
+        var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
-            PostLikeTestUtilities.ValidPostLikeCurrentUserId,
-            PostLikeTestUtilities.ValidUserName,
-            PostLikeTestUtilities.ValidPostLikePostId,
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
@@ -39,9 +41,9 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         await PostLikeReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<PostLikeCollectionReadQuery>(m =>
-                                                                        m.UserId == PostLikeTestUtilities.ValidPostLikeCurrentUserId &&
-                                                                        m.UserName == PostLikeTestUtilities.ValidUserName &&
-                                                                        m.PostId == PostLikeTestUtilities.ValidPostLikePostId &&
+                                                                        m.UserId == existingPostLike.UserId &&
+                                                                        m.UserName == UserTestUtilities.ValidName &&
+                                                                        m.PostId == existingPostLike.PostId &&
                                                                         m.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                         m.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
@@ -53,10 +55,11 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
+        var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
-            PostLikeTestUtilities.ValidPostLikeCurrentUserId,
-            PostLikeTestUtilities.ValidUserName,
-            PostLikeTestUtilities.ValidPostLikePostId,
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
@@ -68,11 +71,11 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         // Assert
         response
             .Should()
-            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == PostLikeTestUtilities.ValidId &&
-                                                           m.UserId == PostLikeTestUtilities.ValidPostLikeCurrentUserId &&
-                                                           m.UserName == PostLikeTestUtilities.ValidUserName &&
-                                                           m.UserProfileImage == PostLikeTestUtilities.ValidUserProfileImage &&
-                                                           m.PostId == PostLikeTestUtilities.ValidPostLikePostId) &&
+            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLike.Id &&
+                                                           m.UserId == existingPostLike.UserId &&
+                                                           m.UserName == UserTestUtilities.ValidName &&
+                                                           m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                           m.PostId == existingPostLike.PostId) &&
                                                            mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&

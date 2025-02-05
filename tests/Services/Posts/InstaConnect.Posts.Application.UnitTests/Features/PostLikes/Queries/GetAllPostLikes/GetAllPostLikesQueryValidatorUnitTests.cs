@@ -2,6 +2,8 @@
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllPostLikes;
 using InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Queries.GetAllPostLikes;
@@ -16,15 +18,16 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     }
 
     [Theory]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForUserId_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
             SharedTestUtilities.GetString(length),
-            PostLikeTestUtilities.ValidUserName,
-            PostLikeTestUtilities.ValidPostId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
@@ -38,15 +41,16 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     }
 
     [Theory]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForUserName_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
-            PostLikeTestUtilities.ValidCurrentUserId,
+            existingPostLike.UserId,
             SharedTestUtilities.GetString(length),
-            PostLikeTestUtilities.ValidPostId,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
@@ -60,14 +64,15 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     }
 
     [Theory]
-    [InlineData(PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH + 1)]
+    [InlineData(PostConfigurations.IdMinLength - 1)]
+    [InlineData(PostConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
-            PostLikeTestUtilities.ValidCurrentUserId,
-            PostLikeTestUtilities.ValidUserName,
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
             SharedTestUtilities.GetString(length),
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -85,10 +90,11 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
     {
         // Arrange
+        var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
-            PostLikeTestUtilities.ValidCurrentUserId,
-            PostLikeTestUtilities.ValidUserName,
-            PostLikeTestUtilities.ValidPostId,
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             null!,
             PostLikeTestUtilities.ValidPageValue,
@@ -105,10 +111,11 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
     {
         // Arrange
+        var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
-            PostLikeTestUtilities.ValidCurrentUserId,
-            PostLikeTestUtilities.ValidUserName,
-            PostLikeTestUtilities.ValidPostId,
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.InvalidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
@@ -128,10 +135,11 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
-            PostLikeTestUtilities.ValidCurrentUserId,
-            PostLikeTestUtilities.ValidUserName,
-            PostLikeTestUtilities.ValidPostId,
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             PostLikeTestUtilities.ValidPageValue,
@@ -150,10 +158,11 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
+        var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
-            PostLikeTestUtilities.ValidCurrentUserId,
-            PostLikeTestUtilities.ValidUserName,
-            PostLikeTestUtilities.ValidPostId,
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             value,
@@ -172,10 +181,11 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
+        var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
-            PostLikeTestUtilities.ValidCurrentUserId,
-            PostLikeTestUtilities.ValidUserName,
-            PostLikeTestUtilities.ValidPostId,
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
@@ -192,10 +202,11 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
+        var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
-            PostLikeTestUtilities.ValidCurrentUserId,
-            PostLikeTestUtilities.ValidUserName,
-            PostLikeTestUtilities.ValidPostId,
+            existingPostLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,

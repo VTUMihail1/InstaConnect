@@ -1,8 +1,8 @@
 ﻿namespace InstaConnect.Posts.Presentation.Features.PostLikes.Models.Binding;
 
-public class AddPostLikeBindingModel
+public class AddPostLikeBody
 {
-    public AddPostLikeBindingModel(string postId)
+    public AddPostLikeBody(string postId)
     {
         PostId = postId;
     }

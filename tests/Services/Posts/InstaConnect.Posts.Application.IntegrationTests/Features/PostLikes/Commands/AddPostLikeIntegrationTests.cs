@@ -3,6 +3,8 @@ using InstaConnect.Posts.Application.Features.PostLikes.Commands.AddPostLike;
 using InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Posts;
@@ -22,11 +24,11 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
             null!,
-            existingPostId
+            existingPost.Id
         );
 
         // Act
@@ -38,16 +40,16 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
             SharedTestUtilities.GetString(length),
-            existingPostId
+            existingPost.Id
         );
 
         // Act
@@ -61,10 +63,10 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPostIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
-            existingUserId,
+            existingUser.Id,
             null!
         );
 
@@ -77,15 +79,15 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostLikeBusinessConfigurations.POST_ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.POST_ID_MAX_LENGTH + 1)]
+    [InlineData(PostConfigurations.IdMinLength - 1)]
+    [InlineData(PostConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPostIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
-            existingUserId,
+            existingUser.Id,
             SharedTestUtilities.GetString(length)
         );
 
@@ -100,11 +102,11 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
-            PostLikeTestUtilities.InvalidUserId,
-            existingPostId
+            UserTestUtilities.InvalidId,
+            existingPost.Id
         );
 
         // Act
@@ -118,11 +120,11 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     public async Task SendAsync_ShouldThrowPostNotFoundException_WhenPostIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
-            existingUserId,
-            PostLikeTestUtilities.InvalidPostId
+            existingUser.Id,
+            PostTestUtilities.InvalidId
         );
 
         // Act
@@ -136,12 +138,10 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPostLikeAlreadyExists()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostLikeId = await CreatePostLikeAsync(existingUserId, existingPostId, CancellationToken);
+        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var command = new AddPostLikeCommand(
-            existingUserId,
-            existingPostId
+            existingPostLike.UserId,
+            existingPostLike.PostId
         );
 
         // Act
@@ -155,11 +155,11 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     public async Task SendAsync_ShouldAddPostLike_WhenPostLikeIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
-            existingUserId,
-            existingPostId
+            existingUser.Id,
+            existingPost.Id
         );
 
         // Act
@@ -170,7 +170,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
         postLike
             .Should()
             .Match<PostLike>(p => p.Id == response.Id &&
-                                     p.UserId == existingUserId &&
-                                     p.PostId == existingPostId);
+                                     p.UserId == existingUser.Id &&
+                                     p.PostId == existingPost.Id);
     }
 }

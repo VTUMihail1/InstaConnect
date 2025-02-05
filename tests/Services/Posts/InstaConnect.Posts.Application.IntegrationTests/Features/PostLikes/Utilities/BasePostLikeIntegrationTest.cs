@@ -1,5 +1,7 @@
 ﻿using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostLikes.Abstract;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.Posts.Abstract;
@@ -14,9 +16,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Utilities;
 
-public abstract class BasePostLikeIntegrationTest : BaseSharedIntegrationTest, IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
+public abstract class BasePostLikeIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
+    protected IServiceScope ServiceScope { get; }
 
+    protected CancellationToken CancellationToken { get; }
+
+    protected IInstaConnectSender InstaConnectSender { get; }
 
     protected IUserWriteRepository UserWriteRepository
     {
@@ -52,49 +58,20 @@ public abstract class BasePostLikeIntegrationTest : BaseSharedIntegrationTest, I
     }
 
     protected BasePostLikeIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
-        : base(integrationTestWebAppFactory.Services.CreateScope())
     {
+        ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
+        CancellationToken = new CancellationToken();
+        InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
     }
 
-    protected async Task<string> CreatePostAsync(string userId, CancellationToken cancellationToken)
-    {
-        var post = new Post(
-            PostLikeTestUtilities.ValidPostTitle,
-            PostLikeTestUtilities.ValidPostContent,
-            userId);
-
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var postWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostWriteRepository>();
-
-        postWriteRepository.Add(post);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return post.Id;
-    }
-
-    protected async Task<string> CreatePostLikeAsync(string userId, string postId, CancellationToken cancellationToken)
-    {
-        var postLike = new PostLike(
-            postId,
-            userId);
-
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var postLikeWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostLikeWriteRepository>();
-
-        postLikeWriteRepository.Add(postLike);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return postLike.Id;
-    }
-
-    protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            PostLikeTestUtilities.ValidUserFirstName,
-            PostLikeTestUtilities.ValidUserLastName,
-            PostLikeTestUtilities.ValidUserEmail,
-            PostLikeTestUtilities.ValidUserName,
-            PostLikeTestUtilities.ValidUserProfileImage);
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
@@ -102,7 +79,41 @@ public abstract class BasePostLikeIntegrationTest : BaseSharedIntegrationTest, I
         userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return user.Id;
+        return user;
+    }
+
+    protected async Task<Post> CreatePostAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(cancellationToken);
+        var post = new Post(
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent,
+            user);
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var postWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostWriteRepository>();
+
+        postWriteRepository.Add(post);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return post;
+    }
+
+    protected async Task<PostLike> CreatePostLikeAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(cancellationToken);
+        var post = await CreatePostAsync(cancellationToken);
+        var postLike = new PostLike(
+            post,
+            user);
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var postLikeWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostLikeWriteRepository>();
+
+        postLikeWriteRepository.Add(postLike);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return postLike;
     }
 
     public async Task InitializeAsync()

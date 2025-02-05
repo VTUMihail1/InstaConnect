@@ -19,6 +19,7 @@ public class GetPostLikeByIdQueryValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
+        var existingPostLike = CreatePostLike();
         var query = new GetPostLikeByIdQuery(null!);
 
         // Act
@@ -30,11 +31,12 @@ public class GetPostLikeByIdQueryValidatorUnitTests : BasePostLikeUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostLikeBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(PostLikeBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(PostLikeBusinessConfigurations.IdMinLength - 1)]
+    [InlineData(PostLikeBusinessConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingPostLike = CreatePostLike();
         var query = new GetPostLikeByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -48,7 +50,8 @@ public class GetPostLikeByIdQueryValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var query = new GetPostLikeByIdQuery(PostLikeTestUtilities.ValidId);
+        var existingPostLike = CreatePostLike();
+        var query = new GetPostLikeByIdQuery(existingPostLike.Id);
 
         // Act
         var result = _validator.TestValidate(query);
