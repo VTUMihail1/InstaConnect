@@ -67,6 +67,6 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeUnitTest
                                               m.UserId == existingPostLike.UserId &&
                                               m.UserName == UserTestUtilities.ValidName &&
                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                              m.PostId == existingPostLike.UserId);
+                                              m.PostId == existingPostLike.PostId);
     }
 }
