@@ -3,6 +3,7 @@ using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 using InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
 using NSubstitute;
 using NSubstitute.ReceivedExtensions;
@@ -24,10 +25,11 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
-            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -40,9 +42,9 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
         await PostCommentLikeReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<PostCommentLikeCollectionReadQuery>(m =>
-                                                                        m.UserId == PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId &&
-                                                                        m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                                        m.PostCommentId == PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId &&
+                                                                        m.UserId == existingPostCommentLike.UserId &&
+                                                                        m.UserName == UserTestUtilities.ValidName &&
+                                                                        m.PostCommentId == existingPostCommentLike.PostCommentId &&
                                                                         m.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == PostCommentLikeTestUtilities.ValidSortOrderProperty &&
@@ -53,10 +55,11 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
-            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -68,11 +71,11 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
         // Assert
         response
             .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == PostCommentLikeTestUtilities.ValidId &&
-                                                           m.UserId == PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId &&
-                                                           m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                           m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
-                                                           m.PostCommentId == PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId) &&
+            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLike.Id &&
+                                                           m.UserId == existingPostCommentLike.UserId &&
+                                                           m.UserName == UserTestUtilities.ValidName &&
+                                                           m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                           m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                            mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&

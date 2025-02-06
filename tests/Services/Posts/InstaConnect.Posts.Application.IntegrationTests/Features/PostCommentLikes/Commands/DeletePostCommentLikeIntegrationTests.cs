@@ -3,6 +3,7 @@ using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.DeletePo
 using InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.PostCommentLike;
 using InstaConnect.Shared.Common.Exceptions.User;
@@ -21,14 +22,11 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
 
         var command = new DeletePostCommentLikeCommand(
             null!,
-            existingUserId
+            existingPostCommentLike.UserId
         );
 
         // Act
@@ -40,19 +38,16 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostCommentLikeBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentLikeBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentLikeConfigurations.IdMinLength - 1)]
+    [InlineData(PostCommentLikeConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
 
         var command = new DeletePostCommentLikeCommand(
             SharedTestUtilities.GetString(length),
-            existingUserId
+            existingPostCommentLike.UserId
         );
 
         // Act
@@ -66,13 +61,10 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
 
         var command = new DeletePostCommentLikeCommand(
-            existingPostCommentLikeId,
+            existingPostCommentLike.Id,
             null!
         );
 
@@ -85,18 +77,15 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
 
         var command = new DeletePostCommentLikeCommand(
-            existingPostCommentLikeId,
+            existingPostCommentLike.Id,
             SharedTestUtilities.GetString(length)
         );
 
@@ -111,13 +100,10 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
     public async Task SendAsync_ShouldThrowPostCommentLikeNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var command = new DeletePostCommentLikeCommand(
             PostCommentLikeTestUtilities.InvalidId,
-            existingUserId
+            existingPostCommentLike.UserId
         );
 
         // Act
@@ -131,14 +117,11 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
     public async Task SendAsync_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeUserId = await CreateUserAsync(CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingPostCommentLikeUserId, existingPostCommentId, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var command = new DeletePostCommentLikeCommand(
-            existingPostCommentLikeId,
-            existingUserId
+            existingPostCommentLike.Id,
+            existingUser.Id
         );
 
         // Act
@@ -152,18 +135,15 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
     public async Task SendAsync_ShouldDeletePostCommentLike_WhenPostCommentLikeIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var command = new DeletePostCommentLikeCommand(
-            existingPostCommentLikeId,
-            existingUserId
+            existingPostCommentLike.Id,
+            existingPostCommentLike.UserId
         );
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
-        var postCommentLike = await PostCommentLikeWriteRepository.GetByIdAsync(existingPostCommentLikeId, CancellationToken);
+        var postCommentLike = await PostCommentLikeWriteRepository.GetByIdAsync(existingPostCommentLike.Id, CancellationToken);
 
         // Assert
         postCommentLike
@@ -175,18 +155,15 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
     public async Task SendAsync_ShouldDeletePostCommentLike_WhenPostCommentLikeIsValidAndIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var command = new DeletePostCommentLikeCommand(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLikeId),
-            existingUserId
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.Id),
+            existingPostCommentLike.UserId
         );
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
-        var postCommentLike = await PostCommentLikeWriteRepository.GetByIdAsync(existingPostCommentLikeId, CancellationToken);
+        var postCommentLike = await PostCommentLikeWriteRepository.GetByIdAsync(existingPostCommentLike.Id, CancellationToken);
 
         // Assert
         postCommentLike

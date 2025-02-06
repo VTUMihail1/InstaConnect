@@ -4,6 +4,8 @@ using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllPos
 using InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Utilities;
 
@@ -16,19 +18,16 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     }
 
     [Theory]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
             SharedTestUtilities.GetString(length),
-            PostCommentLikeTestUtilities.ValidUserName,
-            existingPostCommentId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -42,19 +41,16 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     }
 
     [Theory]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
+            existingPostCommentLike.UserId,
             SharedTestUtilities.GetString(length),
-            existingPostCommentId,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -68,18 +64,15 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     }
 
     [Theory]
-    [InlineData(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentConfigurations.IdMinLength - 1)]
+    [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPostCommentIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
             SharedTestUtilities.GetString(length),
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -97,14 +90,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            existingPostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             null!,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -121,14 +111,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldThrowBadRequestException_WhenMessageDoesNotContaintSortPropertyName()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            existingPostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.InvalidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -148,14 +135,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            existingPostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -174,14 +158,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            existingPostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             value,
@@ -200,14 +181,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            existingPostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -224,14 +202,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldReturnPostCommentLikeViewModelCollection_WhenUserIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
             null!,
-            PostCommentLikeTestUtilities.ValidUserName,
-            existingPostCommentId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -243,11 +218,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         // Assert
         response
             .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLikeId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
-                                                                    m.PostCommentId == existingPostCommentId) &&
+            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLike.Id &&
+                                                                    m.UserId == existingPostCommentLike.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                            mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
@@ -259,14 +234,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldReturnPostCommentLikeViewModelCollection_WhenUserIdIsEmpty()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
             string.Empty,
-            PostCommentLikeTestUtilities.ValidUserName,
-            existingPostCommentId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -278,11 +250,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         // Assert
         response
             .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLikeId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
-                                                                    m.PostCommentId == existingPostCommentId) &&
+            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLike.Id &&
+                                                                    m.UserId == existingPostCommentLike.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                            mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
@@ -294,14 +266,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldReturnPostCommentLikeViewModelCollection_WhenUserIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            SharedTestUtilities.GetNonCaseMatchingString(existingUserId),
-            PostCommentLikeTestUtilities.ValidUserName,
-            existingPostCommentId,
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.UserId),
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -313,11 +282,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         // Assert
         response
             .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLikeId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
-                                                                    m.PostCommentId == existingPostCommentId) &&
+            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLike.Id &&
+                                                                    m.UserId == existingPostCommentLike.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                            mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
@@ -329,14 +298,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldReturnPostCommentLikeViewModelCollection_WhenUserNameIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
+            existingPostCommentLike.UserId,
             null!,
-            existingPostCommentId,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -348,11 +314,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         // Assert
         response
             .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLikeId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
-                                                                    m.PostCommentId == existingPostCommentId) &&
+            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLike.Id &&
+                                                                    m.UserId == existingPostCommentLike.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                            mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
@@ -364,14 +330,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldReturnPostCommentLikeViewModelCollection_WhenUserNameIsEmpty()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
+            existingPostCommentLike.UserId,
             string.Empty,
-            existingPostCommentId,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -383,11 +346,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         // Assert
         response
             .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLikeId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
-                                                                    m.PostCommentId == existingPostCommentId) &&
+            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLike.Id &&
+                                                                    m.UserId == existingPostCommentLike.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                            mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
@@ -399,14 +362,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldReturnPostCommentLikeViewModelCollection_WhenUserNameCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
-            SharedTestUtilities.GetNonCaseMatchingString(PostCommentLikeTestUtilities.ValidUserName),
-            existingPostCommentId,
+            existingPostCommentLike.UserId,
+            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -418,11 +378,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         // Assert
         response
             .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLikeId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
-                                                                    m.PostCommentId == existingPostCommentId) &&
+            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLike.Id &&
+                                                                    m.UserId == existingPostCommentLike.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                            mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
@@ -434,13 +394,10 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldReturnPostCommentLikeViewModelCollection_WhenPostIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
             null!,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -453,11 +410,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         // Assert
         response
             .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLikeId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
-                                                                    m.PostCommentId == existingPostCommentId) &&
+            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLike.Id &&
+                                                                    m.UserId == existingPostCommentLike.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                            mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
@@ -469,13 +426,10 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldReturnPostCommentLikeViewModelCollection_WhenPostIdIsEmpty()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
             string.Empty,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -488,11 +442,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         // Assert
         response
             .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLikeId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
-                                                                    m.PostCommentId == existingPostCommentId) &&
+            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLike.Id &&
+                                                                    m.UserId == existingPostCommentLike.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                            mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
@@ -504,14 +458,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldReturnPostCommentLikeViewModelCollection_WhenPostIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentId),
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.PostCommentId),
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -523,11 +474,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         // Assert
         response
             .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLikeId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
-                                                                    m.PostCommentId == existingPostCommentId) &&
+            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLike.Id &&
+                                                                    m.UserId == existingPostCommentLike.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                            mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
@@ -539,14 +490,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldReturnPostCommentLikeViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            existingUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            existingPostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -558,11 +506,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         // Assert
         response
             .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLikeId &&
-                                                                    m.UserId == existingUserId &&
-                                                                    m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                                    m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
-                                                                    m.PostCommentId == existingPostCommentId) &&
+            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLike.Id &&
+                                                                    m.UserId == existingPostCommentLike.UserId &&
+                                                                    m.UserName == UserTestUtilities.ValidName &&
+                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                            mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&

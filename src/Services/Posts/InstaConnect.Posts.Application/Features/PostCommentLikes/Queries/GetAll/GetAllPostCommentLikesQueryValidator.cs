@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Validators;
@@ -13,18 +15,18 @@ public class GetAllPostCommentLikesQueryValidator : AbstractValidator<GetAllPost
         Include(new CollectionModelValidator());
 
         RuleFor(c => c.UserId)
-            .MinimumLength(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH)
-            .MaximumLength(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH)
+            .MinimumLength(UserConfigurations.IdMinLength)
+            .MaximumLength(UserConfigurations.IdMaxLength)
             .When(q => !string.IsNullOrEmpty(q.UserId));
 
         RuleFor(c => c.UserName)
-            .MinimumLength(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH)
-            .MaximumLength(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH)
+            .MinimumLength(UserConfigurations.NameMinLength)
+            .MaximumLength(UserConfigurations.NameMaxLength)
             .When(q => !string.IsNullOrEmpty(q.UserName));
 
         RuleFor(c => c.PostCommentId)
-            .MinimumLength(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MIN_LENGTH)
-            .MaximumLength(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MAX_LENGTH)
+            .MinimumLength(PostCommentConfigurations.IdMinLength)
+            .MaximumLength(PostCommentConfigurations.IdMaxLength)
             .When(q => !string.IsNullOrEmpty(q.PostCommentId));
 
         RuleFor(c => c.SortPropertyName)

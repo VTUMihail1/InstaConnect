@@ -9,8 +9,8 @@ public class GetPostCommentLikeByIdQueryValidator : AbstractValidator<GetPostCom
     {
         RuleFor(q => q.Id)
             .NotEmpty()
-            .MinimumLength(PostCommentLikeBusinessConfigurations.ID_MIN_LENGTH)
-            .MaximumLength(PostCommentLikeBusinessConfigurations.ID_MAX_LENGTH);
+            .MinimumLength(PostCommentLikeConfigurations.IdMinLength)
+            .MaximumLength(PostCommentLikeConfigurations.IdMaxLength);
         ;
     }
 }

@@ -2,6 +2,8 @@
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.AddPostCommentLike;
 using InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Commands.AddPostCommentLike;
@@ -19,9 +21,11 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
+        var existingUser = CreateUser();
+        var existingPostComment = CreatePostComment();
         var command = new AddPostCommentLikeCommand(
             null!,
-            PostCommentLikeTestUtilities.ValidPostCommentId);
+            existingPostComment.Id);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -32,14 +36,16 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
+        var existingPostComment = CreatePostComment();
         var command = new AddPostCommentLikeCommand(
             SharedTestUtilities.GetString(length)!,
-            PostCommentLikeTestUtilities.ValidPostCommentId);
+            existingPostComment.Id);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -52,8 +58,10 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     public void TestValidate_ShouldHaveAnErrorForPostCommentId_WhenPostCommentIdIsNull()
     {
         // Arrange
+        var existingUser = CreateUser();
+        var existingPostComment = CreatePostComment();
         var command = new AddPostCommentLikeCommand(
-            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            existingUser.Id,
             null!);
 
         // Act
@@ -65,13 +73,15 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentConfigurations.IdMinLength - 1)]
+    [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForPostCommentId_WhenPostCommentIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
+        var existingPostComment = CreatePostComment();
         var command = new AddPostCommentLikeCommand(
-            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            existingUser.Id,
             SharedTestUtilities.GetString(length)!);
 
         // Act
@@ -85,9 +95,11 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
+        var existingUser = CreateUser();
+        var existingPostComment = CreatePostComment();
         var command = new AddPostCommentLikeCommand(
-             PostCommentLikeTestUtilities.ValidCurrentUserId,
-             PostCommentLikeTestUtilities.ValidPostCommentId);
+             existingUser.Id,
+             existingPostComment.Id);
 
         // Act
         var result = _commandValidator.TestValidate(command);

@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using InstaConnect.Shared.Presentation.Binders.FromClaim;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 
-public class DeletePostCommentLikeRequest
-{
-    [FromRoute]
-    public string Id { get; set; } = string.Empty;
-}
+public record DeletePostCommentLikeRequest(
+    [FromRoute] string Id,
+    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId
+);

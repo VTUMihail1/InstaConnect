@@ -2,6 +2,8 @@
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
 using InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
@@ -16,15 +18,16 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     }
 
     [Theory]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForUserId_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
             SharedTestUtilities.GetString(length),
-            PostCommentLikeTestUtilities.ValidUserName,
-            PostCommentLikeTestUtilities.ValidPostCommentId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -38,15 +41,16 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     }
 
     [Theory]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForUserName_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
-            PostCommentLikeTestUtilities.ValidCurrentUserId,
+            existingPostCommentLike.UserId,
             SharedTestUtilities.GetString(length),
-            PostCommentLikeTestUtilities.ValidPostCommentId,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -60,14 +64,15 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     }
 
     [Theory]
-    [InlineData(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentConfigurations.IdMinLength - 1)]
+    [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForPostCommentId_WhenPostCommentIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
-            PostCommentLikeTestUtilities.ValidCurrentUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
             SharedTestUtilities.GetString(length),
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -85,10 +90,11 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
     {
         // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
-            PostCommentLikeTestUtilities.ValidCurrentUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            PostCommentLikeTestUtilities.ValidPostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             null!,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -105,10 +111,11 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
     {
         // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
-            PostCommentLikeTestUtilities.ValidCurrentUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            PostCommentLikeTestUtilities.ValidPostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.InvalidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -128,10 +135,11 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
-            PostCommentLikeTestUtilities.ValidCurrentUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            PostCommentLikeTestUtilities.ValidPostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -150,10 +158,11 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
-            PostCommentLikeTestUtilities.ValidCurrentUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            PostCommentLikeTestUtilities.ValidPostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             value,
@@ -172,10 +181,11 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
-            PostCommentLikeTestUtilities.ValidCurrentUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            PostCommentLikeTestUtilities.ValidPostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -192,10 +202,11 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
-            PostCommentLikeTestUtilities.ValidCurrentUserId,
-            PostCommentLikeTestUtilities.ValidUserName,
-            PostCommentLikeTestUtilities.ValidPostCommentId,
+            existingPostCommentLike.UserId,
+            UserTestUtilities.ValidName,
+            existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,

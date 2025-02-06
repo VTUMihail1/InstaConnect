@@ -12,11 +12,11 @@ internal class PostCommentLikeCommandProfile : Profile
 {
     public PostCommentLikeCommandProfile()
     {
-        CreateMap<(CurrentUserModel, AddPostCommentLikeRequest), AddPostCommentLikeCommand>()
-            .ConstructUsing(src => new(src.Item1.Id, src.Item2.AddPostCommentLikeBindingModel.PostCommentId));
+        CreateMap<AddPostCommentLikeRequest, AddPostCommentLikeCommand>()
+            .ConstructUsing(src => new(src.CurrentUserId, src.Body.PostCommentId));
 
-        CreateMap<(CurrentUserModel, DeletePostCommentLikeRequest), DeletePostCommentLikeCommand>()
-            .ConstructUsing(src => new(src.Item2.Id, src.Item1.Id));
+        CreateMap<DeletePostCommentLikeRequest, DeletePostCommentLikeCommand>()
+            .ConstructUsing(src => new(src.Id, src.CurrentUserId));
 
         CreateMap<PostCommentLikeCommandViewModel, PostCommentLikeCommandResponse>();
     }

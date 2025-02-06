@@ -14,6 +14,16 @@ public class PostCommentLike : BaseEntity
         UserId = userId;
     }
 
+    public PostCommentLike(
+        PostComment postComment,
+        User user)
+    {
+        PostComment = postComment;
+        User = user;
+        PostCommentId = postComment.Id;
+        UserId = user.Id;
+    }
+
     public string PostCommentId { get; }
 
     public string UserId { get; }

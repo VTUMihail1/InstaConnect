@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.DeletePostCommentLike;
 public class DeletePostCommentLikeCommandValidator : AbstractValidator<DeletePostCommentLikeCommand>
@@ -8,12 +9,12 @@ public class DeletePostCommentLikeCommandValidator : AbstractValidator<DeletePos
     {
         RuleFor(c => c.Id)
             .NotEmpty()
-            .MinimumLength(PostCommentLikeBusinessConfigurations.ID_MIN_LENGTH)
-            .MaximumLength(PostCommentLikeBusinessConfigurations.ID_MAX_LENGTH);
+            .MinimumLength(PostCommentLikeConfigurations.IdMinLength)
+            .MaximumLength(PostCommentLikeConfigurations.IdMaxLength);
 
         RuleFor(c => c.CurrentUserId)
             .NotEmpty()
-            .MinimumLength(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH)
-            .MaximumLength(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH);
+            .MinimumLength(UserConfigurations.IdMinLength)
+            .MaximumLength(UserConfigurations.IdMaxLength);
     }
 }

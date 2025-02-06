@@ -1,16 +1,15 @@
-﻿using InstaConnect.Shared.Presentation.Models.Requests;
+﻿using InstaConnect.Shared.Common.Models.Enums;
+using InstaConnect.Shared.Presentation.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 
-public class GetAllPostCommentLikesRequest : CollectionReadRequest
-{
-    [FromQuery(Name = "userId")]
-    public string UserId { get; set; } = string.Empty;
-
-    [FromQuery(Name = "userName")]
-    public string UserName { get; set; } = string.Empty;
-
-    [FromQuery(Name = "postCommentId")]
-    public string PostCommentId { get; set; } = string.Empty;
-}
+public record GetAllPostCommentLikesRequest(
+    [FromQuery(Name = "userId")] string UserId = "",
+    [FromQuery(Name = "userName")] string UserName = "",
+    [FromQuery(Name = "postCommentId")] string PostCommentId = "",
+    [FromQuery(Name = "sortOrder")] SortOrder SortOrder = SortOrder.ASC,
+    [FromQuery(Name = "sortPropertyName")] string SortPropertyName = "CreatedAt",
+    [FromQuery(Name = "page")] int Page = 1,
+    [FromQuery(Name = "pageSize")] int PageSize = 20
+);

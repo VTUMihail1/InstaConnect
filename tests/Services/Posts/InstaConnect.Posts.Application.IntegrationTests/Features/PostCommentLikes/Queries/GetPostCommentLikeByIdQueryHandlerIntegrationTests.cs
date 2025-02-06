@@ -4,6 +4,7 @@ using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetPostCo
 using InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.PostCommentLike;
 using InstaConnect.Shared.Common.Utilities;
@@ -20,10 +21,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetPostCommentLikeByIdQuery(null!);
 
         // Act
@@ -35,15 +33,12 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostCommentLikeBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentLikeBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentLikeConfigurations.IdMinLength - 1)]
+    [InlineData(PostCommentLikeConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetPostCommentLikeByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -57,10 +52,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldThrowPostCommentLikeNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetPostCommentLikeByIdQuery(PostCommentLikeTestUtilities.InvalidId);
 
         // Act
@@ -74,11 +66,8 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldReturnPostCommentLikeViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
-        var query = new GetPostCommentLikeByIdQuery(existingPostCommentLikeId);
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
+        var query = new GetPostCommentLikeByIdQuery(existingPostCommentLike.Id);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -86,22 +75,19 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         // Assert
         response
             .Should()
-            .Match<PostCommentLikeQueryViewModel>(m => m.Id == existingPostCommentLikeId &&
-                                                  m.UserId == existingUserId &&
-                                                  m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                  m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
-                                                  m.PostCommentId == existingPostCommentId);
+            .Match<PostCommentLikeQueryViewModel>(m => m.Id == existingPostCommentLike.Id &&
+                                                  m.UserId == existingPostCommentLike.UserId &&
+                                                  m.UserName == UserTestUtilities.ValidName &&
+                                                  m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                  m.PostCommentId == existingPostCommentLike.PostCommentId);
     }
 
     [Fact]
     public async Task SendAsync_ShouldReturnPostCommentLikeViewModelCollection_WhenQueryIsValidAndCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
-        var query = new GetPostCommentLikeByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLikeId));
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
+        var query = new GetPostCommentLikeByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.Id));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -109,10 +95,10 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         // Assert
         response
             .Should()
-            .Match<PostCommentLikeQueryViewModel>(m => m.Id == existingPostCommentLikeId &&
-                                                  m.UserId == existingUserId &&
-                                                  m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
-                                                  m.UserProfileImage == PostCommentLikeTestUtilities.ValidUserProfileImage &&
-                                                  m.PostCommentId == existingPostCommentId);
+            .Match<PostCommentLikeQueryViewModel>(m => m.Id == existingPostCommentLike.Id &&
+                                                  m.UserId == existingPostCommentLike.UserId &&
+                                                  m.UserName == UserTestUtilities.ValidName &&
+                                                  m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                  m.PostCommentId == existingPostCommentLike.PostCommentId);
     }
 }

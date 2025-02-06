@@ -3,8 +3,11 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Binding;
+using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
@@ -23,204 +26,198 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTe
     public async Task AddAsync_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new AddPostCommentLikeRequest(
+            existingUser.Id,
+            new(existingPostComment.Id));
 
         // Act
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostCommentLikesClient.AddStatusCodeUnauthorizedAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Unauthorized);
+        response
+            .Should()
+            .Be(HttpStatusCode.Unauthorized);
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenPostCommentIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new AddPostCommentLikeBindingModel(null!);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new AddPostCommentLikeRequest(
+            existingUser.Id,
+            new(null!));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostCommentLikesClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentLikeBusinessConfigurations.POST_COMMENT_ID_MAX_LENGTH + 1)]
+    [InlineData(PostCommentConfigurations.IdMinLength - 1)]
+    [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenPostCommentIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new AddPostCommentLikeBindingModel(SharedTestUtilities.GetString(length));
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new AddPostCommentLikeRequest(
+            existingUser.Id,
+            new(SharedTestUtilities.GetString(length)));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostCommentLikesClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new AddPostCommentLikeRequest(
+            null!,
+            new(existingPostComment.Id));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostCommentLikesClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MIN_LENGTH - 1)]
-    [InlineData(PostCommentLikeBusinessConfigurations.CURRENT_USER_ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new AddPostCommentLikeRequest(
+            SharedTestUtilities.GetString(length),
+            new(existingPostComment.Id));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostCommentLikesClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenCurrentUserIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = PostCommentLikeTestUtilities.InvalidUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new AddPostCommentLikeRequest(
+            UserTestUtilities.InvalidId,
+            new(existingPostComment.Id));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostCommentLikesClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
+        response
+            .Should()
+            .Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenPostIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new AddPostCommentLikeBindingModel(PostCommentLikeTestUtilities.InvalidPostCommentId);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new AddPostCommentLikeRequest(
+            existingUser.Id,
+            new(PostCommentTestUtilities.InvalidId));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostCommentLikesClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
+        response
+            .Should()
+            .Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenPostCommentLikeAlreadyExists()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var existingPostCommentLikeId = await CreatePostCommentLikeAsync(existingUserId, existingPostCommentId, CancellationToken);
-        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
+        var request = new AddPostCommentLikeRequest(
+            existingPostCommentLike.UserId,
+            new(existingPostCommentLike.PostCommentId));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostCommentLikesClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
-
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new AddPostCommentLikeRequest(
+            existingUser.Id,
+            new(existingPostComment.Id));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostCommentLikesClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        response
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task AddAsync_ShouldAddPostCommentLike_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingPostId = await CreatePostAsync(existingUserId, CancellationToken);
-        var existingPostCommentId = await CreatePostCommentAsync(existingUserId, existingPostId, CancellationToken);
-        var request = new AddPostCommentLikeBindingModel(existingPostCommentId);
-
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
+        var request = new AddPostCommentLikeRequest(
+            existingUser.Id,
+            new(existingPostComment.Id));
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.PostAsJsonAsync(ApiRoute, request, CancellationToken);
+        var response = await PostCommentLikesClient.AddAsync(request, CancellationToken);
 
-        var postCommentLikeViewResponse = await response
-            .Content
-            .ReadFromJsonAsync<PostCommentLikeCommandResponse>();
-
-        var postCommentLike = await PostCommentLikeWriteRepository.GetByIdAsync(postCommentLikeViewResponse!.Id, CancellationToken);
+        var postCommentLike = await PostCommentLikeWriteRepository.GetByIdAsync(response!.Id, CancellationToken);
 
         // Assert
         postCommentLike
             .Should()
-            .Match<PostCommentLike>(m => m.Id == postCommentLikeViewResponse.Id &&
-                                 m.UserId == existingUserId &&
-                                 m.PostCommentId == existingPostCommentId);
+            .Match<PostCommentLike>(m => m.Id == response.Id &&
+                                 m.UserId == existingUser.Id &&
+                                 m.PostCommentId == existingPostComment.Id);
     }
 }

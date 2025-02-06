@@ -1,10 +1,11 @@
-﻿using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Binding;
+﻿using System.Security.Claims;
+using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Binding;
+using InstaConnect.Shared.Presentation.Binders.FromClaim;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 
-public class AddPostCommentLikeRequest
-{
-    [FromBody]
-    public AddPostCommentLikeBindingModel AddPostCommentLikeBindingModel { get; set; } = new(string.Empty);
-}
+public record AddPostCommentLikeRequest(
+    [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
+    [FromBody] AddPostCommentLikeBody Body
+);

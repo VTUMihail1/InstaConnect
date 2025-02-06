@@ -1,11 +1,16 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Mappings;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
 using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Posts.Abstract;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Application.Abstractions;
@@ -16,9 +21,21 @@ using NSubstitute;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Utilities;
 
-public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
+public abstract class BasePostCommentLikeUnitTest
 {
+    protected IUnitOfWork UnitOfWork { get; }
+
+    protected CancellationToken CancellationToken { get; }
+
+    protected IInstaConnectMapper InstaConnectMapper { get; }
+
+    protected IEntityPropertyValidator EntityPropertyValidator { get; }
+
     protected IUserWriteRepository UserWriteRepository { get; }
+
+    protected IPostReadRepository PostReadRepository { get; }
+
+    protected IPostWriteRepository PostWriteRepository { get; }
 
     protected IPostCommentReadRepository PostCommentReadRepository { get; }
 
@@ -28,134 +45,109 @@ public abstract class BasePostCommentLikeUnitTest : BaseSharedUnitTest
 
     protected IPostCommentLikeWriteRepository PostCommentLikeWriteRepository { get; }
 
-    public BasePostCommentLikeUnitTest() : base(
-        Substitute.For<IUnitOfWork>(),
-        new InstaConnectMapper(
+    public BasePostCommentLikeUnitTest()
+    {
+        UnitOfWork = Substitute.For<IUnitOfWork>();
+        InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
                 new MapperConfiguration(cfg =>
                 {
                     cfg.AddProfile<PostCommentLikeQueryProfile>();
                     cfg.AddProfile<PostCommentLikeCommandProfile>();
-                }))),
-        new EntityPropertyValidator())
-    {
-
+                })));
+        CancellationToken = new CancellationToken();
+        EntityPropertyValidator = new EntityPropertyValidator();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
+        PostReadRepository = Substitute.For<IPostReadRepository>();
+        PostWriteRepository = Substitute.For<IPostWriteRepository>();
         PostCommentReadRepository = Substitute.For<IPostCommentReadRepository>();
         PostCommentWriteRepository = Substitute.For<IPostCommentWriteRepository>();
         PostCommentLikeReadRepository = Substitute.For<IPostCommentLikeReadRepository>();
         PostCommentLikeWriteRepository = Substitute.For<IPostCommentLikeWriteRepository>();
+    }
 
-        var existingUser = new User(
-            PostCommentLikeTestUtilities.ValidUserFirstName,
-            PostCommentLikeTestUtilities.ValidUserLastName,
-            PostCommentLikeTestUtilities.ValidUserEmail,
-            PostCommentLikeTestUtilities.ValidUserName,
-            PostCommentLikeTestUtilities.ValidUserProfileImage)
-        {
-            Id = PostCommentLikeTestUtilities.ValidCurrentUserId,
-        };
+    public User CreateUser()
+    {
+        var user = new User(
+            UserTestUtilities.ValidFirstName,
+            UserTestUtilities.ValidLastName,
+            UserTestUtilities.ValidEmail,
+            UserTestUtilities.ValidName,
+            UserTestUtilities.ValidProfileImage);
 
-        var existingPostCommentLikeUser = new User(
-            PostCommentLikeTestUtilities.ValidUserFirstName,
-            PostCommentLikeTestUtilities.ValidUserLastName,
-            PostCommentLikeTestUtilities.ValidUserEmail,
-            PostCommentLikeTestUtilities.ValidUserName,
-            PostCommentLikeTestUtilities.ValidUserProfileImage)
-        {
-            Id = PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
-        };
+        UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
+            .Returns(user);
 
-        var existingPostComment = new PostComment(
-            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
-            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
-            PostCommentLikeTestUtilities.ValidPostCommentContent
-            )
-        {
-            Id = PostCommentLikeTestUtilities.ValidPostCommentId,
-            User = existingPostCommentLikeUser
-        };
+        return user;
+    }
 
-        var existingPostCommentLikePostComment = new PostComment(
-            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
-            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
-            PostCommentLikeTestUtilities.ValidPostCommentContent
-            )
-        {
-            Id = PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
-            User = existingPostCommentLikeUser,
-        };
+    public Post CreatePost()
+    {
+        var user = CreateUser();
+        var post = new Post(
+            PostTestUtilities.ValidTitle,
+            PostTestUtilities.ValidContent,
+            user);
 
-        var existingPostCommentLike = new PostCommentLike(
-            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
-            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId)
-        {
-            Id = PostCommentLikeTestUtilities.ValidId,
-            User = existingPostCommentLikeUser,
-            PostComment = existingPostCommentLikePostComment,
-        };
+        PostReadRepository.GetByIdAsync(post.Id, CancellationToken)
+            .Returns(post);
 
-        var existingPostCommentLikePaginationList = new PaginationList<PostCommentLike>(
-            [existingPostCommentLike],
-            PostCommentLikeTestUtilities.ValidPageValue,
-            PostCommentLikeTestUtilities.ValidPageSizeValue,
-            PostCommentLikeTestUtilities.ValidTotalCountValue);
+        PostWriteRepository.GetByIdAsync(post.Id, CancellationToken)
+            .Returns(post);
 
-        UserWriteRepository.GetByIdAsync(
-            PostCommentLikeTestUtilities.ValidCurrentUserId,
-            CancellationToken)
-            .Returns(existingUser);
+        return post;
+    }
 
-        UserWriteRepository.GetByIdAsync(
-            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
-            CancellationToken)
-            .Returns(existingPostCommentLikeUser);
+    public PostComment CreatePostComment()
+    {
+        var user = CreateUser();
+        var post = CreatePost();
+        var postComment = new PostComment(
+            user,
+            post,
+            PostCommentTestUtilities.ValidContent);
 
-        PostCommentReadRepository.GetByIdAsync(
-            PostCommentLikeTestUtilities.ValidPostCommentId,
-            CancellationToken)
-            .Returns(existingPostComment);
+        PostCommentReadRepository.GetByIdAsync(postComment.Id, CancellationToken)
+            .Returns(postComment);
 
-        PostCommentWriteRepository.GetByIdAsync(
-            PostCommentLikeTestUtilities.ValidPostCommentId,
-            CancellationToken)
-            .Returns(existingPostComment);
+        PostCommentWriteRepository.GetByIdAsync(postComment.Id, CancellationToken)
+            .Returns(postComment);
 
-        PostCommentReadRepository.GetByIdAsync(
-            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
-            CancellationToken)
-            .Returns(existingPostCommentLikePostComment);
+        return postComment;
+    }
 
-        PostCommentWriteRepository.GetByIdAsync(
-            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
-            CancellationToken)
-            .Returns(existingPostCommentLikePostComment);
+    public PostCommentLike CreatePostCommentLike()
+    {
+        var user = CreateUser();
+        var postComment = CreatePostComment();
+        var postCommentLike = new PostCommentLike(postComment, user);
 
-        PostCommentLikeReadRepository.GetByIdAsync(
-            PostCommentLikeTestUtilities.ValidId,
-            CancellationToken)
-            .Returns(existingPostCommentLike);
+        var postCommentLikePaginationList = new PaginationList<PostCommentLike>(
+        [postCommentLike],
+        PostCommentLikeTestUtilities.ValidPageValue,
+        PostCommentLikeTestUtilities.ValidPageSizeValue,
+        PostCommentLikeTestUtilities.ValidTotalCountValue);
 
-        PostCommentLikeWriteRepository.GetByIdAsync(
-            PostCommentLikeTestUtilities.ValidId,
-            CancellationToken)
-            .Returns(existingPostCommentLike);
+        PostCommentLikeReadRepository.GetByIdAsync(postCommentLike.Id, CancellationToken)
+            .Returns(postCommentLike);
 
-        PostCommentLikeWriteRepository.GetByUserIdAndPostCommentIdAsync(
-            PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId,
-            PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId,
-            CancellationToken)
-            .Returns(existingPostCommentLike);
+        PostCommentLikeWriteRepository.GetByIdAsync(postCommentLike.Id, CancellationToken)
+            .Returns(postCommentLike);
+
+        PostCommentLikeWriteRepository.GetByUserIdAndPostCommentIdAsync(user.Id, postComment.Id, CancellationToken)
+            .Returns(postCommentLike);
 
         PostCommentLikeReadRepository
             .GetAllAsync(Arg.Is<PostCommentLikeCollectionReadQuery>(m =>
-                                                                        m.PostCommentId == PostCommentLikeTestUtilities.ValidPostCommentLikePostCommentId &&
-                                                                        m.UserId == PostCommentLikeTestUtilities.ValidPostCommentLikeCurrentUserId &&
-                                                                        m.UserName == PostCommentLikeTestUtilities.ValidUserName &&
+                                                                        m.UserId == user.Id &&
+                                                                        m.UserName == UserTestUtilities.ValidName &&
+                                                                        m.PostCommentId == postComment.Id &&
                                                                         m.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == PostCommentLikeTestUtilities.ValidSortOrderProperty &&
                                                                         m.SortPropertyName == PostCommentLikeTestUtilities.ValidSortPropertyName), CancellationToken)
-            .Returns(existingPostCommentLikePaginationList);
+            .Returns(postCommentLikePaginationList);
+
+        return postCommentLike;
     }
 }
