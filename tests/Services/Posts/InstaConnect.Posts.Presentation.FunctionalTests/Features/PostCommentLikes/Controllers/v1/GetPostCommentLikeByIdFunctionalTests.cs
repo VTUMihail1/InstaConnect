@@ -30,7 +30,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
         );
 
         // Act
-        var response = await PostCommentLikesClient.GetByIdAsync(request, CancellationToken);
+        var response = await PostCommentLikesClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -49,7 +49,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
         );
 
         // Act
-        var response = await PostCommentLikesClient.GetByIdAsync(request, CancellationToken);
+        var response = await PostCommentLikesClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -67,7 +67,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
         );
 
         // Act
-        var response = await PostCommentLikesClient.GetByIdAsync(request, CancellationToken);
+        var response = await PostCommentLikesClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
