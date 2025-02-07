@@ -8,18 +8,18 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Ed
 
 public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
 {
-    private readonly EditCurrentUserCommandValidator _commandValidator;
+    private readonly UpdateUserCommandValidator _commandValidator;
 
     public EditCurrentUserCommandValidatorUnitTests()
     {
-        _commandValidator = new EditCurrentUserCommandValidator();
+        _commandValidator = new UpdateUserCommandValidator();
     }
 
     [Fact]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             null!,
             UserTestUtilities.ValidFirstName,
             UserTestUtilities.ValidLastName,
@@ -36,12 +36,12 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidFirstName,
             UserTestUtilities.ValidLastName,
@@ -77,8 +77,8 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.FirstNameMinLength - 1)]
+    [InlineData(UserConfigurations.FirstNameMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForFirstName_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
@@ -118,8 +118,8 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.LastNameMinLength - 1)]
+    [InlineData(UserConfigurations.LastNameMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForLastName_WhenLastNameLengthIsInvalid(int length)
     {
         // Arrange
@@ -159,8 +159,8 @@ public class EditCurrentUserCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForUserName_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange

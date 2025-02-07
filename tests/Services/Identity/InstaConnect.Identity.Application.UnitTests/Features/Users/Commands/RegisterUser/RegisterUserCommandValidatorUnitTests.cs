@@ -8,18 +8,18 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Re
 
 public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
 {
-    private readonly RegisterUserCommandValidator _commandValidator;
+    private readonly AddUserCommandValidator _commandValidator;
 
     public RegisterUserCommandValidatorUnitTests()
     {
-        _commandValidator = new RegisterUserCommandValidator();
+        _commandValidator = new AddUserCommandValidator();
     }
 
     [Fact]
     public void TestValidate_ShouldHaveAnErrorForName_WhenNameIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             null!,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword,
@@ -38,12 +38,12 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForName_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword,
@@ -64,7 +64,7 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidName,
             null!,
             UserTestUtilities.ValidPassword,
@@ -83,12 +83,12 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.EMAIL_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.EMAIL_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.EmailMinLength - 1)]
+    [InlineData(UserConfigurations.EmailMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidName,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPassword,
@@ -109,7 +109,7 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,
             null!,
@@ -128,13 +128,13 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.PasswordMinLength - 1)]
+    [InlineData(UserConfigurations.PasswordMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
         var invalidPassword = SharedTestUtilities.GetString(length);
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,
             invalidPassword,
@@ -176,7 +176,7 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForFirstName_WhenFirstNameIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword,
@@ -195,12 +195,12 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.FirstNameMinLength - 1)]
+    [InlineData(UserConfigurations.FirstNameMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForFirstName_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword,
@@ -221,7 +221,7 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForLastName_WhenLastNameIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword,
@@ -240,12 +240,12 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.LastNameMinLength - 1)]
+    [InlineData(UserConfigurations.LastNameMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForLastName_WhenLastNameLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword,
@@ -266,7 +266,7 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword,
@@ -287,7 +287,7 @@ public class RegisterUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValidAndProfileImageIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword,

@@ -11,7 +11,7 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Co
 
 public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
 {
-    private readonly ConfirmUserEmailCommandHandler _commandHandler;
+    private readonly VerifyEmailConfirmationTokenCommandHandler _commandHandler;
 
     public ConfirmUserEmailCommandHandlerUnitTests()
     {
@@ -25,7 +25,7 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenEmailIsInvalid()
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidEmailConfirmationTokenValue);
 
@@ -40,7 +40,7 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserEmailAlreadyConfirmedException_WhenEmailIsConfirmed()
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             UserTestUtilities.ValidId,
             UserTestUtilities.ValidEmailConfirmationTokenValue);
 
@@ -55,7 +55,7 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowTokenNotFoundException_WhenTokenValueIsInvalid()
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             UserTestUtilities.ValidIdWithUnconfirmedEmail,
             UserTestUtilities.InvalidEmailConfirmationTokenValue);
 
@@ -70,7 +70,7 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserForbiddenException_WhenTokenIsNotOwnedByUser()
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             UserTestUtilities.ValidIdWithUnconfirmedEmail,
             UserTestUtilities.ValidEmailConfirmationTokenValueWithTokenUser);
 
@@ -85,7 +85,7 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldGetUserByIdFromRepository_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             UserTestUtilities.ValidIdWithUnconfirmedEmail,
             UserTestUtilities.ValidEmailConfirmationTokenValue);
 
@@ -102,7 +102,7 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldGetEmailConfirmationTokenByValueFromRepository_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             UserTestUtilities.ValidIdWithUnconfirmedEmail,
             UserTestUtilities.ValidEmailConfirmationTokenValue);
 
@@ -119,7 +119,7 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldDeleteEmailConfirmationTokenToRepository_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             UserTestUtilities.ValidIdWithUnconfirmedEmail,
             UserTestUtilities.ValidEmailConfirmationTokenValue);
 
@@ -138,7 +138,7 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldConfirmUserEmailToRepository_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             UserTestUtilities.ValidIdWithUnconfirmedEmail,
             UserTestUtilities.ValidEmailConfirmationTokenValue);
 
@@ -155,7 +155,7 @@ public class ConfirmUserEmailCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallTheUnitOfWorkSaveChanges_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             UserTestUtilities.ValidIdWithUnconfirmedEmail,
             UserTestUtilities.ValidEmailConfirmationTokenValue);
 

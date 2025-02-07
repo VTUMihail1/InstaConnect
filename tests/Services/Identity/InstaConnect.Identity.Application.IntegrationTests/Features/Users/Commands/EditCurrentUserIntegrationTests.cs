@@ -24,7 +24,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             null!,
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
@@ -41,13 +41,13 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
@@ -67,7 +67,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             existingUserId,
             null!,
             UserTestUtilities.ValidUpdateLastName,
@@ -84,13 +84,13 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.FirstNameMinLength - 1)]
+    [InlineData(UserConfigurations.FirstNameMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             existingUserId,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidUpdateLastName,
@@ -110,7 +110,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             existingUserId,
             UserTestUtilities.ValidUpdateFirstName,
             null!,
@@ -127,13 +127,13 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.LastNameMinLength - 1)]
+    [InlineData(UserConfigurations.LastNameMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenLastLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             existingUserId,
             UserTestUtilities.ValidUpdateFirstName,
             SharedTestUtilities.GetString(length),
@@ -153,7 +153,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             existingUserId,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -170,13 +170,13 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             existingUserId,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -196,7 +196,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -217,7 +217,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingUserNameTakedId = await CreateUserAsync(UserTestUtilities.ValidUpdateEmail, UserTestUtilities.ValidUpdateName, true, CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             existingUserId,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -237,7 +237,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             existingUserId,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -259,7 +259,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             existingUserId,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -288,7 +288,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             existingUserId,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -317,7 +317,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             existingUserId,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -346,7 +346,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             existingUserId,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -375,7 +375,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             existingUserId,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,

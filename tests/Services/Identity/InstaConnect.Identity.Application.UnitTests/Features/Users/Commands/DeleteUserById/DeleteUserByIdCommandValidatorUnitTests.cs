@@ -8,18 +8,18 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.De
 
 public class DeleteUserByIdCommandValidatorUnitTests : BaseUserUnitTest
 {
-    private readonly DeleteUserByIdCommandValidator _commandValidator;
+    private readonly DeleteUserCommandValidator _commandValidator;
 
     public DeleteUserByIdCommandValidatorUnitTests()
     {
-        _commandValidator = new DeleteUserByIdCommandValidator();
+        _commandValidator = new DeleteUserCommandValidator();
     }
 
     [Fact]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var command = new DeleteUserByIdCommand(null!);
+        var command = new DeleteUserCommand(null!);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -30,12 +30,12 @@ public class DeleteUserByIdCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new DeleteUserByIdCommand(SharedTestUtilities.GetString(length));
+        var command = new DeleteUserCommand(SharedTestUtilities.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);

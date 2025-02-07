@@ -32,8 +32,8 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenNameLengthIsInvalid(int length)
     {
         // Arrange

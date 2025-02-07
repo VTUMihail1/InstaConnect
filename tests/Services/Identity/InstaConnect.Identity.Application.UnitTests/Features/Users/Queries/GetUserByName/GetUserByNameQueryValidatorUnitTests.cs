@@ -30,8 +30,8 @@ public class GetUserByNameQueryValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForName_WhenNameLengthIsInvalid(int length)
     {
         // Arrange

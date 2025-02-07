@@ -197,7 +197,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task GetDetailedByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetUserDetailedByIdRequest()
+        var request = new GetDetailedUserByIdRequest()
         {
             Id = UserTestUtilities.ValidId
         };
@@ -216,7 +216,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task GetDetailedByIdAsync_ShouldReturnMessageViewModel_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetUserDetailedByIdRequest()
+        var request = new GetDetailedUserByIdRequest()
         {
             Id = UserTestUtilities.ValidId
         };
@@ -243,7 +243,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task GetDetailedByIdAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var request = new GetUserDetailedByIdRequest()
+        var request = new GetDetailedUserByIdRequest()
         {
             Id = UserTestUtilities.ValidId
         };
@@ -254,7 +254,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<GetUserDetailedByIdQuery>(m => m.Id == UserTestUtilities.ValidId), CancellationToken);
+              .SendAsync(Arg.Is<GetDetailedUserByIdQuery>(m => m.Id == UserTestUtilities.ValidId), CancellationToken);
     }
 
     [Fact]
@@ -420,7 +420,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Any<GetCurrentUserDetailedQuery>(), CancellationToken);
+              .SendAsync(Arg.Any<GetCurrentDetailedUserQuery>(), CancellationToken);
     }
 
     [Fact]
@@ -439,9 +439,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task RegisterAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var request = new RegisterUserRequest()
+        var request = new AddUserRequest()
         {
-            RegisterUserBindingModel = new(
+            Form = new(
                 UserTestUtilities.ValidName,
                 UserTestUtilities.ValidEmail,
                 UserTestUtilities.ValidPassword,
@@ -452,7 +452,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         };
 
         // Act
-        var response = await _userController.RegisterAsync(request, CancellationToken);
+        var response = await _userController.AddAsync(request, CancellationToken);
 
         // Assert
         response
@@ -465,9 +465,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task RegisterAsync_ShouldReturnMessageViewModel_WhenRequestIsValid()
     {
         // Arrange
-        var request = new RegisterUserRequest()
+        var request = new AddUserRequest()
         {
-            RegisterUserBindingModel = new(
+            Form = new(
                 UserTestUtilities.ValidName,
                 UserTestUtilities.ValidEmail,
                 UserTestUtilities.ValidPassword,
@@ -478,7 +478,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         };
 
         // Act
-        var response = await _userController.RegisterAsync(request, CancellationToken);
+        var response = await _userController.AddAsync(request, CancellationToken);
 
         // Assert
         response.Result
@@ -494,9 +494,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task RegisterAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var request = new RegisterUserRequest()
+        var request = new AddUserRequest()
         {
-            RegisterUserBindingModel = new(
+            Form = new(
                 UserTestUtilities.ValidName,
                 UserTestUtilities.ValidEmail,
                 UserTestUtilities.ValidPassword,
@@ -507,12 +507,12 @@ public class UserControllerUnitTests : BaseUserUnitTest
         };
 
         // Act
-        await _userController.RegisterAsync(request, CancellationToken);
+        await _userController.AddAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<RegisterUserCommand>(m => m.Email == UserTestUtilities.ValidEmail &&
+              .SendAsync(Arg.Is<AddUserCommand>(m => m.Email == UserTestUtilities.ValidEmail &&
                                                                 m.Password == UserTestUtilities.ValidPassword &&
                                                                 m.ConfirmPassword == UserTestUtilities.ValidPassword &&
                                                                 m.UserName == UserTestUtilities.ValidName &&
@@ -525,9 +525,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task EditCurrentAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var request = new EditCurrentUserRequest()
+        var request = new UpdateUserRequest()
         {
-            EditCurrentUserBindingModel = new(
+            Form = new(
                 UserTestUtilities.ValidName,
                 UserTestUtilities.ValidFirstName,
                 UserTestUtilities.ValidLastName,
@@ -548,9 +548,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task EditCurrentAsync_ShouldReturnMessageViewModel_WhenRequestIsValid()
     {
         // Arrange
-        var request = new EditCurrentUserRequest()
+        var request = new UpdateUserRequest()
         {
-            EditCurrentUserBindingModel = new(
+            Form = new(
                 UserTestUtilities.ValidName,
                 UserTestUtilities.ValidFirstName,
                 UserTestUtilities.ValidLastName,
@@ -574,9 +574,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task EditCurrentAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var request = new EditCurrentUserRequest()
+        var request = new UpdateUserRequest()
         {
-            EditCurrentUserBindingModel = new(
+            Form = new(
                 UserTestUtilities.ValidName,
                 UserTestUtilities.ValidFirstName,
                 UserTestUtilities.ValidLastName,
@@ -589,7 +589,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<EditCurrentUserCommand>(m => m.CurrentUserId == UserTestUtilities.ValidId &&
+              .SendAsync(Arg.Is<UpdateUserCommand>(m => m.CurrentUserId == UserTestUtilities.ValidId &&
                                                                 m.UserName == UserTestUtilities.ValidName &&
                                                                 m.FirstName == UserTestUtilities.ValidFirstName &&
                                                                 m.LastName == UserTestUtilities.ValidLastName &&
@@ -600,9 +600,9 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task EditCurrentAsync_ShouldCallTheCurrentUserContext_WhenRequestIsValid()
     {
         // Arrange
-        var request = new EditCurrentUserRequest()
+        var request = new UpdateUserRequest()
         {
-            EditCurrentUserBindingModel = new(
+            Form = new(
                 UserTestUtilities.ValidName,
                 UserTestUtilities.ValidFirstName,
                 UserTestUtilities.ValidLastName,
@@ -624,7 +624,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new LoginUserRequest()
         {
-            LoginUserBindingModel = new(
+            Body = new(
                 UserTestUtilities.ValidEmail,
                 UserTestUtilities.ValidPassword)
         };
@@ -645,7 +645,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new LoginUserRequest()
         {
-            LoginUserBindingModel = new(
+            Body = new(
                 UserTestUtilities.ValidEmail,
                 UserTestUtilities.ValidPassword)
         };
@@ -670,7 +670,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var request = new LoginUserRequest()
         {
-            LoginUserBindingModel = new(
+            Body = new(
                 UserTestUtilities.ValidEmail,
                 UserTestUtilities.ValidPassword)
         };
@@ -718,7 +718,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<DeleteUserByIdCommand>(m => m.Id == UserTestUtilities.ValidId), CancellationToken);
+              .SendAsync(Arg.Is<DeleteUserCommand>(m => m.Id == UserTestUtilities.ValidId), CancellationToken);
     }
 
     [Fact]
@@ -761,7 +761,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task ConfirmEmailAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var request = new ConfirmUserEmailRequest()
+        var request = new VerifyEmailConfirmationTokenRequest()
         {
             Token = UserTestUtilities.ValidEmailConfirmationTokenValue,
             UserId = UserTestUtilities.ValidId
@@ -780,7 +780,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task ConfirmEmailAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var request = new ConfirmUserEmailRequest()
+        var request = new VerifyEmailConfirmationTokenRequest()
         {
             Token = UserTestUtilities.ValidEmailConfirmationTokenValue,
             UserId = UserTestUtilities.ValidId
@@ -792,7 +792,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<ConfirmUserEmailCommand>(m => m.Token == UserTestUtilities.ValidEmailConfirmationTokenValue &&
+              .SendAsync(Arg.Is<VerifyEmailConfirmationTokenCommand>(m => m.Token == UserTestUtilities.ValidEmailConfirmationTokenValue &&
                                                                  m.UserId == UserTestUtilities.ValidId), CancellationToken);
     }
 
@@ -800,11 +800,11 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task ResetPasswordAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var request = new ResetUserPasswordRequest()
+        var request = new VerifyForgotPasswordTokenRequest()
         {
             Token = UserTestUtilities.ValidEmailConfirmationTokenValue,
             UserId = UserTestUtilities.ValidId,
-            ResetUserPasswordBindingModel = new(
+            Body = new(
                 UserTestUtilities.ValidPassword,
                 UserTestUtilities.ValidPassword)
         };
@@ -822,11 +822,11 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task ResetPasswordAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var request = new ResetUserPasswordRequest()
+        var request = new VerifyForgotPasswordTokenRequest()
         {
             Token = UserTestUtilities.ValidEmailConfirmationTokenValue,
             UserId = UserTestUtilities.ValidId,
-            ResetUserPasswordBindingModel = new(
+            Body = new(
                 UserTestUtilities.ValidPassword,
                 UserTestUtilities.ValidPassword)
         };
@@ -837,7 +837,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<ResetUserPasswordCommand>(m => m.Token == UserTestUtilities.ValidEmailConfirmationTokenValue &&
+              .SendAsync(Arg.Is<VerifyForgotPasswordTokenCommand>(m => m.Token == UserTestUtilities.ValidEmailConfirmationTokenValue &&
                                                                  m.UserId == UserTestUtilities.ValidId &&
                                                                  m.Password == UserTestUtilities.ValidPassword &&
                                                                  m.ConfirmPassword == UserTestUtilities.ValidPassword), CancellationToken);
@@ -847,7 +847,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task ResendConfirmEmailAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var request = new ResendUserConfirmEmailRequest()
+        var request = new AddEmailConfirmationTokenRequest()
         {
             Email = UserTestUtilities.ValidEmail
         };
@@ -865,7 +865,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task ResendConfirmEmailAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var request = new ResendUserConfirmEmailRequest()
+        var request = new AddEmailConfirmationTokenRequest()
         {
             Email = UserTestUtilities.ValidEmail
         };
@@ -876,14 +876,14 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<ResendUserEmailConfirmationCommand>(m => m.Email == UserTestUtilities.ValidEmail), CancellationToken);
+              .SendAsync(Arg.Is<AddEmailConfirmationTokenCommand>(m => m.Email == UserTestUtilities.ValidEmail), CancellationToken);
     }
 
     [Fact]
     public async Task SendResetPasswordAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var request = new SendUserPasswordResetRequest()
+        var request = new AddForgotPasswordTokenRequest()
         {
             Email = UserTestUtilities.ValidEmail
         };
@@ -901,7 +901,7 @@ public class UserControllerUnitTests : BaseUserUnitTest
     public async Task SendResetPasswordAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var request = new SendUserPasswordResetRequest()
+        var request = new AddForgotPasswordTokenRequest()
         {
             Email = UserTestUtilities.ValidEmail
         };
@@ -912,6 +912,6 @@ public class UserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<SendUserPasswordResetCommand>(m => m.Email == UserTestUtilities.ValidEmail), CancellationToken);
+              .SendAsync(Arg.Is<AddForgotPasswordTokenCommand>(m => m.Email == UserTestUtilities.ValidEmail), CancellationToken);
     }
 }

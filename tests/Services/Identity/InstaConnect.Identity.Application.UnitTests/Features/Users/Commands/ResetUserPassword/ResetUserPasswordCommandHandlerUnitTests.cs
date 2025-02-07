@@ -11,7 +11,7 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Re
 
 public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
 {
-    private readonly ResetUserPasswordCommandHandler _commandHandler;
+    private readonly VerifyForgotPasswordTokenCommandHandler _commandHandler;
 
     public ResetUserPasswordCommandHandlerUnitTests()
     {
@@ -26,7 +26,7 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenEmailIsInvalid()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidForgotPasswordTokenValue,
             UserTestUtilities.ValidPassword,
@@ -43,7 +43,7 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowTokenNotFoundException_WhenTokenValueIsInvalid()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidId,
             UserTestUtilities.InvalidForgotPasswordTokenValue,
             UserTestUtilities.ValidPassword,
@@ -60,7 +60,7 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserForbiddenException_WhenTokenIsNotOwnedByUser()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidId,
             UserTestUtilities.ValidForgotPasswordTokenValueWithTokenUser,
             UserTestUtilities.ValidPassword,
@@ -77,7 +77,7 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldGetUserByIdFromRepository_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidId,
             UserTestUtilities.ValidForgotPasswordTokenValue,
             UserTestUtilities.ValidPassword,
@@ -96,7 +96,7 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldHashPassword_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidId,
             UserTestUtilities.ValidForgotPasswordTokenValue,
             UserTestUtilities.ValidPassword,
@@ -115,7 +115,7 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldGetForgotPasswordTokenByValueFromRepository_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidId,
             UserTestUtilities.ValidForgotPasswordTokenValue,
             UserTestUtilities.ValidPassword,
@@ -134,7 +134,7 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldDeleteEmailConfirmationTokenToRepository_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidId,
             UserTestUtilities.ValidForgotPasswordTokenValue,
             UserTestUtilities.ValidPassword,
@@ -155,7 +155,7 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldResetUserPasswordToRepository_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidId,
             UserTestUtilities.ValidForgotPasswordTokenValue,
             UserTestUtilities.ValidPassword,
@@ -174,7 +174,7 @@ public class ResetUserPasswordCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallTheUnitOfWorkSaveChanges_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidId,
             UserTestUtilities.ValidForgotPasswordTokenValue,
             UserTestUtilities.ValidPassword,

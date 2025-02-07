@@ -8,18 +8,18 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Se
 
 public class SendUserPasswordResetCommandValidatorUnitTests : BaseUserUnitTest
 {
-    private readonly SendUserPasswordResetCommandValidator _commandValidator;
+    private readonly AddForgotPasswordTokenCommandValidator _commandValidator;
 
     public SendUserPasswordResetCommandValidatorUnitTests()
     {
-        _commandValidator = new SendUserPasswordResetCommandValidator();
+        _commandValidator = new AddForgotPasswordTokenCommandValidator();
     }
 
     [Fact]
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailIsNull()
     {
         // Arrange
-        var command = new SendUserPasswordResetCommand(null!);
+        var command = new AddForgotPasswordTokenCommand(null!);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -30,12 +30,12 @@ public class SendUserPasswordResetCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.EMAIL_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.EMAIL_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.EmailMinLength - 1)]
+    [InlineData(UserConfigurations.EmailMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new SendUserPasswordResetCommand(SharedTestUtilities.GetString(length));
+        var command = new AddForgotPasswordTokenCommand(SharedTestUtilities.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -48,7 +48,7 @@ public class SendUserPasswordResetCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var command = new SendUserPasswordResetCommand(UserTestUtilities.ValidEmail);
+        var command = new AddForgotPasswordTokenCommand(UserTestUtilities.ValidEmail);
 
         // Act
         var result = _commandValidator.TestValidate(command);

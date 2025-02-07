@@ -15,8 +15,8 @@ public class ConfirmUserEmailFunctionalTests : BaseUserFunctionalTest
     }
 
     [Theory]
-    [InlineData(UserBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task ConfirmEmailAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
@@ -31,8 +31,8 @@ public class ConfirmUserEmailFunctionalTests : BaseUserFunctionalTest
     }
 
     [Theory]
-    [InlineData(UserBusinessConfigurations.TOKEN_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.TOKEN_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.TOKEN_MIN_LENGTH - 1)]
+    [InlineData(UserConfigurations.TOKEN_MAX_LENGTH + 1)]
     public async Task ConfirmEmailAsync_ShouldReturnBadRequestResponse_WhenTokenLengthIsInvalid(int length)
     {
         // Arrange

@@ -13,7 +13,7 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Re
 
 public class RegisterUserCommandHandlerUnitTests : BaseUserUnitTest
 {
-    private readonly RegisterUserCommandHandler _commandHandler;
+    private readonly AddUserCommandHandler _commandHandler;
 
     public RegisterUserCommandHandlerUnitTests()
     {

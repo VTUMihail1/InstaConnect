@@ -4,7 +4,7 @@ using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Bindings;
+using InstaConnect.Identity.Presentation.Features.Users.Models.Forms;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
 using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
@@ -23,12 +23,12 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task RegisterAsync_ShouldReturnBadRequestResponse_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new RegisterUserBindingModel(
+        var request = new AddUserForm(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -48,12 +48,12 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.EMAIL_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.EMAIL_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.EmailMinLength - 1)]
+    [InlineData(UserConfigurations.EmailMaxLength + 1)]
     public async Task RegisterAsync_ShouldReturnBadRequestResponse_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new RegisterUserBindingModel(
+        var request = new AddUserForm(
             UserTestUtilities.ValidAddName,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidAddPassword,
@@ -73,13 +73,13 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.PasswordMinLength - 1)]
+    [InlineData(UserConfigurations.PasswordMaxLength + 1)]
     public async Task RegisterAsync_ShouldReturnBadRequestResponse_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
         var invalidPassword = SharedTestUtilities.GetString(length);
-        var request = new RegisterUserBindingModel(
+        var request = new AddUserForm(
             UserTestUtilities.ValidAddName,
             invalidPassword,
             invalidPassword,
@@ -101,7 +101,7 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
     public async Task RegisterAsync_ShouldReturnBadRequestResponse_WhenPasswordDoesNotMatchConfirmPassword()
     {
         // Arrange
-        var request = new RegisterUserBindingModel(
+        var request = new Form(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -121,12 +121,12 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.FirstNameMinLength - 1)]
+    [InlineData(UserConfigurations.FirstNameMaxLength + 1)]
     public async Task RegisterAsync_ShouldReturnBadRequestResponse_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new RegisterUserBindingModel(
+        var request = new AddUserForm(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -146,12 +146,12 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.LastNameMinLength - 1)]
+    [InlineData(UserConfigurations.LastNameMaxLength + 1)]
     public async Task RegisterAsync_ShouldReturnBadRequestResponse_WhenLastNameLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new RegisterUserBindingModel(
+        var request = new AddUserForm(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -174,7 +174,7 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new RegisterUserBindingModel(
+        var request = new AddUserForm(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidAddPassword,
@@ -197,7 +197,7 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new RegisterUserBindingModel(
+        var request = new AddUserForm(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -220,7 +220,7 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new RegisterUserBindingModel(
+        var request = new AddUserForm(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -243,7 +243,7 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new RegisterUserBindingModel(
+        var request = new AddUserForm(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -280,7 +280,7 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new RegisterUserBindingModel(
+        var request = new AddUserForm(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -317,7 +317,7 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new RegisterUserBindingModel(
+        var request = new AddUserForm(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -353,7 +353,7 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new RegisterUserBindingModel(
+        var request = new AddUserForm(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -389,7 +389,7 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new RegisterUserBindingModel(
+        var request = new AddUserForm(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -430,7 +430,7 @@ public class RegisterUserFunctionalTests : BaseUserFunctionalTest
         return route;
     }
 
-    private MultipartFormDataContent GetFormData(RegisterUserBindingModel registerUserBindingModel)
+    private MultipartFormDataContent GetFormData(AddUserForm registerUserBindingModel)
     {
         var multipartContent = new MultipartFormDataContent
         {

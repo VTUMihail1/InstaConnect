@@ -10,7 +10,7 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.Get
 
 public class GetUserDetailedByIdQueryHandlerUnitTests : BaseUserUnitTest
 {
-    private readonly GetUserDetailedByIdQueryHandler _queryHandler;
+    private readonly GetDetailedUserByIdQueryHandler _queryHandler;
 
     public GetUserDetailedByIdQueryHandlerUnitTests()
     {
@@ -23,7 +23,7 @@ public class GetUserDetailedByIdQueryHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var query = new GetUserDetailedByIdQuery(UserTestUtilities.InvalidId);
+        var query = new GetDetailedUserByIdQuery(UserTestUtilities.InvalidId);
 
         // Act
         var action = async () => await _queryHandler.Handle(query, CancellationToken);

@@ -8,18 +8,18 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Co
 
 public class ConfirmUserEmailCommandValidatorUnitTests : BaseUserUnitTest
 {
-    private readonly ConfirmUserEmailCommandValidator _commandValidator;
+    private readonly VerifyEmailConfirmationTokenCommandValidator _commandValidator;
 
     public ConfirmUserEmailCommandValidatorUnitTests()
     {
-        _commandValidator = new ConfirmUserEmailCommandValidator();
+        _commandValidator = new VerifyEmailConfirmationTokenCommandValidator();
     }
 
     [Fact]
     public void TestValidate_ShouldHaveAnErrorForUserId_WhenUserIdIsNull()
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             null!,
             UserTestUtilities.ValidEmailConfirmationTokenValue);
 
@@ -32,12 +32,12 @@ public class ConfirmUserEmailCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForUserId_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidEmailConfirmationTokenValue);
 
@@ -52,7 +52,7 @@ public class ConfirmUserEmailCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForTokenId_WhenTokenIdIsNull()
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             UserTestUtilities.ValidId,
             null!);
 
@@ -65,12 +65,12 @@ public class ConfirmUserEmailCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.TOKEN_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.TOKEN_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.TOKEN_MIN_LENGTH - 1)]
+    [InlineData(UserConfigurations.TOKEN_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForToken_WhenTokenLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             UserTestUtilities.ValidId,
             SharedTestUtilities.GetString(length));
 
@@ -85,7 +85,7 @@ public class ConfirmUserEmailCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var command = new ConfirmUserEmailCommand(
+        var command = new VerifyEmailConfirmationTokenCommand(
             UserTestUtilities.ValidId,
             UserTestUtilities.ValidEmailConfirmationTokenValue);
 

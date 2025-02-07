@@ -1,4 +1,6 @@
-﻿using InstaConnect.Identity.Presentation.Features.Users.Extensions;
+﻿using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Extensions;
+using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Extensions;
+using InstaConnect.Identity.Presentation.Features.Users.Extensions;
 using InstaConnect.Shared.Application.Extensions;
 using InstaConnect.Shared.Presentation.Extensions;
 
@@ -11,7 +13,9 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
-            .AddUserServices(configuration);
+            .AddUserServices(configuration)
+            .AddForgotPasswordTokenServices()
+            .AddEmailConfirmationTokenServices();
 
         serviceCollection
             .AddApiControllers()

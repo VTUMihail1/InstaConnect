@@ -13,7 +13,7 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Ed
 
 public class EditCurrentUserCommandHandlerUnitTests : BaseUserUnitTest
 {
-    private readonly EditCurrentUserCommandHandler _commandHandler;
+    private readonly UpdateUserCommandHandler _commandHandler;
 
     public EditCurrentUserCommandHandlerUnitTests()
     {
@@ -29,7 +29,7 @@ public class EditCurrentUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
+        var command = new UpdateUserCommand(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidFirstName,
             UserTestUtilities.ValidLastName,

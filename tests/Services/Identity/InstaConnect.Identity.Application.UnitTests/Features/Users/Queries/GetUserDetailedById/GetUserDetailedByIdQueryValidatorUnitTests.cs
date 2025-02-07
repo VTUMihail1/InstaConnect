@@ -8,7 +8,7 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.Get
 
 public class GetUserDetailedByIdQueryValidatorUnitTests : BaseUserUnitTest
 {
-    private readonly GetUserDetailedByIdQueryValidator _validator;
+    private readonly GetDetailedUserByIdQueryValidator _validator;
 
     public GetUserDetailedByIdQueryValidatorUnitTests()
     {
@@ -19,7 +19,7 @@ public class GetUserDetailedByIdQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var query = new GetUserDetailedByIdQuery(null!);
+        var query = new GetDetailedUserByIdQuery(null!);
 
         // Act
         var result = _validator.TestValidate(query);
@@ -30,12 +30,12 @@ public class GetUserDetailedByIdQueryValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetUserDetailedByIdQuery(SharedTestUtilities.GetString(length));
+        var query = new GetDetailedUserByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
         var result = _validator.TestValidate(query);

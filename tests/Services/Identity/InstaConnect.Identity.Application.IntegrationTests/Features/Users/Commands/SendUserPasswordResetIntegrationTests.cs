@@ -23,7 +23,7 @@ public class SendUserPasswordResetIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new SendUserPasswordResetCommand(null!);
+        var command = new AddForgotPasswordTokenCommand(null!);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -34,13 +34,13 @@ public class SendUserPasswordResetIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.EMAIL_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.EMAIL_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.EmailMinLength - 1)]
+    [InlineData(UserConfigurations.EmailMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new SendUserPasswordResetCommand(SharedTestUtilities.GetString(length));
+        var command = new AddForgotPasswordTokenCommand(SharedTestUtilities.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -54,7 +54,7 @@ public class SendUserPasswordResetIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new SendUserPasswordResetCommand(UserTestUtilities.InvalidEmail);
+        var command = new AddForgotPasswordTokenCommand(UserTestUtilities.InvalidEmail);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -68,7 +68,7 @@ public class SendUserPasswordResetIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new SendUserPasswordResetCommand(UserTestUtilities.ValidEmail);
+        var command = new AddForgotPasswordTokenCommand(UserTestUtilities.ValidEmail);
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -86,7 +86,7 @@ public class SendUserPasswordResetIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new SendUserPasswordResetCommand(UserTestUtilities.ValidEmail);
+        var command = new AddForgotPasswordTokenCommand(UserTestUtilities.ValidEmail);
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);

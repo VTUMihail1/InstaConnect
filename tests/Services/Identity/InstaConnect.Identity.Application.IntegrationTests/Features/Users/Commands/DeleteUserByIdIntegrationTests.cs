@@ -22,7 +22,7 @@ public class DeleteUserByIdIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new DeleteUserByIdCommand(null!);
+        var command = new DeleteUserCommand(null!);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -33,13 +33,13 @@ public class DeleteUserByIdIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new DeleteUserByIdCommand(SharedTestUtilities.GetString(length));
+        var command = new DeleteUserCommand(SharedTestUtilities.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -53,7 +53,7 @@ public class DeleteUserByIdIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new DeleteUserByIdCommand(UserTestUtilities.InvalidId);
+        var command = new DeleteUserCommand(UserTestUtilities.InvalidId);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -67,7 +67,7 @@ public class DeleteUserByIdIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new DeleteUserByIdCommand(existingUserId);
+        var command = new DeleteUserCommand(existingUserId);
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -84,7 +84,7 @@ public class DeleteUserByIdIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new DeleteUserByIdCommand(existingUserId);
+        var command = new DeleteUserCommand(existingUserId);
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);

@@ -25,7 +25,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenNameIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             null!,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -44,12 +44,12 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -70,7 +70,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             null!,
             UserTestUtilities.ValidAddPassword,
@@ -89,12 +89,12 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.EMAIL_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.EMAIL_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.EmailMinLength - 1)]
+    [InlineData(UserConfigurations.EmailMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidAddPassword,
@@ -115,7 +115,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             null!,
@@ -134,14 +134,14 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.PasswordMinLength - 1)]
+    [InlineData(UserConfigurations.PasswordMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
         var invalidPassword = SharedTestUtilities.GetString(length);
 
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             invalidPassword,
@@ -162,7 +162,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordAndConfirmPasswordDoNotMatch()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -183,7 +183,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenFirstNameIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddFirstName,
             UserTestUtilities.ValidAddPassword,
@@ -202,12 +202,12 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.FirstNameMinLength - 1)]
+    [InlineData(UserConfigurations.FirstNameMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -228,7 +228,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenLastNameIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddFirstName,
             UserTestUtilities.ValidAddPassword,
@@ -247,12 +247,12 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.LastNameMinLength - 1)]
+    [InlineData(UserConfigurations.LastNameMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenLastNameLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -274,7 +274,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidAddPassword,
@@ -296,7 +296,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -317,7 +317,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserCommandViewModel_WhenUserIsValid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -340,7 +340,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldRegisterUser_WhenUserIsValid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -370,7 +370,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldRegisterUser_WhenUserIsValidAndFormFileIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -400,7 +400,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldPublishUserCreatedEvent_WhenUserIsValid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -430,7 +430,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldPublishUserCreatedEvent_WhenUserIsValidAndFormFileIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
@@ -460,7 +460,7 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldPublishUserConfirmEmailTokenCreatedEvent_WhenUserIsValid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
+        var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,

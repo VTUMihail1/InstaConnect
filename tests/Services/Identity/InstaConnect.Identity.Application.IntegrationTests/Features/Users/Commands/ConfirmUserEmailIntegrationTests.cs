@@ -23,7 +23,7 @@ public class ConfirmUserEmailIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingEmailConfirmationTokenValue = await CreateEmailConfirmationTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ConfirmUserEmailCommand(null!, existingEmailConfirmationTokenValue);
+        var command = new VerifyEmailConfirmationTokenCommand(null!, existingEmailConfirmationTokenValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -34,14 +34,14 @@ public class ConfirmUserEmailIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingEmailConfirmationTokenValue = await CreateEmailConfirmationTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ConfirmUserEmailCommand(SharedTestUtilities.GetString(length), existingEmailConfirmationTokenValue);
+        var command = new VerifyEmailConfirmationTokenCommand(SharedTestUtilities.GetString(length), existingEmailConfirmationTokenValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -56,7 +56,7 @@ public class ConfirmUserEmailIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingEmailConfirmationTokenValue = await CreateEmailConfirmationTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ConfirmUserEmailCommand(existingUserId, null!);
+        var command = new VerifyEmailConfirmationTokenCommand(existingUserId, null!);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -67,14 +67,14 @@ public class ConfirmUserEmailIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.TOKEN_MAX_LENGTH + 1)]
-    [InlineData(UserBusinessConfigurations.TOKEN_MIN_LENGTH - 1)]
+    [InlineData(UserConfigurations.TOKEN_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.TOKEN_MIN_LENGTH - 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenTokenLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingEmailConfirmationTokenValue = await CreateEmailConfirmationTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ConfirmUserEmailCommand(existingUserId, SharedTestUtilities.GetString(length));
+        var command = new VerifyEmailConfirmationTokenCommand(existingUserId, SharedTestUtilities.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -89,7 +89,7 @@ public class ConfirmUserEmailIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingEmailConfirmationTokenValue = await CreateEmailConfirmationTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ConfirmUserEmailCommand(UserTestUtilities.InvalidId, existingEmailConfirmationTokenValue);
+        var command = new VerifyEmailConfirmationTokenCommand(UserTestUtilities.InvalidId, existingEmailConfirmationTokenValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -104,7 +104,7 @@ public class ConfirmUserEmailIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingEmailConfirmationTokenValue = await CreateEmailConfirmationTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ConfirmUserEmailCommand(existingUserId, existingEmailConfirmationTokenValue);
+        var command = new VerifyEmailConfirmationTokenCommand(existingUserId, existingEmailConfirmationTokenValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -119,7 +119,7 @@ public class ConfirmUserEmailIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingEmailConfirmationTokenValue = await CreateEmailConfirmationTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ConfirmUserEmailCommand(existingUserId, UserTestUtilities.InvalidEmailConfirmationTokenValue);
+        var command = new VerifyEmailConfirmationTokenCommand(existingUserId, UserTestUtilities.InvalidEmailConfirmationTokenValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -135,7 +135,7 @@ public class ConfirmUserEmailIntegrationTests : BaseUserIntegrationTest
         var existingEmailConfirmationTokenUserId = await CreateUserAsync(false, CancellationToken);
         var existingEmailConfirmationTokenValue = await CreateEmailConfirmationTokenAsync(existingEmailConfirmationTokenUserId, UserTestUtilities.ValidUntil, CancellationToken);
         var existingUserId = await CreateUserAsync(false, CancellationToken);
-        var command = new ConfirmUserEmailCommand(existingUserId, existingEmailConfirmationTokenValue);
+        var command = new VerifyEmailConfirmationTokenCommand(existingUserId, existingEmailConfirmationTokenValue);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -150,7 +150,7 @@ public class ConfirmUserEmailIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingEmailConfirmationTokenValue = await CreateEmailConfirmationTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ConfirmUserEmailCommand(existingUserId, existingEmailConfirmationTokenValue);
+        var command = new VerifyEmailConfirmationTokenCommand(existingUserId, existingEmailConfirmationTokenValue);
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);

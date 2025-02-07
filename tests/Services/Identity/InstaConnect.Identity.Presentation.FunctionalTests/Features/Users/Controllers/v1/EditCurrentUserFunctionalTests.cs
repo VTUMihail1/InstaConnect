@@ -5,7 +5,7 @@ using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Bindings;
+using InstaConnect.Identity.Presentation.Features.Users.Models.Forms;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
 using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
@@ -26,7 +26,7 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new UpdateUserForm(
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -46,7 +46,7 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new UpdateUserForm(
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -65,13 +65,13 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task EditCurrentAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new UpdateUserForm(
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -89,13 +89,13 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
     }
 
     [Theory]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task EditCurrentAsync_ShouldReturnBadRequestResponse_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new UpdateUserForm(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -114,13 +114,13 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.FirstNameMinLength - 1)]
+    [InlineData(UserConfigurations.FirstNameMaxLength + 1)]
     public async Task EditCurrentAsync_ShouldReturnBadRequestResponse_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new UpdateUserForm(
             UserTestUtilities.ValidUpdateName,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidUpdateLastName,
@@ -139,13 +139,13 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.LastNameMinLength - 1)]
+    [InlineData(UserConfigurations.LastNameMaxLength + 1)]
     public async Task EditCurrentAsync_ShouldReturnBadRequestResponse_WhenLastNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new UpdateUserForm(
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
             SharedTestUtilities.GetString(length),
@@ -167,7 +167,7 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new UpdateUserForm(
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -190,7 +190,7 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingUserTakenNameId = await CreateUserAsync(UserTestUtilities.ValidTakenEmail, UserTestUtilities.ValidTakenName, true, CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new Form(
             UserTestUtilities.ValidTakenName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -212,7 +212,7 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new UpdateUserForm(
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -234,7 +234,7 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new UpdateUserForm(
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -270,7 +270,7 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new UpdateUserForm(
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -306,7 +306,7 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new UpdateUserForm(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -342,7 +342,7 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new UpdateUserForm(
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -377,7 +377,7 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new EditCurrentUserBindingModel(
+        var request = new UpdateUserForm(
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -418,7 +418,7 @@ public class EditCurrentUserFunctionalTests : BaseUserFunctionalTest
         return route;
     }
 
-    private MultipartFormDataContent GetFormData(EditCurrentUserBindingModel editCurrentUserBindingModel)
+    private MultipartFormDataContent GetFormData(UpdateUserForm editCurrentUserBindingModel)
     {
         var multipartContent = new MultipartFormDataContent
         {

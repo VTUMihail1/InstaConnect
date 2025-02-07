@@ -19,7 +19,7 @@ internal class UserCommandProfile : Profile
 {
     public UserCommandProfile()
     {
-        CreateMap<(PasswordHashResultModel, RegisterUserCommand), User>()
+        CreateMap<(PasswordHashResultModel, AddUserCommand), User>()
             .ConstructUsing(src => new(
                 src.Item2.FirstName,
                 src.Item2.LastName,
@@ -31,7 +31,7 @@ internal class UserCommandProfile : Profile
         CreateMap<(ICollection<UserClaim>, User), CreateAccessTokenModel>()
             .ConstructUsing(src => new(src.Item2.Id, src.Item2.Email, src.Item2.FirstName, src.Item2.LastName, src.Item2.UserName, src.Item1));
 
-        CreateMap<EditCurrentUserCommand, User>()
+        CreateMap<UpdateUserCommand, User>()
             .ForMember(dest => dest.Id, opt => opt.Ignore());
 
         CreateMap<AccessTokenResult, UserTokenCommandViewModel>();
@@ -45,40 +45,18 @@ internal class UserCommandProfile : Profile
         CreateMap<User, UserClaimCollectionWriteQuery>()
             .ConstructUsing(src => new(src.Id));
 
-        CreateMap<User, CreateEmailConfirmationTokenModel>()
-            .ConstructUsing(src => new(
-                src.Id,
-                src.Email));
-
-        CreateMap<User, CreateForgotPasswordTokenModel>()
-            .ConstructUsing(src => new(
-                src.Id,
-                src.Email));
-
         CreateMap<ImageResult, User>()
             .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => src.ImageUri));
 
-        CreateMap<EditCurrentUserCommand, ImageUploadModel>()
+        CreateMap<UpdateUserCommand, ImageUploadModel>()
             .ConstructUsing(src => new(src.ProfileImageFile!));
 
-        CreateMap<RegisterUserCommand, ImageUploadModel>()
+        CreateMap<AddUserCommand, ImageUploadModel>()
             .ConstructUsing(src => new(src.ProfileImage!));
 
         CreateMap<ImageUploadResult, User>()
             .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => src.SecureUrl));
 
         CreateMap<User, UserCommandViewModel>();
-
-        CreateMap<GenerateEmailConfirmationTokenResponse, EmailConfirmationToken>()
-            .ConstructUsing(src => new(src.Value, src.ValidUntil, src.UserId));
-
-        CreateMap<GenerateEmailConfirmationTokenResponse, UserConfirmEmailTokenCreatedEvent>()
-            .ConstructUsing(src => new(src.Email, src.RedirectUrl));
-
-        CreateMap<GenerateForgotPasswordTokenResponse, ForgotPasswordToken>()
-            .ConstructUsing(src => new(src.Value, src.ValidUntil, src.UserId));
-
-        CreateMap<GenerateForgotPasswordTokenResponse, UserForgotPasswordTokenCreatedEvent>()
-            .ConstructUsing(src => new(src.Email, src.RedirectUrl));
     }
 }

@@ -36,8 +36,8 @@ public class LoginUserIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.EMAIL_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.EMAIL_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.EmailMinLength - 1)]
+    [InlineData(UserConfigurations.EmailMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
@@ -73,8 +73,8 @@ public class LoginUserIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.PasswordMinLength - 1)]
+    [InlineData(UserConfigurations.PasswordMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange

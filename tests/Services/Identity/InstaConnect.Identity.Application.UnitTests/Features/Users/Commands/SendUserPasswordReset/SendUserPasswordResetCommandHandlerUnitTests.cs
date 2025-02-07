@@ -10,7 +10,7 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Se
 
 public class SendUserPasswordResetCommandHandlerUnitTests : BaseUserUnitTest
 {
-    private readonly SendUserPasswordResetCommandHandler _commandHandler;
+    private readonly AddForgotPasswordTokenCommandHandler _commandHandler;
 
     public SendUserPasswordResetCommandHandlerUnitTests()
     {
@@ -25,7 +25,7 @@ public class SendUserPasswordResetCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenEmailIsInvalid()
     {
         // Arrange
-        var command = new SendUserPasswordResetCommand(UserTestUtilities.InvalidEmail);
+        var command = new AddForgotPasswordTokenCommand(UserTestUtilities.InvalidEmail);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -38,7 +38,7 @@ public class SendUserPasswordResetCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallTheForgotPasswordTokenPublisher_WhenRequestIsValid()
     {
         // Arrange
-        var command = new SendUserPasswordResetCommand(UserTestUtilities.ValidEmail);
+        var command = new AddForgotPasswordTokenCommand(UserTestUtilities.ValidEmail);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -54,7 +54,7 @@ public class SendUserPasswordResetCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallTheUnitOfWorkSaveChanges_WhenRequestIsValid()
     {
         // Arrange
-        var command = new SendUserPasswordResetCommand(UserTestUtilities.ValidEmail);
+        var command = new AddForgotPasswordTokenCommand(UserTestUtilities.ValidEmail);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

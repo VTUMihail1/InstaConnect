@@ -8,18 +8,18 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Re
 
 public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
 {
-    private readonly ResetUserPasswordCommandValidator _commandValidator;
+    private readonly VerifyForgotPasswordTokenCommandValidator _commandValidator;
 
     public ResetUserPasswordCommandValidatorUnitTests()
     {
-        _commandValidator = new ResetUserPasswordCommandValidator();
+        _commandValidator = new VerifyForgotPasswordTokenCommandValidator();
     }
 
     [Fact]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             null!,
             UserTestUtilities.ValidForgotPasswordTokenValue,
             UserTestUtilities.ValidPassword,
@@ -35,12 +35,12 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidForgotPasswordTokenValue,
             UserTestUtilities.ValidPassword,
@@ -58,7 +58,7 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForToken_WhenTokenIsNull()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidName,
             null!,
             UserTestUtilities.ValidPassword,
@@ -74,12 +74,12 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.TOKEN_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.TOKEN_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.TOKEN_MIN_LENGTH - 1)]
+    [InlineData(UserConfigurations.TOKEN_MAX_LENGTH + 1)]
     public void TestValidate_ShouldHaveAnErrorForToken_WhenTokenLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidName,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPassword,
@@ -97,7 +97,7 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordIsNull()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,
             null!,
@@ -113,13 +113,13 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.PasswordMinLength - 1)]
+    [InlineData(UserConfigurations.PasswordMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
         var invalidPassword = SharedTestUtilities.GetString(length);
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,
             invalidPassword,
@@ -137,7 +137,7 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForConfirmPassword_WhenConfirmPasswordDoesNotMatchPassword()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword,
@@ -155,7 +155,7 @@ public class ResetUserPasswordCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.ValidName,
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword,

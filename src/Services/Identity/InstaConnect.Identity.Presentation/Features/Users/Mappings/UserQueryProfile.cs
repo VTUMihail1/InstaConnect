@@ -18,12 +18,12 @@ internal class UserQueryProfile : Profile
     {
         CreateMap<GetAllUsersRequest, GetAllUsersQuery>();
 
-        CreateMap<CurrentUserModel, GetCurrentUserDetailedQuery>()
+        CreateMap<GetCurrentDetailedUserRequest, GetCurrentDetailedUserQuery>()
             .ConstructUsing(src => new(src.Id));
 
-        CreateMap<GetUserDetailedByIdRequest, GetUserDetailedByIdQuery>();
+        CreateMap<GetDetailedUserByIdRequest, GetDetailedUserByIdQuery>();
 
-        CreateMap<CurrentUserModel, GetCurrentUserQuery>()
+        CreateMap<GetCurrentUserRequest, GetCurrentUserQuery>()
             .ConstructUsing(src => new(src.Id));
 
         CreateMap<GetUserByIdRequest, GetUserByIdQuery>();

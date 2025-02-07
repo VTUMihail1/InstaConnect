@@ -18,8 +18,8 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
     }
 
     [Theory]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.FIRST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.FirstNameMinLength - 1)]
+    [InlineData(UserConfigurations.FirstNameMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
@@ -41,8 +41,8 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
     }
 
     [Theory]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.LAST_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.LastNameMinLength - 1)]
+    [InlineData(UserConfigurations.LastNameMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenLastNameLengthIsInvalid(int length)
     {
         // Arrange
@@ -64,8 +64,8 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
     }
 
     [Theory]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.USER_NAME_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.NameMinLength - 1)]
+    [InlineData(UserConfigurations.NameMaxLength + 1)]
     public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange

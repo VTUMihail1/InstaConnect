@@ -1,4 +1,6 @@
-﻿using InstaConnect.Identity.Application.Features.Users.Extensions;
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Extensions;
+using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Extensions;
+using InstaConnect.Identity.Application.Features.Users.Extensions;
 using InstaConnect.Shared.Application.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +13,9 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
 
         serviceCollection
-            .AddUserServices();
+            .AddUserServices()
+            .AddForgotPasswordTokenServices()
+            .AddEmailConfirmationTokenServices();
 
         serviceCollection
             .AddValidators(currentAssembly)

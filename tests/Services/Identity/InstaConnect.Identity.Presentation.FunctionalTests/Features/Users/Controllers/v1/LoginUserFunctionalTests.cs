@@ -22,7 +22,7 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new LoginUserBindingModel(
+        var request = new LoginUserBody(
             null!,
             UserTestUtilities.ValidPassword);
 
@@ -35,13 +35,13 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.EMAIL_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.EMAIL_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.EmailMinLength - 1)]
+    [InlineData(UserConfigurations.EmailMaxLength + 1)]
     public async Task LoginAsync_ShouldReturnBadRequestResponse_WhenEmailengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new LoginUserBindingModel(
+        var request = new LoginUserBody(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPassword);
 
@@ -57,7 +57,7 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new LoginUserBindingModel(
+        var request = new LoginUserBody(
             UserTestUtilities.ValidPassword,
             null!);
 
@@ -70,13 +70,13 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.PasswordMinLength - 1)]
+    [InlineData(UserConfigurations.PasswordMaxLength + 1)]
     public async Task LoginAsync_ShouldReturnBadRequestResponse_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new LoginUserBindingModel(
+        var request = new LoginUserBody(
             UserTestUtilities.ValidEmail,
             SharedTestUtilities.GetString(length));
 
@@ -92,7 +92,7 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new LoginUserBindingModel(
+        var request = new Body(
             UserTestUtilities.InvalidEmail,
             UserTestUtilities.ValidPassword);
 
@@ -108,7 +108,7 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new LoginUserBindingModel(
+        var request = new Body(
             UserTestUtilities.ValidEmail,
             UserTestUtilities.InvalidPassword);
 
@@ -124,7 +124,7 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
-        var request = new LoginUserBindingModel(
+        var request = new LoginUserBody(
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword);
 
@@ -140,7 +140,7 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new LoginUserBindingModel(
+        var request = new LoginUserBody(
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword);
 
@@ -156,7 +156,7 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var request = new LoginUserBindingModel(
+        var request = new LoginUserBody(
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword);
 

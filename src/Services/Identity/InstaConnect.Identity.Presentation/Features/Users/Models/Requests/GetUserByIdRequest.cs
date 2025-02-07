@@ -2,8 +2,4 @@
 
 namespace InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 
-public class GetUserByIdRequest
-{
-    [FromRoute]
-    public string Id { get; set; } = string.Empty;
-}
+public record GetUserByIdRequest([FromRoute] string Id);

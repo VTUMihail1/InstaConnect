@@ -24,7 +24,7 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             null!,
             existingForgotPasswordTokenValue,
             UserTestUtilities.ValidUpdatePassword,
@@ -39,14 +39,14 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             SharedTestUtilities.GetString(length),
             existingForgotPasswordTokenValue,
             UserTestUtilities.ValidUpdatePassword,
@@ -65,7 +65,7 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             existingUserId,
             null!,
             UserTestUtilities.ValidUpdatePassword,
@@ -80,14 +80,14 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.TOKEN_MAX_LENGTH + 1)]
-    [InlineData(UserBusinessConfigurations.TOKEN_MIN_LENGTH - 1)]
+    [InlineData(UserConfigurations.TOKEN_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.TOKEN_MIN_LENGTH - 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenTokenLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             existingUserId,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidUpdatePassword,
@@ -106,7 +106,7 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             existingUserId,
             existingForgotPasswordTokenValue,
             null!,
@@ -121,15 +121,15 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MAX_LENGTH + 1)]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MIN_LENGTH - 1)]
+    [InlineData(UserConfigurations.PasswordMaxLength + 1)]
+    [InlineData(UserConfigurations.PasswordMinLength - 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
         var invalidPassword = SharedTestUtilities.GetString(length);
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             existingUserId,
             SharedTestUtilities.GetString(length),
             invalidPassword,
@@ -148,7 +148,7 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             existingUserId,
             existingForgotPasswordTokenValue,
             UserTestUtilities.ValidUpdatePassword,
@@ -167,7 +167,7 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.InvalidId,
             existingForgotPasswordTokenValue,
             UserTestUtilities.ValidUpdatePassword,
@@ -187,7 +187,7 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             existingUserId,
             UserTestUtilities.InvalidEmailConfirmationTokenValue,
             UserTestUtilities.ValidUpdatePassword,
@@ -207,7 +207,7 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         var existingForgotPasswordTokenUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingForgotPasswordTokenUserId, UserTestUtilities.ValidUntil, CancellationToken);
         var existingUserId = await CreateUserAsync(false, CancellationToken);
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             existingUserId,
             existingForgotPasswordTokenValue,
             UserTestUtilities.ValidUpdatePassword,
@@ -226,7 +226,7 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             existingUserId,
             existingForgotPasswordTokenValue,
             UserTestUtilities.ValidUpdatePassword,
@@ -254,7 +254,7 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var command = new ResetUserPasswordCommand(
+        var command = new VerifyForgotPasswordTokenCommand(
             existingUserId,
             existingForgotPasswordTokenValue,
             UserTestUtilities.ValidUpdatePassword,

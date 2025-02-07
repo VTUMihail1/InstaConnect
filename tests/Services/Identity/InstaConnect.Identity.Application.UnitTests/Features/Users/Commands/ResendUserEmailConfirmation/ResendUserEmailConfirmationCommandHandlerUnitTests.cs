@@ -10,7 +10,7 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Re
 
 public class ResendUserEmailConfirmationCommandHandlerUnitTests : BaseUserUnitTest
 {
-    private readonly ResendUserEmailConfirmationCommandHandler _commandHandler;
+    private readonly AddEmailConfirmationTokenCommandHandler _commandHandler;
 
     public ResendUserEmailConfirmationCommandHandlerUnitTests()
     {
@@ -25,7 +25,7 @@ public class ResendUserEmailConfirmationCommandHandlerUnitTests : BaseUserUnitTe
     public async Task Handle_ShouldThrowUserNotFoundException_WhenEmailIsInvalid()
     {
         // Arrange
-        var command = new ResendUserEmailConfirmationCommand(UserTestUtilities.InvalidEmail);
+        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.InvalidEmail);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -38,7 +38,7 @@ public class ResendUserEmailConfirmationCommandHandlerUnitTests : BaseUserUnitTe
     public async Task Handle_ShouldThrowUserEmailAlreadyConfirmedException_WhenEmailIsConfirmed()
     {
         // Arrange
-        var command = new ResendUserEmailConfirmationCommand(UserTestUtilities.ValidEmail);
+        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidEmail);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -51,7 +51,7 @@ public class ResendUserEmailConfirmationCommandHandlerUnitTests : BaseUserUnitTe
     public async Task Handle_ShouldCallTheEmailConfirmationTokenPublisher_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ResendUserEmailConfirmationCommand(UserTestUtilities.ValidEmailWithUnconfirmedEmail);
+        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidEmailWithUnconfirmedEmail);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -67,7 +67,7 @@ public class ResendUserEmailConfirmationCommandHandlerUnitTests : BaseUserUnitTe
     public async Task Handle_ShouldCallTheUnitOfWorkSaveChanges_WhenRequestIsValid()
     {
         // Arrange
-        var command = new ResendUserEmailConfirmationCommand(UserTestUtilities.ValidEmailWithUnconfirmedEmail);
+        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidEmailWithUnconfirmedEmail);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

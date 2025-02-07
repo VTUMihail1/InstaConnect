@@ -21,7 +21,7 @@ public class GetCurrentUserDetailedQueryHandlerIntegrationTests : BaseUserIntegr
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var query = new GetCurrentUserDetailedQuery(null!);
+        var query = new GetCurrentDetailedUserQuery(null!);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -32,13 +32,13 @@ public class GetCurrentUserDetailedQueryHandlerIntegrationTests : BaseUserIntegr
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var query = new GetCurrentUserDetailedQuery(SharedTestUtilities.GetString(length));
+        var query = new GetCurrentDetailedUserQuery(SharedTestUtilities.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -52,7 +52,7 @@ public class GetCurrentUserDetailedQueryHandlerIntegrationTests : BaseUserIntegr
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var query = new GetCurrentUserDetailedQuery(UserTestUtilities.InvalidId);
+        var query = new GetCurrentDetailedUserQuery(UserTestUtilities.InvalidId);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -66,7 +66,7 @@ public class GetCurrentUserDetailedQueryHandlerIntegrationTests : BaseUserIntegr
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var query = new GetCurrentUserDetailedQuery(existingUserId);
+        var query = new GetCurrentDetailedUserQuery(existingUserId);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -87,7 +87,7 @@ public class GetCurrentUserDetailedQueryHandlerIntegrationTests : BaseUserIntegr
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var query = new GetCurrentUserDetailedQuery(SharedTestUtilities.GetNonCaseMatchingString(existingUserId));
+        var query = new GetCurrentDetailedUserQuery(SharedTestUtilities.GetNonCaseMatchingString(existingUserId));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -108,7 +108,7 @@ public class GetCurrentUserDetailedQueryHandlerIntegrationTests : BaseUserIntegr
     {
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
-        var query = new GetCurrentUserDetailedQuery(existingUserId);
+        var query = new GetCurrentDetailedUserQuery(existingUserId);
 
         // Act
         await InstaConnectSender.SendAsync(query, CancellationToken);

@@ -84,19 +84,19 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
             .Returns(existingUserQueryViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<GetCurrentUserDetailedQuery>(), CancellationToken)
+            .SendAsync(Arg.Any<GetCurrentDetailedUserQuery>(), CancellationToken)
             .Returns(existingUserDetailedQueryViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<GetUserDetailedByIdQuery>(), CancellationToken)
+            .SendAsync(Arg.Any<GetDetailedUserByIdQuery>(), CancellationToken)
             .Returns(existingUserDetailedQueryViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<EditCurrentUserCommand>(), CancellationToken)
+            .SendAsync(Arg.Any<UpdateUserCommand>(), CancellationToken)
             .Returns(existingUserCommandViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Any<RegisterUserCommand>(), CancellationToken)
+            .SendAsync(Arg.Any<AddUserCommand>(), CancellationToken)
             .Returns(existingUserCommandViewModel);
 
         InstaConnectSender

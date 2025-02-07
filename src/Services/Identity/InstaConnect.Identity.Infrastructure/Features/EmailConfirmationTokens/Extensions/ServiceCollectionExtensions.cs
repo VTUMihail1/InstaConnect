@@ -1,6 +1,9 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
+﻿using InstaConnect.Identity.Application.Features.Users.Abstractions;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
+using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Helpers;
 using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Models.Options;
 using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Repositories;
+using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
@@ -16,7 +19,9 @@ internal static class ServiceCollectionExtensions
             .ValidateOnStart();
 
         serviceCollection
-            .AddTransient<IEmailConfirmationTokenWriteRepository, EmailConfirmationTokenWriteRepository>();
+            .AddTransient<IEmailConfirmationTokenWriteRepository, EmailConfirmationTokenWriteRepository>()
+            .AddTransient<IEmailConfirmationTokenPublisher, EmailConfirmationTokenPublisher>()
+            .AddScoped<IEmailConfirmationTokenGenerator, EmailConfirmationTokenGenerator>();
 
         return serviceCollection;
     }

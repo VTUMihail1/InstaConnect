@@ -17,14 +17,14 @@ public class ResetUserPasswordFunctionalTests : BaseUserFunctionalTest
     }
 
     [Theory]
-    [InlineData(UserBusinessConfigurations.ID_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.ID_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
     public async Task ResetPasswordAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var request = new ResetUserPasswordBindingModel(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
+        var request = new VerifyForgotPasswordTokenBody(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
 
         // Act
         var response = await HttpClient.PostAsJsonAsync(GetApiRoute(SharedTestUtilities.GetString(length), existingForgotPasswordTokenValue), request, CancellationToken);
@@ -34,14 +34,14 @@ public class ResetUserPasswordFunctionalTests : BaseUserFunctionalTest
     }
 
     [Theory]
-    [InlineData(UserBusinessConfigurations.TOKEN_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.TOKEN_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.TOKEN_MIN_LENGTH - 1)]
+    [InlineData(UserConfigurations.TOKEN_MAX_LENGTH + 1)]
     public async Task ResetPasswordAsync_ShouldReturnBadRequestResponse_WhenTokenLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var request = new ResetUserPasswordBindingModel(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
+        var request = new VerifyForgotPasswordTokenBody(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
 
         // Act
         var response = await HttpClient.PostAsJsonAsync(GetApiRoute(existingUserId, SharedTestUtilities.GetString(length)), request, CancellationToken);
@@ -56,7 +56,7 @@ public class ResetUserPasswordFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var request = new ResetUserPasswordBindingModel(null!, null!);
+        var request = new VerifyForgotPasswordTokenBody(null!, null!);
 
         // Act
         var response = await HttpClient.PostAsJsonAsync(GetApiRoute(existingUserId, existingForgotPasswordTokenValue), request, CancellationToken);
@@ -67,15 +67,15 @@ public class ResetUserPasswordFunctionalTests : BaseUserFunctionalTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.PASSWORD_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.PasswordMinLength - 1)]
+    [InlineData(UserConfigurations.PasswordMaxLength + 1)]
     public async Task ResetPasswordAsync_ShouldReturnBadRequestResponse_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
         var invalidPassword = SharedTestUtilities.GetString(length);
-        var request = new ResetUserPasswordBindingModel(invalidPassword, invalidPassword);
+        var request = new VerifyForgotPasswordTokenBody(invalidPassword, invalidPassword);
 
         // Act
         var response = await HttpClient.PostAsJsonAsync(GetApiRoute(existingUserId, existingForgotPasswordTokenValue), request, CancellationToken);
@@ -90,7 +90,7 @@ public class ResetUserPasswordFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var request = new ResetUserPasswordBindingModel(UserTestUtilities.ValidPassword, UserTestUtilities.InvalidPassword);
+        var request = new Body(UserTestUtilities.ValidPassword, UserTestUtilities.InvalidPassword);
 
         // Act
         var response = await HttpClient.PostAsJsonAsync(GetApiRoute(existingUserId, existingForgotPasswordTokenValue), request, CancellationToken);
@@ -105,7 +105,7 @@ public class ResetUserPasswordFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var request = new ResetUserPasswordBindingModel(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
+        var request = new VerifyForgotPasswordTokenBody(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
 
         // Act
         var response = await HttpClient.PostAsJsonAsync(GetApiRoute(UserTestUtilities.InvalidId, existingForgotPasswordTokenValue), request, CancellationToken);
@@ -120,7 +120,7 @@ public class ResetUserPasswordFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var request = new ResetUserPasswordBindingModel(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
+        var request = new VerifyForgotPasswordTokenBody(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
 
         // Act
         var response = await HttpClient.PostAsJsonAsync(GetApiRoute(existingUserId, UserTestUtilities.InvalidForgotPasswordTokenValue), request, CancellationToken);
@@ -136,7 +136,7 @@ public class ResetUserPasswordFunctionalTests : BaseUserFunctionalTest
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenUserId = await CreateUserAsync(CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingForgotPasswordTokenUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var request = new ResetUserPasswordBindingModel(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
+        var request = new VerifyForgotPasswordTokenBody(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
 
         // Act
         var response = await HttpClient.PostAsJsonAsync(GetApiRoute(existingUserId, existingForgotPasswordTokenValue), request, CancellationToken);
@@ -151,7 +151,7 @@ public class ResetUserPasswordFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var request = new ResetUserPasswordBindingModel(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
+        var request = new VerifyForgotPasswordTokenBody(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
 
         // Act
         var response = await HttpClient.PostAsJsonAsync(GetApiRoute(existingUserId, existingForgotPasswordTokenValue), request, CancellationToken);
@@ -166,7 +166,7 @@ public class ResetUserPasswordFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUserId = await CreateUserAsync(false, CancellationToken);
         var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var request = new ResetUserPasswordBindingModel(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
+        var request = new VerifyForgotPasswordTokenBody(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword);
 
         // Act
         await HttpClient.PostAsJsonAsync(GetApiRoute(existingUserId, existingForgotPasswordTokenValue), request, CancellationToken);

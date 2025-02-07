@@ -8,18 +8,18 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Re
 
 public class ResendUserEmailConfirmationCommandValidatorUnitTests : BaseUserUnitTest
 {
-    private readonly ResendUserEmailConfirmationCommandValidator _commandValidator;
+    private readonly AddEmailConfirmationTokenCommandValidator _commandValidator;
 
     public ResendUserEmailConfirmationCommandValidatorUnitTests()
     {
-        _commandValidator = new ResendUserEmailConfirmationCommandValidator();
+        _commandValidator = new AddEmailConfirmationTokenCommandValidator();
     }
 
     [Fact]
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailIsNull()
     {
         // Arrange
-        var command = new ResendUserEmailConfirmationCommand(null!);
+        var command = new AddEmailConfirmationTokenCommand(null!);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -30,12 +30,12 @@ public class ResendUserEmailConfirmationCommandValidatorUnitTests : BaseUserUnit
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserBusinessConfigurations.EMAIL_MIN_LENGTH - 1)]
-    [InlineData(UserBusinessConfigurations.EMAIL_MAX_LENGTH + 1)]
+    [InlineData(UserConfigurations.EmailMinLength - 1)]
+    [InlineData(UserConfigurations.EmailMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new ResendUserEmailConfirmationCommand(SharedTestUtilities.GetString(length));
+        var command = new AddEmailConfirmationTokenCommand(SharedTestUtilities.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -48,7 +48,7 @@ public class ResendUserEmailConfirmationCommandValidatorUnitTests : BaseUserUnit
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var command = new ResendUserEmailConfirmationCommand(UserTestUtilities.ValidEmail);
+        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidEmail);
 
         // Act
         var result = _commandValidator.TestValidate(command);

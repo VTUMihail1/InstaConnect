@@ -11,7 +11,7 @@ namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.De
 
 public class DeleteUserByIdCommandHandlerUnitTests : BaseUserUnitTest
 {
-    private readonly DeleteUserByIdCommandHandler _commandHandler;
+    private readonly DeleteUserCommandHandler _commandHandler;
 
     public DeleteUserByIdCommandHandlerUnitTests()
     {
@@ -26,7 +26,7 @@ public class DeleteUserByIdCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var command = new DeleteUserByIdCommand(
+        var command = new DeleteUserCommand(
             UserTestUtilities.InvalidId
         );
 
