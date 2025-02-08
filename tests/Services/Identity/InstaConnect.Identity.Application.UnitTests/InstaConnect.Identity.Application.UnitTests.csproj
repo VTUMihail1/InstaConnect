@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Features\Users\Commands\RegisterUser\RegisterAccountCommandHandlerUnitTests.cs~RF7ab1ba.TMP" />
+    <None Remove="Features\Users\Commands\Add\RegisterAccountCommandHandlerUnitTests.cs~RF7ab1ba.TMP" />
   </ItemGroup>
 
   <ItemGroup>
