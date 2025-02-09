@@ -9,7 +9,7 @@ using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.ResetUserPassword;
 
-public class VerifyForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
+public class VerifyForgotPasswordTokenCommandHandlerUnitTests : BaseForgotPasswordTokenUnitTest
 {
     private readonly VerifyForgotPasswordTokenCommandHandler _commandHandler;
 
@@ -26,11 +26,12 @@ public class VerifyForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenEmailIsInvalid()
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.InvalidId,
-            UserTestUtilities.ValidForgotPasswordTokenValue,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword);
+            existingForgotPasswordToken.Value,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -43,11 +44,12 @@ public class VerifyForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowTokenNotFoundException_WhenTokenValueIsInvalid()
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.InvalidForgotPasswordTokenValue,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword);
+            existingForgotPasswordToken.UserId,
+            ForgotPasswordTokenTestUtilities.InvalidValue,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -60,11 +62,13 @@ public class VerifyForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserForbiddenException_WhenTokenIsNotOwnedByUser()
     {
         // Arrange
+        var existingUser = CreateUser();
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidForgotPasswordTokenValueWithTokenUser,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword);
+            existingUser.Id,
+            existingForgotPasswordToken.Value,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -77,11 +81,12 @@ public class VerifyForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldGetUserByIdFromRepository_WhenRequestIsValid()
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidForgotPasswordTokenValue,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword);
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -89,18 +94,19 @@ public class VerifyForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .GetByIdAsync(UserTestUtilities.ValidId, CancellationToken);
+            .GetByIdAsync(existingForgotPasswordToken.UserId, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldHashPassword_WhenRequestIsValid()
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidForgotPasswordTokenValue,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword);
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -108,18 +114,19 @@ public class VerifyForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         PasswordHasher
             .Received(1)
-            .Hash(UserTestUtilities.ValidPassword);
+            .Hash(UserTestUtilities.ValidUpdatePassword);
     }
 
     [Fact]
     public async Task Handle_ShouldGetForgotPasswordTokenByValueFromRepository_WhenRequestIsValid()
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidForgotPasswordTokenValue,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword);
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -127,18 +134,19 @@ public class VerifyForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await ForgotPasswordTokenWriteRepository
             .Received(1)
-            .GetByValueAsync(UserTestUtilities.ValidForgotPasswordTokenValue, CancellationToken);
+            .GetByValueAsync(existingForgotPasswordToken.Value, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldDeleteEmailConfirmationTokenToRepository_WhenRequestIsValid()
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidForgotPasswordTokenValue,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword);
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -146,20 +154,21 @@ public class VerifyForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         ForgotPasswordTokenWriteRepository
             .Received(1)
-            .Delete(Arg.Is<ForgotPasswordToken>(ec => ec.Value == UserTestUtilities.ValidForgotPasswordTokenValue &&
-                                                         ec.ValidUntil == UserTestUtilities.ValidUntil &&
-                                                         ec.UserId == UserTestUtilities.ValidId));
+            .Delete(Arg.Is<ForgotPasswordToken>(ec => ec.Value == existingForgotPasswordToken.Value &&
+                                                         ec.ValidUntil == existingForgotPasswordToken.ValidUntil &&
+                                                         ec.UserId == existingForgotPasswordToken.UserId));
     }
 
     [Fact]
     public async Task Handle_ShouldResetUserPasswordToRepository_WhenRequestIsValid()
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidForgotPasswordTokenValue,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword);
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -167,18 +176,19 @@ public class VerifyForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await UserWriteRepository
             .Received(1)
-            .ResetPasswordAsync(UserTestUtilities.ValidId, UserTestUtilities.ValidPasswordHash, CancellationToken);
+            .ResetPasswordAsync(existingForgotPasswordToken.UserId, UserTestUtilities.ValidUpdatePasswordHash, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldCallTheUnitOfWorkSaveChanges_WhenRequestIsValid()
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidForgotPasswordTokenValue,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword);
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

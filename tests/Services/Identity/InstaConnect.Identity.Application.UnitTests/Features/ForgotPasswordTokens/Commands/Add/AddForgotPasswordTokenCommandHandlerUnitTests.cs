@@ -8,7 +8,7 @@ using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.SendUserPasswordReset;
 
-public class AddForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
+public class AddForgotPasswordTokenCommandHandlerUnitTests : BaseForgotPasswordTokenUnitTest
 {
     private readonly AddForgotPasswordTokenCommandHandler _commandHandler;
 
@@ -25,7 +25,8 @@ public class AddForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenEmailIsInvalid()
     {
         // Arrange
-        var command = new AddForgotPasswordTokenCommand(UserTestUtilities.InvalidEmail);
+        var existingUser = CreateUser();
+        var command = new AddForgotPasswordTokenCommand(UserTestUtilities.ValidAddEmail);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -38,7 +39,8 @@ public class AddForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallTheForgotPasswordTokenPublisher_WhenRequestIsValid()
     {
         // Arrange
-        var command = new AddForgotPasswordTokenCommand(UserTestUtilities.ValidEmail);
+        var existingUser = CreateUser();
+        var command = new AddForgotPasswordTokenCommand(existingUser.Email);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -46,15 +48,16 @@ public class AddForgotPasswordTokenCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await ForgotPasswordTokenPublisher
             .Received(1)
-            .PublishForgotPasswordTokenAsync(Arg.Is<CreateForgotPasswordTokenModel>(uc => uc.UserId == UserTestUtilities.ValidId &&
-                                                                                          uc.Email == UserTestUtilities.ValidEmail), CancellationToken);
+            .PublishForgotPasswordTokenAsync(Arg.Is<CreateForgotPasswordTokenModel>(uc => uc.UserId == existingUser.Id &&
+                                                                                          uc.Email == existingUser.Email), CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldCallTheUnitOfWorkSaveChanges_WhenRequestIsValid()
     {
         // Arrange
-        var command = new AddForgotPasswordTokenCommand(UserTestUtilities.ValidEmail);
+        var existingUser = CreateUser();
+        var command = new AddForgotPasswordTokenCommand(existingUser.Email);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

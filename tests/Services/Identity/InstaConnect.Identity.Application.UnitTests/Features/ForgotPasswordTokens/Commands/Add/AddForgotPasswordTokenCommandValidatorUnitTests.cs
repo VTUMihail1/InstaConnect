@@ -6,7 +6,7 @@ using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.SendUserPasswordReset;
 
-public class AddForgotPasswordTokenCommandValidatorUnitTests : BaseUserUnitTest
+public class AddForgotPasswordTokenCommandValidatorUnitTests : BaseForgotPasswordTokenUnitTest
 {
     private readonly AddForgotPasswordTokenCommandValidator _commandValidator;
 
@@ -19,6 +19,7 @@ public class AddForgotPasswordTokenCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailIsNull()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new AddForgotPasswordTokenCommand(null!);
 
         // Act
@@ -35,6 +36,7 @@ public class AddForgotPasswordTokenCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new AddForgotPasswordTokenCommand(SharedTestUtilities.GetString(length));
 
         // Act
@@ -48,7 +50,8 @@ public class AddForgotPasswordTokenCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var command = new AddForgotPasswordTokenCommand(UserTestUtilities.ValidEmail);
+        var existingUser = CreateUser();
+        var command = new AddForgotPasswordTokenCommand(existingUser.Email);
 
         // Act
         var result = _commandValidator.TestValidate(command);

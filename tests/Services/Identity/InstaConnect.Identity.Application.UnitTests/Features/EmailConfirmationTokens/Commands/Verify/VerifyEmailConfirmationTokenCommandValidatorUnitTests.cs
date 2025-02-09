@@ -1,12 +1,13 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Identity.Application.Features.Users.Commands.ConfirmUserEmail;
 using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.ConfirmUserEmail;
 
-public class VerifyEmailConfirmationTokenCommandValidatorUnitTests : BaseUserUnitTest
+public class VerifyEmailConfirmationTokenCommandValidatorUnitTests : BaseEmailConfirmationTokenUnitTest
 {
     private readonly VerifyEmailConfirmationTokenCommandValidator _commandValidator;
 
@@ -19,9 +20,10 @@ public class VerifyEmailConfirmationTokenCommandValidatorUnitTests : BaseUserUni
     public void TestValidate_ShouldHaveAnErrorForUserId_WhenUserIdIsNull()
     {
         // Arrange
+        var existingEmailConfirmationToken = CreateEmailConfirmationToken();
         var command = new VerifyEmailConfirmationTokenCommand(
             null!,
-            UserTestUtilities.ValidEmailConfirmationTokenValue);
+            existingEmailConfirmationToken.Value);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -37,9 +39,10 @@ public class VerifyEmailConfirmationTokenCommandValidatorUnitTests : BaseUserUni
     public void TestValidate_ShouldHaveAnErrorForUserId_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingEmailConfirmationToken = CreateEmailConfirmationToken();
         var command = new VerifyEmailConfirmationTokenCommand(
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidEmailConfirmationTokenValue);
+            existingEmailConfirmationToken.Value);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -52,8 +55,9 @@ public class VerifyEmailConfirmationTokenCommandValidatorUnitTests : BaseUserUni
     public void TestValidate_ShouldHaveAnErrorForTokenId_WhenTokenIdIsNull()
     {
         // Arrange
+        var existingEmailConfirmationToken = CreateEmailConfirmationToken();
         var command = new VerifyEmailConfirmationTokenCommand(
-            UserTestUtilities.ValidId,
+            existingEmailConfirmationToken.UserId,
             null!);
 
         // Act
@@ -65,13 +69,14 @@ public class VerifyEmailConfirmationTokenCommandValidatorUnitTests : BaseUserUni
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserConfigurations.TOKEN_MIN_LENGTH - 1)]
-    [InlineData(UserConfigurations.TOKEN_MAX_LENGTH + 1)]
+    [InlineData(EmailConfirmationTokenConfigurations.ValueMinLength - 1)]
+    [InlineData(EmailConfirmationTokenConfigurations.ValueMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForToken_WhenTokenLengthIsInvalid(int length)
     {
         // Arrange
+        var existingEmailConfirmationToken = CreateEmailConfirmationToken();
         var command = new VerifyEmailConfirmationTokenCommand(
-            UserTestUtilities.ValidId,
+            existingEmailConfirmationToken.UserId,
             SharedTestUtilities.GetString(length));
 
         // Act
@@ -85,9 +90,10 @@ public class VerifyEmailConfirmationTokenCommandValidatorUnitTests : BaseUserUni
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
+        var existingEmailConfirmationToken = CreateEmailConfirmationToken();
         var command = new VerifyEmailConfirmationTokenCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidEmailConfirmationTokenValue);
+            existingEmailConfirmationToken.UserId,
+            existingEmailConfirmationToken.Value);
 
         // Act
         var result = _commandValidator.TestValidate(command);

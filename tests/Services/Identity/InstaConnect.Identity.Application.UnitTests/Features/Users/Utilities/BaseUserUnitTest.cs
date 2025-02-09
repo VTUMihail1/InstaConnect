@@ -34,19 +34,13 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
 
     protected IUserWriteRepository UserWriteRepository { get; }
 
-    protected IEmailConfirmationTokenWriteRepository EmailConfirmationTokenWriteRepository { get; }
-
-    protected IForgotPasswordTokenWriteRepository ForgotPasswordTokenWriteRepository { get; }
-
-    protected IEmailConfirmationTokenPublisher EmailConfirmationTokenPublisher { get; }
-
-    protected IForgotPasswordTokenPublisher ForgotPasswordTokenPublisher { get; }
-
     protected IUserClaimWriteRepository UserClaimWriteRepository { get; }
 
     protected IAccessTokenGenerator AccessTokenGenerator { get; }
 
     protected IPasswordHasher PasswordHasher { get; }
+
+    protected IEmailConfirmationTokenPublisher EmailConfirmationTokenPublisher { get; }
 
     public BaseUserUnitTest() : base(
         Substitute.For<IUnitOfWork>(),
@@ -63,168 +57,108 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
         EventPublisher = Substitute.For<IEventPublisher>();
         UserReadRepository = Substitute.For<IUserReadRepository>();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
-        EmailConfirmationTokenWriteRepository = Substitute.For<IEmailConfirmationTokenWriteRepository>();
-        ForgotPasswordTokenWriteRepository = Substitute.For<IForgotPasswordTokenWriteRepository>();
-        EmailConfirmationTokenPublisher = Substitute.For<IEmailConfirmationTokenPublisher>();
-        ForgotPasswordTokenPublisher = Substitute.For<IForgotPasswordTokenPublisher>();
         PasswordHasher = Substitute.For<IPasswordHasher>();
         AccessTokenGenerator = Substitute.For<IAccessTokenGenerator>();
         UserClaimWriteRepository = Substitute.For<IUserClaimWriteRepository>();
+        EmailConfirmationTokenPublisher = Substitute.For<IEmailConfirmationTokenPublisher>();
 
-        var existingUser = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidPasswordHash,
-            UserTestUtilities.ValidProfileImage)
+        PasswordHasher.Hash(UserTestUtilities.ValidAddPassword)
+            .Returns(new PasswordHashResultModel(UserTestUtilities.ValidAddPasswordHash));
+
+        PasswordHasher.Verify(UserTestUtilities.ValidAddPassword, UserTestUtilities.ValidAddPasswordHash)
+            .Returns(true);
+
+        PasswordHasher.Hash(UserTestUtilities.ValidUpdatePassword)
+            .Returns(new PasswordHashResultModel(UserTestUtilities.ValidUpdatePasswordHash));
+
+        PasswordHasher.Verify(UserTestUtilities.ValidUpdatePassword, UserTestUtilities.ValidUpdatePasswordHash)
+            .Returns(true);
+
+        ImageHandler.UploadAsync(Arg.Is<ImageUploadModel>(i => i.FormFile == UserTestUtilities.ValidAddFormFile), CancellationToken)
+            .Returns(new ImageResult(UserTestUtilities.ValidAddFormFileName));
+
+        ImageHandler.UploadAsync(Arg.Is<ImageUploadModel>(i => i.FormFile == UserTestUtilities.ValidUpdateFormFile), CancellationToken)
+            .Returns(new ImageResult(UserTestUtilities.ValidUpdateFormFileName));
+    }
+
+    public User CreateUserWithUnconfirmedEmail()
+    {
+        var user = new User(
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+
+        UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
+            .Returns(user);
+
+        UserWriteRepository.GetByNameAsync(user.UserName, CancellationToken)
+            .Returns(user);
+
+        UserWriteRepository.GetByEmailAsync(user.Email, CancellationToken)
+            .Returns(user);
+
+        return user;
+    }
+
+    public User CreateUser()
+    {
+        var user = new User(
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength))
         {
-            Id = UserTestUtilities.ValidId,
             IsEmailConfirmed = true
         };
 
-        var existingUnconfirmedEmailUser = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmailWithUnconfirmedEmail,
-            UserTestUtilities.ValidNameWithUnconfirmedEmail,
-            UserTestUtilities.ValidPasswordHash,
-            UserTestUtilities.ValidProfileImage)
-        {
-            Id = UserTestUtilities.ValidIdWithUnconfirmedEmail,
-            IsEmailConfirmed = false
-        };
+        var accessTokenResult = new AccessTokenResult(UserTestUtilities.ValidAccessTokenValue, UserTestUtilities.ValidUntil);
 
-        var existingTakenUser = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidTakenEmail,
-            UserTestUtilities.ValidTakenName,
-            UserTestUtilities.ValidPasswordHash,
-            UserTestUtilities.ValidProfileImage)
-        {
-            Id = UserTestUtilities.ValidTakenId,
-            IsEmailConfirmed = false
-        };
+        var userClaim = new UserClaim(AppClaims.Admin, AppClaims.Admin, user.Id);
 
-        var existingEmailConfirmationToken = new EmailConfirmationToken(
-            UserTestUtilities.ValidEmailConfirmationTokenValue,
-            UserTestUtilities.ValidUntil,
-            UserTestUtilities.ValidIdWithUnconfirmedEmail);
-
-        var existingEmailConfirmationTokenWithConfirmedUser = new EmailConfirmationToken(
-            UserTestUtilities.ValidEmailConfirmationTokenValueWithConfirmedUser,
-            UserTestUtilities.ValidUntil,
-            UserTestUtilities.ValidId);
-
-        var existingEmailConfirmationTokenWithTokenUser = new EmailConfirmationToken(
-            UserTestUtilities.ValidEmailConfirmationTokenValueWithTokenUser,
-            UserTestUtilities.ValidUntil,
-            UserTestUtilities.ValidTakenId);
-
-        var existingForgotPasswordToken = new ForgotPasswordToken(
-            UserTestUtilities.ValidForgotPasswordTokenValue,
-            UserTestUtilities.ValidUntil,
-            UserTestUtilities.ValidId);
-
-        var existingForgotPasswordTokenWithTokenUser = new ForgotPasswordToken(
-            UserTestUtilities.ValidForgotPasswordTokenValueWithTokenUser,
-            UserTestUtilities.ValidUntil,
-            UserTestUtilities.ValidTakenId);
-
-        var existingPasswordHashResultModel = new PasswordHashResultModel(UserTestUtilities.ValidPasswordHash);
-
-        var existingImageResult = new ImageResult(UserTestUtilities.ValidProfileImage);
-
-        var existingAccessTokenResult = new AccessTokenResult(UserTestUtilities.ValidAccessTokenValue, UserTestUtilities.ValidUntil);
-
-        var existingUserClaim = new UserClaim(AppClaims.Admin, AppClaims.Admin, UserTestUtilities.ValidId);
-
-        var existingUserPaginationList = new PaginationList<User>(
-            [existingUser],
+        var userPaginationList = new PaginationList<User>(
+            [user],
             UserTestUtilities.ValidPageValue,
             UserTestUtilities.ValidPageSizeValue,
             UserTestUtilities.ValidTotalCountValue);
 
-        UserWriteRepository.GetByIdAsync(UserTestUtilities.ValidId, CancellationToken)
-            .Returns(existingUser);
+        UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
+            .Returns(user);
 
-        UserWriteRepository.GetByNameAsync(UserTestUtilities.ValidName, CancellationToken)
-            .Returns(existingUser);
+        UserWriteRepository.GetByNameAsync(user.UserName, CancellationToken)
+            .Returns(user);
 
-        UserReadRepository.GetByIdAsync(UserTestUtilities.ValidId, CancellationToken)
-            .Returns(existingUser);
+        UserWriteRepository.GetByEmailAsync(user.Email, CancellationToken)
+            .Returns(user);
 
-        UserReadRepository.GetByNameAsync(UserTestUtilities.ValidName, CancellationToken)
-            .Returns(existingUser);
+        UserClaimWriteRepository.GetAllAsync(Arg.Is<UserClaimCollectionWriteQuery>(uc => uc.UserId == user.Id), CancellationToken)
+            .Returns([userClaim]);
 
-        UserWriteRepository.GetByEmailAsync(UserTestUtilities.ValidEmail, CancellationToken)
-            .Returns(existingUser);
-
-        UserWriteRepository.GetByIdAsync(UserTestUtilities.ValidTakenId, CancellationToken)
-            .Returns(existingTakenUser);
-
-        UserWriteRepository.GetByNameAsync(UserTestUtilities.ValidTakenName, CancellationToken)
-            .Returns(existingTakenUser);
-
-        UserWriteRepository.GetByEmailAsync(UserTestUtilities.ValidTakenEmail, CancellationToken)
-            .Returns(existingTakenUser);
-
-        UserWriteRepository.GetByIdAsync(UserTestUtilities.ValidIdWithUnconfirmedEmail, CancellationToken)
-            .Returns(existingUnconfirmedEmailUser);
-
-        UserWriteRepository.GetByNameAsync(UserTestUtilities.ValidNameWithUnconfirmedEmail, CancellationToken)
-            .Returns(existingUnconfirmedEmailUser);
-
-        UserWriteRepository.GetByEmailAsync(UserTestUtilities.ValidEmailWithUnconfirmedEmail, CancellationToken)
-            .Returns(existingUnconfirmedEmailUser);
-
-        EmailConfirmationTokenWriteRepository.GetByValueAsync(UserTestUtilities.ValidEmailConfirmationTokenValue, CancellationToken)
-            .Returns(existingEmailConfirmationToken);
-
-        EmailConfirmationTokenWriteRepository.GetByValueAsync(UserTestUtilities.ValidEmailConfirmationTokenValueWithConfirmedUser, CancellationToken)
-            .Returns(existingEmailConfirmationTokenWithConfirmedUser);
-
-        EmailConfirmationTokenWriteRepository.GetByValueAsync(UserTestUtilities.ValidEmailConfirmationTokenValueWithTokenUser, CancellationToken)
-            .Returns(existingEmailConfirmationTokenWithTokenUser);
-
-        ForgotPasswordTokenWriteRepository.GetByValueAsync(UserTestUtilities.ValidForgotPasswordTokenValue, CancellationToken)
-            .Returns(existingForgotPasswordToken);
-
-        ForgotPasswordTokenWriteRepository.GetByValueAsync(UserTestUtilities.ValidForgotPasswordTokenValueWithTokenUser, CancellationToken)
-            .Returns(existingForgotPasswordTokenWithTokenUser);
-
-        PasswordHasher.Hash(UserTestUtilities.ValidPassword)
-            .Returns(existingPasswordHashResultModel);
-
-        PasswordHasher.Verify(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPasswordHash)
-            .Returns(true);
-
-        ImageHandler.UploadAsync(Arg.Is<ImageUploadModel>(i => i.FormFile == UserTestUtilities.ValidFormFile), CancellationToken)
-            .Returns(existingImageResult);
-
-        UserClaimWriteRepository.GetAllAsync(Arg.Is<UserClaimCollectionWriteQuery>(uc => uc.UserId == UserTestUtilities.ValidId), CancellationToken)
-            .Returns([existingUserClaim]);
-
-        AccessTokenGenerator.GenerateAccessToken(Arg.Is<CreateAccessTokenModel>(at => at.UserId == UserTestUtilities.ValidId &&
-                                                                                      at.Email == UserTestUtilities.ValidEmail &&
-                                                                                      at.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                                      at.LastName == UserTestUtilities.ValidLastName &&
-                                                                                      at.UserName == UserTestUtilities.ValidName &&
-                                                                                      at.UserClaims.All(uc => uc.UserId == UserTestUtilities.ValidId &&
+        AccessTokenGenerator.GenerateAccessToken(Arg.Is<CreateAccessTokenModel>(at => at.UserId == user.Id &&
+                                                                                      at.Email == user.Email &&
+                                                                                      at.FirstName == user.FirstName &&
+                                                                                      at.LastName == user.LastName &&
+                                                                                      at.UserName == user.UserName &&
+                                                                                      at.UserClaims.All(uc => uc.UserId == user.Id &&
                                                                                                               uc.Claim == AppClaims.Admin &&
                                                                                                               uc.Value == AppClaims.Admin)))
-            .Returns(existingAccessTokenResult);
+            .Returns(accessTokenResult);
 
         UserReadRepository
             .GetAllAsync(Arg.Is<UserCollectionReadQuery>(m =>
-                                                                        m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                        m.LastName == UserTestUtilities.ValidLastName &&
-                                                                        m.UserName == UserTestUtilities.ValidName &&
+                                                                        m.FirstName == user.FirstName &&
+                                                                        m.LastName == user.LastName &&
+                                                                        m.UserName == user.UserName &&
                                                                         m.Page == UserTestUtilities.ValidPageValue &&
                                                                         m.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == UserTestUtilities.ValidSortOrderProperty &&
                                                                         m.SortPropertyName == UserTestUtilities.ValidSortPropertyName), CancellationToken)
-            .Returns(existingUserPaginationList);
+            .Returns(userPaginationList);
+
+        return user;
     }
 }

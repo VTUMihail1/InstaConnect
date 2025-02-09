@@ -8,7 +8,7 @@ using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.ResendUserEmailConfirmation;
 
-public class AddEmailConfirmationTokenCommandHandlerUnitTests : BaseUserUnitTest
+public class AddEmailConfirmationTokenCommandHandlerUnitTests : BaseEmailConfirmationTokenUnitTest
 {
     private readonly AddEmailConfirmationTokenCommandHandler _commandHandler;
 
@@ -25,6 +25,7 @@ public class AddEmailConfirmationTokenCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenEmailIsInvalid()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.InvalidEmail);
 
         // Act
@@ -38,7 +39,8 @@ public class AddEmailConfirmationTokenCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserEmailAlreadyConfirmedException_WhenEmailIsConfirmed()
     {
         // Arrange
-        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidEmail);
+        var existingUser = CreateUserWithConfirmedEmail();
+        var command = new AddEmailConfirmationTokenCommand(existingUser.Email);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -51,7 +53,8 @@ public class AddEmailConfirmationTokenCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallTheEmailConfirmationTokenPublisher_WhenRequestIsValid()
     {
         // Arrange
-        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidEmailWithUnconfirmedEmail);
+        var existingUser = CreateUser();
+        var command = new AddEmailConfirmationTokenCommand(existingUser.Email);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -59,15 +62,16 @@ public class AddEmailConfirmationTokenCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await EmailConfirmationTokenPublisher
             .Received(1)
-            .PublishEmailConfirmationTokenAsync(Arg.Is<CreateEmailConfirmationTokenModel>(uc => uc.UserId == UserTestUtilities.ValidIdWithUnconfirmedEmail &&
-                                                                                          uc.Email == UserTestUtilities.ValidEmailWithUnconfirmedEmail), CancellationToken);
+            .PublishEmailConfirmationTokenAsync(Arg.Is<CreateEmailConfirmationTokenModel>(uc => uc.UserId == existingUser.Id &&
+                                                                                          uc.Email == existingUser.Email), CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldCallTheUnitOfWorkSaveChanges_WhenRequestIsValid()
     {
         // Arrange
-        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidEmailWithUnconfirmedEmail);
+        var existingUser = CreateUser();
+        var command = new AddEmailConfirmationTokenCommand(existingUser.Email);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

@@ -28,6 +28,7 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserInvalidDetailsException_WhenEmailIsInvalid()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new LoginUserCommand(
             UserTestUtilities.InvalidEmail,
             UserTestUtilities.ValidPassword
@@ -44,6 +45,7 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserInvalidDetailsException_WhenPasswordIsInvalid()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new LoginUserCommand(
             UserTestUtilities.ValidEmail,
             UserTestUtilities.InvalidPassword
@@ -60,6 +62,7 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserEmailNotConfirmedException_WhenEmailIsNotConfirmed()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new LoginUserCommand(
             UserTestUtilities.ValidEmailWithUnconfirmedEmail,
             UserTestUtilities.ValidPassword
@@ -76,6 +79,7 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallTheUserClaimsRepository_WhenRequestIsValid()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new LoginUserCommand(
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword
@@ -94,6 +98,7 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallTheAccessTokenGenerator_WhenRequestIsValid()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new LoginUserCommand(
             UserTestUtilities.ValidEmail,
             UserTestUtilities.ValidPassword
@@ -119,9 +124,10 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldReturnUserTokenCommandViewModel_WhenRequestIsValid()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new LoginUserCommand(
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidPassword
+            existingUser.Email,
+            existingUser.PasswordHash
         );
 
         // Act

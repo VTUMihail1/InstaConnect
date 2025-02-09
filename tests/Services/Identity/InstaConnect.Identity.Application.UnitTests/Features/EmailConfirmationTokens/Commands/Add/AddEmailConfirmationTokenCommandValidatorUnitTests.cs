@@ -6,7 +6,7 @@ using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.ResendUserEmailConfirmation;
 
-public class AddEmailConfirmationTokenCommandValidatorUnitTests : BaseUserUnitTest
+public class AddEmailConfirmationTokenCommandValidatorUnitTests : BaseEmailConfirmationTokenUnitTest
 {
     private readonly AddEmailConfirmationTokenCommandValidator _commandValidator;
 
@@ -19,6 +19,7 @@ public class AddEmailConfirmationTokenCommandValidatorUnitTests : BaseUserUnitTe
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailIsNull()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new AddEmailConfirmationTokenCommand(null!);
 
         // Act
@@ -35,6 +36,7 @@ public class AddEmailConfirmationTokenCommandValidatorUnitTests : BaseUserUnitTe
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new AddEmailConfirmationTokenCommand(SharedTestUtilities.GetString(length));
 
         // Act
@@ -48,7 +50,8 @@ public class AddEmailConfirmationTokenCommandValidatorUnitTests : BaseUserUnitTe
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidEmail);
+        var existingUser = CreateUser();
+        var command = new AddEmailConfirmationTokenCommand(existingUser.Email);
 
         // Act
         var result = _commandValidator.TestValidate(command);

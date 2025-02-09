@@ -9,7 +9,7 @@ using InstaConnect.Shared.Application.Models;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.RegisterUser;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.AddUser;
 
 public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
 {
@@ -31,14 +31,15 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserEmailAlreadyTakenException_WhenEmailIsInvalid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
-            UserTestUtilities.InvalidName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new AddUserCommand(
+            UserTestUtilities.ValidAddName,
+            existingUser.Email,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddFormFile
         );
 
         // Act
@@ -52,14 +53,15 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserUserNameAlreadyTakenException_WhenUserNameIsInvalid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.InvalidEmail,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new AddUserCommand(
+            existingUser.UserName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddFormFile
         );
 
         // Act
@@ -73,13 +75,14 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldNotCallTheImageHandler_WhenRequestIsValidAndProfileImageIsNull()
     {
         // Arrange
-        var command = new RegisterUserCommand(
-            UserTestUtilities.InvalidName,
-            UserTestUtilities.InvalidEmail,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+        var existingUser = CreateUser();
+        var command = new AddUserCommand(
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
             null!
         );
 
@@ -96,14 +99,15 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallTheImageHandler_WhenRequestIsValid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
-            UserTestUtilities.InvalidName,
-            UserTestUtilities.InvalidEmail,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new AddUserCommand(
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddFormFile
         );
 
         // Act
@@ -112,21 +116,22 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await ImageHandler
             .Received(1)
-            .UploadAsync(Arg.Is<ImageUploadModel>(u => u.FormFile == UserTestUtilities.ValidFormFile), CancellationToken);
+            .UploadAsync(Arg.Is<ImageUploadModel>(u => u.FormFile == UserTestUtilities.ValidAddFormFile), CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldCallThePasswordHasher_WhenRequestIsValid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
-            UserTestUtilities.InvalidName,
-            UserTestUtilities.InvalidEmail,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new AddUserCommand(
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddFormFile
         );
 
         // Act
@@ -135,21 +140,22 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         PasswordHasher
             .Received(1)
-            .Hash(UserTestUtilities.ValidPassword);
+            .Hash(UserTestUtilities.ValidAddPassword);
     }
 
     [Fact]
     public async Task Handle_ShouldAddTheUserToTheRepository_WhenRequestIsValid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
-            UserTestUtilities.InvalidName,
-            UserTestUtilities.InvalidEmail,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new AddUserCommand(
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddFormFile
         );
 
         // Act
@@ -159,25 +165,26 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
         UserWriteRepository
             .Received(1)
             .Add(Arg.Is<User>(u => !string.IsNullOrEmpty(u.Id) &&
-                                   u.FirstName == UserTestUtilities.ValidFirstName &&
-                                   u.LastName == UserTestUtilities.ValidLastName &&
-                                   u.UserName == UserTestUtilities.InvalidName &&
-                                   u.Email == UserTestUtilities.InvalidEmail &&
-                                   u.ProfileImage == UserTestUtilities.ValidProfileImage));
+                                   u.FirstName == UserTestUtilities.ValidAddFirstName &&
+                                   u.LastName == UserTestUtilities.ValidAddLastName &&
+                                   u.UserName == UserTestUtilities.ValidAddName &&
+                                   u.Email == UserTestUtilities.ValidAddEmail &&
+                                   u.ProfileImage == UserTestUtilities.ValidAddProfileImage));
     }
 
     [Fact]
     public async Task Handle_ShouldPublishUserCreatedEvent_WhenRequestIsValid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
-            UserTestUtilities.InvalidName,
-            UserTestUtilities.InvalidEmail,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new AddUserCommand(
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddFormFile
         );
 
         // Act
@@ -186,26 +193,27 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await EventPublisher
             .Received(1)
-            .PublishAsync(Arg.Is<UserCreatedEvent>(u => !string.IsNullOrEmpty(UserTestUtilities.ValidId) &&
-                                   u.FirstName == UserTestUtilities.ValidFirstName &&
-                                   u.LastName == UserTestUtilities.ValidLastName &&
-                                   u.UserName == UserTestUtilities.InvalidName &&
-                                   u.Email == UserTestUtilities.InvalidEmail &&
-                                   u.ProfileImage == UserTestUtilities.ValidProfileImage), CancellationToken);
+            .PublishAsync(Arg.Is<UserCreatedEvent>(u => !string.IsNullOrEmpty(u.Id) &&
+                                   u.FirstName == UserTestUtilities.ValidAddFirstName &&
+                                   u.LastName == UserTestUtilities.ValidAddLastName &&
+                                   u.UserName == UserTestUtilities.ValidAddName &&
+                                   u.Email == UserTestUtilities.ValidAddEmail &&
+                                   u.ProfileImage == UserTestUtilities.ValidAddProfileImage), CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldPublishEmailConfirmationToken_WhenRequestIsValid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
-            UserTestUtilities.InvalidName,
-            UserTestUtilities.InvalidEmail,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new AddUserCommand(
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddFormFile
         );
 
         // Act
@@ -216,21 +224,22 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
             .Received(1)
             .PublishEmailConfirmationTokenAsync(Arg.Is<CreateEmailConfirmationTokenModel>(u =>
                                    !string.IsNullOrEmpty(u.UserId) &&
-                                   u.Email == UserTestUtilities.InvalidEmail), CancellationToken);
+                                   u.Email == UserTestUtilities.ValidAddEmail), CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldCallUnitOfWorkCommit_WhenRequestIsValid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
-            UserTestUtilities.InvalidName,
-            UserTestUtilities.InvalidEmail,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new AddUserCommand(
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddFormFile
         );
 
         // Act
@@ -246,14 +255,15 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldReturnUserCommandViewModel_WhenRequestIsValid()
     {
         // Arrange
-        var command = new RegisterUserCommand(
-            UserTestUtilities.InvalidName,
-            UserTestUtilities.InvalidEmail,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new AddUserCommand(
+            UserTestUtilities.ValidAddName,
+            UserTestUtilities.ValidAddEmail,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddPassword,
+            UserTestUtilities.ValidAddFirstName,
+            UserTestUtilities.ValidAddLastName,
+            UserTestUtilities.ValidAddFormFile
         );
 
         // Act

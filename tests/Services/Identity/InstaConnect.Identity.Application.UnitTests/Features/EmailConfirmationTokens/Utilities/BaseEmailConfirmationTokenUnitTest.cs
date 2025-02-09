@@ -53,12 +53,37 @@ public abstract class BaseEmailConfirmationTokenUnitTest
     public User CreateUser()
     {
         var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidPasswordHash,
-            UserTestUtilities.ValidProfileImage);
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+
+        UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
+            .Returns(user);
+
+        UserWriteRepository.GetByNameAsync(user.UserName, CancellationToken)
+            .Returns(user);
+
+        UserWriteRepository.GetByEmailAsync(user.Email, CancellationToken)
+            .Returns(user);
+
+        return user;
+    }
+
+    public User CreateUserWithConfirmedEmail()
+    {
+        var user = new User(
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength))
+        {
+            IsEmailConfirmed = true
+        };
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -78,6 +103,20 @@ public abstract class BaseEmailConfirmationTokenUnitTest
         var emailConfirmationToken = new EmailConfirmationToken(
             SharedTestUtilities.GetGuid(), 
             SharedTestUtilities.GetMaxDate(), 
+            user.Id);
+
+        EmailConfirmationTokenWriteRepository.GetByValueAsync(emailConfirmationToken.Value, CancellationToken)
+            .Returns(emailConfirmationToken);
+
+        return emailConfirmationToken;
+    }
+
+    public EmailConfirmationToken CreateEmailConfirmationTokenWithConfirmedUser()
+    {
+        var user = CreateUserWithConfirmedEmail();
+        var emailConfirmationToken = new EmailConfirmationToken(
+            SharedTestUtilities.GetGuid(),
+            SharedTestUtilities.GetMaxDate(),
             user.Id);
 
         EmailConfirmationTokenWriteRepository.GetByValueAsync(emailConfirmationToken.Value, CancellationToken)

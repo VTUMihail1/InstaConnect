@@ -1,12 +1,13 @@
 ﻿using FluentValidation.TestHelper;
 using InstaConnect.Identity.Application.Features.Users.Commands.ResetUserPassword;
 using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.ResetUserPassword;
 
-public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseUserUnitTest
+public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseForgotPasswordTokenUnitTest
 {
     private readonly VerifyForgotPasswordTokenCommandValidator _commandValidator;
 
@@ -19,11 +20,12 @@ public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseUserUnitTe
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
             null!,
-            UserTestUtilities.ValidForgotPasswordTokenValue,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword
+            existingForgotPasswordToken.Value,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword
         );
 
         // Act
@@ -40,11 +42,12 @@ public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseUserUnitTe
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidForgotPasswordTokenValue,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword
+            existingForgotPasswordToken.Value,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword
         );
 
         // Act
@@ -58,11 +61,12 @@ public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseUserUnitTe
     public void TestValidate_ShouldHaveAnErrorForToken_WhenTokenIsNull()
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidName,
+            existingForgotPasswordToken.UserId,
             null!,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword
         );
 
         // Act
@@ -74,16 +78,17 @@ public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseUserUnitTe
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserConfigurations.TOKEN_MIN_LENGTH - 1)]
-    [InlineData(UserConfigurations.TOKEN_MAX_LENGTH + 1)]
+    [InlineData(ForgotPasswordTokenConfigurations.ValueMinLength - 1)]
+    [InlineData(ForgotPasswordTokenConfigurations.ValueMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForToken_WhenTokenLengthIsInvalid(int length)
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidName,
+            existingForgotPasswordToken.UserId,
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword
         );
 
         // Act
@@ -97,9 +102,10 @@ public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseUserUnitTe
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordIsNull()
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidEmail,
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
             null!,
             null!
         );
@@ -118,10 +124,11 @@ public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseUserUnitTe
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var invalidPassword = SharedTestUtilities.GetString(length);
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidEmail,
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
             invalidPassword,
             invalidPassword
         );
@@ -137,11 +144,12 @@ public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseUserUnitTe
     public void TestValidate_ShouldHaveAnErrorForConfirmPassword_WhenConfirmPasswordDoesNotMatchPassword()
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.InvalidPassword
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.InvalidUpdateConfirmPassword
         );
 
         // Act
@@ -155,11 +163,12 @@ public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseUserUnitTe
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
+        var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidPassword,
-            UserTestUtilities.ValidPassword
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword
         );
 
         // Act

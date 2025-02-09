@@ -26,6 +26,7 @@ public class DeleteUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new DeleteUserCommand(
             UserTestUtilities.InvalidId
         );
@@ -41,8 +42,9 @@ public class DeleteUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldDeleteTheUserFromTheRepository_WhenRequestIsValid()
     {
         // Arrange
-        var command = new DeleteUserByIdCommand(
-            UserTestUtilities.ValidId
+        var existingUser = CreateUser();
+        var command = new DeleteUserCommand(
+            existingUser.Id
         );
 
         // Act
@@ -51,20 +53,21 @@ public class DeleteUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         UserWriteRepository
             .Received(1)
-            .Delete(Arg.Is<User>(u => u.Id == UserTestUtilities.ValidId &&
-                                      u.FirstName == UserTestUtilities.ValidFirstName &&
-                                      u.LastName == UserTestUtilities.ValidLastName &&
-                                      u.UserName == UserTestUtilities.ValidName &&
-                                      u.Email == UserTestUtilities.ValidEmail &&
-                                      u.ProfileImage == UserTestUtilities.ValidProfileImage));
+            .Delete(Arg.Is<User>(u => u.Id == existingUser.Id &&
+                                      u.FirstName == existingUser.FirstName &&
+                                      u.LastName == existingUser.LastName &&
+                                      u.UserName == existingUser.UserName &&
+                                      u.Email == existingUser.Email &&
+                                      u.ProfileImage == existingUser.ProfileImage));
     }
 
     [Fact]
     public async Task Handle_ShouldPublishUserDeletedEvent_WhenRequestIsValid()
     {
         // Arrange
-        var command = new DeleteUserByIdCommand(
-            UserTestUtilities.ValidId
+        var existingUser = CreateUser();
+        var command = new DeleteUserCommand(
+            existingUser.Id
         );
 
         // Act
@@ -73,15 +76,16 @@ public class DeleteUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await EventPublisher
             .Received(1)
-            .PublishAsync(Arg.Is<UserDeletedEvent>(u => u.Id == UserTestUtilities.ValidId), CancellationToken);
+            .PublishAsync(Arg.Is<UserDeletedEvent>(u => u.Id == existingUser.Id), CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldCallUnitOfWorkCommit_WhenRequestIsValid()
     {
         // Arrange
-        var command = new DeleteUserByIdCommand(
-            UserTestUtilities.ValidId
+        var existingUser = CreateUser();
+        var command = new DeleteUserCommand(
+            existingUser.Id
         );
 
         // Act

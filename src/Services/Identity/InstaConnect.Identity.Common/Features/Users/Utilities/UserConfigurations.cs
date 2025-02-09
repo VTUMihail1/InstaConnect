@@ -19,4 +19,7 @@ public class UserConfigurations
 
     public const int PasswordMinLength = 7;
     public const int PasswordMaxLength = 100;
+
+    public const int ProfileImageMinLength = 7;
+    public const int ProfileImageMaxLength = 100;
 }
