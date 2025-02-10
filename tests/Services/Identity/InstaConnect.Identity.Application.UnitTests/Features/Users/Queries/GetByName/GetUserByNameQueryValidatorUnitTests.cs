@@ -19,6 +19,7 @@ public class GetUserByNameQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForName_WhenNameIsNull()
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetUserByNameQuery(null!);
 
         // Act
@@ -35,6 +36,7 @@ public class GetUserByNameQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForName_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetUserByNameQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -48,7 +50,8 @@ public class GetUserByNameQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var query = new GetUserByNameQuery(UserTestUtilities.ValidName);
+        var existingUser = CreateUser();
+        var query = new GetUserByNameQuery(existingUser.UserName);
 
         // Act
         var result = _validator.TestValidate(query);

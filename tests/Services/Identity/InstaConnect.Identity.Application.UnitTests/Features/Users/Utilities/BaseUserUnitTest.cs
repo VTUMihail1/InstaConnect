@@ -62,6 +62,9 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
         UserClaimWriteRepository = Substitute.For<IUserClaimWriteRepository>();
         EmailConfirmationTokenPublisher = Substitute.For<IEmailConfirmationTokenPublisher>();
 
+        PasswordHasher.Verify(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPasswordHash)
+            .Returns(true);
+
         PasswordHasher.Hash(UserTestUtilities.ValidAddPassword)
             .Returns(new PasswordHashResultModel(UserTestUtilities.ValidAddPasswordHash));
 
@@ -75,10 +78,10 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
             .Returns(true);
 
         ImageHandler.UploadAsync(Arg.Is<ImageUploadModel>(i => i.FormFile == UserTestUtilities.ValidAddFormFile), CancellationToken)
-            .Returns(new ImageResult(UserTestUtilities.ValidAddFormFileName));
+            .Returns(new ImageResult(UserTestUtilities.ValidAddProfileImage));
 
         ImageHandler.UploadAsync(Arg.Is<ImageUploadModel>(i => i.FormFile == UserTestUtilities.ValidUpdateFormFile), CancellationToken)
-            .Returns(new ImageResult(UserTestUtilities.ValidUpdateFormFileName));
+            .Returns(new ImageResult(UserTestUtilities.ValidUpdateProfileImage));
     }
 
     public User CreateUserWithUnconfirmedEmail()
@@ -88,8 +91,8 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
             SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+            UserTestUtilities.ValidPasswordHash,
+            UserTestUtilities.ValidProfileImage);
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -110,8 +113,8 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
             SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength))
+            UserTestUtilities.ValidPasswordHash,
+            UserTestUtilities.ValidProfileImage)
         {
             IsEmailConfirmed = true
         };

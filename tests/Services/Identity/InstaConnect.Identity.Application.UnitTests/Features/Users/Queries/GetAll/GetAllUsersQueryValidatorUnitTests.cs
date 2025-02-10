@@ -21,10 +21,11 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForUserName_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetAllUsersQuery(
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -43,10 +44,11 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForFirstName_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
+            existingUser.UserName,
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidLastName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -65,9 +67,10 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForLastName_WhenLastNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
+            existingUser.UserName,
+            existingUser.FirstName,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
@@ -85,10 +88,11 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             null!,
             UserTestUtilities.ValidPageValue,
@@ -105,10 +109,11 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.InvalidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -128,10 +133,11 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPageValue,
@@ -150,10 +156,11 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             value,
@@ -172,10 +179,11 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -192,10 +200,11 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,

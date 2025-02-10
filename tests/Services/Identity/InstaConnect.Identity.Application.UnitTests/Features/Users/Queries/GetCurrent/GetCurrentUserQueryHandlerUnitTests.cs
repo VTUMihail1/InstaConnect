@@ -23,6 +23,7 @@ public class GetCurrentUserQueryHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetCurrentUserQuery(UserTestUtilities.InvalidId);
 
         // Act
@@ -36,7 +37,8 @@ public class GetCurrentUserQueryHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetByIdMethod_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetCurrentUserQuery(UserTestUtilities.ValidId);
+        var existingUser = CreateUser();
+        var query = new GetCurrentUserQuery(existingUser.Id);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
@@ -44,14 +46,15 @@ public class GetCurrentUserQueryHandlerUnitTests : BaseUserUnitTest
         // Assert
         await UserReadRepository
             .Received(1)
-            .GetByIdAsync(UserTestUtilities.ValidId, CancellationToken);
+            .GetByIdAsync(existingUser.Id, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldReturnUserViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var query = new GetCurrentUserQuery(UserTestUtilities.ValidId);
+        var existingUser = CreateUser();
+        var query = new GetCurrentUserQuery(existingUser.Id);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
@@ -59,10 +62,10 @@ public class GetCurrentUserQueryHandlerUnitTests : BaseUserUnitTest
         // Assert
         response
             .Should()
-            .Match<UserQueryViewModel>(m => m.Id == UserTestUtilities.ValidId &&
-                                            m.UserName == UserTestUtilities.ValidName &&
-                                            m.FirstName == UserTestUtilities.ValidFirstName &&
-                                            m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserQueryViewModel>(m => m.Id == existingUser.Id &&
+                                            m.UserName == existingUser.UserName &&
+                                            m.FirstName == existingUser.FirstName &&
+                                            m.LastName == existingUser.LastName &&
                                             m.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 }

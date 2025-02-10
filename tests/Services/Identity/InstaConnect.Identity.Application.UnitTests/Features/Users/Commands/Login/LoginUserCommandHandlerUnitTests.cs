@@ -30,7 +30,7 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
         // Arrange
         var existingUser = CreateUser();
         var command = new LoginUserCommand(
-            UserTestUtilities.InvalidEmail,
+            UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidPassword
         );
 
@@ -47,8 +47,8 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
         // Arrange
         var existingUser = CreateUser();
         var command = new LoginUserCommand(
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.InvalidPassword
+            existingUser.Email,
+            UserTestUtilities.ValidAddPassword
         );
 
         // Act
@@ -62,9 +62,9 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserEmailNotConfirmedException_WhenEmailIsNotConfirmed()
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingUser = CreateUserWithUnconfirmedEmail();
         var command = new LoginUserCommand(
-            UserTestUtilities.ValidEmailWithUnconfirmedEmail,
+            existingUser.Email,
             UserTestUtilities.ValidPassword
         );
 
@@ -81,7 +81,7 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
         // Arrange
         var existingUser = CreateUser();
         var command = new LoginUserCommand(
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             UserTestUtilities.ValidPassword
         );
 
@@ -91,7 +91,7 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await UserClaimWriteRepository
             .Received(1)
-            .GetAllAsync(Arg.Is<UserClaimCollectionWriteQuery>(uc => uc.UserId == UserTestUtilities.ValidId), CancellationToken);
+            .GetAllAsync(Arg.Is<UserClaimCollectionWriteQuery>(uc => uc.UserId == existingUser.Id), CancellationToken);
     }
 
     [Fact]
@@ -100,7 +100,7 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
         // Arrange
         var existingUser = CreateUser();
         var command = new LoginUserCommand(
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             UserTestUtilities.ValidPassword
         );
 
@@ -110,12 +110,12 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         AccessTokenGenerator
             .Received(1)
-            .GenerateAccessToken(Arg.Is<CreateAccessTokenModel>(at => at.UserId == UserTestUtilities.ValidId &&
-                                                                      at.Email == UserTestUtilities.ValidEmail &&
-                                                                      at.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                      at.LastName == UserTestUtilities.ValidLastName &&
-                                                                      at.UserName == UserTestUtilities.ValidName &&
-                                                                      at.UserClaims.All(uc => uc.UserId == UserTestUtilities.ValidId &&
+            .GenerateAccessToken(Arg.Is<CreateAccessTokenModel>(at => at.UserId == existingUser.Id &&
+                                                                      at.Email == existingUser.Email &&
+                                                                      at.FirstName == existingUser.FirstName &&
+                                                                      at.LastName == existingUser.LastName &&
+                                                                      at.UserName == existingUser.UserName &&
+                                                                      at.UserClaims.All(uc => uc.UserId == existingUser.Id &&
                                                                                               uc.Claim == AppClaims.Admin &&
                                                                                               uc.Value == AppClaims.Admin)));
     }

@@ -125,12 +125,12 @@ public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseForgotPass
     {
         // Arrange
         var existingForgotPasswordToken = CreateForgotPasswordToken();
-        var invalidPassword = SharedTestUtilities.GetString(length);
+        var password = SharedTestUtilities.GetString(length);
         var command = new VerifyForgotPasswordTokenCommand(
             existingForgotPasswordToken.UserId,
             existingForgotPasswordToken.Value,
-            invalidPassword,
-            invalidPassword
+            password,
+            password
         );
 
         // Act
@@ -149,7 +149,7 @@ public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseForgotPass
             existingForgotPasswordToken.UserId,
             existingForgotPasswordToken.Value,
             UserTestUtilities.ValidUpdatePassword,
-            UserTestUtilities.InvalidUpdateConfirmPassword
+            UserTestUtilities.ValidPassword
         );
 
         // Act

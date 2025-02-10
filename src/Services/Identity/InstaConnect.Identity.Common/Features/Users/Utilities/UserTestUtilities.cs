@@ -20,6 +20,7 @@ public abstract class UserTestUtilities : SharedTestUtilities
     public static readonly string ValidAddLastName = GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength);
     public static readonly string ValidUpdateLastName = GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength);
 
+    public static readonly string ValidProfileImage = GetUrl();
     public static readonly string ValidAddProfileImage = GetUrl();
     public static readonly string ValidUpdateProfileImage = GetUrl();
 
@@ -33,9 +34,7 @@ public abstract class UserTestUtilities : SharedTestUtilities
     public static readonly string ValidAddPassword = GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength);
     public static readonly string ValidUpdatePassword = GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength);
 
-    public static readonly string InvalidAddConfirmPassword = GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength);
-    public static readonly string InvalidUpdateConfirmPassword = GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength);
-
+    public static readonly string ValidPasswordHash = GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength);
     public static readonly string ValidAddPasswordHash = GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength);
     public static readonly string ValidUpdatePasswordHash = GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength);
 

@@ -19,6 +19,7 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailIsNull()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new LoginUserCommand(
             null!,
             UserTestUtilities.ValidPassword
@@ -38,6 +39,7 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new LoginUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPassword
@@ -54,8 +56,9 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordIsNull()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new LoginUserCommand(
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             null!
         );
 
@@ -73,8 +76,9 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new LoginUserCommand(
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             SharedTestUtilities.GetString(length)
         );
 
@@ -89,8 +93,9 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new LoginUserCommand(
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             UserTestUtilities.ValidPassword
         );
 

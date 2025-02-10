@@ -26,7 +26,7 @@ public class AddEmailConfirmationTokenCommandHandlerUnitTests : BaseEmailConfirm
     {
         // Arrange
         var existingUser = CreateUser();
-        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.InvalidEmail);
+        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidAddEmail);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);

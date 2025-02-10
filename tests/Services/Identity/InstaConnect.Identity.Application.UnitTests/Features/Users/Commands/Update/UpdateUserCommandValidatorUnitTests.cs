@@ -19,12 +19,13 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new UpdateUserCommand(
             null!,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFormFile
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -41,12 +42,13 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new UpdateUserCommand(
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFormFile
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -60,12 +62,13 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForFirstName_WhenFirstNameIsNull()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
             null!,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFormFile
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -82,12 +85,13 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForFirstName_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFormFile
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -101,12 +105,13 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForLastName_WhenLastNameIsNull()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
             null!,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFormFile
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -123,12 +128,13 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForLastName_WhenLastNameLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFormFile
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -142,12 +148,13 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForUserName_WhenUserNameIsNull()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
             null!,
-            UserTestUtilities.ValidFormFile
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -164,12 +171,13 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForUserName_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidFormFile
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -183,12 +191,13 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -202,11 +211,12 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValidAndProfileImageIsNull()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidName,
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateName,
             null
         );
 

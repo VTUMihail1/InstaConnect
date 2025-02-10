@@ -29,12 +29,13 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
+        var existingUser = CreateUser();
         var command = new UpdateUserCommand(
             UserTestUtilities.InvalidId,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFormFile
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -48,12 +49,14 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNameAlreadyTakenException_WhenNameIsInvalid()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidTakenName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var existingUserWithTakenName = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            existingUserWithTakenName.UserName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -67,11 +70,12 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldNotCallTheImageHandler_WhenRequestIsValidAndProfileImageIsNull()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidName,
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateName,
             null!
         );
 
@@ -88,12 +92,13 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallTheImageHandler_WhenRequestIsValid()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -102,19 +107,20 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await ImageHandler
             .Received(1)
-            .UploadAsync(Arg.Is<ImageUploadModel>(u => u.FormFile == UserTestUtilities.ValidFormFile), CancellationToken);
+            .UploadAsync(Arg.Is<ImageUploadModel>(u => u.FormFile == UserTestUtilities.ValidUpdateFormFile), CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldUpdateTheUserToTheRepository_WhenRequestIsValid()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -123,24 +129,25 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         UserWriteRepository
             .Received(1)
-            .Update(Arg.Is<User>(u => u.Id == UserTestUtilities.ValidId &&
-                                      u.FirstName == UserTestUtilities.ValidFirstName &&
-                                      u.LastName == UserTestUtilities.ValidLastName &&
-                                      u.UserName == UserTestUtilities.ValidName &&
-                                      u.Email == UserTestUtilities.ValidEmail &&
-                                      u.ProfileImage == UserTestUtilities.ValidProfileImage));
+            .Update(Arg.Is<User>(u => u.Id == existingUser.Id &&
+                                      u.FirstName == UserTestUtilities.ValidUpdateFirstName &&
+                                      u.LastName == UserTestUtilities.ValidUpdateLastName &&
+                                      u.UserName == UserTestUtilities.ValidUpdateName &&
+                                      u.Email == existingUser.Email &&
+                                      u.ProfileImage == UserTestUtilities.ValidUpdateProfileImage));
     }
 
     [Fact]
     public async Task Handle_ShouldPublishUserUpdatedEvent_WhenRequestIsValid()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -149,11 +156,11 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await EventPublisher
             .Received(1)
-            .PublishAsync(Arg.Is<UserUpdatedEvent>(u => u.Id == UserTestUtilities.ValidId &&
-                                                        u.FirstName == UserTestUtilities.ValidFirstName &&
-                                                        u.LastName == UserTestUtilities.ValidLastName &&
-                                                        u.UserName == UserTestUtilities.ValidName &&
-                                                        u.Email == UserTestUtilities.ValidEmail &&
+            .PublishAsync(Arg.Is<UserUpdatedEvent>(u => u.Id == existingUser.Id &&
+                                                        u.FirstName == UserTestUtilities.ValidUpdateFirstName &&
+                                                        u.LastName == UserTestUtilities.ValidUpdateLastName &&
+                                                        u.UserName == UserTestUtilities.ValidUpdateName &&
+                                                        u.Email == existingUser.Email &&
                                                         u.ProfileImage == UserTestUtilities.ValidProfileImage), CancellationToken);
     }
 
@@ -161,12 +168,13 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallUnitOfWorkCommit_WhenRequestIsValid()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -182,12 +190,13 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldReturnUserCommandViewModel_WhenRequestIsValid()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            UserTestUtilities.ValidUpdateName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -196,19 +205,20 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         response
             .Should()
-            .Match<UserCommandViewModel>(u => u.Id == UserTestUtilities.ValidId);
+            .Match<UserCommandViewModel>(u => u.Id == existingUser.Id);
     }
 
     [Fact]
     public async Task Handle_ShouldReturnUserCommandViewModel_WhenRequestIsValidAndNameIsNotTakenAndNotDefault()
     {
         // Arrange
-        var command = new EditCurrentUserCommand(
-            UserTestUtilities.ValidId,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.InvalidName,
-            UserTestUtilities.ValidFormFile
+        var existingUser = CreateUser();
+        var command = new UpdateUserCommand(
+            existingUser.Id,
+            UserTestUtilities.ValidUpdateFirstName,
+            UserTestUtilities.ValidUpdateLastName,
+            existingUser.UserName,
+            UserTestUtilities.ValidUpdateFormFile
         );
 
         // Act
@@ -217,6 +227,6 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         response
             .Should()
-            .Match<UserCommandViewModel>(u => u.Id == UserTestUtilities.ValidId);
+            .Match<UserCommandViewModel>(u => u.Id == existingUser.Id);
     }
 }

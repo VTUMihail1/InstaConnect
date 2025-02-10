@@ -10,9 +10,9 @@ using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Queries;
 
-public class GetCurrentUserDetailedQueryHandlerIntegrationTests : BaseUserIntegrationTest
+public class GetCurrentDetailedUserQueryHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public GetCurrentUserDetailedQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetCurrentDetailedUserQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
     }
 

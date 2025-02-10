@@ -117,8 +117,8 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
-            null!,
-            null!,
+            null,
+            null,
             UserTestUtilities.ValidAddFirstName,
             UserTestUtilities.ValidAddLastName,
             UserTestUtilities.ValidAddFormFile
@@ -139,12 +139,12 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var invalidPassword = SharedTestUtilities.GetString(length);
+        var password = SharedTestUtilities.GetString(length);
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
-            invalidPassword,
-            invalidPassword,
+            password,
+            password,
             UserTestUtilities.ValidAddFirstName,
             UserTestUtilities.ValidAddLastName,
             UserTestUtilities.ValidAddFormFile
@@ -166,7 +166,7 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
-            UserTestUtilities.InvalidAddConfirmPassword,
+            UserTestUtilities.ValidPassword,
             UserTestUtilities.ValidAddFirstName,
             UserTestUtilities.ValidAddLastName,
             UserTestUtilities.ValidAddFormFile

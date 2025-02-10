@@ -19,6 +19,7 @@ public class GetCurrentUserQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetCurrentUserQuery(null!);
 
         // Act
@@ -35,6 +36,7 @@ public class GetCurrentUserQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetCurrentUserQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -48,7 +50,8 @@ public class GetCurrentUserQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var query = new GetCurrentUserQuery(UserTestUtilities.ValidId);
+        var existingUser = CreateUser();
+        var query = new GetCurrentUserQuery(existingUser.Id);
 
         // Act
         var result = _validator.TestValidate(query);

@@ -53,8 +53,8 @@ public abstract class BaseForgotPasswordTokenUnitTest
             SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+            UserTestUtilities.ValidPasswordHash,
+            UserTestUtilities.ValidProfileImage);
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);

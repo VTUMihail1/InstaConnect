@@ -23,10 +23,11 @@ public class GetAllUsersQueryHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -39,9 +40,9 @@ public class GetAllUsersQueryHandlerUnitTests : BaseUserUnitTest
         await UserReadRepository
             .Received(1)
             .GetAllAsync(Arg.Is<UserCollectionReadQuery>(m =>
-                                                                        m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                        m.LastName == UserTestUtilities.ValidLastName &&
-                                                                        m.UserName == UserTestUtilities.ValidName &&
+                                                                        m.FirstName == existingUser.FirstName &&
+                                                                        m.LastName == existingUser.LastName &&
+                                                                        m.UserName == existingUser.UserName &&
                                                                         m.Page == UserTestUtilities.ValidPageValue &&
                                                                         m.Page == UserTestUtilities.ValidPageValue &&
                                                                         m.PageSize == UserTestUtilities.ValidPageSizeValue &&
@@ -53,10 +54,11 @@ public class GetAllUsersQueryHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
+        var existingUser = CreateUser();
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -68,12 +70,11 @@ public class GetAllUsersQueryHandlerUnitTests : BaseUserUnitTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == UserTestUtilities.ValidId &&
-                                                           m.Id == UserTestUtilities.ValidId &&
-                                                           m.UserName == UserTestUtilities.ValidName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                           m.UserName == existingUser.UserName &&
                                                            m.ProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                           m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                           m.LastName == UserTestUtilities.ValidLastName) &&
+                                                           m.FirstName == existingUser.FirstName &&
+                                                           m.LastName == existingUser.LastName) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
