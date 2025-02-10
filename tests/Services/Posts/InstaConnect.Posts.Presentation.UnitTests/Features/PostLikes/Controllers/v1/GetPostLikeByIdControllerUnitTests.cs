@@ -6,6 +6,7 @@ using InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
 using InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Utilities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 
@@ -38,7 +39,7 @@ public class GetPostLikeByIdControllerUnitTests : BasePostLikeUnitTest
         response
             .Result
             .Should()
-            .Match<OkObjectResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.OK));
+            .Match<OkObjectResult>(m => m.StatusCode == StatusCodes.Status200OK);
     }
 
     [Fact]

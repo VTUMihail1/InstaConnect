@@ -4,6 +4,7 @@ using InstaConnect.Posts.Application.Features.PostLikes.Commands.DeletePostLike;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Utilities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 
@@ -36,7 +37,7 @@ public class DeletePostLikeControllerUnitTests : BasePostLikeUnitTest
         // Assert
         response
             .Should()
-            .Match<NoContentResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.NoContent));
+            .Match<NoContentResult>(m => m.StatusCode == StatusCodes.Status204NoContent);
     }
 
     [Fact]

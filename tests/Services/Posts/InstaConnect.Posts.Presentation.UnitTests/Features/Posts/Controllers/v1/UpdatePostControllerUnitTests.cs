@@ -7,6 +7,7 @@ using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Shared.Presentation.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 
@@ -41,7 +42,7 @@ public class UpdatePostControllerUnitTests : BasePostUnitTest
         response
             .Result
             .Should()
-            .Match<OkObjectResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.OK));
+            .Match<OkObjectResult>(m => m.StatusCode == StatusCodes.Status200OK);
     }
 
     [Fact]

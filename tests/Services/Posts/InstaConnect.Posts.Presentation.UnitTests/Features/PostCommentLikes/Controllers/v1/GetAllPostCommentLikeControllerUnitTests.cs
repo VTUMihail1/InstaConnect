@@ -10,6 +10,7 @@ using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Controllers.v1;
 using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
 using InstaConnect.Posts.Presentation.UnitTests.Features.PostCommentLikes.Utilities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 
@@ -48,7 +49,7 @@ public class GetAllPostCommentLikeControllerUnitTests : BasePostCommentLikeUnitT
         response
             .Result
             .Should()
-            .Match<OkObjectResult>(m => m.StatusCode == Convert.ToInt32(HttpStatusCode.OK));
+            .Match<OkObjectResult>(m => m.StatusCode == StatusCodes.Status200OK);
     }
 
     [Fact]
