@@ -2,8 +2,4 @@
 
 namespace InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 
-public class AddEmailConfirmationTokenRequest
-{
-    [FromRoute]
-    public string Email { get; set; } = string.Empty;
-}
+public record AddEmailConfirmationTokenRequest([FromRoute] string Email);

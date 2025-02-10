@@ -20,7 +20,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetDetailedUserByIdQuery(null!);
 
         // Act
@@ -37,7 +37,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetDetailedUserByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -51,7 +51,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetDetailedUserByIdQuery(UserTestUtilities.InvalidId);
 
         // Act
@@ -65,8 +65,8 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var query = new GetDetailedUserByIdQuery(existingUserId);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var query = new GetDetailedUserByIdQuery(existingUser.Id);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -74,20 +74,20 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
         // Assert
         response
             .Should()
-            .Match<UserDetailedQueryViewModel>(m => m.Id == existingUserId &&
-                                          m.UserName == UserTestUtilities.ValidName &&
-                                          m.FirstName == UserTestUtilities.ValidFirstName &&
-                                          m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserDetailedQueryViewModel>(m => m.Id == existingUser.Id &&
+                                          m.UserName == existingUser.UserName &&
+                                          m.FirstName == existingUser.FirstName &&
+                                          m.LastName == existingUser.LastName &&
                                           m.ProfileImage == UserTestUtilities.ValidProfileImage &&
-                                          m.Email == UserTestUtilities.ValidEmail);
+                                          m.Email == existingUser.Email);
     }
 
     [Fact]
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenQueryIsValidAndCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var query = new GetDetailedUserByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingUserId));
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var query = new GetDetailedUserByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingUser.Id));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -95,11 +95,11 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
         // Assert
         response
             .Should()
-            .Match<UserDetailedQueryViewModel>(m => m.Id == existingUserId &&
-                                          m.UserName == UserTestUtilities.ValidName &&
-                                          m.FirstName == UserTestUtilities.ValidFirstName &&
-                                          m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserDetailedQueryViewModel>(m => m.Id == existingUser.Id &&
+                                          m.UserName == existingUser.UserName &&
+                                          m.FirstName == existingUser.FirstName &&
+                                          m.LastName == existingUser.LastName &&
                                           m.ProfileImage == UserTestUtilities.ValidProfileImage &&
-                                          m.Email == UserTestUtilities.ValidEmail);
+                                          m.Email == existingUser.Email);
     }
 }

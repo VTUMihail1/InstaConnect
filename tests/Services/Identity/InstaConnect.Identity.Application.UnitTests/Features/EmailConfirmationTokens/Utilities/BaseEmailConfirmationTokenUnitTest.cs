@@ -117,7 +117,7 @@ public abstract class BaseEmailConfirmationTokenUnitTest
         var emailConfirmationToken = new EmailConfirmationToken(
             SharedTestUtilities.GetGuid(),
             SharedTestUtilities.GetMaxDate(),
-            user.Id);
+            user);
 
         EmailConfirmationTokenWriteRepository.GetByValueAsync(emailConfirmationToken.Value, CancellationToken)
             .Returns(emailConfirmationToken);

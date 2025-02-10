@@ -2,6 +2,7 @@
 using InstaConnect.Identity.Application.Features.Users.Commands.ResetUserPassword;
 using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;
+using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
@@ -11,9 +12,9 @@ using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
 
-public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
+public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgotPasswordTokenIntegrationTest
 {
-    public ResetUserPasswordIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public VerifyForgotPasswordTokenCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
 
     }
@@ -22,11 +23,10 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
+        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
             null!,
-            existingForgotPasswordTokenValue,
+            existingForgotPasswordToken.Value,
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword);
 
@@ -34,7 +34,9 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -44,11 +46,10 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
+        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
             SharedTestUtilities.GetString(length),
-            existingForgotPasswordTokenValue,
+            existingForgotPasswordToken.Value,
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword);
 
@@ -56,17 +57,18 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenTokenIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
+        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
-            existingUserId,
+            existingForgotPasswordToken.UserId,
             null!,
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword);
@@ -75,20 +77,21 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(UserConfigurations.TOKEN_MAX_LENGTH + 1)]
-    [InlineData(UserConfigurations.TOKEN_MIN_LENGTH - 1)]
+    [InlineData(ForgotPasswordTokenConfigurations.ValueMinLength + 1)]
+    [InlineData(ForgotPasswordTokenConfigurations.ValueMaxLength - 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenTokenLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(false, CancellationToken);
-        var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
+        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
-            existingUserId,
+            existingForgotPasswordToken.UserId,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword);
@@ -97,18 +100,19 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
+        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
-            existingUserId,
-            existingForgotPasswordTokenValue,
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
             null!,
             null!);
 
@@ -116,7 +120,9 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -126,50 +132,51 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
-        var invalidPassword = SharedTestUtilities.GetString(length);
-        var existingUserId = await CreateUserAsync(false, CancellationToken);
-        var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
+        var password = SharedTestUtilities.GetString(length);
+        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
-            existingUserId,
+            existingForgotPasswordToken.UserId,
             SharedTestUtilities.GetString(length),
-            invalidPassword,
-            invalidPassword);
+            password,
+            password);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordAndConfirmPasswordDoNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
+        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
-            existingUserId,
-            existingForgotPasswordTokenValue,
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
             UserTestUtilities.ValidUpdatePassword,
-            UserTestUtilities.InvalidPassword);
+            UserTestUtilities.ValidPassword);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(false, CancellationToken);
-        var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
+        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
             UserTestUtilities.InvalidId,
-            existingForgotPasswordTokenValue,
+            existingForgotPasswordToken.Value,
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword);
 
@@ -178,18 +185,19 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserNotFoundException>();
+        await action
+            .Should()
+            .ThrowAsync<UserNotFoundException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowTokenNotFoundException_WhenTokenIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(false, CancellationToken);
-        var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
+        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
-            existingUserId,
-            UserTestUtilities.InvalidEmailConfirmationTokenValue,
+            existingForgotPasswordToken.UserId,
+            ForgotPasswordTokenTestUtilities.InvalidValue,
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword);
 
@@ -197,19 +205,20 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<TokenNotFoundException>();
+        await action
+            .Should()
+            .ThrowAsync<TokenNotFoundException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowUserForbiddenException_WhenUserDoesNotOwnToken()
     {
         // Arrange
-        var existingForgotPasswordTokenUserId = await CreateUserAsync(false, CancellationToken);
-        var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingForgotPasswordTokenUserId, UserTestUtilities.ValidUntil, CancellationToken);
-        var existingUserId = await CreateUserAsync(false, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
-            existingUserId,
-            existingForgotPasswordTokenValue,
+            existingUser.Id,
+            existingForgotPasswordToken.Value,
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword);
 
@@ -217,52 +226,52 @@ public class ResetUserPasswordIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserForbiddenException>();
+        await action
+            .Should()
+            .ThrowAsync<UserForbiddenException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldUpdateUserPasswordToRepository_WhenUserIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(false, CancellationToken);
-        var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
+        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
-            existingUserId,
-            existingForgotPasswordTokenValue,
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword);
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
-        var user = await UserWriteRepository.GetByIdAsync(existingUserId, CancellationToken);
+        var user = await UserWriteRepository.GetByIdAsync(existingForgotPasswordToken.UserId, CancellationToken);
 
         // Assert
         user!
             .Should()
-            .Match<User>(p => p.Id == existingUserId &&
-                              p.FirstName == UserTestUtilities.ValidFirstName &&
-                              p.LastName == UserTestUtilities.ValidLastName &&
-                              p.UserName == UserTestUtilities.ValidName &&
-                              p.Email == UserTestUtilities.ValidEmail &&
+            .Match<User>(p => p.Id == existingForgotPasswordToken.UserId &&
+                              p.FirstName == existingForgotPasswordToken.User.FirstName &&
+                              p.LastName == existingForgotPasswordToken.User.LastName &&
+                              p.UserName == existingForgotPasswordToken.User.UserName &&
+                              p.Email == existingForgotPasswordToken.User.Email &&
                               PasswordHasher.Verify(UserTestUtilities.ValidUpdatePassword, p.PasswordHash) &&
                               p.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldRemoveEmailConfirmationTokenFromRepository_WhenUserIsValid()
+    public async Task SendAsync_ShouldRemoveForgotPasswordTokenFromRepository_WhenUserIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(false, CancellationToken);
-        var existingForgotPasswordTokenValue = await CreateForgotPasswordTokenAsync(existingUserId, UserTestUtilities.ValidUntil, CancellationToken);
+        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
-            existingUserId,
-            existingForgotPasswordTokenValue,
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword);
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
-        var user = await UserWriteRepository.GetByIdAsync(existingUserId, CancellationToken);
+        var user = await UserWriteRepository.GetByIdAsync(existingForgotPasswordToken.UserId, CancellationToken);
 
         // Assert
         user!

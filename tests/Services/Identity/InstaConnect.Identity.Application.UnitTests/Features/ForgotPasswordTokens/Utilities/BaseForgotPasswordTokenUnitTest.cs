@@ -74,7 +74,7 @@ public abstract class BaseForgotPasswordTokenUnitTest
         var forgotPasswordToken = new ForgotPasswordToken(
             SharedTestUtilities.GetGuid(),
             SharedTestUtilities.GetMaxDate(),
-            user.Id);
+            user);
 
         ForgotPasswordTokenWriteRepository.GetByValueAsync(forgotPasswordToken.Value, CancellationToken)
             .Returns(forgotPasswordToken);

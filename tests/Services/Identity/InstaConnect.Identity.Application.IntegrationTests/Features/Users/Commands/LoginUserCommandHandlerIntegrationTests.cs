@@ -10,9 +10,9 @@ using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
 
-public class LoginUserIntegrationTests : BaseUserIntegrationTest
+public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public LoginUserIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public LoginUserCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
 
     }
@@ -21,7 +21,7 @@ public class LoginUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new LoginUserCommand(
             null!,
             UserTestUtilities.ValidPassword
@@ -31,7 +31,9 @@ public class LoginUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -41,7 +43,7 @@ public class LoginUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new LoginUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPassword
@@ -58,9 +60,9 @@ public class LoginUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new LoginUserCommand(
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             null!
         );
 
@@ -78,9 +80,9 @@ public class LoginUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new LoginUserCommand(
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             SharedTestUtilities.GetString(length)
         );
 
@@ -95,9 +97,9 @@ public class LoginUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowUserInvalidDetailsException_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new LoginUserCommand(
-            UserTestUtilities.InvalidEmail,
+            UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidPassword
         );
 
@@ -112,10 +114,10 @@ public class LoginUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowUserInvalidDetailsException_WhenPasswordIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new LoginUserCommand(
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.InvalidPassword
+            existingUser.Email,
+            UserTestUtilities.ValidAddPassword
         );
 
         // Act
@@ -129,9 +131,9 @@ public class LoginUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowUserEmailNotConfirmedException_WhenEmailIsNotConfirmed()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(false, CancellationToken);
+        var existingUser = await CreateUserWithUnconfirmedEmailAsync(CancellationToken);
         var command = new LoginUserCommand(
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             UserTestUtilities.ValidPassword
         );
 
@@ -146,9 +148,9 @@ public class LoginUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserTokenCommandViewModel_WhenUserIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new LoginUserCommand(
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             UserTestUtilities.ValidPassword
         );
 

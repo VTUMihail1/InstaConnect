@@ -12,6 +12,14 @@ public class UserClaim : BaseEntity
         UserId = userId;
     }
 
+    public UserClaim(string claim, string value, User user)
+    {
+        Claim = claim;
+        Value = value;
+        UserId = user.Id;
+        User = user;
+    }
+
     public string Claim { get; }
 
     public string Value { get; }

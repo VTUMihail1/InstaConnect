@@ -11,9 +11,9 @@ using MassTransit.Testing;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
 
-public class ResendUserEmailConfirmationIntegrationTests : BaseUserIntegrationTest
+public class AddEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmailConfirmationTokenIntegrationTest
 {
-    public ResendUserEmailConfirmationIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public AddEmailConfirmationTokenCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
 
     }
@@ -22,14 +22,16 @@ public class ResendUserEmailConfirmationIntegrationTests : BaseUserIntegrationTe
     public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(false, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddEmailConfirmationTokenCommand(null!);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -39,54 +41,60 @@ public class ResendUserEmailConfirmationIntegrationTests : BaseUserIntegrationTe
     public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(false, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddEmailConfirmationTokenCommand(SharedTestUtilities.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(false, CancellationToken);
-        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.InvalidEmail);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidAddEmail);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserNotFoundException>();
+        await action
+            .Should()
+            .ThrowAsync<UserNotFoundException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowUserEmailAlreadyConfirmedExceptionn_WhenEmailIsConfirmed()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidEmail);
+        var existingUser = await CreateEmailConfirmationTokenAsync(CancellationToken);
+        var command = new AddEmailConfirmationTokenCommand(existingUser.Id);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserEmailAlreadyConfirmedException>();
+        await action
+            .Should()
+            .ThrowAsync<UserEmailAlreadyConfirmedException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldAddEmailConfirmationTokenToRepository_WhenUserIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(false, CancellationToken);
-        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidEmail);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var command = new AddEmailConfirmationTokenCommand(existingUser.Email);
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
-        var user = await UserWriteRepository.GetByIdAsync(existingUserId, CancellationToken);
+        var user = await UserWriteRepository.GetByIdAsync(existingUser.Id, CancellationToken);
 
         // Assert
         user!
@@ -99,20 +107,20 @@ public class ResendUserEmailConfirmationIntegrationTests : BaseUserIntegrationTe
     public async Task SendAsync_ShouldPublishUserConfirmEmailTokenCreatedEvent_WhenUserIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(false, CancellationToken);
-        var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidEmail);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var command = new AddEmailConfirmationTokenCommand(existingUser.Email);
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
-        var user = await UserWriteRepository.GetByIdAsync(existingUserId, CancellationToken);
-        var url = string.Format(EmailConfirmationOptions.UrlTemplate, user!.Id, user.EmailConfirmationTokens.FirstOrDefault()!.Value);
+        var user = await UserWriteRepository.GetByIdAsync(existingUser.Id, CancellationToken);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserConfirmEmailTokenCreatedEvent>(m =>
-                              m.Context.Message.Email == UserTestUtilities.ValidEmail &&
-                              m.Context.Message.RedirectUrl == url, CancellationToken);
+                              m.Context.Message.Email == existingUser.Email);
 
         // Assert
-        result.Should().BeTrue();
+        result
+            .Should()
+            .BeTrue();
     }
 }

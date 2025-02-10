@@ -20,14 +20,16 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetUserByIdQuery(null!);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -37,36 +39,40 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetUserByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetUserByIdQuery(UserTestUtilities.InvalidId);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserNotFoundException>();
+        await action
+            .Should()
+            .ThrowAsync<UserNotFoundException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var query = new GetUserByIdQuery(existingUserId);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var query = new GetUserByIdQuery(existingUser.Id);
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -74,10 +80,10 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserQueryViewModel>(m => m.Id == existingUserId &&
-                                          m.UserName == UserTestUtilities.ValidName &&
-                                          m.FirstName == UserTestUtilities.ValidFirstName &&
-                                          m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserQueryViewModel>(m => m.Id == existingUser.Id &&
+                                          m.UserName == existingUser.UserName &&
+                                          m.FirstName == existingUser.FirstName &&
+                                          m.LastName == existingUser.LastName &&
                                           m.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 
@@ -85,8 +91,8 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenQueryIsValidAndCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var query = new GetUserByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingUserId));
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var query = new GetUserByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingUser.Id));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -94,10 +100,10 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserQueryViewModel>(m => m.Id == existingUserId &&
-                                          m.UserName == UserTestUtilities.ValidName &&
-                                          m.FirstName == UserTestUtilities.ValidFirstName &&
-                                          m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserQueryViewModel>(m => m.Id == existingUser.Id &&
+                                          m.UserName == existingUser.UserName &&
+                                          m.FirstName == existingUser.FirstName &&
+                                          m.LastName == existingUser.LastName &&
                                           m.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 }

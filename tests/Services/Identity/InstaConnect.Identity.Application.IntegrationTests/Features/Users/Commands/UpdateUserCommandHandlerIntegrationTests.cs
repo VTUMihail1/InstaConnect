@@ -12,9 +12,9 @@ using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
 
-public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
+public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public EditCurrentUserIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public UpdateUserCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
 
     }
@@ -23,7 +23,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
             null!,
             UserTestUtilities.ValidUpdateName,
@@ -36,7 +36,9 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -46,7 +48,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidUpdateName,
@@ -59,16 +61,18 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenFirstNameIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            existingUserId,
+            existingUser.Id,
             null!,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
@@ -79,7 +83,9 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -89,9 +95,9 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            existingUserId,
+            existingUser.Id,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
@@ -102,16 +108,18 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenLastNameIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             null!,
             UserTestUtilities.ValidUpdateName,
@@ -122,7 +130,9 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -132,9 +142,9 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenLastLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidUpdateName,
@@ -145,16 +155,18 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenUserNameIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             null!,
@@ -165,7 +177,9 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -175,9 +189,9 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             SharedTestUtilities.GetString(length),
@@ -188,14 +202,16 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateFirstName,
@@ -208,20 +224,22 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserNotFoundException>();
+        await action
+            .Should()
+            .ThrowAsync<UserNotFoundException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowUserNameAlreadyTakenException_WhenNameIsAlreadyTaken()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var existingUserNameTakedId = await CreateUserAsync(UserTestUtilities.ValidUpdateEmail, UserTestUtilities.ValidUpdateName, true, CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingUserWithTakenName = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
-            UserTestUtilities.ValidUpdateName,
+            existingUserWithTakenName.UserName,
             UserTestUtilities.ValidUpdateFormFile
         );
 
@@ -229,16 +247,18 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserNameAlreadyTakenException>();
+        await action
+            .Should()
+            .ThrowAsync<UserNameAlreadyTakenException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldReturnUserCommandViewModel_WhenUserIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
@@ -251,16 +271,16 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserCommandViewModel>(p => p.Id == existingUserId);
+            .Match<UserCommandViewModel>(p => p.Id == existingUser.Id);
     }
 
     [Fact]
     public async Task SendAsync_ShouldEditCurrentUser_WhenUserIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
@@ -274,11 +294,11 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
         // Assert
         user
             .Should()
-            .Match<User>(p => p.Id == existingUserId &&
+            .Match<User>(p => p.Id == existingUser.Id &&
                               p.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                               p.LastName == UserTestUtilities.ValidUpdateLastName &&
                               p.UserName == UserTestUtilities.ValidUpdateName &&
-                              p.Email == UserTestUtilities.ValidEmail &&
+                              p.Email == existingUser.Email &&
                               PasswordHasher.Verify(UserTestUtilities.ValidPassword, p.PasswordHash) &&
                               p.ProfileImage == UserTestUtilities.ValidUpdateProfileImage);
     }
@@ -287,9 +307,9 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldEditCurrentUser_WhenUserIsValidAndFormFileIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
@@ -307,7 +327,7 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
                               p.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                               p.LastName == UserTestUtilities.ValidUpdateLastName &&
                               p.UserName == UserTestUtilities.ValidUpdateName &&
-                              p.Email == UserTestUtilities.ValidEmail &&
+                              p.Email == existingUser.Email &&
                               PasswordHasher.Verify(UserTestUtilities.ValidPassword, p.PasswordHash) &&
                               p.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
@@ -316,12 +336,12 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldEditCurrentUser_WhenUserIsValidAndNameIsTheSame()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
-            UserTestUtilities.ValidName,
+            existingUser.UserName,
             null
         );
 
@@ -335,8 +355,8 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
             .Match<User>(p => p.Id == response.Id &&
                               p.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                               p.LastName == UserTestUtilities.ValidUpdateLastName &&
-                              p.UserName == UserTestUtilities.ValidName &&
-                              p.Email == UserTestUtilities.ValidEmail &&
+                              p.UserName == existingUser.UserName &&
+                              p.Email == existingUser.Email &&
                               PasswordHasher.Verify(UserTestUtilities.ValidPassword, p.PasswordHash) &&
                               p.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
@@ -345,9 +365,9 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldPublishUserUpdateEvent_WhenUserIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
@@ -359,24 +379,26 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserUpdatedEvent>(m =>
-                              m.Context.Message.Id == existingUserId &&
+                              m.Context.Message.Id == existingUser.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidUpdateLastName &&
                               m.Context.Message.UserName == UserTestUtilities.ValidUpdateName &&
-                              m.Context.Message.Email == UserTestUtilities.ValidEmail &&
+                              m.Context.Message.Email == existingUser.Email &&
                               m.Context.Message.ProfileImage == UserTestUtilities.ValidUpdateProfileImage, CancellationToken);
 
         // Assert
-        result.Should().BeTrue();
+        result
+            .Should()
+            .BeTrue();
     }
 
     [Fact]
     public async Task SendAsync_ShouldPublishUserUpdatedEvent_WhenUserIsValidAndFormFileIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            existingUserId,
+            existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
@@ -388,14 +410,16 @@ public class EditCurrentUserIntegrationTests : BaseUserIntegrationTest
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserUpdatedEvent>(m =>
-                              m.Context.Message.Id == existingUserId &&
+                              m.Context.Message.Id == existingUser.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidUpdateLastName &&
                               m.Context.Message.UserName == UserTestUtilities.ValidUpdateName &&
-                              m.Context.Message.Email == UserTestUtilities.ValidEmail &&
+                              m.Context.Message.Email == existingUser.Email &&
                               m.Context.Message.ProfileImage == UserTestUtilities.ValidProfileImage, CancellationToken);
 
         // Assert
-        result.Should().BeTrue();
+        result
+            .Should()
+            .BeTrue();
     }
 }

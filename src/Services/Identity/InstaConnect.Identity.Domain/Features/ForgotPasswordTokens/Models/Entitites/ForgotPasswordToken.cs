@@ -12,6 +12,14 @@ public class ForgotPasswordToken : BaseEntity
         UserId = userId;
     }
 
+    public ForgotPasswordToken(string value, DateTime validUntil, User user)
+    {
+        Value = value;
+        ValidUntil = validUntil;
+        UserId = user.Id;
+        User = user;
+    }
+
     public string Value { get; }
 
     public DateTime ValidUntil { get; }

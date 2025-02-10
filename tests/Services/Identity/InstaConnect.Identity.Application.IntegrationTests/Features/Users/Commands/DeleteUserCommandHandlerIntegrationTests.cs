@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Commands.DeleteCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.DeleteUserById;
 using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
@@ -10,9 +10,9 @@ using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
 
-public class DeleteCurrentUserIntegrationTests : BaseUserIntegrationTest
+public class DeleteUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public DeleteCurrentUserIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public DeleteUserCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
 
     }
@@ -21,14 +21,16 @@ public class DeleteCurrentUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new DeleteCurrentUserCommand(null!);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var command = new DeleteUserCommand(null!);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -38,40 +40,44 @@ public class DeleteCurrentUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new DeleteCurrentUserCommand(SharedTestUtilities.GetString(length));
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var command = new DeleteUserCommand(SharedTestUtilities.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new DeleteCurrentUserCommand(UserTestUtilities.InvalidId);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var command = new DeleteUserCommand(UserTestUtilities.InvalidId);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserNotFoundException>();
+        await action
+            .Should()
+            .ThrowAsync<UserNotFoundException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldDeleteCurrentUser_WhenUserIsValid()
+    public async Task SendAsync_ShouldDeleteUserById_WhenUserIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new DeleteCurrentUserCommand(existingUserId);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var command = new DeleteUserCommand(existingUser.Id);
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
-        var user = await UserWriteRepository.GetByIdAsync(existingUserId, CancellationToken);
+        var user = await UserWriteRepository.GetByIdAsync(existingUser.Id, CancellationToken);
 
         // Assert
         user
@@ -83,17 +89,19 @@ public class DeleteCurrentUserIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldPublishUserUpdateEvent_WhenUserIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        var command = new DeleteCurrentUserCommand(existingUserId);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var command = new DeleteUserCommand(existingUser.Id);
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserDeletedEvent>(m =>
-                              m.Context.Message.Id == existingUserId, CancellationToken);
+                              m.Context.Message.Id == existingUser.Id, CancellationToken);
 
         // Assert
-        result.Should().BeTrue();
+        result
+            .Should()
+            .BeTrue();
     }
 }

@@ -1,5 +1,7 @@
 ﻿using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
@@ -13,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
 
-public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
+public abstract class BaseForgotPasswordTokenIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
 {
     protected IServiceScope ServiceScope { get; }
 
@@ -32,14 +34,14 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
         }
     }
 
-    protected IUserClaimWriteRepository UserClaimWriteRepository
+    protected IForgotPasswordTokenWriteRepository ForgotPasswordTokenWriteRepository
     {
         get
         {
             var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var userClaimWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();
+            var forgotPasswordTokenWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IForgotPasswordTokenWriteRepository>();
 
-            return userClaimWriteRepository;
+            return forgotPasswordTokenWriteRepository;
         }
     }
 
@@ -78,7 +80,8 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
 
     protected IPasswordHasher PasswordHasher { get; }
 
-    protected BaseUserIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
+
+    protected BaseForgotPasswordTokenIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
     {
         ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
         CancellationToken = new CancellationToken();
@@ -118,7 +121,7 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
         return user;
     }
 
-    protected async Task<User> CreateUserWithUnconfirmedEmailAsync(CancellationToken cancellationToken)
+    protected async Task<User> CreateUserWithConfirmedEmailAsync(CancellationToken cancellationToken)
     {
         var passwordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
         var passwordHash = passwordHasher.Hash(UserTestUtilities.ValidPassword).PasswordHash;
@@ -129,7 +132,10 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
             SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
             passwordHash,
-            UserTestUtilities.ValidProfileImage);
+            UserTestUtilities.ValidProfileImage)
+        {
+            IsEmailConfirmed = true
+        };
 
         var userClaim = new UserClaim(
             AppClaims.Admin,
@@ -147,6 +153,23 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
         return user;
     }
 
+    protected async Task<ForgotPasswordToken> CreateForgotPasswordTokenAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(cancellationToken);
+        var emailConfirmationToken = new ForgotPasswordToken(
+            SharedTestUtilities.GetGuid(),
+            SharedTestUtilities.GetMaxDate(),
+            user);
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var emailConfirmationTokenWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IForgotPasswordTokenWriteRepository>();
+
+        emailConfirmationTokenWriteRepository.Add(emailConfirmationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return emailConfirmationToken;
+    }
+
     public async Task InitializeAsync()
     {
         await EnsureDatabaseIsEmptyAsync();
@@ -160,6 +183,11 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
     private async Task EnsureDatabaseIsEmptyAsync()
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<IdentityContext>();
+
+        if (await dbContext.ForgotPasswordTokens.AnyAsync(CancellationToken))
+        {
+            await dbContext.ForgotPasswordTokens.ExecuteDeleteAsync(CancellationToken);
+        }
 
         if (await dbContext.UserClaims.AnyAsync(CancellationToken))
         {

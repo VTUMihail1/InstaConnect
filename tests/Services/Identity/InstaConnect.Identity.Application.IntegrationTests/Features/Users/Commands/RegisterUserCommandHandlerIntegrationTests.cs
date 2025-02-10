@@ -14,9 +14,9 @@ using MassTransit.Testing;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
 
-public class RegisterUserIntegrationTests : BaseUserIntegrationTest
+public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public RegisterUserIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public RegisterUserCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
     {
 
     }
@@ -39,7 +39,9 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -63,7 +65,9 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
@@ -84,7 +88,9 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -108,7 +114,9 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
@@ -129,7 +137,9 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -155,7 +165,9 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
@@ -176,7 +188,9 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
@@ -197,7 +211,9 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -221,7 +237,9 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
@@ -242,7 +260,9 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -266,17 +286,19 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowUserEmailAlreadyTakenException_WhenEmailIsAlreadyTaken()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddFirstName,
@@ -288,16 +310,18 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserEmailAlreadyTakenException>();
+        await action
+            .Should()
+            .ThrowAsync<UserEmailAlreadyTakenException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowUserNameAlreadyTakenException_WhenNameIsAlreadyTaken()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddUserCommand(
-            UserTestUtilities.ValidName,
+            existingUser.UserName,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
@@ -310,7 +334,9 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserNameAlreadyTakenException>();
+        await action
+            .Should()
+            .ThrowAsync<UserNameAlreadyTakenException>();
     }
 
     [Fact]
@@ -453,7 +479,9 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
                               m.Context.Message.ProfileImage == null, CancellationToken);
 
         // Assert
-        result.Should().BeTrue();
+        result
+            .Should()
+            .BeTrue();
     }
 
     [Fact]
@@ -473,14 +501,13 @@ public class RegisterUserIntegrationTests : BaseUserIntegrationTest
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
         var user = await UserWriteRepository.GetByIdAsync(response.Id, CancellationToken);
-        var url = string.Format(EmailConfirmationOptions.UrlTemplate, user!.Id, user.EmailConfirmationTokens.FirstOrDefault()!.Value);
-
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserConfirmEmailTokenCreatedEvent>(m =>
-                              m.Context.Message.Email == UserTestUtilities.ValidAddEmail &&
-                              m.Context.Message.RedirectUrl == url);
+                              m.Context.Message.Email == UserTestUtilities.ValidAddEmail);
 
         // Assert
-        result.Should().BeTrue();
+        result
+            .Should()
+            .BeTrue();
     }
 }

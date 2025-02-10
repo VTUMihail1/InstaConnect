@@ -21,11 +21,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -35,7 +35,9 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -44,11 +46,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
+            existingUser.UserName,
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidLastName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -58,7 +60,9 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -67,10 +71,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenLastNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
+            existingUser.UserName,
+            existingUser.FirstName,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
@@ -81,18 +85,20 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             null!,
             UserTestUtilities.ValidPageValue,
@@ -102,18 +108,20 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenMessageDoesNotContaintSortPropertyName()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.InvalidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -123,7 +131,9 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -133,11 +143,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPageValue,
@@ -147,7 +157,9 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -156,11 +168,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPageValueIsInvalid(int value)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             value,
@@ -170,7 +182,9 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Theory]
@@ -179,11 +193,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -193,18 +207,20 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action
+            .Should()
+            .ThrowAsync<BadRequestException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenUserNameIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
             null!,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -216,10 +232,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
@@ -232,11 +248,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenUserNameIsEmpty()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
             string.Empty,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -248,10 +264,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
@@ -264,11 +280,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenUserNameCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            SharedTestUtilities.GetNonCaseMatchingString(existingUser.UserName),
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -280,10 +296,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
@@ -296,11 +312,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenUserNameIsNotFull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            SharedTestUtilities.GetHalfStartString(existingUser.UserName),
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -312,10 +328,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
@@ -328,11 +344,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenFirstNameIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
+            existingUser.UserName,
             null!,
-            UserTestUtilities.ValidLastName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -344,10 +360,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
@@ -360,11 +376,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenFirstNameIsEmpty()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
+            existingUser.UserName,
             string.Empty,
-            UserTestUtilities.ValidLastName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -376,10 +392,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
@@ -392,11 +408,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenFirstNameCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidFirstName),
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            SharedTestUtilities.GetNonCaseMatchingString(existingUser.FirstName),
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -408,10 +424,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
@@ -424,11 +440,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenFirstNameIsNotFull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidFirstName),
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            SharedTestUtilities.GetHalfStartString(existingUser.FirstName),
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -440,10 +456,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
@@ -456,10 +472,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenLastNameIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
+            existingUser.UserName,
+            existingUser.FirstName,
             null!,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
@@ -472,10 +488,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
@@ -488,10 +504,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenLastNameIsEmpty()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
+            existingUser.UserName,
+            existingUser.FirstName,
             string.Empty,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
@@ -504,10 +520,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
@@ -520,11 +536,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenLastNameCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidLastName),
+            existingUser.UserName,
+            existingUser.FirstName,
+            SharedTestUtilities.GetNonCaseMatchingString(existingUser.LastName),
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -536,10 +552,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
@@ -552,11 +568,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenLastNameIsNotFulll()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidLastName),
+            existingUser.UserName,
+            existingUser.FirstName,
+            SharedTestUtilities.GetHalfStartString(existingUser.LastName),
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -568,10 +584,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
@@ -584,11 +600,11 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserViewModelCollection_WhenQueryIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
+            existingUser.UserName,
+            existingUser.FirstName,
+            existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -600,10 +616,10 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         response
             .Should()
-            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&

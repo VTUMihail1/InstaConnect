@@ -56,10 +56,6 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
             var imageUploadUpdateResult = new ImageResult(UserTestUtilities.ValidUpdateProfileImage);
 
             imageHandler
-               .UploadAsync(Arg.Is<ImageUploadModel>(iu => iu.FormFile == UserTestUtilities.ValidFormFile), Arg.Any<CancellationToken>())
-               .Returns(imageUploadResult);
-
-            imageHandler
                .UploadAsync(Arg.Is<ImageUploadModel>(iu => iu.FormFile == UserTestUtilities.ValidAddFormFile), Arg.Any<CancellationToken>())
                .Returns(imageUploadAddResult);
 
