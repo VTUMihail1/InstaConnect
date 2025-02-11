@@ -10,6 +10,7 @@ using InstaConnect.Identity.Application.Features.Users.Queries.GetUserById;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetUserByName;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetUserDetailedById;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Presentation.Features.Users.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
@@ -40,6 +41,24 @@ public abstract class BaseUserUnitTest
                 })));
     }
 
+    protected UserClaim CreateUserClaim()
+    {
+        var user = CreateUser();
+        var userClaim = new UserClaim(
+            AppClaims.Admin,
+            AppClaims.Admin,
+            user);
+
+        var userTokenCommandViewModel = new UserTokenCommandViewModel(UserTestUtilities.ValidAccessTokenValue, UserTestUtilities.ValidUntil);
+        
+        InstaConnectSender
+            .SendAsync(Arg.Is<LoginUserCommand>(m => m.Email == user.Email &&
+                                                     m.Password == UserTestUtilities.ValidPassword), CancellationToken)
+            .Returns(userTokenCommandViewModel);
+
+        return userClaim;
+    }
+
     protected User CreateUser()
     {
         var user = new User(
@@ -67,7 +86,7 @@ public abstract class BaseUserUnitTest
 
         var userCommandViewModel = new UserCommandViewModel(user.Id);
 
-        var userTokenCommandViewModel = new UserTokenCommandViewModel(UserTestUtilities.ValidAccessTokenValue, UserTestUtilities.ValidUntil);
+        
 
         var userPaginationCollectionModel = new UserPaginationQueryViewModel(
             [userQueryViewModel],
@@ -125,11 +144,6 @@ public abstract class BaseUserUnitTest
                                                                 m.LastName == UserTestUtilities.ValidAddLastName &&
                                                                 m.ProfileImage == UserTestUtilities.ValidAddFormFile), CancellationToken)
             .Returns(userCommandViewModel);
-
-        InstaConnectSender
-            .SendAsync(Arg.Is<LoginUserCommand>(m => m.Email == user.Email &&
-                                                     m.Password == UserTestUtilities.ValidPassword), CancellationToken)
-            .Returns(userTokenCommandViewModel);
 
         return user;
     }

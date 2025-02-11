@@ -27,10 +27,10 @@ public class LoginUserControllerUnitTests : BaseUserUnitTest
     public async Task LoginAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingUserClaim = CreateUserClaim();
         var request = new LoginUserRequest(
             new(
-                existingUser.Email,
+                existingUserClaim.User.Email,
                 UserTestUtilities.ValidPassword)
         );
 
@@ -48,10 +48,10 @@ public class LoginUserControllerUnitTests : BaseUserUnitTest
     public async Task LoginAsync_ShouldReturnMessageViewModel_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingUserClaim = CreateUserClaim();
         var request = new LoginUserRequest(
             new(
-                existingUser.Email,
+                existingUserClaim.User.Email,
                 UserTestUtilities.ValidPassword)
         );
 
@@ -73,10 +73,10 @@ public class LoginUserControllerUnitTests : BaseUserUnitTest
     public async Task LoginAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingUserClaim = CreateUserClaim();
         var request = new LoginUserRequest(
             new(
-                existingUser.Email,
+                existingUserClaim.User.Email,
                 UserTestUtilities.ValidPassword)
         );
 
@@ -86,7 +86,7 @@ public class LoginUserControllerUnitTests : BaseUserUnitTest
         // Assert
         await InstaConnectSender
               .Received(1)
-              .SendAsync(Arg.Is<LoginUserCommand>(m => m.Email == existingUser.Email &&
+              .SendAsync(Arg.Is<LoginUserCommand>(m => m.Email == existingUserClaim.User.Email &&
                                                           m.Password == UserTestUtilities.ValidPassword), CancellationToken);
     }
 }
