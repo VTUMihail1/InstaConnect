@@ -21,7 +21,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var command = new LoginUserCommand(
             null!,
             UserTestUtilities.ValidPassword
@@ -43,7 +43,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var command = new LoginUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPassword
@@ -60,9 +60,9 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var command = new LoginUserCommand(
-            existingUser.Email,
+            existingUserClaim.User.Email,
             null!
         );
 
@@ -80,9 +80,9 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var command = new LoginUserCommand(
-            existingUser.Email,
+            existingUserClaim.User.Email,
             SharedTestUtilities.GetString(length)
         );
 
@@ -97,7 +97,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowUserInvalidDetailsException_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var command = new LoginUserCommand(
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidPassword
@@ -114,9 +114,9 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowUserInvalidDetailsException_WhenPasswordIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var command = new LoginUserCommand(
-            existingUser.Email,
+            existingUserClaim.User.Email,
             UserTestUtilities.ValidAddPassword
         );
 
@@ -131,9 +131,9 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowUserEmailNotConfirmedException_WhenEmailIsNotConfirmed()
     {
         // Arrange
-        var existingUser = await CreateUserWithUnconfirmedEmailAsync(CancellationToken);
+        var existingUserClaim = await CreateUserClaimWithUnconfirmedUserEmailAsync(CancellationToken);
         var command = new LoginUserCommand(
-            existingUser.Email,
+            existingUserClaim.User.Email,
             UserTestUtilities.ValidPassword
         );
 
@@ -148,9 +148,9 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldReturnUserTokenCommandViewModel_WhenUserIsValid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
+        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var command = new LoginUserCommand(
-            existingUser.Email,
+            existingUserClaim.User.Email,
             UserTestUtilities.ValidPassword
         );
 

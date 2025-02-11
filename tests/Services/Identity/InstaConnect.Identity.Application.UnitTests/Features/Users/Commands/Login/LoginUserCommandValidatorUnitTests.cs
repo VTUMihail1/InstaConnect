@@ -19,7 +19,7 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
             null!,
             UserTestUtilities.ValidPassword
@@ -39,7 +39,7 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPassword
@@ -56,9 +56,9 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
-            existingUser.Email,
+            existingUserClaim.User.Email,
             null!
         );
 
@@ -76,9 +76,9 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
-            existingUser.Email,
+            existingUserClaim.User.Email,
             SharedTestUtilities.GetString(length)
         );
 
@@ -93,9 +93,9 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
-            existingUser.Email,
+            existingUserClaim.User.Email,
             UserTestUtilities.ValidPassword
         );
 

@@ -108,6 +108,24 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
         return userClaim;
     }
 
+    protected async Task<UserClaim> CreateUserClaimWithUnconfirmedUserEmailAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserWithUnconfirmedEmailAsync(cancellationToken);
+
+        var userClaim = new UserClaim(
+            AppClaims.Admin,
+            AppClaims.Admin,
+            user);
+
+        var userClaimWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+        userClaimWriteRepository.Add(userClaim);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return userClaim;
+    }
+
     protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
         var passwordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();

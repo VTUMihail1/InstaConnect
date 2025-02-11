@@ -106,6 +106,64 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
         return user;
     }
 
+    public UserClaim CreateUserClaim()
+    {
+        var user = CreateUser();
+
+        var accessTokenResult = new AccessTokenResult(
+            UserTestUtilities.ValidAccessTokenValue, 
+            UserTestUtilities.ValidUntil);
+
+        var userClaim = new UserClaim(
+            AppClaims.Admin, 
+            AppClaims.Admin, 
+            user);
+
+        UserClaimWriteRepository.GetAllAsync(Arg.Is<UserClaimCollectionWriteQuery>(uc => uc.UserId == user.Id), CancellationToken)
+            .Returns([userClaim]);
+
+        AccessTokenGenerator.GenerateAccessToken(Arg.Is<CreateAccessTokenModel>(at => at.UserId == user.Id &&
+                                                                                      at.Email == user.Email &&
+                                                                                      at.FirstName == user.FirstName &&
+                                                                                      at.LastName == user.LastName &&
+                                                                                      at.UserName == user.UserName &&
+                                                                                      at.UserClaims.All(uc => uc.UserId == user.Id &&
+                                                                                                              uc.Claim == AppClaims.Admin &&
+                                                                                                              uc.Value == AppClaims.Admin)))
+            .Returns(accessTokenResult);
+
+        return userClaim;
+    }
+
+    public UserClaim CreateUserClaimWithUnconfirmedUserEmail()
+    {
+        var user = CreateUserWithUnconfirmedEmail();
+
+        var accessTokenResult = new AccessTokenResult(
+            UserTestUtilities.ValidAccessTokenValue,
+            UserTestUtilities.ValidUntil);
+
+        var userClaim = new UserClaim(
+            AppClaims.Admin,
+            AppClaims.Admin,
+            user);
+
+        UserClaimWriteRepository.GetAllAsync(Arg.Is<UserClaimCollectionWriteQuery>(uc => uc.UserId == user.Id), CancellationToken)
+            .Returns([userClaim]);
+
+        AccessTokenGenerator.GenerateAccessToken(Arg.Is<CreateAccessTokenModel>(at => at.UserId == user.Id &&
+                                                                                      at.Email == user.Email &&
+                                                                                      at.FirstName == user.FirstName &&
+                                                                                      at.LastName == user.LastName &&
+                                                                                      at.UserName == user.UserName &&
+                                                                                      at.UserClaims.All(uc => uc.UserId == user.Id &&
+                                                                                                              uc.Claim == AppClaims.Admin &&
+                                                                                                              uc.Value == AppClaims.Admin)))
+            .Returns(accessTokenResult);
+
+        return userClaim;
+    }
+
     public User CreateUser()
     {
         var user = new User(
@@ -118,10 +176,6 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
         {
             IsEmailConfirmed = true
         };
-
-        var accessTokenResult = new AccessTokenResult(UserTestUtilities.ValidAccessTokenValue, UserTestUtilities.ValidUntil);
-
-        var userClaim = new UserClaim(AppClaims.Admin, AppClaims.Admin, user.Id);
 
         var userPaginationList = new PaginationList<User>(
             [user],
@@ -146,19 +200,6 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
 
         UserReadRepository.GetByEmailAsync(user.Email, CancellationToken)
             .Returns(user);
-
-        UserClaimWriteRepository.GetAllAsync(Arg.Is<UserClaimCollectionWriteQuery>(uc => uc.UserId == user.Id), CancellationToken)
-            .Returns([userClaim]);
-
-        AccessTokenGenerator.GenerateAccessToken(Arg.Is<CreateAccessTokenModel>(at => at.UserId == user.Id &&
-                                                                                      at.Email == user.Email &&
-                                                                                      at.FirstName == user.FirstName &&
-                                                                                      at.LastName == user.LastName &&
-                                                                                      at.UserName == user.UserName &&
-                                                                                      at.UserClaims.All(uc => uc.UserId == user.Id &&
-                                                                                                              uc.Claim == AppClaims.Admin &&
-                                                                                                              uc.Value == AppClaims.Admin)))
-            .Returns(accessTokenResult);
 
         UserReadRepository
             .GetAllAsync(Arg.Is<UserCollectionReadQuery>(m =>
