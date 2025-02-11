@@ -4,6 +4,7 @@ using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilitie
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Token;
 using InstaConnect.Shared.Common.Exceptions.User;
@@ -71,8 +72,8 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(EmailConfirmationTokenConfigurations.ValueMinLength + 1)]
-    [InlineData(EmailConfirmationTokenConfigurations.ValueMaxLength - 1)]
+    [InlineData(EmailConfirmationTokenConfigurations.ValueMinLength - 1)]
+    [InlineData(EmailConfirmationTokenConfigurations.ValueMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenTokenLengthIsInvalid(int length)
     {
         // Arrange
@@ -108,7 +109,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
     public async Task SendAsync_ShouldThrowUserEmailAlreadyConfirmedExceptionn_WhenEmailIsConfirmed()
     {
         // Arrange
-        var existingEmailConfirmationToken = await CreateEmailConfirmationTokenAsync(CancellationToken);
+        var existingEmailConfirmationToken = await CreateEmailConfirmationTokenWithConfirmedUserEmailAsync(CancellationToken);
         var command = new VerifyEmailConfirmationTokenCommand(existingEmailConfirmationToken.UserId, existingEmailConfirmationToken.Value);
 
         // Act
@@ -167,5 +168,31 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
             .EmailConfirmationTokens
             .Should()
             .BeEmpty();
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldChangeUserPassword_WhenRequestIsValid()
+    {
+        // Arrange
+        var existingEmailConfirmationToken = await CreateEmailConfirmationTokenAsync(CancellationToken);
+        var command = new VerifyEmailConfirmationTokenCommand(
+            existingEmailConfirmationToken.UserId, 
+            existingEmailConfirmationToken.Value);
+
+
+        // Act
+        await InstaConnectSender.SendAsync(command, CancellationToken);
+        var user = await UserWriteRepository.GetByIdAsync(existingEmailConfirmationToken.UserId, CancellationToken);
+
+        // Assert
+        user
+            .Should()
+            .Match<User>(p => p.Id == user.Id &&
+                              p.FirstName == user.FirstName &&
+                              p.LastName == user.LastName &&
+                              p.UserName == user.UserName &&
+                              p.Email == user.Email &&
+                              p.IsEmailConfirmed &&
+                              p.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 }

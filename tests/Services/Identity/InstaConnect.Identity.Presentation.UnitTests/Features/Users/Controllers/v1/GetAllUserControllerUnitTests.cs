@@ -29,9 +29,9 @@ public class GetAllUserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var existingUser = CreateUser();
         var request = new GetAllUsersRequest(
+            existingUser.UserName,
             existingUser.FirstName,
             existingUser.LastName,
-            existingUser.UserName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -54,9 +54,9 @@ public class GetAllUserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var existingUser = CreateUser();
         var request = new GetAllUsersRequest(
+            existingUser.UserName,
             existingUser.FirstName,
             existingUser.LastName,
-            existingUser.UserName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -92,9 +92,9 @@ public class GetAllUserControllerUnitTests : BaseUserUnitTest
         // Arrange
         var existingUser = CreateUser();
         var request = new GetAllUsersRequest(
+            existingUser.UserName,
             existingUser.FirstName,
             existingUser.LastName,
-            existingUser.UserName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,

@@ -127,7 +127,7 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
         var existingUser = CreateUser();
         var command = new LoginUserCommand(
             existingUser.Email,
-            existingUser.PasswordHash
+            UserTestUtilities.ValidPassword
         );
 
         // Act

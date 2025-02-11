@@ -5,6 +5,7 @@ using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Token;
 using InstaConnect.Shared.Common.Exceptions.User;
@@ -84,8 +85,8 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(ForgotPasswordTokenConfigurations.ValueMinLength + 1)]
-    [InlineData(ForgotPasswordTokenConfigurations.ValueMaxLength - 1)]
+    [InlineData(ForgotPasswordTokenConfigurations.ValueMinLength - 1)]
+    [InlineData(ForgotPasswordTokenConfigurations.ValueMaxLength + 1)]
     public async Task SendAsync_ShouldThrowBadRequestException_WhenTokenLengthIsInvalid(int length)
     {
         // Arrange
@@ -278,5 +279,33 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
             .ForgotPasswordTokens
             .Should()
             .BeEmpty();
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldChangeUserPassword_WhenRequestIsValid()
+    {
+        // Arrange
+        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
+        var command = new VerifyForgotPasswordTokenCommand(
+            existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
+            UserTestUtilities.ValidUpdatePassword,
+            UserTestUtilities.ValidUpdatePassword);
+
+
+        // Act
+        await InstaConnectSender.SendAsync(command, CancellationToken);
+        var user = await UserWriteRepository.GetByIdAsync(existingForgotPasswordToken.UserId, CancellationToken);
+
+        // Assert
+        user
+            .Should()
+            .Match<User>(p => p.Id == user.Id &&
+                              p.FirstName == user.FirstName &&
+                              p.LastName == user.LastName &&
+                              p.UserName == user.UserName &&
+                              p.Email == user.Email &&
+                              PasswordHasher.Verify(UserTestUtilities.ValidUpdatePassword, p.PasswordHash) &&
+                              p.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 }

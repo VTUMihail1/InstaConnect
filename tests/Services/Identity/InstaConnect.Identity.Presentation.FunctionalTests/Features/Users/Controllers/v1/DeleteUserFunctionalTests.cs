@@ -10,24 +10,24 @@ using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
 
-public class DeleteCurrentUserFunctionalTests : BaseUserFunctionalTest
+public class DeleteUserFunctionalTests : BaseUserFunctionalTest
 {
-    public DeleteCurrentUserFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public DeleteUserFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
     {
 
     }
 
     [Fact]
-    public async Task DeleteCurrentAsync_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
+    public async Task DeleteAsync_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new DeleteCurrentUserRequest(
+        var request = new DeleteUserRequest(
             existingUser.Id
         );
 
         // Act
-        var response = await UsersClient.DeleteCurrentStatusCodeUnauthorizedAsync(request, CancellationToken);
+        var response = await UsersClient.DeleteStatusCodeUnauthorizedAsync(request, CancellationToken);
 
         // Assert
         response
@@ -36,37 +36,36 @@ public class DeleteCurrentUserFunctionalTests : BaseUserFunctionalTest
     }
 
     [Fact]
-    public async Task DeleteCurrentAsync_ShouldReturnBadRequestResponse_WhenIdIsNull()
+    public async Task DeleteAsync_ShouldReturnForbiddenResponse_WhenUserIsNotAdmin()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new DeleteCurrentUserRequest(
-            null
+        var request = new DeleteUserRequest(
+            existingUser.Id
         );
 
         // Act
-        var response = await UsersClient.DeleteCurrentStatusCodeAsync(request, CancellationToken);
+        var response = await UsersClient.DeleteStatusCodeNonAdminAsync(request, CancellationToken);
 
         // Assert
         response
             .Should()
-            .Be(HttpStatusCode.BadRequest);
+            .Be(HttpStatusCode.Forbidden);
     }
 
     [Theory]
-    [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task DeleteCurrentAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
+    public async Task DeleteAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new DeleteCurrentUserRequest(
+        var request = new DeleteUserRequest(
             SharedTestUtilities.GetString(length)
         );
 
         // Act
-        var response = await UsersClient.DeleteCurrentStatusCodeAsync(request, CancellationToken);
+        var response = await UsersClient.DeleteStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -75,16 +74,16 @@ public class DeleteCurrentUserFunctionalTests : BaseUserFunctionalTest
     }
 
     [Fact]
-    public async Task DeleteCurrentAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
+    public async Task DeleteAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new DeleteCurrentUserRequest(
+        var request = new DeleteUserRequest(
             UserTestUtilities.InvalidId
         );
 
         // Act
-        var response = await UsersClient.DeleteCurrentStatusCodeAsync(request, CancellationToken);
+        var response = await UsersClient.DeleteStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -93,16 +92,16 @@ public class DeleteCurrentUserFunctionalTests : BaseUserFunctionalTest
     }
 
     [Fact]
-    public async Task DeleteCurrentAsync_ShouldReturnNoContentResponse_WhenRequestIsValid()
+    public async Task DeleteAsync_ShouldReturnNoContentResponse_WhenRequestIsValid()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new DeleteCurrentUserRequest(
+        var request = new DeleteUserRequest(
             existingUser.Id
         );
 
         // Act
-        var response = await UsersClient.DeleteCurrentStatusCodeAsync(request, CancellationToken);
+        var response = await UsersClient.DeleteStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -111,16 +110,16 @@ public class DeleteCurrentUserFunctionalTests : BaseUserFunctionalTest
     }
 
     [Fact]
-    public async Task DeleteCurrentAsync_ShouldDeleteCurrentUser_WhenRequestIsValid()
+    public async Task DeleteAsync_ShouldDeleteUser_WhenRequestIsValid()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new DeleteCurrentUserRequest(
+        var request = new DeleteUserRequest(
             existingUser.Id
         );
 
         // Act
-        await UsersClient.DeleteCurrentAsync(request, CancellationToken);
+        await UsersClient.DeleteAsync(request, CancellationToken);
 
         var user = await UserWriteRepository.GetByIdAsync(existingUser.Id, CancellationToken);
 
@@ -131,22 +130,24 @@ public class DeleteCurrentUserFunctionalTests : BaseUserFunctionalTest
     }
 
     [Fact]
-    public async Task DeleteCurrentAsync_ShouldPublishUserDeletedEvent_WhenUserIsValid()
+    public async Task DeleteAsync_ShouldPublishUserDeletedEvent_WhenUserIsValid()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new DeleteCurrentUserRequest(
+        var request = new DeleteUserRequest(
             existingUser.Id
         );
 
         // Act
-        await UsersClient.DeleteCurrentAsync(request, CancellationToken);
+        await UsersClient.DeleteAsync(request, CancellationToken);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserDeletedEvent>(m =>
                               m.Context.Message.Id == existingUser.Id, CancellationToken);
 
         // Assert
-        result.Should().BeTrue();
+        result
+            .Should()
+            .BeTrue();
     }
 }

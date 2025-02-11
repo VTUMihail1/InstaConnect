@@ -5,6 +5,8 @@ using FluentAssertions;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
+using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
 using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
@@ -22,28 +24,36 @@ public class GetCurrentDetailedUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrentDetailed_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new GetCurrentDetailedUserRequest(
+            existingUser.Id
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetApiRoute(), CancellationToken);
+        var response = await UsersClient.GetCurrentDetailedStatusCodeUnauthorizedAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Unauthorized);
+        response
+            .Should()
+            .Be(HttpStatusCode.Unauthorized);
     }
 
     [Fact]
     public async Task GetCurrentDetailed_ShouldReturnBadRequestResponse_WhenIdIsNull()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = null!;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new GetCurrentDetailedUserRequest(
+            null!
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetApiRoute(), CancellationToken);
+        var response = await UsersClient.GetCurrentDetailedStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]
@@ -53,15 +63,18 @@ public class GetCurrentDetailedUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrentDetailed_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetString(length);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new GetCurrentDetailedUserRequest(
+            SharedTestUtilities.GetString(length)
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetApiRoute(), CancellationToken);
+        var response = await UsersClient.GetCurrentDetailedStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
 
@@ -69,117 +82,106 @@ public class GetCurrentDetailedUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrentDetailed_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = UserTestUtilities.InvalidId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new GetCurrentDetailedUserRequest(
+            UserTestUtilities.InvalidId
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetApiRoute(), CancellationToken);
+        var response = await UsersClient.GetCurrentDetailedStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
+        response
+            .Should()
+            .Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
     public async Task GetCurrentDetailed_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new GetCurrentDetailedUserRequest(
+            existingUser.Id
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetApiRoute(), CancellationToken);
+        var response = await UsersClient.GetCurrentDetailedStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        response
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task GetCurrentDetailed_ShouldReturnUserViewResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new GetCurrentDetailedUserRequest(existingUser.Id
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetApiRoute(), CancellationToken);
-
-        var userViewResponse = await response
-            .Content
-            .ReadFromJsonAsync<UserDetailedQueryViewModel>();
+        var response = await UsersClient.GetCurrentDetailedAsync(request, CancellationToken);
 
         // Assert
-        userViewResponse
+        response
             .Should()
-            .Match<UserDetailedQueryViewModel>(m => m.Id == existingUserId &&
-                                                                    m.Email == UserTestUtilities.ValidEmail &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage);
+            .Match<UserDetailedQueryResponse>(m => m.Id == existingUser.Id &&
+                                          m.Email == existingUser.Email &&
+                                          m.UserName == existingUser.UserName &&
+                                          m.FirstName == existingUser.FirstName &&
+                                          m.LastName == existingUser.LastName &&
+                                          m.ProfileImage == existingUser.ProfileImage);
     }
 
     [Fact]
     public async Task GetCurrentDetailed_ShouldReturnUserViewResponse_WhenRequestIsValidAndIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = SharedTestUtilities.GetNonCaseMatchingString(existingUserId);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new GetCurrentDetailedUserRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingUser.Id)
+        );
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        var response = await HttpClient.GetAsync(GetApiRoute(), CancellationToken);
-
-        var result = await response
-            .Content
-            .ReadFromJsonAsync<UserDetailedQueryViewModel>();
+        var response = await UsersClient.GetCurrentDetailedAsync(request, CancellationToken);
 
         // Assert
-        result
+        response
             .Should()
-            .Match<UserDetailedQueryViewModel>(m => m.Id == existingUserId &&
-                                                                    m.Email == UserTestUtilities.ValidEmail &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage);
+            .Match<UserDetailedQueryResponse>(m => m.Id == existingUser.Id &&
+                                          m.Email == existingUser.Email &&
+                                          m.UserName == existingUser.UserName &&
+                                          m.FirstName == existingUser.FirstName &&
+                                          m.LastName == existingUser.LastName &&
+                                          m.ProfileImage == existingUser.ProfileImage);
     }
 
     [Fact]
     public async Task GetCurrentDetailed_ShouldSaveUserViewModelCollectionToCacheService_WhenQueryIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
-        ValidJwtConfig[ClaimTypes.NameIdentifier] = existingUserId;
-        var queryKey = string.Format(UserCacheKeys.GetCurrentDetailedUser, existingUserId);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new GetCurrentDetailedUserRequest(
+            existingUser.Id
+        );
+        var queryKey = string.Format(UserCacheKeys.GetCurrentDetailedUser, existingUser.Id);
 
         // Act
-        HttpClient.SetFakeJwtBearerToken(ValidJwtConfig);
-        await HttpClient.GetAsync(GetApiRoute(), CancellationToken);
+        await UsersClient.GetCurrentDetailedAsync(request, CancellationToken);
 
-        var result = await CacheHandler.GetAsync<UserDetailedQueryViewModel>(queryKey, CancellationToken);
+        var response = await CacheHandler.GetAsync<UserDetailedQueryViewModel>(queryKey, CancellationToken);
 
         // Assert
-        result
+        response
             .Should()
-            .Match<UserDetailedQueryViewModel>(m => m.Id == existingUserId &&
-                                          m.Email == UserTestUtilities.ValidEmail &&
-                                          m.UserName == UserTestUtilities.ValidName &&
-                                          m.FirstName == UserTestUtilities.ValidFirstName &&
-                                          m.LastName == UserTestUtilities.ValidLastName &&
-                                          m.ProfileImage == UserTestUtilities.ValidProfileImage);
-    }
-
-    private string GetApiRoute()
-    {
-        var routeTemplate = "{0}/current/detailed";
-
-        var route = string.Format(
-            routeTemplate,
-            ApiRoute);
-
-        return route;
+            .Match<UserDetailedQueryViewModel>(m => m.Id == existingUser.Id &&
+                                          m.Email == existingUser.Email &&
+                                          m.UserName == existingUser.UserName &&
+                                          m.FirstName == existingUser.FirstName &&
+                                          m.LastName == existingUser.LastName &&
+                                          m.ProfileImage == existingUser.ProfileImage);
     }
 }

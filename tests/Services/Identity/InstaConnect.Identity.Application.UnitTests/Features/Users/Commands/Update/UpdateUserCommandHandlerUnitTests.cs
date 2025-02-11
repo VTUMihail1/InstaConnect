@@ -161,7 +161,7 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
                                                         u.LastName == UserTestUtilities.ValidUpdateLastName &&
                                                         u.UserName == UserTestUtilities.ValidUpdateName &&
                                                         u.Email == existingUser.Email &&
-                                                        u.ProfileImage == UserTestUtilities.ValidProfileImage), CancellationToken);
+                                                        u.ProfileImage == UserTestUtilities.ValidUpdateProfileImage), CancellationToken);
     }
 
     [Fact]

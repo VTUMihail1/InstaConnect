@@ -105,17 +105,10 @@ public abstract class BaseForgotPasswordTokenIntegrationTest : IClassFixture<Int
             IsEmailConfirmed = true
         };
 
-        var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
-            user);
-
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-        var userClaimWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
         userWriteRepository.Add(user);
-        userClaimWriteRepository.Add(userClaim);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user;
@@ -137,17 +130,10 @@ public abstract class BaseForgotPasswordTokenIntegrationTest : IClassFixture<Int
             IsEmailConfirmed = true
         };
 
-        var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
-            user);
-
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-        var userClaimWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
         userWriteRepository.Add(user);
-        userClaimWriteRepository.Add(userClaim);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user;

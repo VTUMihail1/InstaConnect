@@ -85,6 +85,23 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
         InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
         PasswordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
     }
+    protected async Task<UserClaim> CreateUserClaimAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(cancellationToken);
+
+        var userClaim = new UserClaim(
+            AppClaims.Admin,
+            AppClaims.Admin,
+            user);
+
+        var userClaimWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+        userClaimWriteRepository.Add(userClaim);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return userClaim;
+    }
 
     protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
@@ -102,17 +119,10 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
             IsEmailConfirmed = true
         };
 
-        var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
-            user);
-
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-        var userClaimWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
         userWriteRepository.Add(user);
-        userClaimWriteRepository.Add(userClaim);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user;
@@ -131,17 +141,10 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
             passwordHash,
             UserTestUtilities.ValidProfileImage);
 
-        var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
-            user);
-
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-        var userClaimWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
         userWriteRepository.Add(user);
-        userClaimWriteRepository.Add(userClaim);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user;
@@ -160,6 +163,16 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
     private async Task EnsureDatabaseIsEmptyAsync()
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<IdentityContext>();
+
+        if (await dbContext.EmailConfirmationTokens.AnyAsync(CancellationToken))
+        {
+            await dbContext.EmailConfirmationTokens.ExecuteDeleteAsync(CancellationToken);
+        }
+
+        if (await dbContext.ForgotPasswordTokens.AnyAsync(CancellationToken))
+        {
+            await dbContext.ForgotPasswordTokens.ExecuteDeleteAsync(CancellationToken);
+        }
 
         if (await dbContext.UserClaims.AnyAsync(CancellationToken))
         {

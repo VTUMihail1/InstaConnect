@@ -138,6 +138,15 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
         UserWriteRepository.GetByEmailAsync(user.Email, CancellationToken)
             .Returns(user);
 
+        UserReadRepository.GetByIdAsync(user.Id, CancellationToken)
+            .Returns(user);
+
+        UserReadRepository.GetByNameAsync(user.UserName, CancellationToken)
+            .Returns(user);
+
+        UserReadRepository.GetByEmailAsync(user.Email, CancellationToken)
+            .Returns(user);
+
         UserClaimWriteRepository.GetAllAsync(Arg.Is<UserClaimCollectionWriteQuery>(uc => uc.UserId == user.Id), CancellationToken)
             .Returns([userClaim]);
 

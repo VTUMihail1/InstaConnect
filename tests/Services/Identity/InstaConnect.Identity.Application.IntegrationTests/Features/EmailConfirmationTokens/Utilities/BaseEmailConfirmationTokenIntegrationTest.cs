@@ -128,22 +128,12 @@ public abstract class BaseEmailConfirmationTokenIntegrationTest :  IClassFixture
             SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
             passwordHash,
-            UserTestUtilities.ValidProfileImage)
-        {
-            IsEmailConfirmed = true
-        };
-
-        var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
-            user);
+            UserTestUtilities.ValidProfileImage);
 
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-        var userClaimWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
         userWriteRepository.Add(user);
-        userClaimWriteRepository.Add(userClaim);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user;
@@ -165,17 +155,10 @@ public abstract class BaseEmailConfirmationTokenIntegrationTest :  IClassFixture
             IsEmailConfirmed = true
         };
 
-        var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
-            user);
-
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-        var userClaimWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
         userWriteRepository.Add(user);
-        userClaimWriteRepository.Add(userClaim);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user;
@@ -184,6 +167,23 @@ public abstract class BaseEmailConfirmationTokenIntegrationTest :  IClassFixture
     protected async Task<EmailConfirmationToken> CreateEmailConfirmationTokenAsync(CancellationToken cancellationToken)
     {
         var user = await CreateUserAsync(cancellationToken);
+        var emailConfirmationToken = new EmailConfirmationToken(
+            SharedTestUtilities.GetGuid(),
+            SharedTestUtilities.GetMaxDate(),
+            user);
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var emailConfirmationTokenWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IEmailConfirmationTokenWriteRepository>();
+
+        emailConfirmationTokenWriteRepository.Add(emailConfirmationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return emailConfirmationToken;
+    }
+
+    protected async Task<EmailConfirmationToken> CreateEmailConfirmationTokenWithConfirmedUserEmailAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserWithConfirmedEmailAsync(cancellationToken);
         var emailConfirmationToken = new EmailConfirmationToken(
             SharedTestUtilities.GetGuid(),
             SharedTestUtilities.GetMaxDate(),

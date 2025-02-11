@@ -38,6 +38,11 @@ internal class UserCommandProfile : Profile
 
         CreateMap<User, UserCreatedEvent>();
 
+        CreateMap<User, CreateEmailConfirmationTokenModel>()
+            .ConstructUsing(src => new(
+                src.Id,
+                src.Email));
+
         CreateMap<User, UserUpdatedEvent>();
 
         CreateMap<User, UserDeletedEvent>();

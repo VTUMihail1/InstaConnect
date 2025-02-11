@@ -11,6 +11,7 @@ using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Infrastructure;
 using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Models.Options;
 using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Models.Options;
+using InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Abstractions;
 using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
@@ -25,13 +26,13 @@ using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
 
-public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
+public abstract class BaseEmailConfirmationTokenFunctionalTest : IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {
     protected CancellationToken CancellationToken { get; }
 
     protected IServiceScope ServiceScope { get; }
 
-    protected IUsersClient UsersClient { get; }
+    protected IEmailConfirmationTokensClient EmailConfirmationTokensClient { get; }
 
     protected ITestHarness TestHarness
     {
@@ -41,17 +42,6 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
             var testHarness = serviceScope.ServiceProvider.GetTestHarness();
 
             return testHarness;
-        }
-    }
-
-    protected ICacheHandler CacheHandler
-    {
-        get
-        {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var cacheHandlerRepository = serviceScope.ServiceProvider.GetRequiredService<ICacheHandler>();
-
-            return cacheHandlerRepository;
         }
     }
 
@@ -77,68 +67,14 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
         }
     }
 
-    protected IPasswordHasher PasswordHasher { get; }
-
-    protected IJsonConverter JsonConverter { get; }
-
-    protected BaseUserFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
+    protected BaseEmailConfirmationTokenFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
     {
         ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
         CancellationToken = new();
-        UsersClient = new UsersClient(functionalTestWebAppFactory.CreateClient());
-        PasswordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
-        JsonConverter = ServiceScope.ServiceProvider.GetRequiredService<IJsonConverter>();
-    }
-
-    protected async Task<UserClaim> CreateUserClaimAsync(CancellationToken cancellationToken)
-    {
-        var user = await CreateUserAsync(cancellationToken);
-
-        var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
-            user);
-
-        var userClaimWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-
-        userClaimWriteRepository.Add(userClaim);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return userClaim;
+        EmailConfirmationTokensClient = new EmailConfirmationTokensClient(functionalTestWebAppFactory.CreateClient());
     }
 
     protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
-    {
-        var passwordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
-        var passwordHash = passwordHasher.Hash(UserTestUtilities.ValidPassword).PasswordHash;
-
-        var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            passwordHash,
-            UserTestUtilities.ValidProfileImage)
-        {
-            IsEmailConfirmed = true
-        };
-
-        var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
-            user);
-
-        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-
-        userWriteRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return user;
-    }
-
-    protected async Task<User> CreateUserWithUnconfirmedEmailAsync(CancellationToken cancellationToken)
     {
         var passwordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
         var passwordHash = passwordHasher.Hash(UserTestUtilities.ValidPassword).PasswordHash;
@@ -160,6 +96,65 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
         return user;
     }
 
+    protected async Task<User> CreateUserWithConfirmedEmailAsync(CancellationToken cancellationToken)
+    {
+        var passwordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+        var passwordHash = passwordHasher.Hash(UserTestUtilities.ValidPassword).PasswordHash;
+
+        var user = new User(
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            passwordHash,
+            UserTestUtilities.ValidProfileImage)
+        {
+            IsEmailConfirmed = true
+        };
+
+        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+        userWriteRepository.Add(user);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return user;
+    }
+
+    protected async Task<EmailConfirmationToken> CreateEmailConfirmationTokenAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(cancellationToken);
+        var emailConfirmationToken = new EmailConfirmationToken(
+            SharedTestUtilities.GetGuid(),
+            SharedTestUtilities.GetMaxDate(),
+            user);
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var emailConfirmationTokenWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IEmailConfirmationTokenWriteRepository>();
+
+        emailConfirmationTokenWriteRepository.Add(emailConfirmationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return emailConfirmationToken;
+    }
+
+    protected async Task<EmailConfirmationToken> CreateEmailConfirmationTokenWithConfirmedUserEmailAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserWithConfirmedEmailAsync(cancellationToken);
+        var emailConfirmationToken = new EmailConfirmationToken(
+            SharedTestUtilities.GetGuid(),
+            SharedTestUtilities.GetMaxDate(),
+            user);
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var emailConfirmationTokenWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IEmailConfirmationTokenWriteRepository>();
+
+        emailConfirmationTokenWriteRepository.Add(emailConfirmationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return emailConfirmationToken;
+    }
+
     public async Task InitializeAsync()
     {
         await EnsureDatabaseIsEmptyAsync();
@@ -173,7 +168,6 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
     private async Task EnsureDatabaseIsEmptyAsync()
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<IdentityContext>();
-        var distibutedCache = ServiceScope.ServiceProvider.GetRequiredService<IDistributedCache>();
 
         if (await dbContext.EmailConfirmationTokens.AnyAsync(CancellationToken))
         {
@@ -193,16 +187,6 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
         if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
-        }
-
-        if (await distibutedCache.GetAsync(UserCacheKeys.GetCurrentUser) != null)
-        {
-            await distibutedCache.RemoveAsync(UserCacheKeys.GetCurrentUser);
-        }
-
-        if (await distibutedCache.GetAsync(UserCacheKeys.GetCurrentDetailedUser) != null)
-        {
-            await distibutedCache.RemoveAsync(UserCacheKeys.GetCurrentDetailedUser);
         }
     }
 }

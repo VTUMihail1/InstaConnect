@@ -73,8 +73,8 @@ public class AddEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmail
     public async Task SendAsync_ShouldThrowUserEmailAlreadyConfirmedExceptionn_WhenEmailIsConfirmed()
     {
         // Arrange
-        var existingUser = await CreateEmailConfirmationTokenAsync(CancellationToken);
-        var command = new AddEmailConfirmationTokenCommand(existingUser.Id);
+        var existingUser = await CreateUserWithConfirmedEmailAsync(CancellationToken);
+        var command = new AddEmailConfirmationTokenCommand(existingUser.Email);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);

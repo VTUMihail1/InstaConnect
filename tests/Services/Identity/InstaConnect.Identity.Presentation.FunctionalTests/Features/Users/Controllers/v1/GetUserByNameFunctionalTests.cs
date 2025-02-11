@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
 using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
@@ -22,13 +23,18 @@ public class GetUserByNameFunctionalTests : BaseUserFunctionalTest
     public async Task GetByNameAsync_ShouldReturnBadRequestResponse_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new GetUserByNameRequest(
+            SharedTestUtilities.GetString(length)
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetApiRoute(SharedTestUtilities.GetString(length)), CancellationToken);
+        var response = await UsersClient.GetByNameStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
 
@@ -36,48 +42,57 @@ public class GetUserByNameFunctionalTests : BaseUserFunctionalTest
     public async Task GetByNameAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new GetUserByNameRequest(
+            UserTestUtilities.ValidAddName
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetApiRoute(UserTestUtilities.InvalidName), CancellationToken);
+        var response = await UsersClient.GetByNameStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.NotFound);
+        response
+            .Should()
+            .Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
     public async Task GetByNameAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new GetUserByNameRequest(
+            existingUser.UserName
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetApiRoute(UserTestUtilities.ValidName), CancellationToken);
+        var response = await UsersClient.GetByNameStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Match<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.OK);
+        response
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task GetByNameAsync_ShouldReturnUserViewResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new GetUserByNameRequest(
+            existingUser.UserName
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetApiRoute(UserTestUtilities.ValidName), CancellationToken);
-
-        var userViewResponse = await response
-            .Content
-            .ReadFromJsonAsync<UserQueryResponse>();
+        var response = await UsersClient.GetByNameAsync(request, CancellationToken);
 
         // Assert
-        userViewResponse
+        response
             .Should()
-            .Match<UserQueryResponse>(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserQueryResponse>(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 
@@ -85,34 +100,21 @@ public class GetUserByNameFunctionalTests : BaseUserFunctionalTest
     public async Task GetByNameAsync_ShouldReturnUserViewResponse_WhenRequestIsValidAndIdCaseDoesNotMatch()
     {
         // Arrange
-        var existingUserId = await CreateUserAsync(CancellationToken);
+        var existingUser = await CreateUserAsync(CancellationToken);
+        var request = new GetUserByNameRequest(
+            SharedTestUtilities.GetNonCaseMatchingString(existingUser.UserName)
+        );
 
         // Act
-        var response = await HttpClient.GetAsync(GetApiRoute(SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName)), CancellationToken);
-
-        var userViewResponse = await response
-            .Content
-            .ReadFromJsonAsync<UserQueryResponse>();
+        var response = await UsersClient.GetByNameAsync(request, CancellationToken);
 
         // Assert
-        userViewResponse
+        response
             .Should()
-            .Match<UserQueryResponse>(m => m.Id == existingUserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.FirstName == UserTestUtilities.ValidFirstName &&
-                                                                    m.LastName == UserTestUtilities.ValidLastName &&
+            .Match<UserQueryResponse>(m => m.Id == existingUser.Id &&
+                                                                    m.UserName == existingUser.UserName &&
+                                                                    m.FirstName == existingUser.FirstName &&
+                                                                    m.LastName == existingUser.LastName &&
                                                                     m.ProfileImage == UserTestUtilities.ValidProfileImage);
-    }
-
-    private string GetApiRoute(string name)
-    {
-        var routeTemplate = "{0}/by-name/{1}";
-
-        var route = string.Format(
-            routeTemplate,
-            ApiRoute,
-            name);
-
-        return route;
     }
 }

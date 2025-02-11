@@ -28,8 +28,8 @@ public class VerifyForgotPasswordTokenControllerUnitTests : BaseForgotPasswordTo
         // Arrange
         var existingForgotPasswordToken = CreateForgotPasswordToken();
         var request = new VerifyForgotPasswordTokenRequest(
-            existingForgotPasswordToken.Value,
             existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
             new(
                 UserTestUtilities.ValidUpdatePassword,
                 UserTestUtilities.ValidUpdatePassword));
@@ -49,8 +49,8 @@ public class VerifyForgotPasswordTokenControllerUnitTests : BaseForgotPasswordTo
         // Arrange
         var existingForgotPasswordToken = CreateForgotPasswordToken();
         var request = new VerifyForgotPasswordTokenRequest(
-            existingForgotPasswordToken.Value,
             existingForgotPasswordToken.UserId,
+            existingForgotPasswordToken.Value,
             new(
                 UserTestUtilities.ValidUpdatePassword,
                 UserTestUtilities.ValidUpdatePassword)
