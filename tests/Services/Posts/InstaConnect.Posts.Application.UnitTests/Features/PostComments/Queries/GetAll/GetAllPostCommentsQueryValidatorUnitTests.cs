@@ -26,7 +26,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var query = new GetAllPostCommentsQuery(
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -72,7 +72,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             SharedTestUtilities.GetString(length),
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -93,7 +93,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             null,
@@ -114,7 +114,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.InvalidSortPropertyName,
@@ -138,7 +138,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
@@ -161,7 +161,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -184,7 +184,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -205,7 +205,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,

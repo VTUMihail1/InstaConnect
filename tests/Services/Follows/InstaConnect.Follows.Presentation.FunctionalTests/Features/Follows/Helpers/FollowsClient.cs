@@ -41,7 +41,7 @@ public class FollowsClient : IFollowsClient
         var response = await _httpClient
             .GetFromJsonAsync<FollowPaginationQueryResponse>(route, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<FollowPaginationQueryResponse> GetAllAsync(CancellationToken cancellationToken)
@@ -49,7 +49,7 @@ public class FollowsClient : IFollowsClient
         var response = await _httpClient
             .GetFromJsonAsync<FollowPaginationQueryResponse>(FollowTestRoutes.Default, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> GetByIdStatusCodeAsync(
@@ -70,7 +70,7 @@ public class FollowsClient : IFollowsClient
         var response = await _httpClient
             .GetFromJsonAsync<FollowQueryResponse>(route, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> AddStatusCodeAsync(
@@ -111,7 +111,7 @@ public class FollowsClient : IFollowsClient
             .PostAsJsonAsync(FollowTestRoutes.Default, request.Body, cancellationToken);
         var response = await httpResponseMessage.Content.ReadFromJsonAsync<FollowCommandResponse>(cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> DeleteStatusCodeAsync(

@@ -63,8 +63,8 @@ public class GetPostByIdControllerUnitTests : BasePostUnitTest
                                                  m.Title == existingPost.Title &&
                                                  m.Content == existingPost.Content &&
                                                  m.UserId == existingPost.UserId &&
-                                                 m.UserName == UserTestUtilities.ValidName &&
-                                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage);
+                                                 m.UserName == existingPost.User.UserName &&
+                                                 m.UserProfileImage == existingPost.User.ProfileImage);
     }
 
     [Fact]

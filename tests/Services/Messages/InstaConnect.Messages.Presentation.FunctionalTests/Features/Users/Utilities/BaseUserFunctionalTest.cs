@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Users.Utilities;
 
-public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
+public abstract class BaseUserFunctionalTest : IClassFixture<MessagesWebApplicationFactory>, IAsyncLifetime
 {
     protected ITestHarness TestHarness
     {
@@ -41,14 +41,14 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
 
     protected Dictionary<string, object> ValidJwtConfig { get; set; }
 
-    protected BaseUserFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
+    protected BaseUserFunctionalTest(MessagesWebApplicationFactory messagesWebApplicationFactory)
     {
-        ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
+        ServiceScope = messagesWebApplicationFactory.Services.CreateScope();
         CancellationToken = new();
         ValidJwtConfig = [];
     }
 
-    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    private async Task<User> CreateUserUtilAsync(CancellationToken cancellationToken)
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -62,6 +62,13 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
 
         userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return user;
+    }
+
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserUtilAsync(cancellationToken);
 
         return user;
     }

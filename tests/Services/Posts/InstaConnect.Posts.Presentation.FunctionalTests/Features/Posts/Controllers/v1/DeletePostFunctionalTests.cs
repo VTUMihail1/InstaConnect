@@ -12,7 +12,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Control
 
 public class DeletePostFunctionalTests : BasePostFunctionalTest
 {
-    public DeletePostFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public DeletePostFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

@@ -34,7 +34,7 @@ public class GetAllPostCommentLikeControllerUnitTests : BasePostCommentLikeUnitT
         var existingPostCommentLike = CreatePostCommentLike();
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -59,7 +59,7 @@ public class GetAllPostCommentLikeControllerUnitTests : BasePostCommentLikeUnitT
         var existingPostCommentLike = CreatePostCommentLike();
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -81,8 +81,8 @@ public class GetAllPostCommentLikeControllerUnitTests : BasePostCommentLikeUnitT
                                                                  m.Id == existingPostCommentLike.Id &&
                                                                  m.PostCommentId == existingPostCommentLike.PostCommentId &&
                                                                  m.UserId == existingPostCommentLike.UserId &&
-                                                                 m.UserName == UserTestUtilities.ValidName &&
-                                                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                 m.UserName == existingPostCommentLike.User.UserName &&
+                                                                 m.UserProfileImage == existingPostCommentLike.User.ProfileImage) &&
                                                               mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                               mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
                                                               mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
@@ -97,7 +97,7 @@ public class GetAllPostCommentLikeControllerUnitTests : BasePostCommentLikeUnitT
         var existingPostCommentLike = CreatePostCommentLike();
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -113,7 +113,7 @@ public class GetAllPostCommentLikeControllerUnitTests : BasePostCommentLikeUnitT
               .Received(1)
               .SendAsync(Arg.Is<GetAllPostCommentLikesQuery>(m =>
                   m.UserId == existingPostCommentLike.UserId &&
-                  m.UserName == UserTestUtilities.ValidName &&
+                  m.UserName == existingPostCommentLike.User.UserName &&
                   m.PostCommentId == existingPostCommentLike.PostCommentId &&
                   m.SortOrder == PostCommentLikeTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == PostCommentLikeTestUtilities.ValidSortPropertyName &&

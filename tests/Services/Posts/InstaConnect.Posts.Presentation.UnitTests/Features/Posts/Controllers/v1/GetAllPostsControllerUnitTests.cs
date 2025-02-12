@@ -32,7 +32,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
         var existingPost = CreatePost();
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -57,7 +57,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
         var existingPost = CreatePost();
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -80,8 +80,8 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
                                                                  m.Title == existingPost.Title &&
                                                                  m.Content == existingPost.Content &&
                                                                  m.UserId == existingPost.UserId &&
-                                                                 m.UserName == UserTestUtilities.ValidName &&
-                                                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                 m.UserName == existingPost.User.UserName &&
+                                                                 m.UserProfileImage == existingPost.User.ProfileImage) &&
                                                               mc.Page == PostTestUtilities.ValidPageValue &&
                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -96,7 +96,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
         var existingPost = CreatePost();
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -112,7 +112,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
               .Received(1)
               .SendAsync(Arg.Is<GetAllPostsQuery>(m =>
                   m.UserId == existingPost.UserId &&
-                  m.UserName == UserTestUtilities.ValidName &&
+                  m.UserName == existingPost.User.UserName &&
                   m.Title == existingPost.Title &&
                   m.SortOrder == PostTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == PostTestUtilities.ValidSortPropertyName &&

@@ -28,7 +28,7 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
         var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -43,7 +43,7 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
             .Received(1)
             .GetAllAsync(Arg.Is<PostCommentLikeCollectionReadQuery>(m =>
                                                                         m.UserId == existingPostCommentLike.UserId &&
-                                                                        m.UserName == UserTestUtilities.ValidName &&
+                                                                        m.UserName == existingPostCommentLike.User.UserName &&
                                                                         m.PostCommentId == existingPostCommentLike.PostCommentId &&
                                                                         m.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
@@ -58,7 +58,7 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
         var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -73,8 +73,8 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
             .Should()
             .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLike.Id &&
                                                            m.UserId == existingPostCommentLike.UserId &&
-                                                           m.UserName == UserTestUtilities.ValidName &&
-                                                           m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                           m.UserName == existingPostCommentLike.User.UserName &&
+                                                           m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
                                                            m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                            mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&

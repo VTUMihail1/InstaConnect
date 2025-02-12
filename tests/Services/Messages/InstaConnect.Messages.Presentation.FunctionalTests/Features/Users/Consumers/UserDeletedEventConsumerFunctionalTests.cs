@@ -5,7 +5,7 @@ namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Users.Consu
 
 public class UserDeletedEventConsumerFunctionalTests : BaseUserFunctionalTest
 {
-    public UserDeletedEventConsumerFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public UserDeletedEventConsumerFunctionalTests(MessagesWebApplicationFactory messagesWebApplicationFactory) : base(messagesWebApplicationFactory)
     {
     }
 

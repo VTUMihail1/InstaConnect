@@ -77,8 +77,8 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostQueryViewModel>(m => m.Id == existingPost.Id &&
                                           m.UserId == existingPost.UserId &&
-                                          m.UserName == UserTestUtilities.ValidName &&
-                                          m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                          m.UserName == existingPost.User.UserName &&
+                                          m.UserProfileImage == existingPost.User.ProfileImage &&
                                           m.Title == existingPost.Title &&
                                           m.Content == existingPost.Content);
     }
@@ -98,8 +98,8 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostQueryViewModel>(m => m.Id == existingPost.Id &&
                                           m.UserId == existingPost.UserId &&
-                                          m.UserName == UserTestUtilities.ValidName &&
-                                          m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                          m.UserName == existingPost.User.UserName &&
+                                          m.UserProfileImage == existingPost.User.ProfileImage &&
                                           m.Title == existingPost.Title &&
                                           m.Content == existingPost.Content);
     }

@@ -9,11 +9,11 @@ using Testcontainers.MsSql;
 
 namespace InstaConnect.Follows.Application.IntegrationTests.Utilities;
 
-public class FollowsIntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
+public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly MsSqlContainer _msSqlContainer;
 
-    public FollowsIntegrationTestWebAppFactory()
+    public FollowsWebApplicationFactory()
     {
         _msSqlContainer = new MsSqlBuilder()
         .WithImage("mcr.microsoft.com/mssql/server:2022-latest")

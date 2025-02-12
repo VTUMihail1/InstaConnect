@@ -16,7 +16,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Control
 
 public class AddPostFunctionalTests : BasePostFunctionalTest
 {
-    public AddPostFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public AddPostFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

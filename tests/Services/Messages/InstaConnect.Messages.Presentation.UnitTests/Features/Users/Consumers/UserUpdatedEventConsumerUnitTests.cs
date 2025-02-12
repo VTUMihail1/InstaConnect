@@ -55,7 +55,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         var userUpdatedEvent = new UserUpdatedEvent(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateName,
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateProfileImage);

@@ -16,7 +16,7 @@ namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.C
 
 public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
 {
-    public UpdateMessageFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public UpdateMessageFunctionalTests(MessagesWebApplicationFactory messagesWebApplicationFactory) : base(messagesWebApplicationFactory)
     {
 
     }
@@ -71,7 +71,7 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
         var request = new UpdateMessageRequest(
             existingMessage.Id,
             existingMessage.SenderId,
-            new(null!)
+            new(null)
         );
 
         // Act
@@ -113,7 +113,7 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new UpdateMessageRequest(
             existingMessage.Id,
-            null!,
+            null,
             new(MessageTestUtilities.ValidUpdateContent)
         );
 

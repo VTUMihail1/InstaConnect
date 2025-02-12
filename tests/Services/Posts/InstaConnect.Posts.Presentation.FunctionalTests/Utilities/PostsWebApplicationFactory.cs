@@ -1,4 +1,5 @@
-﻿using InstaConnect.Messages.Infrastructure;
+﻿using InstaConnect.Posts.Infrastructure;
+using InstaConnect.Posts.Presentation.Features.Users.Consumers;
 using InstaConnect.Shared.Infrastructure.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;
@@ -7,13 +8,13 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.MsSql;
 
-namespace InstaConnect.Messages.Presentation.FunctionalTests.Utilities;
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 
-public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
+public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly MsSqlContainer _msSqlContainer;
 
-    public FunctionalTestWebAppFactory()
+    public PostsWebApplicationFactory()
     {
         _msSqlContainer = new MsSqlBuilder()
         .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
@@ -25,10 +26,15 @@ public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyn
     {
         builder.ConfigureTestServices(serviceCollection =>
         {
-            serviceCollection.AddTestDbContext<MessagesContext>(opt => opt.UseSqlServer(_msSqlContainer.GetConnectionString()));
+            serviceCollection.AddTestDbContext<PostsContext>(opt => opt.UseSqlServer(_msSqlContainer.GetConnectionString()));
             serviceCollection.AddTestJwtAuth();
 
-            serviceCollection.AddMassTransitTestHarness();
+            serviceCollection.AddMassTransitTestHarness(cfg =>
+            {
+                cfg.AddConsumer<UserCreatedEventConsumer>();
+                cfg.AddConsumer<UserUpdatedEventConsumer>();
+                cfg.AddConsumer<UserDeletedEventConsumer>();
+            });
         });
     }
 

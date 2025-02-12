@@ -54,7 +54,7 @@ public class MessagesClient : IMessagesClient
         var response = await _httpClient
             .GetFromJsonAsync<MessagePaginationQueryResponse>(route, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<MessagePaginationQueryResponse> GetAllAsync(
@@ -69,7 +69,7 @@ public class MessagesClient : IMessagesClient
         var response = await _httpClient
             .GetFromJsonAsync<MessagePaginationQueryResponse>(MessageTestRoutes.Default, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> GetByIdStatusCodeAsync(
@@ -100,7 +100,7 @@ public class MessagesClient : IMessagesClient
         var response = await _httpClient
             .GetFromJsonAsync<MessageQueryResponse>(route, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> GetByIdStatusCodeUnathorizedAsync(
@@ -151,7 +151,7 @@ public class MessagesClient : IMessagesClient
             .PostAsJsonAsync(MessageTestRoutes.Default, request.Body, cancellationToken);
         var response = await httpResponseMessage.Content.ReadFromJsonAsync<MessageCommandResponse>(cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> UpdateStatusCodeAsync(
@@ -198,7 +198,7 @@ public class MessagesClient : IMessagesClient
             .PutAsJsonAsync(route, request.Body, cancellationToken);
         var response = await httpResponseMessage.Content.ReadFromJsonAsync<MessageCommandResponse>(cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> DeleteStatusCodeAsync(

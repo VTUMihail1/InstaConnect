@@ -10,6 +10,7 @@ using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 using InstaConnect.Follows.Presentation.Features.Follows.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Utilities;
 using NSubstitute;
 
 namespace InstaConnect.Follows.Presentation.UnitTests.Features.Follows.Utilities;
@@ -39,11 +40,11 @@ public abstract class BaseFollowUnitTest
     public User CreateUser()
     {
         var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
 
         return user;
     }

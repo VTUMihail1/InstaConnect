@@ -71,12 +71,12 @@ public class GetMessageByIdUnitTests : BaseMessageUnitTest
             .Should()
             .Match<MessageQueryResponse>(m => m.Id == existingMessage.Id &&
                                                  m.SenderId == existingMessage.SenderId &&
-                                                 m.SenderName == UserTestUtilities.ValidName &&
-                                                 m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                 m.SenderName == existingMessage.Sender.UserName &&
+                                                 m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                  m.ReceiverId == existingMessage.ReceiverId &&
-                                                 m.ReceiverName == UserTestUtilities.ValidName &&
-                                                 m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                 m.Content == MessageTestUtilities.ValidContent);
+                                                 m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                 m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage &&
+                                                 m.Content == existingMessage.Content);
     }
 
     [Fact]

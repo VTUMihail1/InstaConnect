@@ -30,7 +30,7 @@ public class UpdatePostCommentControllerUnitTests : BasePostCommentUnitTest
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
             existingPostComment.UserId,
-            new(PostCommentTestUtilities.ValidUpdateContent)
+            new(existingPostComment.Content)
         );
 
         // Act
@@ -51,7 +51,7 @@ public class UpdatePostCommentControllerUnitTests : BasePostCommentUnitTest
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
             existingPostComment.UserId,
-            new(PostCommentTestUtilities.ValidUpdateContent)
+            new(existingPostComment.Content)
         );
 
         // Act
@@ -75,7 +75,7 @@ public class UpdatePostCommentControllerUnitTests : BasePostCommentUnitTest
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
             existingPostComment.UserId,
-            new(PostCommentTestUtilities.ValidUpdateContent)
+            new(existingPostComment.Content)
         );
 
         // Act
@@ -86,7 +86,7 @@ public class UpdatePostCommentControllerUnitTests : BasePostCommentUnitTest
             .Received(1)
             .SendAsync(Arg.Is<UpdatePostCommentCommand>(m => m.Id == existingPostComment.Id &&
                                                       m.CurrentUserId == existingPostComment.UserId &&
-                                                      m.Content == PostCommentTestUtilities.ValidUpdateContent),
+                                                      m.Content == existingPostComment.Content),
                                                     CancellationToken);
     }
 }

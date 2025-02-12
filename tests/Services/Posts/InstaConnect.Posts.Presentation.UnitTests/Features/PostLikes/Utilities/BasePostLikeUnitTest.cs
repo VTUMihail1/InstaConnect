@@ -71,8 +71,8 @@ public abstract class BasePostLikeUnitTest
             postLike.Id,
             post.Id,
             user.Id,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            user.UserName,
+            user.ProfileImage);
 
         var postLikeCommandViewModel = new PostLikeCommandViewModel(postLike.Id);
         var postLikePaginationCollectionModel = new PostLikePaginationQueryViewModel(
@@ -87,7 +87,7 @@ public abstract class BasePostLikeUnitTest
             .SendAsync(Arg.Is<GetAllPostLikesQuery>(m =>
                   m.PostId == post.Id &&
                   m.UserId == user.Id &&
-                  m.UserName == UserTestUtilities.ValidName &&
+                  m.UserName == user.UserName &&
                   m.SortOrder == PostLikeTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == PostLikeTestUtilities.ValidSortPropertyName &&
                   m.Page == PostLikeTestUtilities.ValidPageValue &&

@@ -13,7 +13,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLi
 
 public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunctionalTest
 {
-    public GetPostCommentLikeByIdFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetPostCommentLikeByIdFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -92,8 +92,8 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
             .Should()
             .Match<PostCommentLikeQueryResponse>(m => m.Id == existingPostCommentLike.Id &&
                                  m.UserId == existingPostCommentLike.UserId &&
-                                 m.UserName == UserTestUtilities.ValidName &&
-                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                 m.UserName == existingPostCommentLike.User.UserName &&
+                                 m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
                                  m.PostCommentId == existingPostCommentLike.PostCommentId);
     }
 
@@ -114,8 +114,8 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
             .Should()
             .Match<PostCommentLikeQueryResponse>(m => m.Id == existingPostCommentLike.Id &&
                                  m.UserId == existingPostCommentLike.UserId &&
-                                 m.UserName == UserTestUtilities.ValidName &&
-                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                 m.UserName == existingPostCommentLike.User.UserName &&
+                                 m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
                                  m.PostCommentId == existingPostCommentLike.PostCommentId);
     }
 }

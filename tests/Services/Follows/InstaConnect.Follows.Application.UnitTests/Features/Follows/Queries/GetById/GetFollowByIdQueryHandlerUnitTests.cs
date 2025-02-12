@@ -65,10 +65,10 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
             .Should()
             .Match<FollowQueryViewModel>(m => m.Id == existingFollow.Id &&
                                               m.FollowerId == existingFollow.FollowerId &&
-                                              m.FollowerName == UserTestUtilities.ValidName &&
-                                              m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
+                                              m.FollowerName == existingFollow.Follower.UserName &&
+                                              m.FollowerProfileImage == existingFollow.Follower.ProfileImage &&
                                               m.FollowingId == existingFollow.FollowingId &&
-                                              m.FollowingName == UserTestUtilities.ValidName &&
-                                              m.FollowingProfileImage == UserTestUtilities.ValidProfileImage);
+                                              m.FollowingName == existingFollow.Following.UserName &&
+                                              m.FollowingProfileImage == existingFollow.Following.ProfileImage);
     }
 }

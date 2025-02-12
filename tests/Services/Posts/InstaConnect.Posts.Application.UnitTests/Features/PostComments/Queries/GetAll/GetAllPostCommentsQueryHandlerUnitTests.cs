@@ -27,7 +27,7 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -42,7 +42,7 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
             .Received(1)
             .GetAllAsync(Arg.Is<PostCommentCollectionReadQuery>(m =>
                                                                         m.UserId == existingPostComment.UserId &&
-                                                                        m.UserName == UserTestUtilities.ValidName &&
+                                                                        m.UserName == existingPostComment.User.UserName &&
                                                                         m.PostId == existingPostComment.PostId &&
                                                                         m.Page == PostCommentTestUtilities.ValidPageValue &&
                                                                         m.Page == PostCommentTestUtilities.ValidPageValue &&
@@ -58,7 +58,7 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -73,8 +73,8 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
             .Should()
             .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
                                                            m.UserId == existingPostComment.UserId &&
-                                                           m.UserName == UserTestUtilities.ValidName &&
-                                                           m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                           m.UserName == existingPostComment.User.UserName &&
+                                                           m.UserProfileImage == existingPostComment.User.ProfileImage &&
                                                            m.PostId == existingPostComment.PostId &&
                                                            m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&

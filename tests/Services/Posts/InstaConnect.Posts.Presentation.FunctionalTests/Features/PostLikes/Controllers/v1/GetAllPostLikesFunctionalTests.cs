@@ -15,7 +15,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Con
 
 public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
 {
-    public GetAllPostLikesFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetAllPostLikesFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -29,7 +29,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -79,7 +79,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             SharedTestUtilities.GetString(length),
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -102,7 +102,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.InvalidSortPropertyName,
@@ -127,7 +127,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
@@ -152,7 +152,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -179,7 +179,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -202,7 +202,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -225,7 +225,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -241,8 +241,8 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostLike.Id &&
                                                                m.UserId == existingPostLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostLike.User.ProfileImage &&
                                                                m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
@@ -258,7 +258,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -274,8 +274,8 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostLike.Id &&
                                                                m.UserId == existingPostLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostLike.User.ProfileImage &&
                                                                m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
@@ -291,7 +291,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             SharedTestUtilities.GetNonCaseMatchingString(existingPostLike.UserId),
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -307,8 +307,8 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostLike.Id &&
                                                                m.UserId == existingPostLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostLike.User.ProfileImage &&
                                                                m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
@@ -324,7 +324,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostLike.User.UserName),
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -340,8 +340,8 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostLike.Id &&
                                                                m.UserId == existingPostLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostLike.User.ProfileImage &&
                                                                m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
@@ -357,7 +357,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
+            SharedTestUtilities.GetHalfStartString(existingPostLike.User.UserName),
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -373,8 +373,8 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostLike.Id &&
                                                                m.UserId == existingPostLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostLike.User.ProfileImage &&
                                                                m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
@@ -390,7 +390,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             SharedTestUtilities.GetNonCaseMatchingString(existingPostLike.PostId),
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -406,8 +406,8 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostLike.Id &&
                                                                m.UserId == existingPostLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostLike.User.ProfileImage &&
                                                                m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
@@ -431,8 +431,8 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostLike.Id &&
                                                                m.UserId == existingPostLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostLike.User.ProfileImage &&
                                                                m.PostId == existingPostLike.PostId) &&
                                                                mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&

@@ -17,7 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Utilities;
 
-public abstract class BasePostLikeFunctionalTest : IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
+public abstract class BasePostLikeFunctionalTest : IClassFixture<PostsWebApplicationFactory>, IAsyncLifetime
 {
     protected CancellationToken CancellationToken { get; }
 
@@ -47,7 +47,7 @@ public abstract class BasePostLikeFunctionalTest : IClassFixture<FunctionalTestW
         }
     }
 
-    protected BasePostLikeFunctionalTest(FunctionalTestWebAppFactory postsWebApplicationFactory)
+    protected BasePostLikeFunctionalTest(PostsWebApplicationFactory postsWebApplicationFactory)
     {
         ServiceScope = postsWebApplicationFactory.Services.CreateScope();
         CancellationToken = new();

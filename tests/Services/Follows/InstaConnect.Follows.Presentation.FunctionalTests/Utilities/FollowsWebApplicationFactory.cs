@@ -11,12 +11,12 @@ using Testcontainers.RabbitMq;
 
 namespace InstaConnect.Follows.Presentation.FunctionalTests.Utilities;
 
-public class FollowsFunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
+public class FollowsWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly MsSqlContainer _msSqlContainer;
     private readonly RabbitMqContainer _rabbitMqContainer;
 
-    public FollowsFunctionalTestWebAppFactory()
+    public FollowsWebApplicationFactory()
     {
         _msSqlContainer = new MsSqlBuilder()
             .WithImage("mcr.microsoft.com/mssql/server:2022-latest")

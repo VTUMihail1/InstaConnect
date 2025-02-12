@@ -10,6 +10,7 @@ using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Utilities;
 using NSubstitute;
 using MessageCommandProfile = InstaConnect.Messages.Presentation.Features.Messages.Mappings.MessagesCommandProfile;
 using MessageQueryProfile = InstaConnect.Messages.Presentation.Features.Messages.Mappings.MessagesQueryProfile;
@@ -40,11 +41,11 @@ public abstract class BaseMessageUnitTest
     public User CreateUser()
     {
         var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
 
         return user;
     }
@@ -53,17 +54,20 @@ public abstract class BaseMessageUnitTest
     {
         var sender = CreateUser();
         var receiver = CreateUser();
-        var message = new Message(MessageTestUtilities.ValidContent, sender, receiver);
+        var message = new Message(
+            SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
+            sender, 
+            receiver);
 
         var messageQueryViewModel = new MessageQueryViewModel(
             message.Id,
             message.SenderId,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage,
+            sender.UserName,
+            sender.ProfileImage,
             message.ReceiverId,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage,
-            MessageTestUtilities.ValidContent);
+            receiver.UserName,
+            receiver.ProfileImage,
+            message.Content);
 
         var messageCommandViewModel = new MessageCommandViewModel(message.Id);
         var messagePaginationCollectionModel = new MessagePaginationQueryViewModel(
@@ -78,7 +82,7 @@ public abstract class BaseMessageUnitTest
             .SendAsync(Arg.Is<GetAllMessagesQuery>(m =>
                   m.CurrentUserId == sender.Id &&
                   m.ReceiverId == receiver.Id &&
-                  m.ReceiverName == UserTestUtilities.ValidName &&
+                  m.ReceiverName == receiver.UserName &&
                   m.SortOrder == MessageTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == MessageTestUtilities.ValidSortPropertyName &&
                   m.Page == MessageTestUtilities.ValidPageValue &&

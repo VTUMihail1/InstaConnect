@@ -15,7 +15,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLi
 
 public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunctionalTest
 {
-    public GetAllPostCommentLikesFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetAllPostCommentLikesFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -29,7 +29,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -79,7 +79,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             SharedTestUtilities.GetString(length),
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -102,7 +102,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.InvalidSortPropertyName,
@@ -127,7 +127,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
@@ -152,7 +152,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -179,7 +179,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -202,7 +202,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -225,7 +225,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -241,8 +241,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLike.Id &&
                                                                m.UserId == existingPostCommentLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostCommentLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
                                                                m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                                mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
@@ -258,7 +258,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -274,8 +274,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLike.Id &&
                                                                m.UserId == existingPostCommentLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostCommentLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
                                                                m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                                mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
@@ -291,7 +291,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.UserId),
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -307,8 +307,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLike.Id &&
                                                                m.UserId == existingPostCommentLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostCommentLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
                                                                m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                                mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
@@ -324,7 +324,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.User.UserName),
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -340,8 +340,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLike.Id &&
                                                                m.UserId == existingPostCommentLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostCommentLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
                                                                m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                                mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
@@ -357,7 +357,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
+            SharedTestUtilities.GetHalfStartString(existingPostCommentLike.User.UserName),
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -373,8 +373,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLike.Id &&
                                                                m.UserId == existingPostCommentLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostCommentLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
                                                                m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                                mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
@@ -390,7 +390,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostCommentLike.User.UserName,
             SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.PostCommentId),
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -406,8 +406,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLike.Id &&
                                                                m.UserId == existingPostCommentLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostCommentLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
                                                                m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                                mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
@@ -431,8 +431,8 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPostCommentLike.Id &&
                                                                m.UserId == existingPostCommentLike.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPostCommentLike.User.UserName &&
+                                                               m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
                                                                m.PostCommentId == existingPostCommentLike.PostCommentId) &&
                                                                mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&

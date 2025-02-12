@@ -9,6 +9,7 @@ using InstaConnect.Messages.Domain.Features.Users.Abstract;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
 
@@ -52,14 +53,14 @@ public abstract class BaseMessageUnitTest
 
     }
 
-    public User CreateUser()
+    private User CreateUserUtil()
     {
         var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -67,12 +68,17 @@ public abstract class BaseMessageUnitTest
         return user;
     }
 
-    public Message CreateMessage()
+    protected User CreateUser()
     {
-        var sender = CreateUser();
-        var receiver = CreateUser();
+        var user = CreateUserUtil();
+
+        return user;
+    }
+
+    private Message CreateMessageUtil(User sender, User receiver)
+    {
         var message = new Message(
-            MessageTestUtilities.ValidContent,
+            SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
             sender,
             receiver);
 
@@ -96,12 +102,21 @@ public abstract class BaseMessageUnitTest
             .GetAllAsync(Arg.Is<MessageCollectionReadQuery>(m =>
                                                                         m.CurrentUserId == sender.Id &&
                                                                         m.ReceiverId == receiver.Id &&
-                                                                        m.ReceiverName == UserTestUtilities.ValidName &&
+                                                                        m.ReceiverName == receiver.UserName &&
                                                                         m.Page == MessageTestUtilities.ValidPageValue &&
                                                                         m.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == MessageTestUtilities.ValidSortOrderProperty &&
                                                                         m.SortPropertyName == MessageTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(messagePaginationList);
+
+        return message;
+    }
+
+    protected Message CreateMessage()
+    {
+        var sender = CreateUser();
+        var receiver = CreateUser();
+        var message = CreateMessageUtil(sender, receiver);
 
         return message;
     }

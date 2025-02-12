@@ -5,7 +5,7 @@ namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Users.Consu
 
 public class UserCreatedEventConsumerFunctionalTests : BaseUserFunctionalTest
 {
-    public UserCreatedEventConsumerFunctionalTests(FollowsFunctionalTestWebAppFactory followFunctionalTestWebAppFactory) : base(followFunctionalTestWebAppFactory)
+    public UserCreatedEventConsumerFunctionalTests(FollowsWebApplicationFactory followsWebApplicationFactory) : base(followsWebApplicationFactory)
     {
     }
 
@@ -36,7 +36,7 @@ public class UserCreatedEventConsumerFunctionalTests : BaseUserFunctionalTest
     //        .Match<User>(m => m.Id == existingUserId &&
     //                          m.FirstName == UserTestUtilities.ValidFirstName &&
     //                          m.LastName == UserTestUtilities.ValidLastName &&
-    //                          m.UserName == UserTestUtilities.ValidName &&
+    //                          m.UserName == existingFollow.Following.UserName &&
     //                          m.Email == UserTestUtilities.ValidEmail &&
     //                          m.ProfileImage == UserTestUtilities.ValidProfileImage);
     //}

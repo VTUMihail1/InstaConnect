@@ -85,8 +85,8 @@ public abstract class BasePostCommentLikeUnitTest
             postCommentLike.Id,
             postComment.Id,
             user.Id,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            user.UserName,
+            user.ProfileImage);
 
         var postCommentLikeCommandViewModel = new PostCommentLikeCommandViewModel(postCommentLike.Id);
         var postCommentLikePaginationCollectionModel = new PostCommentLikePaginationQueryViewModel(
@@ -101,7 +101,7 @@ public abstract class BasePostCommentLikeUnitTest
             .SendAsync(Arg.Is<GetAllPostCommentLikesQuery>(m =>
                   m.PostCommentId == postComment.Id &&
                   m.UserId == user.Id &&
-                  m.UserName == UserTestUtilities.ValidName &&
+                  m.UserName == user.UserName &&
                   m.SortOrder == PostCommentLikeTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == PostCommentLikeTestUtilities.ValidSortPropertyName &&
                   m.Page == PostCommentLikeTestUtilities.ValidPageValue &&

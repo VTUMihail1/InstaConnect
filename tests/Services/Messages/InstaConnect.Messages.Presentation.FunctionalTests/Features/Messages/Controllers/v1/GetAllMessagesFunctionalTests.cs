@@ -15,7 +15,7 @@ namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.C
 
 public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
 {
-    public GetAllMessagesFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetAllMessagesFunctionalTests(MessagesWebApplicationFactory messagesWebApplicationFactory) : base(messagesWebApplicationFactory)
     {
 
     }
@@ -28,7 +28,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -50,9 +50,9 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new GetAllMessagesRequest(
-            null!,
+            null,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -78,7 +78,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -128,7 +128,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.InvalidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -154,7 +154,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidPageValue,
@@ -180,7 +180,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             value,
@@ -208,7 +208,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -232,7 +232,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -256,7 +256,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -271,13 +271,13 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             .Should()
             .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessage.Id &&
-                                                               m.Content == MessageTestUtilities.ValidContent &&
+                                                               m.Content == existingMessage.Content &&
                                                                m.SenderId == existingMessage.SenderId &&
-                                                               m.SenderName == UserTestUtilities.ValidName &&
-                                                               m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.SenderName == existingMessage.Sender.UserName &&
+                                                               m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                m.ReceiverId == existingMessage.ReceiverId &&
-                                                               m.ReceiverName == UserTestUtilities.ValidName &&
-                                                               m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                               m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                               m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage) &&
                                                                mc.Page == MessageTestUtilities.ValidPageValue &&
                                                                mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -293,7 +293,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             SharedTestUtilities.GetNonCaseMatchingString(existingMessage.SenderId),
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -308,13 +308,13 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             .Should()
             .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessage.Id &&
-                                                               m.Content == MessageTestUtilities.ValidContent &&
+                                                               m.Content == existingMessage.Content &&
                                                                m.SenderId == existingMessage.SenderId &&
-                                                               m.SenderName == UserTestUtilities.ValidName &&
-                                                               m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.SenderName == existingMessage.Sender.UserName &&
+                                                               m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                m.ReceiverId == existingMessage.ReceiverId &&
-                                                               m.ReceiverName == UserTestUtilities.ValidName &&
-                                                               m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                               m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                               m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage) &&
                                                                mc.Page == MessageTestUtilities.ValidPageValue &&
                                                                mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -330,7 +330,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             SharedTestUtilities.GetNonCaseMatchingString(existingMessage.ReceiverId),
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -345,13 +345,13 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             .Should()
             .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessage.Id &&
-                                                               m.Content == MessageTestUtilities.ValidContent &&
+                                                               m.Content == existingMessage.Content &&
                                                                m.SenderId == existingMessage.SenderId &&
-                                                               m.SenderName == UserTestUtilities.ValidName &&
-                                                               m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.SenderName == existingMessage.Sender.UserName &&
+                                                               m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                m.ReceiverId == existingMessage.ReceiverId &&
-                                                               m.ReceiverName == UserTestUtilities.ValidName &&
-                                                               m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                               m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                               m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage) &&
                                                                mc.Page == MessageTestUtilities.ValidPageValue &&
                                                                mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -367,7 +367,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Receiver.UserName),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -382,13 +382,13 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             .Should()
             .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessage.Id &&
-                                                               m.Content == MessageTestUtilities.ValidContent &&
+                                                               m.Content == existingMessage.Content &&
                                                                m.SenderId == existingMessage.SenderId &&
-                                                               m.SenderName == UserTestUtilities.ValidName &&
-                                                               m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.SenderName == existingMessage.Sender.UserName &&
+                                                               m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                m.ReceiverId == existingMessage.ReceiverId &&
-                                                               m.ReceiverName == UserTestUtilities.ValidName &&
-                                                               m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                               m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                               m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage) &&
                                                                mc.Page == MessageTestUtilities.ValidPageValue &&
                                                                mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -404,7 +404,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
+            SharedTestUtilities.GetHalfStartString(existingMessage.Receiver.UserName),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -419,13 +419,13 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             .Should()
             .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessage.Id &&
-                                                               m.Content == MessageTestUtilities.ValidContent &&
+                                                               m.Content == existingMessage.Content &&
                                                                m.SenderId == existingMessage.SenderId &&
-                                                               m.SenderName == UserTestUtilities.ValidName &&
-                                                               m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.SenderName == existingMessage.Sender.UserName &&
+                                                               m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                m.ReceiverId == existingMessage.ReceiverId &&
-                                                               m.ReceiverName == UserTestUtilities.ValidName &&
-                                                               m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                               m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                               m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage) &&
                                                                mc.Page == MessageTestUtilities.ValidPageValue &&
                                                                mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -447,13 +447,13 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             .Should()
             .Match<MessagePaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingMessage.Id &&
-                                                               m.Content == MessageTestUtilities.ValidContent &&
+                                                               m.Content == existingMessage.Content &&
                                                                m.SenderId == existingMessage.SenderId &&
-                                                               m.SenderName == UserTestUtilities.ValidName &&
-                                                               m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.SenderName == existingMessage.Sender.UserName &&
+                                                               m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                m.ReceiverId == existingMessage.ReceiverId &&
-                                                               m.ReceiverName == UserTestUtilities.ValidName &&
-                                                               m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                               m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                               m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage) &&
                                                                mc.Page == MessageTestUtilities.ValidPageValue &&
                                                                mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&

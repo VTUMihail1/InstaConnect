@@ -23,7 +23,7 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
         var existingFollower = CreateUser();
         var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
-            null!,
+            null,
             existingFollowing.Id);
 
         // Act
@@ -61,7 +61,7 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
         var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             existingFollower.Id,
-            null!);
+            null);
 
         // Act
         var result = _commandValidator.TestValidate(command);

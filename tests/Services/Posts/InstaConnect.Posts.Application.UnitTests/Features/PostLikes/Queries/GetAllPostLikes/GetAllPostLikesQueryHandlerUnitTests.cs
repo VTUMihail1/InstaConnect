@@ -27,7 +27,7 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -42,7 +42,7 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
             .Received(1)
             .GetAllAsync(Arg.Is<PostLikeCollectionReadQuery>(m =>
                                                                         m.UserId == existingPostLike.UserId &&
-                                                                        m.UserName == UserTestUtilities.ValidName &&
+                                                                        m.UserName == existingPostLike.User.UserName &&
                                                                         m.PostId == existingPostLike.PostId &&
                                                                         m.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                         m.Page == PostLikeTestUtilities.ValidPageValue &&
@@ -58,7 +58,7 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -73,8 +73,8 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
             .Should()
             .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLike.Id &&
                                                            m.UserId == existingPostLike.UserId &&
-                                                           m.UserName == UserTestUtilities.ValidName &&
-                                                           m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                           m.UserName == existingPostLike.User.UserName &&
+                                                           m.UserProfileImage == existingPostLike.User.ProfileImage &&
                                                            m.PostId == existingPostLike.PostId) &&
                                                            mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&

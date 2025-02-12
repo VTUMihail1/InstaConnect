@@ -14,7 +14,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Control
 
 public class GetAllPostsFunctionalTests : BasePostFunctionalTest
 {
-    public GetAllPostsFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetAllPostsFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -28,7 +28,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -78,7 +78,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -101,7 +101,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.InvalidSortPropertyName,
@@ -126,7 +126,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
@@ -151,7 +151,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -178,7 +178,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -201,7 +201,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -224,7 +224,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -240,8 +240,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPost.Id &&
                                                                m.UserId == existingPost.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPost.User.UserName &&
+                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                m.Title == existingPost.Title &&
                                                                m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -258,7 +258,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -274,8 +274,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPost.Id &&
                                                                m.UserId == existingPost.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPost.User.UserName &&
+                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                m.Title == existingPost.Title &&
                                                                m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -292,7 +292,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             SharedTestUtilities.GetNonCaseMatchingString(existingPost.UserId),
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -308,8 +308,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPost.Id &&
                                                                m.UserId == existingPost.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPost.User.UserName &&
+                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                m.Title == existingPost.Title &&
                                                                m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -326,7 +326,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPost.User.UserName),
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -342,8 +342,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPost.Id &&
                                                                m.UserId == existingPost.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPost.User.UserName &&
+                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                m.Title == existingPost.Title &&
                                                                m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -360,7 +360,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
+            SharedTestUtilities.GetHalfStartString(existingPost.User.UserName),
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -376,8 +376,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPost.Id &&
                                                                m.UserId == existingPost.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPost.User.UserName &&
+                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                m.Title == existingPost.Title &&
                                                                m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -394,7 +394,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             SharedTestUtilities.GetNonCaseMatchingString(existingPost.Title),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -410,8 +410,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPost.Id &&
                                                                m.UserId == existingPost.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPost.User.UserName &&
+                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                m.Title == existingPost.Title &&
                                                                m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -428,7 +428,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
+            SharedTestUtilities.GetHalfStartString(existingPost.User.UserName),
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -444,8 +444,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPost.Id &&
                                                                m.UserId == existingPost.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPost.User.UserName &&
+                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                m.Title == existingPost.Title &&
                                                                m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
@@ -470,8 +470,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                m.Id == existingPost.Id &&
                                                                m.UserId == existingPost.UserId &&
-                                                               m.UserName == UserTestUtilities.ValidName &&
-                                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                               m.UserName == existingPost.User.UserName &&
+                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                m.Title == existingPost.Title &&
                                                                m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&

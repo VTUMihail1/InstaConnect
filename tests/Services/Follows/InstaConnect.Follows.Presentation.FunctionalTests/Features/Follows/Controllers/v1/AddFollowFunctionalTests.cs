@@ -13,7 +13,7 @@ namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Con
 
 public class AddFollowFunctionalTests : BaseFollowFunctionalTest
 {
-    public AddFollowFunctionalTests(FollowsFunctionalTestWebAppFactory followsFunctionalTestWebAppFactory) : base(followsFunctionalTestWebAppFactory)
+    public AddFollowFunctionalTests(FollowsWebApplicationFactory followsFunctionalTestWebAppFactory) : base(followsFunctionalTestWebAppFactory)
     {
 
     }
@@ -44,7 +44,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollowing = await CreateUserAsync(CancellationToken);
         var request = new AddFollowRequest(
             existingFollowing.Id,
-            new(null!));
+            new(null));
 
         // Act
         var statusCode = await FollowsClient.AddStatusCodeAsync(request, CancellationToken);
@@ -82,7 +82,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollowing = await CreateUserAsync(CancellationToken);
         var request = new AddFollowRequest(
-            null!,
+            null,
             new(existingFollowing.Id));
 
         // Act
@@ -200,7 +200,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
 
         // Act
         var response = await FollowsClient.AddAsync(request, CancellationToken);
-        var message = await FollowWriteRepository.GetByIdAsync(response!.Id, CancellationToken);
+        var message = await FollowWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         message

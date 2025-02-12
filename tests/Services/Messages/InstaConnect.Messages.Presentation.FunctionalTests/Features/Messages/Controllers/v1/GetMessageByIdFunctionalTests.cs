@@ -14,7 +14,7 @@ namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.C
 
 public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
 {
-    public GetMessageByIdFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetMessageByIdFunctionalTests(MessagesWebApplicationFactory messagesWebApplicationFactory) : base(messagesWebApplicationFactory)
     {
 
     }
@@ -66,7 +66,7 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new GetMessageByIdRequest(
             existingMessage.Id,
-            null!
+            null
         );
 
         // Act
@@ -176,13 +176,13 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
         response
             .Should()
             .Match<MessageQueryResponse>(m => m.Id == existingMessage.Id &&
-                                 m.Content == MessageTestUtilities.ValidContent &&
+                                 m.Content == existingMessage.Content &&
                                  m.SenderId == existingMessage.SenderId &&
-                                 m.SenderName == UserTestUtilities.ValidName &&
-                                 m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                 m.SenderName == existingMessage.Sender.UserName &&
+                                 m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                  m.ReceiverId == existingMessage.ReceiverId &&
-                                 m.ReceiverName == UserTestUtilities.ValidName &&
-                                 m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage);
+                                 m.ReceiverName == existingMessage.Receiver.UserName &&
+                                 m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage);
     }
 
     [Fact]
@@ -202,12 +202,12 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
         response
             .Should()
             .Match<MessageQueryResponse>(m => m.Id == existingMessage.Id &&
-                                 m.Content == MessageTestUtilities.ValidContent &&
+                                 m.Content == existingMessage.Content &&
                                  m.SenderId == existingMessage.SenderId &&
-                                 m.SenderName == UserTestUtilities.ValidName &&
-                                 m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                 m.SenderName == existingMessage.Sender.UserName &&
+                                 m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                  m.ReceiverId == existingMessage.ReceiverId &&
-                                 m.ReceiverName == UserTestUtilities.ValidName &&
-                                 m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage);
+                                 m.ReceiverName == existingMessage.Receiver.UserName &&
+                                 m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage);
     }
 }

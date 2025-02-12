@@ -24,7 +24,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var command = new UpdatePostCommentCommand(
             null,
             existingPostComment.UserId,
-            PostCommentTestUtilities.ValidUpdateContent
+            existingPostComment.Content
         );
 
         // Act
@@ -45,7 +45,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var command = new UpdatePostCommentCommand(
             SharedTestUtilities.GetString(length),
             existingPostComment.UserId,
-            PostCommentTestUtilities.ValidUpdateContent
+            existingPostComment.Content
         );
 
         // Act
@@ -63,7 +63,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
             null,
-            PostCommentTestUtilities.ValidUpdateContent
+            existingPostComment.Content
         );
 
         // Act
@@ -84,7 +84,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
             SharedTestUtilities.GetString(length),
-            PostCommentTestUtilities.ValidUpdateContent
+            existingPostComment.Content
         );
 
         // Act
@@ -141,7 +141,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
             existingPostComment.UserId,
-            PostCommentTestUtilities.ValidUpdateContent
+            existingPostComment.Content
         );
 
         // Act

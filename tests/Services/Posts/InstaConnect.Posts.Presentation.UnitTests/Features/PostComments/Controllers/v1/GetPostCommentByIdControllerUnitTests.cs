@@ -65,8 +65,8 @@ public class GetPostCommentByIdControllerUnitTests : BasePostCommentUnitTest
                                                  m.PostId == existingPostComment.PostId &&
                                                  m.Content == existingPostComment.Content &&
                                                  m.UserId == existingPostComment.UserId &&
-                                                 m.UserName == UserTestUtilities.ValidName &&
-                                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage);
+                                                 m.UserName == existingPostComment.User.UserName &&
+                                                 m.UserProfileImage == existingPostComment.User.ProfileImage);
     }
 
     [Fact]

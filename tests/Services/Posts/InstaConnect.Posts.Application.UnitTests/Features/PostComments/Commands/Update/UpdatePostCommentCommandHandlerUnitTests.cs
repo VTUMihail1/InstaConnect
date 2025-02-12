@@ -29,7 +29,7 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         var command = new UpdatePostCommentCommand(
             PostCommentTestUtilities.InvalidId,
             existingPostComment.UserId,
-            PostCommentTestUtilities.ValidUpdateContent
+            existingPostComment.Content
         );
 
         // Act
@@ -48,7 +48,7 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
             existingUser.Id,
-            PostCommentTestUtilities.ValidUpdateContent
+            existingPostComment.Content
         );
 
         // Act
@@ -66,7 +66,7 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
             existingPostComment.UserId,
-            PostCommentTestUtilities.ValidUpdateContent
+            existingPostComment.Content
         );
 
         // Act
@@ -86,7 +86,7 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
             existingPostComment.UserId,
-            PostCommentTestUtilities.ValidUpdateContent
+            existingPostComment.Content
         );
 
         // Act
@@ -97,7 +97,7 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
             .Received(1)
             .Update(Arg.Is<PostComment>(m => m.Id == existingPostComment.Id &&
                                       m.UserId == existingPostComment.UserId &&
-                                      m.Content == PostCommentTestUtilities.ValidUpdateContent));
+                                      m.Content == existingPostComment.Content));
     }
 
     [Fact]
@@ -108,7 +108,7 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
             existingPostComment.UserId,
-            PostCommentTestUtilities.ValidUpdateContent
+            existingPostComment.Content
         );
 
         // Act

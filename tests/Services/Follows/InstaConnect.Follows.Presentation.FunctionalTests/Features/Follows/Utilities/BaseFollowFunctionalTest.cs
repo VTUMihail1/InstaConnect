@@ -8,13 +8,14 @@ using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Abstrac
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Helpers;
 using InstaConnect.Follows.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Utilities;
 using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
 
-public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsFunctionalTestWebAppFactory>, IAsyncLifetime
+public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsWebApplicationFactory>, IAsyncLifetime
 {
     protected CancellationToken CancellationToken { get; }
 
@@ -55,17 +56,43 @@ public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsFunctional
         }
     }
 
-    protected BaseFollowFunctionalTest(FollowsFunctionalTestWebAppFactory functionalTestWebAppFactory)
+    protected BaseFollowFunctionalTest(FollowsWebApplicationFactory messagesWebApplicationFactory)
     {
-        ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
+        ServiceScope = messagesWebApplicationFactory.Services.CreateScope();
         CancellationToken = new();
-        FollowsClient = new FollowsClient(functionalTestWebAppFactory.CreateClient());
+        FollowsClient = new FollowsClient(messagesWebApplicationFactory.CreateClient());
     }
 
-    protected async Task<Follow> CreateFollowAsync(CancellationToken cancellationToken)
+    private async Task<User> CreateUserUtilAsync(CancellationToken cancellationToken)
     {
-        var follower = await CreateUserAsync(cancellationToken);
-        var following = await CreateUserAsync(cancellationToken);
+        var user = new User(
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+
+        userWriteRepository.Add(user);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return user;
+    }
+
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserUtilAsync(cancellationToken);
+
+        return user;
+    }
+
+    private async Task<Follow> CreateFollowUtilAsync(
+        User follower, 
+        User following, 
+        CancellationToken cancellationToken)
+    {
         var follow = new Follow(
             follower.Id,
             following.Id);
@@ -79,22 +106,13 @@ public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsFunctional
         return follow;
     }
 
-    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    protected async Task<Follow> CreateFollowAsync(CancellationToken cancellationToken)
     {
-        var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+        var follower = await CreateUserAsync(cancellationToken);
+        var following = await CreateUserAsync(cancellationToken);
+        var follow = await CreateFollowUtilAsync(follower, following, cancellationToken);
 
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-
-        userWriteRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return user;
+        return follow;
     }
 
     public async Task InitializeAsync()

@@ -16,7 +16,7 @@ namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.C
 
 public class AddMessageFunctionalTests : BaseMessageFunctionalTest
 {
-    public AddMessageFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public AddMessageFunctionalTests(MessagesWebApplicationFactory messagesWebApplicationFactory) : base(messagesWebApplicationFactory)
     {
 
     }
@@ -49,7 +49,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         var existingReceiver = await CreateUserAsync(CancellationToken);
         var request = new AddMessageRequest(
             existingSender.Id,
-            new(null!, MessageTestUtilities.ValidAddContent)
+            new(null, MessageTestUtilities.ValidAddContent)
         );
 
         // Act
@@ -92,7 +92,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         var existingReceiver = await CreateUserAsync(CancellationToken);
         var request = new AddMessageRequest(
             existingSender.Id,
-            new(existingReceiver.Id, null!)
+            new(existingReceiver.Id, null)
         );
 
         // Act
@@ -134,7 +134,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         var existingReceiver = await CreateUserAsync(CancellationToken);
         var existingSender = await CreateUserAsync(CancellationToken);
         var request = new AddMessageRequest(
-            null!,
+            null,
             new(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
         );
 

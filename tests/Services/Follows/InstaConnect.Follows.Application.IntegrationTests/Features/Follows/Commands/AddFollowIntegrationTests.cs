@@ -12,7 +12,7 @@ using InstaConnect.Shared.Common.Utilities;
 namespace InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Commands;
 public class AddFollowIntegrationTests : BaseFollowIntegrationTest
 {
-    public AddFollowIntegrationTests(FollowsIntegrationTestWebAppFactory followIntegrationTestWebAppFactory) : base(followIntegrationTestWebAppFactory)
+    public AddFollowIntegrationTests(FollowsWebApplicationFactory followsWebApplicationFactory) : base(followsWebApplicationFactory)
     {
 
     }
@@ -23,7 +23,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         // Arrange
         var existingFollowing = await CreateUserAsync(CancellationToken);
         var command = new AddFollowCommand(
-            null!,
+            null,
             existingFollowing.Id);
 
         // Act
@@ -59,7 +59,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         var existingFollower = await CreateUserAsync(CancellationToken);
         var command = new AddFollowCommand(
             existingFollower.Id,
-            null!);
+            null);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);

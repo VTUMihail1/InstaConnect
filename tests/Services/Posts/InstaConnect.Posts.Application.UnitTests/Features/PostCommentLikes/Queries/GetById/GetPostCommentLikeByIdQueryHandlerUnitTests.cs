@@ -65,8 +65,8 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeUn
             .Should()
             .Match<PostCommentLikeQueryViewModel>(m => m.Id == existingPostCommentLike.Id &&
                                               m.UserId == existingPostCommentLike.UserId &&
-                                              m.UserName == UserTestUtilities.ValidName &&
-                                              m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                              m.UserName == existingPostCommentLike.User.UserName &&
+                                              m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
                                               m.PostCommentId == existingPostCommentLike.PostCommentId);
     }
 }

@@ -12,7 +12,7 @@ namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Con
 
 public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
 {
-    public GetFollowByIdFunctionalTests(FollowsFunctionalTestWebAppFactory followsFunctionalTestWebAppFactory) : base(followsFunctionalTestWebAppFactory)
+    public GetFollowByIdFunctionalTests(FollowsWebApplicationFactory followsFunctionalTestWebAppFactory) : base(followsFunctionalTestWebAppFactory)
     {
 
     }
@@ -33,7 +33,9 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         var response = await FollowsClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Be(HttpStatusCode.BadRequest);
+        response
+            .Should()
+            .Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
@@ -50,7 +52,9 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         var response = await FollowsClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Be(HttpStatusCode.NotFound);
+        response
+            .Should()
+            .Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
@@ -67,7 +71,9 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         var response = await FollowsClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Be(HttpStatusCode.OK);
+        response
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
@@ -84,7 +90,9 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         var response = await FollowsClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response.Should().Be(HttpStatusCode.OK);
+        response
+            .Should()
+            .Be(HttpStatusCode.OK);
     }
 
     [Fact]
@@ -105,11 +113,11 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
             .Should()
             .Match<FollowQueryResponse>(m => m.Id == existingFollow.Id &&
                                  m.FollowerId == existingFollow.FollowerId &&
-                                 m.FollowerName == UserTestUtilities.ValidName &&
-                                 m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
+                                 m.FollowerName == existingFollow.Follower.UserName &&
+                                 m.FollowerProfileImage == existingFollow.Follower.ProfileImage &&
                                  m.FollowingId == existingFollow.FollowingId &&
-                                 m.FollowingName == UserTestUtilities.ValidName &&
-                                 m.FollowingProfileImage == UserTestUtilities.ValidProfileImage);
+                                 m.FollowingName == existingFollow.Following.UserName &&
+                                 m.FollowingProfileImage == existingFollow.Following.ProfileImage);
     }
 
     [Fact]
@@ -130,10 +138,10 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
             .Should()
             .Match<FollowQueryResponse>(m => m.Id == existingFollow.Id &&
                                  m.FollowerId == existingFollow.FollowerId &&
-                                 m.FollowerName == UserTestUtilities.ValidName &&
-                                 m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
+                                 m.FollowerName == existingFollow.Follower.UserName &&
+                                 m.FollowerProfileImage == existingFollow.Follower.ProfileImage &&
                                  m.FollowingId == existingFollow.FollowingId &&
-                                 m.FollowingName == UserTestUtilities.ValidName &&
-                                 m.FollowingProfileImage == UserTestUtilities.ValidProfileImage);
+                                 m.FollowingName == existingFollow.Following.UserName &&
+                                 m.FollowingProfileImage == existingFollow.Following.ProfileImage);
     }
 }

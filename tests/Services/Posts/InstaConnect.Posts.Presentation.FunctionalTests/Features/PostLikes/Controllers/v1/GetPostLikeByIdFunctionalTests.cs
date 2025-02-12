@@ -14,7 +14,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Con
 
 public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
 {
-    public GetPostLikeByIdFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetPostLikeByIdFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -93,8 +93,8 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
             .Should()
             .Match<PostLikeQueryResponse>(m => m.Id == existingPostLike.Id &&
                                  m.UserId == existingPostLike.UserId &&
-                                 m.UserName == UserTestUtilities.ValidName &&
-                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                 m.UserName == existingPostLike.User.UserName &&
+                                 m.UserProfileImage == existingPostLike.User.ProfileImage &&
                                  m.PostId == existingPostLike.PostId);
     }
 
@@ -115,8 +115,8 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
             .Should()
             .Match<PostLikeQueryResponse>(m => m.Id == existingPostLike.Id &&
                                  m.UserId == existingPostLike.UserId &&
-                                 m.UserName == UserTestUtilities.ValidName &&
-                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                 m.UserName == existingPostLike.User.UserName &&
+                                 m.UserProfileImage == existingPostLike.User.ProfileImage &&
                                  m.PostId == existingPostLike.PostId);
     }
 }

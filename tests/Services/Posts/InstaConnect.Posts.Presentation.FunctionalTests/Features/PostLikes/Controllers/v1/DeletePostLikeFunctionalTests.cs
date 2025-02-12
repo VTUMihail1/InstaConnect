@@ -12,7 +12,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Con
 
 public class DeletePostLikeFunctionalTests : BasePostLikeFunctionalTest
 {
-    public DeletePostLikeFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public DeletePostLikeFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

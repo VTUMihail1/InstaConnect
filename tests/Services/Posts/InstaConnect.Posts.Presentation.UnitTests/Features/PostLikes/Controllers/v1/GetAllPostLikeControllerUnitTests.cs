@@ -34,7 +34,7 @@ public class GetAllPostLikeControllerUnitTests : BasePostLikeUnitTest
         var existingPostLike = CreatePostLike();
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -59,7 +59,7 @@ public class GetAllPostLikeControllerUnitTests : BasePostLikeUnitTest
         var existingPostLike = CreatePostLike();
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -81,8 +81,8 @@ public class GetAllPostLikeControllerUnitTests : BasePostLikeUnitTest
                                                                  m.Id == existingPostLike.Id &&
                                                                  m.PostId == existingPostLike.PostId &&
                                                                  m.UserId == existingPostLike.UserId &&
-                                                                 m.UserName == UserTestUtilities.ValidName &&
-                                                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                 m.UserName == existingPostLike.User.UserName &&
+                                                                 m.UserProfileImage == existingPostLike.User.ProfileImage) &&
                                                               mc.Page == PostLikeTestUtilities.ValidPageValue &&
                                                               mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                               mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
@@ -97,7 +97,7 @@ public class GetAllPostLikeControllerUnitTests : BasePostLikeUnitTest
         var existingPostLike = CreatePostLike();
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            UserTestUtilities.ValidName,
+            existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -113,7 +113,7 @@ public class GetAllPostLikeControllerUnitTests : BasePostLikeUnitTest
               .Received(1)
               .SendAsync(Arg.Is<GetAllPostLikesQuery>(m =>
                   m.UserId == existingPostLike.UserId &&
-                  m.UserName == UserTestUtilities.ValidName &&
+                  m.UserName == existingPostLike.User.UserName &&
                   m.PostId == existingPostLike.PostId &&
                   m.SortOrder == PostLikeTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == PostLikeTestUtilities.ValidSortPropertyName &&

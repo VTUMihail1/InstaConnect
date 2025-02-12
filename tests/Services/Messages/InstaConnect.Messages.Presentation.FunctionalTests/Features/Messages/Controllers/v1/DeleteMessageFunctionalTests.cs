@@ -12,7 +12,7 @@ namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.C
 
 public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
 {
-    public DeleteMessageFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public DeleteMessageFunctionalTests(MessagesWebApplicationFactory messagesWebApplicationFactory) : base(messagesWebApplicationFactory)
     {
 
     }
@@ -64,7 +64,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new DeleteMessageRequest(
             existingMessage.Id,
-            null!
+            null
         );
 
         // Act

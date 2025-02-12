@@ -20,7 +20,7 @@ public class GetFollowByIdQueryValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollow = CreateFollow();
-        var query = new GetFollowByIdQuery(null!);
+        var query = new GetFollowByIdQuery(null);
 
         // Act
         var result = _validator.TestValidate(query);

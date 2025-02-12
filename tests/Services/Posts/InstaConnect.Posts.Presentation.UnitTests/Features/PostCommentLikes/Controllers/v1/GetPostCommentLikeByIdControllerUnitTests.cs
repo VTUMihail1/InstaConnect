@@ -64,7 +64,7 @@ public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikeUnit
             .Match<PostCommentLikeQueryResponse>(m => m.Id == existingPostCommentLike.Id &&
                                                  m.PostCommentId == existingPostCommentLike.PostCommentId &&
                                                  m.UserId == existingPostCommentLike.UserId &&
-                                                 m.UserName == UserTestUtilities.ValidName &&
+                                                 m.UserName == existingPostCommentLike.User.UserName &&
                                                  m.UserProfileImage == existingPostCommentLike.User.ProfileImage);
     }
 

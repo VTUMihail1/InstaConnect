@@ -21,7 +21,7 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
         // Arrange
         var existingFollow = CreateFollow();
         var command = new DeleteFollowCommand(
-            null!,
+            null,
             existingFollow.FollowerId
         );
 
@@ -59,7 +59,7 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
         var existingFollow = CreateFollow();
         var command = new DeleteFollowCommand(
             existingFollow.Id,
-            null!
+            null
         );
 
         // Act

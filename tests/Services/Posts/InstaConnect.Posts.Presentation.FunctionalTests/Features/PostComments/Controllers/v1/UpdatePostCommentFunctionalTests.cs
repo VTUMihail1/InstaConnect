@@ -16,7 +16,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.
 
 public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
 {
-    public UpdatePostCommentFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public UpdatePostCommentFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -29,7 +29,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
             existingPostComment.UserId,
-            new(PostCommentTestUtilities.ValidUpdateContent));
+            new(existingPostComment.Content));
 
         // Act
         var response = await PostCommentsClient.UpdateStatusCodeUnauthorizedAsync(request, CancellationToken);
@@ -50,7 +50,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var request = new UpdatePostCommentRequest(
             SharedTestUtilities.GetString(length),
             existingPostComment.UserId,
-            new(PostCommentTestUtilities.ValidUpdateContent));
+            new(existingPostComment.Content));
 
         // Act
         var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -110,7 +110,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
             null,
-            new(PostCommentTestUtilities.ValidUpdateContent));
+            new(existingPostComment.Content));
 
         // Act
         var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -132,7 +132,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
             SharedTestUtilities.GetString(length),
-            new(PostCommentTestUtilities.ValidUpdateContent));
+            new(existingPostComment.Content));
 
         // Act
         var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -151,7 +151,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var request = new UpdatePostCommentRequest(
             PostCommentTestUtilities.InvalidId,
             existingPostComment.UserId,
-            new(PostCommentTestUtilities.ValidUpdateContent));
+            new(existingPostComment.Content));
 
         // Act
         var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -171,7 +171,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
             existingUser.Id,
-            new(PostCommentTestUtilities.ValidUpdateContent));
+            new(existingPostComment.Content));
 
         // Act
         var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -190,7 +190,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
             existingPostComment.UserId,
-            new(PostCommentTestUtilities.ValidUpdateContent));
+            new(existingPostComment.Content));
 
         // Act
         var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -209,7 +209,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
             existingPostComment.UserId,
-            new(PostCommentTestUtilities.ValidUpdateContent));
+            new(existingPostComment.Content));
 
         // Act
         var response = await PostCommentsClient.UpdateAsync(request, CancellationToken);
@@ -229,7 +229,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
             existingPostComment.UserId,
-            new(PostCommentTestUtilities.ValidUpdateContent));
+            new(existingPostComment.Content));
 
         // Act
         var response = await PostCommentsClient.UpdateAsync(request, CancellationToken);
@@ -242,7 +242,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
             .Match<PostComment>(m => m.Id == existingPostComment.Id &&
                                  m.UserId == existingPostComment.UserId &&
                                  m.PostId == existingPostComment.PostId &&
-                                 m.Content == PostCommentTestUtilities.ValidUpdateContent);
+                                 m.Content == existingPostComment.Content);
     }
 
     [Fact]
@@ -253,7 +253,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var request = new UpdatePostCommentRequest(
             SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.Id),
             existingPostComment.UserId,
-            new(PostCommentTestUtilities.ValidUpdateContent));
+            new(existingPostComment.Content));
 
         // Act
         var response = await PostCommentsClient.UpdateAsync(request, CancellationToken);
@@ -265,6 +265,6 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
             .Match<PostComment>(m => m.Id == existingPostComment.Id &&
                                  m.UserId == existingPostComment.UserId &&
                                  m.PostId == existingPostComment.PostId &&
-                                 m.Content == PostCommentTestUtilities.ValidUpdateContent);
+                                 m.Content == existingPostComment.Content);
     }
 }

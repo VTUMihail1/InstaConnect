@@ -29,9 +29,9 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
         var existingFollow = CreateFollow();
         var request = new GetAllFollowsRequest(
             existingFollow.FollowerId,
-            UserTestUtilities.ValidName,
+            existingFollow.Follower.UserName,
             existingFollow.FollowingId,
-            UserTestUtilities.ValidName,
+            existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -55,9 +55,9 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
         var existingFollow = CreateFollow();
         var request = new GetAllFollowsRequest(
             existingFollow.FollowerId,
-            UserTestUtilities.ValidName,
+            existingFollow.Follower.UserName,
             existingFollow.FollowingId,
-            UserTestUtilities.ValidName,
+            existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -77,11 +77,11 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
             .Match<FollowPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                  m.Id == existingFollow.Id &&
                                                                  m.FollowerId == existingFollow.FollowerId &&
-                                                                 m.FollowerName == UserTestUtilities.ValidName &&
-                                                                 m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                 m.FollowerName == existingFollow.Follower.UserName &&
+                                                                 m.FollowerProfileImage == existingFollow.Follower.ProfileImage &&
                                                                  m.FollowingId == existingFollow.FollowingId &&
-                                                                 m.FollowingName == UserTestUtilities.ValidName &&
-                                                                 m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                 m.FollowingName == existingFollow.Following.UserName &&
+                                                                 m.FollowingProfileImage == existingFollow.Following.ProfileImage) &&
                                                               mc.Page == FollowTestUtilities.ValidPageValue &&
                                                               mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
                                                               mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
@@ -96,9 +96,9 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
         var existingFollow = CreateFollow();
         var request = new GetAllFollowsRequest(
             existingFollow.FollowerId,
-            UserTestUtilities.ValidName,
+            existingFollow.Follower.UserName,
             existingFollow.FollowingId,
-            UserTestUtilities.ValidName,
+            existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -113,9 +113,9 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
               .Received(1)
               .SendAsync(Arg.Is<GetAllFollowsQuery>(m =>
                   m.FollowerId == existingFollow.FollowerId &&
-                  m.FollowerName == UserTestUtilities.ValidName &&
+                  m.FollowerName == existingFollow.Follower.UserName &&
                   m.FollowingId == existingFollow.FollowingId &&
-                  m.FollowingName == UserTestUtilities.ValidName &&
+                  m.FollowingName == existingFollow.Following.UserName &&
                   m.SortOrder == FollowTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == FollowTestUtilities.ValidSortPropertyName &&
                   m.Page == FollowTestUtilities.ValidPageValue &&

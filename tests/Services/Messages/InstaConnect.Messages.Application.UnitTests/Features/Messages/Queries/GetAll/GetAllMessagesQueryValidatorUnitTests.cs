@@ -24,7 +24,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         var query = new GetAllMessagesQuery(
             null!,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -48,7 +48,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         var query = new GetAllMessagesQuery(
             SharedTestUtilities.GetString(length),
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -71,7 +71,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -115,7 +115,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             null!,
             MessageTestUtilities.ValidPageValue,
@@ -136,7 +136,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.InvalidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -160,7 +160,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidPageValue,
@@ -183,7 +183,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             value,
@@ -206,7 +206,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -227,7 +227,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,

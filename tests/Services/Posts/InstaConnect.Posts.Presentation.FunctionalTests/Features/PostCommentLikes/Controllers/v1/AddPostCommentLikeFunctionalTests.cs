@@ -17,7 +17,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLi
 
 public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTest
 {
-    public AddPostCommentLikeFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public AddPostCommentLikeFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

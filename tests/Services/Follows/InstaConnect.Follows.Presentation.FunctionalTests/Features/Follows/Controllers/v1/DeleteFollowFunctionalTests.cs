@@ -10,7 +10,7 @@ namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Con
 
 public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
 {
-    public DeleteFollowFunctionalTests(FollowsFunctionalTestWebAppFactory followsFunctionalTestWebAppFactory) : base(followsFunctionalTestWebAppFactory)
+    public DeleteFollowFunctionalTests(FollowsWebApplicationFactory followsFunctionalTestWebAppFactory) : base(followsFunctionalTestWebAppFactory)
     {
     }
 
@@ -62,7 +62,7 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
 
         var request = new DeleteFollowRequest(
             existingFollow.Id,
-            null!);
+            null);
 
         // Act
         var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, CancellationToken);

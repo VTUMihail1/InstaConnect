@@ -24,7 +24,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             null!,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -48,7 +48,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             SharedTestUtilities.GetString(length),
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -71,7 +71,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -115,7 +115,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             null!,
             MessageTestUtilities.ValidPageValue,
@@ -136,7 +136,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.InvalidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -160,7 +160,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             MessageTestUtilities.ValidPageValue,
@@ -183,7 +183,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             value,
@@ -206,7 +206,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -227,7 +227,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             SharedTestUtilities.GetNonCaseMatchingString(existingMessage.SenderId),
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -241,12 +241,12 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             .Should()
             .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
                                                                     m.SenderId == existingMessage.SenderId &&
-                                                                    m.SenderName == UserTestUtilities.ValidName &&
-                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.SenderName == existingMessage.Sender.UserName &&
+                                                                    m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                     m.ReceiverId == existingMessage.ReceiverId &&
-                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
-                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Content == MessageTestUtilities.ValidContent) &&
+                                                                    m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                                    m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage &&
+                                                                    m.Content == existingMessage.Content) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -262,7 +262,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             null!,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -276,12 +276,12 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             .Should()
             .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
                                                                     m.SenderId == existingMessage.SenderId &&
-                                                                    m.SenderName == UserTestUtilities.ValidName &&
-                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.SenderName == existingMessage.Sender.UserName &&
+                                                                    m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                     m.ReceiverId == existingMessage.ReceiverId &&
-                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
-                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Content == MessageTestUtilities.ValidContent) &&
+                                                                    m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                                    m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage &&
+                                                                    m.Content == existingMessage.Content) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -297,7 +297,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             string.Empty,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -311,12 +311,12 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             .Should()
             .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
                                                                     m.SenderId == existingMessage.SenderId &&
-                                                                    m.SenderName == UserTestUtilities.ValidName &&
-                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.SenderName == existingMessage.Sender.UserName &&
+                                                                    m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                     m.ReceiverId == existingMessage.ReceiverId &&
-                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
-                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Content == MessageTestUtilities.ValidContent) &&
+                                                                    m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                                    m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage &&
+                                                                    m.Content == existingMessage.Content) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -332,7 +332,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             SharedTestUtilities.GetNonCaseMatchingString(existingMessage.ReceiverId),
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -346,12 +346,12 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             .Should()
             .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
                                                                     m.SenderId == existingMessage.SenderId &&
-                                                                    m.SenderName == UserTestUtilities.ValidName &&
-                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.SenderName == existingMessage.Sender.UserName &&
+                                                                    m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                     m.ReceiverId == existingMessage.ReceiverId &&
-                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
-                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Content == MessageTestUtilities.ValidContent) &&
+                                                                    m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                                    m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage &&
+                                                                    m.Content == existingMessage.Content) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -381,12 +381,12 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             .Should()
             .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
                                                                     m.SenderId == existingMessage.SenderId &&
-                                                                    m.SenderName == UserTestUtilities.ValidName &&
-                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.SenderName == existingMessage.Sender.UserName &&
+                                                                    m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                     m.ReceiverId == existingMessage.ReceiverId &&
-                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
-                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Content == MessageTestUtilities.ValidContent) &&
+                                                                    m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                                    m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage &&
+                                                                    m.Content == existingMessage.Content) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -416,12 +416,12 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             .Should()
             .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
                                                                     m.SenderId == existingMessage.SenderId &&
-                                                                    m.SenderName == UserTestUtilities.ValidName &&
-                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.SenderName == existingMessage.Sender.UserName &&
+                                                                    m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                     m.ReceiverId == existingMessage.ReceiverId &&
-                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
-                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Content == MessageTestUtilities.ValidContent) &&
+                                                                    m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                                    m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage &&
+                                                                    m.Content == existingMessage.Content) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -437,7 +437,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
+            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Receiver.UserName),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -451,12 +451,12 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             .Should()
             .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
                                                                     m.SenderId == existingMessage.SenderId &&
-                                                                    m.SenderName == UserTestUtilities.ValidName &&
-                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.SenderName == existingMessage.Sender.UserName &&
+                                                                    m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                     m.ReceiverId == existingMessage.ReceiverId &&
-                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
-                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Content == MessageTestUtilities.ValidContent) &&
+                                                                    m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                                    m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage &&
+                                                                    m.Content == existingMessage.Content) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -472,7 +472,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
+            SharedTestUtilities.GetHalfStartString(existingMessage.Receiver.UserName),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -486,12 +486,12 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             .Should()
             .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
                                                                     m.SenderId == existingMessage.SenderId &&
-                                                                    m.SenderName == UserTestUtilities.ValidName &&
-                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.SenderName == existingMessage.Sender.UserName &&
+                                                                    m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                     m.ReceiverId == existingMessage.ReceiverId &&
-                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
-                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Content == MessageTestUtilities.ValidContent) &&
+                                                                    m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                                    m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage &&
+                                                                    m.Content == existingMessage.Content) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&
@@ -507,7 +507,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -521,12 +521,12 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             .Should()
             .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
                                                                     m.SenderId == existingMessage.SenderId &&
-                                                                    m.SenderName == UserTestUtilities.ValidName &&
-                                                                    m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.SenderName == existingMessage.Sender.UserName &&
+                                                                    m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                                     m.ReceiverId == existingMessage.ReceiverId &&
-                                                                    m.ReceiverName == UserTestUtilities.ValidName &&
-                                                                    m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Content == MessageTestUtilities.ValidContent) &&
+                                                                    m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                                    m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage &&
+                                                                    m.Content == existingMessage.Content) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&

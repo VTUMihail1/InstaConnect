@@ -8,7 +8,6 @@ public class MessageTestUtilities : SharedTestUtilities
 {
     public static readonly string InvalidId = GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength);
     
-    public static readonly string ValidContent = GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength);
     public static readonly string ValidAddContent = GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength);
     public static readonly string ValidUpdateContent = GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength);
     

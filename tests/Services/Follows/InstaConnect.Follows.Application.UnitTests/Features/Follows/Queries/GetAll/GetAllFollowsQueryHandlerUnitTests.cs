@@ -27,9 +27,9 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
         var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
             existingFollow.FollowerId,
-            UserTestUtilities.ValidName,
+            existingFollow.Follower.UserName,
             existingFollow.FollowingId,
-            UserTestUtilities.ValidName,
+            existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -43,9 +43,9 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
             .Received(1)
             .GetAllAsync(Arg.Is<FollowCollectionReadQuery>(m =>
                                                                         m.FollowerId == existingFollow.FollowerId &&
-                                                                        m.FollowerName == UserTestUtilities.ValidName &&
+                                                                        m.FollowerName == existingFollow.Follower.UserName &&
                                                                         m.FollowingId == existingFollow.FollowingId &&
-                                                                        m.FollowingName == UserTestUtilities.ValidName &&
+                                                                        m.FollowingName == existingFollow.Following.UserName &&
                                                                         m.Page == FollowTestUtilities.ValidPageValue &&
                                                                         m.PageSize == FollowTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == FollowTestUtilities.ValidSortOrderProperty &&
@@ -59,9 +59,9 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
         var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
             existingFollow.FollowerId,
-            UserTestUtilities.ValidName,
+            existingFollow.Follower.UserName,
             existingFollow.FollowingId,
-            UserTestUtilities.ValidName,
+            existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -75,11 +75,11 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
             .Should()
             .Match<FollowPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingFollow.Id &&
                                                            m.FollowerId == existingFollow.FollowerId &&
-                                                           m.FollowerName == UserTestUtilities.ValidName &&
-                                                           m.FollowerProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                           m.FollowerName == existingFollow.Follower.UserName &&
+                                                           m.FollowerProfileImage == existingFollow.Follower.ProfileImage &&
                                                            m.FollowingId == existingFollow.FollowingId &&
-                                                           m.FollowingName == UserTestUtilities.ValidName &&
-                                                           m.FollowingProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                           m.FollowingName == existingFollow.Following.UserName &&
+                                                           m.FollowingProfileImage == existingFollow.Following.ProfileImage) &&
                                                            mc.Page == FollowTestUtilities.ValidPageValue &&
                                                            mc.PageSize == FollowTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&

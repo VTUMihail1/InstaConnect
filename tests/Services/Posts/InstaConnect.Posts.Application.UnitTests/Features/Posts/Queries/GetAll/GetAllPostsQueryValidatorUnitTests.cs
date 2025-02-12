@@ -25,7 +25,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var existingPost = CreatePost();
         var query = new GetAllPostsQuery(
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -71,7 +71,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var existingPost = CreatePost();
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -92,7 +92,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var existingPost = CreatePost();
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             null,
@@ -113,7 +113,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var existingPost = CreatePost();
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.InvalidSortPropertyName,
@@ -137,7 +137,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var existingPost = CreatePost();
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
@@ -160,7 +160,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var existingPost = CreatePost();
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -183,7 +183,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var existingPost = CreatePost();
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -204,7 +204,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var existingPost = CreatePost();
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,

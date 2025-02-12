@@ -12,7 +12,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.
 
 public class DeletePostCommentFunctionalTests : BasePostCommentFunctionalTest
 {
-    public DeletePostCommentFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public DeletePostCommentFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

@@ -35,7 +35,7 @@ public class GetAllPostCommentControllerUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var request = new GetAllPostCommentsRequest(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -60,7 +60,7 @@ public class GetAllPostCommentControllerUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var request = new GetAllPostCommentsRequest(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -83,8 +83,8 @@ public class GetAllPostCommentControllerUnitTests : BasePostCommentUnitTest
                                                                  m.PostId == existingPostComment.PostId &&
                                                                  m.Content == existingPostComment.Content &&
                                                                  m.UserId == existingPostComment.UserId &&
-                                                                 m.UserName == UserTestUtilities.ValidName &&
-                                                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                 m.UserName == existingPostComment.User.UserName &&
+                                                                 m.UserProfileImage == existingPostComment.User.ProfileImage) &&
                                                               mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                               mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                               mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -99,7 +99,7 @@ public class GetAllPostCommentControllerUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var request = new GetAllPostCommentsRequest(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -115,7 +115,7 @@ public class GetAllPostCommentControllerUnitTests : BasePostCommentUnitTest
               .Received(1)
               .SendAsync(Arg.Is<GetAllPostCommentsQuery>(m =>
                   m.UserId == existingPostComment.UserId &&
-                  m.UserName == UserTestUtilities.ValidName &&
+                  m.UserName == existingPostComment.User.UserName &&
                   m.PostId == existingPostComment.PostId &&
                   m.SortOrder == PostCommentTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == PostCommentTestUtilities.ValidSortPropertyName &&

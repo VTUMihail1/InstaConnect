@@ -65,8 +65,8 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeUnitTest
             .Should()
             .Match<PostLikeQueryViewModel>(m => m.Id == existingPostLike.Id &&
                                               m.UserId == existingPostLike.UserId &&
-                                              m.UserName == UserTestUtilities.ValidName &&
-                                              m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                              m.UserName == existingPostLike.User.UserName &&
+                                              m.UserProfileImage == existingPostLike.User.ProfileImage &&
                                               m.PostId == existingPostLike.PostId);
     }
 }

@@ -28,7 +28,7 @@ public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -43,7 +43,7 @@ public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
             .GetAllAsync(Arg.Is<MessageCollectionReadQuery>(m =>
                                                                         m.CurrentUserId == existingMessage.SenderId &&
                                                                         m.ReceiverId == existingMessage.ReceiverId &&
-                                                                        m.ReceiverName == UserTestUtilities.ValidName &&
+                                                                        m.ReceiverName == existingMessage.Receiver.UserName &&
                                                                         m.Page == MessageTestUtilities.ValidPageValue &&
                                                                         m.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == MessageTestUtilities.ValidSortOrderProperty &&
@@ -58,7 +58,7 @@ public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            UserTestUtilities.ValidName,
+            existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -72,12 +72,12 @@ public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
             .Should()
             .Match<MessagePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingMessage.Id &&
                                                            m.SenderId == existingMessage.SenderId &&
-                                                           m.SenderName == UserTestUtilities.ValidName &&
-                                                           m.SenderProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                           m.SenderName == existingMessage.Sender.UserName &&
+                                                           m.SenderProfileImage == existingMessage.Sender.ProfileImage &&
                                                            m.ReceiverId == existingMessage.ReceiverId &&
-                                                           m.ReceiverName == UserTestUtilities.ValidName &&
-                                                           m.ReceiverProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                           m.Content == MessageTestUtilities.ValidContent) &&
+                                                           m.ReceiverName == existingMessage.Receiver.UserName &&
+                                                           m.ReceiverProfileImage == existingMessage.Receiver.ProfileImage &&
+                                                           m.Content == existingMessage.Content) &&
                                                            mc.Page == MessageTestUtilities.ValidPageValue &&
                                                            mc.PageSize == MessageTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == MessageTestUtilities.ValidTotalCountValue &&

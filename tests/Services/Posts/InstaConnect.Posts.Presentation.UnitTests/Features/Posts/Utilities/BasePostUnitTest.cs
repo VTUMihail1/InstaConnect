@@ -62,8 +62,8 @@ public abstract class BasePostUnitTest
             post.Title,
             post.Content,
             user.Id,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            user.UserName,
+            user.ProfileImage);
 
         var postCommandViewModel = new PostCommandViewModel(post.Id);
         var postPaginationCollectionModel = new PostPaginationQueryViewModel(
@@ -78,7 +78,7 @@ public abstract class BasePostUnitTest
             .SendAsync(Arg.Is<GetAllPostsQuery>(m =>
                   m.Title == post.Title &&
                   m.UserId == user.Id &&
-                  m.UserName == UserTestUtilities.ValidName &&
+                  m.UserName == user.UserName &&
                   m.SortOrder == PostTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == PostTestUtilities.ValidSortPropertyName &&
                   m.Page == PostTestUtilities.ValidPageValue &&

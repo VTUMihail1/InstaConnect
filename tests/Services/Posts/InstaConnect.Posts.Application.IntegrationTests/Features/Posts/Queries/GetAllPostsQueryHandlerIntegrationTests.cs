@@ -25,7 +25,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -71,7 +71,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -92,7 +92,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             null,
@@ -113,7 +113,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.InvalidSortPropertyName,
@@ -137,7 +137,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
@@ -160,7 +160,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -183,7 +183,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -204,7 +204,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             null,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -219,8 +219,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
                                                                     m.UserId == existingPost.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPost.User.UserName &&
+                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                     m.Title == existingPost.Title &&
                                                                     m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -237,7 +237,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             string.Empty,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -252,8 +252,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
                                                                     m.UserId == existingPost.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPost.User.UserName &&
+                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                     m.Title == existingPost.Title &&
                                                                     m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -270,7 +270,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             SharedTestUtilities.GetNonCaseMatchingString(existingPost.UserId),
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -285,8 +285,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
                                                                     m.UserId == existingPost.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPost.User.UserName &&
+                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                     m.Title == existingPost.Title &&
                                                                     m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -318,8 +318,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
                                                                     m.UserId == existingPost.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPost.User.UserName &&
+                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                     m.Title == existingPost.Title &&
                                                                     m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -351,8 +351,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
                                                                     m.UserId == existingPost.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPost.User.UserName &&
+                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                     m.Title == existingPost.Title &&
                                                                     m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -369,7 +369,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPost.User.UserName),
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -384,8 +384,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
                                                                     m.UserId == existingPost.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPost.User.UserName &&
+                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                     m.Title == existingPost.Title &&
                                                                     m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -402,7 +402,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             null,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -417,8 +417,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
                                                                     m.UserId == existingPost.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPost.User.UserName &&
+                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                     m.Title == existingPost.Title &&
                                                                     m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -435,7 +435,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             string.Empty,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -450,8 +450,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
                                                                     m.UserId == existingPost.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPost.User.UserName &&
+                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                     m.Title == existingPost.Title &&
                                                                     m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -468,7 +468,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             SharedTestUtilities.GetNonCaseMatchingString(existingPost.Title),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -483,8 +483,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
                                                                     m.UserId == existingPost.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPost.User.UserName &&
+                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                     m.Title == existingPost.Title &&
                                                                     m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -501,7 +501,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             SharedTestUtilities.GetHalfStartString(existingPost.Title),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -516,8 +516,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
                                                                     m.UserId == existingPost.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPost.User.UserName &&
+                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                     m.Title == existingPost.Title &&
                                                                     m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
@@ -534,7 +534,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            UserTestUtilities.ValidName,
+            existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -549,8 +549,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
             .Should()
             .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
                                                                     m.UserId == existingPost.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPost.User.UserName &&
+                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
                                                                     m.Title == existingPost.Title &&
                                                                     m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&

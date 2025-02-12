@@ -76,8 +76,8 @@ public abstract class BasePostCommentUnitTest
             postComment.Content,
             post.Id,
             user.Id,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            user.UserName,
+            user.ProfileImage);
 
         var postCommentCommandViewModel = new PostCommentCommandViewModel(postComment.Id);
         var postCommentPaginationCollectionModel = new PostCommentPaginationQueryViewModel(
@@ -92,7 +92,7 @@ public abstract class BasePostCommentUnitTest
             .SendAsync(Arg.Is<GetAllPostCommentsQuery>(m =>
                   m.PostId == post.Id &&
                   m.UserId == user.Id &&
-                  m.UserName == UserTestUtilities.ValidName &&
+                  m.UserName == user.UserName &&
                   m.SortOrder == PostCommentTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == PostCommentTestUtilities.ValidSortPropertyName &&
                   m.Page == PostCommentTestUtilities.ValidPageValue &&
@@ -114,7 +114,7 @@ public abstract class BasePostCommentUnitTest
             .SendAsync(Arg.Is<UpdatePostCommentCommand>(m =>
                   m.Id == postComment.Id &&
                   m.CurrentUserId == user.Id &&
-                  m.Content == PostCommentTestUtilities.ValidUpdateContent), CancellationToken)
+                  m.Content == postComment.Content), CancellationToken)
             .Returns(postCommentCommandViewModel);
 
         return postComment;

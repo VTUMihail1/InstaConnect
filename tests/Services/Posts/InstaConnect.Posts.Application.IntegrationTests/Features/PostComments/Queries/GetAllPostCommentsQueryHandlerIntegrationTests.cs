@@ -26,7 +26,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             SharedTestUtilities.GetString(length),
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -72,7 +72,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             SharedTestUtilities.GetString(length),
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -93,7 +93,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             null,
@@ -114,7 +114,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.InvalidSortPropertyName,
@@ -138,7 +138,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
@@ -161,7 +161,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -184,7 +184,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -205,7 +205,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             null,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -220,8 +220,8 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
                                                                     m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPostComment.User.UserName &&
+                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
                                                                     m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
@@ -238,7 +238,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             string.Empty,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -253,8 +253,8 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
                                                                     m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPostComment.User.UserName &&
+                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
                                                                     m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
@@ -271,7 +271,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.UserId),
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -286,8 +286,8 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
                                                                     m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPostComment.User.UserName &&
+                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
                                                                     m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
@@ -319,8 +319,8 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
                                                                     m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPostComment.User.UserName &&
+                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
                                                                     m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
@@ -352,8 +352,8 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
                                                                     m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPostComment.User.UserName &&
+                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
                                                                     m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
@@ -370,7 +370,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.User.UserName),
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -385,8 +385,8 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
                                                                     m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPostComment.User.UserName &&
+                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
                                                                     m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
@@ -403,7 +403,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             null,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -418,8 +418,8 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
                                                                     m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPostComment.User.UserName &&
+                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
                                                                     m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
@@ -436,7 +436,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             string.Empty,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -451,8 +451,8 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
                                                                     m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPostComment.User.UserName &&
+                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
                                                                     m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
@@ -469,7 +469,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.PostId),
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -484,8 +484,8 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
                                                                     m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPostComment.User.UserName &&
+                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
                                                                     m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
@@ -502,7 +502,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            UserTestUtilities.ValidName,
+            existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -517,8 +517,8 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
                                                                     m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == UserTestUtilities.ValidName &&
-                                                                    m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                                    m.UserName == existingPostComment.User.UserName &&
+                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
                                                                     m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&

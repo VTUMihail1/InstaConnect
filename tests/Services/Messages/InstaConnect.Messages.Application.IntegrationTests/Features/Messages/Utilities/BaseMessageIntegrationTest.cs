@@ -7,6 +7,7 @@ using InstaConnect.Messages.Domain.Features.Users.Abstract;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Messages.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -60,12 +61,38 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTest
         InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
     }
 
-    protected async Task<Message> CreateMessageAsync(CancellationToken cancellationToken)
+    private async Task<User> CreateUserUtilAsync(CancellationToken cancellationToken)
     {
-        var sender = await CreateUserAsync(cancellationToken);
-        var receiver = await CreateUserAsync(cancellationToken);
+        var user = new User(
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+
+        userWriteRepository.Add(user);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return user;
+    }
+
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserUtilAsync(cancellationToken);
+
+        return user;
+    }
+
+    private async Task<Message> CreateMessageUtilAsync(
+        User sender,
+        User receiver,
+        CancellationToken cancellationToken)
+    {
         var message = new Message(
-            MessageTestUtilities.ValidContent,
+            SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
             sender.Id,
             receiver.Id);
 
@@ -78,22 +105,13 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTest
         return message;
     }
 
-    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    protected async Task<Message> CreateMessageAsync(CancellationToken cancellationToken)
     {
-        var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+        var sender = await CreateUserAsync(cancellationToken);
+        var receiver = await CreateUserAsync(cancellationToken);
+        var message = await CreateMessageUtilAsync(sender, receiver, cancellationToken);
 
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-
-        userWriteRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return user;
+        return message;
     }
 
     public async Task InitializeAsync()

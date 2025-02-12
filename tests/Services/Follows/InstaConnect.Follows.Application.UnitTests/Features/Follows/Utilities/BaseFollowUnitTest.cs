@@ -9,6 +9,7 @@ using InstaConnect.Follows.Domain.Features.Users.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
 
@@ -47,14 +48,14 @@ public abstract class BaseFollowUnitTest
         FollowWriteRepository = Substitute.For<IFollowWriteRepository>();
     }
 
-    public User CreateUser()
+    private User CreateUserUtil()
     {
         var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -62,10 +63,15 @@ public abstract class BaseFollowUnitTest
         return user;
     }
 
-    public Follow CreateFollow()
+    protected User CreateUser()
     {
-        var follower = CreateUser();
-        var following = CreateUser();
+        var user = CreateUserUtil();
+
+        return user;
+    }
+
+    public Follow CreateFollowUtil(User follower, User following)
+    {
         var follow = new Follow(follower, following);
 
         var followPaginationList = new PaginationList<Follow>(
@@ -96,6 +102,15 @@ public abstract class BaseFollowUnitTest
                                                                  m.SortOrder == FollowTestUtilities.ValidSortOrderProperty &&
                                                                  m.SortPropertyName == FollowTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(followPaginationList);
+
+        return follow;
+    }
+
+    public Follow CreateFollow()
+    {
+        var follower = CreateUser();
+        var following = CreateUser();
+        var follow = CreateFollowUtil(follower, following);
 
         return follow;
     }

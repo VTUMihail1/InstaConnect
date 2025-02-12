@@ -77,8 +77,8 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentQueryViewModel>(m => m.Id == existingPostComment.Id &&
                                                   m.UserId == existingPostComment.UserId &&
-                                                  m.UserName == UserTestUtilities.ValidName &&
-                                                  m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                  m.UserName == existingPostComment.User.UserName &&
+                                                  m.UserProfileImage == existingPostComment.User.ProfileImage &&
                                                   m.PostId == existingPostComment.PostId &&
                                                   m.Content == existingPostComment.Content);
     }
@@ -98,8 +98,8 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentInt
             .Should()
             .Match<PostCommentQueryViewModel>(m => m.Id == existingPostComment.Id &&
                                                   m.UserId == existingPostComment.UserId &&
-                                                  m.UserName == UserTestUtilities.ValidName &&
-                                                  m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                  m.UserName == existingPostComment.User.UserName &&
+                                                  m.UserProfileImage == existingPostComment.User.ProfileImage &&
                                                   m.PostId == existingPostComment.PostId &&
                                                   m.Content == existingPostComment.Content);
     }

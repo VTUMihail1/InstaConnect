@@ -64,8 +64,8 @@ public class GetPostLikeByIdControllerUnitTests : BasePostLikeUnitTest
             .Match<PostLikeQueryResponse>(m => m.Id == existingPostLike.Id &&
                                                  m.PostId == existingPostLike.PostId &&
                                                  m.UserId == existingPostLike.UserId &&
-                                                 m.UserName == UserTestUtilities.ValidName &&
-                                                 m.UserProfileImage == UserTestUtilities.ValidProfileImage);
+                                                 m.UserName == existingPostLike.User.UserName &&
+                                                 m.UserProfileImage == existingPostLike.User.ProfileImage);
     }
 
     [Fact]

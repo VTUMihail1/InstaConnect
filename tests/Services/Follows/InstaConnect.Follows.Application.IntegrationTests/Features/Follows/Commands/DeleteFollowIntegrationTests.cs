@@ -12,7 +12,7 @@ namespace InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Com
 
 public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
 {
-    public DeleteFollowIntegrationTests(FollowsIntegrationTestWebAppFactory followIntegrationTestWebAppFactory) : base(followIntegrationTestWebAppFactory)
+    public DeleteFollowIntegrationTests(FollowsWebApplicationFactory followsWebApplicationFactory) : base(followsWebApplicationFactory)
     {
 
     }
@@ -23,7 +23,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
         var command = new DeleteFollowCommand(
-            null!,
+            null,
             existingFollow.FollowerId
         );
 
@@ -61,7 +61,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         var existingFollow = await CreateFollowAsync(CancellationToken);
         var command = new DeleteFollowCommand(
             existingFollow.Id,
-            null!
+            null
         );
 
         // Act
