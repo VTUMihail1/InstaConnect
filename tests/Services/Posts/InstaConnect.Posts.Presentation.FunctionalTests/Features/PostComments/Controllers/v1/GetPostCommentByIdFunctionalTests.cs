@@ -13,7 +13,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.
 
 public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
 {
-    public GetPostCommentByIdFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetPostCommentByIdFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -91,7 +91,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
         response
             .Should()
             .Match<PostCommentQueryResponse>(m => m.Id == existingPostComment.Id &&
-                                 m.Content == PostCommentTestUtilities.ValidContent &&
+                                 m.Content == existingPostComment.Content &&
                                  m.UserId == existingPostComment.UserId &&
                                  m.UserName == UserTestUtilities.ValidName &&
                                  m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
@@ -114,7 +114,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
         response
             .Should()
             .Match<PostCommentQueryResponse>(m => m.Id == existingPostComment.Id &&
-                                 m.Content == PostCommentTestUtilities.ValidContent &&
+                                 m.Content == existingPostComment.Content &&
                                  m.UserId == existingPostComment.UserId &&
                                  m.UserName == UserTestUtilities.ValidName &&
                                  m.UserProfileImage == UserTestUtilities.ValidProfileImage &&

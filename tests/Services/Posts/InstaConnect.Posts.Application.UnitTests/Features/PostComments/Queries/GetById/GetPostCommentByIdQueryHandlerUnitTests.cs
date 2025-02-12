@@ -68,6 +68,6 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentUnitTest
                                               m.UserName == UserTestUtilities.ValidName &&
                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                               m.PostId == existingPostComment.PostId &&
-                                              m.Content == PostCommentTestUtilities.ValidContent);
+                                              m.Content == existingPostComment.Content);
     }
 }

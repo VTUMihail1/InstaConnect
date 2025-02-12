@@ -14,7 +14,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Command
 
 public class UpdatePostIntegrationTests : BasePostIntegrationTest
 {
-    public UpdatePostIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public UpdatePostIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -25,7 +25,7 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new UpdatePostCommand(
-            null!,
+            null,
             existingPost.UserId,
             PostTestUtilities.ValidUpdateTitle,
             PostTestUtilities.ValidUpdateContent
@@ -67,7 +67,7 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new UpdatePostCommand(
             existingPost.Id,
-            null!,
+            null,
             PostTestUtilities.ValidUpdateTitle,
             PostTestUtilities.ValidUpdateContent
         );
@@ -109,7 +109,7 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
         var command = new UpdatePostCommand(
             existingPost.Id,
             existingPost.UserId,
-            null!,
+            null,
             PostTestUtilities.ValidUpdateContent
         );
 
@@ -151,7 +151,7 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
             existingPost.Id,
             existingPost.UserId,
             PostTestUtilities.ValidUpdateTitle,
-            null!
+            null
         );
 
         // Act

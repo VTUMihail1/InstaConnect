@@ -20,7 +20,7 @@ public class GetPostCommentByIdQueryValidatorUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var existingPostComment = CreatePostComment();
-        var query = new GetPostCommentByIdQuery(null!);
+        var query = new GetPostCommentByIdQuery(null);
 
         // Act
         var result = _validator.TestValidate(query);

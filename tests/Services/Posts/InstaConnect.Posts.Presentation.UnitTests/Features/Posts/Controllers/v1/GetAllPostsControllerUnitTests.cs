@@ -33,7 +33,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -58,7 +58,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -77,8 +77,8 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
             .Should()
             .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                  m.Id == existingPost.Id &&
-                                                                 m.Title == PostTestUtilities.ValidTitle &&
-                                                                 m.Content == PostTestUtilities.ValidContent &&
+                                                                 m.Title == existingPost.Title &&
+                                                                 m.Content == existingPost.Content &&
                                                                  m.UserId == existingPost.UserId &&
                                                                  m.UserName == UserTestUtilities.ValidName &&
                                                                  m.UserProfileImage == UserTestUtilities.ValidProfileImage) &&
@@ -97,7 +97,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -113,7 +113,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
               .SendAsync(Arg.Is<GetAllPostsQuery>(m =>
                   m.UserId == existingPost.UserId &&
                   m.UserName == UserTestUtilities.ValidName &&
-                  m.Title == PostTestUtilities.ValidTitle &&
+                  m.Title == existingPost.Title &&
                   m.SortOrder == PostTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == PostTestUtilities.ValidSortPropertyName &&
                   m.Page == PostTestUtilities.ValidPageValue &&

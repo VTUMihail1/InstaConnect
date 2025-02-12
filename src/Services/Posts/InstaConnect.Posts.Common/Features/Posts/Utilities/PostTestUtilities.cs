@@ -7,11 +7,9 @@ public class PostTestUtilities : SharedTestUtilities
 {
     public static readonly string InvalidId = GetAverageString(PostConfigurations.IdMaxLength, PostConfigurations.IdMinLength);
 
-    public static readonly string ValidTitle = GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength);
     public static readonly string ValidAddTitle = GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength);
     public static readonly string ValidUpdateTitle = GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength);
     
-    public static readonly string ValidContent = GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength);
     public static readonly string ValidAddContent = GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength);
     public static readonly string ValidUpdateContent = GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength);
 

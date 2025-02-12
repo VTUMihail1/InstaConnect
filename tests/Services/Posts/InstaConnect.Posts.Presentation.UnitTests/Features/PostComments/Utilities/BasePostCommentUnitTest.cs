@@ -13,6 +13,7 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Posts.Presentation.Features.PostComments.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Utilities;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostComments.Utilities;
@@ -41,11 +42,11 @@ public abstract class BasePostCommentUnitTest
     public User CreateUser()
     {
         var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
 
         return user;
     }
@@ -54,8 +55,8 @@ public abstract class BasePostCommentUnitTest
     {
         var user = CreateUser();
         var post = new Post(
-            PostTestUtilities.ValidTitle,
-            PostTestUtilities.ValidContent,
+            SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
+            SharedTestUtilities.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength),
             user);
 
         return post;
@@ -65,11 +66,14 @@ public abstract class BasePostCommentUnitTest
     {
         var user = CreateUser();
         var post = CreatePost();
-        var postComment = new PostComment(user, post, PostCommentTestUtilities.ValidContent);
+        var postComment = new PostComment(
+            user,
+            post,
+            SharedTestUtilities.GetAverageString(PostCommentConfigurations.ContentMaxLength, PostCommentConfigurations.ContentMinLength));
 
         var postCommentQueryViewModel = new PostCommentQueryViewModel(
             postComment.Id,
-            PostCommentTestUtilities.ValidContent,
+            postComment.Content,
             post.Id,
             user.Id,
             UserTestUtilities.ValidName,

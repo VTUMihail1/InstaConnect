@@ -17,7 +17,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Con
 
 public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
 {
-    public AddPostLikeFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public AddPostLikeFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -49,7 +49,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         var existingPost = await CreatePostAsync( CancellationToken);
         var request = new AddPostLikeRequest(
             existingUser.Id,
-            new(null!));
+            new(null));
 
         // Act
         var response = await PostLikesClient.AddStatusCodeAsync(request, CancellationToken);
@@ -89,7 +89,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync( CancellationToken);
         var request = new AddPostLikeRequest(
-            null!,
+            null,
             new(existingPost.Id));
 
         // Act
@@ -211,7 +211,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         // Act
         var response = await PostLikesClient.AddAsync(request, CancellationToken);
 
-        var postLike = await PostLikeWriteRepository.GetByIdAsync(response!.Id, CancellationToken);
+        var postLike = await PostLikeWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         postLike

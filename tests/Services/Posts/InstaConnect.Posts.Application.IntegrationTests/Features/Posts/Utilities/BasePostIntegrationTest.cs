@@ -7,12 +7,13 @@ using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Utilities;
 
-public abstract class BasePostIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
+public abstract class BasePostIntegrationTest : IClassFixture<PostsWebApplicationFactory>, IAsyncLifetime
 {
     protected IServiceScope ServiceScope { get; }
 
@@ -53,19 +54,43 @@ public abstract class BasePostIntegrationTest : IClassFixture<IntegrationTestWeb
         }
     }
 
-    protected BasePostIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
+    protected BasePostIntegrationTest(PostsWebApplicationFactory postsWebApplicationFactory)
     {
-        ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
+        ServiceScope = postsWebApplicationFactory.Services.CreateScope();
         CancellationToken = new CancellationToken();
         InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
     }
 
-    protected async Task<Post> CreatePostAsync(CancellationToken cancellationToken)
+    private async Task<User> CreateUserUtilAsync(CancellationToken cancellationToken)
     {
-        var user = await CreateUserAsync(CancellationToken);
+        var user = new User(
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+
+        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+
+        userWriteRepository.Add(user);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return user;
+    }
+
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserUtilAsync(cancellationToken);
+
+        return user;
+    }
+
+    private async Task<Post> CreatePostAsyncUtil(User user, CancellationToken cancellationToken)
+    {
         var post = new Post(
-            PostTestUtilities.ValidTitle,
-            PostTestUtilities.ValidContent,
+            SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
+            SharedTestUtilities.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength),
             user);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
@@ -77,22 +102,12 @@ public abstract class BasePostIntegrationTest : IClassFixture<IntegrationTestWeb
         return post;
     }
 
-    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    protected async Task<Post> CreatePostAsync(CancellationToken cancellationToken)
     {
-        var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+        var user = await CreateUserAsync(CancellationToken);
+        var post = await CreatePostAsyncUtil(user, cancellationToken);
 
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-
-        userWriteRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return user;
+        return post;
     }
 
     public async Task InitializeAsync()

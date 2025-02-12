@@ -94,7 +94,7 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
             .Delete(Arg.Is<PostComment>(m => m.Id == existingPostComment.Id &&
                                              m.UserId == existingPostComment.UserId &&
                                              m.PostId == existingPostComment.PostId &&
-                                             m.Content == PostCommentTestUtilities.ValidContent));
+                                             m.Content == existingPostComment.Content));
     }
 
     [Fact]

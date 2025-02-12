@@ -14,7 +14,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Con
 
 public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
 {
-    public GetPostLikeByIdFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetPostLikeByIdFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

@@ -34,7 +34,7 @@ public class PostsClient : IPostsClient
         var response = await _httpClient
             .GetFromJsonAsync<PostPaginationQueryResponse>(route, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<PostPaginationQueryResponse> GetAllAsync(CancellationToken cancellationToken)
@@ -42,7 +42,7 @@ public class PostsClient : IPostsClient
         var response = await _httpClient
             .GetFromJsonAsync<PostPaginationQueryResponse>(PostTestRoutes.Default, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> GetByIdStatusCodeAsync(
@@ -63,7 +63,7 @@ public class PostsClient : IPostsClient
         var response = await _httpClient
             .GetFromJsonAsync<PostQueryResponse>(route, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> AddStatusCodeAsync(
@@ -104,7 +104,7 @@ public class PostsClient : IPostsClient
             .PostAsJsonAsync(PostTestRoutes.Default, request.Body, cancellationToken);
         var response = await httpResponsePost.Content.ReadFromJsonAsync<PostCommandResponse>(cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> UpdateStatusCodeAsync(
@@ -151,7 +151,7 @@ public class PostsClient : IPostsClient
             .PutAsJsonAsync(route, request.Body, cancellationToken);
         var response = await httpResponsePost.Content.ReadFromJsonAsync<PostCommandResponse>(cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> DeleteStatusCodeAsync(

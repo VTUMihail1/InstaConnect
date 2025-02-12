@@ -22,7 +22,7 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var existingPostLike = CreatePostLike();
         var command = new DeletePostLikeCommand(
-            null!,
+            null,
             existingPostLike.UserId
         );
 
@@ -60,7 +60,7 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
         var existingPostLike = CreatePostLike();
         var command = new DeletePostLikeCommand(
             existingPostLike.Id,
-            null!
+            null
         );
 
         // Act

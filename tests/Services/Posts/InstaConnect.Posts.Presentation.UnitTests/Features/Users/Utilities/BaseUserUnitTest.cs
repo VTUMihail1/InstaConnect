@@ -5,9 +5,10 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Posts.Presentation.Features.Users.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Utilities;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Presentation.UnitTests.Features.Users.Utilities;
+namespace InstaConnect.Follows.Presentation.UnitTests.Features.Users.Utilities;
 
 public abstract class BaseUserUnitTest
 {
@@ -29,20 +30,20 @@ public abstract class BaseUserUnitTest
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
     }
 
-    public string CreateUser()
+    public User CreateUser()
     {
         var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
 
         UserWriteRepository.GetByIdAsync(
             user.Id,
             CancellationToken)
             .Returns(user);
 
-        return user.Id;
+        return user;
     }
 }

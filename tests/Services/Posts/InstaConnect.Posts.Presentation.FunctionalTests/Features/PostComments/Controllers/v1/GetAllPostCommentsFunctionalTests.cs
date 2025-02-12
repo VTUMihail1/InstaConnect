@@ -15,7 +15,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.
 
 public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
 {
-    public GetAllPostCommentsFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetAllPostCommentsFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -228,7 +228,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.PostId == existingPostComment.PostId &&
-                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                               m.Content == existingPostComment.Content) &&
                                                                mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -262,7 +262,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.PostId == existingPostComment.PostId &&
-                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                               m.Content == existingPostComment.Content) &&
                                                                mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -296,7 +296,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.PostId == existingPostComment.PostId &&
-                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                               m.Content == existingPostComment.Content) &&
                                                                mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -330,7 +330,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.PostId == existingPostComment.PostId &&
-                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                               m.Content == existingPostComment.Content) &&
                                                                mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -364,7 +364,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.PostId == existingPostComment.PostId &&
-                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                               m.Content == existingPostComment.Content) &&
                                                                mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -398,7 +398,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.PostId == existingPostComment.PostId &&
-                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                               m.Content == existingPostComment.Content) &&
                                                                mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -424,7 +424,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                m.PostId == existingPostComment.PostId &&
-                                                               m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                               m.Content == existingPostComment.Content) &&
                                                                mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&

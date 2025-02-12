@@ -4,11 +4,12 @@ using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Messages.Infrastructure;
 using InstaConnect.Messages.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Utilities;
 using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Users.Utilities;
+namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Users.Utilities;
 
 public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
 {
@@ -40,21 +41,21 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
 
     protected Dictionary<string, object> ValidJwtConfig { get; set; }
 
-    protected BaseUserFunctionalTest(FunctionalTestWebAppFactory followsFunctionalTestWebAppFactory)
+    protected BaseUserFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
     {
-        ServiceScope = followsFunctionalTestWebAppFactory.Services.CreateScope();
+        ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
         CancellationToken = new();
         ValidJwtConfig = [];
     }
 
-    protected async Task<string> CreateUserAsync(CancellationToken cancellationToken)
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
@@ -62,7 +63,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
         userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return user.Id;
+        return user;
     }
 
     public async Task InitializeAsync()

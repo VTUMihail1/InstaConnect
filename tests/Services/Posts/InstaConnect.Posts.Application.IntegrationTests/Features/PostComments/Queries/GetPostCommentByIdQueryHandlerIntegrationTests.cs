@@ -13,7 +13,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.
 
 public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentIntegrationTest
 {
-    public GetPostCommentByIdQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetPostCommentByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
     }
 
@@ -22,7 +22,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentInt
     {
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetPostCommentByIdQuery(null!);
+        var query = new GetPostCommentByIdQuery(null);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -80,7 +80,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentInt
                                                   m.UserName == UserTestUtilities.ValidName &&
                                                   m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                   m.PostId == existingPostComment.PostId &&
-                                                  m.Content == PostCommentTestUtilities.ValidContent);
+                                                  m.Content == existingPostComment.Content);
     }
 
     [Fact]
@@ -101,6 +101,6 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentInt
                                                   m.UserName == UserTestUtilities.ValidName &&
                                                   m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                   m.PostId == existingPostComment.PostId &&
-                                                  m.Content == PostCommentTestUtilities.ValidContent);
+                                                  m.Content == existingPostComment.Content);
     }
 }

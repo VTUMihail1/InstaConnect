@@ -12,7 +12,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Con
 
 public class DeletePostLikeFunctionalTests : BasePostLikeFunctionalTest
 {
-    public DeletePostLikeFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public DeletePostLikeFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -62,7 +62,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new DeletePostLikeRequest(
             existingPostLike.Id,
-            null!);
+            null);
 
         // Act
         var response = await PostLikesClient.DeleteStatusCodeAsync(request, CancellationToken);

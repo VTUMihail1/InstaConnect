@@ -13,7 +13,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.
 
 public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentIntegrationTest
 {
-    public GetAllPostCommentsQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetAllPostCommentsQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
     }
 
@@ -96,7 +96,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             UserTestUtilities.ValidName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
-            null!,
+            null,
             PostCommentTestUtilities.ValidPageValue,
             PostCommentTestUtilities.ValidPageSizeValue);
 
@@ -204,7 +204,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
-            null!,
+            null,
             UserTestUtilities.ValidName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
@@ -223,7 +223,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                                    m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -256,7 +256,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                                    m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -289,7 +289,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                                    m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -304,7 +304,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            null!,
+            null,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -322,7 +322,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                                    m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -355,7 +355,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                                    m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -388,7 +388,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                                    m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -404,7 +404,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
             UserTestUtilities.ValidName,
-            null!,
+            null,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
             PostCommentTestUtilities.ValidPageValue,
@@ -421,7 +421,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                                    m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -454,7 +454,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                                    m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -487,7 +487,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                                    m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
@@ -520,7 +520,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                                     m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                                    m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&

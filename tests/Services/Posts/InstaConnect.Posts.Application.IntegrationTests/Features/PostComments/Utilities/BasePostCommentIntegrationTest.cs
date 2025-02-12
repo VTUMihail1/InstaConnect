@@ -10,12 +10,13 @@ using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Utilities;
 
-public abstract class BasePostCommentIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
+public abstract class BasePostCommentIntegrationTest : IClassFixture<PostsWebApplicationFactory>, IAsyncLifetime
 {
     protected IServiceScope ServiceScope { get; }
 
@@ -56,21 +57,21 @@ public abstract class BasePostCommentIntegrationTest : IClassFixture<Integration
         }
     }
 
-    protected BasePostCommentIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
+    protected BasePostCommentIntegrationTest(PostsWebApplicationFactory postsWebApplicationFactory)
     {
-        ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
+        ServiceScope = postsWebApplicationFactory.Services.CreateScope();
         CancellationToken = new CancellationToken();
         InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
     }
 
-    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    private async Task<User> CreateUserUtilAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
@@ -81,12 +82,18 @@ public abstract class BasePostCommentIntegrationTest : IClassFixture<Integration
         return user;
     }
 
-    protected async Task<Post> CreatePostAsync(CancellationToken cancellationToken)
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
-        var user = await CreateUserAsync(cancellationToken);
+        var user = await CreateUserUtilAsync(cancellationToken);
+
+        return user;
+    }
+
+    private async Task<Post> CreatePostAsyncUtil(User user, CancellationToken cancellationToken)
+    {
         var post = new Post(
-            PostTestUtilities.ValidTitle,
-            PostTestUtilities.ValidContent,
+            SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
+            SharedTestUtilities.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength),
             user);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
@@ -98,20 +105,35 @@ public abstract class BasePostCommentIntegrationTest : IClassFixture<Integration
         return post;
     }
 
-    protected async Task<PostComment> CreatePostCommentAsync(CancellationToken cancellationToken)
+    protected async Task<Post> CreatePostAsync(CancellationToken cancellationToken)
     {
-        var user = await CreateUserAsync(cancellationToken);
-        var post = await CreatePostAsync(cancellationToken);
+        var user = await CreateUserAsync(CancellationToken);
+        var post = await CreatePostAsyncUtil(user, cancellationToken);
+
+        return post;
+    }
+
+    protected async Task<PostComment> CreatePostCommentUtilAsync(User user, Post post, CancellationToken cancellationToken)
+    {
         var postComment = new PostComment(
             user,
             post,
-            PostCommentTestUtilities.ValidContent);
+            SharedTestUtilities.GetAverageString(PostCommentConfigurations.ContentMaxLength, PostCommentConfigurations.ContentMinLength));
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var postCommentWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostCommentWriteRepository>();
 
         postCommentWriteRepository.Add(postComment);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return postComment;
+    }
+
+    protected async Task<PostComment> CreatePostCommentAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(cancellationToken);
+        var post = await CreatePostAsync(cancellationToken);
+        var postComment = await CreatePostCommentUtilAsync(user, post, cancellationToken);
 
         return postComment;
     }

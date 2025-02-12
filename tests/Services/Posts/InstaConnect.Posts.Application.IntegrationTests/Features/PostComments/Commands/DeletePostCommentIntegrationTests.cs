@@ -13,7 +13,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.
 
 public class DeletePostCommentIntegrationTests : BasePostCommentIntegrationTest
 {
-    public DeletePostCommentIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public DeletePostCommentIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -25,7 +25,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
 
         var command = new DeletePostCommentCommand(
-            null!,
+            null,
             existingPostComment.UserId
         );
 
@@ -65,7 +65,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentIntegrationTest
 
         var command = new DeletePostCommentCommand(
             existingPostComment.Id,
-            null!
+            null
         );
 
         // Act

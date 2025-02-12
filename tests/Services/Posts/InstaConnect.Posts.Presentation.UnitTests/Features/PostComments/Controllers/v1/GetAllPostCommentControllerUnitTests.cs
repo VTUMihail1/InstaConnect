@@ -81,7 +81,7 @@ public class GetAllPostCommentControllerUnitTests : BasePostCommentUnitTest
             .Match<PostCommentPaginationQueryResponse>(mc => mc.Items.All(m =>
                                                                  m.Id == existingPostComment.Id &&
                                                                  m.PostId == existingPostComment.PostId &&
-                                                                 m.Content == PostCommentTestUtilities.ValidContent &&
+                                                                 m.Content == existingPostComment.Content &&
                                                                  m.UserId == existingPostComment.UserId &&
                                                                  m.UserName == UserTestUtilities.ValidName &&
                                                                  m.UserProfileImage == UserTestUtilities.ValidProfileImage) &&

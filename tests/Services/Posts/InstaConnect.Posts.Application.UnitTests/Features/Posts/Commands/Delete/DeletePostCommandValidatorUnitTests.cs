@@ -22,7 +22,7 @@ public class DeletePostCommandValidatorUnitTests : BasePostUnitTest
         // Arrange
         var existingPost = CreatePost();
         var command = new DeletePostCommand(
-            null!,
+            null,
             existingPost.UserId
         );
 
@@ -60,7 +60,7 @@ public class DeletePostCommandValidatorUnitTests : BasePostUnitTest
         var existingPost = CreatePost();
         var command = new DeletePostCommand(
             existingPost.Id,
-            null!
+            null
         );
 
         // Act

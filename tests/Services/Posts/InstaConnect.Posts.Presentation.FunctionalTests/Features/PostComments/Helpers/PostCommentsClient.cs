@@ -34,7 +34,7 @@ public class PostCommentsClient : IPostCommentsClient
         var response = await _httpClient
             .GetFromJsonAsync<PostCommentPaginationQueryResponse>(route, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<PostCommentPaginationQueryResponse> GetAllAsync(CancellationToken cancellationToken)
@@ -42,7 +42,7 @@ public class PostCommentsClient : IPostCommentsClient
         var response = await _httpClient
             .GetFromJsonAsync<PostCommentPaginationQueryResponse>(PostCommentTestRoutes.Default, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> GetByIdStatusCodeAsync(
@@ -63,7 +63,7 @@ public class PostCommentsClient : IPostCommentsClient
         var response = await _httpClient
             .GetFromJsonAsync<PostCommentQueryResponse>(route, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> AddStatusCodeAsync(
@@ -104,7 +104,7 @@ public class PostCommentsClient : IPostCommentsClient
             .PostAsJsonAsync(PostCommentTestRoutes.Default, request.Body, cancellationToken);
         var response = await httpResponsePostComment.Content.ReadFromJsonAsync<PostCommentCommandResponse>(cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> UpdateStatusCodeAsync(
@@ -151,7 +151,7 @@ public class PostCommentsClient : IPostCommentsClient
             .PutAsJsonAsync(route, request.Body, cancellationToken);
         var response = await httpResponsePostComment.Content.ReadFromJsonAsync<PostCommentCommandResponse>(cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> DeleteStatusCodeAsync(

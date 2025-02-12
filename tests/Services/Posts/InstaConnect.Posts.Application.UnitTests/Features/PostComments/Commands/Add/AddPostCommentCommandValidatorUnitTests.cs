@@ -24,7 +24,7 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
         var post = CreatePost();
         var user = CreateUser();
         var command = new AddPostCommentCommand(
-            null!,
+            null,
             post.Id,
             PostCommentTestUtilities.ValidAddContent);
 
@@ -64,7 +64,7 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
         var user = CreateUser();
         var command = new AddPostCommentCommand(
             user.Id,
-            null!,
+            null,
             PostCommentTestUtilities.ValidAddContent);
 
         // Act
@@ -104,7 +104,7 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
         var command = new AddPostCommentCommand(
             user.Id,
             post.Id,
-            null!);
+            null);
 
         // Act
         var result = _commandValidator.TestValidate(command);

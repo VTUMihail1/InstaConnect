@@ -92,8 +92,8 @@ public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
             .Received(1)
             .Delete(Arg.Is<Post>(m => m.Id == existingPost.Id &&
                                       m.UserId == existingPost.UserId &&
-                                      m.Title == PostTestUtilities.ValidTitle &&
-                                      m.Content == PostTestUtilities.ValidContent));
+                                      m.Title == existingPost.Title &&
+                                      m.Content == existingPost.Content));
     }
 
     [Fact]

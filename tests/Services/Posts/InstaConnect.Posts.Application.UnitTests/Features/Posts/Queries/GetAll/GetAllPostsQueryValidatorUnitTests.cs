@@ -26,7 +26,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var query = new GetAllPostsQuery(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -49,7 +49,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             SharedTestUtilities.GetString(length),
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -93,9 +93,9 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
-            null!,
+            null,
             PostTestUtilities.ValidPageValue,
             PostTestUtilities.ValidPageSizeValue);
 
@@ -114,7 +114,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.InvalidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -138,7 +138,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidPageValue,
@@ -161,7 +161,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             value,
@@ -184,7 +184,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -205,7 +205,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,

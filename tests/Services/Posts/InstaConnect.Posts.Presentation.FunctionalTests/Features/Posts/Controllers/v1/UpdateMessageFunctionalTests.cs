@@ -16,7 +16,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Control
 
 public class UpdatePostFunctionalTests : BasePostFunctionalTest
 {
-    public UpdatePostFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public UpdatePostFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -71,7 +71,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         var request = new UpdatePostRequest(
             existingPost.Id,
             existingPost.UserId,
-            new(null!, PostTestUtilities.ValidUpdateContent)
+            new(null, PostTestUtilities.ValidUpdateContent)
         );
 
         // Act
@@ -114,7 +114,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         var request = new UpdatePostRequest(
             existingPost.Id,
             existingPost.UserId,
-            new(PostTestUtilities.ValidUpdateTitle, null!)
+            new(PostTestUtilities.ValidUpdateTitle, null)
         );
 
         // Act
@@ -156,7 +156,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new UpdatePostRequest(
             existingPost.Id,
-            null!,
+            null,
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
         );
 

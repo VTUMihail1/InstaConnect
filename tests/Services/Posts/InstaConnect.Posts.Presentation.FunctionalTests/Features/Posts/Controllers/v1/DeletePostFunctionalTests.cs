@@ -12,7 +12,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Control
 
 public class DeletePostFunctionalTests : BasePostFunctionalTest
 {
-    public DeletePostFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public DeletePostFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -64,7 +64,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new DeletePostRequest(
             existingPost.Id,
-            null!
+            null
         );
 
         // Act

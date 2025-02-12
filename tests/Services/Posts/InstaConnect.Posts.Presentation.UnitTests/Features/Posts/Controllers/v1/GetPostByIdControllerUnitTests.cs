@@ -60,8 +60,8 @@ public class GetPostByIdControllerUnitTests : BasePostUnitTest
             .Value
             .Should()
             .Match<PostQueryResponse>(m => m.Id == existingPost.Id &&
-                                                 m.Title == PostTestUtilities.ValidTitle &&
-                                                 m.Content == PostTestUtilities.ValidContent &&
+                                                 m.Title == existingPost.Title &&
+                                                 m.Content == existingPost.Content &&
                                                  m.UserId == existingPost.UserId &&
                                                  m.UserName == UserTestUtilities.ValidName &&
                                                  m.UserProfileImage == UserTestUtilities.ValidProfileImage);

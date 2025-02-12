@@ -14,7 +14,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Control
 
 public class GetAllPostsFunctionalTests : BasePostFunctionalTest
 {
-    public GetAllPostsFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetAllPostsFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -29,7 +29,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -54,7 +54,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             SharedTestUtilities.GetString(length),
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -102,7 +102,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.InvalidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -127,7 +127,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidPageValue,
@@ -152,7 +152,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             value,
@@ -179,7 +179,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -202,7 +202,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -225,7 +225,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -242,8 +242,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserId == existingPost.UserId &&
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                               m.Title == PostTestUtilities.ValidTitle &&
-                                                               m.Content == PostTestUtilities.ValidContent) &&
+                                                               m.Title == existingPost.Title &&
+                                                               m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -259,7 +259,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -276,8 +276,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserId == existingPost.UserId &&
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                               m.Title == PostTestUtilities.ValidTitle &&
-                                                               m.Content == PostTestUtilities.ValidContent) &&
+                                                               m.Title == existingPost.Title &&
+                                                               m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -293,7 +293,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             SharedTestUtilities.GetNonCaseMatchingString(existingPost.UserId),
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -310,8 +310,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserId == existingPost.UserId &&
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                               m.Title == PostTestUtilities.ValidTitle &&
-                                                               m.Content == PostTestUtilities.ValidContent) &&
+                                                               m.Title == existingPost.Title &&
+                                                               m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -327,7 +327,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -344,8 +344,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserId == existingPost.UserId &&
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                               m.Title == PostTestUtilities.ValidTitle &&
-                                                               m.Content == PostTestUtilities.ValidContent) &&
+                                                               m.Title == existingPost.Title &&
+                                                               m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -361,7 +361,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -378,8 +378,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserId == existingPost.UserId &&
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                               m.Title == PostTestUtilities.ValidTitle &&
-                                                               m.Content == PostTestUtilities.ValidContent) &&
+                                                               m.Title == existingPost.Title &&
+                                                               m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -395,7 +395,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            SharedTestUtilities.GetNonCaseMatchingString(PostTestUtilities.ValidTitle),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPost.Title),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -412,8 +412,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserId == existingPost.UserId &&
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                               m.Title == PostTestUtilities.ValidTitle &&
-                                                               m.Content == PostTestUtilities.ValidContent) &&
+                                                               m.Title == existingPost.Title &&
+                                                               m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -429,7 +429,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             SharedTestUtilities.GetHalfStartString(UserTestUtilities.ValidName),
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -446,8 +446,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserId == existingPost.UserId &&
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                               m.Title == PostTestUtilities.ValidTitle &&
-                                                               m.Content == PostTestUtilities.ValidContent) &&
+                                                               m.Title == existingPost.Title &&
+                                                               m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -472,8 +472,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
                                                                m.UserId == existingPost.UserId &&
                                                                m.UserName == UserTestUtilities.ValidName &&
                                                                m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                               m.Title == PostTestUtilities.ValidTitle &&
-                                                               m.Content == PostTestUtilities.ValidContent) &&
+                                                               m.Title == existingPost.Title &&
+                                                               m.Content == existingPost.Content) &&
                                                                mc.Page == PostTestUtilities.ValidPageValue &&
                                                                mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                                mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&

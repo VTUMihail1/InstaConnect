@@ -28,7 +28,7 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -43,7 +43,7 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
             .GetAllAsync(Arg.Is<PostCollectionReadQuery>(m =>
                                                                         m.UserId == existingPost.UserId &&
                                                                         m.UserName == UserTestUtilities.ValidName &&
-                                                                        m.Title == PostTestUtilities.ValidTitle &&
+                                                                        m.Title == existingPost.Title &&
                                                                         m.Page == PostTestUtilities.ValidPageValue &&
                                                                         m.Page == PostTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostTestUtilities.ValidPageSizeValue &&
@@ -59,7 +59,7 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -75,8 +75,8 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
                                                            m.UserId == existingPost.UserId &&
                                                            m.UserName == UserTestUtilities.ValidName &&
                                                            m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                           m.Title == PostTestUtilities.ValidTitle &&
-                                                           m.Content == PostTestUtilities.ValidContent) &&
+                                                           m.Title == existingPost.Title &&
+                                                           m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&

@@ -23,7 +23,7 @@ public class DeletePostCommentLikeCommandValidatorUnitTests : BasePostCommentLik
         // Arrange
         var existingPostCommentLike = CreatePostCommentLike();
         var command = new DeletePostCommentLikeCommand(
-            null!,
+            null,
             existingPostCommentLike.UserId
         );
 
@@ -61,7 +61,7 @@ public class DeletePostCommentLikeCommandValidatorUnitTests : BasePostCommentLik
         var existingPostCommentLike = CreatePostCommentLike();
         var command = new DeletePostCommentLikeCommand(
             existingPostCommentLike.Id,
-            null!
+            null
         );
 
         // Act

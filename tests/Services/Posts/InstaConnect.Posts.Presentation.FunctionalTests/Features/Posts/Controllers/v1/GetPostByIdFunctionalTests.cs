@@ -13,7 +13,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Control
 
 public class GetPostByIdFunctionalTests : BasePostFunctionalTest
 {
-    public GetPostByIdFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetPostByIdFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -91,11 +91,11 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         response
             .Should()
             .Match<PostQueryResponse>(m => m.Id == existingPost.Id &&
-                                 m.Content == PostTestUtilities.ValidContent &&
+                                 m.Content == existingPost.Content &&
                                  m.UserId == existingPost.UserId &&
                                  m.UserName == UserTestUtilities.ValidName &&
                                  m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                 m.Title == PostTestUtilities.ValidTitle);
+                                 m.Title == existingPost.Title);
     }
 
     [Fact]
@@ -114,10 +114,10 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         response
             .Should()
             .Match<PostQueryResponse>(m => m.Id == existingPost.Id &&
-                                 m.Content == PostTestUtilities.ValidContent &&
+                                 m.Content == existingPost.Content &&
                                  m.UserId == existingPost.UserId &&
                                  m.UserName == UserTestUtilities.ValidName &&
                                  m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                 m.Title == PostTestUtilities.ValidTitle);
+                                 m.Title == existingPost.Title);
     }
 }

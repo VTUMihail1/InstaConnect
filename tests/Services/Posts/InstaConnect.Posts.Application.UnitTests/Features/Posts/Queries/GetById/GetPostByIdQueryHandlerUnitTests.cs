@@ -67,7 +67,7 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostUnitTest
                                               m.UserId == existingPost.UserId &&
                                               m.UserName == UserTestUtilities.ValidName &&
                                               m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                              m.Title == PostTestUtilities.ValidTitle &&
-                                              m.Content == PostTestUtilities.ValidContent);
+                                              m.Title == existingPost.Title &&
+                                              m.Content == existingPost.Content);
     }
 }

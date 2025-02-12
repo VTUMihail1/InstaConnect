@@ -13,7 +13,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Queries
 
 public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
 {
-    public GetPostByIdQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetPostByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
     }
 
@@ -22,7 +22,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetPostByIdQuery(null!);
+        var query = new GetPostByIdQuery(null);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -79,8 +79,8 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
                                           m.UserId == existingPost.UserId &&
                                           m.UserName == UserTestUtilities.ValidName &&
                                           m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                          m.Title == PostTestUtilities.ValidTitle &&
-                                          m.Content == PostTestUtilities.ValidContent);
+                                          m.Title == existingPost.Title &&
+                                          m.Content == existingPost.Content);
     }
 
     [Fact]
@@ -100,7 +100,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
                                           m.UserId == existingPost.UserId &&
                                           m.UserName == UserTestUtilities.ValidName &&
                                           m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                          m.Title == PostTestUtilities.ValidTitle &&
-                                          m.Content == PostTestUtilities.ValidContent);
+                                          m.Title == existingPost.Title &&
+                                          m.Content == existingPost.Content);
     }
 }

@@ -15,7 +15,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.
 
 public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
 {
-    public AddPostCommentIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public AddPostCommentIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -27,7 +27,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostCommentCommand(
-            null!,
+            null,
             existingPost.Id,
             PostCommentTestUtilities.ValidAddContent
         );
@@ -69,7 +69,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostCommentCommand(
             existingUser.Id,
-            null!,
+            null,
             PostCommentTestUtilities.ValidAddContent
         );
 
@@ -111,7 +111,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new AddPostCommentCommand(
             existingUser.Id,
             existingPost.Id,
-            null!
+            null
         );
 
         // Act

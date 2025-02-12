@@ -12,7 +12,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Queries
 
 public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
 {
-    public GetAllPostsQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetAllPostsQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
     }
 
@@ -26,7 +26,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -49,7 +49,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             SharedTestUtilities.GetString(length),
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -93,9 +93,9 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
-            null!,
+            null,
             PostTestUtilities.ValidPageValue,
             PostTestUtilities.ValidPageSizeValue);
 
@@ -114,7 +114,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.InvalidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -138,7 +138,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidPageValue,
@@ -161,7 +161,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             value,
@@ -184,7 +184,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -203,9 +203,9 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
-            null!,
+            null,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -221,8 +221,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
                                                                     m.UserId == existingPost.UserId &&
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Title == PostTestUtilities.ValidTitle &&
-                                                                    m.Content == PostTestUtilities.ValidContent) &&
+                                                                    m.Title == existingPost.Title &&
+                                                                    m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -238,7 +238,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             string.Empty,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -254,8 +254,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
                                                                     m.UserId == existingPost.UserId &&
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Title == PostTestUtilities.ValidTitle &&
-                                                                    m.Content == PostTestUtilities.ValidContent) &&
+                                                                    m.Title == existingPost.Title &&
+                                                                    m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -271,7 +271,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             SharedTestUtilities.GetNonCaseMatchingString(existingPost.UserId),
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -287,8 +287,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
                                                                     m.UserId == existingPost.UserId &&
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Title == PostTestUtilities.ValidTitle &&
-                                                                    m.Content == PostTestUtilities.ValidContent) &&
+                                                                    m.Title == existingPost.Title &&
+                                                                    m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -303,8 +303,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetAllPostsQuery(
             existingPost.UserId,
-            null!,
-            PostTestUtilities.ValidTitle,
+            null,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -320,8 +320,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
                                                                     m.UserId == existingPost.UserId &&
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Title == PostTestUtilities.ValidTitle &&
-                                                                    m.Content == PostTestUtilities.ValidContent) &&
+                                                                    m.Title == existingPost.Title &&
+                                                                    m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -337,7 +337,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             string.Empty,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -353,8 +353,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
                                                                     m.UserId == existingPost.UserId &&
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Title == PostTestUtilities.ValidTitle &&
-                                                                    m.Content == PostTestUtilities.ValidContent) &&
+                                                                    m.Title == existingPost.Title &&
+                                                                    m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -370,7 +370,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             SharedTestUtilities.GetNonCaseMatchingString(UserTestUtilities.ValidName),
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -386,8 +386,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
                                                                     m.UserId == existingPost.UserId &&
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Title == PostTestUtilities.ValidTitle &&
-                                                                    m.Content == PostTestUtilities.ValidContent) &&
+                                                                    m.Title == existingPost.Title &&
+                                                                    m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -403,7 +403,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            null!,
+            null,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -419,8 +419,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
                                                                     m.UserId == existingPost.UserId &&
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Title == PostTestUtilities.ValidTitle &&
-                                                                    m.Content == PostTestUtilities.ValidContent) &&
+                                                                    m.Title == existingPost.Title &&
+                                                                    m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -452,8 +452,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
                                                                     m.UserId == existingPost.UserId &&
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Title == PostTestUtilities.ValidTitle &&
-                                                                    m.Content == PostTestUtilities.ValidContent) &&
+                                                                    m.Title == existingPost.Title &&
+                                                                    m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -469,7 +469,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            SharedTestUtilities.GetNonCaseMatchingString(PostTestUtilities.ValidTitle),
+            SharedTestUtilities.GetNonCaseMatchingString(existingPost.Title),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -485,8 +485,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
                                                                     m.UserId == existingPost.UserId &&
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Title == PostTestUtilities.ValidTitle &&
-                                                                    m.Content == PostTestUtilities.ValidContent) &&
+                                                                    m.Title == existingPost.Title &&
+                                                                    m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -502,7 +502,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            SharedTestUtilities.GetHalfStartString(PostTestUtilities.ValidTitle),
+            SharedTestUtilities.GetHalfStartString(existingPost.Title),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -518,8 +518,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
                                                                     m.UserId == existingPost.UserId &&
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Title == PostTestUtilities.ValidTitle &&
-                                                                    m.Content == PostTestUtilities.ValidContent) &&
+                                                                    m.Title == existingPost.Title &&
+                                                                    m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
@@ -535,7 +535,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetAllPostsQuery(
             existingPost.UserId,
             UserTestUtilities.ValidName,
-            PostTestUtilities.ValidTitle,
+            existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -551,8 +551,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
                                                                     m.UserId == existingPost.UserId &&
                                                                     m.UserName == UserTestUtilities.ValidName &&
                                                                     m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
-                                                                    m.Title == PostTestUtilities.ValidTitle &&
-                                                                    m.Content == PostTestUtilities.ValidContent) &&
+                                                                    m.Title == existingPost.Title &&
+                                                                    m.Content == existingPost.Content) &&
                                                            mc.Page == PostTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&

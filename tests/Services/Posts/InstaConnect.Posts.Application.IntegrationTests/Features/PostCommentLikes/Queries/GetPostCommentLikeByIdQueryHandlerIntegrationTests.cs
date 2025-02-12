@@ -13,7 +13,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLi
 
 public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommentLikeIntegrationTest
 {
-    public GetPostCommentLikeByIdQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetPostCommentLikeByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
     }
 
@@ -22,7 +22,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
-        var query = new GetPostCommentLikeByIdQuery(null!);
+        var query = new GetPostCommentLikeByIdQuery(null);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);

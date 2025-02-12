@@ -15,7 +15,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Com
 
 public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
 {
-    public AddPostLikeIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public AddPostLikeIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -27,7 +27,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
-            null!,
+            null,
             existingPost.Id
         );
 
@@ -67,7 +67,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
             existingUser.Id,
-            null!
+            null
         );
 
         // Act

@@ -22,7 +22,7 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
         // Arrange
         var existingPost = CreatePost();
         var command = new AddPostCommand(
-            null!,
+            null,
             PostTestUtilities.ValidAddTitle,
             PostTestUtilities.ValidAddContent);
 
@@ -60,7 +60,7 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
         var existingPost = CreatePost();
         var command = new AddPostCommand(
             existingPost.UserId,
-            null!,
+            null,
             PostTestUtilities.ValidAddContent);
 
         // Act
@@ -98,7 +98,7 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
         var command = new AddPostCommand(
             existingPost.UserId,
             PostTestUtilities.ValidAddTitle,
-            null!);
+            null);
 
         // Act
         var result = _commandValidator.TestValidate(command);

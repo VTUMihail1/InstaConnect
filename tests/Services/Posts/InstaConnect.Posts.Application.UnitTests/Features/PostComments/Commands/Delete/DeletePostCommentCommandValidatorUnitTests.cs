@@ -23,7 +23,7 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         // Arrange
         var existingPostComment = CreatePostComment();
         var command = new DeletePostCommentCommand(
-            null!,
+            null,
             existingPostComment.UserId
         );
 
@@ -61,7 +61,7 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var existingPostComment = CreatePostComment();
         var command = new DeletePostCommentCommand(
             existingPostComment.Id,
-            null!
+            null
         );
 
         // Act

@@ -96,7 +96,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
             UserTestUtilities.ValidName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
-            null!,
+            null,
             PostCommentTestUtilities.ValidPageValue,
             PostCommentTestUtilities.ValidPageSizeValue);
 

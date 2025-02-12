@@ -31,7 +31,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         var userUpdatedEvent = new UserUpdatedEvent(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateName,
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateProfileImage);
@@ -55,7 +55,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         var userUpdatedEvent = new UserUpdatedEvent(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateName,
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateProfileImage);
@@ -79,7 +79,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         var userUpdatedEvent = new UserUpdatedEvent(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateName,
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateProfileImage);
@@ -103,7 +103,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         var userUpdatedEvent = new UserUpdatedEvent(
             existingUser.Id,
             UserTestUtilities.ValidUpdateName,
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateProfileImage);
@@ -127,7 +127,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         var userUpdatedEvent = new UserUpdatedEvent(
             existingUser.Id,
             UserTestUtilities.ValidUpdateName,
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateProfileImage);
@@ -144,7 +144,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
                                    m.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                                    m.LastName == UserTestUtilities.ValidUpdateLastName &&
                                    m.UserName == UserTestUtilities.ValidUpdateName &&
-                                   m.Email == UserTestUtilities.ValidEmail &&
+                                   m.Email == existingUser.Email &&
                                    m.ProfileImage == UserTestUtilities.ValidUpdateProfileImage));
     }
 
@@ -156,7 +156,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
         var userUpdatedEvent = new UserUpdatedEvent(
             existingUser.Id,
             UserTestUtilities.ValidUpdateName,
-            UserTestUtilities.ValidEmail,
+            existingUser.Email,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateProfileImage);

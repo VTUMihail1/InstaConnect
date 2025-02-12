@@ -96,7 +96,7 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
             UserTestUtilities.ValidName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
-            null!,
+            null,
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 

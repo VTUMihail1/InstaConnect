@@ -20,7 +20,7 @@ public class GetPostLikeByIdQueryValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var existingPostLike = CreatePostLike();
-        var query = new GetPostLikeByIdQuery(null!);
+        var query = new GetPostLikeByIdQuery(null);
 
         // Act
         var result = _validator.TestValidate(query);

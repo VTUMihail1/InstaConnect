@@ -20,7 +20,7 @@ public class GetPostByIdQueryValidatorUnitTests : BasePostUnitTest
     {
         // Arrange
         var existingPost = CreatePost();
-        var query = new GetPostByIdQuery(null!);
+        var query = new GetPostByIdQuery(null);
 
         // Act
         var result = _validator.TestValidate(query);

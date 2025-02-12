@@ -13,7 +13,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Que
 
 public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrationTest
 {
-    public GetAllPostLikesQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetAllPostLikesQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
     }
 
@@ -96,7 +96,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
             UserTestUtilities.ValidName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
-            null!,
+            null,
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
@@ -204,7 +204,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         // Arrange
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var query = new GetAllPostLikesQuery(
-            null!,
+            null,
             UserTestUtilities.ValidName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
@@ -301,7 +301,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var query = new GetAllPostLikesQuery(
             existingPostLike.UserId,
-            null!,
+            null,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -398,7 +398,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrati
         var query = new GetAllPostLikesQuery(
             existingPostLike.UserId,
             UserTestUtilities.ValidName,
-            null!,
+            null,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,

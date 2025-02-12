@@ -11,6 +11,7 @@ using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Abstrac
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Helpers;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -46,21 +47,21 @@ public abstract class BasePostLikeFunctionalTest : IClassFixture<FunctionalTestW
         }
     }
 
-    protected BasePostLikeFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
+    protected BasePostLikeFunctionalTest(FunctionalTestWebAppFactory postsWebApplicationFactory)
     {
-        ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
+        ServiceScope = postsWebApplicationFactory.Services.CreateScope();
         CancellationToken = new();
-        PostLikesClient = new PostLikesClient(functionalTestWebAppFactory.CreateClient());
+        PostLikesClient = new PostLikesClient(postsWebApplicationFactory.CreateClient());
     }
 
-    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    private async Task<User> CreateUserUtilAsync(CancellationToken cancellationToken)
     {
         var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
@@ -71,12 +72,18 @@ public abstract class BasePostLikeFunctionalTest : IClassFixture<FunctionalTestW
         return user;
     }
 
-    protected async Task<Post> CreatePostAsync(CancellationToken cancellationToken)
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
-        var user = await CreateUserAsync(cancellationToken);
+        var user = await CreateUserUtilAsync(cancellationToken);
+
+        return user;
+    }
+
+    private async Task<Post> CreatePostAsyncUtil(User user, CancellationToken cancellationToken)
+    {
         var post = new Post(
-            PostTestUtilities.ValidTitle,
-            PostTestUtilities.ValidContent,
+            SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
+            SharedTestUtilities.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength),
             user);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
@@ -88,10 +95,16 @@ public abstract class BasePostLikeFunctionalTest : IClassFixture<FunctionalTestW
         return post;
     }
 
-    protected async Task<PostLike> CreatePostLikeAsync(CancellationToken cancellationToken)
+    protected async Task<Post> CreatePostAsync(CancellationToken cancellationToken)
     {
-        var user = await CreateUserAsync(cancellationToken);
-        var post = await CreatePostAsync(cancellationToken);
+        var user = await CreateUserAsync(CancellationToken);
+        var post = await CreatePostAsyncUtil(user, cancellationToken);
+
+        return post;
+    }
+
+    private async Task<PostLike> CreatePostLikeUtilAsync(User user, Post post, CancellationToken cancellationToken)
+    {
         var postLike = new PostLike(
             post,
             user);
@@ -101,6 +114,15 @@ public abstract class BasePostLikeFunctionalTest : IClassFixture<FunctionalTestW
 
         postLikeWriteRepository.Add(postLike);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return postLike;
+    }
+
+    protected async Task<PostLike> CreatePostLikeAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(cancellationToken);
+        var post = await CreatePostAsync(cancellationToken);
+        var postLike = await CreatePostLikeUtilAsync(user, post, cancellationToken);
 
         return postLike;
     }

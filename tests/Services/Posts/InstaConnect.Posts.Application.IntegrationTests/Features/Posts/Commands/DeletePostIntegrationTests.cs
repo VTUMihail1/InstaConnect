@@ -13,7 +13,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Command
 
 public class DeletePostIntegrationTests : BasePostIntegrationTest
 {
-    public DeletePostIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public DeletePostIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -24,7 +24,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new DeletePostCommand(
-            null!,
+            null,
             existingPost.UserId
         );
 
@@ -63,7 +63,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new DeletePostCommand(
             existingPost.Id,
-            null!
+            null
         );
 
         // Act

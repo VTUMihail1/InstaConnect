@@ -13,7 +13,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLi
 
 public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommentLikeIntegrationTest
 {
-    public GetAllPostCommentLikesQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetAllPostCommentLikesQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
     }
 
@@ -96,7 +96,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             UserTestUtilities.ValidName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
-            null!,
+            null,
             PostCommentLikeTestUtilities.ValidPageValue,
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
@@ -204,7 +204,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
-            null!,
+            null,
             UserTestUtilities.ValidName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
@@ -301,7 +301,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetAllPostCommentLikesQuery(
             existingPostCommentLike.UserId,
-            null!,
+            null,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -398,7 +398,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var query = new GetAllPostCommentLikesQuery(
             existingPostCommentLike.UserId,
             UserTestUtilities.ValidName,
-            null!,
+            null,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,

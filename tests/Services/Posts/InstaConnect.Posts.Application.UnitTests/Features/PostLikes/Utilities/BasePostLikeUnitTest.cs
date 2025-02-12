@@ -8,10 +8,12 @@ using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
 using InstaConnect.Posts.Domain.Features.Posts.Abstract;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
 using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
 
@@ -56,14 +58,14 @@ public abstract class BasePostLikeUnitTest
         PostLikeWriteRepository = Substitute.For<IPostLikeWriteRepository>();
     }
 
-    public User CreateUser()
+    private User CreateUserUtil()
     {
         var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -71,24 +73,60 @@ public abstract class BasePostLikeUnitTest
         return user;
     }
 
-    public Post CreatePost()
+    protected User CreateUser()
     {
-        var user = CreateUser();
+        var user = CreateUserUtil();
+
+        return user;
+    }
+
+    private Post CreatePostUtil(User user)
+    {
         var post = new Post(
-            PostTestUtilities.ValidTitle,
-            PostTestUtilities.ValidContent,
+            SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
+            SharedTestUtilities.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength),
             user);
 
-        PostWriteRepository.GetByIdAsync(post.Id, CancellationToken)
+        var postPaginationList = new PaginationList<Post>(
+            [post],
+            PostTestUtilities.ValidPageValue,
+            PostTestUtilities.ValidPageSizeValue,
+            PostTestUtilities.ValidTotalCountValue);
+
+        PostReadRepository.GetByIdAsync(
+            post.Id,
+            CancellationToken)
             .Returns(post);
+
+        PostWriteRepository.GetByIdAsync(
+            post.Id,
+            CancellationToken)
+            .Returns(post);
+
+        PostReadRepository
+            .GetAllAsync(Arg.Is<PostCollectionReadQuery>(m =>
+                                                                        m.Title == post.Title &&
+                                                                        m.UserId == user.Id &&
+                                                                        m.UserName == user.UserName &&
+                                                                        m.Page == PostTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == PostTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == PostTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == PostTestUtilities.ValidSortPropertyName), CancellationToken)
+            .Returns(postPaginationList);
 
         return post;
     }
 
-    public PostLike CreatePostLike()
+    protected Post CreatePost()
     {
         var user = CreateUser();
-        var post = CreatePost();
+        var post = CreatePostUtil(user);
+
+        return post;
+    }
+
+    private PostLike CreatePostLikeUtil(User user, Post post)
+    {
         var postLike = new PostLike(post, user);
 
         var postLikePaginationList = new PaginationList<PostLike>(
@@ -109,13 +147,22 @@ public abstract class BasePostLikeUnitTest
         PostLikeReadRepository
             .GetAllAsync(Arg.Is<PostLikeCollectionReadQuery>(m =>
                                                                         m.UserId == user.Id &&
-                                                                        m.UserName == UserTestUtilities.ValidName &&
+                                                                        m.UserName == user.UserName &&
                                                                         m.PostId == post.Id &&
                                                                         m.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == PostLikeTestUtilities.ValidSortOrderProperty &&
                                                                         m.SortPropertyName == PostLikeTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(postLikePaginationList);
+
+        return postLike;
+    }
+
+    protected PostLike CreatePostLike()
+    {
+        var user = CreateUser();
+        var post = CreatePost();
+        var postLike = CreatePostLikeUtil(user, post);
 
         return postLike;
     }

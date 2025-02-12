@@ -8,7 +8,6 @@ public class PostCommentTestUtilities : SharedTestUtilities
 {
     public static readonly string InvalidId = GetAverageString(PostCommentConfigurations.IdMaxLength, PostCommentConfigurations.IdMinLength);
     
-    public static readonly string ValidContent = GetAverageString(PostCommentConfigurations.ContentMaxLength, PostCommentConfigurations.ContentMinLength);
     public static readonly string ValidAddContent = GetAverageString(PostCommentConfigurations.ContentMaxLength, PostCommentConfigurations.ContentMinLength);
     public static readonly string ValidUpdateContent = GetAverageString(PostCommentConfigurations.ContentMaxLength, PostCommentConfigurations.ContentMinLength);
 

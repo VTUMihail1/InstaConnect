@@ -1,11 +1,11 @@
-﻿using InstaConnect.Posts.Presentation.FunctionalTests.Features.Users.Utilities;
+﻿using InstaConnect.Follows.Presentation.FunctionalTests.Features.Users.Utilities;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Users.Consumers;
+namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Users.Consumers;
 
 public class UserUpdatedEventConsumerFunctionalTests : BaseUserFunctionalTest
 {
-    public UserUpdatedEventConsumerFunctionalTests(FunctionalTestWebAppFactory followFunctionalTestWebAppFactory) : base(followFunctionalTestWebAppFactory)
+    public UserUpdatedEventConsumerFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
     {
     }
 

@@ -110,11 +110,11 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
         UserWriteRepository
             .Received(1)
             .Delete(Arg.Is<User>(m => m.Id == existingUser.Id &&
-                                   m.UserName == UserTestUtilities.ValidName &&
-                                   m.FirstName == UserTestUtilities.ValidFirstName &&
-                                   m.LastName == UserTestUtilities.ValidLastName &&
-                                   m.Email == UserTestUtilities.ValidEmail &&
-                                   m.ProfileImage == UserTestUtilities.ValidProfileImage));
+                                   m.UserName == existingUser.UserName &&
+                                   m.FirstName == existingUser.FirstName &&
+                                   m.LastName == existingUser.LastName &&
+                                   m.Email == existingUser.Email &&
+                                   m.ProfileImage == existingUser.ProfileImage));
     }
 
     [Fact]

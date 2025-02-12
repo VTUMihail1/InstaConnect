@@ -22,7 +22,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         // Arrange
         var existingPostComment = CreatePostComment();
         var command = new UpdatePostCommentCommand(
-            null!,
+            null,
             existingPostComment.UserId,
             PostCommentTestUtilities.ValidUpdateContent
         );
@@ -62,7 +62,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var existingPostComment = CreatePostComment();
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
-            null!,
+            null,
             PostCommentTestUtilities.ValidUpdateContent
         );
 
@@ -102,7 +102,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
             existingPostComment.UserId,
-            null!
+            null
         );
 
         // Act

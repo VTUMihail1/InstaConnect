@@ -13,7 +13,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Que
 
 public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrationTest
 {
-    public GetPostLikeByIdQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetPostLikeByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
     }
 
@@ -22,7 +22,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrati
     {
         // Arrange
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetPostLikeByIdQuery(null!);
+        var query = new GetPostLikeByIdQuery(null);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);

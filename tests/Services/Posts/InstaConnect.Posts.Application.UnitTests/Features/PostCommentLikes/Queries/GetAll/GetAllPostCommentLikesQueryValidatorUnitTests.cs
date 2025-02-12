@@ -96,7 +96,7 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
             UserTestUtilities.ValidName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
-            null!,
+            null,
             PostCommentLikeTestUtilities.ValidPageValue,
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 

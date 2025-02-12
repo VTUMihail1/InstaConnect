@@ -16,7 +16,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.
 
 public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
 {
-    public UpdatePostCommentFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public UpdatePostCommentFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -69,7 +69,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
             existingPostComment.UserId,
-            new(null!));
+            new(null));
 
         // Act
         var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -109,7 +109,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
-            null!,
+            null,
             new(PostCommentTestUtilities.ValidUpdateContent));
 
         // Act

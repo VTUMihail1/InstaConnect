@@ -17,7 +17,7 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.
 
 public class AddPostCommentFunctionalTests : BasePostCommentFunctionalTest
 {
-    public AddPostCommentFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public AddPostCommentFunctionalTests(FunctionalTestWebAppFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -50,7 +50,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostCommentRequest(
             existingUser.Id,
-            new(null!, PostCommentTestUtilities.ValidAddContent)
+            new(null, PostCommentTestUtilities.ValidAddContent)
         );
 
         // Act
@@ -93,7 +93,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostCommentRequest(
             existingUser.Id,
-            new(existingPost.Id, null!)
+            new(existingPost.Id, null)
         );
 
         // Act
@@ -135,7 +135,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostCommentRequest(
-            null!,
+            null,
             new(existingPost.Id, PostCommentTestUtilities.ValidAddContent)
         );
 
@@ -244,7 +244,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentFunctionalTest
 
         // Act
         var response = await PostCommentsClient.AddAsync(request, CancellationToken);
-        var postComment = await PostCommentWriteRepository.GetByIdAsync(response!.Id, CancellationToken);
+        var postComment = await PostCommentWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         postComment

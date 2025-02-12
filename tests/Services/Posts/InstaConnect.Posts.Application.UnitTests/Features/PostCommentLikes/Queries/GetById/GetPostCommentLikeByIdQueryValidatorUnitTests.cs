@@ -20,7 +20,7 @@ public class GetPostCommentLikeByIdQueryValidatorUnitTests : BasePostCommentLike
     {
         // Arrange
         var existingPostCommentLike = CreatePostCommentLike();
-        var query = new GetPostCommentLikeByIdQuery(null!);
+        var query = new GetPostCommentLikeByIdQuery(null);
 
         // Act
         var result = _validator.TestValidate(query);

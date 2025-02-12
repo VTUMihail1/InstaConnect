@@ -9,6 +9,7 @@ using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
 
@@ -47,14 +48,14 @@ public abstract class BasePostUnitTest
         PostWriteRepository = Substitute.For<IPostWriteRepository>();
     }
 
-    public User CreateUser()
+    private User CreateUserUtil()
     {
         var user = new User(
-            UserTestUtilities.ValidFirstName,
-            UserTestUtilities.ValidLastName,
-            UserTestUtilities.ValidEmail,
-            UserTestUtilities.ValidName,
-            UserTestUtilities.ValidProfileImage);
+            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -62,12 +63,18 @@ public abstract class BasePostUnitTest
         return user;
     }
 
-    public Post CreatePost()
+    protected User CreateUser()
     {
-        var user = CreateUser();
+        var user = CreateUserUtil();
+
+        return user;
+    }
+
+    private Post CreatePostUtil(User user)
+    {
         var post = new Post(
-            PostTestUtilities.ValidTitle,
-            PostTestUtilities.ValidContent,
+            SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
+            SharedTestUtilities.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength),
             user);
 
         var postPaginationList = new PaginationList<Post>(
@@ -88,14 +95,22 @@ public abstract class BasePostUnitTest
 
         PostReadRepository
             .GetAllAsync(Arg.Is<PostCollectionReadQuery>(m =>
-                                                                        m.Title == PostTestUtilities.ValidTitle &&
+                                                                        m.Title == post.Title &&
                                                                         m.UserId == user.Id &&
-                                                                        m.UserName == UserTestUtilities.ValidName &&
+                                                                        m.UserName == user.UserName &&
                                                                         m.Page == PostTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == PostTestUtilities.ValidSortOrderProperty &&
                                                                         m.SortPropertyName == PostTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(postPaginationList);
+
+        return post;
+    }
+
+    protected Post CreatePost()
+    {
+        var user = CreateUser();
+        var post = CreatePostUtil(user);
 
         return post;
     }

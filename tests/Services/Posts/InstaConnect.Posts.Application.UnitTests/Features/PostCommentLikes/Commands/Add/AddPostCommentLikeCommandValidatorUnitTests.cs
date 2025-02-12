@@ -24,7 +24,7 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
         var existingUser = CreateUser();
         var existingPostComment = CreatePostComment();
         var command = new AddPostCommentLikeCommand(
-            null!,
+            null,
             existingPostComment.Id);
 
         // Act
@@ -62,7 +62,7 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
         var existingPostComment = CreatePostComment();
         var command = new AddPostCommentLikeCommand(
             existingUser.Id,
-            null!);
+            null);
 
         // Act
         var result = _commandValidator.TestValidate(command);

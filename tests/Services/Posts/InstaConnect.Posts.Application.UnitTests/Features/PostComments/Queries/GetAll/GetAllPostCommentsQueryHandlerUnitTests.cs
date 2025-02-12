@@ -76,7 +76,7 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
                                                            m.UserName == UserTestUtilities.ValidName &&
                                                            m.UserProfileImage == UserTestUtilities.ValidProfileImage &&
                                                            m.PostId == existingPostComment.PostId &&
-                                                           m.Content == PostCommentTestUtilities.ValidContent) &&
+                                                           m.Content == existingPostComment.Content) &&
                                                            mc.Page == PostCommentTestUtilities.ValidPageValue &&
                                                            mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
