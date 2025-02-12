@@ -12,9 +12,6 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Presentation.Abstractions;
-using InstaConnect.Shared.Presentation.Models.Users;
-using InstaConnect.Shared.Presentation.UnitTests.Utilities;
 using NSubstitute;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Utilities;

@@ -10,9 +10,6 @@ using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Presentation.Abstractions;
-using InstaConnect.Shared.Presentation.Models.Users;
-using InstaConnect.Shared.Presentation.UnitTests.Utilities;
 using NSubstitute;
 using MessageCommandProfile = InstaConnect.Messages.Presentation.Features.Messages.Mappings.MessagesCommandProfile;
 using MessageQueryProfile = InstaConnect.Messages.Presentation.Features.Messages.Mappings.MessagesQueryProfile;
@@ -89,13 +86,13 @@ public abstract class BaseMessageUnitTest
             .Returns(messagePaginationCollectionModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Is<GetMessageByIdQuery>(m => 
+            .SendAsync(Arg.Is<GetMessageByIdQuery>(m =>
                   m.Id == message.Id &&
                   m.CurrentUserId == sender.Id), CancellationToken)
             .Returns(messageQueryViewModel);
 
         InstaConnectSender
-            .SendAsync(Arg.Is<AddMessageCommand>(m => 
+            .SendAsync(Arg.Is<AddMessageCommand>(m =>
                   m.CurrentUserId == sender.Id &&
                   m.ReceiverId == receiver.Id &&
                   m.Content == MessageTestUtilities.ValidAddContent), CancellationToken)

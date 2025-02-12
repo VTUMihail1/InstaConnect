@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Posts.Presentation.Features.Users.Consumers;
-using InstaConnect.Shared.Presentation.FunctionalTests.Extensions;
+using InstaConnect.Shared.Infrastructure.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;

@@ -1,28 +1,17 @@
-﻿using InstaConnect.Identity.Application.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
+﻿using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Infrastructure;
-using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Models.Options;
-using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Models.Options;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Abstractions;
 using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;
-using InstaConnect.Shared.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Users.Presentation.FunctionalTests.Features.Users.Helpers;
 using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
 
@@ -114,7 +103,7 @@ public abstract class BaseEmailConfirmationTokenFunctionalTest : IClassFixture<I
     }
 
     private async Task<EmailConfirmationToken> CreateEmailConfirmationTokenUtilAsync(
-        User user, 
+        User user,
         CancellationToken cancellationToken)
     {
         var emailConfirmationToken = new EmailConfirmationToken(

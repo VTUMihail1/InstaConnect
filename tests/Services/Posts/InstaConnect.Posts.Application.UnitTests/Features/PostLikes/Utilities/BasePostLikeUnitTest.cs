@@ -12,7 +12,6 @@ using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Application.UnitTests.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
 

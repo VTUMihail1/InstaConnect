@@ -1,6 +1,4 @@
-﻿using InstaConnect.PostComments.Presentation.FunctionalTests.Features.PostComments.Helpers;
-using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+﻿using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
@@ -14,10 +12,8 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Abstractions;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Helpers;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Abstractions;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Presentation.FunctionalTests.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

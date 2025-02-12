@@ -3,25 +3,19 @@ using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Infrastructure;
-using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Models.Options;
-using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Models.Options;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.IntegrationTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
 
-public abstract class BaseEmailConfirmationTokenIntegrationTest :  IClassFixture<IdentityWebApplicationFactory>, IAsyncLifetime
+public abstract class BaseEmailConfirmationTokenIntegrationTest : IClassFixture<IdentityWebApplicationFactory>, IAsyncLifetime
 {
     protected IServiceScope ServiceScope { get; }
 

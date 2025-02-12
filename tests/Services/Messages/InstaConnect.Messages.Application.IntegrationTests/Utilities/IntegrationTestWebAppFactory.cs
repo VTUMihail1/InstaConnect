@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
 using InstaConnect.Messages.Infrastructure;
-using InstaConnect.Shared.Application.IntegrationTests.Extensions;
+using InstaConnect.Shared.Infrastructure.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;

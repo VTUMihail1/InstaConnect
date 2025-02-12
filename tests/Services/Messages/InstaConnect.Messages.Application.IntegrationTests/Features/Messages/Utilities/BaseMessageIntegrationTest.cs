@@ -7,7 +7,6 @@ using InstaConnect.Messages.Domain.Features.Users.Abstract;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Messages.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.IntegrationTests.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

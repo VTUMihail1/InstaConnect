@@ -9,7 +9,6 @@ using InstaConnect.Messages.Domain.Features.Users.Abstract;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Application.UnitTests.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
 
@@ -50,7 +49,7 @@ public abstract class BaseMessageUnitTest
         MessageReadRepository = Substitute.For<IMessageReadRepository>();
         MessageWriteRepository = Substitute.For<IMessageWriteRepository>();
 
-        
+
     }
 
     public User CreateUser()

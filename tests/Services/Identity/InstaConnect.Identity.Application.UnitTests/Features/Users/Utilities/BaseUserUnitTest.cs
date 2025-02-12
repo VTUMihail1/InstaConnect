@@ -3,10 +3,6 @@ using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Mappings;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
@@ -17,15 +13,22 @@ using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Application.Models;
-using InstaConnect.Shared.Application.UnitTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 
-public abstract class BaseUserUnitTest : BaseSharedUnitTest
+public abstract class BaseUserUnitTest
 {
+    protected CancellationToken CancellationToken { get; }
+
+    protected IUnitOfWork UnitOfWork { get; }
+
+    protected IInstaConnectMapper InstaConnectMapper { get; }
+
+    protected IEntityPropertyValidator EntityPropertyValidator { get; }
+
     protected IImageHandler ImageHandler { get; }
 
     protected IEventPublisher EventPublisher { get; }
@@ -42,17 +45,18 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
 
     protected IEmailConfirmationTokenPublisher EmailConfirmationTokenPublisher { get; }
 
-    public BaseUserUnitTest() : base(
-        Substitute.For<IUnitOfWork>(),
-        new InstaConnectMapper(
+    public BaseUserUnitTest()
+    {
+        CancellationToken = new();
+        UnitOfWork = Substitute.For<IUnitOfWork>();
+        InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
                 new MapperConfiguration(cfg =>
                 {
                     cfg.AddProfile<UserCommandProfile>();
                     cfg.AddProfile<UserQueryProfile>();
-                }))),
-        new EntityPropertyValidator())
-    {
+                })));
+        EntityPropertyValidator = new EntityPropertyValidator();
         ImageHandler = Substitute.For<IImageHandler>();
         EventPublisher = Substitute.For<IEventPublisher>();
         UserReadRepository = Substitute.For<IUserReadRepository>();
@@ -87,12 +91,12 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
     private UserClaim CreateUserClaimUtil(User user)
     {
         var accessTokenResult = new AccessTokenResult(
-            UserTestUtilities.ValidAccessTokenValue, 
+            UserTestUtilities.ValidAccessTokenValue,
             UserTestUtilities.ValidUntil);
 
         var userClaim = new UserClaim(
-            AppClaims.Admin, 
-            AppClaims.Admin, 
+            AppClaims.Admin,
+            AppClaims.Admin,
             user);
 
         UserClaimWriteRepository.GetAllAsync(Arg.Is<UserClaimCollectionWriteQuery>(uc => uc.UserId == user.Id), CancellationToken)

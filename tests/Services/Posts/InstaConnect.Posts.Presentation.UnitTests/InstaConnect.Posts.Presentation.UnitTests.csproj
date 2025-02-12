@@ -25,7 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Common\InstaConnect.Posts.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Presentation\InstaConnect.Posts.Presentation.csproj" />
-    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Presentation.UnitTests\InstaConnect.Shared.Presentation.UnitTests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,7 +9,6 @@ using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Abstraction
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Helpers;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Presentation.FunctionalTests.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

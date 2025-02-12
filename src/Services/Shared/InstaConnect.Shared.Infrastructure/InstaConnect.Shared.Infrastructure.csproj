@@ -7,6 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+	<PackageReference Include="AspNetCore.HealthChecks.Redis" Version="8.0.1" />
+	<PackageReference Include="MassTransit.EntityFrameworkCore" Version="8.2.3" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
+	<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.7" />
+	<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.7" />
+	<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
+	<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
+	<PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="8.0.0" />
+	<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.7" />
+	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+	<PackageReference Include="Testcontainers.MsSql" Version="3.9.0" />
+	<PackageReference Include="Testcontainers.RabbitMq" Version="3.10.0" />
+	<PackageReference Include="WebMotions.Fake.Authentication.JwtBearer" Version="8.0.1" />
+  </ItemGroup>
+	
+  <ItemGroup>
     <ProjectReference Include="..\InstaConnect.Shared.Application\InstaConnect.Shared.Application.csproj" />
   </ItemGroup>
 
