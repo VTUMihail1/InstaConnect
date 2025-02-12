@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Binding;
+using InstaConnect.Follows.Presentation.Features.Follows.Models.Bodies;
 using InstaConnect.Shared.Presentation.Binders.FromClaim;
 using Microsoft.AspNetCore.Mvc;
 

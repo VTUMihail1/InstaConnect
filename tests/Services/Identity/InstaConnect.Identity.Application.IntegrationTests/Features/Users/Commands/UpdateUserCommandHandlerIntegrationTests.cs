@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Commands.EditCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.Update;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;

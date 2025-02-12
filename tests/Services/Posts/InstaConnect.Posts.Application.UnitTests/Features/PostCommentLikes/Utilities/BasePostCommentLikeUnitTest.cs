@@ -115,8 +115,8 @@ public abstract class BasePostCommentLikeUnitTest
     private PostComment CreatePostCommentUtil(User user, Post post)
     {
         var postComment = new PostComment(
-            user, 
-            post, 
+            user,
+            post,
             SharedTestUtilities.GetAverageString(PostCommentConfigurations.ContentMaxLength, PostCommentConfigurations.ContentMinLength));
 
         var postCommentPaginationList = new PaginationList<PostComment>(

@@ -3,7 +3,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Posts;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Posts.Application.Features.Posts.Commands.DeletePost;
+namespace InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 
 internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
 {

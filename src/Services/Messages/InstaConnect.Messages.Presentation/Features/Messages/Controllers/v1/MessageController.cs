@@ -1,14 +1,13 @@
 ﻿using Asp.Versioning;
-using InstaConnect.Messages.Application.Features.Messages.Commands.AddMessage;
-using InstaConnect.Messages.Application.Features.Messages.Commands.DeleteMessage;
-using InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetMessageById;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Delete;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
 using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
 using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
 using InstaConnect.Messages.Presentation.Features.Messages.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Presentation.Abstractions;
 using InstaConnect.Shared.Presentation.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -69,7 +68,7 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<MessageCommandResponse>> AddAsync(
-        AddMessageRequest request, 
+        AddMessageRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<AddMessageCommand>(request);
@@ -85,7 +84,7 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<MessageCommandResponse>> UpdateAsync(
-        UpdateMessageRequest request, 
+        UpdateMessageRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<UpdateMessageCommand>(request);
@@ -101,7 +100,7 @@ public class MessageController : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAsync(
-        DeleteMessageRequest request, 
+        DeleteMessageRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<DeleteMessageCommand>(request);

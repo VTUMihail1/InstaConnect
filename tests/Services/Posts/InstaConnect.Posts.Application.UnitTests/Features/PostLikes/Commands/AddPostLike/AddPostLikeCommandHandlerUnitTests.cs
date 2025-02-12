@@ -1,8 +1,7 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.AddPostLike;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostLikes.Models;
 using InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;

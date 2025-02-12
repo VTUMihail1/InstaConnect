@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
-using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Abstractions;
+using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Utilities;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Helpers;
 public class PostCommentLikesClient : IPostCommentLikesClient

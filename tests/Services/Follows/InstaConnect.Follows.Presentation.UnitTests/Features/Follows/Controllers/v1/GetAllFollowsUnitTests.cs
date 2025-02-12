@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllFollows;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;

@@ -1,13 +1,12 @@
 ﻿using FluentAssertions;
 using InstaConnect.Messages.Application.Features.Messages.Models;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Queries.GetAllMessages;
+namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Queries.GetAll;
 
 public class GetAllMessagesQueryHandlerUnitTests : BaseMessageUnitTest
 {

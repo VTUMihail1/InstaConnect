@@ -2,7 +2,7 @@
 using InstaConnect.Identity.Application.Features.Users.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUserDetailed;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
 
 public record GetCurrentDetailedUserQuery(string CurrentUserId) : IQuery<UserDetailedQueryViewModel>, ICachable
 {

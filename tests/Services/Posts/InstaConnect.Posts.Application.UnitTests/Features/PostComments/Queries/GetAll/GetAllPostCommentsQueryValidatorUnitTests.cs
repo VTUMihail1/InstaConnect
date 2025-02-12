@@ -1,12 +1,12 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllPostComments;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 using InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Queries.GetAllPostComments;
+namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Queries.GetAll;
 
 public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
 {

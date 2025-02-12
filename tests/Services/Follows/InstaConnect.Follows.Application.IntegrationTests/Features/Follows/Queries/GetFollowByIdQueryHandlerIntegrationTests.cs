@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
 using InstaConnect.Follows.Application.Features.Follows.Models;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetFollowById;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 using InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Application.IntegrationTests.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Follow;
 using InstaConnect.Shared.Common.Utilities;

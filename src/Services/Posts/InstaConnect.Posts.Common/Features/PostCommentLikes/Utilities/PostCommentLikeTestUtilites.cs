@@ -1,8 +1,4 @@
-﻿using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Models.Enums;
+﻿using InstaConnect.Shared.Common.Models.Enums;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;

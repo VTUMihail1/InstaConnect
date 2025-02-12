@@ -2,7 +2,7 @@
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Users.Utilities;
 
-namespace InstaConnect.Messages.Application.Features.Messages.Commands.DeleteMessage;
+namespace InstaConnect.Messages.Application.Features.Messages.Commands.Delete;
 
 public class DeleteMessageCommandValidator : AbstractValidator<DeleteMessageCommand>
 {

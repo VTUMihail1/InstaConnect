@@ -1,7 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetPostCommentById;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 using InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;

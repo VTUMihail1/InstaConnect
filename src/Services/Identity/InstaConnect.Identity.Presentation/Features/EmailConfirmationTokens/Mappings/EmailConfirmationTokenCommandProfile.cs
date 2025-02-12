@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using InstaConnect.Identity.Application.Features.Users.Commands.ConfirmUserEmail;
-using InstaConnect.Identity.Application.Features.Users.Commands.ResendUserEmailConfirmation;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
+using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models.Requests;
 
-namespace InstaConnect.Identity.Presentation.Features.Users.Mappings;
+namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Mappings;
 
 internal class EmailConfirmationTokenCommandProfile : Profile
 {

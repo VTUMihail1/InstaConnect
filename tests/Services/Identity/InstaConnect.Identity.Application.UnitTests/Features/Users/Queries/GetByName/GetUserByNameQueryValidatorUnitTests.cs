@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetUserByName;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
 using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetUserByName;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetByName;
 
 public class GetUserByNameQueryValidatorUnitTests : BaseUserUnitTest
 {

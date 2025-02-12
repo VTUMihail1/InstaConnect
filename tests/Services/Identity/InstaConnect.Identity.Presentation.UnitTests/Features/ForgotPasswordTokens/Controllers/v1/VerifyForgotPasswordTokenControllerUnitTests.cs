@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Commands.ConfirmUserEmail;
-using InstaConnect.Identity.Application.Features.Users.Commands.ResetUserPassword;
+using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Controllers.v1;
+using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests;
+using InstaConnect.Identity.Presentation.UnitTests.Features.ForgotPasswordTokens.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;

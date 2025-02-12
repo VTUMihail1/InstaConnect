@@ -1,14 +1,14 @@
 ﻿using Asp.Versioning;
-using InstaConnect.Identity.Application.Features.Users.Commands.ResetUserPassword;
-using InstaConnect.Identity.Application.Features.Users.Commands.SendUserPasswordReset;
+using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
+using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
+using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests;
 using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Utilities;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Presentation.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
+namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Controllers.v1;
 
 [ApiVersion(ForgotPasswordTokenRoutes.Version1)]
 [Route(ForgotPasswordTokenRoutes.Resource)]

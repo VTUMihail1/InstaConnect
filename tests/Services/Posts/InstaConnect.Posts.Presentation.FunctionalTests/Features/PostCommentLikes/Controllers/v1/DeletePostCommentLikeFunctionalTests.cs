@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;

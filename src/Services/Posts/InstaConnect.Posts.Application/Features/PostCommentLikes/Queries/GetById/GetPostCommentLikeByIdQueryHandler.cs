@@ -3,7 +3,7 @@ using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.PostCommentLike;
 
-namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
+namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
 
 internal class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostCommentLikeByIdQuery, PostCommentLikeQueryViewModel>
 {

@@ -1,11 +1,8 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
-using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Presentation.Features.Posts.Models.Binding;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Utilities;

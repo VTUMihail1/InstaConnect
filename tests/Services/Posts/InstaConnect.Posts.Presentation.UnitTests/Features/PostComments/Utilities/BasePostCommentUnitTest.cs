@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.AddPostComment;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.UpdatePostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 using InstaConnect.Posts.Application.Features.PostComments.Models;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllPostComments;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetPostCommentById;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;

@@ -4,7 +4,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Token;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Identity.Application.Features.Users.Commands.ConfirmUserEmail;
+namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
 
 public class VerifyEmailConfirmationTokenCommandHandler : ICommandHandler<VerifyEmailConfirmationTokenCommand>
 {

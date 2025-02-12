@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Application.Features.Users.Abstractions;
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
@@ -7,7 +8,7 @@ using InstaConnect.Shared.Application.Contracts.Users;
 using InstaConnect.Shared.Application.Models;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Identity.Application.Features.Users.Commands.RegisterUser;
+namespace InstaConnect.Identity.Application.Features.Users.Commands.Add;
 
 public class AddUserCommandHandler : ICommandHandler<AddUserCommand, UserCommandViewModel>
 {

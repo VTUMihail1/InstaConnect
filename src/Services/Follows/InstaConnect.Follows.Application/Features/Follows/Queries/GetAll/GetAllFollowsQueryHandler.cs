@@ -3,7 +3,7 @@ using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAllFollows;
+namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 
 internal class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQuery, FollowPaginationQueryViewModel>
 {

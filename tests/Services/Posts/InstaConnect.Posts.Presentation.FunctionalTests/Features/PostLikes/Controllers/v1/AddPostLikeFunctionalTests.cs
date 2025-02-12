@@ -1,14 +1,9 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
-using System.Security.Claims;
 using FluentAssertions;
-using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Binding;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
@@ -27,7 +22,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync( CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             existingUser.Id,
             new(existingPost.Id));
@@ -46,7 +41,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync( CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             existingUser.Id,
             new(null));
@@ -68,7 +63,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync( CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             existingUser.Id,
             new(SharedTestUtilities.GetString(length)));
@@ -87,7 +82,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync( CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             null,
             new(existingPost.Id));
@@ -109,7 +104,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync( CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             SharedTestUtilities.GetString(length),
             new(existingPost.Id));
@@ -128,7 +123,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync( CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             UserTestUtilities.InvalidId,
             new(existingPost.Id));
@@ -147,7 +142,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync( CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             existingUser.Id,
             new(PostTestUtilities.InvalidId));
@@ -184,7 +179,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync( CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             existingUser.Id,
             new(existingPost.Id));
@@ -203,7 +198,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync( CancellationToken);
+        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             existingUser.Id,
             new(existingPost.Id));

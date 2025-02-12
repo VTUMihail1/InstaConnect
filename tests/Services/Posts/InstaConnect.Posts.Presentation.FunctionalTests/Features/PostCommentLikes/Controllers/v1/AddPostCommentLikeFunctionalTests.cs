@@ -1,14 +1,9 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
-using System.Security.Claims;
 using FluentAssertions;
-using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Binding;
 using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;

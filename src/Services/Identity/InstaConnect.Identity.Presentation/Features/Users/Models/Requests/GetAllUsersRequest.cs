@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Shared.Common.Models.Enums;
-using InstaConnect.Shared.Presentation.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Identity.Presentation.Features.Users.Models.Requests;

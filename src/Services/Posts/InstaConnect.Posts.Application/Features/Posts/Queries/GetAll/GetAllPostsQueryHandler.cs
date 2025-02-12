@@ -3,7 +3,7 @@ using InstaConnect.Posts.Domain.Features.Posts.Abstract;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAllPosts;
+namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 
 internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, PostPaginationQueryViewModel>
 {

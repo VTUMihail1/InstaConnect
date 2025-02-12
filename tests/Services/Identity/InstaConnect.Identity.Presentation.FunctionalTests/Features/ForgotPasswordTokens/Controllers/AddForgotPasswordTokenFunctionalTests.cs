@@ -1,13 +1,13 @@
 ﻿using System.Net;
 using FluentAssertions;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
+using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests;
+using InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Contracts.Emails;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
+namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Controllers;
 
 public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunctionalTest
 {
@@ -28,7 +28,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunc
         );
 
         // Act
-        var response = await ForgotPasswordTokensClient.AddStatusCodeAsync(request,  CancellationToken);
+        var response = await ForgotPasswordTokensClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -46,7 +46,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunc
         );
 
         // Act
-        var response = await ForgotPasswordTokensClient.AddStatusCodeAsync(request,  CancellationToken);
+        var response = await ForgotPasswordTokensClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -64,7 +64,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunc
         );
 
         // Act
-        var response = await ForgotPasswordTokensClient.AddStatusCodeAsync(request,  CancellationToken);
+        var response = await ForgotPasswordTokensClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -82,7 +82,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunc
         );
 
         // Act
-        await ForgotPasswordTokensClient.AddStatusCodeAsync(request,  CancellationToken);
+        await ForgotPasswordTokensClient.AddStatusCodeAsync(request, CancellationToken);
 
         var user = await UserWriteRepository.GetByIdAsync(existingUser.Id, CancellationToken);
 
@@ -103,7 +103,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunc
         );
 
         // Act
-        await ForgotPasswordTokensClient.AddStatusCodeAsync(request,  CancellationToken);
+        await ForgotPasswordTokensClient.AddStatusCodeAsync(request, CancellationToken);
         var user = await UserWriteRepository.GetByIdAsync(existingUser.Id, CancellationToken);
 
         await TestHarness.InactivityTask;

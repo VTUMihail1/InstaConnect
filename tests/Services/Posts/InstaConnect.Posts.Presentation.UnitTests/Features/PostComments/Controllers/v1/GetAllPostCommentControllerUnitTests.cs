@@ -1,12 +1,6 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.AddPostComment;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.DeletePostComment;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.UpdatePostComment;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllPostComments;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetPostCommentById;
+﻿using FluentAssertions;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;

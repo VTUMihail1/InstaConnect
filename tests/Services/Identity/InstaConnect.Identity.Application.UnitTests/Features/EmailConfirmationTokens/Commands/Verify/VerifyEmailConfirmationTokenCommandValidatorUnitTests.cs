@@ -1,11 +1,11 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Identity.Application.Features.Users.Commands.ConfirmUserEmail;
-using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
+using InstaConnect.Identity.Application.UnitTests.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.ConfirmUserEmail;
+namespace InstaConnect.Identity.Application.UnitTests.Features.EmailConfirmationTokens.Commands.Verify;
 
 public class VerifyEmailConfirmationTokenCommandValidatorUnitTests : BaseEmailConfirmationTokenUnitTest
 {

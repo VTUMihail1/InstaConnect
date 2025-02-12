@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
 using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
 using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetCurrentUser;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetCurrent;
 
 public class GetCurrentUserQueryHandlerUnitTests : BaseUserUnitTest
 {

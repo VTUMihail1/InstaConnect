@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Application.Features.Posts.Models;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllPosts;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;

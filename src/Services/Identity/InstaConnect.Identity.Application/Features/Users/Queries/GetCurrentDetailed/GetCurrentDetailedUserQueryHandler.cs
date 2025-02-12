@@ -3,7 +3,7 @@ using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUserDetailed;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
 
 public class GetCurrentDetailedUserQueryHandler : IQueryHandler<GetCurrentDetailedUserQuery, UserDetailedQueryViewModel>
 {

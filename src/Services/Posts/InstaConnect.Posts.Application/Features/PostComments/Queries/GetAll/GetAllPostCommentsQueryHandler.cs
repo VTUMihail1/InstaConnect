@@ -3,7 +3,7 @@ using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllPostComments;
+namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 
 internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostCommentsQuery, PostCommentPaginationQueryViewModel>
 {

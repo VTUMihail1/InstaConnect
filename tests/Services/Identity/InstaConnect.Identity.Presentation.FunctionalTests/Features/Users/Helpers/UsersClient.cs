@@ -2,15 +2,14 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Security.Claims;
-using Bogus.DataSets;
-using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Forms;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Abstractions;
+using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Users.Presentation.FunctionalTests.Features.Users.Helpers;
+namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Helpers;
 public class UsersClient : IUsersClient
 {
     private readonly HttpClient _httpClient;

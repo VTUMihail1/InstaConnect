@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.AddPostCommentLike;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
 

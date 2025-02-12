@@ -1,6 +1,4 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
-using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Users.Utilities;

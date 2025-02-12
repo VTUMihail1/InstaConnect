@@ -2,7 +2,7 @@
 using InstaConnect.Shared.Application.Abstractions;
 using Microsoft.AspNetCore.Http;
 
-namespace InstaConnect.Identity.Application.Features.Users.Commands.RegisterUser;
+namespace InstaConnect.Identity.Application.Features.Users.Commands.Add;
 
 public record AddUserCommand(
     string UserName,

@@ -1,13 +1,12 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
 using InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.PostCommentLike;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
+namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Queries.GetById;
 
 public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeUnitTest
 {

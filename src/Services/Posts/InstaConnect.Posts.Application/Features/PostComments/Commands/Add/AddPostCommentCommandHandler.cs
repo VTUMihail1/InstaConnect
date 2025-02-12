@@ -7,7 +7,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Posts;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Posts.Application.Features.PostComments.Commands.AddPostComment;
+namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
 
 internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentCommand, PostCommentCommandViewModel>
 {

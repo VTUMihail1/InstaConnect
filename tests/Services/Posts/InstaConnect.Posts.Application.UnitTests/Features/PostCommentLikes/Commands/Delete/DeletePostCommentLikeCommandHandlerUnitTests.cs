@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.DeletePostCommentLike;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete;
 using InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
@@ -7,7 +7,7 @@ using InstaConnect.Shared.Common.Exceptions.PostCommentLike;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Commands.DeletePostCommentLike;
+namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Commands.Delete;
 
 public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeUnitTest
 {

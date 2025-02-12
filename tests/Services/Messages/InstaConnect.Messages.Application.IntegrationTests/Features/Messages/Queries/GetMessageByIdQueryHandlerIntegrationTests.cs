@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using InstaConnect.Messages.Application.Features.Messages.Models;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetMessageById;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
 using InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Application.IntegrationTests.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;

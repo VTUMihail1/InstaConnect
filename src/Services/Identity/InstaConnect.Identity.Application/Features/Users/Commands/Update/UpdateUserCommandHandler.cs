@@ -5,7 +5,7 @@ using InstaConnect.Shared.Application.Contracts.Users;
 using InstaConnect.Shared.Application.Models;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Identity.Application.Features.Users.Commands.EditCurrentUser;
+namespace InstaConnect.Identity.Application.Features.Users.Commands.Update;
 
 public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, UserCommandViewModel>
 {

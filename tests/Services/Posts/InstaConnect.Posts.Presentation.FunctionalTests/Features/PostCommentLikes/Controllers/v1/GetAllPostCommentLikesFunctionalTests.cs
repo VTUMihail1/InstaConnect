@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
@@ -8,7 +7,6 @@ using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Models.Enums;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;

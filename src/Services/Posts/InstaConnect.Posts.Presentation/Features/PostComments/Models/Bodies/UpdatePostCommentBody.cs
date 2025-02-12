@@ -1,3 +1,3 @@
-﻿namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Binding;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Bodies;
 
 public record UpdatePostCommentBody(string Content);

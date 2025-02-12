@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.AddPostCommentLike;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;

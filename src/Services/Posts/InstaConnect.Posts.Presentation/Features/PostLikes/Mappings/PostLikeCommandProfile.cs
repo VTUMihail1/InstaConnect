@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.AddPostLike;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.DeletePostLike;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
 using InstaConnect.Posts.Application.Features.PostLikes.Models;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
-using InstaConnect.Shared.Presentation.Models.Users;
 
 namespace InstaConnect.Posts.Presentation.Features.PostLikes.Mappings;
 

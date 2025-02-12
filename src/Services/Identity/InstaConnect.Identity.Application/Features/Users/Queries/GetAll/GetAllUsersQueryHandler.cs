@@ -3,7 +3,7 @@ using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAllUsers;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 
 public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, UserPaginationQueryViewModel>
 {

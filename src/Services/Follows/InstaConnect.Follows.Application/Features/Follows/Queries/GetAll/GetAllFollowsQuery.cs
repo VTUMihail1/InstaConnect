@@ -3,7 +3,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Models.Filters;
 using InstaConnect.Shared.Common.Models.Enums;
 
-namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAllFollows;
+namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 
 public record GetAllFollowsQuery(
     string FollowerId,

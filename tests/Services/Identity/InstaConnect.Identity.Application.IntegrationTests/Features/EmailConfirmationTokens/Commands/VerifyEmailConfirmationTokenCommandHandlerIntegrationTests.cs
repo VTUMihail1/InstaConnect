@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Commands.ConfirmUserEmail;
-using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
+using InstaConnect.Identity.Application.IntegrationTests.Features.EmailConfirmationTokens.Utilities;
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;
-using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
+using InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
@@ -10,7 +10,7 @@ using InstaConnect.Shared.Common.Exceptions.Token;
 using InstaConnect.Shared.Common.Exceptions.User;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
+namespace InstaConnect.Identity.Application.IntegrationTests.Features.EmailConfirmationTokens.Commands;
 
 public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmailConfirmationTokenIntegrationTest
 {
@@ -176,7 +176,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         // Arrange
         var existingEmailConfirmationToken = await CreateEmailConfirmationTokenAsync(CancellationToken);
         var command = new VerifyEmailConfirmationTokenCommand(
-            existingEmailConfirmationToken.UserId, 
+            existingEmailConfirmationToken.UserId,
             existingEmailConfirmationToken.Value);
 
 

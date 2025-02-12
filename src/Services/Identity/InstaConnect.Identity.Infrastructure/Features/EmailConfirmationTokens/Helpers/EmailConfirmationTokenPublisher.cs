@@ -1,5 +1,5 @@
-﻿using InstaConnect.Identity.Application.Features.Users.Abstractions;
-using InstaConnect.Identity.Application.Features.Users.Models;
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
 using InstaConnect.Shared.Application.Abstractions;

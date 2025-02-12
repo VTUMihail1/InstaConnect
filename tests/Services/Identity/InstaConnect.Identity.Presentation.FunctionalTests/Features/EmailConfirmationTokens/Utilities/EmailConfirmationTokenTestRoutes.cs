@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Utilities;
+﻿namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Utilities;
 
 public static class EmailConfirmationTokenTestRoutes
 {

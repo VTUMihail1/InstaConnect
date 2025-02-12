@@ -8,7 +8,7 @@ using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using NSubstitute;
 
-namespace InstaConnect.Follows.Presentation.UnitTests.Features.Users.Utilities;
+namespace InstaConnect.Messages.Presentation.UnitTests.Features.Users.Utilities;
 
 public abstract class BaseUserUnitTest
 {

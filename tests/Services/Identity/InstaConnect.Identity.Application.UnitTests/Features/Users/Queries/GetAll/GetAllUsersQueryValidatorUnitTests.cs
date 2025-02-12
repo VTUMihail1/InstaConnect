@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetAllUsers;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetAllUsers;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetAll;
 
 public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
 {

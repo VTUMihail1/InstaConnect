@@ -1,11 +1,8 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
-using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Binding;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Utilities;

@@ -1,14 +1,13 @@
 ﻿using Asp.Versioning;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.AddPostComment;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.DeletePostComment;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.UpdatePostComment;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllPostComments;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetPostCommentById;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
-using InstaConnect.Posts.Presentation.Features.Posts.Utilities;
+using InstaConnect.Posts.Presentation.Features.PostComments.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Presentation.Abstractions;
 using InstaConnect.Shared.Presentation.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +36,7 @@ public class PostCommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<PostCommentPaginationQueryResponse>> GetAllAsync(
-        GetAllPostCommentsRequest request, 
+        GetAllPostCommentsRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllPostCommentsQuery>(request);
@@ -52,7 +51,7 @@ public class PostCommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PostCommentQueryResponse>> GetByIdAsync(
-        GetPostCommentByIdRequest request, 
+        GetPostCommentByIdRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetPostCommentByIdQuery>(request);
@@ -69,7 +68,7 @@ public class PostCommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PostCommentCommandResponse>> AddAsync(
-        AddPostCommentRequest request, 
+        AddPostCommentRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<AddPostCommentCommand>(request);
@@ -86,7 +85,7 @@ public class PostCommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PostCommentCommandResponse>> UpdateAsync(
-        UpdatePostCommentRequest request, 
+        UpdatePostCommentRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<UpdatePostCommentCommand>(request);
@@ -103,7 +102,7 @@ public class PostCommentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAsync(
-        DeletePostCommentRequest request, 
+        DeletePostCommentRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<DeletePostCommentCommand>(request);

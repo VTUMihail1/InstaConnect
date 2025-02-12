@@ -3,7 +3,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Models.Filters;
 using InstaConnect.Shared.Common.Models.Enums;
 
-namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAllUsers;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 
 public record GetAllUsersQuery(
     string UserName,

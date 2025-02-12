@@ -8,7 +8,7 @@ using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Posts;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.AddPostLike;
+namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 
 internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand, PostLikeCommandViewModel>
 {

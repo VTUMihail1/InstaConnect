@@ -3,7 +3,7 @@ using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
+namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 
 internal class GetAllPostCommentLikesQueryHandler : IQueryHandler<GetAllPostCommentLikesQuery, PostCommentLikePaginationQueryViewModel>
 {

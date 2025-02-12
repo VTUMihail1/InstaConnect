@@ -2,7 +2,7 @@
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
 
-namespace InstaConnect.Follows.Application.Features.Follows.Commands.DeleteFollow;
+namespace InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
 public class DeleteFollowCommandValidator : AbstractValidator<DeleteFollowCommand>
 {
     public DeleteFollowCommandValidator()

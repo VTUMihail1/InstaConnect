@@ -1,17 +1,16 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Commands.ResetUserPassword;
-using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
+using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
+using InstaConnect.Identity.Application.IntegrationTests.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Token;
 using InstaConnect.Shared.Common.Exceptions.User;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
+namespace InstaConnect.Identity.Application.IntegrationTests.Features.ForgotPasswordTokens.Commands;
 
 public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgotPasswordTokenIntegrationTest
 {

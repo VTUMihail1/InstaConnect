@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Application.Features.PostComments.Models;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllPostComments;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 using InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;

@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.Posts.Commands.UpdatePost;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;

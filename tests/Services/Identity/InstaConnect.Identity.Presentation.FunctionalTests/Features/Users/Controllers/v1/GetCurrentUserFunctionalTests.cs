@@ -1,6 +1,4 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
-using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Features.Users.Utilities;

@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;

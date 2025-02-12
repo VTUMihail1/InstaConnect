@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Commands.EditCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.Update;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
@@ -9,7 +9,7 @@ using InstaConnect.Shared.Application.Models;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.EditCurrentUser;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Update;
 
 public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
 {

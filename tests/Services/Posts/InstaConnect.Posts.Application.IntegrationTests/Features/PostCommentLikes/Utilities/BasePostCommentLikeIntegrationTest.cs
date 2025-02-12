@@ -141,8 +141,8 @@ public abstract class BasePostCommentLikeIntegrationTest : IClassFixture<PostsWe
     }
 
     protected async Task<PostCommentLike> CreatePostCommentLikeUtilAsync(
-        User user, 
-        PostComment postComment, 
+        User user,
+        PostComment postComment,
         CancellationToken cancellationToken)
     {
         var postCommentLike = new PostCommentLike(

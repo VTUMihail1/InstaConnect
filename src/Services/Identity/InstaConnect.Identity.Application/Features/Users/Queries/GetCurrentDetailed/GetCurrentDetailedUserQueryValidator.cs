@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
-namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUserDetailed;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
 
 public class GetCurrentDetailedUserQueryValidator : AbstractValidator<GetCurrentDetailedUserQuery>
 {

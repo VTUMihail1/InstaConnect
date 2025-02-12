@@ -2,13 +2,13 @@
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Presentation.Features.Users.Mappings;
+using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using NSubstitute;
 
-namespace InstaConnect.Identity.Presentation.UnitTests.Features.Users.Utilities;
+namespace InstaConnect.Identity.Presentation.UnitTests.Features.EmailConfirmationTokens.Utilities;
 
 public abstract class BaseEmailConfirmationTokenUnitTest
 {

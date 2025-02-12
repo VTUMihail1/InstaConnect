@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.DeletePostLike;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
 using InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;

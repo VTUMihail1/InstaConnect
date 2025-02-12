@@ -1,5 +1,4 @@
-﻿using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Models.Enums;
+﻿using InstaConnect.Shared.Common.Models.Enums;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Follows.Common.Features.Follows.Utilities;

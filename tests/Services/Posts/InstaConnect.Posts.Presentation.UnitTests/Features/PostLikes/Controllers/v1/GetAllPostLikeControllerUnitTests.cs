@@ -1,11 +1,6 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.AddPostLike;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.DeletePostLike;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllPostLikes;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetPostLikeById;
+﻿using FluentAssertions;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;

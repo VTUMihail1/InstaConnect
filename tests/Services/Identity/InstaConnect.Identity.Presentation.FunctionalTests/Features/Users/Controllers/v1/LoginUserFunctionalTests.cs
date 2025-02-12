@@ -1,8 +1,6 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Bindings;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
@@ -148,7 +146,7 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     public async Task LoginAsync_ShouldReturnBadRequestResponse_WhenEmailIsNotConfirmed()
     {
         // Arrange
-        var existingUserClaim= await CreateUserClaimWithUnconfirmedUserEmailAsync(CancellationToken);
+        var existingUserClaim = await CreateUserClaimWithUnconfirmedUserEmailAsync(CancellationToken);
         var request = new LoginUserRequest(
             new(
             existingUserClaim.User.Email,

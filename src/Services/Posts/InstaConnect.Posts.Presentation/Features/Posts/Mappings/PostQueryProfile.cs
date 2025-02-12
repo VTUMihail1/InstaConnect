@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Application.Features.Posts.Models;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllPosts;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetPostById;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 

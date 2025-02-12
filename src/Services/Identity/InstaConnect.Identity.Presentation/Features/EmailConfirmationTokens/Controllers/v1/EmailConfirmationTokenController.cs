@@ -1,14 +1,14 @@
 ﻿using Asp.Versioning;
-using InstaConnect.Identity.Application.Features.Users.Commands.ConfirmUserEmail;
-using InstaConnect.Identity.Application.Features.Users.Commands.ResendUserEmailConfirmation;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
+using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models.Requests;
 using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Presentation.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
+namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Controllers.v1;
 
 [ApiVersion(EmailConfirmationTokenRoutes.Version1)]
 [Route(EmailConfirmationTokenRoutes.Resource)]

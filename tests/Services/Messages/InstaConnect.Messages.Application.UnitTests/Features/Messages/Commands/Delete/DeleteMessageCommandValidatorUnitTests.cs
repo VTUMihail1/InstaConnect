@@ -1,11 +1,11 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Messages.Application.Features.Messages.Commands.DeleteMessage;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Delete;
 using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Commands.DeleteMessage;
+namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Commands.Delete;
 
 public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
 {

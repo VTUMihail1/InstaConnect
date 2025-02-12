@@ -8,7 +8,6 @@ using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
 using InstaConnect.Posts.Domain.Features.Posts.Abstract;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
 using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Application.Abstractions;
@@ -104,7 +103,7 @@ public abstract class BasePostCommentUnitTest
     {
         var postComment = new PostComment(
             user,
-            post, 
+            post,
             SharedTestUtilities.GetAverageString(PostCommentConfigurations.ContentMaxLength, PostCommentConfigurations.ContentMinLength));
 
         var postCommentPaginationList = new PaginationList<PostComment>(

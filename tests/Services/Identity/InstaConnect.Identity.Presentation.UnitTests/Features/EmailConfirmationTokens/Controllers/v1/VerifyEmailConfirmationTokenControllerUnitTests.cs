@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Commands.ConfirmUserEmail;
-using InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.UnitTests.Features.Users.Utilities;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
+using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Controllers.v1;
+using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models.Requests;
+using InstaConnect.Identity.Presentation.UnitTests.Features.EmailConfirmationTokens.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;

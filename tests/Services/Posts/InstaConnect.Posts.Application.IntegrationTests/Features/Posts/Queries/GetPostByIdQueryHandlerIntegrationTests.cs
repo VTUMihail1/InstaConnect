@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Application.Features.Posts.Models;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetPostById;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.Posts;
 using InstaConnect.Shared.Common.Utilities;

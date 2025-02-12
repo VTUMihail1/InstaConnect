@@ -2,8 +2,6 @@
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Infrastructure;
@@ -13,7 +11,7 @@ using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
+namespace InstaConnect.Identity.Application.IntegrationTests.Features.ForgotPasswordTokens.Utilities;
 
 public abstract class BaseForgotPasswordTokenIntegrationTest : IClassFixture<IdentityWebApplicationFactory>, IAsyncLifetime
 {

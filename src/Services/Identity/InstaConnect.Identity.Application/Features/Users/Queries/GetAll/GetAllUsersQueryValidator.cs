@@ -4,7 +4,7 @@ using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Validators;
 
-namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAllUsers;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 
 public class GetAllUsersQueryValidator : AbstractValidator<GetAllUsersQuery>
 {

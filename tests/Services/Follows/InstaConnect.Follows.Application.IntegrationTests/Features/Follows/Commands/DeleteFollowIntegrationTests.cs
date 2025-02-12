@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Follows.Application.Features.Follows.Commands.DeleteFollow;
+using InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
 using InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Application.IntegrationTests.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;

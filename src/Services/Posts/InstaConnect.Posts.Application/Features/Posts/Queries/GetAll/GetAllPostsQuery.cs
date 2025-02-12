@@ -3,7 +3,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Models.Filters;
 using InstaConnect.Shared.Common.Models.Enums;
 
-namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAllPosts;
+namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 
 public record GetAllPostsQuery(
     string UserId,

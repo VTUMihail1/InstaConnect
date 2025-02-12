@@ -1,9 +1,6 @@
-﻿using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
-using InstaConnect.Shared.Common.Models.Enums;
-using InstaConnect.Shared.Common.Utilities;
-using Microsoft.AspNetCore.Http;
+﻿using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Common.Features.Users.Utilities;
+namespace InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
 
 public abstract class ForgotPasswordTokenTestUtilities : SharedTestUtilities
 {

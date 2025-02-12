@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Application.Features.Posts.Commands.AddPost;
-using InstaConnect.Posts.Application.Features.Posts.Commands.DeletePost;
-using InstaConnect.Posts.Application.Features.Posts.Commands.UpdatePost;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
-using InstaConnect.Shared.Presentation.Models.Users;
 
 namespace InstaConnect.Posts.Presentation.Features.Posts.Mappings;
 

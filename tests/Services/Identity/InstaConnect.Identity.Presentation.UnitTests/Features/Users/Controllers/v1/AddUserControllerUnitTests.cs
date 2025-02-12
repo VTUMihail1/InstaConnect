@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Commands.RegisterUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.Add;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;

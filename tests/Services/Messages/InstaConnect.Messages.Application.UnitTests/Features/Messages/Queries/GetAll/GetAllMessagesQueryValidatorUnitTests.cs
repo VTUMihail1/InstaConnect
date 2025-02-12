@@ -1,11 +1,11 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Queries.GetAllMessages;
+namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Queries.GetAll;
 
 public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
 {

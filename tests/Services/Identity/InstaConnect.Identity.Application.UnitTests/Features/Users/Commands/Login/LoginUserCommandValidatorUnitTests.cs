@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Identity.Application.Features.Users.Commands.LoginUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.Login;
 using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.LoginUser;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Login;
 
 public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
 {

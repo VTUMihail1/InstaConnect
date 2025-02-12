@@ -2,7 +2,7 @@
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 
-namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.DeletePostCommentLike;
+namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete;
 public class DeletePostCommentLikeCommandValidator : AbstractValidator<DeletePostCommentLikeCommand>
 {
     public DeletePostCommentLikeCommandValidator()

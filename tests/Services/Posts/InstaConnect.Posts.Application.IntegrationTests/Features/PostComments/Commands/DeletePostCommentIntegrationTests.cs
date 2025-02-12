@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.DeletePostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
 using InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;

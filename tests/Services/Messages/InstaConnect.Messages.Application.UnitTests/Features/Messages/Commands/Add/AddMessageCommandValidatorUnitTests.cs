@@ -1,11 +1,11 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Messages.Application.Features.Messages.Commands.AddMessage;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
 using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Commands.AddMessage;
+namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Commands.Add;
 
 public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
 {

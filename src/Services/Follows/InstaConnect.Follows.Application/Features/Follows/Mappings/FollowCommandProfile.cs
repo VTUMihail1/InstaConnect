@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Application.Features.Follows.Commands.AddFollow;
+using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 using InstaConnect.Follows.Application.Features.Follows.Models;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
 

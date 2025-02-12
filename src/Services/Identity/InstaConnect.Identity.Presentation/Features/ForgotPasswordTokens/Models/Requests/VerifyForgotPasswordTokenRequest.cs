@@ -1,7 +1,7 @@
-﻿using InstaConnect.Identity.Presentation.Features.Users.Models.Bindings;
+﻿using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Bodies;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
+namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests;
 
 public record VerifyForgotPasswordTokenRequest(
     [FromRoute] string UserId,

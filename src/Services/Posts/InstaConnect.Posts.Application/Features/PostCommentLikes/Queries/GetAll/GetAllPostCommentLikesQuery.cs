@@ -3,7 +3,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Models.Filters;
 using InstaConnect.Shared.Common.Models.Enums;
 
-namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAllPostCommentLikes;
+namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 
 public record GetAllPostCommentLikesQuery(
     string UserId,

@@ -5,15 +5,15 @@ using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Infrastructure;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Abstractions;
+using InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Helpers;
 using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;
-using InstaConnect.Users.Presentation.FunctionalTests.Features.Users.Helpers;
 using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
+namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Utilities;
 
 public abstract class BaseEmailConfirmationTokenFunctionalTest : IClassFixture<IdentityWebApplicationFactory>, IAsyncLifetime
 {

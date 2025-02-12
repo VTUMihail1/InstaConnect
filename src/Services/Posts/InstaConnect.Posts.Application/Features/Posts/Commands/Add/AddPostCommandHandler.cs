@@ -5,7 +5,7 @@ using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Posts.Application.Features.Posts.Commands.AddPost;
+namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 
 internal class AddPostCommandHandler : ICommandHandler<AddPostCommand, PostCommandViewModel>
 {

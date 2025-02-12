@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Identity.Application.Features.Users.Commands.DeleteUserById;
-using InstaConnect.Identity.Application.Features.Users.Commands.EditCurrentUser;
-using InstaConnect.Identity.Application.Features.Users.Commands.LoginUser;
-using InstaConnect.Identity.Application.Features.Users.Commands.RegisterUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.Add;
+using InstaConnect.Identity.Application.Features.Users.Commands.Delete;
+using InstaConnect.Identity.Application.Features.Users.Commands.Login;
+using InstaConnect.Identity.Application.Features.Users.Commands.Update;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
-using InstaConnect.Shared.Presentation.Models.Users;
 
 namespace InstaConnect.Identity.Presentation.Features.Users.Mappings;
 

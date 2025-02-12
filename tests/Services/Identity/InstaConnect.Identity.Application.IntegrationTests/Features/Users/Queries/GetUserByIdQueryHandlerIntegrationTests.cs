@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetUserById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
 using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;

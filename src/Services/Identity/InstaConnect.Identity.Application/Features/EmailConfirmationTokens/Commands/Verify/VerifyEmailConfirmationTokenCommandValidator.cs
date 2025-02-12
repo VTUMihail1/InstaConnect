@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
+using InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 
-namespace InstaConnect.Identity.Application.Features.Users.Commands.ConfirmUserEmail;
+namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
 
 public class VerifyEmailConfirmationTokenCommandValidator : AbstractValidator<VerifyEmailConfirmationTokenCommand>
 {

@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using FluentAssertions;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;

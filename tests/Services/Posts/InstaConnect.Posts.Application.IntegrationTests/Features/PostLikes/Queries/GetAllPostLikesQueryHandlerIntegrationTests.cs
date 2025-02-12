@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Application.Features.PostLikes.Models;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllPostLikes;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;

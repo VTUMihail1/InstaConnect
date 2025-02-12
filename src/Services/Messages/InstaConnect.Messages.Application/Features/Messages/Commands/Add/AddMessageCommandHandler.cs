@@ -6,7 +6,7 @@ using InstaConnect.Messages.Domain.Features.Users.Abstract;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Messages.Application.Features.Messages.Commands.AddMessage;
+namespace InstaConnect.Messages.Application.Features.Messages.Commands.Add;
 
 internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand, MessageCommandViewModel>
 {

@@ -1,5 +1,4 @@
-﻿using InstaConnect.PostComments.Presentation.FunctionalTests.Features.PostComments.Helpers;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+﻿using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
@@ -10,6 +9,7 @@ using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Abstractions;
+using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Helpers;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;

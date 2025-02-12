@@ -2,7 +2,7 @@
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 
-namespace InstaConnect.Posts.Application.Features.PostComments.Commands.UpdatePostComment;
+namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 public class UpdatePostCommentCommandValidator : AbstractValidator<UpdatePostCommentCommand>
 {
     public UpdatePostCommentCommandValidator()

@@ -1,17 +1,9 @@
 ﻿using System.Net;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.Security.Claims;
-using Bogus.DataSets;
-using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Forms;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
+using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models.Requests;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Abstractions;
+using InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Utilities;
 
-namespace InstaConnect.Users.Presentation.FunctionalTests.Features.Users.Helpers;
+namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Helpers;
 public class EmailConfirmationTokensClient : IEmailConfirmationTokensClient
 {
     private readonly HttpClient _httpClient;

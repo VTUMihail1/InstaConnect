@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Identity.Presentation.Features.Users.Models.Bindings;
+﻿namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Bodies;
 
 public class VerifyForgotPasswordTokenBody
 {

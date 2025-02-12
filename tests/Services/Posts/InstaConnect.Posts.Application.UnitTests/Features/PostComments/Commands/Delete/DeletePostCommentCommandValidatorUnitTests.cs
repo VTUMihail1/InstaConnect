@@ -1,12 +1,11 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.DeletePostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
 using InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Commands.DeletePostComment;
+namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Commands.Delete;
 
 public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
 {

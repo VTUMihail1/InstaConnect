@@ -1,7 +1,5 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetUserById;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
+﻿using FluentAssertions;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
 using InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;

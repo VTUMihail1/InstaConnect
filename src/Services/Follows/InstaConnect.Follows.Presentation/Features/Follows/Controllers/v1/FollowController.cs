@@ -1,8 +1,8 @@
 ﻿using Asp.Versioning;
-using InstaConnect.Follows.Application.Features.Follows.Commands.AddFollow;
-using InstaConnect.Follows.Application.Features.Follows.Commands.DeleteFollow;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllFollows;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetFollowById;
+using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
+using InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Presentation.Features.Follows.Utilities;

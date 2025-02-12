@@ -3,7 +3,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Message;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Messages.Application.Features.Messages.Commands.DeleteMessage;
+namespace InstaConnect.Messages.Application.Features.Messages.Commands.Delete;
 
 internal class DeleteMessageCommandHandler : ICommandHandler<DeleteMessageCommand>
 {

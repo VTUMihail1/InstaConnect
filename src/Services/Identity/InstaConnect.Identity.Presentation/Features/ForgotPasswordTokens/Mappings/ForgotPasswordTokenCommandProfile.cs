@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using InstaConnect.Identity.Application.Features.Users.Commands.ResetUserPassword;
-using InstaConnect.Identity.Application.Features.Users.Commands.SendUserPasswordReset;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
+using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
+using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
+using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests;
 
-namespace InstaConnect.Identity.Presentation.Features.Users.Mappings;
+namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Mappings;
 
 internal class ForgotPasswordTokenCommandProfile : Profile
 {

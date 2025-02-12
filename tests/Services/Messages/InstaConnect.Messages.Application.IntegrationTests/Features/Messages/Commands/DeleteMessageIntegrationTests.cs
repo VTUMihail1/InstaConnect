@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Messages.Application.Features.Messages.Commands.DeleteMessage;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Delete;
 using InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Application.IntegrationTests.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;

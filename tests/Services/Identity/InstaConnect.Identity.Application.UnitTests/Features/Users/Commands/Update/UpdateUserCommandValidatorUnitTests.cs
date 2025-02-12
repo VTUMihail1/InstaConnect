@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Identity.Application.Features.Users.Commands.EditCurrentUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.Update;
 using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.EditCurrentUser;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Update;
 
 public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
 {

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Application.Features.Posts.Commands.AddPost;
-using InstaConnect.Posts.Application.Features.Posts.Commands.UpdatePost;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Application.Features.Posts.Models;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllPosts;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetPostById;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;

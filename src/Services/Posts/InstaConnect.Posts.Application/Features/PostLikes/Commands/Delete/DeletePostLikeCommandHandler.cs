@@ -3,7 +3,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.PostLike;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.DeletePostLike;
+namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
 
 internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeCommand>
 {

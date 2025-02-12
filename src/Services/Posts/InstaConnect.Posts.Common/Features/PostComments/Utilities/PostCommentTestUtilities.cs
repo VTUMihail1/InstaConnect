@@ -1,5 +1,4 @@
-﻿using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Shared.Common.Models.Enums;
+﻿using InstaConnect.Shared.Common.Models.Enums;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Common.Features.PostComments.Utilities;
@@ -7,7 +6,7 @@ namespace InstaConnect.Posts.Common.Features.PostComments.Utilities;
 public class PostCommentTestUtilities : SharedTestUtilities
 {
     public static readonly string InvalidId = GetAverageString(PostCommentConfigurations.IdMaxLength, PostCommentConfigurations.IdMinLength);
-    
+
     public static readonly string ValidAddContent = GetAverageString(PostCommentConfigurations.ContentMaxLength, PostCommentConfigurations.ContentMinLength);
     public static readonly string ValidUpdateContent = GetAverageString(PostCommentConfigurations.ContentMaxLength, PostCommentConfigurations.ContentMinLength);
 

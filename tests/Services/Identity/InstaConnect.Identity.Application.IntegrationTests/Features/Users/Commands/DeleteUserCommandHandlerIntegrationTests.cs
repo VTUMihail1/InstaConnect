@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Commands.DeleteUserById;
+using InstaConnect.Identity.Application.Features.Users.Commands.Delete;
 using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;

@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Utilities;
 public class PostTestRoutes
 {
     public const string Default = "api/v1/posts";

@@ -1,8 +1,7 @@
-﻿using InstaConnect.Shared.Presentation.Binders.FromClaim;
-using System.Security.Claims;
-using InstaConnect.Shared.Presentation.Models.Requests;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
 using InstaConnect.Shared.Common.Models.Enums;
+using InstaConnect.Shared.Presentation.Binders.FromClaim;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
 

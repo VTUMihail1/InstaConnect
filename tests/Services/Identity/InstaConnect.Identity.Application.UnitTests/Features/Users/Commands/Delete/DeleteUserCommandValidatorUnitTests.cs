@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Identity.Application.Features.Users.Commands.DeleteUserById;
+using InstaConnect.Identity.Application.Features.Users.Commands.Delete;
 using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.DeleteUserById;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Delete;
 
 public class DeleteUserCommandValidatorUnitTests : BaseUserUnitTest
 {

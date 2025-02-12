@@ -6,7 +6,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Follows.Application.Features.Follows.Commands.AddFollow;
+namespace InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 
 internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand, FollowCommandViewModel>
 {

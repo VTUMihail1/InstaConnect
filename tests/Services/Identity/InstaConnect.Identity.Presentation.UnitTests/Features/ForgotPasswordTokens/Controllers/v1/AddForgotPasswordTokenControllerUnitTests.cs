@@ -1,28 +1,13 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Commands.DeleteUserById;
-using InstaConnect.Identity.Application.Features.Users.Commands.EditCurrentUser;
-using InstaConnect.Identity.Application.Features.Users.Commands.LoginUser;
-using InstaConnect.Identity.Application.Features.Users.Commands.RegisterUser;
-using InstaConnect.Identity.Application.Features.Users.Commands.ResendUserEmailConfirmation;
-using InstaConnect.Identity.Application.Features.Users.Commands.ResetUserPassword;
-using InstaConnect.Identity.Application.Features.Users.Commands.SendUserPasswordReset;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetAllUsers;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUser;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUserDetailed;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetUserById;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetUserByName;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetUserDetailedById;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
-using InstaConnect.Identity.Presentation.UnitTests.Features.Users.Utilities;
+﻿using FluentAssertions;
+using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
+using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Controllers.v1;
+using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests;
+using InstaConnect.Identity.Presentation.UnitTests.Features.ForgotPasswordTokens.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 
-namespace InstaConnect.Identity.Presentation.UnitTests.Features.Users.Controllers.v1;
+namespace InstaConnect.Identity.Presentation.UnitTests.Features.ForgotPasswordTokens.Controllers.v1;
 public class AddForgotPasswordTokenControllerUnitTests : BaseForgotPasswordTokenUnitTest
 {
     private readonly ForgotPasswordTokenController _forgotPasswordTokenController;

@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUserDetailed;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
 using InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;

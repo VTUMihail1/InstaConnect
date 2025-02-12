@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Application.Features.Follows.Commands.AddFollow;
+using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 using InstaConnect.Follows.Application.Features.Follows.Models;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetAllFollows;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetFollowById;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
+using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;

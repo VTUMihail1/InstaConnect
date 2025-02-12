@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
+﻿namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Utilities;
 public class MessageTestRoutes
 {
     public const string Default = "api/v1/message";

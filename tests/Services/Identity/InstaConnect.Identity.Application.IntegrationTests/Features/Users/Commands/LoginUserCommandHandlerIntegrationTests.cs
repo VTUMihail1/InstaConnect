@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Commands.LoginUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.Login;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;

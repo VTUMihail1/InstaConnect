@@ -2,7 +2,7 @@
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Users.Utilities;
 
-namespace InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
+namespace InstaConnect.Messages.Application.Features.Messages.Commands.Update;
 public class UpdateMessageCommandValidator : AbstractValidator<UpdateMessageCommand>
 {
     public UpdateMessageCommandValidator()

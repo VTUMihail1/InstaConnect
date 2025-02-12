@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.AddPostComment;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.DeletePostComment;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.UpdatePostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 using InstaConnect.Posts.Application.Features.PostComments.Models;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
-using InstaConnect.Shared.Presentation.Models.Users;
 
 namespace InstaConnect.Posts.Presentation.Features.PostComments.Mappings;
 

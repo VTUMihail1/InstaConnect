@@ -4,7 +4,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.PostComment;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Posts.Application.Features.PostComments.Commands.UpdatePostComment;
+namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 
 internal class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommand, PostCommentCommandViewModel>
 {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using InstaConnect.Posts.Application.Features.PostComments.Models;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAllPostComments;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetPostCommentById;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
 

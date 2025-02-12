@@ -1,5 +1,5 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllPostLikes;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;

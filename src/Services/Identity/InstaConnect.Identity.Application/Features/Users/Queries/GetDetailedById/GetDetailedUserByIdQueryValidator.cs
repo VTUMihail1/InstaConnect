@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 
-namespace InstaConnect.Identity.Application.Features.Users.Queries.GetUserDetailedById;
+namespace InstaConnect.Identity.Application.Features.Users.Queries.GetDetailedById;
 
 public class GetDetailedUserByIdQueryValidator : AbstractValidator<GetDetailedUserByIdQuery>
 {

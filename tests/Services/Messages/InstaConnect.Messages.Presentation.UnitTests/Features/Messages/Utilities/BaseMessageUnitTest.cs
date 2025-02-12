@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Application.Features.Messages.Commands.AddMessage;
-using InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
 using InstaConnect.Messages.Application.Features.Messages.Models;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetMessageById;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
@@ -61,7 +61,7 @@ public abstract class BaseMessageUnitTest
     {
         var message = new Message(
             SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
-            sender, 
+            sender,
             receiver);
 
         var messageQueryViewModel = new MessageQueryViewModel(

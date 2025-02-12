@@ -1,14 +1,7 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Messages.Application.Features.Messages.Commands.AddMessage;
-using InstaConnect.Messages.Application.Features.Messages.Commands.DeleteMessage;
-using InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetMessageById;
+﻿using FluentAssertions;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Presentation.Features.Messages.Controllers.v1;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Binding;
 using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
 using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
 using InstaConnect.Messages.Presentation.UnitTests.Features.Messages.Utilities;

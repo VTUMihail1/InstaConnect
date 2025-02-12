@@ -4,7 +4,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Token;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Identity.Application.Features.Users.Commands.ResetUserPassword;
+namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 
 public class VerifyForgotPasswordTokenCommandHandler : ICommandHandler<VerifyForgotPasswordTokenCommand>
 {

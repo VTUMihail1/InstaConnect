@@ -1,22 +1,19 @@
 ﻿using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Infrastructure;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Abstractions;
+using InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Helpers;
 using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;
-using InstaConnect.Users.Presentation.FunctionalTests.Features.Users.Helpers;
 using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
+namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Utilities;
 
 public abstract class BaseForgotPasswordTokenFunctionalTest : IClassFixture<IdentityWebApplicationFactory>, IAsyncLifetime
 {
@@ -102,7 +99,7 @@ public abstract class BaseForgotPasswordTokenFunctionalTest : IClassFixture<Iden
     }
 
     private async Task<ForgotPasswordToken> CreateForgotPasswordTokenUtilAsync(
-        User user, 
+        User user,
         CancellationToken cancellationToken)
     {
         var forgotPasswordToken = new ForgotPasswordToken(

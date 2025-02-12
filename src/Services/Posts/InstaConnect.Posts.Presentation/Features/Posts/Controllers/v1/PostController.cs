@@ -1,14 +1,13 @@
 ﻿using Asp.Versioning;
-using InstaConnect.Posts.Application.Features.Posts.Commands.AddPost;
-using InstaConnect.Posts.Application.Features.Posts.Commands.DeletePost;
-using InstaConnect.Posts.Application.Features.Posts.Commands.UpdatePost;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetAllPosts;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetPostById;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Presentation.Features.Posts.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Presentation.Abstractions;
 using InstaConnect.Shared.Presentation.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +36,7 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<PostPaginationQueryResponse>> GetAllAsync(
-        GetAllPostsRequest request, 
+        GetAllPostsRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllPostsQuery>(request);
@@ -52,7 +51,7 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PostQueryResponse>> GetByIdAsync(
-        GetPostByIdRequest request, 
+        GetPostByIdRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetPostByIdQuery>(request);
@@ -69,7 +68,7 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PostCommandResponse>> AddAsync(
-        AddPostRequest request, 
+        AddPostRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<AddPostCommand>(request);
@@ -86,7 +85,7 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PostCommandResponse>> UpdateAsync(
-        UpdatePostRequest request, 
+        UpdatePostRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<UpdatePostCommand>(request);
@@ -103,7 +102,7 @@ public class PostController : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAsync(
-        DeletePostRequest request, 
+        DeletePostRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<DeletePostCommand>(request);

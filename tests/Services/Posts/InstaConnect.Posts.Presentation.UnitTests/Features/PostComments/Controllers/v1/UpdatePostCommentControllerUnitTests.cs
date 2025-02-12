@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.UpdatePostComment;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 using InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;

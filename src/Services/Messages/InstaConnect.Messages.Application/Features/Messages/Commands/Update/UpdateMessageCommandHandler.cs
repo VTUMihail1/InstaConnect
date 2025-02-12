@@ -4,7 +4,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Message;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
+namespace InstaConnect.Messages.Application.Features.Messages.Commands.Update;
 
 internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageCommand, MessageCommandViewModel>
 {

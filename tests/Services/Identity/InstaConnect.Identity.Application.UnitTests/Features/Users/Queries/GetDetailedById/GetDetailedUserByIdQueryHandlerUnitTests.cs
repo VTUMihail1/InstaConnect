@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
 using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetUserDetailedById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailedById;
 using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetUserDetailedById;
+namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetDetailedById;
 
 public class GetDetailedUserByIdQueryHandlerUnitTests : BaseUserUnitTest
 {

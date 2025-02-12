@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
+﻿namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
 public class UserTestRoutes
 {
     public const string Default = "api/v1/users";

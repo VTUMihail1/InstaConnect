@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
 using InstaConnect.Messages.Application.Features.Messages.Models;
 using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
@@ -8,7 +8,7 @@ using InstaConnect.Shared.Common.Exceptions.Message;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Commands.UpdateMessage;
+namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Commands.Update;
 
 public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
 {

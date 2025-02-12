@@ -3,7 +3,7 @@ using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
 
-namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
+namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 
 internal class GetAllMessagesQueryHandler : IQueryHandler<GetAllMessagesQuery, MessagePaginationQueryViewModel>
 {

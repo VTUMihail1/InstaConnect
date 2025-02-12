@@ -89,8 +89,8 @@ public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsWebApplica
     }
 
     private async Task<Follow> CreateFollowUtilAsync(
-        User follower, 
-        User following, 
+        User follower,
+        User following,
         CancellationToken cancellationToken)
     {
         var follow = new Follow(

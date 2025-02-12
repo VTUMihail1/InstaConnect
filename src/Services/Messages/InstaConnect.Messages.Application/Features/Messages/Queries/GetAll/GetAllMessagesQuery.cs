@@ -3,7 +3,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Models.Filters;
 using InstaConnect.Shared.Common.Models.Enums;
 
-namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
+namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 
 public record GetAllMessagesQuery(
     string CurrentUserId,

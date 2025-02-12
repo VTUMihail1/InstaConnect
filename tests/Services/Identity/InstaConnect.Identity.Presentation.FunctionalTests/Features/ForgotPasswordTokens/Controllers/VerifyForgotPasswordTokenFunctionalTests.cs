@@ -1,16 +1,14 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
 using FluentAssertions;
 using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Bindings;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
+using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests;
+using InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
+namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Controllers;
 
 public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunctionalTest
 {
@@ -27,7 +25,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenF
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var request = new VerifyForgotPasswordTokenRequest(
-            SharedTestUtilities.GetString(length), 
+            SharedTestUtilities.GetString(length),
             existingForgotPasswordToken.Value,
             new(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword)
         );
@@ -49,7 +47,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenF
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var request = new VerifyForgotPasswordTokenRequest(
-            existingForgotPasswordToken.UserId, 
+            existingForgotPasswordToken.UserId,
             SharedTestUtilities.GetString(length),
             new(UserTestUtilities.ValidPassword, UserTestUtilities.ValidPassword)
         );
@@ -93,7 +91,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenF
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var password = SharedTestUtilities.GetString(length);
         var request = new VerifyForgotPasswordTokenRequest(
-            existingForgotPasswordToken.UserId, 
+            existingForgotPasswordToken.UserId,
             existingForgotPasswordToken.Value,
             new(password, password)
         );
@@ -113,7 +111,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenF
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var request = new VerifyForgotPasswordTokenRequest(
-            existingForgotPasswordToken.UserId, 
+            existingForgotPasswordToken.UserId,
             existingForgotPasswordToken.Value,
             new(UserTestUtilities.ValidUpdatePassword, UserTestUtilities.ValidPassword)
         );
@@ -133,7 +131,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenF
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var request = new VerifyForgotPasswordTokenRequest(
-            UserTestUtilities.InvalidId, 
+            UserTestUtilities.InvalidId,
             existingForgotPasswordToken.Value,
             new(UserTestUtilities.ValidUpdatePassword, UserTestUtilities.ValidUpdatePassword)
         );
@@ -153,7 +151,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenF
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var request = new VerifyForgotPasswordTokenRequest(
-            existingForgotPasswordToken.UserId, 
+            existingForgotPasswordToken.UserId,
             ForgotPasswordTokenTestUtilities.InvalidValue,
             new(UserTestUtilities.ValidUpdatePassword, UserTestUtilities.ValidUpdatePassword)
         );
@@ -174,7 +172,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenF
         var existingUser = await CreateUserAsync(CancellationToken);
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var request = new VerifyForgotPasswordTokenRequest(
-            existingUser.Id, 
+            existingUser.Id,
             existingForgotPasswordToken.Value,
             new(UserTestUtilities.ValidUpdatePassword, UserTestUtilities.ValidUpdatePassword)
         );
@@ -194,7 +192,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenF
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var request = new VerifyForgotPasswordTokenRequest(
-            existingForgotPasswordToken.UserId, 
+            existingForgotPasswordToken.UserId,
             existingForgotPasswordToken.Value,
             new(UserTestUtilities.ValidUpdatePassword, UserTestUtilities.ValidUpdatePassword)
         );
@@ -218,7 +216,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenF
             existingForgotPasswordToken.Value,
             new(UserTestUtilities.ValidUpdatePassword, UserTestUtilities.ValidUpdatePassword)
         );
-        
+
 
         // Act
         await ForgotPasswordTokensClient.VerifyAsync(request, CancellationToken);

@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using InstaConnect.Identity.Application.Features.Users.Commands.EditCurrentUser;
-using InstaConnect.Identity.Application.Features.Users.Commands.LoginUser;
-using InstaConnect.Identity.Application.Features.Users.Commands.RegisterUser;
+using InstaConnect.Identity.Application.Features.Users.Commands.Add;
+using InstaConnect.Identity.Application.Features.Users.Commands.Login;
+using InstaConnect.Identity.Application.Features.Users.Commands.Update;
 using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetAllUsers;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUser;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentUserDetailed;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetUserById;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetUserByName;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetUserDetailedById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailedById;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
@@ -68,7 +68,7 @@ public abstract class BaseUserUnitTest
 
         var userCommandViewModel = new UserCommandViewModel(user.Id);
 
-        
+
 
         var userPaginationCollectionModel = new UserPaginationQueryViewModel(
             [userQueryViewModel],

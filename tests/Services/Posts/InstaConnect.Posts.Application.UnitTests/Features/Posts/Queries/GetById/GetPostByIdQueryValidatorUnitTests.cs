@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetPostById;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetPostById;
+namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetById;
 
 public class GetPostByIdQueryValidatorUnitTests : BasePostUnitTest
 {

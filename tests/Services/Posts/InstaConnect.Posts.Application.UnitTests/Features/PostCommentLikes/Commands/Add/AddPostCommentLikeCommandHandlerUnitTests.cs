@@ -1,8 +1,7 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.AddPostCommentLike;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
@@ -11,7 +10,7 @@ using InstaConnect.Shared.Common.Exceptions.PostComment;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Commands.AddPostCommentLike;
+namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Commands.Add;
 
 public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeUnitTest
 {

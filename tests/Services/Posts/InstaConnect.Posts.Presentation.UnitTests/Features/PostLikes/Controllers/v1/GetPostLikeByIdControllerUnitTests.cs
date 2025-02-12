@@ -1,7 +1,5 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetPostLikeById;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
+﻿using FluentAssertions;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;

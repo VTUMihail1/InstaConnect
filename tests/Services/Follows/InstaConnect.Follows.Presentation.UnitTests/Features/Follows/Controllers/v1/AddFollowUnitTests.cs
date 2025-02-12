@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
-using InstaConnect.Follows.Application.Features.Follows.Commands.AddFollow;
+using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 using InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Binding;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Presentation.UnitTests.Features.Follows.Utilities;

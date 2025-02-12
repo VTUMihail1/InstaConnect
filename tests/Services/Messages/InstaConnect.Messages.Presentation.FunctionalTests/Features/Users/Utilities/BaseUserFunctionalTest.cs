@@ -9,7 +9,7 @@ using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Users.Utilities;
+namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Users.Utilities;
 
 public abstract class BaseUserFunctionalTest : IClassFixture<MessagesWebApplicationFactory>, IAsyncLifetime
 {

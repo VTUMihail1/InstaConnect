@@ -1,7 +1,7 @@
-﻿using InstaConnect.Follows.Presentation.FunctionalTests.Features.Users.Utilities;
+﻿using InstaConnect.Messages.Presentation.FunctionalTests.Features.Users.Utilities;
 using InstaConnect.Messages.Presentation.FunctionalTests.Utilities;
 
-namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Users.Consumers;
+namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Users.Consumers;
 
 public class UserDeletedEventConsumerFunctionalTests : BaseUserFunctionalTest
 {

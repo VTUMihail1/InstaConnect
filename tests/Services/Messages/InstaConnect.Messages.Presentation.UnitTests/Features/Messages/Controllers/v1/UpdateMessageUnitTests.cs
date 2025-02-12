@@ -1,8 +1,7 @@
 ﻿using FluentAssertions;
-using InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Presentation.Features.Messages.Controllers.v1;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Binding;
 using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
 using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
 using InstaConnect.Messages.Presentation.UnitTests.Features.Messages.Utilities;

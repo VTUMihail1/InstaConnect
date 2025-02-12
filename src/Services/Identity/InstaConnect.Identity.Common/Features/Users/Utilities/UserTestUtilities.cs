@@ -39,7 +39,7 @@ public abstract class UserTestUtilities : SharedTestUtilities
     public static readonly string ValidUpdatePasswordHash = GetAverageString(UserConfigurations.PasswordMaxLength, UserConfigurations.PasswordMinLength);
 
     public static readonly string ValidAccessTokenValue = GetGuid();
-    
+
     public static readonly DateTime ValidUntil = GetMaxDate();
 
     public static readonly int ValidPageValue = 1;

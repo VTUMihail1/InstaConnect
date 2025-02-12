@@ -1,13 +1,8 @@
 ﻿using System.Net;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Forms;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
 using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Contracts.Users;
@@ -202,7 +197,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
         var existingUserWithTakenName = await CreateUserAsync(CancellationToken);
         var request = new UpdateCurrentUserRequest(
             existingUser.Id,
-            new (
+            new(
             existingUserWithTakenName.UserName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,

@@ -1,14 +1,10 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
-using System.Security.Claims;
 using FluentAssertions;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Binding;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
@@ -239,7 +235,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostCommentRequest(
             existingUser.Id,
-            new (existingPost.Id, PostCommentTestUtilities.ValidAddContent)
+            new(existingPost.Id, PostCommentTestUtilities.ValidAddContent)
         );
 
         // Act

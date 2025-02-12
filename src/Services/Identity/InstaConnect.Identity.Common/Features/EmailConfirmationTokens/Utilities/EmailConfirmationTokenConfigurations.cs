@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
+﻿namespace InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities;
 
 public class EmailConfirmationTokenConfigurations
 {

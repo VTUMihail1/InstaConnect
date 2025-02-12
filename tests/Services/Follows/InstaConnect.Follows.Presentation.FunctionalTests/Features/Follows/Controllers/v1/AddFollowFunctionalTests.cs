@@ -3,7 +3,6 @@ using FluentAssertions;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Binding;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Presentation.FunctionalTests.Utilities;
@@ -176,7 +175,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollower = await CreateUserAsync(CancellationToken);
         var existingFollowing = await CreateUserAsync(CancellationToken);
         var request = new AddFollowRequest(
-            existingFollower.Id, 
+            existingFollower.Id,
             new(existingFollowing.Id));
 
         // Act
@@ -195,7 +194,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollower = await CreateUserAsync(CancellationToken);
         var existingFollowing = await CreateUserAsync(CancellationToken);
         var request = new AddFollowRequest(
-            existingFollower.Id, 
+            existingFollower.Id,
             new(existingFollowing.Id));
 
         // Act

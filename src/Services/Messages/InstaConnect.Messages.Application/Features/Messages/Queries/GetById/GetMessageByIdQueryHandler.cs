@@ -4,7 +4,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Message;
 using InstaConnect.Shared.Common.Exceptions.User;
 
-namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetMessageById;
+namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
 
 internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, MessageQueryViewModel>
 {

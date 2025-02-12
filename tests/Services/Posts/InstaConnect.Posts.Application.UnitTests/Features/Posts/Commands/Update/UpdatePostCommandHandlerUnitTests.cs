@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.Posts.Commands.UpdatePost;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
@@ -7,7 +7,7 @@ using InstaConnect.Shared.Common.Exceptions.Posts;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.UpdatePost;
+namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Update;
 
 public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
 {

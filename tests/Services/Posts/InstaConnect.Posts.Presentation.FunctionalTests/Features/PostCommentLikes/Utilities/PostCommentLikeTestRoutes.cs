@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Utilities;
 public class PostCommentLikeTestRoutes
 {
     public const string Default = "api/v1/post-comment-likes";

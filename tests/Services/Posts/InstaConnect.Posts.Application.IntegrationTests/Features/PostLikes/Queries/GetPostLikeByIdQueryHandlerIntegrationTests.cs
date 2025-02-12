@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
 using InstaConnect.Posts.Application.Features.PostLikes.Models;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetPostLikeById;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 using InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
 using InstaConnect.Shared.Common.Exceptions.PostLike;
 using InstaConnect.Shared.Common.Utilities;

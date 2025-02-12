@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using InstaConnect.Identity.Application.Features.Users.Abstractions;
-using InstaConnect.Identity.Application.Features.Users.Mappings;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Mappings;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
@@ -11,7 +11,7 @@ using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using NSubstitute;
 
-namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
+namespace InstaConnect.Identity.Application.UnitTests.Features.EmailConfirmationTokens.Utilities;
 
 public abstract class BaseEmailConfirmationTokenUnitTest
 {

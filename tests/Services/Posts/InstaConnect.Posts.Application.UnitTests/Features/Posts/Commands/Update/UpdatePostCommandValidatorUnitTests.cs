@@ -1,11 +1,11 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Application.Features.Posts.Commands.UpdatePost;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.UpdatePost;
+namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Update;
 
 public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
 {

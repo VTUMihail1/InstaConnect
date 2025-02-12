@@ -13,7 +13,7 @@ using MassTransit.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
+namespace InstaConnect.Identity.Application.IntegrationTests.Features.EmailConfirmationTokens.Utilities;
 
 public abstract class BaseEmailConfirmationTokenIntegrationTest : IClassFixture<IdentityWebApplicationFactory>, IAsyncLifetime
 {

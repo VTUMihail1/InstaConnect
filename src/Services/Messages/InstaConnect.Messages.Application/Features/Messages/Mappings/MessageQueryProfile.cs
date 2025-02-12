@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InstaConnect.Messages.Application.Features.Messages.Models;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetAllMessages;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
 using InstaConnect.Shared.Domain.Models.Pagination;

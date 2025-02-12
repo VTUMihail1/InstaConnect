@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.AddPostComment;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostComments.Models;
 using InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
@@ -10,7 +10,7 @@ using InstaConnect.Shared.Common.Exceptions.Posts;
 using InstaConnect.Shared.Common.Exceptions.User;
 using NSubstitute;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Commands.AddComment;
+namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Commands.Add;
 
 public class AddPostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
 {

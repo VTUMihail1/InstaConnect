@@ -1,7 +1,6 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.AddPostLike;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 using InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Utilities;

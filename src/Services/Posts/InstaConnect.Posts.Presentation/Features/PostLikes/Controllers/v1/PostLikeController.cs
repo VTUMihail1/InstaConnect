@@ -1,13 +1,12 @@
 ﻿using Asp.Versioning;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.AddPostLike;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.DeletePostLike;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAllPostLikes;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetPostLikeById;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
+using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
-using InstaConnect.Posts.Presentation.Features.Posts.Utilities;
+using InstaConnect.Posts.Presentation.Features.PostLikes.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Presentation.Abstractions;
 using InstaConnect.Shared.Presentation.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +35,7 @@ public class PostLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<PostLikePaginationQueryResponse>> GetAllAsync(
-        GetAllPostLikesRequest request, 
+        GetAllPostLikesRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetAllPostLikesQuery>(request);
@@ -51,7 +50,7 @@ public class PostLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PostLikeQueryResponse>> GetByIdAsync(
-        GetPostLikeByIdRequest request, 
+        GetPostLikeByIdRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _instaConnectMapper.Map<GetPostLikeByIdQuery>(request);
@@ -68,7 +67,7 @@ public class PostLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PostLikeCommandResponse>> AddAsync(
-        AddPostLikeRequest request, 
+        AddPostLikeRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<AddPostLikeCommand>(request);
@@ -85,7 +84,7 @@ public class PostLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAsync(
-        DeletePostLikeRequest request, 
+        DeletePostLikeRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _instaConnectMapper.Map<DeletePostLikeCommand>(request);

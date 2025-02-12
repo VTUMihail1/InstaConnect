@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Application.Features.Messages.Commands.AddMessage;
-using InstaConnect.Messages.Application.Features.Messages.Commands.UpdateMessage;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
 using InstaConnect.Messages.Application.Features.Messages.Models;
 using InstaConnect.Messages.Domain.Features.Messages.Models;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;

@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
 using InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Shared.Common.Utilities;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Queries.GetPostCommentLikeById;
+namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Queries.GetById;
 
 public class GetPostCommentLikeByIdQueryValidatorUnitTests : BasePostCommentLikeUnitTest
 {

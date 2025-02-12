@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
-using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
 using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
 using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
 using InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Abstractions;
+using InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Utilities;
 
 namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Helpers;
 public class MessagesClient : IMessagesClient
