@@ -27,7 +27,7 @@ public abstract class BaseEmailConfirmationTokenUnitTest
                 new MapperConfiguration(cfg => cfg.AddProfile<EmailConfirmationTokenCommandProfile>())));
     }
 
-    protected User CreateUser()
+    private User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -40,13 +40,27 @@ public abstract class BaseEmailConfirmationTokenUnitTest
         return user;
     }
 
-    protected EmailConfirmationToken CreateEmailConfirmationToken()
+    protected User CreateUser()
     {
-        var user = CreateUser();
+        var user = CreateUserUtil();
+
+        return user;
+    }
+
+    private EmailConfirmationToken CreateEmailConfirmationTokenUtil(User user)
+    {
         var emailConfirmationToken = new EmailConfirmationToken(
             SharedTestUtilities.GetGuid(),
             SharedTestUtilities.GetMaxDate(),
             user);
+
+        return emailConfirmationToken;
+    }
+
+    protected EmailConfirmationToken CreateEmailConfirmationToken()
+    {
+        var user = CreateUser();
+        var emailConfirmationToken = CreateEmailConfirmationTokenUtil(user);
 
         return emailConfirmationToken;
     }

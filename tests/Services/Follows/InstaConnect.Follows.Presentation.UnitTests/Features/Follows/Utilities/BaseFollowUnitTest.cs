@@ -37,7 +37,7 @@ public abstract class BaseFollowUnitTest
                 })));
     }
 
-    public User CreateUser()
+    private User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -49,10 +49,15 @@ public abstract class BaseFollowUnitTest
         return user;
     }
 
-    public Follow CreateFollow()
+    protected User CreateUser()
     {
-        var follower = CreateUser();
-        var following = CreateUser();
+        var user = CreateUserUtil();
+
+        return user;
+    }
+
+    private Follow CreateFollowUtil(User follower, User following)
+    {
         var follow = new Follow(follower, following);
 
         var followCommandViewModel = new FollowCommandViewModel(follow.Id);
@@ -96,6 +101,15 @@ public abstract class BaseFollowUnitTest
                                                      m.FollowingId == following.Id),
                                                      CancellationToken)
             .Returns(followCommandViewModel);
+
+        return follow;
+    }
+
+    protected Follow CreateFollow()
+    {
+        var follower = CreateUser();
+        var following = CreateUser();
+        var follow = CreateFollowUtil(follower, following);
 
         return follow;
     }

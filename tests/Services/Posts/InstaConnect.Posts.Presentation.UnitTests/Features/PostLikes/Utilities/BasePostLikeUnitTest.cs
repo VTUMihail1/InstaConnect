@@ -38,7 +38,7 @@ public abstract class BasePostLikeUnitTest
         CancellationToken = new CancellationToken();
     }
 
-    public User CreateUser()
+    private User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -50,9 +50,15 @@ public abstract class BasePostLikeUnitTest
         return user;
     }
 
-    public Post CreatePost()
+    protected User CreateUser()
     {
-        var user = CreateUser();
+        var user = CreateUserUtil();
+
+        return user;
+    }
+
+    private Post CreatePostUtil(User user)
+    {
         var post = new Post(
             SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
             SharedTestUtilities.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength),
@@ -61,10 +67,16 @@ public abstract class BasePostLikeUnitTest
         return post;
     }
 
-    public PostLike CreatePostLike()
+    protected Post CreatePost()
     {
         var user = CreateUser();
-        var post = CreatePost();
+        var post = CreatePostUtil(user);
+
+        return post;
+    }
+
+    private PostLike CreatePostLikeUtil(User user, Post post)
+    {
         var postLike = new PostLike(post, user);
 
         var postLikeQueryViewModel = new PostLikeQueryViewModel(
@@ -103,6 +115,15 @@ public abstract class BasePostLikeUnitTest
                   m.CurrentUserId == user.Id &&
                   m.PostId == post.Id), CancellationToken)
             .Returns(postLikeCommandViewModel);
+
+        return postLike;
+    }
+
+    protected PostLike CreatePostLike()
+    {
+        var user = CreateUser();
+        var post = CreatePost();
+        var postLike = CreatePostLikeUtil(user, post);
 
         return postLike;
     }

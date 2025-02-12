@@ -41,25 +41,7 @@ public abstract class BaseUserUnitTest
                 })));
     }
 
-    protected UserClaim CreateUserClaim()
-    {
-        var user = CreateUser();
-        var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
-            user);
-
-        var userTokenCommandViewModel = new UserTokenCommandViewModel(UserTestUtilities.ValidAccessTokenValue, UserTestUtilities.ValidUntil);
-        
-        InstaConnectSender
-            .SendAsync(Arg.Is<LoginUserCommand>(m => m.Email == user.Email &&
-                                                     m.Password == UserTestUtilities.ValidPassword), CancellationToken)
-            .Returns(userTokenCommandViewModel);
-
-        return userClaim;
-    }
-
-    protected User CreateUser()
+    private User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -146,5 +128,37 @@ public abstract class BaseUserUnitTest
             .Returns(userCommandViewModel);
 
         return user;
+    }
+
+    protected User CreateUser()
+    {
+        var user = CreateUserUtil();
+
+        return user;
+    }
+
+    private UserClaim CreateUserClaimUtil(User user)
+    {
+        var userClaim = new UserClaim(
+            AppClaims.Admin,
+            AppClaims.Admin,
+            user);
+
+        var userTokenCommandViewModel = new UserTokenCommandViewModel(UserTestUtilities.ValidAccessTokenValue, UserTestUtilities.ValidUntil);
+
+        InstaConnectSender
+            .SendAsync(Arg.Is<LoginUserCommand>(m => m.Email == user.Email &&
+                                                     m.Password == UserTestUtilities.ValidPassword), CancellationToken)
+            .Returns(userTokenCommandViewModel);
+
+        return userClaim;
+    }
+
+    protected UserClaim CreateUserClaim()
+    {
+        var user = CreateUser();
+        var userClaim = CreateUserClaimUtil(user);
+
+        return userClaim;
     }
 }

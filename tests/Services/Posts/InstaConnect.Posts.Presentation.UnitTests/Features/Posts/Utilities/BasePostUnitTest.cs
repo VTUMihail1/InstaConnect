@@ -37,7 +37,7 @@ public abstract class BasePostUnitTest
                 })));
     }
 
-    public User CreateUser()
+    private User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -49,9 +49,15 @@ public abstract class BasePostUnitTest
         return user;
     }
 
-    public Post CreatePost()
+    protected User CreateUser()
     {
-        var user = CreateUser();
+        var user = CreateUserUtil();
+
+        return user;
+    }
+
+    private Post CreatePostUtil(User user)
+    {
         var post = new Post(
             SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
             SharedTestUtilities.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength),
@@ -103,6 +109,14 @@ public abstract class BasePostUnitTest
                   m.Title == PostTestUtilities.ValidUpdateTitle &&
                   m.Content == PostTestUtilities.ValidUpdateContent), CancellationToken)
             .Returns(postCommandViewModel);
+
+        return post;
+    }
+
+    protected Post CreatePost()
+    {
+        var user = CreateUser();
+        var post = CreatePostUtil(user);
 
         return post;
     }

@@ -30,7 +30,7 @@ public abstract class BaseUserUnitTest
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
     }
 
-    public User CreateUser()
+    private User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -43,6 +43,13 @@ public abstract class BaseUserUnitTest
             user.Id,
             CancellationToken)
             .Returns(user);
+
+        return user;
+    }
+
+    protected User CreateUser()
+    {
+        var user = CreateUserUtil();
 
         return user;
     }

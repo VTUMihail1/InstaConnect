@@ -38,7 +38,7 @@ public abstract class BaseMessageUnitTest
                 })));
     }
 
-    public User CreateUser()
+    private User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -50,10 +50,15 @@ public abstract class BaseMessageUnitTest
         return user;
     }
 
-    public Message CreateMessage()
+    protected User CreateUser()
     {
-        var sender = CreateUser();
-        var receiver = CreateUser();
+        var user = CreateUserUtil();
+
+        return user;
+    }
+
+    private Message CreateMessageUtil(User sender, User receiver)
+    {
         var message = new Message(
             SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
             sender, 
@@ -108,6 +113,15 @@ public abstract class BaseMessageUnitTest
                   m.CurrentUserId == sender.Id &&
                   m.Content == MessageTestUtilities.ValidUpdateContent), CancellationToken)
             .Returns(messageCommandViewModel);
+
+        return message;
+    }
+
+    protected Message CreateMessage()
+    {
+        var sender = CreateUser();
+        var receiver = CreateUser();
+        var message = CreateMessageUtil(sender, receiver);
 
         return message;
     }
