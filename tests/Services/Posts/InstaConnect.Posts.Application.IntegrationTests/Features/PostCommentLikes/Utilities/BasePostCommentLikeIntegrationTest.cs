@@ -164,12 +164,6 @@ public abstract class BasePostCommentLikeIntegrationTest : IClassFixture<PostsWe
         var postComment = await CreatePostCommentAsync(cancellationToken);
         var postCommentLike = await CreatePostCommentLikeUtilAsync(user, postComment, cancellationToken);
 
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var PostCommentLikeWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostCommentLikeWriteRepository>();
-
-        PostCommentLikeWriteRepository.Add(postCommentLike);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
         return postCommentLike;
     }
 
