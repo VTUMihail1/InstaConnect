@@ -1,0 +1,198 @@
+﻿using FluentAssertions;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
+using InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
+using InstaConnect.Messages.Application.IntegrationTests.Utilities;
+using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Features.Users.Utilities;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
+using InstaConnect.Shared.Common.Exceptions.Base;
+using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Utilities;
+
+namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Commands;
+public class AddMessageIntegrationTests : BaseMessageIntegrationTest
+{
+    public AddMessageIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    {
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
+    {
+        // Arrange
+        var existingReceiver = await CreateUserAsync(CancellationToken);
+        var command = new AddMessageCommand(
+            null!,
+            existingReceiver.Id,
+            MessageTestUtilities.ValidAddContent
+        );
+
+        // Act
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<BadRequestException>();
+    }
+
+    [Theory]
+    [InlineData(default(int))]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
+    {
+        // Arrange
+        var existingReceiver = await CreateUserAsync(CancellationToken);
+        var command = new AddMessageCommand(
+            SharedTestUtilities.GetString(length),
+            existingReceiver.Id,
+            MessageTestUtilities.ValidAddContent
+        );
+
+        // Act
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<BadRequestException>();
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverIdIsNull()
+    {
+        // Arrange
+        var existingSender = await CreateUserAsync(CancellationToken);
+        var command = new AddMessageCommand(
+            existingSender.Id,
+            null!,
+            MessageTestUtilities.ValidAddContent
+        );
+
+        // Act
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<BadRequestException>();
+    }
+
+    [Theory]
+    [InlineData(default(int))]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverIdLengthIsInvalid(int length)
+    {
+        // Arrange
+        var existingSender = await CreateUserAsync(CancellationToken);
+        var command = new AddMessageCommand(
+            existingSender.Id,
+            SharedTestUtilities.GetString(length),
+            MessageTestUtilities.ValidAddContent
+        );
+
+        // Act
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<BadRequestException>();
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenContentIsNull()
+    {
+        // Arrange
+        var existingSender = await CreateUserAsync(CancellationToken);
+        var existingReceiver = await CreateUserAsync(CancellationToken);
+        var command = new AddMessageCommand(
+            existingSender.Id,
+            existingReceiver.Id,
+            null!
+        );
+
+        // Act
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<BadRequestException>();
+    }
+
+    [Theory]
+    [InlineData(default(int))]
+    [InlineData(MessageConfigurations.ContentMinLength - 1)]
+    [InlineData(MessageConfigurations.ContentMaxLength + 1)]
+    public async Task SendAsync_ShouldThrowBadRequestException_WhenContentLengthIsInvalid(int length)
+    {
+        // Arrange
+        var existingSender = await CreateUserAsync(CancellationToken);
+        var existingReceiver = await CreateUserAsync(CancellationToken);
+        var command = new AddMessageCommand(
+            existingSender.Id,
+            existingReceiver.Id,
+            SharedTestUtilities.GetString(length)
+        );
+
+        // Act
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<BadRequestException>();
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
+    {
+        // Arrange
+        var existingReceiver = await CreateUserAsync(CancellationToken);
+        var command = new AddMessageCommand(
+            UserTestUtilities.InvalidId,
+            existingReceiver.Id,
+            MessageTestUtilities.ValidAddContent
+        );
+
+        // Act
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<UserNotFoundException>();
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenReceiverIdIsInvalid()
+    {
+        // Arrange
+        var existingSender = await CreateUserAsync(CancellationToken);
+        var command = new AddMessageCommand(
+            existingSender.Id,
+            UserTestUtilities.InvalidId,
+            MessageTestUtilities.ValidAddContent
+        );
+
+        // Act
+        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<UserNotFoundException>();
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldAddMessage_WhenMessageIsValid()
+    {
+        // Arrange
+        var existingSender = await CreateUserAsync(CancellationToken);
+        var existingReceiver = await CreateUserAsync(CancellationToken);
+        var command = new AddMessageCommand(
+            existingSender.Id,
+            existingReceiver.Id,
+            MessageTestUtilities.ValidAddContent
+        );
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var message = await MessageWriteRepository.GetByIdAsync(response.Id, CancellationToken);
+
+        // Assert
+        message
+            .Should()
+            .Match<Message>(m => m.Id == response.Id &&
+                                 m.SenderId == existingSender.Id &&
+                                 m.ReceiverId == existingReceiver.Id &&
+                                 m.Content == MessageTestUtilities.ValidAddContent);
+    }
+}

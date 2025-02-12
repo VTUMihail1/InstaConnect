@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Features\Users\Models\Options\**" />
+    <EmbeddedResource Remove="Features\Users\Models\Options\**" />
+    <None Remove="Features\Users\Models\Options\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Application\InstaConnect.Shared.Application.csproj" />
+    <ProjectReference Include="..\InstaConnect.Identity.Common\InstaConnect.Identity.Common.csproj" />
+    <ProjectReference Include="..\InstaConnect.Identity.Domain\InstaConnect.Identity.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Identity.Application.UnitTests</_Parameter1>
+  	</AssemblyAttribute>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Identity.Application.IntegrationTests</_Parameter1>
+  	</AssemblyAttribute>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Identity.Presentation.UnitTests</_Parameter1>
+  	</AssemblyAttribute>
+  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+  	  <_Parameter1>InstaConnect.Identity.Presentation.FunctionalTests</_Parameter1>
+  	</AssemblyAttribute>
+  </ItemGroup>
+
+</Project>
