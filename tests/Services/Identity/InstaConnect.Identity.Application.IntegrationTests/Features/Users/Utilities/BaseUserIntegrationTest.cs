@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
 
-public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
+public abstract class BaseUserIntegrationTest : IClassFixture<IdentityWebApplicationFactory>, IAsyncLifetime
 {
     protected IServiceScope ServiceScope { get; }
 
@@ -78,17 +78,17 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
 
     protected IPasswordHasher PasswordHasher { get; }
 
-    protected BaseUserIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
+    protected BaseUserIntegrationTest(IdentityWebApplicationFactory integrationTestWebAppFactory)
     {
         ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
         CancellationToken = new CancellationToken();
         InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
         PasswordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
     }
-    protected async Task<UserClaim> CreateUserClaimAsync(CancellationToken cancellationToken)
+    private async Task<UserClaim> CreateUserClaimUtilAsync(
+        User user,
+        CancellationToken cancellationToken)
     {
-        var user = await CreateUserAsync(cancellationToken);
-
         var userClaim = new UserClaim(
             AppClaims.Admin,
             AppClaims.Admin,
@@ -99,6 +99,14 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
 
         userClaimWriteRepository.Add(userClaim);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return userClaim;
+    }
+
+    protected async Task<UserClaim> CreateUserClaimAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(cancellationToken);
+        var userClaim = await CreateUserClaimUtilAsync(user, cancellationToken);
 
         return userClaim;
     }
@@ -106,22 +114,12 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
     protected async Task<UserClaim> CreateUserClaimWithUnconfirmedUserEmailAsync(CancellationToken cancellationToken)
     {
         var user = await CreateUserWithUnconfirmedEmailAsync(cancellationToken);
-
-        var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
-            user);
-
-        var userClaimWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-
-        userClaimWriteRepository.Add(userClaim);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        var userClaim = await CreateUserClaimUtilAsync(user, cancellationToken);
 
         return userClaim;
     }
 
-    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    private async Task<User> CreateUserUtilAsync(bool isEmailConfirmed, CancellationToken cancellationToken)
     {
         var passwordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
         var passwordHash = passwordHasher.Hash(UserTestUtilities.ValidPassword).PasswordHash;
@@ -134,7 +132,7 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
             passwordHash,
             UserTestUtilities.ValidProfileImage)
         {
-            IsEmailConfirmed = true
+            IsEmailConfirmed = isEmailConfirmed
         };
 
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
@@ -146,24 +144,16 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IntegrationTestWeb
         return user;
     }
 
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserUtilAsync(true, cancellationToken);
+
+        return user;
+    }
+
     protected async Task<User> CreateUserWithUnconfirmedEmailAsync(CancellationToken cancellationToken)
     {
-        var passwordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
-        var passwordHash = passwordHasher.Hash(UserTestUtilities.ValidPassword).PasswordHash;
-
-        var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            passwordHash,
-            UserTestUtilities.ValidProfileImage);
-
-        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-
-        userWriteRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        var user = await CreateUserUtilAsync(false, cancellationToken);
 
         return user;
     }

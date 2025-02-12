@@ -20,7 +20,7 @@ public class GetUserByIdQueryValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var query = new GetUserByIdQuery(null!);
+        var query = new GetUserByIdQuery(null);
 
         // Act
         var result = _validator.TestValidate(query);

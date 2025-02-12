@@ -15,7 +15,7 @@ namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Comm
 
 public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgotPasswordTokenIntegrationTest
 {
-    public VerifyForgotPasswordTokenCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public VerifyForgotPasswordTokenCommandHandlerIntegrationTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -26,7 +26,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
-            null!,
+            null,
             existingForgotPasswordToken.Value,
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword);
@@ -70,7 +70,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
             existingForgotPasswordToken.UserId,
-            null!,
+            null,
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword);
 
@@ -114,8 +114,8 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         var command = new VerifyForgotPasswordTokenCommand(
             existingForgotPasswordToken.UserId,
             existingForgotPasswordToken.Value,
-            null!,
-            null!);
+            null,
+            null);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -256,7 +256,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
                               p.UserName == existingForgotPasswordToken.User.UserName &&
                               p.Email == existingForgotPasswordToken.User.Email &&
                               PasswordHasher.Verify(UserTestUtilities.ValidUpdatePassword, p.PasswordHash) &&
-                              p.ProfileImage == UserTestUtilities.ValidProfileImage);
+                              p.ProfileImage == existingForgotPasswordToken.User.ProfileImage);
     }
 
     [Fact]
@@ -279,33 +279,5 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
             .ForgotPasswordTokens
             .Should()
             .BeEmpty();
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldChangeUserPassword_WhenRequestIsValid()
-    {
-        // Arrange
-        var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
-        var command = new VerifyForgotPasswordTokenCommand(
-            existingForgotPasswordToken.UserId,
-            existingForgotPasswordToken.Value,
-            UserTestUtilities.ValidUpdatePassword,
-            UserTestUtilities.ValidUpdatePassword);
-
-
-        // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
-        var user = await UserWriteRepository.GetByIdAsync(existingForgotPasswordToken.UserId, CancellationToken);
-
-        // Assert
-        user
-            .Should()
-            .Match<User>(p => p.Id == user.Id &&
-                              p.FirstName == user.FirstName &&
-                              p.LastName == user.LastName &&
-                              p.UserName == user.UserName &&
-                              p.Email == user.Email &&
-                              PasswordHasher.Verify(UserTestUtilities.ValidUpdatePassword, p.PasswordHash) &&
-                              p.ProfileImage == UserTestUtilities.ValidProfileImage);
     }
 }

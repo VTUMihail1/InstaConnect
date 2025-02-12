@@ -21,7 +21,7 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
-            null!,
+            null,
             UserTestUtilities.ValidPassword
         );
 
@@ -59,7 +59,7 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
         var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
             existingUserClaim.User.Email,
-            null!
+            null
         );
 
         // Act

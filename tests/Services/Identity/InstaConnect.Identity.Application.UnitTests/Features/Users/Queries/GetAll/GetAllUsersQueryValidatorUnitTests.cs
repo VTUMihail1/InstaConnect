@@ -94,7 +94,7 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
             existingUser.FirstName,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
-            null!,
+            null,
             UserTestUtilities.ValidPageValue,
             UserTestUtilities.ValidPageSizeValue);
 

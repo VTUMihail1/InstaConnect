@@ -22,7 +22,7 @@ public class VerifyEmailConfirmationTokenCommandValidatorUnitTests : BaseEmailCo
         // Arrange
         var existingEmailConfirmationToken = CreateEmailConfirmationToken();
         var command = new VerifyEmailConfirmationTokenCommand(
-            null!,
+            null,
             existingEmailConfirmationToken.Value);
 
         // Act
@@ -58,7 +58,7 @@ public class VerifyEmailConfirmationTokenCommandValidatorUnitTests : BaseEmailCo
         var existingEmailConfirmationToken = CreateEmailConfirmationToken();
         var command = new VerifyEmailConfirmationTokenCommand(
             existingEmailConfirmationToken.UserId,
-            null!);
+            null);
 
         // Act
         var result = _commandValidator.TestValidate(command);

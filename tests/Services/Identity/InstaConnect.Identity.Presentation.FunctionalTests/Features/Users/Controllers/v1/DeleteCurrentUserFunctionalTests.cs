@@ -12,7 +12,7 @@ namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Cont
 
 public class DeleteCurrentUserFunctionalTests : BaseUserFunctionalTest
 {
-    public DeleteCurrentUserFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public DeleteCurrentUserFunctionalTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }

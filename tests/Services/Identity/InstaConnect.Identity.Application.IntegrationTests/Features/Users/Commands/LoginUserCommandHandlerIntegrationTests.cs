@@ -12,7 +12,7 @@ namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Comm
 
 public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public LoginUserCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public LoginUserCommandHandlerIntegrationTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -23,7 +23,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var command = new LoginUserCommand(
-            null!,
+            null,
             UserTestUtilities.ValidPassword
         );
 
@@ -63,7 +63,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var command = new LoginUserCommand(
             existingUserClaim.User.Email,
-            null!
+            null
         );
 
         // Act

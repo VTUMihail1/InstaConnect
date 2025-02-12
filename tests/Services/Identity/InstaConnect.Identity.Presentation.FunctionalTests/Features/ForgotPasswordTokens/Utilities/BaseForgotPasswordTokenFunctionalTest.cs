@@ -18,7 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
 
-public abstract class BaseForgotPasswordTokenFunctionalTest : IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
+public abstract class BaseForgotPasswordTokenFunctionalTest : IClassFixture<IdentityWebApplicationFactory>, IAsyncLifetime
 {
     protected CancellationToken CancellationToken { get; }
 
@@ -61,7 +61,7 @@ public abstract class BaseForgotPasswordTokenFunctionalTest : IClassFixture<Func
         }
     }
 
-    protected BaseForgotPasswordTokenFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
+    protected BaseForgotPasswordTokenFunctionalTest(IdentityWebApplicationFactory functionalTestWebAppFactory)
     {
         ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
         CancellationToken = new();
@@ -69,7 +69,7 @@ public abstract class BaseForgotPasswordTokenFunctionalTest : IClassFixture<Func
         PasswordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
     }
 
-    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    private async Task<User> CreateUserUtilAsync(bool isEmailConfirmed, CancellationToken cancellationToken)
     {
         var passwordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
         var passwordHash = passwordHasher.Hash(UserTestUtilities.ValidPassword).PasswordHash;
@@ -82,7 +82,7 @@ public abstract class BaseForgotPasswordTokenFunctionalTest : IClassFixture<Func
             passwordHash,
             UserTestUtilities.ValidProfileImage)
         {
-            IsEmailConfirmed = true
+            IsEmailConfirmed = isEmailConfirmed
         };
 
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
@@ -94,9 +94,17 @@ public abstract class BaseForgotPasswordTokenFunctionalTest : IClassFixture<Func
         return user;
     }
 
-    protected async Task<ForgotPasswordToken> CreateForgotPasswordTokenAsync(CancellationToken cancellationToken)
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
     {
-        var user = await CreateUserAsync(cancellationToken);
+        var user = await CreateUserUtilAsync(true, cancellationToken);
+
+        return user;
+    }
+
+    private async Task<ForgotPasswordToken> CreateForgotPasswordTokenUtilAsync(
+        User user, 
+        CancellationToken cancellationToken)
+    {
         var forgotPasswordToken = new ForgotPasswordToken(
             SharedTestUtilities.GetGuid(),
             SharedTestUtilities.GetMaxDate(),
@@ -107,6 +115,14 @@ public abstract class BaseForgotPasswordTokenFunctionalTest : IClassFixture<Func
 
         forgotPasswordTokenWriteRepository.Add(forgotPasswordToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return forgotPasswordToken;
+    }
+
+    protected async Task<ForgotPasswordToken> CreateForgotPasswordTokenAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(cancellationToken);
+        var forgotPasswordToken = await CreateForgotPasswordTokenUtilAsync(user, cancellationToken);
 
         return forgotPasswordToken;
     }

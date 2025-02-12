@@ -76,7 +76,7 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
-            null!
+            null
         );
 
         // Act

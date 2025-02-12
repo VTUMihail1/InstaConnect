@@ -25,7 +25,7 @@ using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
 
-public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAppFactory>, IAsyncLifetime
+public abstract class BaseUserFunctionalTest : IClassFixture<IdentityWebApplicationFactory>, IAsyncLifetime
 {
     protected CancellationToken CancellationToken { get; }
 
@@ -81,7 +81,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
 
     protected IJsonConverter JsonConverter { get; }
 
-    protected BaseUserFunctionalTest(FunctionalTestWebAppFactory functionalTestWebAppFactory)
+    protected BaseUserFunctionalTest(IdentityWebApplicationFactory functionalTestWebAppFactory)
     {
         ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
         CancellationToken = new();
@@ -90,10 +90,10 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
         JsonConverter = ServiceScope.ServiceProvider.GetRequiredService<IJsonConverter>();
     }
 
-    protected async Task<UserClaim> CreateUserClaimAsync(CancellationToken cancellationToken)
+    private async Task<UserClaim> CreateUserClaimUtilAsync(
+        User user, 
+        CancellationToken cancellationToken)
     {
-        var user = await CreateUserAsync(cancellationToken);
-
         var userClaim = new UserClaim(
             AppClaims.Admin,
             AppClaims.Admin,
@@ -104,6 +104,14 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
 
         userClaimWriteRepository.Add(userClaim);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return userClaim;
+    }
+
+    protected async Task<UserClaim> CreateUserClaimAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserAsync(cancellationToken);
+        var userClaim = await CreateUserClaimUtilAsync(user, cancellationToken);
 
         return userClaim;
     }
@@ -111,22 +119,12 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
     protected async Task<UserClaim> CreateUserClaimWithUnconfirmedUserEmailAsync(CancellationToken cancellationToken)
     {
         var user = await CreateUserWithUnconfirmedEmailAsync(cancellationToken);
-
-        var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
-            user);
-
-        var userClaimWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-
-        userClaimWriteRepository.Add(userClaim);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        var userClaim = await CreateUserClaimUtilAsync(user, cancellationToken);
 
         return userClaim;
     }
 
-    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    private async Task<User> CreateUserUtilAsync(bool isEmailConfirmed, CancellationToken cancellationToken)
     {
         var passwordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
         var passwordHash = passwordHasher.Hash(UserTestUtilities.ValidPassword).PasswordHash;
@@ -139,13 +137,8 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
             passwordHash,
             UserTestUtilities.ValidProfileImage)
         {
-            IsEmailConfirmed = true
+            IsEmailConfirmed = isEmailConfirmed
         };
-
-        var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
-            user);
 
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
@@ -156,24 +149,16 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FunctionalTestWebAp
         return user;
     }
 
+    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    {
+        var user = await CreateUserUtilAsync(true, cancellationToken);
+
+        return user;
+    }
+
     protected async Task<User> CreateUserWithUnconfirmedEmailAsync(CancellationToken cancellationToken)
     {
-        var passwordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
-        var passwordHash = passwordHasher.Hash(UserTestUtilities.ValidPassword).PasswordHash;
-
-        var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            passwordHash,
-            UserTestUtilities.ValidProfileImage);
-
-        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
-        var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-
-        userWriteRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        var user = await CreateUserUtilAsync(false, cancellationToken);
 
         return user;
     }

@@ -12,7 +12,7 @@ namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Quer
 
 public class GetCurrentUserQueryHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public GetCurrentUserQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetCurrentUserQueryHandlerIntegrationTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
     }
 
@@ -21,7 +21,7 @@ public class GetCurrentUserQueryHandlerIntegrationTests : BaseUserIntegrationTes
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var query = new GetCurrentUserQuery(null!);
+        var query = new GetCurrentUserQuery(null);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -84,7 +84,7 @@ public class GetCurrentUserQueryHandlerIntegrationTests : BaseUserIntegrationTes
                                           m.UserName == existingUser.UserName &&
                                           m.FirstName == existingUser.FirstName &&
                                           m.LastName == existingUser.LastName &&
-                                          m.ProfileImage == UserTestUtilities.ValidProfileImage);
+                                          m.ProfileImage == existingUser.ProfileImage);
     }
 
     [Fact]
@@ -104,7 +104,7 @@ public class GetCurrentUserQueryHandlerIntegrationTests : BaseUserIntegrationTes
                                           m.UserName == existingUser.UserName &&
                                           m.FirstName == existingUser.FirstName &&
                                           m.LastName == existingUser.LastName &&
-                                          m.ProfileImage == UserTestUtilities.ValidProfileImage);
+                                          m.ProfileImage == existingUser.ProfileImage);
     }
 
     [Fact]
@@ -126,6 +126,6 @@ public class GetCurrentUserQueryHandlerIntegrationTests : BaseUserIntegrationTes
                                           m.UserName == existingUser.UserName &&
                                           m.FirstName == existingUser.FirstName &&
                                           m.LastName == existingUser.LastName &&
-                                          m.ProfileImage == UserTestUtilities.ValidProfileImage);
+                                          m.ProfileImage == existingUser.ProfileImage);
     }
 }

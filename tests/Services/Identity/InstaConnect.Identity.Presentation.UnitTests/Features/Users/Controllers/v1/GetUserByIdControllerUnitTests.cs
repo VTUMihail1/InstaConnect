@@ -65,7 +65,7 @@ public class GetUserByIdControllerUnitTests : BaseUserUnitTest
                                            m.FirstName == existingUser.FirstName &&
                                            m.LastName == existingUser.LastName &&
                                            m.UserName == existingUser.UserName &&
-                                           m.ProfileImage == UserTestUtilities.ValidProfileImage);
+                                           m.ProfileImage == existingUser.ProfileImage);
     }
 
     [Fact]

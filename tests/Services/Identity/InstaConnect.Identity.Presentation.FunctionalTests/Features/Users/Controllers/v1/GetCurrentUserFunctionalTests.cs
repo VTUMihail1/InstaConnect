@@ -15,7 +15,7 @@ namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Cont
 
 public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
 {
-    public GetCurrentUserFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetCurrentUserFunctionalTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -44,7 +44,7 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetCurrentUserRequest(
-            null!
+            null
         );
 
 
@@ -154,7 +154,7 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage);
+                                                                    m.ProfileImage == existingUser.ProfileImage);
     }
 
     [Fact]
@@ -179,6 +179,6 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
                                           m.UserName == existingUser.UserName &&
                                           m.FirstName == existingUser.FirstName &&
                                           m.LastName == existingUser.LastName &&
-                                          m.ProfileImage == UserTestUtilities.ValidProfileImage);
+                                          m.ProfileImage == existingUser.ProfileImage);
     }
 }

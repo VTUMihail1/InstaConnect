@@ -13,7 +13,7 @@ namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Cont
 
 public class LoginUserFunctionalTests : BaseUserFunctionalTest
 {
-    public LoginUserFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public LoginUserFunctionalTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }

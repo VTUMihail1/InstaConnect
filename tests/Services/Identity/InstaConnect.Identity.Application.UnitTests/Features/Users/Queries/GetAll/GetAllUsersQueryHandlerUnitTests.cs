@@ -72,7 +72,7 @@ public class GetAllUsersQueryHandlerUnitTests : BaseUserUnitTest
             .Should()
             .Match<UserPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingUser.Id &&
                                                            m.UserName == existingUser.UserName &&
-                                                           m.ProfileImage == UserTestUtilities.ValidProfileImage &&
+                                                           m.ProfileImage == existingUser.ProfileImage &&
                                                            m.FirstName == existingUser.FirstName &&
                                                            m.LastName == existingUser.LastName) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&

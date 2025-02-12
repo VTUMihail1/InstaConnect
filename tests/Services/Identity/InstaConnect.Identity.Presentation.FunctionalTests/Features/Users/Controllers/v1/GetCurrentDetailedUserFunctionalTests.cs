@@ -15,7 +15,7 @@ namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Cont
 
 public class GetCurrentDetailedUserFunctionalTests : BaseUserFunctionalTest
 {
-    public GetCurrentDetailedUserFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetCurrentDetailedUserFunctionalTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -44,7 +44,7 @@ public class GetCurrentDetailedUserFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetCurrentDetailedUserRequest(
-            null!
+            null
         );
 
         // Act

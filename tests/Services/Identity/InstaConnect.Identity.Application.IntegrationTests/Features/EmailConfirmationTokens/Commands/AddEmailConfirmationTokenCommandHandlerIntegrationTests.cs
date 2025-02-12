@@ -13,7 +13,7 @@ namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Comm
 
 public class AddEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmailConfirmationTokenIntegrationTest
 {
-    public AddEmailConfirmationTokenCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public AddEmailConfirmationTokenCommandHandlerIntegrationTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -23,7 +23,7 @@ public class AddEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmail
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var command = new AddEmailConfirmationTokenCommand(null!);
+        var command = new AddEmailConfirmationTokenCommand(null);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);

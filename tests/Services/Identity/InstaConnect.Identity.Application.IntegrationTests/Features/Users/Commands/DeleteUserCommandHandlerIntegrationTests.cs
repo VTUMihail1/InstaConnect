@@ -12,7 +12,7 @@ namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Comm
 
 public class DeleteUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public DeleteUserCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public DeleteUserCommandHandlerIntegrationTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -22,7 +22,7 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var command = new DeleteUserCommand(null!);
+        var command = new DeleteUserCommand(null);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);

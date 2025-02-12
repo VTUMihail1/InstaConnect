@@ -17,7 +17,7 @@ namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Cont
 
 public class AddUserFunctionalTests : BaseUserFunctionalTest
 {
-    public AddUserFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public AddUserFunctionalTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -276,7 +276,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
         // Act
         var response = await UsersClient.AddAsync(request, CancellationToken);
 
-        var user = await UserWriteRepository.GetByIdAsync(response!.Id, CancellationToken);
+        var user = await UserWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         user
@@ -309,7 +309,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
         // Act
         var response = await UsersClient.AddAsync(request, CancellationToken);
 
-        var user = await UserWriteRepository.GetByIdAsync(response!.Id, CancellationToken);
+        var user = await UserWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         user
@@ -344,7 +344,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserCreatedEvent>(m =>
-                              m.Context.Message.Id == response!.Id &&
+                              m.Context.Message.Id == response.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidAddFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidAddLastName &&
                               m.Context.Message.UserName == UserTestUtilities.ValidAddName &&
@@ -378,7 +378,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserCreatedEvent>(m =>
-                              m.Context.Message.Id == response!.Id &&
+                              m.Context.Message.Id == response.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidAddFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidAddLastName &&
                               m.Context.Message.UserName == UserTestUtilities.ValidAddName &&

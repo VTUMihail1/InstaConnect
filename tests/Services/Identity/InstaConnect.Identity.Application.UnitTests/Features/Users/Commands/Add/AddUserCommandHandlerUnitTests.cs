@@ -83,7 +83,7 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddFirstName,
             UserTestUtilities.ValidAddLastName,
-            null!
+            null
         );
 
         // Act

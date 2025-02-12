@@ -11,7 +11,7 @@ namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Quer
 
 public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public GetAllUsersQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetAllUsersQueryHandlerIntegrationTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
     }
 
@@ -100,7 +100,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             existingUser.FirstName,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
-            null!,
+            null,
             UserTestUtilities.ValidPageValue,
             UserTestUtilities.ValidPageSizeValue);
 
@@ -218,7 +218,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            null!,
+            null,
             existingUser.FirstName,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
@@ -236,7 +236,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -268,7 +268,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -300,7 +300,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -332,7 +332,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -347,7 +347,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
             existingUser.UserName,
-            null!,
+            null,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
@@ -364,7 +364,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -396,7 +396,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -428,7 +428,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -460,7 +460,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -476,7 +476,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetAllUsersQuery(
             existingUser.UserName,
             existingUser.FirstName,
-            null!,
+            null,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -492,7 +492,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -524,7 +524,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -556,7 +556,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -588,7 +588,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -620,7 +620,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&

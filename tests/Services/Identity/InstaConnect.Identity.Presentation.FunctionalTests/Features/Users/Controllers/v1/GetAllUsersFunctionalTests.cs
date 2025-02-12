@@ -13,7 +13,7 @@ namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Cont
 
 public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
 {
-    public GetAllUsersFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetAllUsersFunctionalTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -240,7 +240,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -272,7 +272,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -304,7 +304,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -336,7 +336,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -368,7 +368,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -400,7 +400,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -432,7 +432,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
@@ -456,7 +456,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                    m.ProfileImage == existingUser.ProfileImage) &&
                                                            mc.Page == UserTestUtilities.ValidPageValue &&
                                                            mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&

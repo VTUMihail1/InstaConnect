@@ -14,7 +14,7 @@ namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Cont
 
 public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunctionalTest
 {
-    public VerifyForgotPasswordTokenFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public VerifyForgotPasswordTokenFunctionalTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -71,7 +71,7 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenF
         var request = new VerifyForgotPasswordTokenRequest(
             existingForgotPasswordToken.UserId,
             existingForgotPasswordToken.Value,
-            new(null!, null!)
+            new(null, null)
         );
 
         // Act
@@ -252,12 +252,12 @@ public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenF
         // Assert
         user
             .Should()
-            .Match<User>(p => p.Id == user.Id &&
-                              p.FirstName == user.FirstName &&
-                              p.LastName == user.LastName &&
-                              p.UserName == user.UserName &&
-                              p.Email == user.Email &&
+            .Match<User>(p => p.Id == existingForgotPasswordToken.User.Id &&
+                              p.FirstName == existingForgotPasswordToken.User.FirstName &&
+                              p.LastName == existingForgotPasswordToken.User.LastName &&
+                              p.UserName == existingForgotPasswordToken.User.UserName &&
+                              p.Email == existingForgotPasswordToken.User.Email &&
                               PasswordHasher.Verify(UserTestUtilities.ValidUpdatePassword, p.PasswordHash) &&
-                              p.ProfileImage == UserTestUtilities.ValidProfileImage);
+                              p.ProfileImage == existingForgotPasswordToken.User.ProfileImage);
     }
 }

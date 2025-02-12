@@ -20,7 +20,7 @@ public class AddEmailConfirmationTokenCommandValidatorUnitTests : BaseEmailConfi
     {
         // Arrange
         var existingUser = CreateUser();
-        var command = new AddEmailConfirmationTokenCommand(null!);
+        var command = new AddEmailConfirmationTokenCommand(null);
 
         // Act
         var result = _commandValidator.TestValidate(command);

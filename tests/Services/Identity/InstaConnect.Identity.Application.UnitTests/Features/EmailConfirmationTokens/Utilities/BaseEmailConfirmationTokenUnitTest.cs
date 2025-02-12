@@ -1,25 +1,14 @@
 ﻿using AutoMapper;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Mappings;
-using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
-using InstaConnect.Identity.Domain.Features.Users.Models;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Application.Models;
-using InstaConnect.Shared.Application.UnitTests.Utilities;
 using InstaConnect.Shared.Common.Utilities;
-using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
@@ -50,7 +39,7 @@ public abstract class BaseEmailConfirmationTokenUnitTest
         EmailConfirmationTokenPublisher = Substitute.For<IEmailConfirmationTokenPublisher>();
     }
 
-    public User CreateUser()
+    private User CreateUserUtil(bool isEmailConfirmed)
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -58,31 +47,9 @@ public abstract class BaseEmailConfirmationTokenUnitTest
             SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
             UserTestUtilities.ValidPasswordHash,
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
-
-        UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
-            .Returns(user);
-
-        UserWriteRepository.GetByNameAsync(user.UserName, CancellationToken)
-            .Returns(user);
-
-        UserWriteRepository.GetByEmailAsync(user.Email, CancellationToken)
-            .Returns(user);
-
-        return user;
-    }
-
-    public User CreateUserWithConfirmedEmail()
-    {
-        var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            UserTestUtilities.ValidPasswordHash,
-            UserTestUtilities.ValidProfileImage)
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength))
         {
-            IsEmailConfirmed = true
+            IsEmailConfirmed = isEmailConfirmed
         };
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
@@ -97,23 +64,22 @@ public abstract class BaseEmailConfirmationTokenUnitTest
         return user;
     }
 
-    public EmailConfirmationToken CreateEmailConfirmationToken()
+    protected User CreateUser()
     {
-        var user = CreateUser();
-        var emailConfirmationToken = new EmailConfirmationToken(
-            SharedTestUtilities.GetGuid(), 
-            SharedTestUtilities.GetMaxDate(), 
-            user.Id);
+        var user = CreateUserUtil(false);
 
-        EmailConfirmationTokenWriteRepository.GetByValueAsync(emailConfirmationToken.Value, CancellationToken)
-            .Returns(emailConfirmationToken);
-
-        return emailConfirmationToken;
+        return user;
     }
 
-    public EmailConfirmationToken CreateEmailConfirmationTokenWithConfirmedUser()
+    public User CreateUserWithConfirmedEmail()
     {
-        var user = CreateUserWithConfirmedEmail();
+        var user = CreateUserUtil(true);
+
+        return user;
+    }
+
+    public EmailConfirmationToken CreateEmailConfirmationTokenUtil(User user)
+    {
         var emailConfirmationToken = new EmailConfirmationToken(
             SharedTestUtilities.GetGuid(),
             SharedTestUtilities.GetMaxDate(),
@@ -121,6 +87,22 @@ public abstract class BaseEmailConfirmationTokenUnitTest
 
         EmailConfirmationTokenWriteRepository.GetByValueAsync(emailConfirmationToken.Value, CancellationToken)
             .Returns(emailConfirmationToken);
+
+        return emailConfirmationToken;
+    }
+
+    public EmailConfirmationToken CreateEmailConfirmationToken()
+    {
+        var user = CreateUser();
+        var emailConfirmationToken = CreateEmailConfirmationTokenUtil(user);
+
+        return emailConfirmationToken;
+    }
+
+    public EmailConfirmationToken CreateEmailConfirmationTokenWithConfirmedUser()
+    {
+        var user = CreateUserWithConfirmedEmail();
+        var emailConfirmationToken = CreateEmailConfirmationTokenUtil(user);
 
         return emailConfirmationToken;
     }

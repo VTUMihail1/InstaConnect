@@ -12,7 +12,7 @@ namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Cont
 
 public class GetUserByIdFunctionalTests : BaseUserFunctionalTest
 {
-    public GetUserByIdFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public GetUserByIdFunctionalTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -93,7 +93,7 @@ public class GetUserByIdFunctionalTests : BaseUserFunctionalTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage);
+                                                                    m.ProfileImage == existingUser.ProfileImage);
     }
 
     [Fact]
@@ -115,6 +115,6 @@ public class GetUserByIdFunctionalTests : BaseUserFunctionalTest
                                                                     m.UserName == existingUser.UserName &&
                                                                     m.FirstName == existingUser.FirstName &&
                                                                     m.LastName == existingUser.LastName &&
-                                                                    m.ProfileImage == UserTestUtilities.ValidProfileImage);
+                                                                    m.ProfileImage == existingUser.ProfileImage);
     }
 }

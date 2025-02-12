@@ -17,7 +17,7 @@ namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Cont
 
 public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
 {
-    public UpdateCurrentUserFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public UpdateCurrentUserFunctionalTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -258,7 +258,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
         // Act
         var response = await UsersClient.UpdateCurrentAsync(request, CancellationToken);
 
-        var user = await UserWriteRepository.GetByIdAsync(response!.Id, CancellationToken);
+        var user = await UserWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         user
@@ -289,7 +289,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
         // Act
         var response = await UsersClient.UpdateCurrentAsync(request, CancellationToken);
 
-        var user = await UserWriteRepository.GetByIdAsync(response!.Id, CancellationToken);
+        var user = await UserWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         user
@@ -300,7 +300,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
                               p.UserName == UserTestUtilities.ValidUpdateName &&
                               p.Email == existingUser.Email &&
                               PasswordHasher.Verify(UserTestUtilities.ValidPassword, p.PasswordHash) &&
-                              p.ProfileImage == UserTestUtilities.ValidProfileImage);
+                              p.ProfileImage == existingUser.ProfileImage);
     }
 
     [Fact]
@@ -353,7 +353,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserUpdatedEvent>(m =>
-                              m.Context.Message.Id == response!.Id &&
+                              m.Context.Message.Id == response.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidUpdateLastName &&
                               m.Context.Message.UserName == UserTestUtilities.ValidUpdateName &&
@@ -385,12 +385,12 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserUpdatedEvent>(m =>
-                              m.Context.Message.Id == response!.Id &&
+                              m.Context.Message.Id == response.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidUpdateLastName &&
                               m.Context.Message.UserName == UserTestUtilities.ValidUpdateName &&
                               m.Context.Message.Email == existingUser.Email &&
-                              m.Context.Message.ProfileImage == UserTestUtilities.ValidProfileImage, CancellationToken);
+                              m.Context.Message.ProfileImage == existingUser.ProfileImage, CancellationToken);
 
         // Assert
         result

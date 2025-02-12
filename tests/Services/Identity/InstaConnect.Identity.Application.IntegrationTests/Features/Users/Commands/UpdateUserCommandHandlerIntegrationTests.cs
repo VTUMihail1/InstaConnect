@@ -14,7 +14,7 @@ namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Comm
 
 public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public UpdateUserCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public UpdateUserCommandHandlerIntegrationTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -25,7 +25,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
-            null!,
+            null,
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -73,7 +73,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
             existingUser.Id,
-            null!,
+            null,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFormFile
@@ -121,7 +121,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var command = new UpdateUserCommand(
             existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
-            null!,
+            null,
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFormFile
         );
@@ -169,7 +169,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
             existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
-            null!,
+            null,
             UserTestUtilities.ValidUpdateFormFile
         );
 
@@ -329,7 +329,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
                               p.UserName == UserTestUtilities.ValidUpdateName &&
                               p.Email == existingUser.Email &&
                               PasswordHasher.Verify(UserTestUtilities.ValidPassword, p.PasswordHash) &&
-                              p.ProfileImage == UserTestUtilities.ValidProfileImage);
+                              p.ProfileImage == existingUser.ProfileImage);
     }
 
     [Fact]
@@ -358,7 +358,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
                               p.UserName == existingUser.UserName &&
                               p.Email == existingUser.Email &&
                               PasswordHasher.Verify(UserTestUtilities.ValidPassword, p.PasswordHash) &&
-                              p.ProfileImage == UserTestUtilities.ValidProfileImage);
+                              p.ProfileImage == existingUser.ProfileImage);
     }
 
     [Fact]
@@ -415,7 +415,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
                               m.Context.Message.LastName == UserTestUtilities.ValidUpdateLastName &&
                               m.Context.Message.UserName == UserTestUtilities.ValidUpdateName &&
                               m.Context.Message.Email == existingUser.Email &&
-                              m.Context.Message.ProfileImage == UserTestUtilities.ValidProfileImage, CancellationToken);
+                              m.Context.Message.ProfileImage == existingUser.ProfileImage, CancellationToken);
 
         // Assert
         result

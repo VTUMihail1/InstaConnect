@@ -20,7 +20,7 @@ public class DeleteUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var command = new DeleteUserCommand(null!);
+        var command = new DeleteUserCommand(null);
 
         // Act
         var result = _commandValidator.TestValidate(command);

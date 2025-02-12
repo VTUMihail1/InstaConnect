@@ -20,7 +20,7 @@ public class GetCurrentDetailedUserQueryValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var query = new GetCurrentDetailedUserQuery(null!);
+        var query = new GetCurrentDetailedUserQuery(null);
 
         // Act
         var result = _validator.TestValidate(query);

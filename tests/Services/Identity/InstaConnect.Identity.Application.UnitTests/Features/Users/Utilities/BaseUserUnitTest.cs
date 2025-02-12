@@ -84,32 +84,8 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
             .Returns(new ImageResult(UserTestUtilities.ValidUpdateProfileImage));
     }
 
-    public User CreateUserWithUnconfirmedEmail()
+    private UserClaim CreateUserClaimUtil(User user)
     {
-        var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            UserTestUtilities.ValidPasswordHash,
-            UserTestUtilities.ValidProfileImage);
-
-        UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
-            .Returns(user);
-
-        UserWriteRepository.GetByNameAsync(user.UserName, CancellationToken)
-            .Returns(user);
-
-        UserWriteRepository.GetByEmailAsync(user.Email, CancellationToken)
-            .Returns(user);
-
-        return user;
-    }
-
-    public UserClaim CreateUserClaim()
-    {
-        var user = CreateUser();
-
         var accessTokenResult = new AccessTokenResult(
             UserTestUtilities.ValidAccessTokenValue, 
             UserTestUtilities.ValidUntil);
@@ -135,36 +111,25 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
         return userClaim;
     }
 
-    public UserClaim CreateUserClaimWithUnconfirmedUserEmail()
+    protected UserClaim CreateUserClaim()
     {
-        var user = CreateUserWithUnconfirmedEmail();
+        var user = CreateUser();
 
-        var accessTokenResult = new AccessTokenResult(
-            UserTestUtilities.ValidAccessTokenValue,
-            UserTestUtilities.ValidUntil);
-
-        var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
-            user);
-
-        UserClaimWriteRepository.GetAllAsync(Arg.Is<UserClaimCollectionWriteQuery>(uc => uc.UserId == user.Id), CancellationToken)
-            .Returns([userClaim]);
-
-        AccessTokenGenerator.GenerateAccessToken(Arg.Is<CreateAccessTokenModel>(at => at.UserId == user.Id &&
-                                                                                      at.Email == user.Email &&
-                                                                                      at.FirstName == user.FirstName &&
-                                                                                      at.LastName == user.LastName &&
-                                                                                      at.UserName == user.UserName &&
-                                                                                      at.UserClaims.All(uc => uc.UserId == user.Id &&
-                                                                                                              uc.Claim == AppClaims.Admin &&
-                                                                                                              uc.Value == AppClaims.Admin)))
-            .Returns(accessTokenResult);
+        var userClaim = CreateUserClaimUtil(user);
 
         return userClaim;
     }
 
-    public User CreateUser()
+    protected UserClaim CreateUserClaimWithUnconfirmedUserEmail()
+    {
+        var user = CreateUserWithUnconfirmedEmail();
+
+        var userClaim = CreateUserClaimUtil(user);
+
+        return userClaim;
+    }
+
+    private User CreateUserUtil(bool isEmailConfirmed)
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -174,7 +139,7 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
             UserTestUtilities.ValidPasswordHash,
             UserTestUtilities.ValidProfileImage)
         {
-            IsEmailConfirmed = true
+            IsEmailConfirmed = isEmailConfirmed
         };
 
         var userPaginationList = new PaginationList<User>(
@@ -211,6 +176,22 @@ public abstract class BaseUserUnitTest : BaseSharedUnitTest
                                                                         m.SortOrder == UserTestUtilities.ValidSortOrderProperty &&
                                                                         m.SortPropertyName == UserTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(userPaginationList);
+
+        return user;
+    }
+
+    protected User CreateUser()
+    {
+        var user = CreateUserUtil(true);
+
+        return user;
+    }
+
+
+
+    protected User CreateUserWithUnconfirmedEmail()
+    {
+        var user = CreateUserUtil(false);
 
         return user;
     }

@@ -78,7 +78,7 @@ public class GetAllUserControllerUnitTests : BaseUserUnitTest
                                                                  m.FirstName == existingUser.FirstName &&
                                                                  m.LastName == existingUser.LastName &&
                                                                  m.UserName == existingUser.UserName &&
-                                                                 m.ProfileImage == UserTestUtilities.ValidProfileImage) &&
+                                                                 m.ProfileImage == existingUser.ProfileImage) &&
                                                               mc.Page == UserTestUtilities.ValidPageValue &&
                                                               mc.PageSize == UserTestUtilities.ValidPageSizeValue &&
                                                               mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&

@@ -58,7 +58,7 @@ public class DeleteUserCommandHandlerUnitTests : BaseUserUnitTest
                                       u.LastName == existingUser.LastName &&
                                       u.UserName == existingUser.UserName &&
                                       u.Email == existingUser.Email &&
-                                      u.ProfileImage == UserTestUtilities.ValidProfileImage &&
+                                      u.ProfileImage == existingUser.ProfileImage &&
                                       u.PasswordHash == UserTestUtilities.ValidPasswordHash));
     }
 

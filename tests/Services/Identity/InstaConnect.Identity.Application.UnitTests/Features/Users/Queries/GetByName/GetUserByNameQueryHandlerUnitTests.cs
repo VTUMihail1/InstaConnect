@@ -66,6 +66,6 @@ public class GetUserByNameQueryHandlerUnitTests : BaseUserUnitTest
                                             m.UserName == existingUser.UserName &&
                                             m.FirstName == existingUser.FirstName &&
                                             m.LastName == existingUser.LastName &&
-                                            m.ProfileImage == UserTestUtilities.ValidProfileImage);
+                                            m.ProfileImage == existingUser.ProfileImage);
     }
 }

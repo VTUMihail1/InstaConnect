@@ -38,7 +38,7 @@ public class UsersClient : IUsersClient
         var response = await _httpClient
             .GetFromJsonAsync<UserPaginationQueryResponse>(route, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<UserPaginationQueryResponse> GetAllAsync(CancellationToken cancellationToken)
@@ -46,7 +46,7 @@ public class UsersClient : IUsersClient
         var response = await _httpClient
             .GetFromJsonAsync<UserPaginationQueryResponse>(UserTestRoutes.Default, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> GetByIdStatusCodeAsync(
@@ -67,7 +67,7 @@ public class UsersClient : IUsersClient
         var response = await _httpClient
             .GetFromJsonAsync<UserQueryResponse>(route, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> GetDetailedByIdStatusCodeAsync(
@@ -125,7 +125,7 @@ public class UsersClient : IUsersClient
         var response = await _httpClient
             .GetFromJsonAsync<UserDetailedQueryResponse>(route, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> GetByNameStatusCodeAsync(
@@ -146,7 +146,7 @@ public class UsersClient : IUsersClient
         var response = await _httpClient
             .GetFromJsonAsync<UserQueryResponse>(route, cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> GetCurrentStatusCodeAsync(
@@ -187,7 +187,7 @@ public class UsersClient : IUsersClient
             .GetAsync(UserTestRoutes.Current, cancellationToken);
         var response = await httpResponseMessage.Content.ReadFromJsonAsync<UserQueryResponse>(cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> GetCurrentDetailedStatusCodeAsync(
@@ -228,7 +228,7 @@ public class UsersClient : IUsersClient
             .GetAsync(UserTestRoutes.CurrentDetailed, cancellationToken);
         var response = await httpResponseMessage.Content.ReadFromJsonAsync<UserDetailedQueryResponse>(cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> AddStatusCodeAsync(
@@ -251,7 +251,7 @@ public class UsersClient : IUsersClient
             .PostAsync(UserTestRoutes.Default, requestForm, cancellationToken);
         var response = await httpResponseMessage.Content.ReadFromJsonAsync<UserCommandResponse>(cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> LoginStatusCodeAsync(
@@ -272,7 +272,7 @@ public class UsersClient : IUsersClient
             .PostAsJsonAsync(UserTestRoutes.Login, request.Body, cancellationToken);
         var response = await httpResponseMessage.Content.ReadFromJsonAsync<UserTokenCommandResponse>(cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> UpdateCurrentStatusCodeAsync(
@@ -319,7 +319,7 @@ public class UsersClient : IUsersClient
             .PutAsync(UserTestRoutes.Current, requestForm, cancellationToken);
         var response = await httpResponseMessage.Content.ReadFromJsonAsync<UserCommandResponse>(cancellationToken);
 
-        return response!;
+        return response;
     }
 
     public async Task<HttpStatusCode> DeleteStatusCodeAsync(

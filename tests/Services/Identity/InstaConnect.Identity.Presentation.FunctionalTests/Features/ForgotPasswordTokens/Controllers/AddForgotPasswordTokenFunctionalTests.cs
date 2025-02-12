@@ -11,7 +11,7 @@ namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Cont
 
 public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunctionalTest
 {
-    public AddForgotPasswordTokenFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public AddForgotPasswordTokenFunctionalTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }

@@ -12,7 +12,7 @@ namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Quer
 
 public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public GetUserByNameQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetUserByNameQueryHandlerIntegrationTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
     }
 
@@ -21,7 +21,7 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var query = new GetUserByNameQuery(null!);
+        var query = new GetUserByNameQuery(null);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -84,7 +84,7 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                           m.UserName == existingUser.UserName &&
                                           m.FirstName == existingUser.FirstName &&
                                           m.LastName == existingUser.LastName &&
-                                          m.ProfileImage == UserTestUtilities.ValidProfileImage);
+                                          m.ProfileImage == existingUser.ProfileImage);
     }
 
     [Fact]
@@ -104,6 +104,6 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
                                           m.UserName == existingUser.UserName &&
                                           m.FirstName == existingUser.FirstName &&
                                           m.LastName == existingUser.LastName &&
-                                          m.ProfileImage == UserTestUtilities.ValidProfileImage);
+                                          m.ProfileImage == existingUser.ProfileImage);
     }
 }

@@ -13,7 +13,7 @@ namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Comm
 
 public class AddForgotPasswordTokenCommandHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public AddForgotPasswordTokenCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public AddForgotPasswordTokenCommandHandlerIntegrationTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -23,7 +23,7 @@ public class AddForgotPasswordTokenCommandHandlerIntegrationTests : BaseUserInte
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var command = new AddForgotPasswordTokenCommand(null!);
+        var command = new AddForgotPasswordTokenCommand(null);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);

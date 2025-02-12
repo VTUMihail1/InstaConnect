@@ -15,12 +15,12 @@ using Testcontainers.Redis;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Utilities;
 
-public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
+public class IdentityWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly MsSqlContainer _msSqlContainer;
     private readonly RedisContainer _redisContainer;
 
-    public IntegrationTestWebAppFactory()
+    public IdentityWebApplicationFactory()
     {
         _msSqlContainer = new MsSqlBuilder()
         .WithImage("mcr.microsoft.com/mssql/server:2022-latest")

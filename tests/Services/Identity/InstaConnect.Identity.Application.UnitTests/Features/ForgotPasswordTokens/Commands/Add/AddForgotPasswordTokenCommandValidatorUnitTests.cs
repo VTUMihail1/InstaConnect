@@ -20,7 +20,7 @@ public class AddForgotPasswordTokenCommandValidatorUnitTests : BaseForgotPasswor
     {
         // Arrange
         var existingUser = CreateUser();
-        var command = new AddForgotPasswordTokenCommand(null!);
+        var command = new AddForgotPasswordTokenCommand(null);
 
         // Act
         var result = _commandValidator.TestValidate(command);

@@ -14,7 +14,7 @@ namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Comm
 
 public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmailConfirmationTokenIntegrationTest
 {
-    public VerifyEmailConfirmationTokenCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public VerifyEmailConfirmationTokenCommandHandlerIntegrationTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -24,7 +24,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
     {
         // Arrange
         var existingEmailConfirmationToken = await CreateEmailConfirmationTokenAsync(CancellationToken);
-        var command = new VerifyEmailConfirmationTokenCommand(null!, existingEmailConfirmationToken.Value);
+        var command = new VerifyEmailConfirmationTokenCommand(null, existingEmailConfirmationToken.Value);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -59,7 +59,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
     {
         // Arrange
         var existingEmailConfirmationToken = await CreateEmailConfirmationTokenAsync(CancellationToken);
-        var command = new VerifyEmailConfirmationTokenCommand(existingEmailConfirmationToken.UserId, null!);
+        var command = new VerifyEmailConfirmationTokenCommand(existingEmailConfirmationToken.UserId, null);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -187,12 +187,12 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         // Assert
         user
             .Should()
-            .Match<User>(p => p.Id == user.Id &&
-                              p.FirstName == user.FirstName &&
-                              p.LastName == user.LastName &&
-                              p.UserName == user.UserName &&
-                              p.Email == user.Email &&
+            .Match<User>(p => p.Id == existingEmailConfirmationToken.User.Id &&
+                              p.FirstName == existingEmailConfirmationToken.User.FirstName &&
+                              p.LastName == existingEmailConfirmationToken.User.LastName &&
+                              p.UserName == existingEmailConfirmationToken.User.UserName &&
+                              p.Email == existingEmailConfirmationToken.User.Email &&
                               p.IsEmailConfirmed &&
-                              p.ProfileImage == UserTestUtilities.ValidProfileImage);
+                              p.ProfileImage == existingEmailConfirmationToken.User.ProfileImage);
     }
 }

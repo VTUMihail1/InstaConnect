@@ -16,7 +16,7 @@ namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Comm
 
 public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public RegisterUserCommandHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public RegisterUserCommandHandlerIntegrationTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -26,7 +26,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
     {
         // Arrange
         var command = new AddUserCommand(
-            null!,
+            null,
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
@@ -76,7 +76,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         // Arrange
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
-            null!,
+            null,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddFirstName,
@@ -126,8 +126,8 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
-            null!,
-            null!,
+            null,
+            null,
             UserTestUtilities.ValidAddFirstName,
             UserTestUtilities.ValidAddLastName,
             UserTestUtilities.ValidAddFormFile
@@ -202,7 +202,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
             UserTestUtilities.ValidAddFirstName,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
-            null!,
+            null,
             UserTestUtilities.ValidAddLastName,
             UserTestUtilities.ValidAddFormFile
         );
@@ -252,7 +252,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddFirstName,
-            null!,
+            null,
             UserTestUtilities.ValidAddFormFile
         );
 

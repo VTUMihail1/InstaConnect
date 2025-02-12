@@ -46,7 +46,7 @@ public abstract class BaseForgotPasswordTokenUnitTest
             .Returns(new PasswordHashResultModel(UserTestUtilities.ValidUpdatePasswordHash));
     }
 
-    public User CreateUser()
+    private User CreateUserUtil(bool isEmailConfirmed)
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -54,7 +54,10 @@ public abstract class BaseForgotPasswordTokenUnitTest
             SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
             UserTestUtilities.ValidPasswordHash,
-            UserTestUtilities.ValidProfileImage);
+            UserTestUtilities.ValidProfileImage)
+        {
+            IsEmailConfirmed = isEmailConfirmed
+        };
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -68,9 +71,15 @@ public abstract class BaseForgotPasswordTokenUnitTest
         return user;
     }
 
-    public ForgotPasswordToken CreateForgotPasswordToken()
+    protected User CreateUser()
     {
-        var user = CreateUser();
+        var user = CreateUserUtil(true);
+
+        return user;
+    }
+
+    private ForgotPasswordToken CreateForgotPasswordTokenUtil(User user)
+    {
         var forgotPasswordToken = new ForgotPasswordToken(
             SharedTestUtilities.GetGuid(),
             SharedTestUtilities.GetMaxDate(),
@@ -78,6 +87,14 @@ public abstract class BaseForgotPasswordTokenUnitTest
 
         ForgotPasswordTokenWriteRepository.GetByValueAsync(forgotPasswordToken.Value, CancellationToken)
             .Returns(forgotPasswordToken);
+
+        return forgotPasswordToken;
+    }
+
+    protected ForgotPasswordToken CreateForgotPasswordToken()
+    {
+        var user = CreateUser();
+        var forgotPasswordToken = CreateForgotPasswordTokenUtil(user);
 
         return forgotPasswordToken;
     }

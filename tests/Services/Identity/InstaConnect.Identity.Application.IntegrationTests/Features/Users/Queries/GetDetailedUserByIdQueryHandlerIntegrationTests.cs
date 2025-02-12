@@ -12,7 +12,7 @@ namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Quer
 
 public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrationTest
 {
-    public GetDetailedUserByIdQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetDetailedUserByIdQueryHandlerIntegrationTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
     }
 
@@ -21,7 +21,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var query = new GetDetailedUserByIdQuery(null!);
+        var query = new GetDetailedUserByIdQuery(null);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -78,7 +78,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
                                           m.UserName == existingUser.UserName &&
                                           m.FirstName == existingUser.FirstName &&
                                           m.LastName == existingUser.LastName &&
-                                          m.ProfileImage == UserTestUtilities.ValidProfileImage &&
+                                          m.ProfileImage == existingUser.ProfileImage &&
                                           m.Email == existingUser.Email);
     }
 
@@ -99,7 +99,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
                                           m.UserName == existingUser.UserName &&
                                           m.FirstName == existingUser.FirstName &&
                                           m.LastName == existingUser.LastName &&
-                                          m.ProfileImage == UserTestUtilities.ValidProfileImage &&
+                                          m.ProfileImage == existingUser.ProfileImage &&
                                           m.Email == existingUser.Email);
     }
 }

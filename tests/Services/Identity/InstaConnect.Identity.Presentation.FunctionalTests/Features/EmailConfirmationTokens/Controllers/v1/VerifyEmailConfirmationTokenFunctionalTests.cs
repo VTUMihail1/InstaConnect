@@ -13,7 +13,7 @@ namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Cont
 
 public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTokenFunctionalTest
 {
-    public VerifyEmailConfirmationTokenFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public VerifyEmailConfirmationTokenFunctionalTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }
@@ -196,12 +196,12 @@ public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmation
         // Assert
         user
             .Should()
-            .Match<User>(p => p.Id == user.Id &&
-                              p.FirstName == user.FirstName &&
-                              p.LastName == user.LastName &&
-                              p.UserName == user.UserName &&
-                              p.Email == user.Email &&
+            .Match<User>(p => p.Id == existingEmailConfirmationToken.User.Id &&
+                              p.FirstName == existingEmailConfirmationToken.User.FirstName &&
+                              p.LastName == existingEmailConfirmationToken.User.LastName &&
+                              p.UserName == existingEmailConfirmationToken.User.UserName &&
+                              p.Email == existingEmailConfirmationToken.User.Email &&
                               p.IsEmailConfirmed &&
-                              p.ProfileImage == UserTestUtilities.ValidProfileImage);
+                              p.ProfileImage == existingEmailConfirmationToken.User.ProfileImage);
     }
 }

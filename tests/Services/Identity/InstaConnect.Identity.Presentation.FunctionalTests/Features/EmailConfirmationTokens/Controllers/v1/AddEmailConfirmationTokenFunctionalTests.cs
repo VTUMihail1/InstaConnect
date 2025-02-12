@@ -11,7 +11,7 @@ namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Cont
 
 public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTokenFunctionalTest
 {
-    public AddEmailConfirmationTokenFunctionalTests(FunctionalTestWebAppFactory functionalTestWebAppFactory) : base(functionalTestWebAppFactory)
+    public AddEmailConfirmationTokenFunctionalTests(IdentityWebApplicationFactory identityWebApplicationFactory) : base(identityWebApplicationFactory)
     {
 
     }

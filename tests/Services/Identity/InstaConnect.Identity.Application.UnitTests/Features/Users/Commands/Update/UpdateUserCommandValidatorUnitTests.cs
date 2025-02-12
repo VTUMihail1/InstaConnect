@@ -21,7 +21,7 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var existingUser = CreateUser();
         var command = new UpdateUserCommand(
-            null!,
+            null,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
@@ -65,7 +65,7 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
         var existingUser = CreateUser();
         var command = new UpdateUserCommand(
             existingUser.Id,
-            null!,
+            null,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFormFile
@@ -109,7 +109,7 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
         var command = new UpdateUserCommand(
             existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
-            null!,
+            null,
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFormFile
         );
@@ -153,7 +153,7 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
             existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
-            null!,
+            null,
             UserTestUtilities.ValidUpdateFormFile
         );
 
