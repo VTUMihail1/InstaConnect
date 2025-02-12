@@ -1,0 +1,7 @@
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
+
+namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions;
+public interface IEmailConfirmationTokenPublisher
+{
+    Task PublishEmailConfirmationTokenAsync(CreateEmailConfirmationTokenModel createEmailConfirmationTokenModel, CancellationToken cancellationToken);
+}
