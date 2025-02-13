@@ -5,6 +5,7 @@ using InstaConnect.Shared.Application.Extensions;
 using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Application.PipelineBehaviors;
 using Microsoft.Extensions.DependencyInjection;
+using Scrutor;
 
 namespace InstaConnect.Shared.Application.Extensions;
 public static class ServiceCollectionExtentions
@@ -40,6 +41,19 @@ public static class ServiceCollectionExtentions
         serviceCollection.AddValidatorsFromAssembly(assembly);
 
         serviceCollection.AddScoped<IEntityPropertyValidator, EntityPropertyValidator>();
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddServicesWithMatchingInterfaces(this IServiceCollection serviceCollection, Assembly assembly)
+    {
+        serviceCollection
+            .Scan(selector => selector
+            .FromAssemblies(assembly)
+            .AddClasses(false)
+            .UsingRegistrationStrategy(RegistrationStrategy.Throw)
+            .AsMatchingInterface()
+            .WithScopedLifetime());
 
         return serviceCollection;
     }
