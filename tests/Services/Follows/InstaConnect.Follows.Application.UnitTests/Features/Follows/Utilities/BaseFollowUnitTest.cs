@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InstaConnect.Follows.Application.Extensions;
 using InstaConnect.Follows.Application.Features.Follows.Mappings;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
@@ -9,6 +10,8 @@ using InstaConnect.Follows.Domain.Features.Users.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
@@ -36,11 +39,7 @@ public abstract class BaseFollowUnitTest
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg =>
-                {
-                    cfg.AddProfile<FollowQueryProfile>();
-                    cfg.AddProfile<FollowCommandProfile>();
-                })));
+                new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
         CancellationToken = new CancellationToken();
         EntityPropertyValidator = new EntityPropertyValidator();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();

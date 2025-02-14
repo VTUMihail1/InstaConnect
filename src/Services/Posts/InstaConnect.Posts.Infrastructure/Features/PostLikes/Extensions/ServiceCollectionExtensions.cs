@@ -8,10 +8,6 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddPostLikeServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddScoped<IPostLikeReadRepository, PostLikeReadRepository>()
-            .AddScoped<IPostLikeWriteRepository, PostLikeWriteRepository>();
-
         return serviceCollection;
     }
 }

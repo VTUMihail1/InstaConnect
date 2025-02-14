@@ -9,9 +9,12 @@ using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Posts.Presentation.Extensions;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using NSubstitute;
 
@@ -30,11 +33,7 @@ public abstract class BasePostLikeUnitTest
         InstaConnectSender = Substitute.For<IInstaConnectSender>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg =>
-                {
-                    cfg.AddProfile<PostLikeCommandProfile>();
-                    cfg.AddProfile<PostLikeQueryProfile>();
-                })));
+                new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
         CancellationToken = new CancellationToken();
     }
 

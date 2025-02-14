@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Application.Features.Messages.Mappings;
+using InstaConnect.Messages.Application.Extensions;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
@@ -9,6 +9,8 @@ using InstaConnect.Messages.Domain.Features.Users.Abstract;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
@@ -38,11 +40,7 @@ public abstract class BaseMessageUnitTest
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg =>
-                {
-                    cfg.AddProfile<MessageQueryProfile>();
-                    cfg.AddProfile<MessageCommandProfile>();
-                })));
+                new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
         CancellationToken = new CancellationToken();
         EntityPropertyValidator = new EntityPropertyValidator();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();

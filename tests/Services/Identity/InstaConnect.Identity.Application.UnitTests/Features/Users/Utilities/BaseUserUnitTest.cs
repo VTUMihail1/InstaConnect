@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InstaConnect.Identity.Application.Extensions;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Mappings;
@@ -14,6 +15,8 @@ using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Application.Models;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
@@ -52,11 +55,7 @@ public abstract class BaseUserUnitTest
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg =>
-                {
-                    cfg.AddProfile<UserCommandProfile>();
-                    cfg.AddProfile<UserQueryProfile>();
-                })));
+                new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
         EntityPropertyValidator = new EntityPropertyValidator();
         ImageHandler = Substitute.For<IImageHandler>();
         EventPublisher = Substitute.For<IEventPublisher>();

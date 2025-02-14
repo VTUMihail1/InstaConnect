@@ -2,9 +2,12 @@
 using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Domain.Features.Users.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+using InstaConnect.Follows.Presentation.Extensions;
 using InstaConnect.Follows.Presentation.Features.Users.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using NSubstitute;
 
@@ -26,7 +29,7 @@ public abstract class BaseUserUnitTest
         CancellationToken = new();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg => cfg.AddProfile<UserConsumerProfile>())));
+                new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
     }
 

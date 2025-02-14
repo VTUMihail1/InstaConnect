@@ -1,4 +1,6 @@
-﻿using InstaConnect.Messages.Domain.Features.Users.Abstract;
+﻿using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Messages.Domain.Features.Users.Abstract;
+using InstaConnect.Messages.Infrastructure.Features.Messages.Repositories;
 using InstaConnect.Messages.Infrastructure.Features.Users.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,9 +10,6 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddMessageServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddScoped<IUserWriteRepository, UserWriteRepository>();
-
         return serviceCollection;
     }
 }

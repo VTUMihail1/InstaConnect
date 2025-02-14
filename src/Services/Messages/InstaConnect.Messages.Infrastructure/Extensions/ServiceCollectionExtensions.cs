@@ -2,6 +2,7 @@
 using InstaConnect.Messages.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Messages.Infrastructure.Helpers;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,19 +13,15 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
-
         serviceCollection
             .AddMessageServices()
             .AddUserServices();
 
         serviceCollection
-            .AddDatabaseContext<MessagesContext>(configuration);
-
-        serviceCollection
-            .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
+            .AddDatabaseContext<MessagesContext>(configuration)
+            .AddServicesWithMatchingInterfaces(InfrastructureReference.Assembly)
             .AddUnitOfWork<MessagesContext>()
-            .AddRabbitMQ(configuration, currentAssembly)
+            .AddRabbitMQ(configuration, InfrastructureReference.Assembly)
             .AddJwtBearer(configuration)
             .AddDateTimeProvider();
 

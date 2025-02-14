@@ -21,18 +21,6 @@ internal static class ServiceCollectionExtensions
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        serviceCollection
-            .AddTransient<IUserWriteRepository, UserWriteRepository>()
-            .AddTransient<IUserReadRepository, UserReadRepository>()
-            .AddScoped<IPasswordHasher, PasswordHasher>();
-
-        serviceCollection
-            .AddScoped<IAccessTokenGenerator, AccessTokenGenerator>()
-            .AddTransient<IEmailConfirmationTokenPublisher, EmailConfirmationTokenPublisher>()
-            .AddTransient<IForgotPasswordTokenPublisher, ForgotPasswordTokenPublisher>()
-            .AddScoped<IEmailConfirmationTokenGenerator, EmailConfirmationTokenGenerator>()
-            .AddScoped<IForgotPasswordTokenGenerator, ForgotPasswordTokenGenerator>();
-
         return serviceCollection;
     }
 }

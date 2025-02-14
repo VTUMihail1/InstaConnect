@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CloudinaryDotNet.Actions;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
 using InstaConnect.Identity.Application.Features.Users.Commands.Add;
 using InstaConnect.Identity.Application.Features.Users.Commands.Update;
@@ -57,8 +56,8 @@ internal class UserCommandProfile : Profile
         CreateMap<AddUserCommand, ImageUploadModel>()
             .ConstructUsing(src => new(src.ProfileImage!));
 
-        CreateMap<ImageUploadResult, User>()
-            .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => src.SecureUrl));
+        CreateMap<ImageResult, User>()
+            .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => src.ImageUri));
 
         CreateMap<User, UserCommandViewModel>();
     }

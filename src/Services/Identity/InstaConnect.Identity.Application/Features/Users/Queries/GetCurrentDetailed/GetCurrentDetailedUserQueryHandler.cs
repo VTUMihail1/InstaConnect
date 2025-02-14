@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;

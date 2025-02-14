@@ -2,6 +2,7 @@
 using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Abstractions;
 
 namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 

@@ -22,10 +22,6 @@ internal static class ServiceCollectionExtensions
             .GetSection(nameof(EmailOptions))
             .Get<EmailOptions>()!;
 
-        serviceCollection
-            .AddScoped<IEmailSender, EmailSender>()
-            .AddScoped<IEmailFactory, EmailFactory>();
-
         serviceCollection.AddScoped(_ => new SmtpClient()
         {
             Host = emailOptions.SmtpServer,

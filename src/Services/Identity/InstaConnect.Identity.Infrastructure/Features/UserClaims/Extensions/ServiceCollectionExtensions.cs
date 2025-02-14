@@ -8,9 +8,6 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddUserClaimServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddTransient<IUserClaimWriteRepository, UserClaimWriteRepository>();
-
         return serviceCollection;
     }
 }

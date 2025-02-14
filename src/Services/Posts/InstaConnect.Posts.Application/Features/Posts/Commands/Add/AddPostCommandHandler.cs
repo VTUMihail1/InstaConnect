@@ -3,6 +3,7 @@ using InstaConnect.Posts.Domain.Features.Posts.Abstract;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;

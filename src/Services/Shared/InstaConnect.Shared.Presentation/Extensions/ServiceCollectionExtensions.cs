@@ -9,7 +9,6 @@ using InstaConnect.Shared.Presentation.ExceptionHandlers;
 using InstaConnect.Shared.Presentation.Helpers;
 using InstaConnect.Shared.Presentation.Models.Options;
 using InstaConnect.Shared.Presentation.Utilities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -44,13 +43,21 @@ public static class ServiceCollectionExtensions
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
-        return serviceCollection;
-    }
-
-    public static IServiceCollection ConfigureApiBehaviorOptions(this IServiceCollection serviceCollection)
-    {
         serviceCollection
             .Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
+
+        serviceCollection
+            .AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1);
+                options.ReportApiVersions = true;
+
+            })
+            .AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+            });
 
         return serviceCollection;
     }
@@ -95,34 +102,7 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection.AddEndpointsApiExplorer();
 
-        serviceCollection.AddSwaggerGen(c =>
-                {
-                    c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
-                    {
-                        In = ParameterLocation.Header,
-                        Name = "Authorization",
-                        Type = SecuritySchemeType.ApiKey,
-                    });
-
-                    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                    {
-                        {
-                            new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference
-                                {
-                                    Type = ReferenceType.SecurityScheme,
-                                    Id = JwtBearerDefaults.AuthenticationScheme
-                                }
-                            },
-                            Array.Empty<string>()
-                        }
-                    });
-
-                    //var xmlfile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                    //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlfile);
-                    //c.IncludeXmlComments(xmlPath);
-                });
+        serviceCollection.AddSwaggerGen();
 
         return serviceCollection;
     }
@@ -142,33 +122,6 @@ public static class ServiceCollectionExtensions
                         Window = TimeSpan.FromSeconds(10),
                     }));
         });
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddVersioning(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-            .AddApiVersioning(options =>
-            {
-                options.DefaultApiVersion = new ApiVersion(1);
-                options.ReportApiVersions = true;
-
-            })
-            .AddApiExplorer(options =>
-            {
-                options.GroupNameFormat = "'v'VVV";
-                options.SubstituteApiVersionInUrl = true;
-            });
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddCurrentUserContext(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-            .AddHttpContextAccessor()
-            .AddScoped<ICurrentUserContext, CurrentUserContext>();
 
         return serviceCollection;
     }

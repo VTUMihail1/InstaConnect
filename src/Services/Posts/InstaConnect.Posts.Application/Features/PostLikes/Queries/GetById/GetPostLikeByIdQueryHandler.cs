@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Posts.Application.Features.PostLikes.Models;
 using InstaConnect.Posts.Domain.Features.PostLikes.Abstract;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.PostLike;
 
 namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;

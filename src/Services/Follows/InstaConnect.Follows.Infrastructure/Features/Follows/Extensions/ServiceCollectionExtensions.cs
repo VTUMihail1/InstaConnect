@@ -8,10 +8,6 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddFollowServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddScoped<IFollowReadRepository, FollowReadRepository>()
-            .AddScoped<IFollowWriteRepository, FollowWriteRepository>();
-
         return serviceCollection;
     }
 }

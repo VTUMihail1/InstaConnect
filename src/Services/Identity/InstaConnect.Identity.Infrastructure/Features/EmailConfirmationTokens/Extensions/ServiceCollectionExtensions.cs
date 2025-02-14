@@ -17,11 +17,6 @@ internal static class ServiceCollectionExtensions
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        serviceCollection
-            .AddTransient<IEmailConfirmationTokenWriteRepository, EmailConfirmationTokenWriteRepository>()
-            .AddTransient<IEmailConfirmationTokenPublisher, EmailConfirmationTokenPublisher>()
-            .AddScoped<IEmailConfirmationTokenGenerator, EmailConfirmationTokenGenerator>();
-
         return serviceCollection;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Messages.Application.Features.Messages.Models;
 using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Message;
 using InstaConnect.Shared.Common.Exceptions.User;
 

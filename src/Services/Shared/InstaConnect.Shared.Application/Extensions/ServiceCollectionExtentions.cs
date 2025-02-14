@@ -27,33 +27,11 @@ public static class ServiceCollectionExtentions
         return serviceCollection;
     }
 
-    public static IServiceCollection AddMapper(this IServiceCollection serviceCollection, Assembly assembly)
-    {
-        serviceCollection.AddAutoMapper(assembly);
-
-        serviceCollection.AddScoped<IInstaConnectMapper, InstaConnectMapper>();
-
-        return serviceCollection;
-    }
-
     public static IServiceCollection AddValidators(this IServiceCollection serviceCollection, Assembly assembly)
     {
         serviceCollection.AddValidatorsFromAssembly(assembly);
 
         serviceCollection.AddScoped<IEntityPropertyValidator, EntityPropertyValidator>();
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddServicesWithMatchingInterfaces(this IServiceCollection serviceCollection, Assembly assembly)
-    {
-        serviceCollection
-            .Scan(selector => selector
-            .FromAssemblies(assembly)
-            .AddClasses(false)
-            .UsingRegistrationStrategy(RegistrationStrategy.Throw)
-            .AsMatchingInterface()
-            .WithScopedLifetime());
 
         return serviceCollection;
     }

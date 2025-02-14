@@ -10,9 +10,6 @@ internal static class ServiceCollectionExtensions
         serviceCollection
             .AddSignalR();
 
-        serviceCollection
-            .AddScoped<IMessageSender, MessageSender>();
-
         return serviceCollection;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InstaConnect.Posts.Application.Extensions;
 using InstaConnect.Posts.Application.Features.PostLikes.Mappings;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
@@ -13,6 +14,8 @@ using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using NSubstitute;
@@ -44,11 +47,7 @@ public abstract class BasePostLikeUnitTest
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg =>
-                {
-                    cfg.AddProfile<PostLikeQueryProfile>();
-                    cfg.AddProfile<PostLikeCommandProfile>();
-                })));
+                new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
         CancellationToken = new CancellationToken();
         EntityPropertyValidator = new EntityPropertyValidator();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();

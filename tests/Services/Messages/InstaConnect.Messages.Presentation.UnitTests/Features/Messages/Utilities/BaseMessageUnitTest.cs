@@ -8,8 +8,11 @@ using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
+using InstaConnect.Messages.Presentation.Extensions;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using NSubstitute;
 using MessageCommandProfile = InstaConnect.Messages.Presentation.Features.Messages.Mappings.MessagesCommandProfile;
@@ -31,11 +34,7 @@ public abstract class BaseMessageUnitTest
         InstaConnectSender = Substitute.For<IInstaConnectSender>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg =>
-                {
-                    cfg.AddProfile<MessageCommandProfile>();
-                    cfg.AddProfile<MessageQueryProfile>();
-                })));
+                new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
     }
 
     private User CreateUserUtil()

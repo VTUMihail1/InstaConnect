@@ -3,6 +3,7 @@ using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Contracts.Users;
 using InstaConnect.Shared.Application.Models;
+using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.User;
 
 namespace InstaConnect.Identity.Application.Features.Users.Commands.Update;

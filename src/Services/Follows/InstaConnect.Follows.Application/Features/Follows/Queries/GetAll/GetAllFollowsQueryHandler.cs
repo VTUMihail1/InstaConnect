@@ -2,6 +2,7 @@
 using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Abstractions;
 
 namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 

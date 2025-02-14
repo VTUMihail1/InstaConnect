@@ -4,6 +4,7 @@ using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Contracts.Emails;
+using InstaConnect.Shared.Common.Abstractions;
 
 namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Helpers;
 

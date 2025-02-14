@@ -8,10 +8,6 @@ internal static class ServiceCollectionExtensions
 {
     internal static IServiceCollection AddPostCommentServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection
-            .AddScoped<IPostCommentReadRepository, PostCommentReadRepository>()
-            .AddScoped<IPostCommentWriteRepository, PostCommentWriteRepository>();
-
         return serviceCollection;
     }
 }

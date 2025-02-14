@@ -17,6 +17,14 @@
 	<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
 	<PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="8.0.0" />
 	<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	<PackageReference Include="IdentityModel" Version="7.0.0" />
+	<PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="8.0.1" />
+	<PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
+	<PackageReference Include="EntityFramework" Version="6.5.1" />
+	<PackageReference Include="MassTransit" Version="8.2.3" />
+	<PackageReference Include="MassTransit.RabbitMQ" Version="8.2.3" />
+	<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
 	<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.7" />
 	<PackageReference Include="Testcontainers.MsSql" Version="3.9.0" />
 	<PackageReference Include="Testcontainers.RabbitMq" Version="3.10.0" />

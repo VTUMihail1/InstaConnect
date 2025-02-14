@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Application.Abstractions;
+﻿namespace InstaConnect.Shared.Common.Abstractions;
 
 public interface IInstaConnectMapper
 {
