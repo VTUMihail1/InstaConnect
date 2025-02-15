@@ -1,34 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
   <ItemGroup>
-	<PackageReference Include="AspNetCore.HealthChecks.Redis" Version="8.0.1" />
-	<PackageReference Include="MassTransit.EntityFrameworkCore" Version="8.2.3" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
-	<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.7" />
-	<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.7" />
-	<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
-	<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
-	<PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="8.0.0" />
-	<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	<PackageReference Include="IdentityModel" Version="7.0.0" />
-	<PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="8.0.1" />
-	<PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
-	<PackageReference Include="EntityFramework" Version="6.5.1" />
-	<PackageReference Include="MassTransit" Version="8.2.3" />
-	<PackageReference Include="MassTransit.RabbitMQ" Version="8.2.3" />
-	<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
-	<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.7" />
-	<PackageReference Include="Testcontainers.MsSql" Version="3.9.0" />
-	<PackageReference Include="Testcontainers.RabbitMq" Version="3.10.0" />
-	<PackageReference Include="WebMotions.Fake.Authentication.JwtBearer" Version="8.0.1" />
+	<PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" />
+	<PackageReference Include="AspNetCore.HealthChecks.Redis" />
+	<PackageReference Include="CloudinaryDotNet" />
+	<PackageReference Include="EntityFramework" />
+	<PackageReference Include="IdentityModel" />
+	<PackageReference Include="MassTransit" />
+	<PackageReference Include="MassTransit.EntityFrameworkCore" />
+	<PackageReference Include="MassTransit.RabbitMQ" />
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+	<PackageReference Include="Microsoft.AspNetCore.Identity" />
+	<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+	<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
+	<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" />
+	<PackageReference Include="Microsoft.Extensions.Options" />
+	<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+	<PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" />
+	<PackageReference Include="Newtonsoft.Json" />
+	<PackageReference Include="Testcontainers.MsSql" />
+	<PackageReference Include="Testcontainers.RabbitMq" />
+	<PackageReference Include="Testcontainers.Redis" />
+	<PackageReference Include="WebMotions.Fake.Authentication.JwtBearer" />
   </ItemGroup>
 	
   <ItemGroup>

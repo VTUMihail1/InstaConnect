@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 using Bogus;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
@@ -82,7 +83,7 @@ public class SharedTestUtilities
 
     public static string GetNonCaseMatchingString(string value)
     {
-        var result = value.ToUpper();
+        var result = value.ToUpper(CultureInfo.CurrentCulture);
 
         return result;
     }
