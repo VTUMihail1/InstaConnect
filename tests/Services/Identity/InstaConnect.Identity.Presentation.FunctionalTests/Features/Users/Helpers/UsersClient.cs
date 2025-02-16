@@ -506,14 +506,14 @@ public class UsersClient : IUsersClient
 
     private StringContent GetStringContent(string content)
     {
-        using var stringContent = new StringContent(content);
+        var stringContent = new StringContent(content);
 
         return stringContent;
     }
 
     private StreamContent GetStreamContent(Stream content)
     {
-        using var streamContent = new StreamContent(content);
+        var streamContent = new StreamContent(content);
 
         return streamContent;
     }

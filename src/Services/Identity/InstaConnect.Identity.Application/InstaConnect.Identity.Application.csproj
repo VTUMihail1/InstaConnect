@@ -17,12 +17,6 @@
   	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
   	  <_Parameter1>InstaConnect.Identity.Application.IntegrationTests</_Parameter1>
   	</AssemblyAttribute>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-  	  <_Parameter1>InstaConnect.Identity.Presentation.UnitTests</_Parameter1>
-  	</AssemblyAttribute>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-  	  <_Parameter1>InstaConnect.Identity.Presentation.FunctionalTests</_Parameter1>
-  	</AssemblyAttribute>
   </ItemGroup>
 
 </Project>
