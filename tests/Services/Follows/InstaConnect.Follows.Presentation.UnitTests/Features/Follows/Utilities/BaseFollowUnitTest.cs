@@ -24,7 +24,7 @@ public abstract class BaseFollowUnitTest
 
     protected IInstaConnectMapper InstaConnectMapper { get; }
 
-    public BaseFollowUnitTest()
+    protected BaseFollowUnitTest()
     {
 
         CancellationToken = new();

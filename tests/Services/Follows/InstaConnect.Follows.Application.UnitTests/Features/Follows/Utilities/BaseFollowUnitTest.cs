@@ -34,7 +34,7 @@ public abstract class BaseFollowUnitTest
 
     protected IFollowWriteRepository FollowWriteRepository { get; }
 
-    public BaseFollowUnitTest()
+    protected BaseFollowUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(

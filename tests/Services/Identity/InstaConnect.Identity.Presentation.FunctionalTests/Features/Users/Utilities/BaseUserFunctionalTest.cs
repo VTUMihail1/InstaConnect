@@ -29,7 +29,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<IdentityWebApplicat
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var testHarness = serviceScope.ServiceProvider.GetTestHarness();
 
             return testHarness;
@@ -40,7 +40,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<IdentityWebApplicat
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var cacheHandlerRepository = serviceScope.ServiceProvider.GetRequiredService<ICacheHandler>();
 
             return cacheHandlerRepository;
@@ -51,7 +51,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<IdentityWebApplicat
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
             return userRepository;
@@ -62,7 +62,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<IdentityWebApplicat
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userReadRepository = serviceScope.ServiceProvider.GetRequiredService<IUserReadRepository>();
 
             return userReadRepository;

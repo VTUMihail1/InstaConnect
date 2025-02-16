@@ -2,6 +2,7 @@
 
 public enum InstaConnectStatusCode
 {
+    None = 0,
     OK = 200,
     Created = 201,
     NoContent = 204,

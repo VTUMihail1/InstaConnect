@@ -28,7 +28,7 @@ public abstract class BasePostLikeUnitTest
 
     protected CancellationToken CancellationToken { get; }
 
-    public BasePostLikeUnitTest()
+    protected BasePostLikeUnitTest()
     {
         InstaConnectSender = Substitute.For<IInstaConnectSender>();
         InstaConnectMapper = new InstaConnectMapper(

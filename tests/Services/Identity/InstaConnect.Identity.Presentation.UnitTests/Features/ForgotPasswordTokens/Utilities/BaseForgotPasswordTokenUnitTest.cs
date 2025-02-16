@@ -21,7 +21,7 @@ public abstract class BaseForgotPasswordTokenUnitTest
 
     protected IInstaConnectMapper InstaConnectMapper { get; }
 
-    public BaseForgotPasswordTokenUnitTest()
+    protected BaseForgotPasswordTokenUnitTest()
     {
         CancellationToken = new CancellationToken();
         InstaConnectSender = Substitute.For<IInstaConnectSender>();

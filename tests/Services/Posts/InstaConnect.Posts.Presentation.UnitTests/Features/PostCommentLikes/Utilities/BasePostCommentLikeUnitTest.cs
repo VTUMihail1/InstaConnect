@@ -30,7 +30,7 @@ public abstract class BasePostCommentLikeUnitTest
 
     protected IInstaConnectMapper InstaConnectMapper { get; }
 
-    public BasePostCommentLikeUnitTest()
+    protected BasePostCommentLikeUnitTest()
     {
         CancellationToken = new CancellationToken();
         InstaConnectSender = Substitute.For<IInstaConnectSender>();

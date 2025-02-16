@@ -37,7 +37,7 @@ app.MapControllers();
 
 app.UseExceptionHandler(opt => { });
 
-app.Run();
+await app.RunAsync();
 
 
 // Utils for testing

@@ -32,7 +32,7 @@ public abstract class BasePostCommentLikeFunctionalTest : IClassFixture<PostsWeb
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postCommentLikeRepository = serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeWriteRepository>();
 
             return postCommentLikeRepository;
@@ -43,7 +43,7 @@ public abstract class BasePostCommentLikeFunctionalTest : IClassFixture<PostsWeb
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postCommentLikeReadRepository = serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeReadRepository>();
 
             return postCommentLikeReadRepository;

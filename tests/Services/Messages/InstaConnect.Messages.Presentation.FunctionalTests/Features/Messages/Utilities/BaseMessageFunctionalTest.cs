@@ -28,7 +28,7 @@ public abstract class BaseMessageFunctionalTest : IClassFixture<MessagesWebAppli
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var messageRepository = serviceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();
 
             return messageRepository;
@@ -39,7 +39,7 @@ public abstract class BaseMessageFunctionalTest : IClassFixture<MessagesWebAppli
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var messageReadRepository = serviceScope.ServiceProvider.GetRequiredService<IMessageReadRepository>();
 
             return messageReadRepository;

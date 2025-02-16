@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Globalization;
+using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
@@ -151,6 +152,7 @@ public class PostLikesClient : IPostLikesClient
     private string GetAllRoute(GetAllPostLikesRequest request)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             PostLikeTestRoutes.GetAll,
             request.UserId,
             request.UserName,
@@ -166,6 +168,7 @@ public class PostLikesClient : IPostLikesClient
     private string IdRoute(string id)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             PostLikeTestRoutes.Id,
             id);
 

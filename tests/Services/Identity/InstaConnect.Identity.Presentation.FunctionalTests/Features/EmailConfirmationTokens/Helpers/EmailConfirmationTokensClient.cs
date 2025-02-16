@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Globalization;
+using System.Net;
 using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models.Requests;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Utilities;
@@ -52,6 +53,7 @@ public class EmailConfirmationTokensClient : IEmailConfirmationTokensClient
     private string GetAddRoute(string email)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             EmailConfirmationTokenTestRoutes.Add,
             email);
 
@@ -61,6 +63,7 @@ public class EmailConfirmationTokensClient : IEmailConfirmationTokensClient
     private string GetVerifyRoute(string userId, string token)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             EmailConfirmationTokenTestRoutes.Verify,
             userId,
             token);

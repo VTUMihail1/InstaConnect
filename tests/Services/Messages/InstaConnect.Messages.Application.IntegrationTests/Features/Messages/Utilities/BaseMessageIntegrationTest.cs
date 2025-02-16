@@ -25,7 +25,7 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTest
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
             return userWriteRepository;
@@ -36,7 +36,7 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTest
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var messageWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();
 
             return messageWriteRepository;
@@ -47,7 +47,7 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTest
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var messageReadRepository = serviceScope.ServiceProvider.GetRequiredService<IMessageReadRepository>();
 
             return messageReadRepository;

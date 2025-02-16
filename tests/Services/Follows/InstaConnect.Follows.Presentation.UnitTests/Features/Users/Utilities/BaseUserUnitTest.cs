@@ -23,7 +23,7 @@ public abstract class BaseUserUnitTest
 
     protected IUserWriteRepository UserWriteRepository { get; }
 
-    public BaseUserUnitTest()
+    protected BaseUserUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         CancellationToken = new();

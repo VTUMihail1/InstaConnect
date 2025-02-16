@@ -29,7 +29,7 @@ public abstract class BasePostCommentUnitTest
 
     protected CancellationToken CancellationToken { get; }
 
-    public BasePostCommentUnitTest()
+    protected BasePostCommentUnitTest()
     {
         InstaConnectSender = Substitute.For<IInstaConnectSender>();
         InstaConnectMapper = new InstaConnectMapper(

@@ -30,7 +30,7 @@ public abstract class BaseEmailConfirmationTokenUnitTest
 
     protected IEmailConfirmationTokenPublisher EmailConfirmationTokenPublisher { get; }
 
-    public BaseEmailConfirmationTokenUnitTest()
+    protected BaseEmailConfirmationTokenUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(

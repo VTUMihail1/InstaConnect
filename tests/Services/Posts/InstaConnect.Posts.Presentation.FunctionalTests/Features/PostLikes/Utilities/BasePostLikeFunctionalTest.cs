@@ -29,7 +29,7 @@ public abstract class BasePostLikeFunctionalTest : IClassFixture<PostsWebApplica
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postLikeRepository = serviceScope.ServiceProvider.GetRequiredService<IPostLikeWriteRepository>();
 
             return postLikeRepository;
@@ -40,7 +40,7 @@ public abstract class BasePostLikeFunctionalTest : IClassFixture<PostsWebApplica
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postLikeReadRepository = serviceScope.ServiceProvider.GetRequiredService<IPostLikeReadRepository>();
 
             return postLikeReadRepository;

@@ -27,7 +27,7 @@ public abstract class BasePostFunctionalTest : IClassFixture<PostsWebApplication
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postRepository = serviceScope.ServiceProvider.GetRequiredService<IPostWriteRepository>();
 
             return postRepository;
@@ -38,7 +38,7 @@ public abstract class BasePostFunctionalTest : IClassFixture<PostsWebApplication
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postReadRepository = serviceScope.ServiceProvider.GetRequiredService<IPostReadRepository>();
 
             return postReadRepository;

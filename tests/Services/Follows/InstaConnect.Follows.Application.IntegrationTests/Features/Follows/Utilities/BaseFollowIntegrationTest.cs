@@ -24,7 +24,7 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
             return userWriteRepository;
@@ -35,7 +35,7 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var followWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IFollowWriteRepository>();
 
             return followWriteRepository;
@@ -46,7 +46,7 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var followReadRepository = serviceScope.ServiceProvider.GetRequiredService<IFollowReadRepository>();
 
             return followReadRepository;

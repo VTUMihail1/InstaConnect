@@ -49,7 +49,7 @@ public abstract class BaseUserUnitTest
 
     protected IEmailConfirmationTokenPublisher EmailConfirmationTokenPublisher { get; }
 
-    public BaseUserUnitTest()
+    protected BaseUserUnitTest()
     {
         CancellationToken = new();
         UnitOfWork = Substitute.For<IUnitOfWork>();

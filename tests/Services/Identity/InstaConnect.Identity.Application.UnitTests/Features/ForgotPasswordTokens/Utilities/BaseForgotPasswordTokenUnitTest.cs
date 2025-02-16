@@ -33,7 +33,7 @@ public abstract class BaseForgotPasswordTokenUnitTest
 
     protected IForgotPasswordTokenPublisher ForgotPasswordTokenPublisher { get; }
 
-    public BaseForgotPasswordTokenUnitTest()
+    protected BaseForgotPasswordTokenUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(

@@ -35,7 +35,7 @@ public abstract class BaseMessageUnitTest
 
     protected IMessageWriteRepository MessageWriteRepository { get; }
 
-    public BaseMessageUnitTest()
+    protected BaseMessageUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(

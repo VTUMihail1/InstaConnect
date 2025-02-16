@@ -27,7 +27,7 @@ public abstract class BasePostLikeIntegrationTest : IClassFixture<PostsWebApplic
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
             return userWriteRepository;
@@ -38,7 +38,7 @@ public abstract class BasePostLikeIntegrationTest : IClassFixture<PostsWebApplic
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postLikeWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IPostLikeWriteRepository>();
 
             return postLikeWriteRepository;
@@ -49,7 +49,7 @@ public abstract class BasePostLikeIntegrationTest : IClassFixture<PostsWebApplic
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postLikeReadRepository = serviceScope.ServiceProvider.GetRequiredService<IPostLikeReadRepository>();
 
             return postLikeReadRepository;

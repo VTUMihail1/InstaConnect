@@ -27,7 +27,7 @@ public abstract class BasePostUnitTest
 
     protected IInstaConnectMapper InstaConnectMapper { get; }
 
-    public BasePostUnitTest()
+    protected BasePostUnitTest()
     {
         CancellationToken = new();
         InstaConnectSender = Substitute.For<IInstaConnectSender>();

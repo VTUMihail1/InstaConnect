@@ -27,7 +27,7 @@ public abstract class BaseEmailConfirmationTokenIntegrationTest : IClassFixture<
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var testHarness = serviceScope.ServiceProvider.GetTestHarness();
 
             return testHarness;
@@ -38,7 +38,7 @@ public abstract class BaseEmailConfirmationTokenIntegrationTest : IClassFixture<
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var emailConfirmationTokenWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IEmailConfirmationTokenWriteRepository>();
 
             return emailConfirmationTokenWriteRepository;
@@ -49,7 +49,7 @@ public abstract class BaseEmailConfirmationTokenIntegrationTest : IClassFixture<
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var forgotPasswordTokenWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IForgotPasswordTokenWriteRepository>();
 
             return forgotPasswordTokenWriteRepository;
@@ -60,7 +60,7 @@ public abstract class BaseEmailConfirmationTokenIntegrationTest : IClassFixture<
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userClaimWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();
 
             return userClaimWriteRepository;
@@ -71,7 +71,7 @@ public abstract class BaseEmailConfirmationTokenIntegrationTest : IClassFixture<
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
             return userWriteRepository;
@@ -82,7 +82,7 @@ public abstract class BaseEmailConfirmationTokenIntegrationTest : IClassFixture<
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userReadRepository = serviceScope.ServiceProvider.GetRequiredService<IUserReadRepository>();
 
             return userReadRepository;
@@ -93,7 +93,7 @@ public abstract class BaseEmailConfirmationTokenIntegrationTest : IClassFixture<
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var cacheHandlerRepository = serviceScope.ServiceProvider.GetRequiredService<ICacheHandler>();
 
             return cacheHandlerRepository;

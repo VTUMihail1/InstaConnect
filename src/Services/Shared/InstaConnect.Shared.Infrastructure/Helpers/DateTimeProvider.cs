@@ -10,9 +10,9 @@ public class DateTimeProvider : IDateTimeProvider
         return currentDateTime;
     }
 
-    public DateTime GetCurrentUtc(int secondsAhead)
+    public DateTime GetCurrentUtc(int seconds)
     {
-        var currentDateTimeWithSecondsAhead = DateTime.UtcNow.AddSeconds(secondsAhead);
+        var currentDateTimeWithSecondsAhead = DateTime.UtcNow.AddSeconds(seconds);
 
         return currentDateTimeWithSecondsAhead;
     }

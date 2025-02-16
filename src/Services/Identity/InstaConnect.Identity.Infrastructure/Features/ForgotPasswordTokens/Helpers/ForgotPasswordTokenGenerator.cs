@@ -1,4 +1,6 @@
-﻿using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Abstractions;
+﻿using System.Globalization;
+
+using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Abstractions;
 using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Models;
 using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Models.Options;
 using InstaConnect.Shared.Application.Abstractions;
@@ -28,6 +30,10 @@ internal class ForgotPasswordTokenGenerator : IForgotPasswordTokenGenerator
             email,
             _dateTimeProvider.GetCurrentUtc(_forgotPasswordOptions.LifetimeSeconds),
             value,
-            string.Format(_forgotPasswordOptions.UrlTemplate, userId, value));
+            string.Format(
+                CultureInfo.InvariantCulture,
+                _forgotPasswordOptions.UrlTemplate, 
+                userId, 
+                value));
     }
 }

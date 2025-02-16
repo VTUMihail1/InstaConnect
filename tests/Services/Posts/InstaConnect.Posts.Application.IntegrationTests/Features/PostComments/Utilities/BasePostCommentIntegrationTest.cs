@@ -28,7 +28,7 @@ public abstract class BasePostCommentIntegrationTest : IClassFixture<PostsWebApp
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
             return userWriteRepository;
@@ -39,7 +39,7 @@ public abstract class BasePostCommentIntegrationTest : IClassFixture<PostsWebApp
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postCommentWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IPostCommentWriteRepository>();
 
             return postCommentWriteRepository;
@@ -50,7 +50,7 @@ public abstract class BasePostCommentIntegrationTest : IClassFixture<PostsWebApp
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postCommentReadRepository = serviceScope.ServiceProvider.GetRequiredService<IPostCommentReadRepository>();
 
             return postCommentReadRepository;

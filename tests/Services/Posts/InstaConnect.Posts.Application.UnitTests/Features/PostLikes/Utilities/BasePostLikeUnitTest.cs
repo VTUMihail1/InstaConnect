@@ -42,7 +42,7 @@ public abstract class BasePostLikeUnitTest
 
     protected IPostLikeWriteRepository PostLikeWriteRepository { get; }
 
-    public BasePostLikeUnitTest()
+    protected BasePostLikeUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(

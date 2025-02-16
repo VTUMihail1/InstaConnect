@@ -21,7 +21,7 @@ public abstract class BaseEmailConfirmationTokenUnitTest
 
     protected IInstaConnectMapper InstaConnectMapper { get; }
 
-    public BaseEmailConfirmationTokenUnitTest()
+    protected BaseEmailConfirmationTokenUnitTest()
     {
         CancellationToken = new CancellationToken();
         InstaConnectSender = Substitute.For<IInstaConnectSender>();

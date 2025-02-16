@@ -4,7 +4,7 @@ namespace InstaConnect.Shared.Domain.Models.Base;
 
 public abstract class BaseEntity : IBaseEntity
 {
-    public BaseEntity()
+    protected BaseEntity()
     {
         Id = Guid.NewGuid().ToString();
     }

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Globalization;
+using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
@@ -245,6 +246,7 @@ public class MessagesClient : IMessagesClient
     private string GetAllRoute(GetAllMessagesRequest request)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             MessageTestRoutes.GetAll,
             request.ReceiverId,
             request.ReceiverName,
@@ -259,6 +261,7 @@ public class MessagesClient : IMessagesClient
     private string IdRoute(string id)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             MessageTestRoutes.Id,
             id);
 

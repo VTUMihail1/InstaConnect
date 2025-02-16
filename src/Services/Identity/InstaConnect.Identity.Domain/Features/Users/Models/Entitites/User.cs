@@ -35,7 +35,7 @@ public class User : BaseEntity
 
     public string? ProfileImage { get; set; }
 
-    public bool IsEmailConfirmed { get; set; } = false;
+    public bool IsEmailConfirmed { get; set; }
 
     public ICollection<ForgotPasswordToken> ForgotPasswordTokens { get; set; } = [];
 

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Globalization;
+using System.Net;
 using FluentAssertions;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Features.Users.Utilities;
@@ -165,7 +166,10 @@ public class GetCurrentDetailedUserFunctionalTests : BaseUserFunctionalTest
         var request = new GetCurrentDetailedUserRequest(
             existingUser.Id
         );
-        var queryKey = string.Format(UserCacheKeys.GetCurrentDetailedUser, existingUser.Id);
+        var queryKey = string.Format(
+            CultureInfo.InvariantCulture,
+            UserCacheKeys.GetCurrentDetailedUser, 
+            existingUser.Id);
 
         // Act
         await UsersClient.GetCurrentDetailedAsync(request, CancellationToken);

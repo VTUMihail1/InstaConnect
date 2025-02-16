@@ -28,7 +28,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FollowsWebApplicati
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
             return userRepository;

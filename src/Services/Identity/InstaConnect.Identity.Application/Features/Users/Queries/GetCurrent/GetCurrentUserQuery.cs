@@ -1,4 +1,6 @@
-﻿using InstaConnect.Identity.Application.Features.Users.Models;
+﻿using System.Globalization;
+
+using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Features.Users.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
 
@@ -8,7 +10,10 @@ public record GetCurrentUserQuery(string CurrentUserId) : IQuery<UserQueryViewMo
 {
     private const int EXPIRATION_SECONDS = 1500;
 
-    public string Key => string.Format(UserCacheKeys.GetCurrentUser, CurrentUserId);
+    public string Key => string.Format(
+        CultureInfo.InvariantCulture,
+        UserCacheKeys.GetCurrentUser, 
+        CurrentUserId);
 
     public int ExpirationSeconds => EXPIRATION_SECONDS;
 }

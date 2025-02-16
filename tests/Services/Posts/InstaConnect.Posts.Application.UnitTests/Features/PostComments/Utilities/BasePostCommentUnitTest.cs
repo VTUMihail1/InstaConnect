@@ -39,7 +39,7 @@ public abstract class BasePostCommentUnitTest
 
     protected IPostCommentWriteRepository PostCommentWriteRepository { get; }
 
-    public BasePostCommentUnitTest()
+    protected BasePostCommentUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(

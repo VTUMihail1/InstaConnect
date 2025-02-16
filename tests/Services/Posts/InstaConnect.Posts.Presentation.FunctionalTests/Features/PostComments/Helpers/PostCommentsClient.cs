@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Globalization;
+using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
@@ -198,6 +199,7 @@ public class PostCommentsClient : IPostCommentsClient
     private string GetAllRoute(GetAllPostCommentsRequest request)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             PostCommentTestRoutes.GetAll,
             request.UserId,
             request.UserName,
@@ -213,6 +215,7 @@ public class PostCommentsClient : IPostCommentsClient
     private string IdRoute(string id)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             PostCommentTestRoutes.Id,
             id);
 

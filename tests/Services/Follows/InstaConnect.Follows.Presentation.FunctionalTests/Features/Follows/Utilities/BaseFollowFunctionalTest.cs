@@ -27,7 +27,7 @@ public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsWebApplica
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var testHarness = serviceScope.ServiceProvider.GetTestHarness();
 
             return testHarness;
@@ -38,7 +38,7 @@ public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsWebApplica
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var followWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IFollowWriteRepository>();
 
             return followWriteRepository;
@@ -49,7 +49,7 @@ public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsWebApplica
     {
         get
         {
-            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var followReadRepository = serviceScope.ServiceProvider.GetRequiredService<IFollowReadRepository>();
 
             return followReadRepository;
