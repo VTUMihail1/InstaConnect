@@ -487,7 +487,7 @@ public class UsersClient : IUsersClient
 
     private MultipartFormDataContent GetForm(UpdateUserForm form)
     {
-        using var multipartContent = new MultipartFormDataContent
+        var multipartContent = new MultipartFormDataContent
         {
             { GetStringContent(form.UserName), nameof(form.UserName) },
             { GetStringContent(form.FirstName), nameof(form.FirstName) },
