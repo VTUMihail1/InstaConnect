@@ -12,7 +12,7 @@ public record GetCurrentDetailedUserQuery(string CurrentUserId) : IQuery<UserDet
 
     public string Key => string.Format(
         CultureInfo.InvariantCulture,
-        UserCacheKeys.GetCurrentDetailedUser, 
+        UserCacheKeys.GetCurrentDetailedUser,
         CurrentUserId);
 
     public int ExpirationSeconds => EXPIRATION_SECONDS;

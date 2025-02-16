@@ -1,4 +1,5 @@
 ﻿using System.Text;
+
 using InstaConnect.Shared.Infrastructure.Abstractions;
 
 namespace InstaConnect.Shared.Infrastructure.Extensions;

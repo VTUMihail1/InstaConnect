@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Security.Claims;
+
 using InstaConnect.Identity.Presentation.Features.Users.Models.Forms;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;

@@ -1,12 +1,13 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
 using InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
+using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.PostComment;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Commands;
@@ -19,7 +20,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
@@ -33,14 +34,14 @@ public class DeletePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(PostCommentConfigurations.IdMinLength - 1)]
     [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
@@ -54,11 +55,11 @@ public class DeletePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
     {
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
@@ -72,14 +73,14 @@ public class DeletePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
@@ -93,7 +94,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]

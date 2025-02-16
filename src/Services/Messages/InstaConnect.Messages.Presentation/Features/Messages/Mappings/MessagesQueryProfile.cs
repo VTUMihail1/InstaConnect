@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Messages.Application.Features.Messages.Models;
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;

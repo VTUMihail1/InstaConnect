@@ -4,6 +4,7 @@ using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Abstractio
 using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Models;
 using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Models.Options;
 using InstaConnect.Shared.Application.Abstractions;
+
 using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Helpers;
@@ -32,8 +33,8 @@ internal class ForgotPasswordTokenGenerator : IForgotPasswordTokenGenerator
             value,
             string.Format(
                 CultureInfo.InvariantCulture,
-                _forgotPasswordOptions.UrlTemplate, 
-                userId, 
+                _forgotPasswordOptions.UrlTemplate,
+                userId,
                 value));
     }
 }

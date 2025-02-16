@@ -1,28 +1,28 @@
 ﻿using InstaConnect.Messages.Application.Features.Messages.Models;
 using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Messages.Domain.Features.Messages.Exceptions;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Message;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 
 namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
 
 internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, MessageQueryViewModel>
 {
-    private readonly IMessageReadRepository _messageRepository;
     private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IMessageReadRepository _messageReadRepository;
 
     public GetMessageByIdQueryHandler(
-        IMessageReadRepository messageRepository,
-        IInstaConnectMapper instaConnectMapper)
+        IInstaConnectMapper instaConnectMapper,
+        IMessageReadRepository messageReadRepository)
     {
-        _messageRepository = messageRepository;
         _instaConnectMapper = instaConnectMapper;
+        _messageReadRepository = messageReadRepository;
     }
 
     public async Task<MessageQueryViewModel> Handle(GetMessageByIdQuery request, CancellationToken cancellationToken)
     {
-        var message = await _messageRepository.GetByIdAsync(request.Id, cancellationToken);
+        var message = await _messageReadRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (message == null)
         {

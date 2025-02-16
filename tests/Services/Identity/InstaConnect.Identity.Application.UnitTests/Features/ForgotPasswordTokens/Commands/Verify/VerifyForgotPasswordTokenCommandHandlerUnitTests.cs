@@ -1,11 +1,13 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 using InstaConnect.Identity.Application.UnitTests.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
-using InstaConnect.Shared.Common.Exceptions.Token;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
+
 using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.ForgotPasswordTokens.Commands.Verify;
@@ -56,7 +58,7 @@ public class VerifyForgotPasswordTokenCommandHandlerUnitTests : BaseForgotPasswo
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<TokenNotFoundException>();
+        await action.Should().ThrowAsync<ForgotPasswordTokenNotFoundException>();
     }
 
     [Fact]

@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Shared.Application.Abstractions;
+
 using MediatR;
 
 namespace InstaConnect.Shared.Application.Helpers;

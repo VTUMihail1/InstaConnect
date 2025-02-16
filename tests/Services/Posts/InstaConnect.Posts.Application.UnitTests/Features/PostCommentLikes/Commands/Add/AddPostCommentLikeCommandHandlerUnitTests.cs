@@ -1,13 +1,15 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.PostComment;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
+using InstaConnect.Shared.Common.Exceptions.Users;
+
 using NSubstitute;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Commands.Add;
@@ -61,7 +63,7 @@ public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeUnit
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowBadRequestException_WhenPostCommentLikeAlreadyExists()
+    public async Task Handle_ShouldThrowPostCommentLikeAlreadyExistsException_WhenPostCommentLikeAlreadyExists()
     {
         // Arrange
         var existingPostCommentLike = CreatePostCommentLike();
@@ -73,7 +75,7 @@ public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeUnit
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<PostCommentLikeAlreadyExistsException>();
     }
 
     [Fact]

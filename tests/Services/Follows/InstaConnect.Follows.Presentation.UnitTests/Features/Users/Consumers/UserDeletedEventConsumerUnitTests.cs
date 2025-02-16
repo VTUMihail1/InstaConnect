@@ -3,7 +3,9 @@ using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 using InstaConnect.Follows.Presentation.Features.Users.Consumers;
 using InstaConnect.Follows.Presentation.UnitTests.Features.Users.Utilities;
 using InstaConnect.Shared.Application.Contracts.Users;
+
 using MassTransit;
+
 using NSubstitute;
 
 namespace InstaConnect.Follows.Presentation.UnitTests.Features.Users.Consumers;

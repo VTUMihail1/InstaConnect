@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Users.Abstract;
-using InstaConnect.Posts.Infrastructure.Features.Users.Repositories;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
 

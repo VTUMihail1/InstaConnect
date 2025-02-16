@@ -1,13 +1,14 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 using InstaConnect.Identity.Application.IntegrationTests.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.Token;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.ForgotPasswordTokens.Commands;
@@ -20,7 +21,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
@@ -36,14 +37,14 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
@@ -59,11 +60,11 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenTokenIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenTokenIsNull()
     {
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
@@ -79,14 +80,14 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(ForgotPasswordTokenConfigurations.ValueMinLength - 1)]
     [InlineData(ForgotPasswordTokenConfigurations.ValueMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenTokenLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenTokenLengthIsInvalid(int length)
     {
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
@@ -102,11 +103,11 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenPasswordIsNull()
     {
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
@@ -122,14 +123,14 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.PasswordMaxLength + 1)]
     [InlineData(UserConfigurations.PasswordMinLength - 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
         var password = SharedTestUtilities.GetString(length);
@@ -146,11 +147,11 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordAndConfirmPasswordDoNotMatch()
+    public async Task SendAsync_ShouldThrowValidationException_WhenPasswordAndConfirmPasswordDoNotMatch()
     {
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
@@ -166,7 +167,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Fact]
@@ -207,7 +208,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<TokenNotFoundException>();
+            .ThrowAsync<ForgotPasswordTokenNotFoundException>();
     }
 
     [Fact]

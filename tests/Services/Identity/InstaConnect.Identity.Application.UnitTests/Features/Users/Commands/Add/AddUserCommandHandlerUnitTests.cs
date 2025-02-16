@@ -1,13 +1,15 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
 using InstaConnect.Identity.Application.Features.Users.Commands.Add;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Identity.Domain.Features.Users.Exceptions;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Application.Contracts.Users;
 using InstaConnect.Shared.Application.Models;
-using InstaConnect.Shared.Common.Exceptions.User;
+
 using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Add;

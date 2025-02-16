@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Messages.Domain.Features.Users.Abstract;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Contracts.Users;
+
 using MassTransit;
 
 namespace InstaConnect.Messages.Presentation.Features.Users.Consumers;

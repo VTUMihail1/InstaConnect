@@ -8,6 +8,7 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,7 +26,7 @@ public abstract class BasePostIntegrationTest : IClassFixture<PostsWebApplicatio
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
             return userWriteRepository;
@@ -36,7 +37,7 @@ public abstract class BasePostIntegrationTest : IClassFixture<PostsWebApplicatio
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IPostWriteRepository>();
 
             return postWriteRepository;
@@ -47,7 +48,7 @@ public abstract class BasePostIntegrationTest : IClassFixture<PostsWebApplicatio
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postReadRepository = serviceScope.ServiceProvider.GetRequiredService<IPostReadRepository>();
 
             return postReadRepository;

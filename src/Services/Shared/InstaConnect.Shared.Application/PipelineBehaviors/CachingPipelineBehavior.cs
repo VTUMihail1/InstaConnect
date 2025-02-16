@@ -1,5 +1,7 @@
 ﻿using InstaConnect.Shared.Application.Abstractions;
+
 using MediatR;
+
 using Microsoft.Extensions.Logging;
 
 namespace InstaConnect.Shared.Application.PipelineBehaviors;

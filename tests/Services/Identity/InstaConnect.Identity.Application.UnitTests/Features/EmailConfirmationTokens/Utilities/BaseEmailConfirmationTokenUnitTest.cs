@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Identity.Application.Extensions;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Mappings;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
+
 using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.EmailConfirmationTokens.Utilities;

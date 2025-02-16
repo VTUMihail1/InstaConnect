@@ -4,6 +4,7 @@ using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstrac
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
 using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Models.Options;
 using InstaConnect.Shared.Application.Abstractions;
+
 using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Helpers;
@@ -32,8 +33,8 @@ internal class EmailConfirmationTokenGenerator : IEmailConfirmationTokenGenerato
             value,
             string.Format(
                 CultureInfo.InvariantCulture,
-                _emailConfirmationOptions.UrlTemplate, 
-                userId, 
+                _emailConfirmationOptions.UrlTemplate,
+                userId,
                 value));
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Messages.Application.Extensions;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Users.Utilities;
@@ -13,6 +14,7 @@ using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
+
 using NSubstitute;
 
 namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;

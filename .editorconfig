@@ -163,6 +163,7 @@ csharp_space_between_square_brackets = false
 # Analyzers
 dotnet_code_quality.ca1802.api_surface = private, internal
 
+# Diagnostics
 [*.{cs,vb}]
 dotnet_diagnostic.CA1032.severity = none
 dotnet_diagnostic.CA1040.severity = none
@@ -180,6 +181,7 @@ dotnet_diagnostic.CA1822.severity = none
 dotnet_diagnostic.CA1848.severity = none
 dotnet_diagnostic.CA1852.severity = none
 dotnet_diagnostic.CA1863.severity = none
+dotnet_diagnostic.CA2000.severity = none
 dotnet_diagnostic.CA2007.severity = none
 dotnet_diagnostic.CA2227.severity = none
 dotnet_diagnostic.CA2234.severity = none

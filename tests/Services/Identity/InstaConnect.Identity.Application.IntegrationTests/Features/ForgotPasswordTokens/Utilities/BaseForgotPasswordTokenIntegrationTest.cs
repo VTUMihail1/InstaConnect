@@ -7,7 +7,9 @@ using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;
+
 using MassTransit.Testing;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,7 +27,7 @@ public abstract class BaseForgotPasswordTokenIntegrationTest : IClassFixture<Ide
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var testHarness = serviceScope.ServiceProvider.GetTestHarness();
 
             return testHarness;
@@ -36,7 +38,7 @@ public abstract class BaseForgotPasswordTokenIntegrationTest : IClassFixture<Ide
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var forgotPasswordTokenWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IForgotPasswordTokenWriteRepository>();
 
             return forgotPasswordTokenWriteRepository;
@@ -47,7 +49,7 @@ public abstract class BaseForgotPasswordTokenIntegrationTest : IClassFixture<Ide
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
             return userWriteRepository;
@@ -58,7 +60,7 @@ public abstract class BaseForgotPasswordTokenIntegrationTest : IClassFixture<Ide
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userReadRepository = serviceScope.ServiceProvider.GetRequiredService<IUserReadRepository>();
 
             return userReadRepository;
@@ -69,7 +71,7 @@ public abstract class BaseForgotPasswordTokenIntegrationTest : IClassFixture<Ide
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var cacheHandlerRepository = serviceScope.ServiceProvider.GetRequiredService<ICacheHandler>();
 
             return cacheHandlerRepository;

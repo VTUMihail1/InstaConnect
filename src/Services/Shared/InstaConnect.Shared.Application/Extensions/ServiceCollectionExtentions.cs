@@ -1,11 +1,13 @@
 ﻿using System.Reflection;
+
 using FluentValidation;
+
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Extensions;
 using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Application.PipelineBehaviors;
+
 using Microsoft.Extensions.DependencyInjection;
-using Scrutor;
 
 namespace InstaConnect.Shared.Application.Extensions;
 public static class ServiceCollectionExtentions

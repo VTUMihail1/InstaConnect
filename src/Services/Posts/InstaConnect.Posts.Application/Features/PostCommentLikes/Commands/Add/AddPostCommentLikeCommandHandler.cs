@@ -1,20 +1,18 @@
 ﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
+using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.PostComment;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 
 namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
 
 internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostCommentLikeCommand, PostCommentLikeCommandViewModel>
 {
-    private const string POST_COMMENT_ALREADY_LIKED = "This user has already liked this comment";
-
     private readonly IUnitOfWork _unitOfWork;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
@@ -57,7 +55,7 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
 
         if (existingPostLike != null)
         {
-            throw new BadRequestException(POST_COMMENT_ALREADY_LIKED);
+            throw new PostCommentLikeAlreadyExistsException();
         }
 
         var postCommentLike = _instaConnectMapper.Map<PostCommentLike>(request);

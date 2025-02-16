@@ -1,7 +1,10 @@
 ﻿using System.Reflection;
+
 using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
+
 using Microsoft.Extensions.DependencyInjection;
+
 using Scrutor;
 
 namespace InstaConnect.Shared.Common.Extensions;

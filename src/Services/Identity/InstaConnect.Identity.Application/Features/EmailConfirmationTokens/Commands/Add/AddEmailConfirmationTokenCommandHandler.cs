@@ -1,9 +1,10 @@
 ﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Identity.Domain.Features.Users.Exceptions;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 
 namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
 

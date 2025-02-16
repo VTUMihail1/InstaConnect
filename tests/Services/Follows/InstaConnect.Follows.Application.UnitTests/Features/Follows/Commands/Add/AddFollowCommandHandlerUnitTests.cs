@@ -1,11 +1,13 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 using InstaConnect.Follows.Application.Features.Follows.Models;
 using InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
+using InstaConnect.Follows.Domain.Features.Follows.Exceptions;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
+
 using NSubstitute;
 
 namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Commands.Add;
@@ -58,7 +60,7 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowBadRequestException_WhenFollowAlreadyExists()
+    public async Task Handle_ShouldThrowFollowAlreadyExistsException_WhenFollowAlreadyExists()
     {
         // Arrange
         var existingFollow = CreateFollow();
@@ -70,7 +72,7 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<FollowAlreadyExistsException>();
     }
 
     [Fact]

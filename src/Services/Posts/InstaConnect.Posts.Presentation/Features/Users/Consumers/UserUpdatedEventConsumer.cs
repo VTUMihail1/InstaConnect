@@ -2,6 +2,7 @@
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Contracts.Users;
 using InstaConnect.Shared.Common.Abstractions;
+
 using MassTransit;
 
 namespace InstaConnect.Posts.Presentation.Features.Users.Consumers;

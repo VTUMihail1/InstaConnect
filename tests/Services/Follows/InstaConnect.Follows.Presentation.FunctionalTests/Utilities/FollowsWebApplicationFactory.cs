@@ -1,11 +1,14 @@
 ﻿using InstaConnect.Follows.Infrastructure;
 using InstaConnect.Follows.Presentation.Features.Users.Consumers;
 using InstaConnect.Shared.Infrastructure.Extensions;
+
 using MassTransit;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
+
 using Testcontainers.MsSql;
 using Testcontainers.RabbitMq;
 

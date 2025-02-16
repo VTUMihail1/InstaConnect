@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Domain.Features.Users.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 using InstaConnect.Follows.Presentation.Extensions;
-using InstaConnect.Follows.Presentation.Features.Users.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
+
 using NSubstitute;
 
 namespace InstaConnect.Follows.Presentation.UnitTests.Features.Users.Utilities;

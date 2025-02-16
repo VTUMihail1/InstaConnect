@@ -7,6 +7,7 @@ using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 using InstaConnect.Follows.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,7 +25,7 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
             return userWriteRepository;
@@ -35,7 +36,7 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var followWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IFollowWriteRepository>();
 
             return followWriteRepository;
@@ -46,7 +47,7 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var followReadRepository = serviceScope.ServiceProvider.GetRequiredService<IFollowReadRepository>();
 
             return followReadRepository;

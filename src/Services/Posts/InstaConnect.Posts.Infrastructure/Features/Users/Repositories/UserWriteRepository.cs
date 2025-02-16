@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Users.Repositories;

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Application.Contracts.Users;
 

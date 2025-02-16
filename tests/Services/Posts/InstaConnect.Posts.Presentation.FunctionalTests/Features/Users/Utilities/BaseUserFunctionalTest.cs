@@ -5,7 +5,9 @@ using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;
+
 using MassTransit.Testing;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,7 +19,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<PostsWebApplication
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var testHarness = serviceScope.ServiceProvider.GetTestHarness();
 
             return testHarness;
@@ -28,7 +30,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<PostsWebApplication
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
             return userRepository;

@@ -1,13 +1,14 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 using InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
+using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.PostComment;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Commands;
@@ -20,7 +21,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
@@ -34,14 +35,14 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(PostCommentConfigurations.IdMinLength - 1)]
     [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
@@ -55,11 +56,11 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
     {
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
@@ -73,14 +74,14 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
@@ -94,11 +95,11 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenContentIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenContentIsNull()
     {
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
@@ -112,14 +113,14 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(PostCommentConfigurations.ContentMinLength - 1)]
     [InlineData(PostCommentConfigurations.ContentMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenContentLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
@@ -133,7 +134,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]

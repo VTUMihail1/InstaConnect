@@ -1,8 +1,8 @@
 ﻿using InstaConnect.Follows.Application.Features.Follows.Models;
 using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
+using InstaConnect.Follows.Domain.Features.Follows.Exceptions;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Follow;
 
 namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 

@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
+
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Abstractions;
@@ -173,12 +174,12 @@ public class FollowsClient : IFollowsClient
         return route;
     }
 
-    private Uri IdRoute(string id)
+    private string IdRoute(string id)
     {
-        var route = new Uri(string.Format(
+        var route = string.Format(
             CultureInfo.InvariantCulture,
             FollowTestRoutes.Id,
-            id));
+            id);
 
         return route;
     }

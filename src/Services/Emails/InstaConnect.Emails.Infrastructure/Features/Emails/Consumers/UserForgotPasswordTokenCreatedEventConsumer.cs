@@ -2,6 +2,7 @@
 using InstaConnect.Emails.Infrastructure.Features.Emails.Utilities;
 using InstaConnect.Shared.Application.Contracts.Emails;
 using InstaConnect.Shared.Common.Exceptions.Base;
+
 using MassTransit;
 
 namespace InstaConnect.Emails.Infrastructure.Features.Emails.Consumers;

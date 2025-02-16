@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Posts.Application.Extensions;
-using InstaConnect.Posts.Application.Features.Posts.Mappings;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Abstract;
@@ -14,6 +14,7 @@ using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
+
 using NSubstitute;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities;

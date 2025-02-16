@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Application.Abstractions;

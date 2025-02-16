@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.PostLikes.Abstract;
-using InstaConnect.Posts.Infrastructure.Features.PostLikes.Repositories;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
 

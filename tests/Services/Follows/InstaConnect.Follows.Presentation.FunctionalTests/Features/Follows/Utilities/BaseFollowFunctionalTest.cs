@@ -9,7 +9,9 @@ using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Helpers
 using InstaConnect.Follows.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;
+
 using MassTransit.Testing;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,7 +29,7 @@ public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsWebApplica
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var testHarness = serviceScope.ServiceProvider.GetTestHarness();
 
             return testHarness;
@@ -38,7 +40,7 @@ public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsWebApplica
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var followWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IFollowWriteRepository>();
 
             return followWriteRepository;
@@ -49,7 +51,7 @@ public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsWebApplica
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var followReadRepository = serviceScope.ServiceProvider.GetRequiredService<IFollowReadRepository>();
 
             return followReadRepository;

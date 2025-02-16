@@ -10,6 +10,7 @@ using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Helpers;
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,7 +28,7 @@ public abstract class BasePostFunctionalTest : IClassFixture<PostsWebApplication
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postRepository = serviceScope.ServiceProvider.GetRequiredService<IPostWriteRepository>();
 
             return postRepository;
@@ -38,7 +39,7 @@ public abstract class BasePostFunctionalTest : IClassFixture<PostsWebApplication
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postReadRepository = serviceScope.ServiceProvider.GetRequiredService<IPostReadRepository>();
 
             return postReadRepository;

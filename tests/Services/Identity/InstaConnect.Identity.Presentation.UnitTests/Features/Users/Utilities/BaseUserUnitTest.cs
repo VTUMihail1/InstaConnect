@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Identity.Application.Features.Users.Commands.Add;
 using InstaConnect.Identity.Application.Features.Users.Commands.Login;
 using InstaConnect.Identity.Application.Features.Users.Commands.Update;
@@ -13,12 +14,11 @@ using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Presentation.Extensions;
-using InstaConnect.Identity.Presentation.Features.Users.Mappings;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
+
 using NSubstitute;
 
 namespace InstaConnect.Identity.Presentation.UnitTests.Features.Users.Utilities;

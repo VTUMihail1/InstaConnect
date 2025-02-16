@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+
 using InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 

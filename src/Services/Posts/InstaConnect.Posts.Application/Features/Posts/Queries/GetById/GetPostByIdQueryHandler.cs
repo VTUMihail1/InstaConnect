@@ -1,8 +1,8 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Posts.Abstract;
+using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Posts;
 
 namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 

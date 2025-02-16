@@ -12,6 +12,7 @@ using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Helpers
 using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,7 +30,7 @@ public abstract class BasePostLikeFunctionalTest : IClassFixture<PostsWebApplica
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postLikeRepository = serviceScope.ServiceProvider.GetRequiredService<IPostLikeWriteRepository>();
 
             return postLikeRepository;
@@ -40,7 +41,7 @@ public abstract class BasePostLikeFunctionalTest : IClassFixture<PostsWebApplica
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var postLikeReadRepository = serviceScope.ServiceProvider.GetRequiredService<IPostLikeReadRepository>();
 
             return postLikeReadRepository;

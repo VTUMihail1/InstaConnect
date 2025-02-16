@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Shared.Common.Abstractions;
 
 namespace InstaConnect.Shared.Common.Helpers;

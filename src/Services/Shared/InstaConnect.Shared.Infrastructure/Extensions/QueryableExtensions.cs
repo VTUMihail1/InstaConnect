@@ -1,7 +1,9 @@
 ﻿using System.Linq.Expressions;
+
 using InstaConnect.Shared.Common.Models.Enums;
 using InstaConnect.Shared.Domain.Abstractions;
 using InstaConnect.Shared.Domain.Models.Pagination;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Shared.Infrastructure.Extensions;

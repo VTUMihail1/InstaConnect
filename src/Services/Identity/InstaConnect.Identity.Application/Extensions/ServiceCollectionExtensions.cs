@@ -3,6 +3,7 @@ using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Extensions
 using InstaConnect.Identity.Application.Features.Users.Extensions;
 using InstaConnect.Shared.Application.Extensions;
 using InstaConnect.Shared.Common.Extensions;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Identity.Application.Extensions;

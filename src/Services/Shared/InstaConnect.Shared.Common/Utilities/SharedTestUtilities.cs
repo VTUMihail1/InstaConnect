@@ -1,7 +1,10 @@
 ﻿using System.Globalization;
 using System.Text;
+
 using Bogus;
+
 using Microsoft.AspNetCore.Http;
+
 using NSubstitute;
 
 namespace InstaConnect.Shared.Common.Utilities;

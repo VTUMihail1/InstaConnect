@@ -1,9 +1,11 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Shared.Common.Exceptions.Posts;
+using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
+
 using NSubstitute;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetById;

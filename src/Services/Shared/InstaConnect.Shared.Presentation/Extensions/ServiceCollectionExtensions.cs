@@ -1,21 +1,21 @@
 ﻿using System.Security.Claims;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
+
 using Asp.Versioning;
+
 using InstaConnect.Shared.Common.Utilities;
-using InstaConnect.Shared.Presentation.Abstractions;
 using InstaConnect.Shared.Presentation.Binders.FromClaim;
 using InstaConnect.Shared.Presentation.ExceptionHandlers;
-using InstaConnect.Shared.Presentation.Helpers;
 using InstaConnect.Shared.Presentation.Models.Options;
 using InstaConnect.Shared.Presentation.Utilities;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
 
 namespace InstaConnect.Shared.Presentation.Extensions;
 public static class ServiceCollectionExtensions

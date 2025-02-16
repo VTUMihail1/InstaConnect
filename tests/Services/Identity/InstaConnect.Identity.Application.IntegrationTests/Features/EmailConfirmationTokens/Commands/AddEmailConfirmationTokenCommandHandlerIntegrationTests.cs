@@ -1,11 +1,13 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
 using InstaConnect.Identity.Application.IntegrationTests.Features.EmailConfirmationTokens.Utilities;
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Identity.Domain.Features.Users.Exceptions;
 using InstaConnect.Shared.Application.Contracts.Emails;
 using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.EmailConfirmationTokens.Commands;
@@ -18,7 +20,7 @@ public class AddEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmail
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenEmailIsNull()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -30,14 +32,14 @@ public class AddEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmail
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.EmailMinLength - 1)]
     [InlineData(UserConfigurations.EmailMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -49,7 +51,7 @@ public class AddEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmail
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Fact]

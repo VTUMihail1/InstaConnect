@@ -1,13 +1,15 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Identity.Application.Features.Users.Commands.Update;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Identity.Domain.Features.Users.Exceptions;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Application.Contracts.Users;
 using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
@@ -20,7 +22,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -38,14 +40,14 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -63,11 +65,11 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenFirstNameIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenFirstNameIsNull()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -85,14 +87,14 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.FirstNameMinLength - 1)]
     [InlineData(UserConfigurations.FirstNameMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenFirstNameLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -110,11 +112,11 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenLastNameIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenLastNameIsNull()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -132,14 +134,14 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.LastNameMinLength - 1)]
     [InlineData(UserConfigurations.LastNameMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenLastLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenLastLengthIsInvalid(int length)
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -157,11 +159,11 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenUserNameIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserNameIsNull()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -179,14 +181,14 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.NameMinLength - 1)]
     [InlineData(UserConfigurations.NameMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenNameLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -204,7 +206,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Fact]

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Messages.Domain.Features.Users.Abstract;
-using InstaConnect.Messages.Infrastructure.Features.Users.Repositories;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Messages.Infrastructure.Features.Users.Extensions;
 

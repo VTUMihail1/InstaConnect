@@ -8,6 +8,7 @@ using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Messages.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,7 +26,7 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTest
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
             return userWriteRepository;
@@ -36,7 +37,7 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTest
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var messageWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();
 
             return messageWriteRepository;
@@ -47,7 +48,7 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTest
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var messageReadRepository = serviceScope.ServiceProvider.GetRequiredService<IMessageReadRepository>();
 
             return messageReadRepository;

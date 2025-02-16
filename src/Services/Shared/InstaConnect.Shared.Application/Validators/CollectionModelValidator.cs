@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+
 using InstaConnect.Shared.Application.Models.Filters;
 using InstaConnect.Shared.Common.Utilities;
 

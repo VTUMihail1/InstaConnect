@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Identity.Application.Extensions;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
-using InstaConnect.Identity.Application.Features.Users.Mappings;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
@@ -19,6 +19,7 @@ using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
+
 using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;

@@ -3,6 +3,7 @@ using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitite
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Infrastructure.Extensions;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Identity.Infrastructure;

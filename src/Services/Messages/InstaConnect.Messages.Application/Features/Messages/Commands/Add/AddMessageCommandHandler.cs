@@ -5,7 +5,7 @@ using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Domain.Features.Users.Abstract;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 
 namespace InstaConnect.Messages.Application.Features.Messages.Commands.Add;
 

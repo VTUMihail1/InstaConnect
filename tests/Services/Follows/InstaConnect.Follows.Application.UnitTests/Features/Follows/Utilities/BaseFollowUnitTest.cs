@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Follows.Application.Extensions;
-using InstaConnect.Follows.Application.Features.Follows.Mappings;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Users.Utilities;
 using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
@@ -14,6 +14,7 @@ using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
+
 using NSubstitute;
 
 namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;

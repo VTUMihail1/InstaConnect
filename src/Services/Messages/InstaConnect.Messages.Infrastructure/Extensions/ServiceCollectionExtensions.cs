@@ -1,9 +1,8 @@
 ﻿using InstaConnect.Messages.Infrastructure.Features.Messages.Extensions;
 using InstaConnect.Messages.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Messages.Infrastructure.Helpers;
-using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

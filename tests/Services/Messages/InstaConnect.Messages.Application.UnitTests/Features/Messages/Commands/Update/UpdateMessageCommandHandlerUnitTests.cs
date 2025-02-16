@@ -1,11 +1,13 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
 using InstaConnect.Messages.Application.Features.Messages.Models;
 using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Features.Messages.Utilities;
+using InstaConnect.Messages.Domain.Features.Messages.Exceptions;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
-using InstaConnect.Shared.Common.Exceptions.Message;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
+
 using NSubstitute;
 
 namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Commands.Update;

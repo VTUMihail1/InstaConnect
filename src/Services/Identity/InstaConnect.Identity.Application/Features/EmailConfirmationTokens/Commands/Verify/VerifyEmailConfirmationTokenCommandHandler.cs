@@ -1,8 +1,9 @@
 ﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Exceptions;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
+using InstaConnect.Identity.Domain.Features.Users.Exceptions;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Token;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 
 namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
 
@@ -42,7 +43,7 @@ public class VerifyEmailConfirmationTokenCommandHandler : ICommandHandler<Verify
 
         if (existingToken == null)
         {
-            throw new TokenNotFoundException();
+            throw new EmailConfirmationTokenNotFoundException();
         }
 
         if (existingToken.UserId != request.UserId)

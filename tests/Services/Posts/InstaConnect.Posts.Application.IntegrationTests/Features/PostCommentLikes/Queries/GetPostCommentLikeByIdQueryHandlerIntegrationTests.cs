@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
 using InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
 using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.PostCommentLike;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Queries;
@@ -17,7 +18,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -27,14 +28,14 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(PostCommentLikeConfigurations.IdMinLength - 1)]
     [InlineData(PostCommentLikeConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -44,7 +45,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]

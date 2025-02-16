@@ -1,6 +1,4 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
-using InstaConnect.Follows.Infrastructure.Features.Follows.Repositories;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 

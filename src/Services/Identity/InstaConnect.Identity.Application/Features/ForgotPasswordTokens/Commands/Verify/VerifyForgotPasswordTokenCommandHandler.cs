@@ -1,8 +1,8 @@
 ﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Token;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 
 namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 
@@ -40,7 +40,7 @@ public class VerifyForgotPasswordTokenCommandHandler : ICommandHandler<VerifyFor
 
         if (existingForgotPasswordToken == null)
         {
-            throw new TokenNotFoundException();
+            throw new ForgotPasswordTokenNotFoundException();
         }
 
         if (existingForgotPasswordToken.UserId != request.UserId)

@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Repositories;

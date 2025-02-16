@@ -1,5 +1,7 @@
 using FluentValidation;
+
 using InstaConnect.Shared.Common.Exceptions.Base;
+
 using MediatR;
 
 namespace InstaConnect.Shared.Application.PipelineBehaviors;
@@ -34,7 +36,7 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
         {
             var errorMessage = string.Join(",\n", validationFailures);
 
-            throw new BadRequestException(errorMessage);
+            throw new AppValidationException(errorMessage);
         }
 
         return await next();

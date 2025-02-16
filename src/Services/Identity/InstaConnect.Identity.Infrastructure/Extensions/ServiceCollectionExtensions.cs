@@ -2,10 +2,9 @@
 using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Identity.Infrastructure.Helpers;
-using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

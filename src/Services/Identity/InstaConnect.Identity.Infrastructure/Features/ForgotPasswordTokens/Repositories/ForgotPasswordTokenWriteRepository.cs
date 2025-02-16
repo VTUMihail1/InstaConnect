@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Repositories;

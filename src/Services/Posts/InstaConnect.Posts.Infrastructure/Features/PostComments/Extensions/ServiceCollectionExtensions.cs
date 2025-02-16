@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
-using InstaConnect.Posts.Infrastructure.Features.PostComments.Repositories;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
 

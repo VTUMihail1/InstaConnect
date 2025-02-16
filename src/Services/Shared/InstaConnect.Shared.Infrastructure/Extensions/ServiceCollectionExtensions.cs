@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
+
 using CloudinaryDotNet;
+
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Infrastructure.Abstractions;
@@ -7,7 +9,9 @@ using InstaConnect.Shared.Infrastructure.Extensions;
 using InstaConnect.Shared.Infrastructure.Helpers;
 using InstaConnect.Shared.Infrastructure.Interceptors;
 using InstaConnect.Shared.Infrastructure.Models.Options;
+
 using MassTransit;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
@@ -15,6 +19,7 @@ using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+
 using WebMotions.Fake.Authentication.JwtBearer;
 
 namespace InstaConnect.Shared.Infrastructure.Extensions;

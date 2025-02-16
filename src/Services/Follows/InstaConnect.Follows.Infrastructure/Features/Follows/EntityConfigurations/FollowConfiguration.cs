@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

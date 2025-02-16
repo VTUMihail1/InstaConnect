@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Identity.Application.Features.Users.Commands.Login;
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
+using InstaConnect.Identity.Domain.Features.Users.Exceptions;
 using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.User;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
@@ -18,7 +19,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenEmailIsNull()
     {
         // Arrange
         var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
@@ -33,14 +34,14 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.EmailMinLength - 1)]
     [InlineData(UserConfigurations.EmailMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenEmailLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
@@ -53,11 +54,11 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenPasswordIsNull()
     {
         // Arrange
         var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
@@ -70,14 +71,14 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.PasswordMinLength - 1)]
     [InlineData(UserConfigurations.PasswordMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenPasswordLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
         var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
@@ -90,7 +91,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]

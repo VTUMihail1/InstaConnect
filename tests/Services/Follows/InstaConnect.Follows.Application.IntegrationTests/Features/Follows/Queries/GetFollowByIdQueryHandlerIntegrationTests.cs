@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Follows.Application.Features.Follows.Models;
 using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 using InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Application.IntegrationTests.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
+using InstaConnect.Follows.Domain.Features.Follows.Exceptions;
 using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.Follow;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Queries;
@@ -17,7 +18,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
@@ -27,14 +28,14 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(FollowConfigurations.IdMinLength - 1)]
     [InlineData(FollowConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
@@ -44,7 +45,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]

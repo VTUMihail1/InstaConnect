@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.PostCommentLike;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 
 namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete;
 

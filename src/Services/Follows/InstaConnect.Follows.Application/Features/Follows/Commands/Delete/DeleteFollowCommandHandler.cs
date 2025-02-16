@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
+using InstaConnect.Follows.Domain.Features.Follows.Exceptions;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Follow;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 
 namespace InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
 

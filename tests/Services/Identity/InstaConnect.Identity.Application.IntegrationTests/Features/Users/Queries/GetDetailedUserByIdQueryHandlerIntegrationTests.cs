@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailedById;
 using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
 using InstaConnect.Identity.Application.IntegrationTests.Utilities;
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Queries;
@@ -17,7 +18,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -27,14 +28,14 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -44,7 +45,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]

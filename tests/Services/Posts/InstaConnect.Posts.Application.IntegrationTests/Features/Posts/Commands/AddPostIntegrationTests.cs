@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Utilities;
 using InstaConnect.Posts.Application.IntegrationTests.Utilities;
@@ -6,7 +7,7 @@ using InstaConnect.Posts.Common.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Features.Users.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.User;
+using InstaConnect.Shared.Common.Exceptions.Users;
 using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Commands;
@@ -19,7 +20,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -33,14 +34,14 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -54,11 +55,11 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenTitleIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsNull()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -72,14 +73,14 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(PostConfigurations.TitleMinLength - 1)]
     [InlineData(PostConfigurations.TitleMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenTitleLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenTitleLengthIsInvalid(int length)
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -93,11 +94,11 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenContentIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenContentIsNull()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -111,14 +112,14 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(PostConfigurations.ContentMinLength - 1)]
     [InlineData(PostConfigurations.ContentMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenContentLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
@@ -133,7 +134,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]

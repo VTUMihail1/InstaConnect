@@ -1,6 +1,4 @@
-﻿using InstaConnect.Follows.Domain.Features.Users.Abstractions;
-using InstaConnect.Follows.Infrastructure.Features.Users.Repositories;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
 internal static class ServiceCollectionExtensions

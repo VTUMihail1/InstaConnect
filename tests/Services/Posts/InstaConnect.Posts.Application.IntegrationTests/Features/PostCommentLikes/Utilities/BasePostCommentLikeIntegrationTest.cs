@@ -13,6 +13,7 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Utilities;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,7 +31,7 @@ public abstract class BasePostCommentLikeIntegrationTest : IClassFixture<PostsWe
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var userWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
             return userWriteRepository;
@@ -41,7 +42,7 @@ public abstract class BasePostCommentLikeIntegrationTest : IClassFixture<PostsWe
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var PostCommentLikeWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeWriteRepository>();
 
             return PostCommentLikeWriteRepository;
@@ -52,7 +53,7 @@ public abstract class BasePostCommentLikeIntegrationTest : IClassFixture<PostsWe
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var PostCommentLikeReadRepository = serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeReadRepository>();
 
             return PostCommentLikeReadRepository;

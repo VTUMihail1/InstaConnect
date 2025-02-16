@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;

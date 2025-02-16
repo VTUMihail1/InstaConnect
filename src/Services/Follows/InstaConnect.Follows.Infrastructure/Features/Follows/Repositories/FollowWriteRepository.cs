@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Repositories;

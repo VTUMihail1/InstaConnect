@@ -1,9 +1,8 @@
 ﻿using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Follows.Infrastructure.Helpers;
-using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

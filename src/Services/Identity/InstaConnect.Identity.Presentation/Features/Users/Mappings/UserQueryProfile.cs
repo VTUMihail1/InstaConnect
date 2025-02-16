@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetById;

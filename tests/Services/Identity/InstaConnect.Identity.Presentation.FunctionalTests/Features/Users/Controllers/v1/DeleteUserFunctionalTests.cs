@@ -1,5 +1,7 @@
 ﻿using System.Net;
+
 using FluentAssertions;
+
 using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;

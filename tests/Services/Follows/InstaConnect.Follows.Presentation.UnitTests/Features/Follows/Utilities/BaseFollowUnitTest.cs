@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 using InstaConnect.Follows.Application.Features.Follows.Models;
 using InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
@@ -12,6 +13,7 @@ using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Common.Utilities;
+
 using NSubstitute;
 
 namespace InstaConnect.Follows.Presentation.UnitTests.Features.Follows.Utilities;

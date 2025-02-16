@@ -1,9 +1,11 @@
 ﻿using FluentAssertions;
+
 using InstaConnect.Follows.Application.Features.Follows.Models;
 using InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 using InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
 using InstaConnect.Follows.Common.Features.Follows.Utilities;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
+
 using NSubstitute;
 
 namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Queries.GetAll;

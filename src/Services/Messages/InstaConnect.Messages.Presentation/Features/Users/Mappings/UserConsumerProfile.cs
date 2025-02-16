@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Application.Contracts.Users;
 
