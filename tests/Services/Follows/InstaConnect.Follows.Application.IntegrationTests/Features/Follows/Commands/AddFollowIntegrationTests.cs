@@ -55,7 +55,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowFollowAlreadyExistsException_WhenFollowingIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenFollowingIdIsNull()
     {
         // Arrange
         var existingFollower = await CreateUserAsync(CancellationToken);
@@ -67,7 +67,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<FollowAlreadyExistsException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
@@ -134,7 +134,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<FollowAlreadyExistsException>();
     }
 
     [Fact]
