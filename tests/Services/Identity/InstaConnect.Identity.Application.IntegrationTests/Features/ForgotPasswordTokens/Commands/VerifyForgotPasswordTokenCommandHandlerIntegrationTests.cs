@@ -1,15 +1,4 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
-using InstaConnect.Identity.Application.IntegrationTests.Features.ForgotPasswordTokens.Utilities;
-using InstaConnect.Identity.Application.IntegrationTests.Utilities;
-using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.Users;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.ForgotPasswordTokens.Commands;
 

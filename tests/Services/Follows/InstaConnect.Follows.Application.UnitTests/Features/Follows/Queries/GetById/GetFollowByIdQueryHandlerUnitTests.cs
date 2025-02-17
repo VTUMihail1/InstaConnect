@@ -1,12 +1,4 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Follows.Application.Features.Follows.Models;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
-using InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Follows.Domain.Features.Follows.Exceptions;
-
-using NSubstitute;
+﻿using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 
 namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Queries.GetById;
 

@@ -1,21 +1,15 @@
 ﻿using AutoMapper;
 
 using InstaConnect.Messages.Application.Extensions;
-using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
-using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
-using InstaConnect.Messages.Domain.Features.Users.Abstract;
+using InstaConnect.Messages.Domain.Features.Users.Abstractions;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
-using InstaConnect.Shared.Common.Utilities;
 using InstaConnect.Shared.Domain.Models.Pagination;
-
-using NSubstitute;
 
 namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 

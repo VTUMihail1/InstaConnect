@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Abstract;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using InstaConnect.Shared.Infrastructure.Extensions;
 

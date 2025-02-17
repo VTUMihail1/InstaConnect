@@ -1,12 +1,8 @@
 ﻿using System.Globalization;
-using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
 
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Abstractions;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Utilities;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Helpers;
 public class PostCommentsClient : IPostCommentsClient

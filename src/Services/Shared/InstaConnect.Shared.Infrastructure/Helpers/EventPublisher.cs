@@ -1,8 +1,4 @@
-﻿using InstaConnect.Shared.Application.Abstractions;
-
-using MassTransit;
-
-namespace InstaConnect.Shared.Infrastructure.Helpers;
+﻿namespace InstaConnect.Shared.Infrastructure.Helpers;
 
 public class EventPublisher : IEventPublisher
 {

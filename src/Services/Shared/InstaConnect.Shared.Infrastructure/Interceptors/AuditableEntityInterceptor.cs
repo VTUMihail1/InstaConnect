@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Domain.Abstractions;
 
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 

@@ -1,15 +1,4 @@
-﻿using System.Net;
-
-using FluentAssertions;
-
-using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
 
 public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
 {

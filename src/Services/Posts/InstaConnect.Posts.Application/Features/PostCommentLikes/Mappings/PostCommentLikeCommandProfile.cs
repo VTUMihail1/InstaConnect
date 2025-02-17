@@ -2,7 +2,6 @@
 
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
 
 namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Mappings;
 

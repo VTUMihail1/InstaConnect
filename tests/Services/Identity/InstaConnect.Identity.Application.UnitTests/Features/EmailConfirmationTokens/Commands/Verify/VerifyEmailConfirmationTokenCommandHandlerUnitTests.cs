@@ -1,15 +1,4 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
-using InstaConnect.Identity.Application.UnitTests.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Exceptions;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.Users.Exceptions;
-using InstaConnect.Shared.Common.Exceptions.Users;
-
-using NSubstitute;
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.EmailConfirmationTokens.Commands.Verify;
 

@@ -1,12 +1,8 @@
 ﻿using System.Globalization;
-using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
 
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Abstractions;
-using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
 
 namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Helpers;
 public class FollowsClient : IFollowsClient

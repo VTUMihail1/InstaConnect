@@ -10,10 +10,7 @@ using InstaConnect.Shared.Infrastructure.Helpers;
 using InstaConnect.Shared.Infrastructure.Interceptors;
 using InstaConnect.Shared.Infrastructure.Models.Options;
 
-using MassTransit;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;

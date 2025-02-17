@@ -1,16 +1,4 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
-using InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Application.IntegrationTests.Utilities;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.Users;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Commands;
 

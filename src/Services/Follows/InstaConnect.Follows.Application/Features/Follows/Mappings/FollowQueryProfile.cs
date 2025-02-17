@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 
-using InstaConnect.Follows.Application.Features.Follows.Models;
 using InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
 using InstaConnect.Shared.Domain.Models.Pagination;
 

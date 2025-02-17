@@ -1,9 +1,4 @@
-﻿using InstaConnect.Follows.Domain.Features.Users.Abstractions;
-using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
-
-using Microsoft.EntityFrameworkCore;
-
-namespace InstaConnect.Follows.Infrastructure.Features.Users.Repositories;
+﻿namespace InstaConnect.Follows.Infrastructure.Features.Users.Repositories;
 
 internal class UserWriteRepository : IUserWriteRepository
 {

@@ -2,7 +2,6 @@
 
 using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
 using InstaConnect.Shared.Domain.Models.Pagination;
 

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+﻿using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Messages.Application.Features.Messages.Models;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
-using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Domain.Features.Messages.Exceptions;
-using InstaConnect.Shared.Common.Exceptions.Users;
-
-using NSubstitute;
+﻿using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
 
 namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Queries.GetById;
 

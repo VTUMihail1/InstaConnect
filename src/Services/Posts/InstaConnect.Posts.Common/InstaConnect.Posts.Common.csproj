@@ -4,4 +4,10 @@
     <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Common\InstaConnect.Shared.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Common -->
+    <Using Include="InstaConnect.Shared.Common.Models.Enums" />
+    <Using Include="InstaConnect.Shared.Common.Utilities" />
+  </ItemGroup>
+
 </Project>

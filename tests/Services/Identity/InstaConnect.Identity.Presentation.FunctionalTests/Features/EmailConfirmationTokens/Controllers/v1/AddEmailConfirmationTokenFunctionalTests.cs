@@ -1,13 +1,4 @@
-﻿using System.Net;
-
-using FluentAssertions;
-
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Application.Contracts.Emails;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Shared.Application.Contracts.EmailConfirmationTokens;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Controllers.v1;
 

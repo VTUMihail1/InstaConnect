@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Emails.Application.Features.Emails.Abstractions;
 using InstaConnect.Emails.Infrastructure.Features.Emails.Utilities;
-using InstaConnect.Shared.Application.Contracts.Emails;
+using InstaConnect.Shared.Application.Contracts.EmailConfirmationTokens;
 using InstaConnect.Shared.Common.Exceptions.Base;
 
 using MassTransit;

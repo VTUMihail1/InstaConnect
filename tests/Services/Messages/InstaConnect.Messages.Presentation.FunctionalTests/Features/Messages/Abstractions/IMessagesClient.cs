@@ -1,9 +1,4 @@
-﻿using System.Net;
-
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
-
-namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Abstractions;
+﻿namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Abstractions;
 public interface IMessagesClient
 {
     Task<MessageCommandResponse> AddAsync(AddMessageRequest request, CancellationToken cancellationToken);

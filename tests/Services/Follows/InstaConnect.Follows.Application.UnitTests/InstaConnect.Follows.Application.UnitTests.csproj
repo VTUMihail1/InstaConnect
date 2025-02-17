@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Nullable>disable</Nullable>
@@ -8,13 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" >
+    <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio" >
+    <PackageReference Include="xunit.runner.visualstudio">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -26,7 +24,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- General -->
+    <Using Include="FluentAssertions" />
+    <Using Include="FluentValidation.TestHelper" />
+    <Using Include="NSubstitute" />
     <Using Include="Xunit" />
+
+    <!-- Follows -->
+    <Using Include="InstaConnect.Follows.Application.Features.Follows.Models" />
+    <Using Include="InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Exceptions" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Entities" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Follows.Common.Features.Follows.Utilities" />
+    <Using Include="InstaConnect.Follows.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Shared.Common.Exceptions.Base" />
+    <Using Include="InstaConnect.Shared.Common.Exceptions.Users" />
+    <Using Include="InstaConnect.Shared.Common.Utilities" />
   </ItemGroup>
 
 </Project>

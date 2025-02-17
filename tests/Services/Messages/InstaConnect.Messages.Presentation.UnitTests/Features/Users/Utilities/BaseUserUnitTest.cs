@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 
 using InstaConnect.Messages.Common.Features.Users.Utilities;
-using InstaConnect.Messages.Domain.Features.Users.Abstract;
+using InstaConnect.Messages.Domain.Features.Users.Abstractions;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Messages.Presentation.Extensions;
 using InstaConnect.Shared.Application.Abstractions;

@@ -1,16 +1,4 @@
-﻿using System.Net;
-
-using FluentAssertions;
-
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
-using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Controllers.v1;
+﻿namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Controllers.v1;
 
 public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
 {

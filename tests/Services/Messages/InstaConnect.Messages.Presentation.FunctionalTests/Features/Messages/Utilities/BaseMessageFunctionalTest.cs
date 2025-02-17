@@ -1,15 +1,9 @@
-﻿using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Users.Utilities;
-using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
-using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
-using InstaConnect.Messages.Domain.Features.Users.Abstract;
-using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
+﻿using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Messages.Domain.Features.Users.Abstractions;
 using InstaConnect.Messages.Infrastructure;
 using InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Abstractions;
 using InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Helpers;
-using InstaConnect.Messages.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Utilities;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

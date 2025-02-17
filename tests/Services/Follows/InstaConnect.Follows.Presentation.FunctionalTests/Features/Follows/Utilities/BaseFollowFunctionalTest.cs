@@ -1,14 +1,9 @@
-﻿using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+﻿using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Abstractions;
-using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 using InstaConnect.Follows.Infrastructure;
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Abstractions;
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Helpers;
-using InstaConnect.Follows.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Utilities;
 
 using MassTransit.Testing;
 

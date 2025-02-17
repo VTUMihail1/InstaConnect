@@ -1,15 +1,5 @@
-﻿using System.Net;
-
-using FluentAssertions;
-
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Application.Contracts.Emails;
+﻿using InstaConnect.Shared.Application.Contracts.EmailConfirmationTokens;
 using InstaConnect.Shared.Application.Contracts.Users;
-using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
 

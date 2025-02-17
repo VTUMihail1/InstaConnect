@@ -12,8 +12,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,7 +24,45 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- General -->
+    <Using Include="FluentAssertions" />
+    <Using Include="FluentValidation.TestHelper" />
+    <Using Include="NSubstitute" />
     <Using Include="Xunit" />
+
+    <!-- Posts -->
+    <Using Include="InstaConnect.Posts.Application.Features.Posts.Models" />
+    <Using Include="InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Entities" />
+
+    <!-- Post Comments -->
+    <Using Include="InstaConnect.Posts.Application.Features.PostComments.Models" />
+    <Using Include="InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Entities" />
+
+    <!-- Post Comment Likes -->
+    <Using Include="InstaConnect.Posts.Application.Features.PostCommentLikes.Models" />
+    <Using Include="InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities" />
+
+    <!-- Post Likes -->
+    <Using Include="InstaConnect.Posts.Application.Features.PostLikes.Models" />
+    <Using Include="InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Posts.Common.Features.Posts.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Features.PostComments.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Features.PostLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Shared.Common.Exceptions.Base" />
+    <Using Include="InstaConnect.Shared.Common.Exceptions.Users" />
+    <Using Include="InstaConnect.Shared.Common.Utilities" />
   </ItemGroup>
 
 </Project>

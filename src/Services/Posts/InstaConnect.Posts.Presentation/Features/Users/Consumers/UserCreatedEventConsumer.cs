@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Users.Abstract;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Application.Abstractions;
+﻿using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Contracts.Users;
 using InstaConnect.Shared.Common.Abstractions;
 

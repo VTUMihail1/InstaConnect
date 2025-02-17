@@ -1,8 +1,4 @@
-﻿using MassTransit;
-
-using Microsoft.EntityFrameworkCore;
-
-namespace InstaConnect.Shared.Infrastructure.Extensions;
+﻿namespace InstaConnect.Shared.Infrastructure.Extensions;
 public static class BusRegistrationConfiguratorExtensions
 {
     private const int QUERY_DELAY = 1;

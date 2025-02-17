@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
+﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using InstaConnect.Shared.Infrastructure.Extensions;
 

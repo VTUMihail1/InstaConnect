@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Posts.Application.Features.Posts.Models;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
-using InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Utilities;
-using InstaConnect.Posts.Application.IntegrationTests.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Queries;
 

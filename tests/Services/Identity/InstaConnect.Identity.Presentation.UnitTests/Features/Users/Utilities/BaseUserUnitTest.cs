@@ -10,16 +10,12 @@ using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailedById;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 using InstaConnect.Identity.Presentation.Extensions;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
-using InstaConnect.Shared.Common.Utilities;
-
-using NSubstitute;
 
 namespace InstaConnect.Identity.Presentation.UnitTests.Features.Users.Utilities;
 

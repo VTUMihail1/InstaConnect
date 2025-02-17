@@ -6,19 +6,13 @@ using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 using InstaConnect.Posts.Presentation.Extensions;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
-using InstaConnect.Shared.Common.Utilities;
-
-using NSubstitute;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostCommentLikes.Utilities;
 

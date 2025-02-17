@@ -1,15 +1,11 @@
 ﻿using InstaConnect.Identity.Application.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Infrastructure;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Abstractions;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Helpers;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Utilities;
 
 using MassTransit.Testing;
 

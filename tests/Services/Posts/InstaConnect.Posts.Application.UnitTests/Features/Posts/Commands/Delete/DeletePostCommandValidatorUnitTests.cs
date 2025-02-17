@@ -1,10 +1,4 @@
-﻿using FluentValidation.TestHelper;
-
-using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
-using InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Delete;
 

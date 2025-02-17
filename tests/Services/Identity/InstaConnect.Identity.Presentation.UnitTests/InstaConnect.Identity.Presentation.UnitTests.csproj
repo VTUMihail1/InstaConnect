@@ -12,8 +12,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,7 +24,39 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- General Dependencies -->
+    <Using Include="FluentAssertions" />
+    <Using Include="MassTransit" />
+    <Using Include="Microsoft.AspNetCore.Http" />
+    <Using Include="Microsoft.AspNetCore.Mvc" />
+    <Using Include="NSubstitute" />
     <Using Include="Xunit" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Identity.Presentation.Features.Users.Controllers.v1" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.Users.Models" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.Users.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.Users.Models.Responses" />
+    <Using Include="InstaConnect.Identity.Presentation.UnitTests.Features.Users.Utilities" />
+
+    <!-- Email Confirmation Tokens -->
+    <Using Include="InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Controllers.v1" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Presentation.UnitTests.Features.EmailConfirmationTokens.Utilities" />
+
+    <!-- Forgot Password Tokens -->
+    <Using Include="InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Controllers.v1" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models" />
+    <Using Include="InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests" />
+    <Using Include="InstaConnect.Identity.Presentation.UnitTests.Features.ForgotPasswordTokens.Utilities" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Identity.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities" />
+    <Using Include="InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities" />
+    <Using Include="InstaConnect.Shared.Application.Contracts.Users" />
+    <Using Include="InstaConnect.Shared.Common.Utilities" />
   </ItemGroup>
 
 </Project>

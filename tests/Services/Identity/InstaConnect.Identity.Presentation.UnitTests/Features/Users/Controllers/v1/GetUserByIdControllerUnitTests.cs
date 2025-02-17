@@ -1,15 +1,4 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
-using InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
-using InstaConnect.Identity.Presentation.UnitTests.Features.Users.Utilities;
-
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-using NSubstitute;
+﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
 
 namespace InstaConnect.Identity.Presentation.UnitTests.Features.Users.Controllers.v1;
 

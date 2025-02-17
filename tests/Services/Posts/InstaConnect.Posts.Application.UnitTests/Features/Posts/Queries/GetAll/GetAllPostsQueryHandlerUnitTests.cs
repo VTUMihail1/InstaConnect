@@ -1,12 +1,5 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Posts.Application.Features.Posts.Models;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
-using InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
+﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
-
-using NSubstitute;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetAll;
 

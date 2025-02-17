@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Identity.Domain.Features.Users.Abstractions;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 
 using Microsoft.EntityFrameworkCore;
 

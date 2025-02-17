@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Models;
-using InstaConnect.Posts.Domain.Features.Posts.Abstract;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;

@@ -1,16 +1,7 @@
 ﻿using System.Globalization;
-using System.Net;
-
-using FluentAssertions;
 
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
 

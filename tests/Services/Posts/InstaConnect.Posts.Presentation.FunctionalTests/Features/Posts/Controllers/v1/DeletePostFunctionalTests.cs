@@ -1,15 +1,4 @@
-﻿using System.Net;
-
-using FluentAssertions;
-
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class DeletePostFunctionalTests : BasePostFunctionalTest
 {

@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
-using InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Application.IntegrationTests.Utilities;
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Follows.Domain.Features.Follows.Exceptions;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.Users;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
 
 namespace InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Commands;
 

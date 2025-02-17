@@ -1,8 +1,5 @@
 ﻿using InstaConnect.Follows.Infrastructure;
-using InstaConnect.Follows.Presentation.Features.Users.Consumers;
 using InstaConnect.Shared.Infrastructure.Extensions;
-
-using MassTransit;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;

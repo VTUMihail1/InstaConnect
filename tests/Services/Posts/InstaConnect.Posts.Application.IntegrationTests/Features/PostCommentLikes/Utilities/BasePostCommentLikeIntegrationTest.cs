@@ -1,18 +1,10 @@
-﻿using InstaConnect.Posts.Application.IntegrationTests.Utilities;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Posts.Abstract;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Users.Abstract;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
+using InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
+using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Domain.Features.Users.Abstractions;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Utilities;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

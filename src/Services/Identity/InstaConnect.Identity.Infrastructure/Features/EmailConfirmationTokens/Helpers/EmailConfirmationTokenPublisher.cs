@@ -1,9 +1,9 @@
 ﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Contracts.Emails;
+using InstaConnect.Shared.Application.Contracts.EmailConfirmationTokens;
 using InstaConnect.Shared.Common.Abstractions;
 
 namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Helpers;

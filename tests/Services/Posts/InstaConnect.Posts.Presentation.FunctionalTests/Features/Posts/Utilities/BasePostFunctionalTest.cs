@@ -1,15 +1,9 @@
-﻿using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.Posts.Abstract;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Users.Abstract;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Abstractions;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Helpers;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Utilities;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

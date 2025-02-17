@@ -1,5 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Abstract;
-using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Users;
 

@@ -1,9 +1,4 @@
-﻿using System.Net;
-
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Abstractions;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Abstractions;
 public interface IPostCommentsClient
 {
     Task<PostCommentCommandResponse> AddAsync(AddPostCommentRequest request, CancellationToken cancellationToken);

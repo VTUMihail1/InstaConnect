@@ -1,9 +1,4 @@
-﻿using FluentValidation.TestHelper;
-
-using InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
-using InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
 
 namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Commands.Delete;
 

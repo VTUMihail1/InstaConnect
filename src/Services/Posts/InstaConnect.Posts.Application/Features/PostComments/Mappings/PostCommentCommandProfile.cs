@@ -3,7 +3,6 @@
 using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 using InstaConnect.Posts.Application.Features.PostComments.Models;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
 
 namespace InstaConnect.Posts.Application.Features.PostComments.Mappings;
 

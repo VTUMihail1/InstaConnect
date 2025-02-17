@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Application.Contracts.Emails;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Mappings;
 

@@ -1,14 +1,5 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Identity.Application.Features.Users.Commands.Login;
-using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
+﻿using InstaConnect.Identity.Application.Features.Users.Commands.Login;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
-using InstaConnect.Identity.Domain.Features.Users.Exceptions;
-using InstaConnect.Shared.Common.Utilities;
-
-using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Login;
 

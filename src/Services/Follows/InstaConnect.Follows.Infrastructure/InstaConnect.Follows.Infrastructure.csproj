@@ -5,4 +5,26 @@
     <ProjectReference Include="..\InstaConnect.Follows.Application\InstaConnect.Follows.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- General -->
+    <Using Include="FluentValidation" />
+    <Using Include="Microsoft.EntityFrameworkCore" />
+    <Using Include="Microsoft.EntityFrameworkCore.Metadata.Builders" />
+    <Using Include="Microsoft.Extensions.Configuration" />
+    <Using Include="Microsoft.Extensions.DependencyInjection" />
+
+    <!-- Follows -->
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Abstractions" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Entities" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Follows.Domain.Features.Users.Abstractions" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Entities" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Follows.Common.Features.Follows.Utilities" />
+    <Using Include="InstaConnect.Follows.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Shared.Application.Abstractions" />
+  </ItemGroup>
+
 </Project>

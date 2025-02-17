@@ -11,4 +11,12 @@
     <ProjectReference Include="..\InstaConnect.Shared.Domain\InstaConnect.Shared.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- General -->
+    <Using Include="MediatR" />
+    <Using Include="Microsoft.Extensions.Logging" />
+    
+    <!-- Common -->
+    <Using Include="InstaConnect.Shared.Application.Abstractions" />
+  </ItemGroup>
 </Project>

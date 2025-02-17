@@ -1,6 +1,4 @@
-﻿using InstaConnect.Shared.Application.Abstractions;
-
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace InstaConnect.Shared.Infrastructure.Helpers;
 

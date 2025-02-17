@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Posts.Application.Features.PostComments.Models;
-using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;

@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
 
 using Microsoft.EntityFrameworkCore;
 

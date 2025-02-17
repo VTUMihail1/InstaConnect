@@ -1,10 +1,6 @@
 ﻿using InstaConnect.Posts.Application.Features.PostLikes.Models;
-using InstaConnect.Posts.Domain.Features.PostLikes.Abstract;
 using InstaConnect.Posts.Domain.Features.PostLikes.Exceptions;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Posts.Abstract;
 using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
-using InstaConnect.Posts.Domain.Features.Users.Abstract;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Exceptions.Users;

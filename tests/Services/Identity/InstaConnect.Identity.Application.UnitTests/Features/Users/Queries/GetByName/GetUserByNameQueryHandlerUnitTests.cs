@@ -1,12 +1,4 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
-using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Exceptions.Users;
-
-using NSubstitute;
+﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetByName;
 

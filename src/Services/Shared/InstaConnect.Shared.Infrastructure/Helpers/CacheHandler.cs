@@ -1,7 +1,4 @@
-﻿using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Models;
-
-using Microsoft.Extensions.Caching.Distributed;
+﻿using Microsoft.Extensions.Caching.Distributed;
 
 namespace InstaConnect.Shared.Infrastructure.Helpers;
 internal class CacheHandler : ICacheHandler

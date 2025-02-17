@@ -5,4 +5,9 @@
     <ProjectReference Include="..\InstaConnect.Messages.Common\InstaConnect.Messages.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Common -->
+    <Using Include="InstaConnect.Shared.Domain.Models.Base"/>
+  </ItemGroup>
+
 </Project>

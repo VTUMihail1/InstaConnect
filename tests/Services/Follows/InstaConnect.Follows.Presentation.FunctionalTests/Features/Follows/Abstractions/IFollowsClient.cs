@@ -1,9 +1,4 @@
-﻿using System.Net;
-
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
-
-namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Abstractions;
+﻿namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Abstractions;
 public interface IFollowsClient
 {
     Task<FollowCommandResponse> AddAsync(AddFollowRequest request, CancellationToken cancellationToken);

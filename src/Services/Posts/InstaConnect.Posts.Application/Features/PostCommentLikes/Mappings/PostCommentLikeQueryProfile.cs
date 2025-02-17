@@ -2,7 +2,6 @@
 
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
 using InstaConnect.Shared.Domain.Models.Pagination;
 

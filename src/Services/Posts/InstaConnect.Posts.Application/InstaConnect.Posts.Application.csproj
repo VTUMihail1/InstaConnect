@@ -15,4 +15,48 @@
   	</AssemblyAttribute>
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- General -->
+    <Using Include="FluentValidation" />
+    <Using Include="Microsoft.Extensions.DependencyInjection" />
+
+    <!-- Posts -->
+    <Using Include="InstaConnect.Posts.Application.Features.Posts.Models" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Abstractions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Entities" />
+
+    <!-- Post Likes -->
+    <Using Include="InstaConnect.Posts.Application.Features.PostLikes.Models" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Abstractions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities" />
+
+    <!-- Post Comments -->
+    <Using Include="InstaConnect.Posts.Application.Features.PostComments.Models" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Abstractions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Entities" />
+
+    <!-- Post Comment Likes -->
+    <Using Include="InstaConnect.Posts.Application.Features.PostCommentLikes.Models" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Posts.Domain.Features.Users.Abstractions" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Posts.Common.Features.Posts.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Features.PostLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Features.PostComments.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Shared.Application.Abstractions" />
+    <Using Include="InstaConnect.Shared.Common.Abstractions" />
+    <Using Include="InstaConnect.Shared.Common.Exceptions.Users" />
+    <Using Include="InstaConnect.Shared.Common.Models.Enums" />
+  </ItemGroup>
+
 </Project>

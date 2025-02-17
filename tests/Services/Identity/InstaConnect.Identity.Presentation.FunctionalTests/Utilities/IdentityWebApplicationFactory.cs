@@ -1,10 +1,7 @@
-﻿using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Infrastructure;
+﻿using InstaConnect.Identity.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Models;
 using InstaConnect.Shared.Infrastructure.Extensions;
-
-using MassTransit;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;

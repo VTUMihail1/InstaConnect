@@ -1,9 +1,4 @@
-﻿using System.Net;
-
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Abstractions;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Abstractions;
 public interface IPostLikesClient
 {
     Task<PostLikeCommandResponse> AddAsync(AddPostLikeRequest request, CancellationToken cancellationToken);

@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Posts.Application.Features.PostLikes.Models;
-using InstaConnect.Posts.Domain.Features.PostLikes.Abstract;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;

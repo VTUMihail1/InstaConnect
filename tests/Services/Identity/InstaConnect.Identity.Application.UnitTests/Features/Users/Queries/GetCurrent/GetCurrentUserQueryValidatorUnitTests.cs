@@ -1,9 +1,4 @@
-﻿using FluentValidation.TestHelper;
-
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
-using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetCurrent;
 

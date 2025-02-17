@@ -1,15 +1,4 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Controllers.v1;
-using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests;
-using InstaConnect.Identity.Presentation.UnitTests.Features.ForgotPasswordTokens.Utilities;
-
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-using NSubstitute;
+﻿using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 
 namespace InstaConnect.Identity.Presentation.UnitTests.Features.ForgotPasswordTokens.Controllers.v1;
 

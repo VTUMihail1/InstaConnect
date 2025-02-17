@@ -1,9 +1,4 @@
-﻿using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
-
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace InstaConnect.Follows.Infrastructure.Features.Users.EntityConfigurations;
+﻿namespace InstaConnect.Follows.Infrastructure.Features.Users.EntityConfigurations;
 
 internal class UserConfiguration : IEntityTypeConfiguration<User>
 {

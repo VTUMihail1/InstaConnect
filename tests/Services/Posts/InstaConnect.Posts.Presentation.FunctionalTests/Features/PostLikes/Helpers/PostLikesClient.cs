@@ -1,12 +1,8 @@
 ﻿using System.Globalization;
-using System.Net;
 using System.Net.Http.Json;
 using System.Security.Claims;
 
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Abstractions;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Helpers;
 public class PostLikesClient : IPostLikesClient

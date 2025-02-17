@@ -1,16 +1,5 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
+﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Controllers.v1;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
-using InstaConnect.Posts.Presentation.UnitTests.Features.PostCommentLikes.Utilities;
-
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-using NSubstitute;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostCommentLikes.Controllers.v1;
 

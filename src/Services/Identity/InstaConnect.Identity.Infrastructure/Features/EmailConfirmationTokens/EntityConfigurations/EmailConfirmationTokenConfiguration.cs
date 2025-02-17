@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
+﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

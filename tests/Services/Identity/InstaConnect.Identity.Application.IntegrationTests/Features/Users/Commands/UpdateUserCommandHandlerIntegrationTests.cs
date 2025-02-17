@@ -1,16 +1,5 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Identity.Application.Features.Users.Commands.Update;
-using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
-using InstaConnect.Identity.Application.IntegrationTests.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.Users.Exceptions;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+﻿using InstaConnect.Identity.Application.Features.Users.Commands.Update;
 using InstaConnect.Shared.Application.Contracts.Users;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.Users;
-using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
 

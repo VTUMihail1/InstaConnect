@@ -1,14 +1,4 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
-using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Controllers.v1;
-using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Identity.Presentation.UnitTests.Features.EmailConfirmationTokens.Utilities;
-
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-using NSubstitute;
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
 
 namespace InstaConnect.Identity.Presentation.UnitTests.Features.EmailConfirmationTokens.Controllers.v1;
 public class AddEmailConfirmationTokenControllerUnitTests : BaseEmailConfirmationTokenUnitTest

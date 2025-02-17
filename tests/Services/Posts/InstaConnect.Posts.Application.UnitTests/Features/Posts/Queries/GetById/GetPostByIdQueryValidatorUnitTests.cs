@@ -1,9 +1,4 @@
-﻿using FluentValidation.TestHelper;
-
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
-using InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetById;
 

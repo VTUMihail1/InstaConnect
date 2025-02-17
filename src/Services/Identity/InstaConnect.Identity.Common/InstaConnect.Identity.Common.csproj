@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" />
+    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Common\InstaConnect.Shared.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Common\InstaConnect.Shared.Common.csproj" />
+    <!-- Common -->
+    <Using Include="InstaConnect.Shared.Common.Models.Enums" />
+    <Using Include="InstaConnect.Shared.Common.Utilities" />
   </ItemGroup>
 
 </Project>

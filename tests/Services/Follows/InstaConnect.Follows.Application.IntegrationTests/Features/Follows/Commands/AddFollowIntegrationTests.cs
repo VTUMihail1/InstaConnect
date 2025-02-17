@@ -1,15 +1,4 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
-using InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Application.IntegrationTests.Utilities;
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Domain.Features.Follows.Exceptions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.Users;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 
 namespace InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Commands;
 public class AddFollowIntegrationTests : BaseFollowIntegrationTest

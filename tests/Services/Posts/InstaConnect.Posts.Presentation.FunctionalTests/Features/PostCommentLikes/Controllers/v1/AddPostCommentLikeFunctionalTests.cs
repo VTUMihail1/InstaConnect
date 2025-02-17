@@ -1,16 +1,4 @@
-﻿using System.Net;
-
-using FluentAssertions;
-
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 
 public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTest
 {
