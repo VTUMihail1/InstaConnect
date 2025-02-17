@@ -1,8 +1,4 @@
-﻿using InstaConnect.Shared.Common.Models.Enums;
-
-using Microsoft.AspNetCore.Mvc;
-
-namespace InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
+﻿namespace InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
 
 public record GetAllUsersRequest(
     [FromQuery(Name = "userName")] string UserName = "",

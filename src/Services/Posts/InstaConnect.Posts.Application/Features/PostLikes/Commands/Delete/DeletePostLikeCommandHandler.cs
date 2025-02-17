@@ -1,8 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.PostLikes.Exceptions;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Users;
-
-namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
+﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
 
 internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeCommand>
 {

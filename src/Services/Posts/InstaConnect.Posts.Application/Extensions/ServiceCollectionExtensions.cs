@@ -5,8 +5,6 @@ using InstaConnect.Posts.Application.Features.Posts.Extensions;
 using InstaConnect.Shared.Application.Extensions;
 using InstaConnect.Shared.Common.Extensions;
 
-using Microsoft.Extensions.DependencyInjection;
-
 namespace InstaConnect.Posts.Application.Extensions;
 
 public static class ServiceCollectionExtensions

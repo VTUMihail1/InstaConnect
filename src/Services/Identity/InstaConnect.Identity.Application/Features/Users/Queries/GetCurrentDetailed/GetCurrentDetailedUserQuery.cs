@@ -1,8 +1,6 @@
 ﻿using System.Globalization;
 
-using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Features.Users.Utilities;
-using InstaConnect.Shared.Application.Abstractions;
 
 namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
 

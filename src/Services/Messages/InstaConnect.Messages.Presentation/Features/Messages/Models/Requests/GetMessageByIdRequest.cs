@@ -2,8 +2,6 @@
 
 using InstaConnect.Shared.Presentation.Binders.FromClaim;
 
-using Microsoft.AspNetCore.Mvc;
-
 namespace InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
 
 public record GetMessageByIdRequest(

@@ -2,7 +2,6 @@
 
 using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
 using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
-using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests;
 
 namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Mappings;
 

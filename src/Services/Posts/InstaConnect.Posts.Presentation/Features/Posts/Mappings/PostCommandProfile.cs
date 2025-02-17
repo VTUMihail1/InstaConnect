@@ -3,9 +3,6 @@
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
-using InstaConnect.Posts.Application.Features.Posts.Models;
-using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
 
 namespace InstaConnect.Posts.Presentation.Features.Posts.Mappings;
 

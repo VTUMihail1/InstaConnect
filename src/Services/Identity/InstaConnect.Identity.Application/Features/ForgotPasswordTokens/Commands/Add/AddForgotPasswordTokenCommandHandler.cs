@@ -1,11 +1,4 @@
-﻿using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Models;
-using InstaConnect.Identity.Domain.Features.Users.Abstractions;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Users;
-
-namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
+﻿namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
 
 public class AddForgotPasswordTokenCommandHandler : ICommandHandler<AddForgotPasswordTokenCommand>
 {

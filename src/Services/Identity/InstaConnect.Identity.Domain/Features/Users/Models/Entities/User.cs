@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
-using InstaConnect.Shared.Domain.Models.Base;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 

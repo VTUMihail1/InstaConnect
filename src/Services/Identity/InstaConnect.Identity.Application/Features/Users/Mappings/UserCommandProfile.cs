@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
 
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
 using InstaConnect.Identity.Application.Features.Users.Commands.Add;
 using InstaConnect.Identity.Application.Features.Users.Commands.Update;
-using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
 using InstaConnect.Identity.Domain.Features.Users.Models;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
-using InstaConnect.Shared.Application.Contracts.Users;
-using InstaConnect.Shared.Application.Models;
 
 namespace InstaConnect.Identity.Application.Features.Users.Mappings;
 

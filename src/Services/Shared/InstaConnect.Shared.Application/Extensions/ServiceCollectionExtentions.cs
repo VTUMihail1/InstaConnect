@@ -2,7 +2,6 @@
 
 using FluentValidation;
 
-using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Extensions;
 using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Application.PipelineBehaviors;

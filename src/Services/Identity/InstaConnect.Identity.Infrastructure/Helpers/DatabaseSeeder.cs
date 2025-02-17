@@ -1,6 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
-using InstaConnect.Identity.Infrastructure.Features.Users.Models.Options;
+﻿using InstaConnect.Identity.Infrastructure.Features.Users.Models.Options;
 using InstaConnect.Shared.Common.Utilities;
 
 using Microsoft.Extensions.Options;

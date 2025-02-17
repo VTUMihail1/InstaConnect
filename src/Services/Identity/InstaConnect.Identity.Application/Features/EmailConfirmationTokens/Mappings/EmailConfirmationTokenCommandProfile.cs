@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
 
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
-
 namespace InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Mappings;
 
 internal class EmailConfirmationTokenCommandProfile : Profile

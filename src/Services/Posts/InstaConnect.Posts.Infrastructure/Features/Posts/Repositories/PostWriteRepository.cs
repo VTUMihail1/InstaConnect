@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace InstaConnect.Posts.Infrastructure.Features.Posts.Repositories;
+﻿namespace InstaConnect.Posts.Infrastructure.Features.Posts.Repositories;
 
 internal class PostWriteRepository : IPostWriteRepository
 {

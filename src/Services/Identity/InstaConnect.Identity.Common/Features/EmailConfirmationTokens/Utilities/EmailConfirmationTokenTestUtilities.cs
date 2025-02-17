@@ -1,6 +1,4 @@
-﻿using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities;
+﻿namespace InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities;
 
 public abstract class EmailConfirmationTokenTestUtilities : SharedTestUtilities
 {

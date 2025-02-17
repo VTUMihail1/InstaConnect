@@ -1,8 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
-
-using Microsoft.EntityFrameworkCore;
+﻿using InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
 
 namespace InstaConnect.Identity.Infrastructure.Features.UserClaims.Repositories;
 

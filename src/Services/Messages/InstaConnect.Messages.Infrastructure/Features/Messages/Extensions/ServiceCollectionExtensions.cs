@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace InstaConnect.Messages.Infrastructure.Features.Messages.Extensions;
+﻿namespace InstaConnect.Messages.Infrastructure.Features.Messages.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

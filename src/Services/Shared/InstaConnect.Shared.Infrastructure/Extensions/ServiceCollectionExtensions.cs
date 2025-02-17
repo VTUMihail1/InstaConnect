@@ -2,7 +2,6 @@
 
 using CloudinaryDotNet;
 
-using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Infrastructure.Abstractions;
 using InstaConnect.Shared.Infrastructure.Extensions;

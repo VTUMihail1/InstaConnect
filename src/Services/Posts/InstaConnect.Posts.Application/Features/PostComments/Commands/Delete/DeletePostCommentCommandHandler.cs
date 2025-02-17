@@ -1,8 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Users;
-
-namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
+﻿namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
 
 internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostCommentCommand>
 {

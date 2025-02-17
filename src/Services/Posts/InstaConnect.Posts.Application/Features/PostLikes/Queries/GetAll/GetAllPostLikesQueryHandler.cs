@@ -1,7 +1,4 @@
-﻿using InstaConnect.Posts.Application.Features.PostLikes.Models;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Abstractions;
+﻿using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
 
 namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 

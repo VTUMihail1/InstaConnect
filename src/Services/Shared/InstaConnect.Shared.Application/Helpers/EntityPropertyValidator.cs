@@ -1,5 +1,4 @@
-﻿using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Domain.Abstractions;
+﻿using InstaConnect.Shared.Domain.Abstractions;
 
 namespace InstaConnect.Shared.Application.Helpers;
 

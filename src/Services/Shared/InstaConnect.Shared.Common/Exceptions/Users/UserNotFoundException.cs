@@ -1,6 +1,4 @@
-﻿using InstaConnect.Shared.Common.Exceptions.Base;
-
-namespace InstaConnect.Shared.Common.Exceptions.Users;
+﻿namespace InstaConnect.Shared.Common.Exceptions.Users;
 
 public class UserNotFoundException : NotFoundException
 {

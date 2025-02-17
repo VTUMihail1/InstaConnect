@@ -3,7 +3,6 @@ using System.Security.Claims;
 
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Infrastructure.Abstractions;
 using InstaConnect.Shared.Infrastructure.Models.Options;
 

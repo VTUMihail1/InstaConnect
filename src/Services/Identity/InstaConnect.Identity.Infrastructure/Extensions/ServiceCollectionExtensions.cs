@@ -5,9 +5,6 @@ using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Shared.Common.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace InstaConnect.Identity.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions

@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
 
-using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Models;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
-
 namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Mappings;
 
 internal class ForgotPasswordTokenCommandProfile : Profile

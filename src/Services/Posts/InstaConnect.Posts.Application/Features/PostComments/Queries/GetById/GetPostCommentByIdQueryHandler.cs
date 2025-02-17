@@ -1,9 +1,4 @@
-﻿using InstaConnect.Posts.Application.Features.PostComments.Models;
-using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Abstractions;
-
-namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
+﻿namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 
 internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentByIdQuery, PostCommentQueryViewModel>
 {

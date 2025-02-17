@@ -2,8 +2,6 @@
 using InstaConnect.Shared.Domain.Models.Pagination;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
-using Microsoft.EntityFrameworkCore;
-
 namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Repositories;
 
 internal class PostCommentReadRepository : IPostCommentReadRepository

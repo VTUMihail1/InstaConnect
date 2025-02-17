@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
-
-using Serilog;
+﻿using Serilog;
 
 namespace InstaConnect.Shared.Presentation.Extensions;
 

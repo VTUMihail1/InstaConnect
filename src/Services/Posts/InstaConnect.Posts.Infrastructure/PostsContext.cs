@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace InstaConnect.Posts.Infrastructure;
+﻿namespace InstaConnect.Posts.Infrastructure;
 
 public class PostsContext : DbContext
 {

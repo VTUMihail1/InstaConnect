@@ -2,9 +2,6 @@
 
 using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
-using InstaConnect.Posts.Application.Features.PostLikes.Models;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
 
 namespace InstaConnect.Posts.Presentation.Features.PostLikes.Mappings;
 

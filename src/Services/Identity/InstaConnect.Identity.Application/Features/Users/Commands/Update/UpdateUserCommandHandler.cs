@@ -1,13 +1,4 @@
-﻿using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Domain.Features.Users.Abstractions;
-using InstaConnect.Identity.Domain.Features.Users.Exceptions;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Contracts.Users;
-using InstaConnect.Shared.Application.Models;
-using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Users;
-
-namespace InstaConnect.Identity.Application.Features.Users.Commands.Update;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.Update;
 
 public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, UserCommandViewModel>
 {

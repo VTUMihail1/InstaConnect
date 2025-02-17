@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Repositories;
+﻿namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Repositories;
 
 internal class PostLikeWriteRepository : IPostLikeWriteRepository
 {

@@ -1,7 +1,4 @@
-﻿using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Models.Filters;
-using InstaConnect.Shared.Common.Models.Enums;
+﻿using InstaConnect.Shared.Application.Models.Filters;
 
 namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 

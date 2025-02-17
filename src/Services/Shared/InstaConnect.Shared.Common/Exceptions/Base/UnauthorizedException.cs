@@ -1,6 +1,4 @@
-﻿using InstaConnect.Shared.Common.Models.Enums;
-
-namespace InstaConnect.Shared.Common.Exceptions.Base;
+﻿namespace InstaConnect.Shared.Common.Exceptions.Base;
 
 public class UnauthorizedException : BaseException
 {

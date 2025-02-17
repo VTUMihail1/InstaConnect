@@ -1,10 +1,4 @@
-﻿using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Domain.Features.Users.Abstractions;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Users;
-
-namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
 
 public class GetCurrentUserQueryHandler : IQueryHandler<GetCurrentUserQuery, UserQueryViewModel>
 {

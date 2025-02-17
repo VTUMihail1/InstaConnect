@@ -1,10 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
-using InstaConnect.Shared.Infrastructure.Extensions;
-
-using Microsoft.EntityFrameworkCore;
+﻿using InstaConnect.Shared.Infrastructure.Extensions;
 
 namespace InstaConnect.Identity.Infrastructure;
 

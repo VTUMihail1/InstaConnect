@@ -1,6 +1,4 @@
-﻿using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Common.Features.Users.Utilities;
+﻿namespace InstaConnect.Posts.Common.Features.Users.Utilities;
 public class UserTestUtilities : SharedTestUtilities
 {
     public static readonly string InvalidId = GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);

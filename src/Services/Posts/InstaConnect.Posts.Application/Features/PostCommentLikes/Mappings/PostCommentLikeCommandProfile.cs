@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 
 namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Mappings;
 

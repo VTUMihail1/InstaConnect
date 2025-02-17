@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Shared.Application.Abstractions;
 
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace InstaConnect.Shared.Presentation.Extensions;
 

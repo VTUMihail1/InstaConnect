@@ -5,17 +5,11 @@ using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
 using InstaConnect.Messages.Application.Features.Messages.Models;
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
-using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
-using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Messages.Presentation.Extensions;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
-using InstaConnect.Shared.Common.Utilities;
-
-using NSubstitute;
 
 namespace InstaConnect.Messages.Presentation.UnitTests.Features.Messages.Utilities;
 

@@ -1,11 +1,4 @@
-﻿using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Contracts.Users;
-using InstaConnect.Shared.Common.Abstractions;
-
-using MassTransit;
-
-namespace InstaConnect.Messages.Presentation.Features.Users.Consumers;
+﻿namespace InstaConnect.Messages.Presentation.Features.Users.Consumers;
 
 internal class UserCreatedEventConsumer : IConsumer<UserCreatedEvent>
 {

@@ -3,7 +3,6 @@
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
 using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Models.Options;
-using InstaConnect.Shared.Application.Abstractions;
 
 using Microsoft.Extensions.Options;
 

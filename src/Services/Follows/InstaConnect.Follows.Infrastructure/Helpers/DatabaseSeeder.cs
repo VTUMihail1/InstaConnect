@@ -1,6 +1,4 @@
-﻿using InstaConnect.Shared.Application.Abstractions;
-
-namespace InstaConnect.Follows.Infrastructure.Helpers;
+﻿namespace InstaConnect.Follows.Infrastructure.Helpers;
 
 internal class DatabaseSeeder : IDatabaseSeeder
 {

@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 
-using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetById;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailedById;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 
 namespace InstaConnect.Identity.Presentation.Features.Users.Mappings;
 

@@ -1,9 +1,4 @@
-﻿using FluentValidation;
-
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-
-namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 public class AddPostCommandValidator : AbstractValidator<AddPostCommand>
 {
     public AddPostCommandValidator()

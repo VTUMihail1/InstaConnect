@@ -1,15 +1,10 @@
 ﻿using AutoMapper;
 
-using InstaConnect.Messages.Common.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Users.Abstractions;
-using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Messages.Presentation.Extensions;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Common.Abstractions;
 using InstaConnect.Shared.Common.Helpers;
-using InstaConnect.Shared.Common.Utilities;
-
-using NSubstitute;
 
 namespace InstaConnect.Messages.Presentation.UnitTests.Features.Users.Utilities;
 

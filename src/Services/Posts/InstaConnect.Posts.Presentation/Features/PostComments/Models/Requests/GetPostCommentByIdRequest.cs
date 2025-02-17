@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 
 public record GetPostCommentByIdRequest(
     [FromRoute] string Id

@@ -1,15 +1,4 @@
-﻿using FluentAssertions;
-
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
-using InstaConnect.Messages.Presentation.Features.Messages.Controllers.v1;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
-using InstaConnect.Messages.Presentation.UnitTests.Features.Messages.Utilities;
-
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-using NSubstitute;
+﻿using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
 
 namespace InstaConnect.Messages.Presentation.UnitTests.Features.Messages.Controllers.v1;
 

@@ -1,8 +1,4 @@
-﻿using InstaConnect.Shared.Application.Abstractions;
-
-using Microsoft.Extensions.Logging;
-
-namespace InstaConnect.Shared.Application.PipelineBehaviors;
+﻿namespace InstaConnect.Shared.Application.PipelineBehaviors;
 
 internal class CachingPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>

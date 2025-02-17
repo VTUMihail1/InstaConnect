@@ -1,14 +1,4 @@
-﻿using InstaConnect.Messages.Common.Features.Users.Utilities;
-using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
-using InstaConnect.Messages.Presentation.Features.Users.Consumers;
-using InstaConnect.Messages.Presentation.UnitTests.Features.Users.Utilities;
-using InstaConnect.Shared.Application.Contracts.Users;
-
-using MassTransit;
-
-using NSubstitute;
-
-namespace InstaConnect.Messages.Presentation.UnitTests.Features.Users.Consumers;
+﻿namespace InstaConnect.Messages.Presentation.UnitTests.Features.Users.Consumers;
 
 public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
 {

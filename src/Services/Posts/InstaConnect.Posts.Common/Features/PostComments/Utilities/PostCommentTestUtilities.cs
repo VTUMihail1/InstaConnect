@@ -1,7 +1,4 @@
-﻿using InstaConnect.Shared.Common.Models.Enums;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Common.Features.PostComments.Utilities;
+﻿namespace InstaConnect.Posts.Common.Features.PostComments.Utilities;
 
 public class PostCommentTestUtilities : SharedTestUtilities
 {

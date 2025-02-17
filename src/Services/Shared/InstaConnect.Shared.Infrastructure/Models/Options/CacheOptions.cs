@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace InstaConnect.Shared.Infrastructure.Models.Options;
+﻿namespace InstaConnect.Shared.Infrastructure.Models.Options;
 public class CacheOptions
 {
     [Required]
