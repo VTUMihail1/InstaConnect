@@ -1,0 +1,29 @@
+name: CD - Publish & Deploy
+
+on:
+  workflow_run:
+    workflows: ["CI - Build & Test"]
+    types:
+      - completed
+    branches:
+      - main
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore ./InstaConnect.sln
+
+      - name: Build
+        run: dotnet build ./InstaConnect.sln --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish ./InstaConnect.sln -c Release -o ./publish
