@@ -1,8 +1,7 @@
-﻿using System.Net;
+﻿using System.Globalization;
 using System.Net.Http.Json;
-using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests;
+
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Utilities;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Helpers;
 public class ForgotPasswordTokensClient : IForgotPasswordTokensClient
@@ -50,18 +49,20 @@ public class ForgotPasswordTokensClient : IForgotPasswordTokensClient
         await _httpClient.PutAsJsonAsync(route, request.Body, cancellationToken);
     }
 
-    private string GetAddRoute(string email)
+    private static string GetAddRoute(string email)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             ForgotPasswordTokenTestRoutes.Add,
             email);
 
         return route;
     }
 
-    private string GetVerifyRoute(string userId, string token)
+    private static string GetVerifyRoute(string userId, string token)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             ForgotPasswordTokenTestRoutes.Verify,
             userId,
             token);

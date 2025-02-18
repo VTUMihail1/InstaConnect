@@ -1,5 +1,5 @@
 ﻿namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Utilities;
-public class MessageTestRoutes
+public abstract class MessageTestRoutes
 {
     public const string Default = "api/v1/message";
 

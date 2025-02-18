@@ -1,16 +1,14 @@
 ﻿using InstaConnect.Identity.Application.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Infrastructure;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Abstractions;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Helpers;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Utilities;
+
 using MassTransit.Testing;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
@@ -190,12 +188,12 @@ public abstract class BaseUserFunctionalTest : IClassFixture<IdentityWebApplicat
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (await distibutedCache.GetAsync(UserCacheKeys.GetCurrentUser) != null)
+        if (await distibutedCache.GetAsync(UserCacheKeys.GetCurrentUser, CancellationToken) != null)
         {
             await distibutedCache.RemoveAsync(UserCacheKeys.GetCurrentUser);
         }
 
-        if (await distibutedCache.GetAsync(UserCacheKeys.GetCurrentDetailedUser) != null)
+        if (await distibutedCache.GetAsync(UserCacheKeys.GetCurrentDetailedUser, CancellationToken) != null)
         {
             await distibutedCache.RemoveAsync(UserCacheKeys.GetCurrentDetailedUser);
         }

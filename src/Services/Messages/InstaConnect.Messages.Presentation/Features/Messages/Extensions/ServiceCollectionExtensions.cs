@@ -1,7 +1,4 @@
-﻿using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
-using InstaConnect.Messages.Presentation.Features.Messages.Helpers;
-
-namespace InstaConnect.Messages.Presentation.Features.Messages.Extensions;
+﻿namespace InstaConnect.Messages.Presentation.Features.Messages.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
@@ -9,9 +6,6 @@ internal static class ServiceCollectionExtensions
     {
         serviceCollection
             .AddSignalR();
-
-        serviceCollection
-            .AddScoped<IMessageSender, MessageSender>();
 
         return serviceCollection;
     }

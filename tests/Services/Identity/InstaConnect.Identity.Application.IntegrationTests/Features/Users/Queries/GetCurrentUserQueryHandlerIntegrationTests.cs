@@ -1,12 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
-using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
-using InstaConnect.Identity.Application.IntegrationTests.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Queries;
 
@@ -17,10 +9,9 @@ public class GetCurrentUserQueryHandlerIntegrationTests : BaseUserIntegrationTes
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetCurrentUserQuery(null);
 
         // Act
@@ -29,17 +20,16 @@ public class GetCurrentUserQueryHandlerIntegrationTests : BaseUserIntegrationTes
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetCurrentUserQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -48,14 +38,13 @@ public class GetCurrentUserQueryHandlerIntegrationTests : BaseUserIntegrationTes
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetCurrentUserQuery(UserTestUtilities.InvalidId);
 
         // Act

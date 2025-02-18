@@ -1,12 +1,4 @@
-﻿using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
-using InstaConnect.Follows.Presentation.Features.Users.Consumers;
-using InstaConnect.Follows.Presentation.UnitTests.Features.Users.Utilities;
-using InstaConnect.Shared.Application.Contracts.Users;
-using MassTransit;
-using NSubstitute;
-
-namespace InstaConnect.Follows.Presentation.UnitTests.Features.Users.Consumers;
+﻿namespace InstaConnect.Follows.Presentation.UnitTests.Features.Users.Consumers;
 
 public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
 {
@@ -99,7 +91,6 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldGetById_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var existingUserId = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidAddName,
@@ -123,7 +114,6 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldAddUserToRepository_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var existingUserId = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidAddName,
@@ -152,7 +142,6 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldCallSaveChangesAsync_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var existingUserId = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidAddName,

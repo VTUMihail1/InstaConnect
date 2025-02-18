@@ -1,13 +1,10 @@
-﻿using System.Net;
+﻿using System.Globalization;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Security.Claims;
+
 using InstaConnect.Identity.Presentation.Features.Users.Models.Forms;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Abstractions;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Helpers;
 public class UsersClient : IUsersClient
@@ -415,9 +412,10 @@ public class UsersClient : IUsersClient
         await _httpClient.DeleteAsync(UserTestRoutes.Current, cancellationToken);
     }
 
-    private string GetAllRoute(GetAllUsersRequest request)
+    private static string GetAllRoute(GetAllUsersRequest request)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             UserTestRoutes.GetAll,
             request.UserName,
             request.FirstName,
@@ -430,48 +428,51 @@ public class UsersClient : IUsersClient
         return route;
     }
 
-    private string IdRoute(string id)
+    private static string IdRoute(string id)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             UserTestRoutes.Id,
             id);
 
         return route;
     }
 
-    private string IdDetailedRoute(string id)
+    private static string IdDetailedRoute(string id)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             UserTestRoutes.IdDetailed,
             id);
 
         return route;
     }
 
-    private string NameRoute(string name)
+    private static string NameRoute(string name)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             UserTestRoutes.Name,
             name);
 
         return route;
     }
 
-    private MultipartFormDataContent GetForm(AddUserForm form)
+    private static MultipartFormDataContent GetForm(AddUserForm form)
     {
         var multipartContent = new MultipartFormDataContent
-        {
-            { new StringContent(form.UserName), nameof(form.UserName) },
-            { new StringContent(form.Email), nameof(form.Email) },
-            { new StringContent(form.Password), nameof(form.Password) },
-            { new StringContent(form.ConfirmPassword), nameof(form.ConfirmPassword) },
-            { new StringContent(form.FirstName), nameof(form.FirstName) },
-            { new StringContent(form.LastName), nameof(form.LastName) }
-        };
+    {
+        { GetStringContent(form.UserName), nameof(form.UserName) },
+        { GetStringContent(form.Email), nameof(form.Email) },
+        { GetStringContent(form.Password), nameof(form.Password) },
+        { GetStringContent(form.ConfirmPassword), nameof(form.ConfirmPassword) },
+        { GetStringContent(form.FirstName), nameof(form.FirstName) },
+        { GetStringContent(form.LastName), nameof(form.LastName) }
+    };
 
         if (form.ProfileImage != null)
         {
-            var streamContent = new StreamContent(form.ProfileImage.OpenReadStream());
+            var streamContent = GetStreamContent(form.ProfileImage.OpenReadStream());
             streamContent.Headers.ContentType = new MediaTypeHeaderValue(form.ProfileImage.ContentType);
             multipartContent.Add(streamContent, nameof(form.ProfileImage), form.ProfileImage.FileName);
         }
@@ -479,22 +480,36 @@ public class UsersClient : IUsersClient
         return multipartContent;
     }
 
-    private MultipartFormDataContent GetForm(UpdateUserForm form)
+    private static MultipartFormDataContent GetForm(UpdateUserForm form)
     {
         var multipartContent = new MultipartFormDataContent
         {
-            { new StringContent(form.UserName), nameof(form.UserName) },
-            { new StringContent(form.FirstName), nameof(form.FirstName) },
-            { new StringContent(form.LastName), nameof(form.LastName) }
+            { GetStringContent(form.UserName), nameof(form.UserName) },
+            { GetStringContent(form.FirstName), nameof(form.FirstName) },
+            { GetStringContent(form.LastName), nameof(form.LastName) }
         };
 
         if (form.ProfileImage != null)
         {
-            var streamContent = new StreamContent(form.ProfileImage.OpenReadStream());
+            var streamContent = GetStreamContent(form.ProfileImage.OpenReadStream());
             streamContent.Headers.ContentType = new MediaTypeHeaderValue(form.ProfileImage.ContentType);
             multipartContent.Add(streamContent, nameof(form.ProfileImage), form.ProfileImage.FileName);
         }
 
         return multipartContent;
+    }
+
+    private static StringContent GetStringContent(string content)
+    {
+        var stringContent = new StringContent(content);
+
+        return stringContent;
+    }
+
+    private static StreamContent GetStreamContent(Stream content)
+    {
+        var streamContent = new StreamContent(content);
+
+        return streamContent;
     }
 }

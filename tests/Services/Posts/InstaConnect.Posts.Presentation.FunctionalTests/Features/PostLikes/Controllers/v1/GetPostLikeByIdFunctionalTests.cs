@@ -1,13 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
 
 public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
 {
@@ -22,7 +13,6 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetPostLikeByIdRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -41,7 +31,6 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetPostLikeByIdRequest(
             PostLikeTestUtilities.InvalidId
         );

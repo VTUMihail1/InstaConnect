@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Shared.Infrastructure.Models.Options;
+
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace InstaConnect.Identity.Presentation.Features.Users.Extensions;

@@ -1,10 +1,8 @@
-﻿using System.Net;
+﻿using System.Globalization;
 using System.Net.Http.Json;
 using System.Security.Claims;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
+
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Abstractions;
-using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
 
 namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Helpers;
 public class FollowsClient : IFollowsClient
@@ -155,9 +153,10 @@ public class FollowsClient : IFollowsClient
         await _httpClient.DeleteAsync(route, cancellationToken);
     }
 
-    private string GetAllRoute(GetAllFollowsRequest request)
+    private static string GetAllRoute(GetAllFollowsRequest request)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             FollowTestRoutes.GetAll,
             request.FollowerId,
             request.FollowerName,
@@ -171,9 +170,10 @@ public class FollowsClient : IFollowsClient
         return route;
     }
 
-    private string IdRoute(string id)
+    private static string IdRoute(string id)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             FollowTestRoutes.Id,
             id);
 

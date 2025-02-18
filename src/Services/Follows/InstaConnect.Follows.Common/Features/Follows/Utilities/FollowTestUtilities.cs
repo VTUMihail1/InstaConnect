@@ -1,7 +1,4 @@
-﻿using InstaConnect.Shared.Common.Models.Enums;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Follows.Common.Features.Follows.Utilities;
+﻿namespace InstaConnect.Follows.Common.Features.Follows.Utilities;
 
 public class FollowTestUtilities : SharedTestUtilities
 {

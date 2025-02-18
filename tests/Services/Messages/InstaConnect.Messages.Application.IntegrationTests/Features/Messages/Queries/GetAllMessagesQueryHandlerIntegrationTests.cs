@@ -1,12 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Messages.Application.Features.Messages.Models;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
-using InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
-using InstaConnect.Messages.Application.IntegrationTests.Utilities;
-using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 
 namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Queries;
 
@@ -17,7 +9,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -34,14 +26,14 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -58,13 +50,13 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenReceiverIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -81,13 +73,13 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(UserConfigurations.NameMinLength - 1)]
     [InlineData(UserConfigurations.NameMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverNameLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenReceiverNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -104,11 +96,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyNameIsNull()
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -125,11 +117,11 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenMessageDoesNotContaintSortPropertyName()
+    public async Task SendAsync_ShouldThrowValidationException_WhenMessageDoesNotContaintSortPropertyName()
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -146,14 +138,14 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(SharedConfigurations.SortOrderMinLength - 1)]
     [InlineData(SharedConfigurations.SortOrderMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -170,13 +162,13 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(SharedConfigurations.PageMinValue - 1)]
     [InlineData(SharedConfigurations.PageMaxValue + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenPageValueIsInvalid(int value)
+    public async Task SendAsync_ShouldThrowValidationException_WhenPageValueIsInvalid(int value)
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -193,13 +185,13 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(SharedConfigurations.PageSizeMinValue - 1)]
     [InlineData(SharedConfigurations.PageSizeMaxValue + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenPageSizeValueIsInvalid(int value)
+    public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -216,7 +208,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]

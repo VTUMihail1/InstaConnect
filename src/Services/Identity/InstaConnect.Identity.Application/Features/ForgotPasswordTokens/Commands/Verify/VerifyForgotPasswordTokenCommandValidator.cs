@@ -1,8 +1,4 @@
-﻿using FluentValidation;
-using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-
-namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
+﻿namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 public class VerifyForgotPasswordTokenCommandValidator : AbstractValidator<VerifyForgotPasswordTokenCommand>
 {
     public VerifyForgotPasswordTokenCommandValidator()

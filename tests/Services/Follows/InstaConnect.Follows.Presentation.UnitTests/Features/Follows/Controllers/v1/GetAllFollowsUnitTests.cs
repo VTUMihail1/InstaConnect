@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
-using InstaConnect.Follows.Presentation.UnitTests.Features.Follows.Utilities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
+﻿using InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 
 namespace InstaConnect.Follows.Presentation.UnitTests.Features.Follows.Controllers.v1;
 public class GetAllFollowsUnitTests : BaseFollowUnitTest
@@ -105,7 +96,7 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
         );
 
         // Act
-        var response = await _followController.GetAllAsync(request, CancellationToken);
+        await _followController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

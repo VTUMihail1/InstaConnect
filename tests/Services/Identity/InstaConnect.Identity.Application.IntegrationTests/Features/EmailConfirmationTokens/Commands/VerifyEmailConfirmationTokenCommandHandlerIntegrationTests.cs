@@ -1,14 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
-using InstaConnect.Identity.Application.IntegrationTests.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Application.IntegrationTests.Utilities;
-using InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.Token;
-using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.EmailConfirmationTokens.Commands;
 
@@ -20,7 +10,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
         var existingEmailConfirmationToken = await CreateEmailConfirmationTokenAsync(CancellationToken);
@@ -32,14 +22,14 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingEmailConfirmationToken = await CreateEmailConfirmationTokenAsync(CancellationToken);
@@ -51,11 +41,11 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenTokenIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenTokenIsNull()
     {
         // Arrange
         var existingEmailConfirmationToken = await CreateEmailConfirmationTokenAsync(CancellationToken);
@@ -67,14 +57,14 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(EmailConfirmationTokenConfigurations.ValueMinLength - 1)]
     [InlineData(EmailConfirmationTokenConfigurations.ValueMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenTokenLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenTokenLengthIsInvalid(int length)
     {
         // Arrange
         var existingEmailConfirmationToken = await CreateEmailConfirmationTokenAsync(CancellationToken);
@@ -86,7 +76,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Fact]
@@ -134,7 +124,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         // Assert
         await action
             .Should()
-            .ThrowAsync<TokenNotFoundException>();
+            .ThrowAsync<EmailConfirmationTokenNotFoundException>();
     }
 
     [Fact]

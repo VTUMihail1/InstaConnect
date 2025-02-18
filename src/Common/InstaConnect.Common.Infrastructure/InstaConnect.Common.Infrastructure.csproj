@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+	<PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" />
+	<PackageReference Include="AspNetCore.HealthChecks.Redis" />
+	<PackageReference Include="CloudinaryDotNet" />
+	<PackageReference Include="EntityFramework" />
+	<PackageReference Include="MassTransit" />
+	<PackageReference Include="MassTransit.EntityFrameworkCore" />
+	<PackageReference Include="MassTransit.RabbitMQ" />
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+	<PackageReference Include="Microsoft.AspNetCore.Identity" />
+	<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+	<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
+	<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" />
+	<PackageReference Include="Microsoft.Extensions.Options" />
+	<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+	<PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" />
+	<PackageReference Include="Newtonsoft.Json" />
+	<PackageReference Include="Testcontainers.MsSql" />
+	<PackageReference Include="Testcontainers.RabbitMq" />
+	<PackageReference Include="Testcontainers.Redis" />
+	<PackageReference Include="WebMotions.Fake.Authentication.JwtBearer" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\InstaConnect.Common\InstaConnect.Common.csproj" />
+    <ProjectReference Include="..\InstaConnect.Common.Application\InstaConnect.Common.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- General -->
+    <Using Include="MassTransit" />
+    <Using Include="System.ComponentModel.DataAnnotations" />
+    <Using Include="Microsoft.EntityFrameworkCore" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Shared.Application.Abstractions" />
+    <Using Include="InstaConnect.Shared.Application.Models" />
+  </ItemGroup>
+
+</Project>

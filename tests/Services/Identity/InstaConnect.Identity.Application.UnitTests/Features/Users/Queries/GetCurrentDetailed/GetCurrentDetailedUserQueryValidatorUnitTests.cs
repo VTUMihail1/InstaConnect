@@ -1,8 +1,4 @@
-﻿using FluentValidation.TestHelper;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
-using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetCurrentDetailed;
 
@@ -19,7 +15,6 @@ public class GetCurrentDetailedUserQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var query = new GetCurrentDetailedUserQuery(null);
 
         // Act
@@ -36,7 +31,6 @@ public class GetCurrentDetailedUserQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var query = new GetCurrentDetailedUserQuery(SharedTestUtilities.GetString(length));
 
         // Act

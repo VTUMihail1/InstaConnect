@@ -1,16 +1,7 @@
-﻿using Asp.Versioning;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
+﻿using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Utilities;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Presentation.Utilities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
 
 namespace InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
 

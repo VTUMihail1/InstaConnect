@@ -1,9 +1,6 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Abstractions;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
+﻿using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using InstaConnect.Shared.Infrastructure.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Repositories;
 

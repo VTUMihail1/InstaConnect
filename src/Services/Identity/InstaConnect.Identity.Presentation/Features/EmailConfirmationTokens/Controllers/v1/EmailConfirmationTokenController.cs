@@ -1,12 +1,5 @@
-﻿using Asp.Versioning;
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
-using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Presentation.Utilities;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
 
 namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Controllers.v1;
 

@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
-using InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Application.IntegrationTests.Utilities;
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 
 namespace InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Commands;
 public class AddFollowIntegrationTests : BaseFollowIntegrationTest
@@ -18,7 +9,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
     {
         // Arrange
         var existingFollowing = await CreateUserAsync(CancellationToken);
@@ -30,14 +21,14 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(FollowConfigurations.IdMinLength - 1)]
     [InlineData(FollowConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingFollowing = await CreateUserAsync(CancellationToken);
@@ -49,11 +40,11 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenFollowingIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenFollowingIdIsNull()
     {
         // Arrange
         var existingFollower = await CreateUserAsync(CancellationToken);
@@ -65,14 +56,14 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenFollowingIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenFollowingIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingFollower = await CreateUserAsync(CancellationToken);
@@ -84,7 +75,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
@@ -120,7 +111,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenFollowAlreadyExists()
+    public async Task SendAsync_ShouldThrowValidationException_WhenFollowAlreadyExists()
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
@@ -132,7 +123,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<FollowAlreadyExistsException>();
     }
 
     [Fact]

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+﻿using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
 public interface IUserWriteRepository

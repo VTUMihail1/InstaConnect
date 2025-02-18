@@ -1,5 +1,5 @@
 ﻿namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
-public class FollowTestRoutes
+public abstract class FollowTestRoutes
 {
     public const string Default = "api/v1/follows";
 

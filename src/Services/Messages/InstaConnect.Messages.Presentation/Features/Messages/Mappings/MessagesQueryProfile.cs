@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using InstaConnect.Messages.Application.Features.Messages.Models;
+
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
 
 namespace InstaConnect.Messages.Presentation.Features.Messages.Mappings;
 

@@ -1,10 +1,4 @@
-﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
-using InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Commands.Add;
 
@@ -22,7 +16,6 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var post = CreatePost();
-        var user = CreateUser();
         var command = new AddPostCommentCommand(
             null,
             post.Id,
@@ -43,7 +36,6 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var post = CreatePost();
-        var user = CreateUser();
         var command = new AddPostCommentCommand(
             SharedTestUtilities.GetString(length)!,
             post.Id,
@@ -60,7 +52,6 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdIsNull()
     {
         // Arrange
-        var post = CreatePost();
         var user = CreateUser();
         var command = new AddPostCommentCommand(
             user.Id,
@@ -81,7 +72,6 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdLengthIsInvalid(int length)
     {
         // Arrange
-        var post = CreatePost();
         var user = CreateUser();
         var command = new AddPostCommentCommand(
             user.Id,

@@ -3,7 +3,6 @@ using InstaConnect.Messages.Infrastructure.Extensions;
 using InstaConnect.Messages.Presentation.Extensions;
 using InstaConnect.Messages.Presentation.Features.Messages.Helpers.Hubs;
 using InstaConnect.Shared.Presentation.Extensions;
-using InstaConnect.Shared.Presentation.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,8 +36,13 @@ app.MapControllers();
 
 app.UseExceptionHandler(opt => { });
 
-app.Run();
+await app.RunAsync();
 
 
 // Utils for testing
-public partial class Program { }
+public partial class Program
+{
+    private Program()
+    {
+    }
+}

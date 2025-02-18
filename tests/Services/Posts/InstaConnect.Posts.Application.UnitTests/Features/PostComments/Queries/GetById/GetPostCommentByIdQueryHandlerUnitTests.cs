@@ -1,10 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostComments.Models;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
-using InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Shared.Common.Exceptions.PostComment;
-using NSubstitute;
+﻿using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Queries.GetById;
 
@@ -23,7 +17,6 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentUnitTest
     public async Task Handle_ShouldThrowPostCommentNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPostComment = CreatePostComment();
         var query = new GetPostCommentByIdQuery(PostCommentTestUtilities.InvalidId);
 
         // Act

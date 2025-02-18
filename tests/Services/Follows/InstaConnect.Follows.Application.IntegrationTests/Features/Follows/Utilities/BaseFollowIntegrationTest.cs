@@ -1,12 +1,9 @@
-﻿using InstaConnect.Follows.Application.IntegrationTests.Utilities;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+﻿using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 using InstaConnect.Follows.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Utilities;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -126,12 +123,12 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<FollowsContext>();
 
-        if (dbContext.Follows.Any())
+        if (await dbContext.Follows.AnyAsync(CancellationToken))
         {
             await dbContext.Follows.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }

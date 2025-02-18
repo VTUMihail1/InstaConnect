@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
 
     <IsPackable>false</IsPackable>
@@ -10,25 +8,71 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.2">
+    <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
-    <PackageReference Include="xunit" Version="2.9.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Common\InstaConnect.Posts.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Presentation\InstaConnect.Posts.Presentation.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <!-- General -->
+    <Using Include="FluentAssertions" />
+    <Using Include="MassTransit" />
+    <Using Include="Microsoft.AspNetCore.Http" />
+    <Using Include="Microsoft.AspNetCore.Mvc" />
+    <Using Include="NSubstitute" />
     <Using Include="Xunit" />
+
+    <!-- Posts -->
+    <Using Include="InstaConnect.Posts.Presentation.Features.Posts.Controllers.v1" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.Posts.Models" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.Posts.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.Posts.Models.Responses" />
+    <Using Include="InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Utilities" />
+
+    <!-- Post Likes -->
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostLikes.Models" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses" />
+    <Using Include="InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Utilities" />
+
+    <!-- Post Comments -->
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostComments.Models" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses" />
+    <Using Include="InstaConnect.Posts.Presentation.UnitTests.Features.PostComments.Utilities" />
+
+    <!-- Post Comment Likes -->
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostCommentLikes.Controllers.v1" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses" />
+    <Using Include="InstaConnect.Posts.Presentation.UnitTests.Features.PostCommentLikes.Utilities" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Presentation.Features.Users.Consumers" />
+    <Using Include="InstaConnect.Posts.Presentation.UnitTests.Features.Users.Utilities" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Posts.Common.Features.Posts.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Shared.Application.Contracts.Users" />
+    <Using Include="InstaConnect.Shared.Common.Utilities" />
   </ItemGroup>
 
 </Project>

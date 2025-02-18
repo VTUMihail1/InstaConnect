@@ -1,17 +1,8 @@
-﻿using Asp.Versioning;
-using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
+﻿using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
 using InstaConnect.Messages.Application.Features.Messages.Commands.Delete;
 using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
-using InstaConnect.Messages.Presentation.Features.Messages.Utilities;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Presentation.Utilities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
 
 namespace InstaConnect.Messages.Presentation.Features.Messages.Controllers.v1;
 

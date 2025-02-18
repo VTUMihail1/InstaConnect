@@ -1,13 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
-using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Controllers.v1;
+﻿namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Controllers.v1;
 
 public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
 {
@@ -22,7 +13,6 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollow = await CreateFollowAsync(CancellationToken);
         var request = new GetFollowByIdRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -41,7 +31,6 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingFollow = await CreateFollowAsync(CancellationToken);
         var request = new GetFollowByIdRequest(
             FollowTestUtilities.InvalidId
         );

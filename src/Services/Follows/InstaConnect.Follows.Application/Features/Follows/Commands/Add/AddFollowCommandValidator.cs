@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
-
-namespace InstaConnect.Follows.Application.Features.Follows.Commands.Add;
+﻿namespace InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 public class AddFollowCommandValidator : AbstractValidator<AddFollowCommand>
 {
     public AddFollowCommandValidator()

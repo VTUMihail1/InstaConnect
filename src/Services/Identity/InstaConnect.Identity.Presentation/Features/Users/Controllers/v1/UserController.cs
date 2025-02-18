@@ -1,5 +1,4 @@
-﻿using Asp.Versioning;
-using InstaConnect.Identity.Application.Features.Users.Commands.Add;
+﻿using InstaConnect.Identity.Application.Features.Users.Commands.Add;
 using InstaConnect.Identity.Application.Features.Users.Commands.Delete;
 using InstaConnect.Identity.Application.Features.Users.Commands.Login;
 using InstaConnect.Identity.Application.Features.Users.Commands.Update;
@@ -9,14 +8,6 @@ using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailedById;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
-using InstaConnect.Identity.Presentation.Features.Users.Utilities;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Presentation.Utilities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
 
 namespace InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
 

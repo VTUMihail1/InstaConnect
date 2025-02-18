@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Application.Features.PostLikes.Models;
+
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
 using InstaConnect.Shared.Domain.Models.Pagination;
 

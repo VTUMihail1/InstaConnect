@@ -2,7 +2,6 @@ using InstaConnect.Posts.Application.Extensions;
 using InstaConnect.Posts.Infrastructure.Extensions;
 using InstaConnect.Posts.Presentation.Extensions;
 using InstaConnect.Shared.Presentation.Extensions;
-using InstaConnect.Shared.Presentation.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,8 +33,13 @@ app.MapControllers();
 
 app.UseExceptionHandler();
 
-app.Run();
+await app.RunAsync();
 
 
 // Utils for testing
-public partial class Program { }
+public partial class Program
+{
+    private Program()
+    {
+    }
+}

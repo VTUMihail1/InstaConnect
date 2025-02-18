@@ -1,15 +1,12 @@
-﻿using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+﻿using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Abstractions;
-using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 using InstaConnect.Follows.Infrastructure;
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Abstractions;
 using InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Helpers;
-using InstaConnect.Follows.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Utilities;
+
 using MassTransit.Testing;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -129,12 +126,12 @@ public abstract class BaseFollowFunctionalTest : IClassFixture<FollowsWebApplica
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<FollowsContext>();
 
-        if (dbContext.Follows.Any())
+        if (await dbContext.Follows.AnyAsync(CancellationToken))
         {
             await dbContext.Follows.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }

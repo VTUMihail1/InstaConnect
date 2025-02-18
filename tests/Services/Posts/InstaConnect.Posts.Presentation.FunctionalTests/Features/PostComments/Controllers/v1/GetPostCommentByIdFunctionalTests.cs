@@ -1,13 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Controllers.v1;
 
 public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
 {
@@ -22,7 +13,6 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new GetPostCommentByIdRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -41,7 +31,6 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new GetPostCommentByIdRequest(
             PostCommentTestUtilities.InvalidId
         );

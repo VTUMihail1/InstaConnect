@@ -1,11 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
-using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Controllers.v1;
-using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Identity.Presentation.UnitTests.Features.EmailConfirmationTokens.Utilities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
 
 namespace InstaConnect.Identity.Presentation.UnitTests.Features.EmailConfirmationTokens.Controllers.v1;
 
@@ -50,7 +43,7 @@ public class VerifyEmailConfirmationTokenControllerUnitTests : BaseEmailConfirma
         );
 
         // Act
-        var response = await _emailConfirmationTokenController.VerifyAsync(request, CancellationToken);
+        await _emailConfirmationTokenController.VerifyAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

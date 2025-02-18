@@ -1,13 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
+﻿namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
 
 public class GetUserByNameFunctionalTests : BaseUserFunctionalTest
 {
@@ -22,7 +13,6 @@ public class GetUserByNameFunctionalTests : BaseUserFunctionalTest
     public async Task GetByNameAsync_ShouldReturnBadRequestResponse_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetUserByNameRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -41,7 +31,6 @@ public class GetUserByNameFunctionalTests : BaseUserFunctionalTest
     public async Task GetByNameAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetUserByNameRequest(
             UserTestUtilities.ValidAddName
         );

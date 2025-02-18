@@ -1,14 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
-using InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Application.IntegrationTests.Utilities;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.PostComment;
-using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Commands;
 
@@ -20,10 +10,9 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             null,
@@ -34,17 +23,16 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             SharedTestUtilities.GetString(length),
@@ -55,15 +43,14 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenPostIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenPostIdIsNull()
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             existingUser.Id,
             null
@@ -73,18 +60,17 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(PostCommentConfigurations.IdMinLength - 1)]
     [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenPostIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenPostIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             existingUser.Id,
             SharedTestUtilities.GetString(length)
@@ -94,14 +80,13 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             UserTestUtilities.InvalidId,
@@ -120,7 +105,6 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             existingUser.Id,
             PostCommentTestUtilities.InvalidId
@@ -134,7 +118,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenPostCommentLikeAlreadyExists()
+    public async Task SendAsync_ShouldThrowPostCommentLikeAlreadyExistsException_WhenPostCommentLikeAlreadyExists()
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -147,7 +131,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<PostCommentLikeAlreadyExistsException>();
     }
 
     [Fact]
@@ -155,7 +139,6 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             existingUser.Id,

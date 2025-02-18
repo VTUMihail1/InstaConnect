@@ -1,11 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
-using InstaConnect.Posts.Presentation.Features.Posts.Controllers.v1;
-using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Utilities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
+﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Controllers.v1;
 

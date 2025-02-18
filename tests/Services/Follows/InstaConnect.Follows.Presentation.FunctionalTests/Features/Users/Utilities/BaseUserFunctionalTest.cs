@@ -1,11 +1,9 @@
-﻿using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Follows.Domain.Features.Users.Abstractions;
-using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+﻿using InstaConnect.Follows.Domain.Features.Users.Abstractions;
 using InstaConnect.Follows.Infrastructure;
-using InstaConnect.Follows.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Utilities;
+
 using MassTransit.Testing;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,7 +15,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FollowsWebApplicati
     {
         get
         {
-            using var serviceScope = ServiceScope.ServiceProvider.CreateScope();
+            var serviceScope = ServiceScope.ServiceProvider.CreateScope();
             var testHarness = serviceScope.ServiceProvider.GetTestHarness();
 
             return testHarness;
@@ -89,7 +87,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FollowsWebApplicati
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<FollowsContext>();
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }

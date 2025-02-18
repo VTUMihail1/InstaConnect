@@ -1,12 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
-using InstaConnect.Identity.Application.IntegrationTests.Features.Users.Utilities;
-using InstaConnect.Identity.Application.IntegrationTests.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Queries;
 
@@ -17,10 +9,9 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenNameIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenNameIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetUserByNameQuery(null);
 
         // Act
@@ -29,17 +20,16 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.NameMinLength - 1)]
     [InlineData(UserConfigurations.NameMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenNameLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetUserByNameQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -48,14 +38,13 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<BadRequestException>();
+            .ThrowAsync<AppValidationException>();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenNameIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetUserByNameQuery(UserTestUtilities.ValidAddName);
 
         // Act

@@ -1,12 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
-using InstaConnect.Identity.Application.UnitTests.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
-using InstaConnect.Shared.Common.Exceptions.Token;
-using InstaConnect.Shared.Common.Exceptions.User;
-using NSubstitute;
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.EmailConfirmationTokens.Commands.Verify;
 
@@ -67,7 +59,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerUnitTests : BaseEmailConf
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<TokenNotFoundException>();
+        await action.Should().ThrowAsync<EmailConfirmationTokenNotFoundException>();
     }
 
     [Fact]

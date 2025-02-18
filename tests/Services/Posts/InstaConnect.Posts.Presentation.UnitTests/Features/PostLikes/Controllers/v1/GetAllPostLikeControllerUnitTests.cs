@@ -1,13 +1,5 @@
-﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
+﻿using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
-using InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Utilities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Controllers.v1;
 
@@ -101,7 +93,7 @@ public class GetAllPostLikeControllerUnitTests : BasePostLikeUnitTest
         );
 
         // Act
-        var response = await _postLikeController.GetAllAsync(request, CancellationToken);
+        await _postLikeController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

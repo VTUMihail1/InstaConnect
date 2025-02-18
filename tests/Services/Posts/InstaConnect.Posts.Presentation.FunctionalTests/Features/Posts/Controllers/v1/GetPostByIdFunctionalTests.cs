@@ -1,13 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class GetPostByIdFunctionalTests : BasePostFunctionalTest
 {
@@ -22,7 +13,6 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetPostByIdRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -41,7 +31,6 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetPostByIdRequest(
             PostTestUtilities.InvalidId
         );

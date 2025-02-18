@@ -1,9 +1,4 @@
-﻿using FluentValidation.TestHelper;
-using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
-using InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 
 namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Commands.Add;
 
@@ -20,7 +15,6 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingFollower = CreateUser();
         var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             null,
@@ -40,7 +34,6 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollower = CreateUser();
         var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             SharedTestUtilities.GetString(length)!,
@@ -58,7 +51,6 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollower = CreateUser();
-        var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             existingFollower.Id,
             null);
@@ -78,7 +70,6 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollower = CreateUser();
-        var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             existingFollower.Id,
             SharedTestUtilities.GetString(length));

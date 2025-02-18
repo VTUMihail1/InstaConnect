@@ -1,11 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Utilities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
+﻿using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Controllers.v1;
 

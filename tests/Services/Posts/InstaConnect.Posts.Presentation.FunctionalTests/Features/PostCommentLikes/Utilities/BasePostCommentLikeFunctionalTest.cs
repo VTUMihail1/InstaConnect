@@ -1,20 +1,12 @@
-﻿using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstract;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Posts.Abstract;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Users.Abstract;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
+using InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
+using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Abstractions;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Helpers;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Utilities;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -141,9 +133,9 @@ public abstract class BasePostCommentLikeFunctionalTest : IClassFixture<PostsWeb
             user);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var PostCommentLikeWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostCommentLikeWriteRepository>();
+        var postCommentLikeWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostCommentLikeWriteRepository>();
 
-        PostCommentLikeWriteRepository.Add(postCommentLike);
+        postCommentLikeWriteRepository.Add(postCommentLike);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return postCommentLike;
@@ -172,22 +164,22 @@ public abstract class BasePostCommentLikeFunctionalTest : IClassFixture<PostsWeb
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<PostsContext>();
 
-        if (dbContext.PostCommentLikes.Any())
+        if (await dbContext.PostCommentLikes.AnyAsync(CancellationToken))
         {
             await dbContext.PostCommentLikes.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.PostComments.Any())
+        if (await dbContext.PostComments.AnyAsync(CancellationToken))
         {
             await dbContext.PostComments.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Posts.Any())
+        if (await dbContext.Posts.AnyAsync(CancellationToken))
         {
             await dbContext.Posts.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }

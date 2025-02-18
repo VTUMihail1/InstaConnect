@@ -1,10 +1,8 @@
-﻿using System.Net;
+﻿using System.Globalization;
 using System.Net.Http.Json;
 using System.Security.Claims;
-using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
+
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Abstractions;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Helpers;
 public class PostsClient : IPostsClient
@@ -195,9 +193,10 @@ public class PostsClient : IPostsClient
         await _httpClient.DeleteAsync(route, cancellationToken);
     }
 
-    private string GetAllRoute(GetAllPostsRequest request)
+    private static string GetAllRoute(GetAllPostsRequest request)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             PostTestRoutes.GetAll,
             request.UserId,
             request.UserName,
@@ -210,9 +209,10 @@ public class PostsClient : IPostsClient
         return route;
     }
 
-    private string IdRoute(string id)
+    private static string IdRoute(string id)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             PostTestRoutes.Id,
             id);
 

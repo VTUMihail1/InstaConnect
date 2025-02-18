@@ -1,7 +1,4 @@
-﻿using InstaConnect.Shared.Common.Models.Enums;
-using Microsoft.AspNetCore.Mvc;
-
-namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
+﻿namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 
 public record GetAllPostCommentsRequest(
     [FromQuery(Name = "userId")] string UserId = "",

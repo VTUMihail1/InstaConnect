@@ -1,12 +1,5 @@
-﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Commands.Login;
-using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
+﻿using InstaConnect.Identity.Application.Features.Users.Commands.Login;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
-using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Common.Utilities;
-using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Login;
 
@@ -28,7 +21,6 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserInvalidDetailsException_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidPassword

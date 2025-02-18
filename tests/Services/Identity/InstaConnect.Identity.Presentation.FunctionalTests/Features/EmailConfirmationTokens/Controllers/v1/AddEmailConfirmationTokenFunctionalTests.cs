@@ -1,11 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models.Requests;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Application.Contracts.Emails;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Shared.Application.Contracts.EmailConfirmationTokens;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Controllers.v1;
 
@@ -22,7 +15,6 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddEmailConfirmationTokenRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -40,7 +32,6 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddEmailConfirmationTokenRequest(
             UserTestUtilities.ValidAddEmail
         );
@@ -122,7 +113,6 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 
         // Act
         await EmailConfirmationTokensClient.AddAsync(request, CancellationToken);
-        var user = await UserWriteRepository.GetByIdAsync(existingUser.Id, CancellationToken);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserConfirmEmailTokenCreatedEvent>(m =>

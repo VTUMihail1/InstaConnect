@@ -1,17 +1,8 @@
-﻿using Asp.Versioning;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
+﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
 using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
-using InstaConnect.Posts.Presentation.Features.PostComments.Utilities;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Presentation.Utilities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
 
 namespace InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1;
 

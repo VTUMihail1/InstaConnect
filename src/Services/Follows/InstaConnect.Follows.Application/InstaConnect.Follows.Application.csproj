@@ -1,13 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Application\InstaConnect.Shared.Application.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Application\InstaConnect.Common.Application.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Follows.Common\InstaConnect.Follows.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Follows.Domain\InstaConnect.Follows.Domain.csproj" />
   </ItemGroup>
@@ -19,12 +14,29 @@
   	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
   	  <_Parameter1>InstaConnect.Follows.Application.IntegrationTests</_Parameter1>
   	</AssemblyAttribute>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-  	  <_Parameter1>InstaConnect.Follows.Presentation.UnitTests</_Parameter1>
-  	</AssemblyAttribute>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>InstaConnect.Follows.Presentation.FunctionalTests</_Parameter1>
-  	</AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- General -->
+    <Using Include="FluentValidation" />
+    <Using Include="Microsoft.Extensions.DependencyInjection" />
+
+    <!-- Follows -->
+    <Using Include="InstaConnect.Follows.Application.Features.Follows.Models" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Abstractions" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Exceptions" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Entities" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Follows.Domain.Features.Users.Abstractions" />
+    
+    <!-- Common -->
+    <Using Include="InstaConnect.Follows.Common.Features.Follows.Utilities" />
+    <Using Include="InstaConnect.Follows.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Shared.Application.Abstractions" />
+    <Using Include="InstaConnect.Shared.Common.Abstractions" />
+    <Using Include="InstaConnect.Shared.Common.Exceptions.Users" />
+    <Using Include="InstaConnect.Shared.Common.Models.Enums" />
   </ItemGroup>
 
 </Project>

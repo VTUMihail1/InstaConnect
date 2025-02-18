@@ -1,12 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Application.Contracts.Users;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Shared.Application.Contracts.Users;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
 
@@ -44,7 +36,6 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task UpdateCurrentAsync_ShouldReturnBadRequestResponse_WhenIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new UpdateCurrentUserRequest(
             null,
             new(
@@ -70,7 +61,6 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task UpdateCurrentAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new UpdateCurrentUserRequest(
             SharedTestUtilities.GetString(length),
             new(
@@ -170,7 +160,6 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task UpdateCurrentAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new UpdateCurrentUserRequest(
             UserTestUtilities.InvalidId,
             new(

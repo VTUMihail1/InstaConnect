@@ -1,6 +1,8 @@
 ﻿using System.Net.Mail;
+
 using InstaConnect.Emails.Application.Features.Emails.Abstractions;
 using InstaConnect.Emails.Infrastructure.Features.Emails.Models.Options;
+
 using Microsoft.Extensions.Options;
 
 namespace InstaConnect.Emails.Infrastructure.Features.Emails.Helpers;
