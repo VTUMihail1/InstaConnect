@@ -1,21 +1,18 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
 using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Mappings;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.Posts.Presentation.Extensions;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Common.Utilities;
-using NSubstitute;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostCommentLikes.Utilities;
 
@@ -27,20 +24,16 @@ public abstract class BasePostCommentLikeUnitTest
 
     protected IInstaConnectMapper InstaConnectMapper { get; }
 
-    public BasePostCommentLikeUnitTest()
+    protected BasePostCommentLikeUnitTest()
     {
         CancellationToken = new CancellationToken();
         InstaConnectSender = Substitute.For<IInstaConnectSender>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg =>
-                {
-                    cfg.AddProfile<PostCommentLikeCommandProfile>();
-                    cfg.AddProfile<PostCommentLikeQueryProfile>();
-                })));
+                new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
     }
 
-    private User CreateUserUtil()
+    private static User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -52,14 +45,14 @@ public abstract class BasePostCommentLikeUnitTest
         return user;
     }
 
-    protected User CreateUser()
+    protected static User CreateUser()
     {
         var user = CreateUserUtil();
 
         return user;
     }
 
-    private Post CreatePostUtil(User user)
+    private static Post CreatePostUtil(User user)
     {
         var post = new Post(
             SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
@@ -69,7 +62,7 @@ public abstract class BasePostCommentLikeUnitTest
         return post;
     }
 
-    protected Post CreatePost()
+    protected static Post CreatePost()
     {
         var user = CreateUser();
         var post = CreatePostUtil(user);
@@ -77,7 +70,7 @@ public abstract class BasePostCommentLikeUnitTest
         return post;
     }
 
-    private PostComment CreatePostCommentUtil(User user, Post post)
+    private static PostComment CreatePostCommentUtil(User user, Post post)
     {
         var postComment = new PostComment(
             user,
@@ -87,7 +80,7 @@ public abstract class BasePostCommentLikeUnitTest
         return postComment;
     }
 
-    protected PostComment CreatePostComment()
+    protected static PostComment CreatePostComment()
     {
         var user = CreateUser();
         var post = CreatePost();

@@ -1,23 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
   <ItemGroup>
-    <Compile Remove="Features\Users\Models\Options\**" />
-    <EmbeddedResource Remove="Features\Users\Models\Options\**" />
-    <None Remove="Features\Users\Models\Options\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="7.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Application\InstaConnect.Shared.Application.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Application\InstaConnect.Common.Application.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Identity.Common\InstaConnect.Identity.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Identity.Domain\InstaConnect.Identity.Domain.csproj" />
   </ItemGroup>
@@ -29,12 +14,50 @@
   	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
   	  <_Parameter1>InstaConnect.Identity.Application.IntegrationTests</_Parameter1>
   	</AssemblyAttribute>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-  	  <_Parameter1>InstaConnect.Identity.Presentation.UnitTests</_Parameter1>
-  	</AssemblyAttribute>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-  	  <_Parameter1>InstaConnect.Identity.Presentation.FunctionalTests</_Parameter1>
-  	</AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- General -->
+    <Using Include="FluentValidation" />
+    <Using Include="Microsoft.Extensions.DependencyInjection" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Abstractions" />
+    <Using Include="InstaConnect.Identity.Application.Features.Users.Models" />
+    <Using Include="InstaConnect.Identity.Domain.Features.Users.Abstractions" />
+    <Using Include="InstaConnect.Identity.Domain.Features.Users.Exceptions" />
+    <Using Include="InstaConnect.Identity.Domain.Features.Users.Models.Entities" />
+
+    <!-- User Claims -->
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Abstractions" />
+    <Using Include="InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities" />
+
+    <!-- Email Confirmation Tokens -->
+    <Using Include="InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions" />
+    <Using Include="InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models" />
+    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions" />
+    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Exceptions" />
+    <Using Include="InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities" />
+
+    <!-- Forgot Password Tokens -->
+    <Using Include="InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Abstractions" />
+    <Using Include="InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Models" />
+    <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions" />
+    <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Exceptions" />
+    <Using Include="InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Shared.Application.Contracts.Users" />
+    <Using Include="InstaConnect.Shared.Application.Contracts.EmailConfirmationTokens" />
+    <Using Include="InstaConnect.Shared.Application.Contracts.ForgotPasswordTokens" />
+    <Using Include="InstaConnect.Shared.Application.Models" />
+    <Using Include="InstaConnect.Identity.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities" />
+    <Using Include="InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities" />
+    <Using Include="InstaConnect.Shared.Application.Abstractions" />
+    <Using Include="InstaConnect.Shared.Common.Abstractions" />
+    <Using Include="InstaConnect.Shared.Common.Exceptions.Users" />
+    <Using Include="InstaConnect.Shared.Common.Models.Enums" />
   </ItemGroup>
 
 </Project>

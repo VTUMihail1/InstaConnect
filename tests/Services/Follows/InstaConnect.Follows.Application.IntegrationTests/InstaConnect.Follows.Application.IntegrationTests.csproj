@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
 
     <IsPackable>false</IsPackable>
@@ -10,25 +8,42 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.2">
+    <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
-    <PackageReference Include="xunit" Version="2.9.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Follows\InstaConnect.Follows.Common\InstaConnect.Follows.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Follows\InstaConnect.Follows.Presentation\InstaConnect.Follows.Presentation.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <!-- General -->
+    <Using Include="FluentAssertions" />
     <Using Include="Xunit" />
+
+    <!-- Follows -->
+    <Using Include="InstaConnect.Follows.Application.Features.Follows.Models" />
+    <Using Include="InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Utilities" />
+    <Using Include="InstaConnect.Follows.Application.IntegrationTests.Utilities" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Exceptions" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Entities" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Follows.Common.Features.Follows.Utilities" />
+    <Using Include="InstaConnect.Follows.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Shared.Common.Exceptions.Base" />
+    <Using Include="InstaConnect.Shared.Common.Exceptions.Users" />
+    <Using Include="InstaConnect.Shared.Common.Utilities" />
   </ItemGroup>
 
 </Project>

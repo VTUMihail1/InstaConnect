@@ -1,10 +1,8 @@
-﻿using System.Net;
+﻿using System.Globalization;
 using System.Net.Http.Json;
 using System.Security.Claims;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
+
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Abstractions;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Utilities;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Helpers;
 public class PostCommentLikesClient : IPostCommentLikesClient
@@ -148,9 +146,10 @@ public class PostCommentLikesClient : IPostCommentLikesClient
         await _httpClient.DeleteAsync(route, cancellationToken);
     }
 
-    private string GetAllRoute(GetAllPostCommentLikesRequest request)
+    private static string GetAllRoute(GetAllPostCommentLikesRequest request)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             PostCommentLikeTestRoutes.GetAll,
             request.UserId,
             request.UserName,
@@ -163,9 +162,10 @@ public class PostCommentLikesClient : IPostCommentLikesClient
         return route;
     }
 
-    private string IdRoute(string id)
+    private static string IdRoute(string id)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             PostCommentLikeTestRoutes.Id,
             id);
 

@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete;
-using InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Application.IntegrationTests.Utilities;
-using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.PostCommentLike;
-using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Commands;
 
@@ -19,7 +10,7 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -33,14 +24,14 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(PostCommentLikeConfigurations.IdMinLength - 1)]
     [InlineData(PostCommentLikeConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -54,11 +45,11 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -72,14 +63,14 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -93,7 +84,7 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]

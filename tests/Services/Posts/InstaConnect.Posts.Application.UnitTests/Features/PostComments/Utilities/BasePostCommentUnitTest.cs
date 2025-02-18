@@ -1,20 +1,16 @@
 ﻿using AutoMapper;
-using InstaConnect.Posts.Application.Features.PostComments.Mappings;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostComments.Abstract;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
+
+using InstaConnect.Posts.Application.Extensions;
+using InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
-using InstaConnect.Posts.Domain.Features.Posts.Abstract;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Users.Abstract;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
+using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Domain.Features.Users.Abstractions;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Common.Utilities;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Domain.Models.Pagination;
-using NSubstitute;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities;
 
@@ -36,16 +32,12 @@ public abstract class BasePostCommentUnitTest
 
     protected IPostCommentWriteRepository PostCommentWriteRepository { get; }
 
-    public BasePostCommentUnitTest()
+    protected BasePostCommentUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg =>
-                {
-                    cfg.AddProfile<PostCommentQueryProfile>();
-                    cfg.AddProfile<PostCommentCommandProfile>();
-                })));
+                new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
         EntityPropertyValidator = new EntityPropertyValidator();
         CancellationToken = new CancellationToken();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();

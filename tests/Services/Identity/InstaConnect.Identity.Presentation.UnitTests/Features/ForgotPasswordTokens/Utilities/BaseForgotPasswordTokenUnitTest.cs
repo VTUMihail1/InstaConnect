@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Mappings;
+
+using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
+using InstaConnect.Identity.Presentation.Extensions;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Common.Utilities;
-using NSubstitute;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 
 namespace InstaConnect.Identity.Presentation.UnitTests.Features.ForgotPasswordTokens.Utilities;
 
@@ -18,16 +17,16 @@ public abstract class BaseForgotPasswordTokenUnitTest
 
     protected IInstaConnectMapper InstaConnectMapper { get; }
 
-    public BaseForgotPasswordTokenUnitTest()
+    protected BaseForgotPasswordTokenUnitTest()
     {
         CancellationToken = new CancellationToken();
         InstaConnectSender = Substitute.For<IInstaConnectSender>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg => cfg.AddProfile<ForgotPasswordTokenCommandProfile>())));
+                new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
     }
 
-    private User CreateUserUtil()
+    private static User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -40,14 +39,14 @@ public abstract class BaseForgotPasswordTokenUnitTest
         return user;
     }
 
-    protected User CreateUser()
+    protected static User CreateUser()
     {
         var user = CreateUserUtil();
 
         return user;
     }
 
-    private ForgotPasswordToken CreateForgotPasswordTokenUtil(User user)
+    private static ForgotPasswordToken CreateForgotPasswordTokenUtil(User user)
     {
         var forgotPasswordToken = new ForgotPasswordToken(
             SharedTestUtilities.GetGuid(),
@@ -57,7 +56,7 @@ public abstract class BaseForgotPasswordTokenUnitTest
         return forgotPasswordToken;
     }
 
-    protected ForgotPasswordToken CreateForgotPasswordToken()
+    protected static ForgotPasswordToken CreateForgotPasswordToken()
     {
         var user = CreateUser();
         var forgotPasswordToken = CreateForgotPasswordTokenUtil(user);

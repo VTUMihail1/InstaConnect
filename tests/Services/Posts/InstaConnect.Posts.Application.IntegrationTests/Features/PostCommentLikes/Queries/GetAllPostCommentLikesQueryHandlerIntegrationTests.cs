@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
-using InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Application.IntegrationTests.Utilities;
-using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Queries;
 
@@ -20,7 +11,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
     [Theory]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenUserIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -37,13 +28,13 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(UserConfigurations.NameMinLength - 1)]
     [InlineData(UserConfigurations.NameMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenUserNameLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -60,13 +51,13 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(PostCommentConfigurations.IdMinLength - 1)]
     [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenPostCommentIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenPostCommentIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -83,11 +74,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyNameIsNull()
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -104,11 +95,11 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenMessageDoesNotContaintSortPropertyName()
+    public async Task SendAsync_ShouldThrowValidationException_WhenMessageDoesNotContaintSortPropertyName()
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -125,14 +116,14 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(SharedConfigurations.SortOrderMinLength - 1)]
     [InlineData(SharedConfigurations.SortOrderMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenSortPropertyNameLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyNameLengthIsInvalid(int length)
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -149,13 +140,13 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(SharedConfigurations.PageMinValue - 1)]
     [InlineData(SharedConfigurations.PageMaxValue + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenPageValueIsInvalid(int value)
+    public async Task SendAsync_ShouldThrowValidationException_WhenPageValueIsInvalid(int value)
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -172,13 +163,13 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(SharedConfigurations.PageSizeMinValue - 1)]
     [InlineData(SharedConfigurations.PageSizeMaxValue + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenPageSizeValueIsInvalid(int value)
+    public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeValueIsInvalid(int value)
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
@@ -195,7 +186,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]

@@ -1,13 +1,5 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Application.Contracts.Emails;
+﻿using InstaConnect.Shared.Application.Contracts.EmailConfirmationTokens;
 using InstaConnect.Shared.Application.Contracts.Users;
-using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
 
@@ -232,7 +224,6 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldReturnOkResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddUserRequest(
             new(
             UserTestUtilities.ValidAddName,
@@ -257,7 +248,6 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldRegisterUser_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddUserRequest(
             new(
             UserTestUtilities.ValidAddName,
@@ -290,7 +280,6 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldRegisterUser_WhenUserIsValidAndFormFileIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddUserRequest(
             new(
             UserTestUtilities.ValidAddName,
@@ -323,7 +312,6 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldPublishUserCreatedEvent_WhenUserIsValid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddUserRequest(
             new(
             UserTestUtilities.ValidAddName,
@@ -357,7 +345,6 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldPublishUserCreatedEvent_WhenUserIsValidAndFormFileIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddUserRequest(
             new(
             UserTestUtilities.ValidAddName,
@@ -391,7 +378,6 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldPublishUserConfirmEmailTokenCreatedEvent_WhenUserIsValid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddUserRequest(
             new(
             UserTestUtilities.ValidAddName,
@@ -404,7 +390,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
         );
 
         // Act
-        var response = await UsersClient.AddAsync(request, CancellationToken);
+        await UsersClient.AddAsync(request, CancellationToken);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserConfirmEmailTokenCreatedEvent>(m =>

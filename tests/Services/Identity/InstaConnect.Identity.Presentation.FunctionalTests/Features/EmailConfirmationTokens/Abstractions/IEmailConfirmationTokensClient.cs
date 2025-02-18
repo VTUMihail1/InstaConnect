@@ -1,7 +1,4 @@
-﻿using System.Net;
-using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Models.Requests;
-
-namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Abstractions;
+﻿namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Abstractions;
 public interface IEmailConfirmationTokensClient
 {
     Task AddAsync(AddEmailConfirmationTokenRequest request, CancellationToken cancellationToken);

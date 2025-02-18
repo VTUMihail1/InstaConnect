@@ -1,11 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Application.Contracts.Users;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Shared.Application.Contracts.Users;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
 
@@ -38,7 +31,6 @@ public class DeleteCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task DeleteCurrentAsync_ShouldReturnBadRequestResponse_WhenIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new DeleteCurrentUserRequest(
             null
         );
@@ -59,7 +51,6 @@ public class DeleteCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task DeleteCurrentAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new DeleteCurrentUserRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -77,7 +68,6 @@ public class DeleteCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task DeleteCurrentAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new DeleteCurrentUserRequest(
             UserTestUtilities.InvalidId
         );

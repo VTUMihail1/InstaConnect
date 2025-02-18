@@ -1,10 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
-using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Exceptions.User;
-using NSubstitute;
+﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetByName;
 
@@ -23,7 +17,6 @@ public class GetUserByNameQueryHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenNameIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var query = new GetUserByNameQuery(UserTestUtilities.ValidAddName);
 
         // Act

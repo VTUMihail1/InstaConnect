@@ -1,9 +1,6 @@
-﻿using InstaConnect.Posts.Domain.Features.PostLikes.Abstract;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
+﻿using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using InstaConnect.Shared.Infrastructure.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Repositories;
 

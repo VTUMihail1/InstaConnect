@@ -1,13 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
 
 public class DeletePostLikeFunctionalTests : BasePostLikeFunctionalTest
 {
@@ -180,10 +171,10 @@ public class DeletePostLikeFunctionalTests : BasePostLikeFunctionalTest
         // Act
         await PostLikesClient.DeleteAsync(request, CancellationToken);
 
-        var message = await PostLikeWriteRepository.GetByIdAsync(existingPostLike.Id, CancellationToken);
+        var postLike = await PostLikeWriteRepository.GetByIdAsync(existingPostLike.Id, CancellationToken);
 
         // Assert
-        message
+        postLike
             .Should()
             .BeNull();
     }

@@ -1,8 +1,4 @@
-﻿using FluentValidation.TestHelper;
-using InstaConnect.Identity.Application.Features.Users.Commands.Login;
-using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Identity.Application.Features.Users.Commands.Login;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Login;
 
@@ -19,7 +15,6 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailIsNull()
     {
         // Arrange
-        var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
             null,
             UserTestUtilities.ValidPassword
@@ -39,7 +34,6 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPassword

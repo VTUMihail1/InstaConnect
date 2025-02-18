@@ -1,7 +1,4 @@
-﻿using InstaConnect.Shared.Common.Models.Enums;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Messages.Common.Features.Messages.Utilities;
+﻿namespace InstaConnect.Messages.Common.Features.Messages.Utilities;
 
 public class MessageTestUtilities : SharedTestUtilities
 {

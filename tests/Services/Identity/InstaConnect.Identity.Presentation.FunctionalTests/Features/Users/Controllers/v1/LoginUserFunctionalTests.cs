@@ -1,13 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
+﻿namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
 
 public class LoginUserFunctionalTests : BaseUserFunctionalTest
 {
@@ -20,7 +11,6 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     public async Task LoginAsync_ShouldReturnBadRequestResponse_WhenEmailIsNull()
     {
         // Arrange
-        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var request = new LoginUserRequest(
             new(
             null,
@@ -43,7 +33,6 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     public async Task LoginAsync_ShouldReturnBadRequestResponse_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var request = new LoginUserRequest(
             new(
             SharedTestUtilities.GetString(length),
@@ -63,7 +52,6 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     public async Task LoginAsync_ShouldReturnBadRequestResponse_WhenPasswordIsNull()
     {
         // Arrange
-        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var request = new LoginUserRequest(
             new(
             UserTestUtilities.ValidPassword,
@@ -106,7 +94,6 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     public async Task LoginAsync_ShouldReturnBadRequestResponse_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var request = new LoginUserRequest(
             new(
             UserTestUtilities.ValidAddEmail,

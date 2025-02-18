@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-
-namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
+﻿namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
 public class AddForgotPasswordTokenCommandValidator : AbstractValidator<AddForgotPasswordTokenCommand>
 {
     public AddForgotPasswordTokenCommandValidator()
@@ -10,6 +7,5 @@ public class AddForgotPasswordTokenCommandValidator : AbstractValidator<AddForgo
             .NotEmpty()
             .MinimumLength(UserConfigurations.EmailMinLength)
             .MaximumLength(UserConfigurations.EmailMaxLength);
-        ;
     }
 }

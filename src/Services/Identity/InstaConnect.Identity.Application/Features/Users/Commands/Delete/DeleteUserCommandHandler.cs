@@ -1,9 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Abstractions;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Contracts.Users;
-using InstaConnect.Shared.Common.Exceptions.User;
-
-namespace InstaConnect.Identity.Application.Features.Users.Commands.Delete;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.Delete;
 
 public class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand>
 {

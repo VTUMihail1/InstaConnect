@@ -1,10 +1,8 @@
-﻿using System.Net;
+﻿using System.Globalization;
 using System.Net.Http.Json;
 using System.Security.Claims;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
+
 using InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Abstractions;
-using InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Utilities;
 
 namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Helpers;
 public class MessagesClient : IMessagesClient
@@ -242,9 +240,10 @@ public class MessagesClient : IMessagesClient
         await _httpClient.DeleteAsync(route, cancellationToken);
     }
 
-    private string GetAllRoute(GetAllMessagesRequest request)
+    private static string GetAllRoute(GetAllMessagesRequest request)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             MessageTestRoutes.GetAll,
             request.ReceiverId,
             request.ReceiverName,
@@ -256,9 +255,10 @@ public class MessagesClient : IMessagesClient
         return route;
     }
 
-    private string IdRoute(string id)
+    private static string IdRoute(string id)
     {
         var route = string.Format(
+            CultureInfo.InvariantCulture,
             MessageTestRoutes.Id,
             id);
 

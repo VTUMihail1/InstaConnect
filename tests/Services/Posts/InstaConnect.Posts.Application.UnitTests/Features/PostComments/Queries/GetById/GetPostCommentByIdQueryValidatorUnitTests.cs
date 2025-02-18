@@ -1,8 +1,4 @@
-﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
-using InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Queries.GetById;
 
@@ -19,7 +15,6 @@ public class GetPostCommentByIdQueryValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var existingPostComment = CreatePostComment();
         var query = new GetPostCommentByIdQuery(null);
 
         // Act
@@ -36,7 +31,6 @@ public class GetPostCommentByIdQueryValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPostComment = CreatePostComment();
         var query = new GetPostCommentByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act

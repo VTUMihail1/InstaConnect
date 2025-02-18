@@ -1,13 +1,9 @@
-﻿using InstaConnect.Messages.Application.IntegrationTests.Utilities;
-using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Users.Utilities;
-using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
-using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
-using InstaConnect.Messages.Domain.Features.Users.Abstract;
+﻿using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+using InstaConnect.Messages.Domain.Features.Users.Abstractions;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Messages.Infrastructure;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Utilities;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -128,12 +124,12 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTest
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<MessagesContext>();
 
-        if (dbContext.Messages.Any())
+        if (await dbContext.Messages.AnyAsync(CancellationToken))
         {
             await dbContext.Messages.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }

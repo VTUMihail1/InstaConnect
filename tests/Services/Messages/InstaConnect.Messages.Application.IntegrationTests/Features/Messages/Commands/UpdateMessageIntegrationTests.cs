@@ -1,14 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
-using InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
-using InstaConnect.Messages.Application.IntegrationTests.Utilities;
-using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Users.Utilities;
-using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.Message;
-using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
 
 namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Commands;
 
@@ -19,7 +9,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -33,14 +23,14 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(MessageConfigurations.IdMinLength - 1)]
     [InlineData(MessageConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -54,11 +44,11 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -72,14 +62,14 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -93,11 +83,11 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenContentIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenContentIsNull()
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -111,14 +101,14 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(MessageConfigurations.ContentMinLength - 1)]
     [InlineData(MessageConfigurations.ContentMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenContentLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
@@ -132,7 +122,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
@@ -185,7 +175,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var message = await MessageWriteRepository.GetByIdAsync(existingMessage.Id, CancellationToken);
+        var message = await MessageWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         message
@@ -209,7 +199,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var message = await MessageWriteRepository.GetByIdAsync(existingMessage.Id, CancellationToken);
+        var message = await MessageWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         message

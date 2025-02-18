@@ -1,10 +1,5 @@
-﻿using FluentAssertions;
-using InstaConnect.Messages.Application.Features.Messages.Models;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
-using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Messages.Utilities;
+﻿using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
-using NSubstitute;
 
 namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Queries.GetAll;
 

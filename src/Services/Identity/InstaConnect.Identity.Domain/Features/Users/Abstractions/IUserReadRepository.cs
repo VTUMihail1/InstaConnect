@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+﻿using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
 using InstaConnect.Shared.Domain.Models.Pagination;
 

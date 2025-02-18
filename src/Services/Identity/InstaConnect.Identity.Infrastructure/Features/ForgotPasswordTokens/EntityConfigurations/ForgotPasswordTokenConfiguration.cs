@@ -1,8 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.EntityConfigurations;
+﻿namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.EntityConfigurations;
 
 public class ForgotPasswordTokenConfiguration : IEntityTypeConfiguration<ForgotPasswordToken>
 {

@@ -1,7 +1,4 @@
-﻿using InstaConnect.Posts.Application.Features.PostComments.Models;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Models.Filters;
-using InstaConnect.Shared.Common.Models.Enums;
+﻿using InstaConnect.Shared.Application.Models.Filters;
 
 namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 

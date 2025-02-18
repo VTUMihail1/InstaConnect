@@ -1,15 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Controllers.v1;
 
 public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
 {
@@ -202,40 +191,6 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnPostCommentPaginationCollectionResponse_WhenRequestIsValid()
-    {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var request = new GetAllPostCommentsRequest(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await PostCommentsClient.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostCommentPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostComment.Id &&
-                                                               m.UserId == existingPostComment.UserId &&
-                                                               m.UserName == existingPostComment.User.UserName &&
-                                                               m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                               m.PostId == existingPostComment.PostId &&
-                                                               m.Content == existingPostComment.Content) &&
-                                                               mc.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnPostCommentPaginationCollectionResponse_WhenRequestIsValidAndCurrentUserIdCaseDoesNotMatch()
     {
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);

@@ -1,7 +1,4 @@
-﻿using System.Net;
-using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests;
-
-namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Abstractions;
+﻿namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Abstractions;
 public interface IForgotPasswordTokensClient
 {
     Task AddAsync(AddForgotPasswordTokenRequest request, CancellationToken cancellationToken);

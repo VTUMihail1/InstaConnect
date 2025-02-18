@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
-using InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
-using InstaConnect.Messages.Application.IntegrationTests.Utilities;
-using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Users.Utilities;
-using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.User;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
 
 namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Commands;
 public class AddMessageIntegrationTests : BaseMessageIntegrationTest
@@ -17,7 +8,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
     {
         // Arrange
         var existingReceiver = await CreateUserAsync(CancellationToken);
@@ -31,14 +22,14 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenCurrentUserIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingReceiver = await CreateUserAsync(CancellationToken);
@@ -52,11 +43,11 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenReceiverIdIsNull()
     {
         // Arrange
         var existingSender = await CreateUserAsync(CancellationToken);
@@ -70,14 +61,14 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(UserConfigurations.IdMinLength - 1)]
     [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenReceiverIdLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenReceiverIdLengthIsInvalid(int length)
     {
         // Arrange
         var existingSender = await CreateUserAsync(CancellationToken);
@@ -91,11 +82,11 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenContentIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenContentIsNull()
     {
         // Arrange
         var existingSender = await CreateUserAsync(CancellationToken);
@@ -110,14 +101,14 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Theory]
     [InlineData(default(int))]
     [InlineData(MessageConfigurations.ContentMinLength - 1)]
     [InlineData(MessageConfigurations.ContentMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowBadRequestException_WhenContentLengthIsInvalid(int length)
+    public async Task SendAsync_ShouldThrowValidationException_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
         var existingSender = await CreateUserAsync(CancellationToken);
@@ -132,7 +123,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<AppValidationException>();
     }
 
     [Fact]

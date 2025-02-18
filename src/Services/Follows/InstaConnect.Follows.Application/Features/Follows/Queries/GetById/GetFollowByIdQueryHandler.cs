@@ -1,9 +1,4 @@
-﻿using InstaConnect.Follows.Application.Features.Follows.Models;
-using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Follow;
-
-namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
+﻿namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 
 public class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, FollowQueryViewModel>
 {

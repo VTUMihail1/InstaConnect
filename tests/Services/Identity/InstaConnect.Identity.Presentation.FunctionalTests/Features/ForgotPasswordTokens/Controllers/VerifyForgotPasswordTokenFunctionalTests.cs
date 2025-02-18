@@ -1,14 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Models.Requests;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Utilities;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Controllers;
+﻿namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Controllers;
 
 public class VerifyForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunctionalTest
 {

@@ -1,7 +1,4 @@
-﻿using InstaConnect.Follows.Application.Features.Follows.Models;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Models.Filters;
-using InstaConnect.Shared.Common.Models.Enums;
+﻿using InstaConnect.Shared.Application.Models.Filters;
 
 namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 

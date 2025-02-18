@@ -1,10 +1,5 @@
-﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
-using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
+﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
-using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetAll;
 
@@ -80,6 +75,5 @@ public class GetAllUsersQueryHandlerUnitTests : BaseUserUnitTest
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
-        ;
     }
 }

@@ -1,5 +1,5 @@
 ﻿namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
-public class UserTestRoutes
+public abstract class UserTestRoutes
 {
     public const string Default = "api/v1/users";
 

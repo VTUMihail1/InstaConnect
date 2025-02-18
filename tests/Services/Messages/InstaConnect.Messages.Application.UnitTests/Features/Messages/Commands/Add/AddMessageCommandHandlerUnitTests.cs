@@ -1,13 +1,5 @@
-﻿using FluentAssertions;
-using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
-using InstaConnect.Messages.Application.Features.Messages.Models;
-using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Users.Utilities;
+﻿using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
 using InstaConnect.Messages.Domain.Features.Messages.Models;
-using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
-using InstaConnect.Shared.Common.Exceptions.User;
-using NSubstitute;
 
 namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Commands.Add;
 
@@ -29,7 +21,6 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenSenderIdIsInvalid()
     {
         // Arrange
-        var existingSender = CreateUser();
         var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
             UserTestUtilities.InvalidId,
@@ -49,7 +40,6 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingSender = CreateUser();
-        var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
             existingSender.Id,
             UserTestUtilities.InvalidId,

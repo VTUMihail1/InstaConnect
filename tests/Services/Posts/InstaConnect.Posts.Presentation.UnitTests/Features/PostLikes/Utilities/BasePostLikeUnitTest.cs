@@ -1,19 +1,16 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostLikes.Models;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Mappings;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.Posts.Presentation.Extensions;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Common.Utilities;
-using NSubstitute;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Utilities;
 
@@ -25,20 +22,16 @@ public abstract class BasePostLikeUnitTest
 
     protected CancellationToken CancellationToken { get; }
 
-    public BasePostLikeUnitTest()
+    protected BasePostLikeUnitTest()
     {
         InstaConnectSender = Substitute.For<IInstaConnectSender>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg =>
-                {
-                    cfg.AddProfile<PostLikeCommandProfile>();
-                    cfg.AddProfile<PostLikeQueryProfile>();
-                })));
+                new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
         CancellationToken = new CancellationToken();
     }
 
-    private User CreateUserUtil()
+    private static User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -50,14 +43,14 @@ public abstract class BasePostLikeUnitTest
         return user;
     }
 
-    protected User CreateUser()
+    protected static User CreateUser()
     {
         var user = CreateUserUtil();
 
         return user;
     }
 
-    private Post CreatePostUtil(User user)
+    private static Post CreatePostUtil(User user)
     {
         var post = new Post(
             SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
@@ -67,7 +60,7 @@ public abstract class BasePostLikeUnitTest
         return post;
     }
 
-    protected Post CreatePost()
+    protected static Post CreatePost()
     {
         var user = CreateUser();
         var post = CreatePostUtil(user);

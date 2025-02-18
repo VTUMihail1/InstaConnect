@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Follows.Application.Features.Follows.Extensions;
 using InstaConnect.Shared.Application.Extensions;
-using Microsoft.Extensions.DependencyInjection;
+using InstaConnect.Shared.Common.Extensions;
 
 namespace InstaConnect.Follows.Application.Extensions;
 
@@ -8,15 +8,13 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
     {
-        var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
-
         serviceCollection
             .AddFollowServices();
 
         serviceCollection
-            .AddMediatR(currentAssembly)
-            .AddMapper(currentAssembly)
-            .AddValidators(currentAssembly);
+            .AddMediatR(ApplicationReference.Assembly)
+            .AddMapper(ApplicationReference.Assembly)
+            .AddValidators(ApplicationReference.Assembly);
 
         return serviceCollection;
     }

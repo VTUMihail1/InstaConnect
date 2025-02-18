@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 using InstaConnect.Follows.Application.Features.Follows.Commands.Delete;
-using InstaConnect.Follows.Application.Features.Follows.Models;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
-using InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 
 namespace InstaConnect.Follows.Presentation.Features.Follows.Mappings;
 

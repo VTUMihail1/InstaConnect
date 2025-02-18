@@ -1,15 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Responses;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
 
 public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
 {
@@ -218,39 +207,6 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnPostLikePaginationCollectionResponse_WhenRequestIsValid()
-    {
-        // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var request = new GetAllPostLikesRequest(
-            existingPostLike.UserId,
-            existingPostLike.User.UserName,
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await PostLikesClient.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostLikePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostLike.Id &&
-                                                               m.UserId == existingPostLike.UserId &&
-                                                               m.UserName == existingPostLike.User.UserName &&
-                                                               m.UserProfileImage == existingPostLike.User.ProfileImage &&
-                                                               m.PostId == existingPostLike.PostId) &&
-                                                               mc.Page == PostLikeTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnPostLikePaginationCollectionResponse_WhenRequestIsValidAndCurrentUserIdCaseDoesNotMatch()
     {
         // Arrange
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);

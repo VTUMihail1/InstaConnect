@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Presentation.Features.Posts.Controllers.v1;
-using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.Posts.Models.Responses;
-using InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Utilities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
+﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Controllers.v1;
 
@@ -102,7 +93,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
         );
 
         // Act
-        var response = await _postController.GetAllAsync(request, CancellationToken);
+        await _postController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

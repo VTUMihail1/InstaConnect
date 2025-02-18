@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Common.Features.PostComments.Utilities;
 
-public class PostCommentConfigurations
+public abstract class PostCommentConfigurations
 {
     public const int IdMinLength = 7;
     public const int IdMaxLength = 100;

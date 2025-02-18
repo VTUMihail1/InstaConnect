@@ -1,8 +1,4 @@
-﻿using System.Net;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
-
-namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Abstractions;
+﻿namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Abstractions;
 public interface IUsersClient
 {
     Task<UserCommandResponse> AddAsync(AddUserRequest request, CancellationToken cancellationToken);

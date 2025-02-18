@@ -1,5 +1,5 @@
 ﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Utilities;
-public class PostLikeTestRoutes
+public abstract class PostLikeTestRoutes
 {
     public const string Default = "api/v1/post-likes";
 

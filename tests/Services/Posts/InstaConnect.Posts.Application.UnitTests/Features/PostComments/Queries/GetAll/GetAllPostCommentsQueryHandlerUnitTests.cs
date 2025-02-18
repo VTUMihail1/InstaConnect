@@ -1,10 +1,5 @@
-﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostComments.Models;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
-using InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+﻿using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
-using NSubstitute;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Queries.GetAll;
 
@@ -81,6 +76,5 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
                                                            mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
-        ;
     }
 }

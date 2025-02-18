@@ -1,18 +1,15 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Posts.Presentation.Features.Posts.Mappings;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.Posts.Presentation.Extensions;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Common.Utilities;
-using NSubstitute;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Utilities;
 
@@ -24,20 +21,16 @@ public abstract class BasePostUnitTest
 
     protected IInstaConnectMapper InstaConnectMapper { get; }
 
-    public BasePostUnitTest()
+    protected BasePostUnitTest()
     {
         CancellationToken = new();
         InstaConnectSender = Substitute.For<IInstaConnectSender>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg =>
-                {
-                    cfg.AddProfile<PostCommandProfile>();
-                    cfg.AddProfile<PostQueryProfile>();
-                })));
+                new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
     }
 
-    private User CreateUserUtil()
+    private static User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -49,7 +42,7 @@ public abstract class BasePostUnitTest
         return user;
     }
 
-    protected User CreateUser()
+    protected static User CreateUser()
     {
         var user = CreateUserUtil();
 

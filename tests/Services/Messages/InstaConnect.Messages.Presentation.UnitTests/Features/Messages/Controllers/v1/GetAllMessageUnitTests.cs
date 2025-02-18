@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
-using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Presentation.Features.Messages.Controllers.v1;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
-using InstaConnect.Messages.Presentation.UnitTests.Features.Messages.Utilities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
+﻿using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 
 namespace InstaConnect.Messages.Presentation.UnitTests.Features.Messages.Controllers.v1;
 
@@ -104,7 +95,7 @@ public class GetAllMessageUnitTests : BaseMessageUnitTest
         );
 
         // Act
-        var response = await _messageController.GetAllAsync(request, CancellationToken);
+        await _messageController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

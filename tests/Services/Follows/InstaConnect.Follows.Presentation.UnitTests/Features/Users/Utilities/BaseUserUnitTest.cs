@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using InstaConnect.Follows.Common.Features.Users.Utilities;
+
 using InstaConnect.Follows.Domain.Features.Users.Abstractions;
-using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
-using InstaConnect.Follows.Presentation.Features.Users.Mappings;
+using InstaConnect.Follows.Presentation.Extensions;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Common.Utilities;
-using NSubstitute;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 
 namespace InstaConnect.Follows.Presentation.UnitTests.Features.Users.Utilities;
 
@@ -20,13 +18,13 @@ public abstract class BaseUserUnitTest
 
     protected IUserWriteRepository UserWriteRepository { get; }
 
-    public BaseUserUnitTest()
+    protected BaseUserUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         CancellationToken = new();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg => cfg.AddProfile<UserConsumerProfile>())));
+                new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
     }
 

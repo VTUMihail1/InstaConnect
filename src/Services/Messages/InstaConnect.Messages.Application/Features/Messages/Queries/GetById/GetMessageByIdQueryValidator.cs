@@ -1,8 +1,4 @@
-﻿using FluentValidation;
-using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Users.Utilities;
-
-namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
+﻿namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
 
 public class GetMessageByIdQueryValidator : AbstractValidator<GetMessageByIdQuery>
 {

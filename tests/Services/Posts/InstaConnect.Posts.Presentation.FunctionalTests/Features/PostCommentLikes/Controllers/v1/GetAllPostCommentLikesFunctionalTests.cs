@@ -1,15 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 
 public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunctionalTest
 {
@@ -218,39 +207,6 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnPostCommentLikePaginationCollectionResponse_WhenRequestIsValid()
-    {
-        // Arrange
-        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
-        var request = new GetAllPostCommentLikesRequest(
-            existingPostCommentLike.UserId,
-            existingPostCommentLike.User.UserName,
-            existingPostCommentLike.PostCommentId,
-            PostCommentLikeTestUtilities.ValidSortOrderProperty,
-            PostCommentLikeTestUtilities.ValidSortPropertyName,
-            PostCommentLikeTestUtilities.ValidPageValue,
-            PostCommentLikeTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await PostCommentLikesClient.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostCommentLike.Id &&
-                                                               m.UserId == existingPostCommentLike.UserId &&
-                                                               m.UserName == existingPostCommentLike.User.UserName &&
-                                                               m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
-                                                               m.PostCommentId == existingPostCommentLike.PostCommentId) &&
-                                                               mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnPostCommentLikePaginationCollectionResponse_WhenRequestIsValidAndCurrentUserIdCaseDoesNotMatch()
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);

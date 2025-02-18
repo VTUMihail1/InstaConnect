@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
+
+using InstaConnect.Identity.Application.Extensions;
 using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Mappings;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Abstractions;
-using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Common.Utilities;
-using NSubstitute;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.ForgotPasswordTokens.Utilities;
 
@@ -30,12 +27,12 @@ public abstract class BaseForgotPasswordTokenUnitTest
 
     protected IForgotPasswordTokenPublisher ForgotPasswordTokenPublisher { get; }
 
-    public BaseForgotPasswordTokenUnitTest()
+    protected BaseForgotPasswordTokenUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg => cfg.AddProfile<ForgotPasswordTokenCommandProfile>())));
+                new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
         CancellationToken = new CancellationToken();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         PasswordHasher = Substitute.For<IPasswordHasher>();

@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Mappings;
+
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
+using InstaConnect.Identity.Presentation.Extensions;
 using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Common.Utilities;
-using NSubstitute;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 
 namespace InstaConnect.Identity.Presentation.UnitTests.Features.EmailConfirmationTokens.Utilities;
 
@@ -18,16 +17,16 @@ public abstract class BaseEmailConfirmationTokenUnitTest
 
     protected IInstaConnectMapper InstaConnectMapper { get; }
 
-    public BaseEmailConfirmationTokenUnitTest()
+    protected BaseEmailConfirmationTokenUnitTest()
     {
         CancellationToken = new CancellationToken();
         InstaConnectSender = Substitute.For<IInstaConnectSender>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg => cfg.AddProfile<EmailConfirmationTokenCommandProfile>())));
+                new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
     }
 
-    private User CreateUserUtil()
+    private static User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -40,14 +39,14 @@ public abstract class BaseEmailConfirmationTokenUnitTest
         return user;
     }
 
-    protected User CreateUser()
+    protected static User CreateUser()
     {
         var user = CreateUserUtil();
 
         return user;
     }
 
-    private EmailConfirmationToken CreateEmailConfirmationTokenUtil(User user)
+    private static EmailConfirmationToken CreateEmailConfirmationTokenUtil(User user)
     {
         var emailConfirmationToken = new EmailConfirmationToken(
             SharedTestUtilities.GetGuid(),
@@ -57,7 +56,7 @@ public abstract class BaseEmailConfirmationTokenUnitTest
         return emailConfirmationToken;
     }
 
-    protected EmailConfirmationToken CreateEmailConfirmationToken()
+    protected static EmailConfirmationToken CreateEmailConfirmationToken()
     {
         var user = CreateUser();
         var emailConfirmationToken = CreateEmailConfirmationTokenUtil(user);

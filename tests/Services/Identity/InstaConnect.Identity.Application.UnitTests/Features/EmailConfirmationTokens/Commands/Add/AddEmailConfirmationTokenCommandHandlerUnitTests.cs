@@ -1,10 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
-using InstaConnect.Identity.Application.UnitTests.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Exceptions.User;
-using NSubstitute;
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.EmailConfirmationTokens.Commands.Add;
 
@@ -25,7 +19,6 @@ public class AddEmailConfirmationTokenCommandHandlerUnitTests : BaseEmailConfirm
     public async Task Handle_ShouldThrowUserNotFoundException_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidAddEmail);
 
         // Act

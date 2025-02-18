@@ -1,14 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
-using InstaConnect.Posts.Application.Features.PostComments.Models;
-using InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
-using InstaConnect.Shared.Common.Exceptions.Posts;
-using InstaConnect.Shared.Common.Exceptions.User;
-using NSubstitute;
+﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Commands.Add;
 
@@ -31,7 +21,6 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var post = CreatePost();
-        var user = CreateUser();
         var command = new AddPostCommentCommand(
             UserTestUtilities.InvalidId,
             post.Id,
@@ -48,7 +37,6 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     public async Task Handle_ShouldThrowPostNotFoundException_WhenPostIdIsInvalid()
     {
         // Arrange
-        var post = CreatePost();
         var user = CreateUser();
         var command = new AddPostCommentCommand(
             user.Id,

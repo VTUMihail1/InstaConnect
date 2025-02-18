@@ -1,8 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Abstractions;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using Microsoft.EntityFrameworkCore;
-
-namespace InstaConnect.Identity.Infrastructure.Features.Users.Repositories;
+﻿namespace InstaConnect.Identity.Infrastructure.Features.Users.Repositories;
 
 internal class UserWriteRepository : IUserWriteRepository
 {
@@ -40,18 +36,18 @@ internal class UserWriteRepository : IUserWriteRepository
             .Add(entity);
     }
 
-    public void Update(User user)
+    public void Update(User entity)
     {
         _identityContext
             .Users
-            .Update(user);
+            .Update(entity);
     }
 
-    public void Delete(User user)
+    public void Delete(User entity)
     {
         _identityContext
             .Users
-            .Remove(user);
+            .Remove(entity);
     }
 
     public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)

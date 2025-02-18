@@ -1,15 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Entitites;
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostComments.Models.Responses;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Controllers.v1;
 
 public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
 {

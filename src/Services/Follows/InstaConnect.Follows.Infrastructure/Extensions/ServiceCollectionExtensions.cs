@@ -1,10 +1,7 @@
 ﻿using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Follows.Infrastructure.Helpers;
-using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Follows.Infrastructure.Extensions;
 
@@ -12,8 +9,6 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
-
         serviceCollection
             .AddDatabaseContext<FollowsContext>(configuration);
 
@@ -22,9 +17,9 @@ public static class ServiceCollectionExtensions
             .AddUserServices();
 
         serviceCollection
-            .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
+            .AddServicesWithMatchingInterfaces(InfrastructureReference.Assembly)
             .AddUnitOfWork<FollowsContext>()
-            .AddRabbitMQ(configuration, currentAssembly)
+            .AddRabbitMQ(configuration, InfrastructureReference.Assembly)
             .AddJwtBearer(configuration)
             .AddDateTimeProvider();
 

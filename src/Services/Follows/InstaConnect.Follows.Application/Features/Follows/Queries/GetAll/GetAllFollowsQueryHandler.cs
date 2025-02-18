@@ -1,7 +1,4 @@
-﻿using InstaConnect.Follows.Application.Features.Follows.Models;
-using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
-using InstaConnect.Shared.Application.Abstractions;
+﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
 
 namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 

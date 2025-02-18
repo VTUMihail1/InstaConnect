@@ -2,11 +2,8 @@
 using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Identity.Infrastructure.Helpers;
-using InstaConnect.Shared.Application.Abstractions;
+using InstaConnect.Shared.Common.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Identity.Infrastructure.Extensions;
 
@@ -14,8 +11,6 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
-
         serviceCollection
             .AddForgotPasswordTokenServices()
             .AddEmailConfirmationTokenServices()
@@ -23,15 +18,13 @@ public static class ServiceCollectionExtensions
             .AddUserServices();
 
         serviceCollection
-            .AddDatabaseContext<IdentityContext>(configuration);
-
-        serviceCollection
-            .AddScoped<IDatabaseSeeder, DatabaseSeeder>()
+            .AddDatabaseContext<IdentityContext>(configuration)
+            .AddServicesWithMatchingInterfaces(InfrastructureReference.Assembly)
             .AddRedisCaching(configuration)
             .AddUnitOfWork<IdentityContext>()
             .AddJwtBearer(configuration)
             .AddCloudinary(configuration)
-            .AddRabbitMQ(configuration, currentAssembly, busConfigurator =>
+            .AddRabbitMQ(configuration, InfrastructureReference.Assembly, busConfigurator =>
                 busConfigurator.AddTransactionalOutbox<IdentityContext>())
             .AddDateTimeProvider();
 

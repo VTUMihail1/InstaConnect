@@ -1,9 +1,6 @@
-﻿using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
-using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
-using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
+﻿using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
 using InstaConnect.Shared.Domain.Models.Pagination;
 using InstaConnect.Shared.Infrastructure.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace InstaConnect.Messages.Infrastructure.Features.Messages.Repositories;
 

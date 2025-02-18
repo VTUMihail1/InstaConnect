@@ -1,14 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entitites;
-using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class AddPostFunctionalTests : BasePostFunctionalTest
 {
@@ -122,7 +112,6 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddPostRequest(
             null,
             new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
@@ -144,7 +133,6 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddPostRequest(
             SharedTestUtilities.GetString(length),
             new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
@@ -163,7 +151,6 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenCurrentUserIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddPostRequest(
             UserTestUtilities.InvalidId,
             new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)

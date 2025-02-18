@@ -1,14 +1,6 @@
-﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Models;
-using InstaConnect.Identity.Application.Features.Users.Commands.Add;
-using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
+﻿using InstaConnect.Identity.Application.Features.Users.Commands.Add;
 using InstaConnect.Shared.Application.Contracts.Users;
 using InstaConnect.Shared.Application.Models;
-using InstaConnect.Shared.Common.Exceptions.User;
-using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Add;
 
@@ -76,7 +68,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldNotCallTheImageHandler_WhenRequestIsValidAndProfileImageIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -100,7 +91,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallTheImageHandler_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -124,7 +114,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallThePasswordHasher_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -148,7 +137,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldAddTheUserToTheRepository_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -177,7 +165,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldPublishUserCreatedEvent_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -206,7 +193,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldPublishEmailConfirmationToken_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -232,7 +218,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallUnitOfWorkCommit_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -256,7 +241,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldReturnUserCommandViewModel_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,

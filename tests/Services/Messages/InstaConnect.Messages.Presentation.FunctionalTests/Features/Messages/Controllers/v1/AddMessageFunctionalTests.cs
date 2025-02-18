@@ -1,14 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Users.Utilities;
-using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
-using InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Utilities;
-using InstaConnect.Messages.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Controllers.v1;
+﻿namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Controllers.v1;
 
 public class AddMessageFunctionalTests : BaseMessageFunctionalTest
 {
@@ -42,7 +32,6 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingSender = await CreateUserAsync(CancellationToken);
-        var existingReceiver = await CreateUserAsync(CancellationToken);
         var request = new AddMessageRequest(
             existingSender.Id,
             new(null, MessageTestUtilities.ValidAddContent)
@@ -65,7 +54,6 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingSender = await CreateUserAsync(CancellationToken);
-        var existingReceiver = await CreateUserAsync(CancellationToken);
         var request = new AddMessageRequest(
             existingSender.Id,
             new(SharedTestUtilities.GetString(length), MessageTestUtilities.ValidAddContent)
@@ -128,7 +116,6 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingReceiver = await CreateUserAsync(CancellationToken);
-        var existingSender = await CreateUserAsync(CancellationToken);
         var request = new AddMessageRequest(
             null,
             new(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
@@ -151,7 +138,6 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingReceiver = await CreateUserAsync(CancellationToken);
-        var existingSender = await CreateUserAsync(CancellationToken);
         var request = new AddMessageRequest(
             SharedTestUtilities.GetString(length),
             new(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
@@ -171,7 +157,6 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
     {
         // Arrange
         var existingReceiver = await CreateUserAsync(CancellationToken);
-        var existingSender = await CreateUserAsync(CancellationToken);
         var request = new AddMessageRequest(
             UserTestUtilities.InvalidId,
             new(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
@@ -190,7 +175,6 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenReceiverIsInvalid()
     {
         // Arrange
-        var existingReceiver = await CreateUserAsync(CancellationToken);
         var existingSender = await CreateUserAsync(CancellationToken);
         var request = new AddMessageRequest(
             existingSender.Id,

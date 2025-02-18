@@ -1,11 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Messages.Application.Features.Messages.Models;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
-using InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Features.Messages.Utilities;
-using InstaConnect.Shared.Common.Exceptions.Message;
-using InstaConnect.Shared.Common.Exceptions.User;
-using NSubstitute;
+﻿using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
 
 namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Queries.GetById;
 
@@ -16,8 +9,8 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     public GetMessageByIdQueryHandlerUnitTests()
     {
         _queryHandler = new(
-            MessageReadRepository,
-            InstaConnectMapper);
+            InstaConnectMapper,
+            MessageReadRepository);
     }
 
     [Fact]

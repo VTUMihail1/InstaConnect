@@ -1,10 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailedById;
-using InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Exceptions.User;
-using NSubstitute;
+﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailedById;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetDetailedById;
 
@@ -23,7 +17,6 @@ public class GetDetailedUserByIdQueryHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var query = new GetDetailedUserByIdQuery(UserTestUtilities.InvalidId);
 
         // Act

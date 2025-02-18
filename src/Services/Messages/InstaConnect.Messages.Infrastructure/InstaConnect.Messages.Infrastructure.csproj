@@ -1,14 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Infrastructure\InstaConnect.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
+    <ProjectReference Include="..\InstaConnect.Messages.Application\InstaConnect.Messages.Application.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Infrastructure\InstaConnect.Shared.Infrastructure.csproj" />
-    <ProjectReference Include="..\InstaConnect.Messages.Application\InstaConnect.Messages.Application.csproj" />
+    <!-- General -->
+    <Using Include="FluentValidation" />
+    <Using Include="Microsoft.EntityFrameworkCore" />
+    <Using Include="Microsoft.EntityFrameworkCore.Metadata.Builders" />
+    <Using Include="Microsoft.Extensions.Configuration" />
+    <Using Include="Microsoft.Extensions.DependencyInjection" />
+
+    <!-- Messages -->
+    <Using Include="InstaConnect.Messages.Domain.Features.Messages.Abstractions" />
+    <Using Include="InstaConnect.Messages.Domain.Features.Messages.Models.Entities" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Messages.Domain.Features.Users.Abstractions" />
+    <Using Include="InstaConnect.Messages.Domain.Features.Users.Models.Entities" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Messages.Common.Features.Messages.Utilities" />
+    <Using Include="InstaConnect.Messages.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Shared.Application.Abstractions" />
   </ItemGroup>
 
 </Project>

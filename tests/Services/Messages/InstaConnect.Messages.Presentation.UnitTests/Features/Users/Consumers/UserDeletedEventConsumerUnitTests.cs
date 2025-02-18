@@ -1,12 +1,4 @@
-﻿using InstaConnect.Messages.Common.Features.Users.Utilities;
-using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
-using InstaConnect.Messages.Presentation.Features.Users.Consumers;
-using InstaConnect.Messages.Presentation.UnitTests.Features.Users.Utilities;
-using InstaConnect.Shared.Application.Contracts.Users;
-using MassTransit;
-using NSubstitute;
-
-namespace InstaConnect.Messages.Presentation.UnitTests.Features.Users.Consumers;
+﻿namespace InstaConnect.Messages.Presentation.UnitTests.Features.Users.Consumers;
 
 public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
 {
@@ -26,7 +18,6 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldCallGetUserByIdAsyncMethod_WhenUserIdIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var userDeletedEvent = new UserDeletedEvent(UserTestUtilities.InvalidId);
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
@@ -44,7 +35,6 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldNotDeleteMethod_WhenUserIdIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var userDeletedEvent = new UserDeletedEvent(UserTestUtilities.InvalidId);
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
@@ -62,7 +52,6 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldNotCallSaveChangesAsync_WhenUserIdIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var userDeletedEvent = new UserDeletedEvent(UserTestUtilities.InvalidId);
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);

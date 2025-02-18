@@ -1,8 +1,4 @@
-﻿using FluentValidation;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Validators;
+﻿using InstaConnect.Shared.Application.Validators;
 
 namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 

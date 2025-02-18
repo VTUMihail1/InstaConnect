@@ -1,14 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Common.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entitites;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 
 public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTest
 {
@@ -41,7 +31,6 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTe
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new AddPostCommentLikeRequest(
             existingUser.Id,
             new(null));
@@ -63,7 +52,6 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTe
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new AddPostCommentLikeRequest(
             existingUser.Id,
             new(SharedTestUtilities.GetString(length)));
@@ -81,7 +69,6 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTe
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new AddPostCommentLikeRequest(
             null,
@@ -103,7 +90,6 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTe
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new AddPostCommentLikeRequest(
             SharedTestUtilities.GetString(length),
@@ -122,7 +108,6 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTe
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenCurrentUserIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new AddPostCommentLikeRequest(
             UserTestUtilities.InvalidId,
@@ -142,7 +127,6 @@ public class AddPostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTe
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new AddPostCommentLikeRequest(
             existingUser.Id,
             new(PostCommentTestUtilities.InvalidId));

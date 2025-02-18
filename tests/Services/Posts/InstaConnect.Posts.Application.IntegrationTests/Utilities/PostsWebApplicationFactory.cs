@@ -1,10 +1,13 @@
 ﻿using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Shared.Infrastructure.Extensions;
+
 using MassTransit;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
+
 using Testcontainers.MsSql;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Utilities;

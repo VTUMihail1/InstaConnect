@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-
-namespace InstaConnect.Identity.Application.Features.Users.Commands.Delete;
+﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.Delete;
 
 public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
 {

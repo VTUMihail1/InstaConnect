@@ -1,4 +1,4 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entitites;
+﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.Entities;
 
 namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 public interface IEmailConfirmationTokenWriteRepository

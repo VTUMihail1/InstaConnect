@@ -1,9 +1,4 @@
-﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Add;
 
@@ -20,7 +15,6 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingPost = CreatePost();
         var command = new AddPostCommand(
             null,
             PostTestUtilities.ValidAddTitle,
@@ -40,7 +34,6 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPost = CreatePost();
         var command = new AddPostCommand(
             SharedTestUtilities.GetString(length)!,
             PostTestUtilities.ValidAddTitle,

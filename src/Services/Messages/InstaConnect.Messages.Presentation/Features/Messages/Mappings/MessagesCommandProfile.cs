@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
+
 using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
 using InstaConnect.Messages.Application.Features.Messages.Commands.Delete;
 using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
-using InstaConnect.Messages.Application.Features.Messages.Models;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Requests;
-using InstaConnect.Messages.Presentation.Features.Messages.Models.Responses;
 
 namespace InstaConnect.Messages.Presentation.Features.Messages.Mappings;
 

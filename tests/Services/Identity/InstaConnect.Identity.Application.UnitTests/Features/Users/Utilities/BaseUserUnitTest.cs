@@ -1,22 +1,20 @@
 ﻿using AutoMapper;
+
+using InstaConnect.Identity.Application.Extensions;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
-using InstaConnect.Identity.Application.Features.Users.Mappings;
-using InstaConnect.Identity.Application.Features.Users.Models;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
-using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entitites;
+using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models;
-using InstaConnect.Identity.Domain.Features.Users.Models.Entitites;
 using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
 using InstaConnect.Shared.Application.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Application.Models;
-using InstaConnect.Shared.Common.Utilities;
+using InstaConnect.Shared.Common.Abstractions;
+using InstaConnect.Shared.Common.Helpers;
 using InstaConnect.Shared.Domain.Models.Pagination;
-using NSubstitute;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 
@@ -46,17 +44,13 @@ public abstract class BaseUserUnitTest
 
     protected IEmailConfirmationTokenPublisher EmailConfirmationTokenPublisher { get; }
 
-    public BaseUserUnitTest()
+    protected BaseUserUnitTest()
     {
         CancellationToken = new();
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg =>
-                {
-                    cfg.AddProfile<UserCommandProfile>();
-                    cfg.AddProfile<UserQueryProfile>();
-                })));
+                new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
         EntityPropertyValidator = new EntityPropertyValidator();
         ImageHandler = Substitute.For<IImageHandler>();
         EventPublisher = Substitute.For<IEventPublisher>();

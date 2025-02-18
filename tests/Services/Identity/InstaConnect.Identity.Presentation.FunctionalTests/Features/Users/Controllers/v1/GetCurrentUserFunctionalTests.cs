@@ -1,13 +1,7 @@
-﻿using System.Net;
-using FluentAssertions;
+﻿using System.Globalization;
+
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
 
@@ -40,7 +34,6 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrent_ShouldReturnBadRequestResponse_WhenIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetCurrentUserRequest(
             null
         );
@@ -62,7 +55,6 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrent_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetCurrentUserRequest(SharedTestUtilities.GetString(length)
         );
 
@@ -80,7 +72,6 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrent_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetCurrentUserRequest(
             UserTestUtilities.InvalidId
         );
@@ -163,7 +154,10 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
         var request = new GetCurrentUserRequest(
             existingUser.Id
         );
-        var queryKey = string.Format(UserCacheKeys.GetCurrentUser, existingUser.Id);
+        var queryKey = string.Format(
+            CultureInfo.InvariantCulture,
+            UserCacheKeys.GetCurrentUser,
+            existingUser.Id);
 
         // Act
         await UsersClient.GetCurrentAsync(request, CancellationToken);

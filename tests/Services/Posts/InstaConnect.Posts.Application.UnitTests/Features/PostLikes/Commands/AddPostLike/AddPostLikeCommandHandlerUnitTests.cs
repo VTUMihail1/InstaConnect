@@ -1,14 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
-using InstaConnect.Posts.Application.Features.PostLikes.Models;
-using InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.Posts;
-using InstaConnect.Shared.Common.Exceptions.User;
-using NSubstitute;
+﻿using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Commands.AddPostLike;
 
@@ -30,7 +20,6 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             UserTestUtilities.InvalidId,
@@ -48,7 +37,6 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             existingUser.Id,
             PostTestUtilities.InvalidId);
@@ -61,7 +49,7 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowBadRequestException_WhenPostLikeAlreadyExists()
+    public async Task Handle_ShouldThrowPostLikeAlreadyExistsException_WhenPostLikeAlreadyExists()
     {
         // Arrange
         var existingPostLike = CreatePostLike();
@@ -73,7 +61,7 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<BadRequestException>();
+        await action.Should().ThrowAsync<PostLikeAlreadyExistsException>();
     }
 
     [Fact]

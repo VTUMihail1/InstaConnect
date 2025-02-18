@@ -1,21 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>b534b6e1-bffe-440d-8f41-823bc991ccc3</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Presentation\InstaConnect.Shared.Presentation.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Presentation\InstaConnect.Common.Presentation.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Follows.Application\InstaConnect.Follows.Application.csproj" />
     <ProjectReference Include="..\InstaConnect.Follows.Common\InstaConnect.Follows.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Follows.Infrastructure\InstaConnect.Follows.Infrastructure.csproj" />
@@ -28,6 +21,32 @@
   	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
   	  <_Parameter1>InstaConnect.Follows.Presentation.FunctionalTests</_Parameter1>
   	</AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- General -->
+    <Using Include="Asp.Versioning" />
+    <Using Include="MassTransit" />
+    <Using Include="Microsoft.AspNetCore.Authorization" />
+    <Using Include="Microsoft.AspNetCore.Mvc" />
+    <Using Include="Microsoft.AspNetCore.RateLimiting" />
+
+    <!-- Follows -->
+    <Using Include="InstaConnect.Follows.Application.Features.Follows.Models" />
+    <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Models.Requests" />
+    <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Models.Responses" />
+    <Using Include="InstaConnect.Follows.Presentation.Features.Follows.Utilities" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Follows.Domain.Features.Users.Abstractions" />
+    <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Entities" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Shared.Application.Abstractions" />
+    <Using Include="InstaConnect.Shared.Application.Contracts.Users" />
+    <Using Include="InstaConnect.Shared.Common.Abstractions" />
+    <Using Include="InstaConnect.Shared.Common.Models.Enums" />
+    <Using Include="InstaConnect.Shared.Presentation.Utilities" />
   </ItemGroup>
 
 </Project>

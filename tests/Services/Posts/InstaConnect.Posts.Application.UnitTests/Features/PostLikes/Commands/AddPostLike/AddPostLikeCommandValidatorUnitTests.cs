@@ -1,9 +1,4 @@
-﻿using FluentValidation.TestHelper;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
-using InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Commands.AddPostLike;
 
@@ -20,7 +15,6 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             null,
@@ -40,7 +34,6 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             SharedTestUtilities.GetString(length)!,
@@ -58,7 +51,6 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             existingUser.Id,
             null);
@@ -78,7 +70,6 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             existingUser.Id,
             SharedTestUtilities.GetString(length));

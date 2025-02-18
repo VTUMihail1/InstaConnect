@@ -1,14 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Common.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entitites;
-using InstaConnect.Posts.Presentation.Features.PostLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
 
 public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
 {
@@ -41,7 +31,6 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             existingUser.Id,
             new(null));
@@ -63,7 +52,6 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             existingUser.Id,
             new(SharedTestUtilities.GetString(length)));
@@ -81,7 +69,6 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             null,
@@ -103,7 +90,6 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             SharedTestUtilities.GetString(length),
@@ -122,7 +108,6 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenCurrentUserIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             UserTestUtilities.InvalidId,
@@ -142,7 +127,6 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             existingUser.Id,
             new(PostTestUtilities.InvalidId));

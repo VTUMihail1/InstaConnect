@@ -1,8 +1,4 @@
-﻿using InstaConnect.Messages.Domain.Features.Users.Abstract;
-using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
-using Microsoft.EntityFrameworkCore;
-
-namespace InstaConnect.Messages.Infrastructure.Features.Users.Repositories;
+﻿namespace InstaConnect.Messages.Infrastructure.Features.Users.Repositories;
 
 internal class UserWriteRepository : IUserWriteRepository
 {

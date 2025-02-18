@@ -1,8 +1,4 @@
-﻿using FluentValidation.TestHelper;
-using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
-using InstaConnect.Identity.Application.UnitTests.Features.EmailConfirmationTokens.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.EmailConfirmationTokens.Commands.Add;
 
@@ -19,7 +15,6 @@ public class AddEmailConfirmationTokenCommandValidatorUnitTests : BaseEmailConfi
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddEmailConfirmationTokenCommand(null);
 
         // Act
@@ -36,7 +31,6 @@ public class AddEmailConfirmationTokenCommandValidatorUnitTests : BaseEmailConfi
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddEmailConfirmationTokenCommand(SharedTestUtilities.GetString(length));
 
         // Act

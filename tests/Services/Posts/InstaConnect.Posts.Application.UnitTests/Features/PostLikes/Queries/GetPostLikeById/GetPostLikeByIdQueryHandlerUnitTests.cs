@@ -1,10 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Posts.Application.Features.PostLikes.Models;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
-using InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Utilities;
-using InstaConnect.Posts.Common.Features.PostLikes.Utilities;
-using InstaConnect.Shared.Common.Exceptions.PostLike;
-using NSubstitute;
+﻿using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Queries.GetPostLikeById;
 
@@ -23,7 +17,6 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeUnitTest
     public async Task Handle_ShouldThrowPostLikeNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPostLike = CreatePostLike();
         var query = new GetPostLikeByIdQuery(PostLikeTestUtilities.InvalidId);
 
         // Act

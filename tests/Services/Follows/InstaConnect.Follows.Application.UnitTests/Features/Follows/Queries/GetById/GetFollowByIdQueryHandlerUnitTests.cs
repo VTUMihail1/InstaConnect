@@ -1,10 +1,4 @@
-﻿using FluentAssertions;
-using InstaConnect.Follows.Application.Features.Follows.Models;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
-using InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
-using InstaConnect.Follows.Common.Features.Follows.Utilities;
-using InstaConnect.Shared.Common.Exceptions.Follow;
-using NSubstitute;
+﻿using InstaConnect.Follows.Application.Features.Follows.Queries.GetById;
 
 namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Queries.GetById;
 
@@ -23,7 +17,6 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldThrowFollowNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingFollow = CreateFollow();
         var query = new GetFollowByIdQuery(FollowTestUtilities.InvalidId);
 
         // Act

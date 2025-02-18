@@ -1,7 +1,4 @@
-﻿using InstaConnect.Shared.Common.Models.Enums;
-using Microsoft.AspNetCore.Mvc;
-
-namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
+﻿namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Requests;
 
 public record GetAllFollowsRequest(
     [FromQuery(Name = "followerId")] string FollowerId = "",

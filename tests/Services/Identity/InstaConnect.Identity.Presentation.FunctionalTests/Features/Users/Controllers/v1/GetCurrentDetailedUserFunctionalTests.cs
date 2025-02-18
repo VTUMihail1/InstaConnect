@@ -1,13 +1,7 @@
-﻿using System.Net;
-using FluentAssertions;
+﻿using System.Globalization;
+
 using InstaConnect.Identity.Application.Features.Users.Models;
 using InstaConnect.Identity.Application.Features.Users.Utilities;
-using InstaConnect.Identity.Common.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Requests;
-using InstaConnect.Identity.Presentation.Features.Users.Models.Responses;
-using InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Utilities;
-using InstaConnect.Identity.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
 
@@ -40,7 +34,6 @@ public class GetCurrentDetailedUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrentDetailed_ShouldReturnBadRequestResponse_WhenIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetCurrentDetailedUserRequest(
             null
         );
@@ -61,7 +54,6 @@ public class GetCurrentDetailedUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrentDetailed_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetCurrentDetailedUserRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -80,7 +72,6 @@ public class GetCurrentDetailedUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrentDetailed_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetCurrentDetailedUserRequest(
             UserTestUtilities.InvalidId
         );
@@ -165,7 +156,10 @@ public class GetCurrentDetailedUserFunctionalTests : BaseUserFunctionalTest
         var request = new GetCurrentDetailedUserRequest(
             existingUser.Id
         );
-        var queryKey = string.Format(UserCacheKeys.GetCurrentDetailedUser, existingUser.Id);
+        var queryKey = string.Format(
+            CultureInfo.InvariantCulture,
+            UserCacheKeys.GetCurrentDetailedUser,
+            existingUser.Id);
 
         // Act
         await UsersClient.GetCurrentDetailedAsync(request, CancellationToken);

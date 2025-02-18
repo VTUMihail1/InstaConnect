@@ -1,17 +1,7 @@
-﻿using InstaConnect.Follows.Application.Features.Follows.Models;
-using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
-using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-using InstaConnect.Follows.Domain.Features.Users.Abstractions;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Exceptions.Base;
-using InstaConnect.Shared.Common.Exceptions.User;
-
-namespace InstaConnect.Follows.Application.Features.Follows.Commands.Add;
+﻿namespace InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 
 internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand, FollowCommandViewModel>
 {
-    private const string USER_ALREADY_FOLLOWED = "This user has already been followed";
-
     private readonly IUnitOfWork _unitOfWork;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
@@ -54,7 +44,7 @@ internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand, Follo
 
         if (existingFollow != null)
         {
-            throw new BadRequestException(USER_ALREADY_FOLLOWED);
+            throw new FollowAlreadyExistsException();
         }
 
         var follow = _instaConnectMapper.Map<Follow>(request);

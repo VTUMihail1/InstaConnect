@@ -1,6 +1,4 @@
-﻿using InstaConnect.Follows.Application.Features.Follows.Models;
-
-namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
+﻿namespace InstaConnect.Follows.Presentation.Features.Follows.Models.Responses;
 
 public record FollowPaginationQueryResponse(
     ICollection<FollowQueryViewModel> Items,

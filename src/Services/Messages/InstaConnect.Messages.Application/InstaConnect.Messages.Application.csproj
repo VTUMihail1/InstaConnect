@@ -1,13 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Application\InstaConnect.Shared.Application.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Application\InstaConnect.Common.Application.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Messages.Common\InstaConnect.Messages.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Messages.Domain\InstaConnect.Messages.Domain.csproj" />
   </ItemGroup>
@@ -19,12 +14,29 @@
   	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
   	  <_Parameter1>InstaConnect.Messages.Application.IntegrationTests</_Parameter1>
   	</AssemblyAttribute>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-  	  <_Parameter1>InstaConnect.Messages.Presentation.UnitTests</_Parameter1>
-  	</AssemblyAttribute>
-  	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-  	  <_Parameter1>InstaConnect.Messages.Presentation.FunctionalTests</_Parameter1>
-  	</AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- General -->
+    <Using Include="FluentValidation" />
+    <Using Include="Microsoft.Extensions.DependencyInjection" />
+
+    <!-- Messages -->
+    <Using Include="InstaConnect.Messages.Application.Features.Messages.Models" />
+    <Using Include="InstaConnect.Messages.Domain.Features.Messages.Abstractions" />
+    <Using Include="InstaConnect.Messages.Domain.Features.Messages.Exceptions" />
+    <Using Include="InstaConnect.Messages.Domain.Features.Messages.Models.Entities" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Messages.Domain.Features.Users.Abstractions" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Messages.Common.Features.Messages.Utilities" />
+    <Using Include="InstaConnect.Messages.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Shared.Application.Abstractions" />
+    <Using Include="InstaConnect.Shared.Common.Abstractions" />
+    <Using Include="InstaConnect.Shared.Common.Exceptions.Users" />
+    <Using Include="InstaConnect.Shared.Common.Models.Enums" />
   </ItemGroup>
 
 </Project>

@@ -1,13 +1,4 @@
-﻿using System.Net;
-using FluentAssertions;
-using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
-using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Responses;
-using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Utilities;
-using InstaConnect.Posts.Presentation.FunctionalTests.Utilities;
-using InstaConnect.Shared.Common.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 
 public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunctionalTest
 {
@@ -22,7 +13,6 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetPostCommentLikeByIdRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -41,7 +31,6 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetPostCommentLikeByIdRequest(
             PostCommentLikeTestUtilities.InvalidId
         );

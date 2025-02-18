@@ -1,8 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
 
     <IsPackable>false</IsPackable>
@@ -10,25 +8,50 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.2">
+    <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
-    <PackageReference Include="xunit" Version="2.9.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Messages\InstaConnect.Messages.Common\InstaConnect.Messages.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Messages\InstaConnect.Messages.Presentation\InstaConnect.Messages.Presentation.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <!-- General -->
+    <Using Include="FluentAssertions" />
+    <Using Include="MassTransit" />
+    <Using Include="Microsoft.AspNetCore.Http" />
+    <Using Include="Microsoft.AspNetCore.Mvc" />
+    <Using Include="NSubstitute" />
     <Using Include="Xunit" />
+
+    <!-- Messages -->
+    <Using Include="InstaConnect.Messages.Presentation.Features.Messages.Controllers.v1" />
+    <Using Include="InstaConnect.Messages.Presentation.Features.Messages.Models" />
+    <Using Include="InstaConnect.Messages.Presentation.Features.Messages.Models.Requests" />
+    <Using Include="InstaConnect.Messages.Presentation.Features.Messages.Models.Responses" />
+    <Using Include="InstaConnect.Messages.Presentation.UnitTests.Features.Messages.Utilities" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Messages.Domain.Features.Users.Models.Entities" />
+    <Using Include="InstaConnect.Messages.Presentation.Features.Users.Consumers" />
+    <Using Include="InstaConnect.Messages.Presentation.UnitTests.Features.Users.Utilities" />
+
+    <!-- Common -->
+    <Using Include="InstaConnect.Messages.Common.Features.Messages.Utilities" />
+    <Using Include="InstaConnect.Messages.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Shared.Application.Contracts.Users" />
+    <Using Include="InstaConnect.Shared.Common.Utilities" />
   </ItemGroup>
 
 </Project>
