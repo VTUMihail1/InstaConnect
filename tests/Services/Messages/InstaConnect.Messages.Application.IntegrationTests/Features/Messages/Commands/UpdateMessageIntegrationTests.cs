@@ -175,7 +175,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var message = await MessageWriteRepository.GetByIdAsync(existingMessage.Id, CancellationToken);
+        var message = await MessageWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         message
@@ -199,7 +199,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var message = await MessageWriteRepository.GetByIdAsync(existingMessage.Id, CancellationToken);
+        var message = await MessageWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         message

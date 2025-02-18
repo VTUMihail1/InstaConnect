@@ -15,7 +15,6 @@ public class AddForgotPasswordTokenCommandValidatorUnitTests : BaseForgotPasswor
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddForgotPasswordTokenCommand(null);
 
         // Act
@@ -32,7 +31,6 @@ public class AddForgotPasswordTokenCommandValidatorUnitTests : BaseForgotPasswor
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddForgotPasswordTokenCommand(SharedTestUtilities.GetString(length));
 
         // Act

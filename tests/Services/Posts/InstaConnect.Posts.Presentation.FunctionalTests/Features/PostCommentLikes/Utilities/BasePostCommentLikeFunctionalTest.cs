@@ -133,9 +133,9 @@ public abstract class BasePostCommentLikeFunctionalTest : IClassFixture<PostsWeb
             user);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var PostCommentLikeWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostCommentLikeWriteRepository>();
+        var postCommentLikeWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostCommentLikeWriteRepository>();
 
-        PostCommentLikeWriteRepository.Add(postCommentLike);
+        postCommentLikeWriteRepository.Add(postCommentLike);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return postCommentLike;
@@ -164,22 +164,22 @@ public abstract class BasePostCommentLikeFunctionalTest : IClassFixture<PostsWeb
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<PostsContext>();
 
-        if (dbContext.PostCommentLikes.Any())
+        if (await dbContext.PostCommentLikes.AnyAsync(CancellationToken))
         {
             await dbContext.PostCommentLikes.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.PostComments.Any())
+        if (await dbContext.PostComments.AnyAsync(CancellationToken))
         {
             await dbContext.PostComments.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Posts.Any())
+        if (await dbContext.Posts.AnyAsync(CancellationToken))
         {
             await dbContext.Posts.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }

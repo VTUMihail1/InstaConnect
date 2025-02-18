@@ -36,18 +36,18 @@ internal class UserWriteRepository : IUserWriteRepository
             .Add(entity);
     }
 
-    public void Update(User user)
+    public void Update(User entity)
     {
         _identityContext
             .Users
-            .Update(user);
+            .Update(entity);
     }
 
-    public void Delete(User user)
+    public void Delete(User entity)
     {
         _identityContext
             .Users
-            .Remove(user);
+            .Remove(entity);
     }
 
     public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)

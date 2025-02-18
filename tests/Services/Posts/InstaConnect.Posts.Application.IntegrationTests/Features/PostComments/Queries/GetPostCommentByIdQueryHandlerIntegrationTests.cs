@@ -12,7 +12,6 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentInt
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetPostCommentByIdQuery(null);
 
         // Act
@@ -29,7 +28,6 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentInt
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetPostCommentByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -43,7 +41,6 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentInt
     public async Task SendAsync_ShouldThrowPostCommentNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetPostCommentByIdQuery(PostCommentTestUtilities.InvalidId);
 
         // Act

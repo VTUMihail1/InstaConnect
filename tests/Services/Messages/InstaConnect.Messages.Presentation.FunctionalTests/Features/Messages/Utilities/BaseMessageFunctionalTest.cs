@@ -115,12 +115,12 @@ public abstract class BaseMessageFunctionalTest : IClassFixture<MessagesWebAppli
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<MessagesContext>();
 
-        if (dbContext.Messages.Any())
+        if (await dbContext.Messages.AnyAsync(CancellationToken))
         {
             await dbContext.Messages.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }

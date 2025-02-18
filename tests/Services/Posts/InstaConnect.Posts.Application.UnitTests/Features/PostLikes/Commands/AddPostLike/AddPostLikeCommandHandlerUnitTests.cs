@@ -20,7 +20,6 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             UserTestUtilities.InvalidId,
@@ -38,7 +37,6 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             existingUser.Id,
             PostTestUtilities.InvalidId);

@@ -43,6 +43,7 @@
     <PackageVersion Include="NSubstitute" Version="5.1.0" />
     <PackageVersion Include="Scrutor" Version="6.0.1" />
     <PackageVersion Include="Serilog.AspNetCore" Version="8.0.2" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.6.0.109712" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.7.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore.Swagger" Version="6.7.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.7.0" />

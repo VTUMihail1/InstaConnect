@@ -15,7 +15,6 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingFollower = CreateUser();
         var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             null,
@@ -35,7 +34,6 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollower = CreateUser();
         var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             SharedTestUtilities.GetString(length)!,
@@ -53,7 +51,6 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollower = CreateUser();
-        var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             existingFollower.Id,
             null);
@@ -73,7 +70,6 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollower = CreateUser();
-        var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             existingFollower.Id,
             SharedTestUtilities.GetString(length));

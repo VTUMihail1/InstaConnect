@@ -188,12 +188,12 @@ public abstract class BaseUserFunctionalTest : IClassFixture<IdentityWebApplicat
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (await distibutedCache.GetAsync(UserCacheKeys.GetCurrentUser) != null)
+        if (await distibutedCache.GetAsync(UserCacheKeys.GetCurrentUser, CancellationToken) != null)
         {
             await distibutedCache.RemoveAsync(UserCacheKeys.GetCurrentUser);
         }
 
-        if (await distibutedCache.GetAsync(UserCacheKeys.GetCurrentDetailedUser) != null)
+        if (await distibutedCache.GetAsync(UserCacheKeys.GetCurrentDetailedUser, CancellationToken) != null)
         {
             await distibutedCache.RemoveAsync(UserCacheKeys.GetCurrentDetailedUser);
         }

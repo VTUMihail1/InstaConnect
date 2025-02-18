@@ -13,7 +13,6 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
     public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             null,
@@ -34,7 +33,6 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
     public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             SharedTestUtilities.GetString(length),
@@ -53,7 +51,6 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             existingUser.Id,
             null
@@ -74,7 +71,6 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             existingUser.Id,
             SharedTestUtilities.GetString(length)
@@ -91,7 +87,6 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             UserTestUtilities.InvalidId,
@@ -110,7 +105,6 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             existingUser.Id,
             PostCommentTestUtilities.InvalidId
@@ -145,7 +139,6 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             existingUser.Id,

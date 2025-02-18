@@ -17,7 +17,6 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostUnitTest
     public async Task Handle_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPost = CreatePost();
         var query = new GetPostByIdQuery(PostTestUtilities.InvalidId);
 
         // Act

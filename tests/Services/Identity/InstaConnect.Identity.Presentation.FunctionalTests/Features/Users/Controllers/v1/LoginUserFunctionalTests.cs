@@ -11,7 +11,6 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     public async Task LoginAsync_ShouldReturnBadRequestResponse_WhenEmailIsNull()
     {
         // Arrange
-        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var request = new LoginUserRequest(
             new(
             null,
@@ -34,7 +33,6 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     public async Task LoginAsync_ShouldReturnBadRequestResponse_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var request = new LoginUserRequest(
             new(
             SharedTestUtilities.GetString(length),
@@ -54,7 +52,6 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     public async Task LoginAsync_ShouldReturnBadRequestResponse_WhenPasswordIsNull()
     {
         // Arrange
-        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var request = new LoginUserRequest(
             new(
             UserTestUtilities.ValidPassword,
@@ -97,7 +94,6 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
     public async Task LoginAsync_ShouldReturnBadRequestResponse_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var request = new LoginUserRequest(
             new(
             UserTestUtilities.ValidAddEmail,

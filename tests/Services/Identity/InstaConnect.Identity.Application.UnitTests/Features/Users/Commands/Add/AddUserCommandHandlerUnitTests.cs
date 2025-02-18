@@ -68,7 +68,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldNotCallTheImageHandler_WhenRequestIsValidAndProfileImageIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -92,7 +91,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallTheImageHandler_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -116,7 +114,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallThePasswordHasher_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -140,7 +137,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldAddTheUserToTheRepository_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -169,7 +165,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldPublishUserCreatedEvent_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -198,7 +193,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldPublishEmailConfirmationToken_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -224,7 +218,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldCallUnitOfWorkCommit_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -248,7 +241,6 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldReturnUserCommandViewModel_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,

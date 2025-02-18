@@ -54,7 +54,6 @@ public class IdentityWebApplicationFactory : WebApplicationFactory<Program>, IAs
             }
 
             var imageHandler = Substitute.For<IImageHandler>();
-            var imageUploadResult = new ImageResult(UserTestUtilities.ValidProfileImage);
             var imageUploadAddResult = new ImageResult(UserTestUtilities.ValidAddProfileImage);
             var imageUploadUpdateResult = new ImageResult(UserTestUtilities.ValidUpdateProfileImage);
 

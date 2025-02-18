@@ -19,7 +19,6 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingPost = CreatePost();
         var command = new AddPostCommand(
             UserTestUtilities.InvalidId,
             PostTestUtilities.ValidAddTitle,

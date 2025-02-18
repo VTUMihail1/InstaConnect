@@ -21,7 +21,6 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var post = CreatePost();
-        var user = CreateUser();
         var command = new AddPostCommentCommand(
             UserTestUtilities.InvalidId,
             post.Id,
@@ -38,7 +37,6 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     public async Task Handle_ShouldThrowPostNotFoundException_WhenPostIdIsInvalid()
     {
         // Arrange
-        var post = CreatePost();
         var user = CreateUser();
         var command = new AddPostCommentCommand(
             user.Id,

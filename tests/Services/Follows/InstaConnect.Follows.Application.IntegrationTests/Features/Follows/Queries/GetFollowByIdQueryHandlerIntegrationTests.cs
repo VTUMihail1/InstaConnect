@@ -12,7 +12,6 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
-        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetFollowByIdQuery(null);
 
         // Act
@@ -29,7 +28,6 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetFollowByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -43,7 +41,6 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowFollowNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingFollow = await CreateFollowAsync(CancellationToken);
         var query = new GetFollowByIdQuery(FollowTestUtilities.InvalidId);
 
         // Act

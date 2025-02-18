@@ -95,7 +95,7 @@ public class GetAllMessageUnitTests : BaseMessageUnitTest
         );
 
         // Act
-        var response = await _messageController.GetAllAsync(request, CancellationToken);
+        await _messageController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

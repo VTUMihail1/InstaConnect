@@ -17,7 +17,6 @@ public class GetUserByNameQueryHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenNameIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var query = new GetUserByNameQuery(UserTestUtilities.ValidAddName);
 
         // Act

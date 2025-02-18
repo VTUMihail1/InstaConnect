@@ -226,7 +226,7 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var post = await PostWriteRepository.GetByIdAsync(existingPost.Id, CancellationToken);
+        var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         post
@@ -251,7 +251,7 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var post = await PostWriteRepository.GetByIdAsync(existingPost.Id, CancellationToken);
+        var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         post

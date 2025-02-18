@@ -21,7 +21,6 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserInvalidDetailsException_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidPassword

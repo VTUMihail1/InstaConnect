@@ -17,7 +17,6 @@ public class GetUserByIdQueryHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var query = new GetUserByIdQuery(UserTestUtilities.InvalidId);
 
         // Act

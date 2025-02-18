@@ -48,7 +48,7 @@ public class VerifyForgotPasswordTokenControllerUnitTests : BaseForgotPasswordTo
         );
 
         // Act
-        var response = await _ForgotPasswordTokenController.VerifyAsync(request, CancellationToken);
+        await _ForgotPasswordTokenController.VerifyAsync(request, CancellationToken);
 
         // Assert
         // Assert

@@ -31,7 +31,7 @@ public abstract class BasePostLikeUnitTest
         CancellationToken = new CancellationToken();
     }
 
-    private User CreateUserUtil()
+    private static User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -43,14 +43,14 @@ public abstract class BasePostLikeUnitTest
         return user;
     }
 
-    protected User CreateUser()
+    protected static User CreateUser()
     {
         var user = CreateUserUtil();
 
         return user;
     }
 
-    private Post CreatePostUtil(User user)
+    private static Post CreatePostUtil(User user)
     {
         var post = new Post(
             SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
@@ -60,7 +60,7 @@ public abstract class BasePostLikeUnitTest
         return post;
     }
 
-    protected Post CreatePost()
+    protected static Post CreatePost()
     {
         var user = CreateUser();
         var post = CreatePostUtil(user);

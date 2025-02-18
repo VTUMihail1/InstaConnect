@@ -145,17 +145,17 @@ public abstract class BasePostLikeIntegrationTest : IClassFixture<PostsWebApplic
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<PostsContext>();
 
-        if (dbContext.PostLikes.Any())
+        if (await dbContext.PostLikes.AnyAsync(CancellationToken))
         {
             await dbContext.Posts.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Posts.Any())
+        if (await dbContext.Posts.AnyAsync(CancellationToken))
         {
             await dbContext.Posts.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }

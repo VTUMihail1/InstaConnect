@@ -15,7 +15,6 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunc
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddForgotPasswordTokenRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -33,7 +32,6 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunc
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddForgotPasswordTokenRequest(
             UserTestUtilities.ValidAddEmail
         );
@@ -97,7 +95,6 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunc
 
         // Act
         await ForgotPasswordTokensClient.AddStatusCodeAsync(request, CancellationToken);
-        var user = await UserWriteRepository.GetByIdAsync(existingUser.Id, CancellationToken);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserForgotPasswordTokenCreatedEvent>(m =>

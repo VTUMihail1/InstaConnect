@@ -87,7 +87,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<FollowsWebApplicati
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<FollowsContext>();
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }

@@ -12,7 +12,6 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrati
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var query = new GetPostLikeByIdQuery(null);
 
         // Act
@@ -29,7 +28,6 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrati
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var query = new GetPostLikeByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -43,7 +41,6 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrati
     public async Task SendAsync_ShouldThrowPostLikeNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var query = new GetPostLikeByIdQuery(PostLikeTestUtilities.InvalidId);
 
         // Act

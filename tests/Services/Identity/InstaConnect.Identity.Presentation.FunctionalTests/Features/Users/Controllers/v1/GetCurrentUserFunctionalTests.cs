@@ -34,7 +34,6 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrent_ShouldReturnBadRequestResponse_WhenIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetCurrentUserRequest(
             null
         );
@@ -56,7 +55,6 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrent_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetCurrentUserRequest(SharedTestUtilities.GetString(length)
         );
 
@@ -74,7 +72,6 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrent_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetCurrentUserRequest(
             UserTestUtilities.InvalidId
         );

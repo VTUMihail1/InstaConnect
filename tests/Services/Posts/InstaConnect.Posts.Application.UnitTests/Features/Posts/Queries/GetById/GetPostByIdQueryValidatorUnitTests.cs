@@ -15,7 +15,6 @@ public class GetPostByIdQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var existingPost = CreatePost();
         var query = new GetPostByIdQuery(null);
 
         // Act
@@ -32,7 +31,6 @@ public class GetPostByIdQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPost = CreatePost();
         var query = new GetPostByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act

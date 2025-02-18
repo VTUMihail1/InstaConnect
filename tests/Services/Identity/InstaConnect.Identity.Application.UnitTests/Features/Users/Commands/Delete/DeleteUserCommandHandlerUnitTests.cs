@@ -20,7 +20,6 @@ public class DeleteUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new DeleteUserCommand(
             UserTestUtilities.InvalidId
         );

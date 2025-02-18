@@ -12,7 +12,6 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
-        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetPostCommentLikeByIdQuery(null);
 
         // Act
@@ -29,7 +28,6 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetPostCommentLikeByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -43,7 +41,6 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldThrowPostCommentLikeNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var query = new GetPostCommentLikeByIdQuery(PostCommentLikeTestUtilities.InvalidId);
 
         // Act

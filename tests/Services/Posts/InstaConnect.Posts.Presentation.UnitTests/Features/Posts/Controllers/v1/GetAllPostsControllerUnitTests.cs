@@ -93,7 +93,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
         );
 
         // Act
-        var response = await _postController.GetAllAsync(request, CancellationToken);
+        await _postController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

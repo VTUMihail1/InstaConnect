@@ -489,9 +489,9 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var user = await UserWriteRepository.GetByIdAsync(response.Id, CancellationToken);
+        await InstaConnectSender.SendAsync(command, CancellationToken);
         await TestHarness.InactivityTask;
+
         var result = await TestHarness.Published.Any<UserConfirmEmailTokenCreatedEvent>(m =>
                               m.Context.Message.Email == UserTestUtilities.ValidAddEmail);
 

@@ -13,7 +13,6 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostCommentCommand(
             null,
@@ -35,7 +34,6 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostCommentCommand(
             SharedTestUtilities.GetString(length),
@@ -55,7 +53,6 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostCommentCommand(
             existingUser.Id,
             null,
@@ -77,7 +74,6 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostCommentCommand(
             existingUser.Id,
             SharedTestUtilities.GetString(length),
@@ -119,7 +115,6 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
-        var anotherExistingUserId = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommentCommand(
             existingUser.Id,
             existingPost.Id,
@@ -137,7 +132,6 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostCommentCommand(
             UserTestUtilities.InvalidId,
@@ -157,7 +151,6 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostCommentCommand(
             existingUser.Id,
             PostTestUtilities.InvalidId,

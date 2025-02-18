@@ -96,7 +96,7 @@ public class GetAllFollowsUnitTests : BaseFollowUnitTest
         );
 
         // Act
-        var response = await _followController.GetAllAsync(request, CancellationToken);
+        await _followController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

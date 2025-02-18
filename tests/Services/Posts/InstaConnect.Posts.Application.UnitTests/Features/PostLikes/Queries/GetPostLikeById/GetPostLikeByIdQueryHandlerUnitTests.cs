@@ -17,7 +17,6 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeUnitTest
     public async Task Handle_ShouldThrowPostLikeNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPostLike = CreatePostLike();
         var query = new GetPostLikeByIdQuery(PostLikeTestUtilities.InvalidId);
 
         // Act

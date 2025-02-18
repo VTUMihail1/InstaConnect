@@ -40,7 +40,7 @@ public class AddForgotPasswordTokenControllerUnitTests : BaseForgotPasswordToken
         );
 
         // Act
-        var response = await _forgotPasswordTokenController.AddAsync(request, CancellationToken);
+        await _forgotPasswordTokenController.AddAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

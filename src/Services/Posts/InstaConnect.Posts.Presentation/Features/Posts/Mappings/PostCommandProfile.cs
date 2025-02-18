@@ -17,7 +17,7 @@ internal class PostCommandProfile : Profile
             .ConstructUsing(src => new(src.Id, src.CurrentUserId, src.Body.Title, src.Body.Content));
 
         CreateMap<DeletePostRequest, DeletePostCommand>()
-            .ConstructUsing(src => new(src.CurrentUserId, src.Id));
+            .ConstructUsing(src => new(src.Id, src.CurrentUserId));
 
         CreateMap<PostCommandViewModel, PostCommandResponse>();
     }

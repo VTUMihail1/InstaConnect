@@ -13,7 +13,6 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetPostByIdRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -32,7 +31,6 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetPostByIdRequest(
             PostTestUtilities.InvalidId
         );

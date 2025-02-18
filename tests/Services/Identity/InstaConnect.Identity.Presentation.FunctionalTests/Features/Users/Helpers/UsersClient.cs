@@ -412,7 +412,7 @@ public class UsersClient : IUsersClient
         await _httpClient.DeleteAsync(UserTestRoutes.Current, cancellationToken);
     }
 
-    private string GetAllRoute(GetAllUsersRequest request)
+    private static string GetAllRoute(GetAllUsersRequest request)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,
@@ -428,7 +428,7 @@ public class UsersClient : IUsersClient
         return route;
     }
 
-    private string IdRoute(string id)
+    private static string IdRoute(string id)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,
@@ -438,7 +438,7 @@ public class UsersClient : IUsersClient
         return route;
     }
 
-    private string IdDetailedRoute(string id)
+    private static string IdDetailedRoute(string id)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,
@@ -448,7 +448,7 @@ public class UsersClient : IUsersClient
         return route;
     }
 
-    private string NameRoute(string name)
+    private static string NameRoute(string name)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,
@@ -458,7 +458,7 @@ public class UsersClient : IUsersClient
         return route;
     }
 
-    private MultipartFormDataContent GetForm(AddUserForm form)
+    private static MultipartFormDataContent GetForm(AddUserForm form)
     {
         var multipartContent = new MultipartFormDataContent
     {
@@ -480,7 +480,7 @@ public class UsersClient : IUsersClient
         return multipartContent;
     }
 
-    private MultipartFormDataContent GetForm(UpdateUserForm form)
+    private static MultipartFormDataContent GetForm(UpdateUserForm form)
     {
         var multipartContent = new MultipartFormDataContent
         {
@@ -499,14 +499,14 @@ public class UsersClient : IUsersClient
         return multipartContent;
     }
 
-    private StringContent GetStringContent(string content)
+    private static StringContent GetStringContent(string content)
     {
         var stringContent = new StringContent(content);
 
         return stringContent;
     }
 
-    private StreamContent GetStreamContent(Stream content)
+    private static StreamContent GetStreamContent(Stream content)
     {
         var streamContent = new StreamContent(content);
 

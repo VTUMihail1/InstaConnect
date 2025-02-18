@@ -15,7 +15,6 @@ public class GetPostCommentLikeByIdQueryValidatorUnitTests : BasePostCommentLike
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetPostCommentLikeByIdQuery(null);
 
         // Act
@@ -32,7 +31,6 @@ public class GetPostCommentLikeByIdQueryValidatorUnitTests : BasePostCommentLike
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetPostCommentLikeByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act

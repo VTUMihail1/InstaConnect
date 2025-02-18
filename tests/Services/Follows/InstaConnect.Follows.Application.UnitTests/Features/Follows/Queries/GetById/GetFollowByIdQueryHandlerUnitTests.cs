@@ -17,7 +17,6 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldThrowFollowNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingFollow = CreateFollow();
         var query = new GetFollowByIdQuery(FollowTestUtilities.InvalidId);
 
         // Act

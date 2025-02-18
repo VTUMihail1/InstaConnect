@@ -240,40 +240,6 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndCurrentUserIdCaseDoesNotMatch()
-    {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await PostsClient.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPost.Id &&
-                                                               m.UserId == existingPost.UserId &&
-                                                               m.UserName == existingPost.User.UserName &&
-                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                               m.Title == existingPost.Title &&
-                                                               m.Content == existingPost.Content) &&
-                                                               mc.Page == PostTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
-    }
-
-    [Fact]
     public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndUserIdCaseDoesNotMatch()
     {
         // Arrange
@@ -416,8 +382,8 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            SharedTestUtilities.GetHalfStartString(existingPost.User.UserName),
-            existingPost.Title,
+            existingPost.User.UserName,
+            SharedTestUtilities.GetHalfStartString(existingPost.Title),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,

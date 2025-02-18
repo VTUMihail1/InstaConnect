@@ -48,7 +48,7 @@ public class EmailConfirmationTokensClient : IEmailConfirmationTokensClient
         await _httpClient.PutAsync(route, null, cancellationToken);
     }
 
-    private string GetAddRoute(string email)
+    private static string GetAddRoute(string email)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,
@@ -58,7 +58,7 @@ public class EmailConfirmationTokensClient : IEmailConfirmationTokensClient
         return route;
     }
 
-    private string GetVerifyRoute(string userId, string token)
+    private static string GetVerifyRoute(string userId, string token)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,

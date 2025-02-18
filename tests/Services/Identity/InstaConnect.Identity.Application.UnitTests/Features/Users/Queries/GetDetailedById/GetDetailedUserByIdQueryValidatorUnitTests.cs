@@ -15,7 +15,6 @@ public class GetDetailedUserByIdQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var query = new GetDetailedUserByIdQuery(null);
 
         // Act
@@ -32,7 +31,6 @@ public class GetDetailedUserByIdQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var query = new GetDetailedUserByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act

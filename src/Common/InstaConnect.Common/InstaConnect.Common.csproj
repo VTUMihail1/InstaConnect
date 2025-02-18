@@ -13,8 +13,8 @@
 
   <ItemGroup>
     <!-- Common -->
-    <Using Include="InstaConnect.Shared.Common.Exceptions.Base"/>
-    <Using Include="InstaConnect.Shared.Common.Models.Enums"/>
+    <Using Include="InstaConnect.Shared.Common.Exceptions.Base" />
+    <Using Include="InstaConnect.Shared.Common.Models.Enums" />
   </ItemGroup>
 
 </Project>

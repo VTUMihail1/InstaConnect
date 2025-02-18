@@ -19,7 +19,6 @@ public class AddEmailConfirmationTokenCommandHandlerUnitTests : BaseEmailConfirm
     public async Task Handle_ShouldThrowUserNotFoundException_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddEmailConfirmationTokenCommand(UserTestUtilities.ValidAddEmail);
 
         // Act

@@ -14,7 +14,6 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
             null,
             UserTestUtilities.ValidUpdateName,
@@ -39,7 +38,6 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidUpdateName,
@@ -202,7 +200,6 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateFirstName,
@@ -366,7 +363,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        await InstaConnectSender.SendAsync(command, CancellationToken);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserUpdatedEvent>(m =>
@@ -397,7 +394,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        await InstaConnectSender.SendAsync(command, CancellationToken);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserUpdatedEvent>(m =>

@@ -17,7 +17,6 @@ public class AddUserControllerUnitTests : BaseUserUnitTest
     public async Task AddAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var request = new AddUserRequest(
             new(
                 UserTestUtilities.ValidAddName,
@@ -72,7 +71,6 @@ public class AddUserControllerUnitTests : BaseUserUnitTest
     public async Task AddAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var request = new AddUserRequest(
             new(
                 UserTestUtilities.ValidAddName,

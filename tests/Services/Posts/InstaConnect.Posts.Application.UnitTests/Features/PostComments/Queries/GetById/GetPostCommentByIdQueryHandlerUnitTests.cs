@@ -17,7 +17,6 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentUnitTest
     public async Task Handle_ShouldThrowPostCommentNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPostComment = CreatePostComment();
         var query = new GetPostCommentByIdQuery(PostCommentTestUtilities.InvalidId);
 
         // Act

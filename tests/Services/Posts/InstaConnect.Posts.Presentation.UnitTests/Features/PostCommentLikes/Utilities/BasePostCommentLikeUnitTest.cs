@@ -33,7 +33,7 @@ public abstract class BasePostCommentLikeUnitTest
                 new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
     }
 
-    private User CreateUserUtil()
+    private static User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -45,14 +45,14 @@ public abstract class BasePostCommentLikeUnitTest
         return user;
     }
 
-    protected User CreateUser()
+    protected static User CreateUser()
     {
         var user = CreateUserUtil();
 
         return user;
     }
 
-    private Post CreatePostUtil(User user)
+    private static Post CreatePostUtil(User user)
     {
         var post = new Post(
             SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
@@ -62,7 +62,7 @@ public abstract class BasePostCommentLikeUnitTest
         return post;
     }
 
-    protected Post CreatePost()
+    protected static Post CreatePost()
     {
         var user = CreateUser();
         var post = CreatePostUtil(user);
@@ -70,7 +70,7 @@ public abstract class BasePostCommentLikeUnitTest
         return post;
     }
 
-    private PostComment CreatePostCommentUtil(User user, Post post)
+    private static PostComment CreatePostCommentUtil(User user, Post post)
     {
         var postComment = new PostComment(
             user,
@@ -80,7 +80,7 @@ public abstract class BasePostCommentLikeUnitTest
         return postComment;
     }
 
-    protected PostComment CreatePostComment()
+    protected static PostComment CreatePostComment()
     {
         var user = CreateUser();
         var post = CreatePost();

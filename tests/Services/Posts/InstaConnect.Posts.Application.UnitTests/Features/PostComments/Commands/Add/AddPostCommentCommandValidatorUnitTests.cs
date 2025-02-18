@@ -16,7 +16,6 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var post = CreatePost();
-        var user = CreateUser();
         var command = new AddPostCommentCommand(
             null,
             post.Id,
@@ -37,7 +36,6 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     {
         // Arrange
         var post = CreatePost();
-        var user = CreateUser();
         var command = new AddPostCommentCommand(
             SharedTestUtilities.GetString(length)!,
             post.Id,
@@ -54,7 +52,6 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdIsNull()
     {
         // Arrange
-        var post = CreatePost();
         var user = CreateUser();
         var command = new AddPostCommentCommand(
             user.Id,
@@ -75,7 +72,6 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdLengthIsInvalid(int length)
     {
         // Arrange
-        var post = CreatePost();
         var user = CreateUser();
         var command = new AddPostCommentCommand(
             user.Id,

@@ -12,7 +12,6 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenNameIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetUserByNameQuery(null);
 
         // Act
@@ -31,7 +30,6 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetUserByNameQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -47,7 +45,6 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenNameIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetUserByNameQuery(UserTestUtilities.ValidAddName);
 
         // Act

@@ -30,7 +30,7 @@ public abstract class BaseMessageUnitTest
                 new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
     }
 
-    private User CreateUserUtil()
+    private static User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -42,7 +42,7 @@ public abstract class BaseMessageUnitTest
         return user;
     }
 
-    protected User CreateUser()
+    protected static User CreateUser()
     {
         var user = CreateUserUtil();
 

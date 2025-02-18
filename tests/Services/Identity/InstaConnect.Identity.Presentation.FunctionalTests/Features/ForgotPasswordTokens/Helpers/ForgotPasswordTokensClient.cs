@@ -49,7 +49,7 @@ public class ForgotPasswordTokensClient : IForgotPasswordTokensClient
         await _httpClient.PutAsJsonAsync(route, request.Body, cancellationToken);
     }
 
-    private string GetAddRoute(string email)
+    private static string GetAddRoute(string email)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,
@@ -59,7 +59,7 @@ public class ForgotPasswordTokensClient : IForgotPasswordTokensClient
         return route;
     }
 
-    private string GetVerifyRoute(string userId, string token)
+    private static string GetVerifyRoute(string userId, string token)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,

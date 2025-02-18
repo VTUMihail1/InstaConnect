@@ -91,7 +91,6 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldGetById_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var existingUserId = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidAddName,
@@ -115,7 +114,6 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldAddUserToRepository_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var existingUserId = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidAddName,
@@ -144,7 +142,6 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldCallSaveChangesAsync_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var existingUserId = CreateUser();
         var userCreatedEvent = new UserCreatedEvent(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidAddName,

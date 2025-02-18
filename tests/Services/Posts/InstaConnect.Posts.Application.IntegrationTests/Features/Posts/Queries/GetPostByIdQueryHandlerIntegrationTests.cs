@@ -12,7 +12,6 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetPostByIdQuery(null);
 
         // Act
@@ -29,7 +28,6 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetPostByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -43,7 +41,6 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
         var query = new GetPostByIdQuery(PostTestUtilities.InvalidId);
 
         // Act

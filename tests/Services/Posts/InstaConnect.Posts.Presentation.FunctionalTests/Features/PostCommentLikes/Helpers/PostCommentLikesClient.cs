@@ -146,7 +146,7 @@ public class PostCommentLikesClient : IPostCommentLikesClient
         await _httpClient.DeleteAsync(route, cancellationToken);
     }
 
-    private string GetAllRoute(GetAllPostCommentLikesRequest request)
+    private static string GetAllRoute(GetAllPostCommentLikesRequest request)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,
@@ -162,7 +162,7 @@ public class PostCommentLikesClient : IPostCommentLikesClient
         return route;
     }
 
-    private string IdRoute(string id)
+    private static string IdRoute(string id)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,

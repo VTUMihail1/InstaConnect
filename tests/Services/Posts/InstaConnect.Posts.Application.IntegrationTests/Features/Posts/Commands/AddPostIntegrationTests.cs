@@ -13,7 +13,6 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
             null,
             PostTestUtilities.ValidAddTitle,
@@ -34,7 +33,6 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
             SharedTestUtilities.GetString(length),
             PostTestUtilities.ValidAddTitle,
@@ -113,7 +111,6 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var anotherExistingUserId = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
             existingUser.Id,
             PostTestUtilities.ValidAddTitle,
@@ -131,7 +128,6 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommand(
             UserTestUtilities.InvalidId,
             PostTestUtilities.ValidAddTitle,

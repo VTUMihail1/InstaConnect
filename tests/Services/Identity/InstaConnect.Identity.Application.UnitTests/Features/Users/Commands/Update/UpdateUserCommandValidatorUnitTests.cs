@@ -15,7 +15,6 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new UpdateUserCommand(
             null,
             UserTestUtilities.ValidUpdateFirstName,
@@ -38,7 +37,6 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new UpdateUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidUpdateFirstName,

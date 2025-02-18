@@ -35,9 +35,9 @@ public abstract class BasePostCommentLikeIntegrationTest : IClassFixture<PostsWe
         get
         {
             var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var PostCommentLikeWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeWriteRepository>();
+            var postCommentLikeWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeWriteRepository>();
 
-            return PostCommentLikeWriteRepository;
+            return postCommentLikeWriteRepository;
         }
     }
 
@@ -46,9 +46,9 @@ public abstract class BasePostCommentLikeIntegrationTest : IClassFixture<PostsWe
         get
         {
             var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var PostCommentLikeReadRepository = serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeReadRepository>();
+            var postCommentLikeReadRepository = serviceScope.ServiceProvider.GetRequiredService<IPostCommentLikeReadRepository>();
 
-            return PostCommentLikeReadRepository;
+            return postCommentLikeReadRepository;
         }
     }
 
@@ -143,9 +143,9 @@ public abstract class BasePostCommentLikeIntegrationTest : IClassFixture<PostsWe
             user);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var PostCommentLikeWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostCommentLikeWriteRepository>();
+        var postCommentLikeWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostCommentLikeWriteRepository>();
 
-        PostCommentLikeWriteRepository.Add(postCommentLike);
+        postCommentLikeWriteRepository.Add(postCommentLike);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return postCommentLike;
@@ -174,22 +174,22 @@ public abstract class BasePostCommentLikeIntegrationTest : IClassFixture<PostsWe
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<PostsContext>();
 
-        if (dbContext.PostCommentLikes.Any())
+        if (await dbContext.PostCommentLikes.AnyAsync(CancellationToken))
         {
             await dbContext.PostCommentLikes.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.PostComments.Any())
+        if (await dbContext.PostComments.AnyAsync(CancellationToken))
         {
             await dbContext.PostComments.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Posts.Any())
+        if (await dbContext.Posts.AnyAsync(CancellationToken))
         {
             await dbContext.Posts.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }

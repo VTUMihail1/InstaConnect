@@ -8,6 +8,5 @@ public class GetUserByNameQueryValidator : AbstractValidator<GetUserByNameQuery>
             .NotEmpty()
             .MinimumLength(UserConfigurations.NameMinLength)
             .MaximumLength(UserConfigurations.NameMaxLength);
-        ;
     }
 }

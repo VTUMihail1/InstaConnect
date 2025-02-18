@@ -15,7 +15,6 @@ public class GetPostCommentByIdQueryValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var existingPostComment = CreatePostComment();
         var query = new GetPostCommentByIdQuery(null);
 
         // Act
@@ -32,7 +31,6 @@ public class GetPostCommentByIdQueryValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPostComment = CreatePostComment();
         var query = new GetPostCommentByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act

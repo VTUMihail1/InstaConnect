@@ -37,4 +37,9 @@ await app.RunAsync();
 
 
 // Utils for testing
-public partial class Program { }
+public partial class Program
+{
+    private Program()
+    {
+    }
+}

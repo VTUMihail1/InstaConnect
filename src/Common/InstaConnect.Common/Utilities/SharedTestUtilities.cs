@@ -9,7 +9,7 @@ using NSubstitute;
 
 namespace InstaConnect.Shared.Common.Utilities;
 
-public class SharedTestUtilities
+public abstract class SharedTestUtilities
 {
     private const int DefaultStringLength = 100;
 

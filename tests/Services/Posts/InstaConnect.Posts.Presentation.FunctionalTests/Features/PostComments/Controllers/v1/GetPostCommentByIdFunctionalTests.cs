@@ -13,7 +13,6 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new GetPostCommentByIdRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -32,7 +31,6 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new GetPostCommentByIdRequest(
             PostCommentTestUtilities.InvalidId
         );

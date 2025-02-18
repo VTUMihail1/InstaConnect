@@ -15,7 +15,6 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingPost = CreatePost();
         var command = new AddPostCommand(
             null,
             PostTestUtilities.ValidAddTitle,
@@ -35,7 +34,6 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPost = CreatePost();
         var command = new AddPostCommand(
             SharedTestUtilities.GetString(length)!,
             PostTestUtilities.ValidAddTitle,

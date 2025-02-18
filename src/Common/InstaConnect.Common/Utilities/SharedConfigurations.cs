@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Shared.Common.Utilities;
 
-public class SharedConfigurations
+public static class SharedConfigurations
 {
     public const int PageMinValue = 1;
     public const int PageMaxValue = 10000;

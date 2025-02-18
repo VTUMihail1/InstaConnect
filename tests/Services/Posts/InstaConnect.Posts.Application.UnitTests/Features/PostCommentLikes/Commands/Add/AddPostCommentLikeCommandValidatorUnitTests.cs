@@ -15,7 +15,6 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var existingPostComment = CreatePostComment();
         var command = new AddPostCommentLikeCommand(
             null,
@@ -35,7 +34,6 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var existingPostComment = CreatePostComment();
         var command = new AddPostCommentLikeCommand(
             SharedTestUtilities.GetString(length)!,
@@ -53,7 +51,6 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     {
         // Arrange
         var existingUser = CreateUser();
-        var existingPostComment = CreatePostComment();
         var command = new AddPostCommentLikeCommand(
             existingUser.Id,
             null);
@@ -73,7 +70,6 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     {
         // Arrange
         var existingUser = CreateUser();
-        var existingPostComment = CreatePostComment();
         var command = new AddPostCommentLikeCommand(
             existingUser.Id,
             SharedTestUtilities.GetString(length)!);

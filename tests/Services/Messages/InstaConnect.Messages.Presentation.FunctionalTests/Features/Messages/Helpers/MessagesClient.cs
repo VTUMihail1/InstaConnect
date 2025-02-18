@@ -240,7 +240,7 @@ public class MessagesClient : IMessagesClient
         await _httpClient.DeleteAsync(route, cancellationToken);
     }
 
-    private string GetAllRoute(GetAllMessagesRequest request)
+    private static string GetAllRoute(GetAllMessagesRequest request)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,
@@ -255,7 +255,7 @@ public class MessagesClient : IMessagesClient
         return route;
     }
 
-    private string IdRoute(string id)
+    private static string IdRoute(string id)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,

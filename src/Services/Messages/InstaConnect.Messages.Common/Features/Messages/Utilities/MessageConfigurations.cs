@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Messages.Common.Features.Messages.Utilities;
 
-public class MessageConfigurations
+public abstract class MessageConfigurations
 {
     public const int IdMinLength = 7;
     public const int IdMaxLength = 100;

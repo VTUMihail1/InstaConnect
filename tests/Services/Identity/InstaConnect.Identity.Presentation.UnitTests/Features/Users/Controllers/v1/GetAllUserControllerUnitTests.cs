@@ -92,7 +92,7 @@ public class GetAllUserControllerUnitTests : BaseUserUnitTest
         );
 
         // Act
-        var response = await _userController.GetAllAsync(request, CancellationToken);
+        await _userController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

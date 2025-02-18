@@ -123,12 +123,12 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<FollowsContext>();
 
-        if (dbContext.Follows.Any())
+        if (await dbContext.Follows.AnyAsync(CancellationToken))
         {
             await dbContext.Follows.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }

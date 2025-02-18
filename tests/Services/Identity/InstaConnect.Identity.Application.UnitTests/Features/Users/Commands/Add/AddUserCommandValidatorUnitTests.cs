@@ -15,7 +15,6 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForName_WhenNameIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             null,
             UserTestUtilities.ValidAddEmail,
@@ -40,7 +39,6 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForName_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidAddEmail,
@@ -62,7 +60,6 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             null,
@@ -87,7 +84,6 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             SharedTestUtilities.GetString(length),
@@ -109,7 +105,6 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -134,7 +129,6 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var password = SharedTestUtilities.GetString(length);
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
@@ -157,7 +151,6 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForConfirmPassword_WhenConfirmPasswordDoesNotMatchPassword()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -179,7 +172,6 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForFirstName_WhenFirstNameIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -204,7 +196,6 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForFirstName_WhenFirstNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -226,7 +217,6 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForLastName_WhenLastNameIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -251,7 +241,6 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForLastName_WhenLastNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -273,7 +262,6 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -295,7 +283,6 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValidAndProfileImageIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,

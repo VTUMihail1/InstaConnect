@@ -15,7 +15,6 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingSender = CreateUser();
         var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
             null!,
@@ -37,7 +36,6 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingSender = CreateUser();
         var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
             SharedTestUtilities.GetString(length)!,
@@ -57,7 +55,6 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingSender = CreateUser();
-        var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
             existingSender.Id,
             null!,
@@ -79,7 +76,6 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingSender = CreateUser();
-        var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
             existingSender.Id,
             SharedTestUtilities.GetString(length)!,

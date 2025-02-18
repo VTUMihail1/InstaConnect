@@ -7,6 +7,5 @@ public class AddForgotPasswordTokenCommandValidator : AbstractValidator<AddForgo
             .NotEmpty()
             .MinimumLength(UserConfigurations.EmailMinLength)
             .MaximumLength(UserConfigurations.EmailMaxLength);
-        ;
     }
 }

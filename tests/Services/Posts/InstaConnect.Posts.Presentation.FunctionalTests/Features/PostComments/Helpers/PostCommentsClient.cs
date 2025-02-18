@@ -193,7 +193,7 @@ public class PostCommentsClient : IPostCommentsClient
         await _httpClient.DeleteAsync(route, cancellationToken);
     }
 
-    private string GetAllRoute(GetAllPostCommentsRequest request)
+    private static string GetAllRoute(GetAllPostCommentsRequest request)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,
@@ -209,7 +209,7 @@ public class PostCommentsClient : IPostCommentsClient
         return route;
     }
 
-    private string IdRoute(string id)
+    private static string IdRoute(string id)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,

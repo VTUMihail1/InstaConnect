@@ -75,6 +75,5 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
                                                            mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
-        ;
     }
 }

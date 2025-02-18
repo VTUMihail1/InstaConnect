@@ -76,6 +76,5 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
                                                            mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
-        ;
     }
 }

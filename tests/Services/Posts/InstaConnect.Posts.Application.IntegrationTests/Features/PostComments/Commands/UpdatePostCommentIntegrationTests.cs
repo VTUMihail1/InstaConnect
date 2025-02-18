@@ -176,7 +176,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var postComment = await PostCommentWriteRepository.GetByIdAsync(existingPostComment.Id, CancellationToken);
+        var postComment = await PostCommentWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         postComment
@@ -200,7 +200,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
-        var postComment = await PostCommentWriteRepository.GetByIdAsync(existingPostComment.Id, CancellationToken);
+        var postComment = await PostCommentWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
         postComment

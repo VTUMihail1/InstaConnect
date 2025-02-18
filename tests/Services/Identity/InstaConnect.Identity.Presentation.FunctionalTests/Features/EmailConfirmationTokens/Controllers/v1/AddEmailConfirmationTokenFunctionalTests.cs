@@ -15,7 +15,6 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddEmailConfirmationTokenRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -33,7 +32,6 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddEmailConfirmationTokenRequest(
             UserTestUtilities.ValidAddEmail
         );
@@ -115,7 +113,6 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
 
         // Act
         await EmailConfirmationTokensClient.AddAsync(request, CancellationToken);
-        var user = await UserWriteRepository.GetByIdAsync(existingUser.Id, CancellationToken);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserConfirmEmailTokenCreatedEvent>(m =>

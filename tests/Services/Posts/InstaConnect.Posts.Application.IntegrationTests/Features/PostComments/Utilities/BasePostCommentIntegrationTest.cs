@@ -146,17 +146,17 @@ public abstract class BasePostCommentIntegrationTest : IClassFixture<PostsWebApp
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<PostsContext>();
 
-        if (dbContext.PostComments.Any())
+        if (await dbContext.PostComments.AnyAsync(CancellationToken))
         {
             await dbContext.PostComments.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Posts.Any())
+        if (await dbContext.Posts.AnyAsync(CancellationToken))
         {
             await dbContext.Posts.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }

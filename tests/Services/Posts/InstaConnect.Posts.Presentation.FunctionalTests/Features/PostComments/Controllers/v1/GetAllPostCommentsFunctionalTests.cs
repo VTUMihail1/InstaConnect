@@ -224,40 +224,6 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldReturnPostCommentPaginationCollectionResponse_WhenRequestIsValidAndCurrentUserIdCaseDoesNotMatch()
-    {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var request = new GetAllPostCommentsRequest(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await PostCommentsClient.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostCommentPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostComment.Id &&
-                                                               m.UserId == existingPostComment.UserId &&
-                                                               m.UserName == existingPostComment.User.UserName &&
-                                                               m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                               m.PostId == existingPostComment.PostId &&
-                                                               m.Content == existingPostComment.Content) &&
-                                                               mc.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
-    }
-
-    [Fact]
     public async Task GetAllAsync_ShouldReturnPostCommentPaginationCollectionResponse_WhenRequestIsValidAndUserIdCaseDoesNotMatch()
     {
         // Arrange

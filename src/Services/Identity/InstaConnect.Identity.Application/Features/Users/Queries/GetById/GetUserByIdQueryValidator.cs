@@ -8,6 +8,5 @@ public class GetUserByIdQueryValidator : AbstractValidator<GetUserByIdQuery>
             .NotEmpty()
             .MinimumLength(UserConfigurations.IdMinLength)
             .MaximumLength(UserConfigurations.IdMaxLength);
-        ;
     }
 }

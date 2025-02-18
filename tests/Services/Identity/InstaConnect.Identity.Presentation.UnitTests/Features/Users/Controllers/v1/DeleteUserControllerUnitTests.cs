@@ -41,7 +41,7 @@ public class DeleteUserControllerUnitTests : BaseUserUnitTest
         );
 
         // Act
-        var response = await _userController.DeleteAsync(request, CancellationToken);
+        await _userController.DeleteAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

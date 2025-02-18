@@ -15,7 +15,6 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailIsNull()
     {
         // Arrange
-        var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
             null,
             UserTestUtilities.ValidPassword
@@ -35,7 +34,6 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPassword

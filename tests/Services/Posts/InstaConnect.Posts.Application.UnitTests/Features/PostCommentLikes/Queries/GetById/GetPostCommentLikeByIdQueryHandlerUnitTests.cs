@@ -17,7 +17,6 @@ public class GetPostCommentLikeByIdQueryHandlerUnitTests : BasePostCommentLikeUn
     public async Task Handle_ShouldThrowPostCommentLikeNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetPostCommentLikeByIdQuery(PostCommentLikeTestUtilities.InvalidId);
 
         // Act

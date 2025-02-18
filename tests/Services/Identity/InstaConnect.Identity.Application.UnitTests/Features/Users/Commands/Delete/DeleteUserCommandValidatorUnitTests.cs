@@ -15,7 +15,6 @@ public class DeleteUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new DeleteUserCommand(null);
 
         // Act
@@ -32,7 +31,6 @@ public class DeleteUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new DeleteUserCommand(SharedTestUtilities.GetString(length));
 
         // Act

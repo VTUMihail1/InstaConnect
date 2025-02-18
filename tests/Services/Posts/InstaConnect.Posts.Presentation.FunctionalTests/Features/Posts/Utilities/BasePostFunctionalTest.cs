@@ -110,12 +110,12 @@ public abstract class BasePostFunctionalTest : IClassFixture<PostsWebApplication
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<PostsContext>();
 
-        if (dbContext.Posts.Any())
+        if (await dbContext.Posts.AnyAsync(CancellationToken))
         {
             await dbContext.Posts.ExecuteDeleteAsync(CancellationToken);
         }
 
-        if (dbContext.Users.Any())
+        if (await dbContext.Users.AnyAsync(CancellationToken))
         {
             await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
         }

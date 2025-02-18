@@ -93,7 +93,7 @@ public class GetAllPostCommentLikeControllerUnitTests : BasePostCommentLikeUnitT
         );
 
         // Act
-        var response = await _postCommentLikeController.GetAllAsync(request, CancellationToken);
+        await _postCommentLikeController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

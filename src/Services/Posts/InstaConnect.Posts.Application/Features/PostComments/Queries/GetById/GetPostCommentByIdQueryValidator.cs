@@ -8,6 +8,5 @@ public class GetPostCommentByIdQueryValidator : AbstractValidator<GetPostComment
             .NotEmpty()
             .MinimumLength(PostCommentConfigurations.IdMinLength)
             .MaximumLength(PostCommentConfigurations.IdMaxLength);
-        ;
     }
 }

@@ -12,7 +12,6 @@ public class GetCurrentUserQueryHandlerIntegrationTests : BaseUserIntegrationTes
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetCurrentUserQuery(null);
 
         // Act
@@ -31,7 +30,6 @@ public class GetCurrentUserQueryHandlerIntegrationTests : BaseUserIntegrationTes
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetCurrentUserQuery(SharedTestUtilities.GetString(length));
 
         // Act
@@ -47,7 +45,6 @@ public class GetCurrentUserQueryHandlerIntegrationTests : BaseUserIntegrationTes
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetCurrentUserQuery(UserTestUtilities.InvalidId);
 
         // Act

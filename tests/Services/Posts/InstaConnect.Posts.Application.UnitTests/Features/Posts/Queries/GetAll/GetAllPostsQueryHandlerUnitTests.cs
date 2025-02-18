@@ -76,6 +76,5 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
                                                            mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
-        ;
     }
 }

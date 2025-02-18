@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Messages.Common.Features.Users.Utilities;
 
-public class UserConfigurations
+public abstract class UserConfigurations
 {
     public const int IdMinLength = 7;
     public const int IdMaxLength = 100;

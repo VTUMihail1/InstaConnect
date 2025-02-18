@@ -75,6 +75,5 @@ public class GetAllUsersQueryHandlerUnitTests : BaseUserUnitTest
                                                            mc.TotalCount == UserTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
-        ;
     }
 }

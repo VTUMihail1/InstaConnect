@@ -51,7 +51,6 @@ public class DeleteUserFunctionalTests : BaseUserFunctionalTest
     public async Task DeleteAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new DeleteUserRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -69,7 +68,6 @@ public class DeleteUserFunctionalTests : BaseUserFunctionalTest
     public async Task DeleteAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new DeleteUserRequest(
             UserTestUtilities.InvalidId
         );

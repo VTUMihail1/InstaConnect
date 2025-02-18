@@ -94,7 +94,7 @@ public class GetAllPostCommentControllerUnitTests : BasePostCommentUnitTest
         );
 
         // Act
-        var response = await _postCommentController.GetAllAsync(request, CancellationToken);
+        await _postCommentController.GetAllAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

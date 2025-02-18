@@ -322,8 +322,8 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollow = await CreateFollowAsync(CancellationToken);
         var request = new GetAllFollowsRequest(
             existingFollow.FollowerId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Follower.UserName),
-            existingFollow.FollowingId,
+            existingFollow.Follower.UserName,
+            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.FollowingId),
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -397,7 +397,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
     public async Task GetAllAsync_ShouldOkStatusCodeResponse_WhenRouteHasNoParameters()
     {
         // Arrange
-        var existingFollow = await CreateFollowAsync(CancellationToken);
+        await CreateFollowAsync(CancellationToken);
 
         // Act
         var response = await FollowsClient.GetAllStatusCodeAsync(CancellationToken);
@@ -406,30 +406,6 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         response
             .Should()
             .Be(HttpStatusCode.OK);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnFollowPaginationCollectionResponse_WhenRequestIsValid()
-    {
-        // Arrange
-        var existingFollow = await CreateFollowAsync(CancellationToken);
-        var request = new GetAllFollowsRequest(
-            existingFollow.FollowerId,
-            existingFollow.Follower.UserName,
-            existingFollow.FollowingId,
-            existingFollow.Following.UserName,
-            FollowTestUtilities.ValidSortOrderProperty,
-            FollowTestUtilities.ValidSortPropertyName,
-            FollowTestUtilities.ValidPageValue,
-            FollowTestUtilities.ValidPageSizeValue
-        );
-
-
-        // Act
-        var response = await FollowsClient.GetAllStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response.Should().Be(HttpStatusCode.OK);
     }
 
     [Fact]
@@ -515,8 +491,8 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollow = await CreateFollowAsync(CancellationToken);
         var request = new GetAllFollowsRequest(
             existingFollow.FollowerId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Follower.UserName),
-            existingFollow.FollowingId,
+            existingFollow.Follower.UserName,
+            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.FollowingId),
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,

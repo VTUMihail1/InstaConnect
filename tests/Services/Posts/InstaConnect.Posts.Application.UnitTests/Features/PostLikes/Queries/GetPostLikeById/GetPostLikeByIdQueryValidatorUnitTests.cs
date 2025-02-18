@@ -15,7 +15,6 @@ public class GetPostLikeByIdQueryValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
     {
         // Arrange
-        var existingPostLike = CreatePostLike();
         var query = new GetPostLikeByIdQuery(null);
 
         // Act
@@ -32,7 +31,6 @@ public class GetPostLikeByIdQueryValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPostLike = CreatePostLike();
         var query = new GetPostLikeByIdQuery(SharedTestUtilities.GetString(length));
 
         // Act

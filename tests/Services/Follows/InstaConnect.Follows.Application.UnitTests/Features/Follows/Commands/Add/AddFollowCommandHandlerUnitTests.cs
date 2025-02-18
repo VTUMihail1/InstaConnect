@@ -19,7 +19,6 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingFollower = CreateUser();
         var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             UserTestUtilities.InvalidId,
@@ -37,7 +36,6 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
     {
         // Arrange
         var existingFollower = CreateUser();
-        var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
             existingFollower.Id,
             UserTestUtilities.InvalidId);

@@ -21,7 +21,6 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenSenderIdIsInvalid()
     {
         // Arrange
-        var existingSender = CreateUser();
         var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
             UserTestUtilities.InvalidId,
@@ -41,7 +40,6 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         // Arrange
         var existingSender = CreateUser();
-        var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
             existingSender.Id,
             UserTestUtilities.InvalidId,

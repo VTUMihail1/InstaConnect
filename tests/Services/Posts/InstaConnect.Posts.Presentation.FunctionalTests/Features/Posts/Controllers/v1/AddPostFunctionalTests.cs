@@ -112,7 +112,6 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddPostRequest(
             null,
             new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
@@ -134,7 +133,6 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddPostRequest(
             SharedTestUtilities.GetString(length),
             new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
@@ -153,7 +151,6 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenCurrentUserIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddPostRequest(
             UserTestUtilities.InvalidId,
             new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)

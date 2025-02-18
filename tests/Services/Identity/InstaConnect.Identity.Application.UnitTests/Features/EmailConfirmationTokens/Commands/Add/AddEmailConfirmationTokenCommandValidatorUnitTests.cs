@@ -15,7 +15,6 @@ public class AddEmailConfirmationTokenCommandValidatorUnitTests : BaseEmailConfi
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddEmailConfirmationTokenCommand(null);
 
         // Act
@@ -32,7 +31,6 @@ public class AddEmailConfirmationTokenCommandValidatorUnitTests : BaseEmailConfi
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddEmailConfirmationTokenCommand(SharedTestUtilities.GetString(length));
 
         // Act

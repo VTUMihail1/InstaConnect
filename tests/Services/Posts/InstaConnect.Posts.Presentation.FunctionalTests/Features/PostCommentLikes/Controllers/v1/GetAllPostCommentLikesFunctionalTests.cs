@@ -239,39 +239,6 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldReturnPostCommentLikePaginationCollectionResponse_WhenRequestIsValidAndCurrentUserIdCaseDoesNotMatch()
-    {
-        // Arrange
-        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
-        var request = new GetAllPostCommentLikesRequest(
-            existingPostCommentLike.UserId,
-            existingPostCommentLike.User.UserName,
-            existingPostCommentLike.PostCommentId,
-            PostCommentLikeTestUtilities.ValidSortOrderProperty,
-            PostCommentLikeTestUtilities.ValidSortPropertyName,
-            PostCommentLikeTestUtilities.ValidPageValue,
-            PostCommentLikeTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await PostCommentLikesClient.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostCommentLikePaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPostCommentLike.Id &&
-                                                               m.UserId == existingPostCommentLike.UserId &&
-                                                               m.UserName == existingPostCommentLike.User.UserName &&
-                                                               m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
-                                                               m.PostCommentId == existingPostCommentLike.PostCommentId) &&
-                                                               mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
-    }
-
-    [Fact]
     public async Task GetAllAsync_ShouldReturnPostCommentLikePaginationCollectionResponse_WhenRequestIsValidAndUserIdCaseDoesNotMatch()
     {
         // Arrange

@@ -19,7 +19,6 @@ public class AddForgotPasswordTokenCommandHandlerUnitTests : BaseForgotPasswordT
     public async Task Handle_ShouldThrowUserNotFoundException_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new AddForgotPasswordTokenCommand(UserTestUtilities.ValidAddEmail);
 
         // Act

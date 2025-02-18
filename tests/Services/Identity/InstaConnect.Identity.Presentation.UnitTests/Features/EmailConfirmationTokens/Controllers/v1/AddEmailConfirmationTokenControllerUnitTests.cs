@@ -40,7 +40,7 @@ public class AddEmailConfirmationTokenControllerUnitTests : BaseEmailConfirmatio
         );
 
         // Act
-        var response = await _emailConfirmationTokenController.AddAsync(request, CancellationToken);
+        await _emailConfirmationTokenController.AddAsync(request, CancellationToken);
 
         // Assert
         await InstaConnectSender

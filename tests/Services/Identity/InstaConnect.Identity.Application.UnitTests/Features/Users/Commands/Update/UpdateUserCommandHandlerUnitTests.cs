@@ -22,7 +22,6 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
     public async Task Handle_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
         var command = new UpdateUserCommand(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateFirstName,

@@ -8,6 +8,5 @@ public class GetPostCommentLikeByIdQueryValidator : AbstractValidator<GetPostCom
             .NotEmpty()
             .MinimumLength(PostCommentLikeConfigurations.IdMinLength)
             .MaximumLength(PostCommentLikeConfigurations.IdMaxLength);
-        ;
     }
 }

@@ -13,7 +13,6 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingFollow = await CreateFollowAsync(CancellationToken);
         var request = new GetFollowByIdRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -32,7 +31,6 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingFollow = await CreateFollowAsync(CancellationToken);
         var request = new GetFollowByIdRequest(
             FollowTestUtilities.InvalidId
         );

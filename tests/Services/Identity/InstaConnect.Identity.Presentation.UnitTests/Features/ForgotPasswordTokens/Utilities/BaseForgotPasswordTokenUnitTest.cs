@@ -26,7 +26,7 @@ public abstract class BaseForgotPasswordTokenUnitTest
                 new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
     }
 
-    private User CreateUserUtil()
+    private static User CreateUserUtil()
     {
         var user = new User(
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
@@ -39,14 +39,14 @@ public abstract class BaseForgotPasswordTokenUnitTest
         return user;
     }
 
-    protected User CreateUser()
+    protected static User CreateUser()
     {
         var user = CreateUserUtil();
 
         return user;
     }
 
-    private ForgotPasswordToken CreateForgotPasswordTokenUtil(User user)
+    private static ForgotPasswordToken CreateForgotPasswordTokenUtil(User user)
     {
         var forgotPasswordToken = new ForgotPasswordToken(
             SharedTestUtilities.GetGuid(),
@@ -56,7 +56,7 @@ public abstract class BaseForgotPasswordTokenUnitTest
         return forgotPasswordToken;
     }
 
-    protected ForgotPasswordToken CreateForgotPasswordToken()
+    protected static ForgotPasswordToken CreateForgotPasswordToken()
     {
         var user = CreateUser();
         var forgotPasswordToken = CreateForgotPasswordTokenUtil(user);

@@ -14,7 +14,6 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new DeleteUserCommand(null);
 
         // Act
@@ -33,7 +32,6 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new DeleteUserCommand(SharedTestUtilities.GetString(length));
 
         // Act
@@ -49,7 +47,6 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var command = new DeleteUserCommand(UserTestUtilities.InvalidId);
 
         // Act

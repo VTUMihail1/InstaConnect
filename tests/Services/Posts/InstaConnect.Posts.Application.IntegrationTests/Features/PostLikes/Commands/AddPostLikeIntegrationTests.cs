@@ -13,7 +13,6 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
             null,
@@ -34,7 +33,6 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
             SharedTestUtilities.GetString(length),
@@ -53,7 +51,6 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
             existingUser.Id,
             null
@@ -74,7 +71,6 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
             existingUser.Id,
             SharedTestUtilities.GetString(length)
@@ -91,7 +87,6 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
             UserTestUtilities.InvalidId,
@@ -110,7 +105,6 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
             existingUser.Id,
             PostTestUtilities.InvalidId

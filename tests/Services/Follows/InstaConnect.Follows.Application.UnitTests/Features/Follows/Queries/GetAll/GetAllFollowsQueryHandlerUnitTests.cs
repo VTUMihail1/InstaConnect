@@ -79,6 +79,5 @@ public class GetAllFollowsQueryHandlerUnitTests : BaseFollowUnitTest
                                                            mc.TotalCount == FollowTestUtilities.ValidTotalCountValue &&
                                                            !mc.HasPreviousPage &&
                                                            !mc.HasNextPage);
-        ;
     }
 }

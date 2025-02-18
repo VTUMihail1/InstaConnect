@@ -13,7 +13,6 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenEmailIsNull()
     {
         // Arrange
-        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var command = new LoginUserCommand(
             null,
             UserTestUtilities.ValidPassword
@@ -35,7 +34,6 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var command = new LoginUserCommand(
             SharedTestUtilities.GetString(length),
             UserTestUtilities.ValidPassword
@@ -89,7 +87,6 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowUserInvalidDetailsException_WhenEmailIsInvalid()
     {
         // Arrange
-        var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var command = new LoginUserCommand(
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidPassword

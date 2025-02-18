@@ -13,7 +13,6 @@ public class GetUserByNameFunctionalTests : BaseUserFunctionalTest
     public async Task GetByNameAsync_ShouldReturnBadRequestResponse_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetUserByNameRequest(
             SharedTestUtilities.GetString(length)
         );
@@ -32,7 +31,6 @@ public class GetUserByNameFunctionalTests : BaseUserFunctionalTest
     public async Task GetByNameAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetUserByNameRequest(
             UserTestUtilities.ValidAddName
         );

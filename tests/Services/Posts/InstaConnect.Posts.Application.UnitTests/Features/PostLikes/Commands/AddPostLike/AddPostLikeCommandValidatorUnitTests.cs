@@ -15,7 +15,6 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
         var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             null,
@@ -35,7 +34,6 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
         var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             SharedTestUtilities.GetString(length)!,
@@ -53,7 +51,6 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             existingUser.Id,
             null);
@@ -73,7 +70,6 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var existingPost = CreatePost();
         var command = new AddPostLikeCommand(
             existingUser.Id,
             SharedTestUtilities.GetString(length));

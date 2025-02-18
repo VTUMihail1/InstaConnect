@@ -1,5 +1,5 @@
 ﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Utilities;
-public class PostCommentTestRoutes
+public abstract class PostCommentTestRoutes
 {
     public const string Default = "api/v1/post-comments";
 
