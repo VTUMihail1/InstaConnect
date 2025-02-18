@@ -3,10 +3,8 @@ name: CD - Publish & Deploy
 on:
   workflow_run:
     workflows: ["CI - Build & Test"]
-    types:
+    types: 
       - completed
-    branches:
-      - main
 
 jobs:
   cd:
@@ -14,16 +12,33 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
-      - name: Setup .NET
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      - name: Restore
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-
+
+      - name: Restore dependencies
         run: dotnet restore ./InstaConnect.sln
 
-      - name: Build
+      - name: Build solution
         run: dotnet build ./InstaConnect.sln --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish ./InstaConnect.sln -c Release -o ./publish
+        run: dotnet publish ./InstaConnect.sln --configuration Release --output ./publish
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: published-app
+          path: ./publish
