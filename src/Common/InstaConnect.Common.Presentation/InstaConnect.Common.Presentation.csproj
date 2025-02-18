@@ -13,8 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InstaConnect.Shared.Application\InstaConnect.Shared.Application.csproj" />
-    <ProjectReference Include="..\InstaConnect.Shared.Common\InstaConnect.Shared.Common.csproj" />
+    <ProjectReference Include="..\InstaConnect.Common\InstaConnect.Common.csproj" />
+    <ProjectReference Include="..\InstaConnect.Common.Application\InstaConnect.Common.Application.csproj" />
+    <ProjectReference Include="..\InstaConnect.Common.Infrastructure\InstaConnect.Common.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Infrastructure\InstaConnect.Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Infrastructure\InstaConnect.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Messages.Application\InstaConnect.Messages.Application.csproj" />
   </ItemGroup>
 

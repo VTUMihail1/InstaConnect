@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Common\InstaConnect.Shared.Common.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

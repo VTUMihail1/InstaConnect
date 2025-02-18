@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Domain\InstaConnect.Shared.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Domain\InstaConnect.Common.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Messages.Common\InstaConnect.Messages.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Common -->
-    <Using Include="InstaConnect.Shared.Domain.Models.Base"/>
+    <Using Include="InstaConnect.Shared.Domain.Models.Base" />
   </ItemGroup>
 
 </Project>

@@ -7,8 +7,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InstaConnect.Shared.Common\InstaConnect.Shared.Common.csproj" />
-    <ProjectReference Include="..\InstaConnect.Shared.Domain\InstaConnect.Shared.Domain.csproj" />
+    <ProjectReference Include="..\InstaConnect.Common\InstaConnect.Common.csproj" />
+    <ProjectReference Include="..\InstaConnect.Common.Domain\InstaConnect.Common.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Messages\InstaConnect.Messages.Application\InstaConnect.Messages.Application.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Messages\InstaConnect.Messages.Common\InstaConnect.Messages.Common.csproj" />
   </ItemGroup>

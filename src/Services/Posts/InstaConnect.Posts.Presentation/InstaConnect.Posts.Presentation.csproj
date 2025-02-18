@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\InstaConnect.Shared.Presentation\InstaConnect.Shared.Presentation.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Presentation\InstaConnect.Common.Presentation.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Posts.Application\InstaConnect.Posts.Application.csproj" />
     <ProjectReference Include="..\InstaConnect.Posts.Common\InstaConnect.Posts.Common.csproj" />
     <ProjectReference Include="..\InstaConnect.Posts.Infrastructure\InstaConnect.Posts.Infrastructure.csproj" />
