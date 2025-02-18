@@ -1,0 +1,25 @@
+name: CI - Build & Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ci:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore ./InstaConnect.sln
+
+      - name: Build
+        run: dotnet build ./InstaConnect.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test ./InstaConnect.sln --configuration Release --no-build
