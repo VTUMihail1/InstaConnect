@@ -10,16 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
       - name: Set up .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
 
-      - name: Restore
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-
+
+      - name: Restore dependencies
         run: dotnet restore ./InstaConnect.sln
 
-      - name: Build
+      - name: Build solution
         run: dotnet build ./InstaConnect.sln --configuration Release --no-restore
 
-      - name: Test
-        run: dotnet test ./InstaConnect.sln --configuration Release --no-build
+      - name: Run tests
+        run: dotnet test ./InstaConnect.sln --configuration Release --no-build --verbosity normal
