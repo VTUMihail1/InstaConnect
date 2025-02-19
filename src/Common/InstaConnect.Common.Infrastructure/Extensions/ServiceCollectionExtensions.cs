@@ -2,11 +2,11 @@
 
 using CloudinaryDotNet;
 
+using InstaConnect.Common.Domain.Abstractions;
 using InstaConnect.Shared.Application.Helpers;
 using InstaConnect.Shared.Infrastructure.Abstractions;
 using InstaConnect.Shared.Infrastructure.Extensions;
 using InstaConnect.Shared.Infrastructure.Helpers;
-using InstaConnect.Shared.Infrastructure.Interceptors;
 using InstaConnect.Shared.Infrastructure.Models.Options;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,8 +36,6 @@ public static partial class ServiceCollectionExtensions
         Action<DbContextOptionsBuilder>? optionsAction = null)
     where TContext : DbContext
     {
-        serviceCollection.AddScoped<AuditableEntityInterceptor>();
-
         serviceCollection
             .AddOptions<DatabaseOptions>()
             .BindConfiguration(nameof(DatabaseOptions))
@@ -52,10 +50,6 @@ public static partial class ServiceCollectionExtensions
 
         serviceCollection.AddDbContext<TContext>((sp, options) =>
         {
-            var auditableEntityInterceptor = sp.GetRequiredService<AuditableEntityInterceptor>();
-
-            options.AddInterceptors(auditableEntityInterceptor);
-
             options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
             options.UseSqlServer(
@@ -212,6 +206,14 @@ public static partial class ServiceCollectionExtensions
     {
         serviceCollection
             .AddScoped<IDateTimeProvider, DateTimeProvider>();
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddGuidProvider(this IServiceCollection serviceCollection)
+    {
+        serviceCollection
+            .AddScoped<IGuidProvider, GuidProvider>();
 
         return serviceCollection;
     }

@@ -17,6 +17,8 @@ public abstract class BaseFollowUnitTest
 {
     protected IUnitOfWork UnitOfWork { get; }
 
+    protected IFollowFactory FollowFactory { get; }
+
     protected CancellationToken CancellationToken { get; }
 
     protected IInstaConnectMapper InstaConnectMapper { get; }
@@ -32,6 +34,7 @@ public abstract class BaseFollowUnitTest
     protected BaseFollowUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
+        FollowFactory = Substitute.For<IFollowFactory>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
@@ -66,7 +69,14 @@ public abstract class BaseFollowUnitTest
 
     public Follow CreateFollowUtil(User follower, User following)
     {
-        var follow = new Follow(follower, following);
+        var id = SharedTestUtilities.GetGuid();
+        var utcNow = SharedTestUtilities.GetMaxDate();
+        var follow = new Follow(
+            id,
+            follower,
+            following,
+            utcNow,
+            utcNow);
 
         var followPaginationList = new PaginationList<Follow>(
             [follow],
@@ -105,6 +115,26 @@ public abstract class BaseFollowUnitTest
         var follower = CreateUser();
         var following = CreateUser();
         var follow = CreateFollowUtil(follower, following);
+
+        return follow;
+    }
+
+    public Follow CreateFollowFactory()
+    {
+        var follower = CreateUser();
+        var following = CreateUser();
+
+        var id = SharedTestUtilities.GetGuid();
+        var utcNow = SharedTestUtilities.GetMaxDate();
+        var follow = new Follow(
+            id,
+            follower,
+            following,
+            utcNow,
+            utcNow);
+
+        FollowFactory.Get(follower.Id, following.Id)
+            .Returns(follow);
 
         return follow;
     }

@@ -87,9 +87,14 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
         User following,
         CancellationToken cancellationToken)
     {
+        var id = SharedTestUtilities.GetGuid();
+        var utcNow = SharedTestUtilities.GetMaxDate();
         var follow = new Follow(
-            follower.Id,
-            following.Id);
+            id,
+            follower,
+            following,
+            utcNow,
+            utcNow);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var followWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IFollowWriteRepository>();

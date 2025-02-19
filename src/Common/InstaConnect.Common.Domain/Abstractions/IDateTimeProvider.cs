@@ -1,7 +1,7 @@
 ﻿namespace InstaConnect.Shared.Application.Abstractions;
 public interface IDateTimeProvider
 {
-    public DateTime GetCurrentUtc();
+    public DateTime GetUtcNow();
 
-    public DateTime GetCurrentUtc(int seconds);
+    public DateTime GetUtcNow(int seconds);
 }

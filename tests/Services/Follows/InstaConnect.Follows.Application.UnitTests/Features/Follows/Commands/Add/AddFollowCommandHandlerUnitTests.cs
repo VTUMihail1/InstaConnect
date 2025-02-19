@@ -10,6 +10,7 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
     {
         _commandHandler = new(
             UnitOfWork,
+            FollowFactory,
             InstaConnectMapper,
             UserWriteRepository,
             FollowWriteRepository);
@@ -67,11 +68,10 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
     public async Task Handle_ShouldReturnFollowCommandViewModel_WhenFollowIsValid()
     {
         // Arrange
-        var existingFollower = CreateUser();
-        var existingFollowing = CreateUser();
+        var existingFollow = CreateFollowFactory();
         var command = new AddFollowCommand(
-            existingFollower.Id,
-            existingFollowing.Id);
+            existingFollow.FollowerId,
+            existingFollow.FollowingId);
 
         // Act
         var response = await _commandHandler.Handle(command, CancellationToken);
@@ -79,18 +79,35 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
         // Assert
         response
             .Should()
-            .Match<FollowCommandViewModel>(m => !string.IsNullOrEmpty(m.Id));
+            .Match<FollowCommandViewModel>(m => m.Id == existingFollow.Id);
+    }
+
+    [Fact]
+    public async Task Handle_ShouldGetFollowFromFactory_WhenFollowIsValid()
+    {
+        // Arrange
+        var existingFollow = CreateFollowFactory();
+        var command = new AddFollowCommand(
+            existingFollow.FollowerId,
+            existingFollow.FollowingId);
+
+        // Act
+        await _commandHandler.Handle(command, CancellationToken);
+
+        // Assert
+        FollowFactory
+            .Received(1)
+            .Get(existingFollow.FollowerId, existingFollow.FollowingId);
     }
 
     [Fact]
     public async Task Handle_ShouldAddFollowToRepository_WhenFollowIsValid()
     {
         // Arrange
-        var existingFollower = CreateUser();
-        var existingFollowing = CreateUser();
+        var existingFollow = CreateFollowFactory();
         var command = new AddFollowCommand(
-            existingFollower.Id,
-            existingFollowing.Id);
+            existingFollow.FollowerId,
+            existingFollow.FollowingId);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -99,20 +116,19 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
         FollowWriteRepository
             .Received(1)
             .Add(Arg.Is<Follow>(m =>
-                !string.IsNullOrEmpty(m.Id) &&
-                m.FollowerId == existingFollower.Id &&
-                m.FollowingId == existingFollowing.Id));
+                m.Id == existingFollow.Id &&
+                m.FollowerId == existingFollow.FollowerId &&
+                m.FollowingId == existingFollow.FollowingId));
     }
 
     [Fact]
     public async Task Handle_ShouldCallSaveChangesAsync_WhenFollowIsValid()
     {
         // Arrange
-        var existingFollower = CreateUser();
-        var existingFollowing = CreateUser();
+        var existingFollow = CreateFollowFactory();
         var command = new AddFollowCommand(
-            existingFollower.Id,
-            existingFollowing.Id);
+            existingFollow.FollowerId,
+            existingFollow.FollowingId);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

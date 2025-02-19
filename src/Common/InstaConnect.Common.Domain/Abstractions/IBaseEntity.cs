@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Shared.Domain.Abstractions;
 
-public interface IBaseEntity : IAuditableInfo
+public interface IBaseEntity
 {
-    string Id { get; set; }
+    string Id { get; }
 }

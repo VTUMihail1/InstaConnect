@@ -13,7 +13,7 @@ public class CacheRequestFactory : ICacheRequestFactory
 
     public CacheRequest Get(string key, int expirationSeconds, object? data)
     {
-        var absoluteExpiration = _dateTimeProvider.GetCurrentUtc(expirationSeconds);
+        var absoluteExpiration = _dateTimeProvider.GetUtcNow(expirationSeconds);
         var cacheRequest = new CacheRequest(key, data, absoluteExpiration);
 
         return cacheRequest;

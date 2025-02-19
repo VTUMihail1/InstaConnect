@@ -3,17 +3,20 @@
 internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand, FollowCommandViewModel>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IFollowFactory _followFactory;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
     private readonly IFollowWriteRepository _followWriteRepository;
 
     public AddFollowCommandHandler(
         IUnitOfWork unitOfWork,
+        IFollowFactory followFactory,
         IInstaConnectMapper instaConnectMapper,
         IUserWriteRepository userWriteRepository,
         IFollowWriteRepository followWriteRepository)
     {
         _unitOfWork = unitOfWork;
+        _followFactory = followFactory;
         _instaConnectMapper = instaConnectMapper;
         _userWriteRepository = userWriteRepository;
         _followWriteRepository = followWriteRepository;
@@ -47,7 +50,7 @@ internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand, Follo
             throw new FollowAlreadyExistsException();
         }
 
-        var follow = _instaConnectMapper.Map<Follow>(request);
+        var follow = _followFactory.Get(request.CurrentUserId, request.FollowingId);
         _followWriteRepository.Add(follow);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

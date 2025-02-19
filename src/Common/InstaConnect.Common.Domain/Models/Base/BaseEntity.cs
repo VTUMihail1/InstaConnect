@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Shared.Domain.Models.Base;
 
-public abstract class BaseEntity : IBaseEntity
+public abstract class BaseEntity : IBaseEntity, IAuditableInfo
 {
     protected BaseEntity()
     {

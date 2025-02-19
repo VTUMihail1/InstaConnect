@@ -51,7 +51,14 @@ public abstract class BaseFollowUnitTest
 
     private Follow CreateFollowUtil(User follower, User following)
     {
-        var follow = new Follow(follower, following);
+        var id = SharedTestUtilities.GetGuid();
+        var utcNow = SharedTestUtilities.GetMaxDate();
+        var follow = new Follow(
+            id,
+            follower,
+            following,
+            utcNow,
+            utcNow);
 
         var followCommandViewModel = new FollowCommandViewModel(follow.Id);
 

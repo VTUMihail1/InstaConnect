@@ -30,7 +30,7 @@ internal class AccessTokenGenerator : IAccessTokenGenerator
     public AccessTokenResult GenerateAccessToken(CreateAccessTokenModel createAccessTokenModel)
     {
         var securityKeyByteArray = _encoder.GetBytesUTF8(_accessTokenOptions.SecurityKey);
-        var validUntil = _dateTimeProvider.GetCurrentUtc(_accessTokenOptions.LifetimeSeconds);
+        var validUntil = _dateTimeProvider.GetUtcNow(_accessTokenOptions.LifetimeSeconds);
         var signingKey = new SymmetricSecurityKey(securityKeyByteArray);
 
         var claimsIdentity = new ClaimsIdentity(
