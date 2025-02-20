@@ -1,22 +1,64 @@
 ﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
+using InstaConnect.Shared.Domain.Abstractions;
 
 namespace InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 
-public class User : BaseEntity
+public class User : IBaseEntity, IAuditableInfo
 {
+    private User()
+    {
+        Id = string.Empty;
+        FirstName = string.Empty;
+        LastName = string.Empty;
+        Email = string.Empty;
+        UserName = string.Empty;
+    }
+
     public User(
+        string id,
         string firstName,
         string lastName,
         string email,
         string userName,
-        string? profileImage = null)
+        string? profileImage,
+        DateTime createdAt,
+        DateTime updatedAt)
     {
+        Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
         UserName = userName;
         ProfileImage = profileImage;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
     }
+
+    public User(
+        string id,
+        string firstName,
+        string lastName,
+        string email,
+        string userName,
+        string? profileImage,
+        DateTime createdAt,
+        DateTime updatedAt,
+        ICollection<Follow> followers,
+        ICollection<Follow> followings)
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        UserName = userName;
+        ProfileImage = profileImage;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+        Followers = followers;
+        Followings = followings;
+    }
+
+    public string Id { get; }
 
     public string FirstName { get; set; }
 
@@ -31,6 +73,10 @@ public class User : BaseEntity
     public ICollection<Follow> Followers { get; set; } = [];
 
     public ICollection<Follow> Followings { get; set; } = [];
+
+    public DateTime CreatedAt { get; }
+
+    public DateTime UpdatedAt { get; }
 }
 
 
