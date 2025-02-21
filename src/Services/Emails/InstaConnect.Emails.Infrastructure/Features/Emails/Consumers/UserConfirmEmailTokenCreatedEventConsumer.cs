@@ -22,11 +22,11 @@ public class UserConfirmEmailTokenCreatedEventConsumer : IConsumer<UserConfirmEm
 
     public async Task Consume(ConsumeContext<UserConfirmEmailTokenCreatedEvent> context)
     {
-        var emailContent = _emailFactory.GetEmail(context.Message.Email, EmailConstants.ForgotPasswordTitle, context.Message.RedirectUrl);
+        var mailMessage = _emailFactory.GetEmail(context.Message.Email, EmailConstants.ForgotPasswordTitle, context.Message.RedirectUrl);
 
         try
         {
-            await _emailSender.SendEmailAsync(emailContent, context.CancellationToken);
+            await _emailSender.SendEmailAsync(mailMessage, context.CancellationToken);
         }
         catch (Exception exception)
         {
