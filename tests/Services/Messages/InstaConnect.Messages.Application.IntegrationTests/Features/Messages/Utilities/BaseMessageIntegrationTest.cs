@@ -59,12 +59,17 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTest
 
     private async Task<User> CreateUserUtilAsync(CancellationToken cancellationToken)
     {
+        var id = SharedTestUtilities.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
+        var utcNow = SharedTestUtilities.GetMaxDate();
         var user = new User(
+            id,
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength),
+            utcNow,
+            utcNow);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
@@ -87,10 +92,15 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTest
         User receiver,
         CancellationToken cancellationToken)
     {
+        var id = SharedTestUtilities.GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength);
+        var utcNow = SharedTestUtilities.GetMaxDate();
         var message = new Message(
+            id,
             SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
-            sender.Id,
-            receiver.Id);
+            sender,
+            receiver,
+            utcNow,
+            utcNow);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var messageWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();

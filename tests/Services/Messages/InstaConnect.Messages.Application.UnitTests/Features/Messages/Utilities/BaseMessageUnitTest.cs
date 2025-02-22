@@ -25,6 +25,10 @@ public abstract class BaseMessageUnitTest
 
     protected IMessageSender MessageSender { get; }
 
+    protected IMessageFactory MessageFactory { get; }
+
+    protected IMessageService MessageService { get; }
+
     protected IUserWriteRepository UserWriteRepository { get; }
 
     protected IMessageReadRepository MessageReadRepository { get; }
@@ -41,6 +45,8 @@ public abstract class BaseMessageUnitTest
         EntityPropertyValidator = new EntityPropertyValidator();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         MessageSender = Substitute.For<IMessageSender>();
+        MessageFactory = Substitute.For<IMessageFactory>();
+        MessageService = Substitute.For<IMessageService>();
         MessageReadRepository = Substitute.For<IMessageReadRepository>();
         MessageWriteRepository = Substitute.For<IMessageWriteRepository>();
 
@@ -49,12 +55,17 @@ public abstract class BaseMessageUnitTest
 
     private User CreateUserUtil()
     {
+        var id = SharedTestUtilities.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
+        var utcNow = SharedTestUtilities.GetMaxDate();
         var user = new User(
+            id,
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength),
+            utcNow,
+            utcNow);
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -71,10 +82,15 @@ public abstract class BaseMessageUnitTest
 
     private Message CreateMessageUtil(User sender, User receiver)
     {
+        var id = SharedTestUtilities.GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength);
+        var utcNow = SharedTestUtilities.GetMaxDate();
         var message = new Message(
+            id,
             SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
             sender,
-            receiver);
+            receiver,
+            utcNow,
+            utcNow);
 
         var messagePaginationList = new PaginationList<Message>(
             [message],
@@ -91,6 +107,14 @@ public abstract class BaseMessageUnitTest
             message.Id,
             CancellationToken)
             .Returns(message);
+
+        MessageService
+            .When(x => x.Update(message, MessageTestUtilities.ValidUpdateContent))
+            .Do(call =>
+            {
+                var updatedMessage = call.Arg<Message>();
+                updatedMessage.Update(MessageTestUtilities.ValidUpdateContent, utcNow);
+            });
 
         MessageReadRepository
             .GetAllAsync(Arg.Is<MessageCollectionReadQuery>(m =>
@@ -111,6 +135,27 @@ public abstract class BaseMessageUnitTest
         var sender = CreateUser();
         var receiver = CreateUser();
         var message = CreateMessageUtil(sender, receiver);
+
+        return message;
+    }
+
+    public Message CreateMessageFactory()
+    {
+        var sender = CreateUser();
+        var receiver = CreateUser();
+
+        var id = SharedTestUtilities.GetGuid();
+        var utcNow = SharedTestUtilities.GetMaxDate();
+        var message = new Message(
+            id,
+            MessageTestUtilities.ValidAddContent,
+            sender,
+            receiver,
+            utcNow,
+            utcNow);
+
+        MessageFactory.Get(sender.Id, receiver.Id, MessageTestUtilities.ValidAddContent)
+            .Returns(message);
 
         return message;
     }

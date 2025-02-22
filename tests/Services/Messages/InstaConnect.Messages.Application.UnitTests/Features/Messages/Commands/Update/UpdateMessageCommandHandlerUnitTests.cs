@@ -10,6 +10,7 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
     {
         _commandHandler = new(
             UnitOfWork,
+            MessageService,
             InstaConnectMapper,
             MessageWriteRepository);
     }
@@ -89,6 +90,26 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
         await MessageWriteRepository
             .Received(1)
             .GetByIdAsync(existingMessage.Id, CancellationToken);
+    }
+
+    [Fact]
+    public async Task Handle_ShouldUpdateMessageInService_WhenMessageIdIsValid()
+    {
+        // Arrange
+        var existingMessage = CreateMessage();
+        var command = new UpdateMessageCommand(
+            existingMessage.Id,
+            MessageTestUtilities.ValidUpdateContent,
+            existingMessage.SenderId
+        );
+
+        // Act
+        await _commandHandler.Handle(command, CancellationToken);
+
+        // Assert
+        MessageService
+            .Received(1)
+            .Update(existingMessage, MessageTestUtilities.ValidUpdateContent);
     }
 
     [Fact]

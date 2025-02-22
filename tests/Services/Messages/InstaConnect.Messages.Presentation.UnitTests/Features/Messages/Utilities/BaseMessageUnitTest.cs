@@ -32,12 +32,17 @@ public abstract class BaseMessageUnitTest
 
     private static User CreateUserUtil()
     {
+        var id = SharedTestUtilities.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
+        var utcNow = SharedTestUtilities.GetMaxDate();
         var user = new User(
+            id,
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength),
+            utcNow,
+            utcNow);
 
         return user;
     }
@@ -51,10 +56,15 @@ public abstract class BaseMessageUnitTest
 
     private Message CreateMessageUtil(User sender, User receiver)
     {
+        var id = SharedTestUtilities.GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength);
+        var utcNow = SharedTestUtilities.GetMaxDate();
         var message = new Message(
+            id,
             SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
             sender,
-            receiver);
+            receiver,
+            utcNow,
+            utcNow);
 
         var messageQueryViewModel = new MessageQueryViewModel(
             message.Id,

@@ -10,15 +10,6 @@ internal class MessageCommandProfile : Profile
 {
     public MessageCommandProfile()
     {
-        CreateMap<AddMessageCommand, Message>()
-            .ConstructUsing(src => new(
-                src.Content,
-                src.CurrentUserId,
-                src.ReceiverId));
-
-        CreateMap<UpdateMessageCommand, Message>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore());
-
         CreateMap<Message, MessageSendModel>();
 
         CreateMap<Message, MessageCommandViewModel>();

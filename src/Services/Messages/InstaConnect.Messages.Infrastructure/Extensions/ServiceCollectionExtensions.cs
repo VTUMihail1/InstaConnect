@@ -19,6 +19,7 @@ public static class ServiceCollectionExtensions
             .AddUnitOfWork<MessagesContext>()
             .AddRabbitMQ(configuration, InfrastructureReference.Assembly)
             .AddJwtBearer(configuration)
+            .AddGuidProvider()
             .AddDateTimeProvider();
 
         return serviceCollection;

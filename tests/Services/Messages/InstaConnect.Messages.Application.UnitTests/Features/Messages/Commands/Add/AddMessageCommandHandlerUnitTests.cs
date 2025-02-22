@@ -12,6 +12,7 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
         _commandHandler = new(
             UnitOfWork,
             MessageSender,
+            MessageFactory,
             InstaConnectMapper,
             UserWriteRepository,
             MessageWriteRepository);
@@ -57,13 +58,11 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldReturnMessageViewModel_WhenMessageIsValid()
     {
         // Arrange
-        var existingSender = CreateUser();
-        var existingReceiver = CreateUser();
+        var existingMessage = CreateMessageFactory();
         var command = new AddMessageCommand(
-            existingSender.Id,
-            existingReceiver.Id,
-            MessageTestUtilities.ValidAddContent
-        );
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            MessageTestUtilities.ValidAddContent);
 
         // Act
         var response = await _commandHandler.Handle(command, CancellationToken);
@@ -71,20 +70,37 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
         // Assert
         response
             .Should()
-            .Match<MessageCommandViewModel>(m => !string.IsNullOrEmpty(m.Id));
+            .Match<MessageCommandViewModel>(m => m.Id == existingMessage.SenderId);
+    }
+
+    [Fact]
+    public async Task Handle_ShouldGetMessageFromFactory_WhenMessageIsValid()
+    {
+        // Arrange
+        var existingMessage = CreateMessageFactory();
+        var command = new AddMessageCommand(
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            MessageTestUtilities.ValidAddContent);
+
+        // Act
+        await _commandHandler.Handle(command, CancellationToken);
+
+        // Assert
+        MessageFactory
+            .Received(1)
+            .Get(existingMessage.SenderId, existingMessage.ReceiverId, MessageTestUtilities.ValidAddContent);
     }
 
     [Fact]
     public async Task Handle_ShouldAddMessageToRepository_WhenMessageIsValid()
     {
         // Arrange
-        var existingSender = CreateUser();
-        var existingReceiver = CreateUser();
+        var existingMessage = CreateMessageFactory();
         var command = new AddMessageCommand(
-            existingSender.Id,
-            existingReceiver.Id,
-            MessageTestUtilities.ValidAddContent
-        );
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            MessageTestUtilities.ValidAddContent);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -94,8 +110,8 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
             .Received(1)
             .Add(Arg.Is<Message>(m =>
                 !string.IsNullOrEmpty(m.Id) &&
-                m.SenderId == existingSender.Id &&
-                m.ReceiverId == existingReceiver.Id &&
+                m.SenderId == existingMessage.SenderId &&
+                m.ReceiverId == existingMessage.ReceiverId &&
                 m.Content == MessageTestUtilities.ValidAddContent));
     }
 
@@ -103,13 +119,11 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldSendMessageFromSender_WhenMessageIsValid()
     {
         // Arrange
-        var existingSender = CreateUser();
-        var existingReceiver = CreateUser();
+        var existingMessage = CreateMessageFactory();
         var command = new AddMessageCommand(
-            existingSender.Id,
-            existingReceiver.Id,
-            MessageTestUtilities.ValidAddContent
-        );
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            MessageTestUtilities.ValidAddContent);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
@@ -119,7 +133,7 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
             .Received(1)
             .SendMessageToUserAsync(Arg.Is<MessageSendModel>(m =>
                 m.Content == MessageTestUtilities.ValidAddContent &&
-                m.ReceiverId == existingReceiver.Id),
+                m.ReceiverId == existingMessage.ReceiverId),
                 CancellationToken);
     }
 
@@ -127,13 +141,11 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
     public async Task Handle_ShouldCallSaveChangesAsync_WhenMessageIsValid()
     {
         // Arrange
-        var existingSender = CreateUser();
-        var existingReceiver = CreateUser();
+        var existingMessage = CreateMessageFactory();
         var command = new AddMessageCommand(
-            existingSender.Id,
-            existingReceiver.Id,
-            MessageTestUtilities.ValidAddContent
-        );
+            existingMessage.SenderId,
+            existingMessage.ReceiverId,
+            MessageTestUtilities.ValidAddContent);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
