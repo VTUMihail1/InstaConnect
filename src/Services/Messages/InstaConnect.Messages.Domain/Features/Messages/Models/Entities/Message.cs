@@ -1,8 +1,6 @@
 ﻿using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Shared.Domain.Abstractions;
 
-using NSubstitute;
-
 namespace InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 
 public class Message : IBaseEntity, IAuditableInfo

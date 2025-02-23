@@ -52,7 +52,7 @@ public class Follow : IBaseEntity, IAuditableInfo
 
     public User? Follower { get; }
 
-    public DateTime CreatedAt {  get; }
+    public DateTime CreatedAt { get; }
 
     public DateTime UpdatedAt { get; }
 }
