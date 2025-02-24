@@ -28,7 +28,7 @@ namespace InstaConnect.Follows.Read.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FollowerId")
@@ -41,7 +41,7 @@ namespace InstaConnect.Follows.Read.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("following_id");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -59,7 +59,7 @@ namespace InstaConnect.Follows.Read.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -83,7 +83,7 @@ namespace InstaConnect.Follows.Read.Data.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("profile_image");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")

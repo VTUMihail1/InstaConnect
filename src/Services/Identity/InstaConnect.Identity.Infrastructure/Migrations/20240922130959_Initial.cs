@@ -20,11 +20,11 @@ public partial class Initial : Migration
                 ConsumerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                 LockId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                 RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
-                Received = table.Column<DateTime>(type: "datetime2", nullable: false),
+                Received = table.Column<DateTimeOffset>(type: "datetime2", nullable: false),
                 ReceiveCount = table.Column<int>(type: "int", nullable: false),
-                ExpirationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                Consumed = table.Column<DateTime>(type: "datetime2", nullable: true),
-                Delivered = table.Column<DateTime>(type: "datetime2", nullable: true),
+                ExpirationTime = table.Column<DateTimeOffset>(type: "datetime2", nullable: true),
+                Consumed = table.Column<DateTimeOffset>(type: "datetime2", nullable: true),
+                Delivered = table.Column<DateTimeOffset>(type: "datetime2", nullable: true),
                 LastSequenceNumber = table.Column<long>(type: "bigint", nullable: true)
             },
             constraints: table =>
@@ -39,8 +39,8 @@ public partial class Initial : Migration
             {
                 SequenceNumber = table.Column<long>(type: "bigint", nullable: false)
                     .Annotation("SqlServer:Identity", "1, 1"),
-                EnqueueTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                SentTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                EnqueueTime = table.Column<DateTimeOffset>(type: "datetime2", nullable: true),
+                SentTime = table.Column<DateTimeOffset>(type: "datetime2", nullable: false),
                 Headers = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Properties = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 InboxMessageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -58,7 +58,7 @@ public partial class Initial : Migration
                 DestinationAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                 ResponseAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                 FaultAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                ExpirationTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                ExpirationTime = table.Column<DateTimeOffset>(type: "datetime2", nullable: true)
             },
             constraints: table => table.PrimaryKey("PK_OutboxMessage", x => x.SequenceNumber));
 
@@ -69,8 +69,8 @@ public partial class Initial : Migration
                 OutboxId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                 LockId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                 RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
-                Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                Delivered = table.Column<DateTime>(type: "datetime2", nullable: true),
+                Created = table.Column<DateTimeOffset>(type: "datetime2", nullable: false),
+                Delivered = table.Column<DateTimeOffset>(type: "datetime2", nullable: true),
                 LastSequenceNumber = table.Column<long>(type: "bigint", nullable: true)
             },
             constraints: table => table.PrimaryKey("PK_OutboxState", x => x.OutboxId));
@@ -87,8 +87,8 @@ public partial class Initial : Migration
                 password_hash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 profile_image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 is_email_confirmed = table.Column<bool>(type: "bit", nullable: false),
-                created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
-                updated_at = table.Column<DateTime>(type: "datetime2", nullable: false)
+                created_at = table.Column<DateTimeOffset>(type: "datetime2", nullable: false),
+                updated_at = table.Column<DateTimeOffset>(type: "datetime2", nullable: false)
             },
             constraints: table => table.PrimaryKey("PK_user", x => x.id));
 
@@ -98,10 +98,10 @@ public partial class Initial : Migration
             {
                 id = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                 value = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                is_valid_until = table.Column<DateTime>(type: "datetime2", nullable: false),
+                is_valid_until = table.Column<DateTimeOffset>(type: "datetime2", nullable: false),
                 user_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
-                updated_at = table.Column<DateTime>(type: "datetime2", nullable: false)
+                created_at = table.Column<DateTimeOffset>(type: "datetime2", nullable: false),
+                updated_at = table.Column<DateTimeOffset>(type: "datetime2", nullable: false)
             },
             constraints: table =>
             {
@@ -120,10 +120,10 @@ public partial class Initial : Migration
             {
                 id = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                 value = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                is_valid_until = table.Column<DateTime>(type: "datetime2", nullable: false),
+                is_valid_until = table.Column<DateTimeOffset>(type: "datetime2", nullable: false),
                 user_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
-                updated_at = table.Column<DateTime>(type: "datetime2", nullable: false)
+                created_at = table.Column<DateTimeOffset>(type: "datetime2", nullable: false),
+                updated_at = table.Column<DateTimeOffset>(type: "datetime2", nullable: false)
             },
             constraints: table =>
             {
@@ -144,8 +144,8 @@ public partial class Initial : Migration
                 claim = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 value = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 user_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
-                updated_at = table.Column<DateTime>(type: "datetime2", nullable: false)
+                created_at = table.Column<DateTimeOffset>(type: "datetime2", nullable: false),
+                updated_at = table.Column<DateTimeOffset>(type: "datetime2", nullable: false)
             },
             constraints: table =>
             {

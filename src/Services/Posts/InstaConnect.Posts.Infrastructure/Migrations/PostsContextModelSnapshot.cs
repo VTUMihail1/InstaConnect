@@ -28,7 +28,7 @@ namespace InstaConnect.Posts.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
@@ -37,7 +37,7 @@ namespace InstaConnect.Posts.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("comment_id");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
@@ -67,7 +67,7 @@ namespace InstaConnect.Posts.Data.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("content");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
@@ -76,7 +76,7 @@ namespace InstaConnect.Posts.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("post_id");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
@@ -100,7 +100,7 @@ namespace InstaConnect.Posts.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
@@ -109,7 +109,7 @@ namespace InstaConnect.Posts.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("post_id");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
@@ -139,7 +139,7 @@ namespace InstaConnect.Posts.Data.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("content");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
@@ -149,7 +149,7 @@ namespace InstaConnect.Posts.Data.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("title");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
@@ -171,7 +171,7 @@ namespace InstaConnect.Posts.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -195,7 +195,7 @@ namespace InstaConnect.Posts.Data.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("profile_image");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")

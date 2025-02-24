@@ -16,8 +16,8 @@ public class Follow : IBaseEntity, IAuditableInfo
         string id,
         string followerId,
         string followingId,
-        DateTime createdAt,
-        DateTime updatedAt)
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt)
     {
         Id = id;
         FollowerId = followerId;
@@ -30,8 +30,8 @@ public class Follow : IBaseEntity, IAuditableInfo
         string id,
         User follower,
         User following,
-        DateTime createdAt,
-        DateTime updatedAt)
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt)
     {
         Id = id;
         Follower = follower;
@@ -52,7 +52,7 @@ public class Follow : IBaseEntity, IAuditableInfo
 
     public User? Follower { get; }
 
-    public DateTime CreatedAt { get; }
+    public DateTimeOffset CreatedAt { get; }
 
-    public DateTime UpdatedAt { get; }
+    public DateTimeOffset UpdatedAt { get; }
 }

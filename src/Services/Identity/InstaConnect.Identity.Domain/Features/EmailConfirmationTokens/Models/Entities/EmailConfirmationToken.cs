@@ -4,14 +4,14 @@ namespace InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Models.E
 
 public class EmailConfirmationToken : BaseEntity
 {
-    public EmailConfirmationToken(string value, DateTime validUntil, string userId)
+    public EmailConfirmationToken(string value, DateTimeOffset validUntil, string userId)
     {
         Value = value;
         ValidUntil = validUntil;
         UserId = userId;
     }
 
-    public EmailConfirmationToken(string value, DateTime validUntil, User user)
+    public EmailConfirmationToken(string value, DateTimeOffset validUntil, User user)
     {
         Value = value;
         ValidUntil = validUntil;
@@ -21,7 +21,7 @@ public class EmailConfirmationToken : BaseEntity
 
     public string Value { get; }
 
-    public DateTime ValidUntil { get; }
+    public DateTimeOffset ValidUntil { get; }
 
     public string UserId { get; }
 

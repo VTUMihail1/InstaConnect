@@ -4,14 +4,14 @@ namespace InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Enti
 
 public class ForgotPasswordToken : BaseEntity
 {
-    public ForgotPasswordToken(string value, DateTime validUntil, string userId)
+    public ForgotPasswordToken(string value, DateTimeOffset validUntil, string userId)
     {
         Value = value;
         ValidUntil = validUntil;
         UserId = userId;
     }
 
-    public ForgotPasswordToken(string value, DateTime validUntil, User user)
+    public ForgotPasswordToken(string value, DateTimeOffset validUntil, User user)
     {
         Value = value;
         ValidUntil = validUntil;
@@ -21,7 +21,7 @@ public class ForgotPasswordToken : BaseEntity
 
     public string Value { get; }
 
-    public DateTime ValidUntil { get; }
+    public DateTimeOffset ValidUntil { get; }
 
     public string UserId { get; }
 

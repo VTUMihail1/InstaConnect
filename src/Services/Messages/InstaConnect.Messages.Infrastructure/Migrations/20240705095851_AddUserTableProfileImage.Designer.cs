@@ -37,7 +37,7 @@ namespace InstaConnect.Messages.Read.Data.Migrations
                         .HasColumnType("nvarchar(2000)")
                         .HasColumnName("content");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
@@ -51,7 +51,7 @@ namespace InstaConnect.Messages.Read.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("sender_id");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
@@ -70,7 +70,7 @@ namespace InstaConnect.Messages.Read.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -94,7 +94,7 @@ namespace InstaConnect.Messages.Read.Data.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("profile_image");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")

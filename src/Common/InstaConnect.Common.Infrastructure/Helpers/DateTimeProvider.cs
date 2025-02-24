@@ -1,16 +1,16 @@
 ﻿namespace InstaConnect.Shared.Infrastructure.Helpers;
 public class DateTimeProvider : IDateTimeProvider
 {
-    public DateTime GetUtcNow()
+    public DateTimeOffset GetUtcNow()
     {
-        var currentDateTime = DateTime.UtcNow;
+        var currentDateTime = DateTimeOffset.UtcNow;
 
         return currentDateTime;
     }
 
-    public DateTime GetUtcNow(int seconds)
+    public DateTimeOffset GetUtcNow(int seconds)
     {
-        var currentDateTime = DateTime.UtcNow.AddSeconds(seconds);
+        var currentDateTime = DateTimeOffset.UtcNow.AddSeconds(seconds);
 
         return currentDateTime;
     }

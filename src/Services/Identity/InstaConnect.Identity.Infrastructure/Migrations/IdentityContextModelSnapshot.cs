@@ -29,11 +29,11 @@ namespace InstaConnect.Identity.Data.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
@@ -42,7 +42,7 @@ namespace InstaConnect.Identity.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("user_id");
 
-                    b.Property<DateTime>("ValidUntil")
+                    b.Property<DateTimeOffset>("ValidUntil")
                         .HasColumnType("datetime2")
                         .HasColumnName("is_valid_until");
 
@@ -66,11 +66,11 @@ namespace InstaConnect.Identity.Data.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
@@ -79,7 +79,7 @@ namespace InstaConnect.Identity.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("user_id");
 
-                    b.Property<DateTime>("ValidUntil")
+                    b.Property<DateTimeOffset>("ValidUntil")
                         .HasColumnType("datetime2")
                         .HasColumnName("is_valid_until");
 
@@ -107,11 +107,11 @@ namespace InstaConnect.Identity.Data.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("claim");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
@@ -138,7 +138,7 @@ namespace InstaConnect.Identity.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
@@ -172,7 +172,7 @@ namespace InstaConnect.Identity.Data.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("profile_image");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
@@ -194,16 +194,16 @@ namespace InstaConnect.Identity.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime?>("Consumed")
+                    b.Property<DateTimeOffset?>("Consumed")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("ConsumerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("Delivered")
+                    b.Property<DateTimeOffset?>("Delivered")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ExpirationTime")
+                    b.Property<DateTimeOffset?>("ExpirationTime")
                         .HasColumnType("datetime2");
 
                     b.Property<long?>("LastSequenceNumber")
@@ -218,7 +218,7 @@ namespace InstaConnect.Identity.Data.Migrations
                     b.Property<int>("ReceiveCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Received")
+                    b.Property<DateTimeOffset>("Received")
                         .HasColumnType("datetime2");
 
                     b.Property<byte[]>("RowVersion")
@@ -262,10 +262,10 @@ namespace InstaConnect.Identity.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<DateTime?>("EnqueueTime")
+                    b.Property<DateTimeOffset?>("EnqueueTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ExpirationTime")
+                    b.Property<DateTimeOffset?>("ExpirationTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FaultAddress")
@@ -304,7 +304,7 @@ namespace InstaConnect.Identity.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<DateTime>("SentTime")
+                    b.Property<DateTimeOffset>("SentTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SourceAddress")
@@ -334,10 +334,10 @@ namespace InstaConnect.Identity.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTimeOffset>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("Delivered")
+                    b.Property<DateTimeOffset?>("Delivered")
                         .HasColumnType("datetime2");
 
                     b.Property<long?>("LastSequenceNumber")

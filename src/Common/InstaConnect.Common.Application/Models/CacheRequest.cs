@@ -3,4 +3,4 @@
 public record CacheRequest(
     string Key,
     object? Data,
-    DateTime Expiration);
+    DateTimeOffset Expiration);

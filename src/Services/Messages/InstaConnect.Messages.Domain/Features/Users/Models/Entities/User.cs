@@ -1,4 +1,6 @@
-﻿using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
+﻿using System;
+
+using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Shared.Domain.Abstractions;
 
 namespace InstaConnect.Messages.Domain.Features.Users.Models.Entities;
@@ -21,8 +23,8 @@ public class User : IBaseEntity, IAuditableInfo
         string email,
         string userName,
         string? profileImage,
-        DateTime createdAt,
-        DateTime updatedAt)
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt)
     {
         Id = id;
         FirstName = firstName;
@@ -41,8 +43,8 @@ public class User : IBaseEntity, IAuditableInfo
         string email,
         string userName,
         string? profileImage,
-        DateTime createdAt,
-        DateTime updatedAt,
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt,
         ICollection<Message> senderMessages,
         ICollection<Message> receiverMessages)
     {
@@ -74,9 +76,9 @@ public class User : IBaseEntity, IAuditableInfo
 
     public ICollection<Message> ReceiverMessages { get; set; } = [];
 
-    public DateTime CreatedAt { get; }
+    public DateTimeOffset CreatedAt { get; }
 
-    public DateTime UpdatedAt { get; }
+    public DateTimeOffset UpdatedAt { get; }
 }
 
 

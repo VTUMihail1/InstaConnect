@@ -41,7 +41,7 @@ internal static class DistributedCacheExtensions
         this IDistributedCache distributedCache,
         string key,
         string value,
-        DateTime expiration,
+        DateTimeOffset expiration,
         CancellationToken cancellationToken)
     {
         await distributedCache.SetStringAsync(

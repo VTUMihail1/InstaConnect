@@ -19,8 +19,8 @@ public partial class Initial : Migration
                 last_name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                 email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 user_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                CreatedAt = table.Column<DateTimeOffset>(type: "datetime2", nullable: false),
+                UpdatedAt = table.Column<DateTimeOffset>(type: "datetime2", nullable: false)
             },
             constraints: table => table.PrimaryKey("PK_user", x => x.id));
 
@@ -32,8 +32,8 @@ public partial class Initial : Migration
                 content = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
                 sender_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 receiver_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
-                updated_at = table.Column<DateTime>(type: "datetime2", nullable: false)
+                created_at = table.Column<DateTimeOffset>(type: "datetime2", nullable: false),
+                updated_at = table.Column<DateTimeOffset>(type: "datetime2", nullable: false)
             },
             constraints: table =>
             {

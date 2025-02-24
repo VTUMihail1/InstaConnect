@@ -42,7 +42,7 @@ public abstract class SharedTestUtilities
         return result;
     }
 
-    public static DateTime GetMaxDate()
+    public static DateTimeOffset GetMaxDate()
     {
         var result = _faker.Date.Future();
 

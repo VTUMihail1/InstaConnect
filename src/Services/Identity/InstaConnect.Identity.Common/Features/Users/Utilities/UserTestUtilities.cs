@@ -38,7 +38,7 @@ public abstract class UserTestUtilities : SharedTestUtilities
 
     public static readonly string ValidAccessTokenValue = GetGuid();
 
-    public static readonly DateTime ValidUntil = GetMaxDate();
+    public static readonly DateTimeOffset ValidUntil = GetMaxDate();
 
     public static readonly int ValidPageValue = 1;
     public static readonly int ValidPageSizeValue = 20;

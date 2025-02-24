@@ -18,8 +18,8 @@ public class Message : IBaseEntity, IAuditableInfo
         string content,
         string senderId,
         string receiverId,
-        DateTime createdAt,
-        DateTime updatedAt)
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt)
     {
         Id = id;
         Content = content;
@@ -34,8 +34,8 @@ public class Message : IBaseEntity, IAuditableInfo
         string content,
         User sender,
         User receiver,
-        DateTime createdAt,
-        DateTime updatedAt)
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt)
     {
         Id = id;
         Content = content;
@@ -59,11 +59,11 @@ public class Message : IBaseEntity, IAuditableInfo
 
     public User? Receiver { get; }
 
-    public DateTime CreatedAt { get; }
+    public DateTimeOffset CreatedAt { get; }
 
-    public DateTime UpdatedAt { get; private set; }
+    public DateTimeOffset UpdatedAt { get; private set; }
 
-    public void Update(string content, DateTime updatedAt)
+    public void Update(string content, DateTimeOffset updatedAt)
     {
         Content = content;
         UpdatedAt = updatedAt;

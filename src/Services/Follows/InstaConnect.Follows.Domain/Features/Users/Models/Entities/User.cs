@@ -21,8 +21,8 @@ public class User : IBaseEntity, IAuditableInfo
         string email,
         string userName,
         string? profileImage,
-        DateTime createdAt,
-        DateTime updatedAt)
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt)
     {
         Id = id;
         FirstName = firstName;
@@ -41,8 +41,8 @@ public class User : IBaseEntity, IAuditableInfo
         string email,
         string userName,
         string? profileImage,
-        DateTime createdAt,
-        DateTime updatedAt,
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt,
         ICollection<Follow> followers,
         ICollection<Follow> followings)
     {
@@ -74,9 +74,9 @@ public class User : IBaseEntity, IAuditableInfo
 
     public ICollection<Follow> Followings { get; set; } = [];
 
-    public DateTime CreatedAt { get; }
+    public DateTimeOffset CreatedAt { get; }
 
-    public DateTime UpdatedAt { get; }
+    public DateTimeOffset UpdatedAt { get; }
 }
 
 

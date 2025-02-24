@@ -5,7 +5,7 @@
 /// </summary>
 public interface IAuditableInfo
 {
-    DateTime CreatedAt { get; }
+    DateTimeOffset CreatedAt { get; }
 
-    DateTime UpdatedAt { get; }
+    DateTimeOffset UpdatedAt { get; }
 }
