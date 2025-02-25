@@ -28,7 +28,7 @@ internal class ForgotPasswordTokenGenerator : IForgotPasswordTokenGenerator
         return new(
             userId,
             email,
-            _dateTimeProvider.GetUtcNow(_forgotPasswordOptions.LifetimeSeconds),
+            _dateTimeProvider.GetOffsetUtcNow(_forgotPasswordOptions.LifetimeSeconds),
             value,
             string.Format(
                 CultureInfo.InvariantCulture,

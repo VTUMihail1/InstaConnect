@@ -10,7 +10,7 @@ internal class MessageService : IMessageService
 
     public void Update(Message message, string content)
     {
-        var utcNow = _dateTimeProvider.GetUtcNow();
+        var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         message.Update(content, utcNow);
     }
 }

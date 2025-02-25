@@ -28,7 +28,7 @@ internal class EmailConfirmationTokenGenerator : IEmailConfirmationTokenGenerato
         return new(
             userId,
             email,
-            _dateTimeProvider.GetUtcNow(_emailConfirmationOptions.LifetimeSeconds),
+            _dateTimeProvider.GetOffsetUtcNow(_emailConfirmationOptions.LifetimeSeconds),
             value,
             string.Format(
                 CultureInfo.InvariantCulture,

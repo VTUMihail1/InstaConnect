@@ -17,7 +17,7 @@ internal class FollowFactory : IFollowFactory
     public Follow Get(string followerId, string followingId)
     {
         var id = _guidProvider.NewGuid().ToString();
-        var utcNow = _dateTimeProvider.GetUtcNow();
+        var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var follow = new Follow(
             id,
             followerId,

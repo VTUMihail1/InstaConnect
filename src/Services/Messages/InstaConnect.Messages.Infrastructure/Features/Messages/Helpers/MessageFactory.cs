@@ -18,7 +18,7 @@ internal class MessageFactory : IMessageFactory
     public Message Get(string senderId, string receiverId, string content)
     {
         var id = _guidProvider.NewGuid().ToString();
-        var utcNow = _dateTimeProvider.GetUtcNow();
+        var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         var message = new Message(
             id,
             content,
