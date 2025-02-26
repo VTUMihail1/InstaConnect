@@ -113,7 +113,7 @@ public abstract class BaseMessageUnitTest
             .Do(call =>
             {
                 var updatedMessage = call.Arg<Message>();
-                updatedMessage.Update(MessageTestUtilities.ValidUpdateContent, utcNow);
+                updatedMessage.Update(MessageTestUtilities.ValidUpdateContent, MessageTestUtilities.ValidUpdateUpdatedAtUtc);
             });
 
         MessageReadRepository

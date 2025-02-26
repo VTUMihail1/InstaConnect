@@ -7,6 +7,8 @@ public class MessageTestUtilities : SharedTestUtilities
     public static readonly string ValidAddContent = GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength);
     public static readonly string ValidUpdateContent = GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength);
 
+    public static readonly DateTimeOffset ValidUpdateUpdatedAtUtc = GetMaxDate();
+
     public static readonly int ValidPageValue = 1;
     public static readonly int ValidPageSizeValue = 20;
     public static readonly int ValidTotalCountValue = 1;
