@@ -83,15 +83,13 @@ public abstract class BaseMessageFunctionalTest : IClassFixture<MessagesWebAppli
         User receiver,
         CancellationToken cancellationToken)
     {
-        var id = SharedTestUtilities.GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength);
-        var utcNow = SharedTestUtilities.GetMaxDate();
         var message = new Message(
-            id,
+            SharedTestUtilities.GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength),
             SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
             sender,
             receiver,
-            utcNow,
-            utcNow);
+            SharedTestUtilities.GetMaxDate(),
+            SharedTestUtilities.GetMaxDate());
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var messageWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();

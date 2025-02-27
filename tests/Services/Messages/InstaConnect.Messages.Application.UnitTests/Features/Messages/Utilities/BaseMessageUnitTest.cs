@@ -55,17 +55,15 @@ public abstract class BaseMessageUnitTest
 
     private User CreateUserUtil()
     {
-        var id = SharedTestUtilities.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
-        var utcNow = SharedTestUtilities.GetMaxDate();
         var user = new User(
-            id,
+            SharedTestUtilities.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength),
-            utcNow,
-            utcNow);
+            SharedTestUtilities.GetMaxDate(),
+            SharedTestUtilities.GetMaxDate());
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -82,15 +80,13 @@ public abstract class BaseMessageUnitTest
 
     private Message CreateMessageUtil(User sender, User receiver)
     {
-        var id = SharedTestUtilities.GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength);
-        var utcNow = SharedTestUtilities.GetMaxDate();
         var message = new Message(
-            id,
+            SharedTestUtilities.GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength),
             SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
             sender,
             receiver,
-            utcNow,
-            utcNow);
+            SharedTestUtilities.GetMaxDate(),
+            SharedTestUtilities.GetMaxDate());
 
         var messagePaginationList = new PaginationList<Message>(
             [message],
@@ -145,14 +141,13 @@ public abstract class BaseMessageUnitTest
         var receiver = CreateUser();
 
         var id = SharedTestUtilities.GetGuid();
-        var utcNow = SharedTestUtilities.GetMaxDate();
         var message = new Message(
             id,
             MessageTestUtilities.ValidAddContent,
             sender,
             receiver,
-            utcNow,
-            utcNow);
+            MessageTestUtilities.ValidAddCreatedAtUtc,
+            MessageTestUtilities.ValidAddUpdatedAtUtc);
 
         MessageFactory.Get(sender.Id, receiver.Id, MessageTestUtilities.ValidAddContent)
             .Returns(message);
