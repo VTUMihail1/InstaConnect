@@ -47,17 +47,15 @@ public abstract class BaseFollowUnitTest
 
     private User CreateUserUtil()
     {
-        var id = SharedTestUtilities.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
-        var utcNow = SharedTestUtilities.GetMaxDate();
         var user = new User(
-            id,
+            SharedTestUtilities.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
             SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength),
-            utcNow,
-            utcNow);
+            SharedTestUtilities.GetMaxDate(),
+            SharedTestUtilities.GetMaxDate());
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -74,14 +72,12 @@ public abstract class BaseFollowUnitTest
 
     public Follow CreateFollowUtil(User follower, User following)
     {
-        var id = SharedTestUtilities.GetGuid();
-        var utcNow = SharedTestUtilities.GetMaxDate();
         var follow = new Follow(
-            id,
+            SharedTestUtilities.GetAverageString(FollowConfigurations.IdMaxLength, FollowConfigurations.IdMinLength),
             follower,
             following,
-            utcNow,
-            utcNow);
+            SharedTestUtilities.GetMaxDate(),
+            SharedTestUtilities.GetMaxDate());
 
         var followPaginationList = new PaginationList<Follow>(
             [follow],
@@ -129,14 +125,12 @@ public abstract class BaseFollowUnitTest
         var follower = CreateUser();
         var following = CreateUser();
 
-        var id = SharedTestUtilities.GetGuid();
-        var utcNow = SharedTestUtilities.GetMaxDate();
         var follow = new Follow(
-            id,
+            SharedTestUtilities.GetAverageString(FollowConfigurations.IdMaxLength, FollowConfigurations.IdMinLength),
             follower,
             following,
-            utcNow,
-            utcNow);
+            SharedTestUtilities.GetMaxDate(),
+            SharedTestUtilities.GetMaxDate());
 
         FollowFactory.Get(follower.Id, following.Id)
             .Returns(follow);

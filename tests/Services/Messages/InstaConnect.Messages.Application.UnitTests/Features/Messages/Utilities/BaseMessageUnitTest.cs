@@ -140,14 +140,13 @@ public abstract class BaseMessageUnitTest
         var sender = CreateUser();
         var receiver = CreateUser();
 
-        var id = SharedTestUtilities.GetGuid();
         var message = new Message(
-            id,
-            MessageTestUtilities.ValidAddContent,
+            SharedTestUtilities.GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength),
+            SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
             sender,
             receiver,
-            MessageTestUtilities.ValidAddCreatedAtUtc,
-            MessageTestUtilities.ValidAddUpdatedAtUtc);
+            SharedTestUtilities.GetMaxDate(),
+            SharedTestUtilities.GetMaxDate());
 
         MessageFactory.Get(sender.Id, receiver.Id, MessageTestUtilities.ValidAddContent)
             .Returns(message);
