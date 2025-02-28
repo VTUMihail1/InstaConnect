@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
+﻿using InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 
 namespace InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Queries;
 

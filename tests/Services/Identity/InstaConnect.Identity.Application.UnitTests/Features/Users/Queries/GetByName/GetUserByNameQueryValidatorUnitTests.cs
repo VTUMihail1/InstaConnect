@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
+﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetByName;
 

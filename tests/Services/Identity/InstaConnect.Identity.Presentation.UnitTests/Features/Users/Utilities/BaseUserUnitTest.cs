@@ -3,7 +3,6 @@
 using InstaConnect.Common.Abstractions;
 using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Helpers;
-using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Identity.Application.Features.Users.Commands.Add;
 using InstaConnect.Identity.Application.Features.Users.Commands.Login;
 using InstaConnect.Identity.Application.Features.Users.Commands.Update;
@@ -14,7 +13,6 @@ using InstaConnect.Identity.Application.Features.Users.Queries.GetByName;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetDetailedById;
-using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 using InstaConnect.Identity.Presentation.Extensions;

@@ -1,7 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 
 public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunctionalTest
 {

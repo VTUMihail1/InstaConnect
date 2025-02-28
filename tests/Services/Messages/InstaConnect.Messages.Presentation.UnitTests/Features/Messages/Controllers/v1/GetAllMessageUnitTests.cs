@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
-using InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
 
 namespace InstaConnect.Messages.Presentation.UnitTests.Features.Messages.Controllers.v1;
 

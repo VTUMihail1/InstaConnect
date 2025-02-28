@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Delete;
 

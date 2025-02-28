@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
-using InstaConnect.Posts.Common.Tests.Features.PostComments.Utilities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Commands.Delete;
 

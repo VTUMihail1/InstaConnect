@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Messages.Application.Features.Messages.Commands.Delete;
+﻿using InstaConnect.Messages.Application.Features.Messages.Commands.Delete;
 
 namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Commands.Delete;
 

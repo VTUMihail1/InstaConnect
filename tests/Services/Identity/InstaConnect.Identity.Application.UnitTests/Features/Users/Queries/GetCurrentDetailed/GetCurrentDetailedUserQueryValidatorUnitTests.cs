@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
+﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetCurrentDetailed;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetCurrentDetailed;
 

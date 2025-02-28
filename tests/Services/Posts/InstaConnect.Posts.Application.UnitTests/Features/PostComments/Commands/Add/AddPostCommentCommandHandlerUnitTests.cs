@@ -1,7 +1,4 @@
 ﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
-using InstaConnect.Posts.Common.Tests.Features.PostComments.Utilities;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Commands.Add;
 

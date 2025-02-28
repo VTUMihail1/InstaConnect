@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
-using InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities;
+﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Queries.GetAll;
 

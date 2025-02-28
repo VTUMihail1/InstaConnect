@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
-using InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
+﻿using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
 
 namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Queries;
 

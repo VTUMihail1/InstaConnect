@@ -1,7 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
-using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
+﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Commands;
 

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Identity.Application.Features.Users.Commands.Login;
-using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
+﻿using InstaConnect.Identity.Application.Features.Users.Commands.Login;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Login;
 

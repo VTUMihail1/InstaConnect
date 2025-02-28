@@ -64,9 +64,15 @@
     <Using Include="InstaConnect.Posts.Common.Features.PostComments.Utilities" />
     <Using Include="InstaConnect.Posts.Common.Features.PostLikes.Utilities" />
     <Using Include="InstaConnect.Posts.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.Posts.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.PostLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.PostComments.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.Users.Utilities" />
     <Using Include="InstaConnect.Common.Exceptions.Base" />
     <Using Include="InstaConnect.Common.Exceptions.Users" />
     <Using Include="InstaConnect.Common.Utilities" />
+    <Using Include="InstaConnect.Common.Tests.Utilities" />
   </ItemGroup>
 
 </Project>

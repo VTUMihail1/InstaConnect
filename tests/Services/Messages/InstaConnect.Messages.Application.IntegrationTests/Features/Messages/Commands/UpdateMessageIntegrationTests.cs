@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
-using InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
+﻿using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
 
 namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Commands;
 

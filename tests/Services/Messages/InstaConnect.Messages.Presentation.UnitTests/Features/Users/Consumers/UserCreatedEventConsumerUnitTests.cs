@@ -1,6 +1,4 @@
-﻿using InstaConnect.Messages.Common.Tests.Features.Users.Utilities;
-
-namespace InstaConnect.Messages.Presentation.UnitTests.Features.Users.Consumers;
+﻿namespace InstaConnect.Messages.Presentation.UnitTests.Features.Users.Consumers;
 
 public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
 {

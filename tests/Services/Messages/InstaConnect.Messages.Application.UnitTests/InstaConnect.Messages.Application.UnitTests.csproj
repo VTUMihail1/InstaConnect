@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Nullable>disable</Nullable>
@@ -43,9 +43,12 @@
     <!-- Common -->
     <Using Include="InstaConnect.Messages.Common.Features.Messages.Utilities" />
     <Using Include="InstaConnect.Messages.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Messages.Common.Tests.Features.Messages.Utilities" />
+    <Using Include="InstaConnect.Messages.Common.Tests.Features.Users.Utilities" />
     <Using Include="InstaConnect.Common.Exceptions.Base" />
     <Using Include="InstaConnect.Common.Exceptions.Users" />
     <Using Include="InstaConnect.Common.Utilities" />
+    <Using Include="InstaConnect.Common.Tests.Utilities" />
   </ItemGroup>
 
 </Project>

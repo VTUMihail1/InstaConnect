@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-
-namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Controllers.v1;
+﻿namespace InstaConnect.Follows.Presentation.FunctionalTests.Features.Follows.Controllers.v1;
 
 public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
 {

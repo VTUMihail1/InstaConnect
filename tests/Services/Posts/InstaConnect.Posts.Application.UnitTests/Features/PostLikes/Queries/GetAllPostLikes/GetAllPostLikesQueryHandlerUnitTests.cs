@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
-using InstaConnect.Posts.Common.Tests.Features.PostLikes.Utilities;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Queries.GetAllPostLikes;

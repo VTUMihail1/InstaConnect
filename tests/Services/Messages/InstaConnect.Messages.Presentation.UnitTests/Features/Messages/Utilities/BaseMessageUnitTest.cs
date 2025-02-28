@@ -8,8 +8,6 @@ using InstaConnect.Messages.Application.Features.Messages.Commands.Update;
 using InstaConnect.Messages.Application.Features.Messages.Models;
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
-using InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
-using InstaConnect.Messages.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Presentation.Extensions;
 

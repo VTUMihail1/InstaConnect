@@ -59,6 +59,7 @@
     <Using Include="InstaConnect.Follows.Common.Tests.Features.Users.Utilities" />
     <Using Include="InstaConnect.Common.Application.Contracts.Users" />
     <Using Include="InstaConnect.Common.Utilities" />
+    <Using Include="InstaConnect.Common.Tests.Utilities" />
   </ItemGroup>
 
 </Project>

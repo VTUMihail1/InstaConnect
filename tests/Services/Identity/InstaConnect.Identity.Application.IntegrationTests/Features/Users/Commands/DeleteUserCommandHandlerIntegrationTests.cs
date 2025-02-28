@@ -1,7 +1,5 @@
 ﻿using InstaConnect.Common.Application.Contracts.Users;
-using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Identity.Application.Features.Users.Commands.Delete;
-using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
 

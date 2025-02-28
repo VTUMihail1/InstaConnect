@@ -3,10 +3,8 @@
 using InstaConnect.Common.Abstractions;
 using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Helpers;
-using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Identity.Application.Extensions;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions;
-using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 

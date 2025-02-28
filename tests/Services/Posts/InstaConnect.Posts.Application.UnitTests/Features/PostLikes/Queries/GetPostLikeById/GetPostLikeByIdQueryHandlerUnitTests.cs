@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
-using InstaConnect.Posts.Common.Tests.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Queries.GetPostLikeById;
 

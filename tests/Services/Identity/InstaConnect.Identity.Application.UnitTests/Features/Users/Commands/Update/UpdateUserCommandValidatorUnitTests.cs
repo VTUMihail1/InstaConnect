@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Identity.Application.Features.Users.Commands.Update;
-using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
+﻿using InstaConnect.Identity.Application.Features.Users.Commands.Update;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Update;
 

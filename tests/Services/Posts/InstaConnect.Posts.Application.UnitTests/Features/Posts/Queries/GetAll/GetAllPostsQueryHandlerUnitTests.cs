@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetAll;

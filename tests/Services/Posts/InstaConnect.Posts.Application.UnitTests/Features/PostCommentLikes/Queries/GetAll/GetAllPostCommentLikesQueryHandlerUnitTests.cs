@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
-using InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
 
 using NSubstitute.ReceivedExtensions;

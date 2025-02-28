@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
+﻿using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.ForgotPasswordTokens.Commands.Add;
 

@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Application.Models;
-using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Infrastructure;
 using InstaConnect.Shared.Infrastructure.Extensions;
 

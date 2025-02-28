@@ -57,8 +57,12 @@
     <Using Include="InstaConnect.Identity.Common.Features.Users.Utilities" />
     <Using Include="InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities" />
     <Using Include="InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities" />
+    <Using Include="InstaConnect.Identity.Common.Tests.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Identity.Common.Tests.Features.EmailConfirmationTokens.Utilities" />
+    <Using Include="InstaConnect.Identity.Common.Tests.Features.ForgotPasswordTokens.Utilities" />
     <Using Include="InstaConnect.Identity.Presentation.FunctionalTests.Utilities" />
     <Using Include="InstaConnect.Common.Utilities" />
+    <Using Include="InstaConnect.Common.Tests.Utilities" />
   </ItemGroup>
 
 </Project>
