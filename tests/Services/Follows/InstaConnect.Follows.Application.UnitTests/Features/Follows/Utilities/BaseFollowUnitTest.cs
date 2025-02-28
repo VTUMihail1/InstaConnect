@@ -47,15 +47,7 @@ public abstract class BaseFollowUnitTest
 
     private User CreateUserUtil()
     {
-        var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength),
-            SharedTestUtilities.GetMaxDate(),
-            SharedTestUtilities.GetMaxDate());
+        var user = UserTestUtilities.CreateUser();
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -72,12 +64,7 @@ public abstract class BaseFollowUnitTest
 
     public Follow CreateFollowUtil(User follower, User following)
     {
-        var follow = new Follow(
-            SharedTestUtilities.GetAverageString(FollowConfigurations.IdMaxLength, FollowConfigurations.IdMinLength),
-            follower,
-            following,
-            SharedTestUtilities.GetMaxDate(),
-            SharedTestUtilities.GetMaxDate());
+        var follow = FollowTestUtilities.CreateFollow(follower, following);
 
         var followPaginationList = new PaginationList<Follow>(
             [follow],
@@ -125,12 +112,7 @@ public abstract class BaseFollowUnitTest
         var follower = CreateUser();
         var following = CreateUser();
 
-        var follow = new Follow(
-            SharedTestUtilities.GetAverageString(FollowConfigurations.IdMaxLength, FollowConfigurations.IdMinLength),
-            follower,
-            following,
-            SharedTestUtilities.GetMaxDate(),
-            SharedTestUtilities.GetMaxDate());
+        var follow = FollowTestUtilities.CreateFollow(follower, following);
 
         FollowFactory.Get(follower.Id, following.Id)
             .Returns(follow);

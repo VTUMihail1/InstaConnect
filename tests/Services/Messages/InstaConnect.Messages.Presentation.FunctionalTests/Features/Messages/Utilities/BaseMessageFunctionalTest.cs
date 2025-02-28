@@ -1,4 +1,6 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
 using InstaConnect.Messages.Domain.Features.Users.Abstractions;
 using InstaConnect.Messages.Infrastructure;
@@ -50,17 +52,7 @@ public abstract class BaseMessageFunctionalTest : IClassFixture<MessagesWebAppli
 
     private async Task<User> CreateUserUtilAsync(CancellationToken cancellationToken)
     {
-        var id = SharedTestUtilities.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
-        var utcNow = SharedTestUtilities.GetMaxDate();
-        var user = new User(
-            id,
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength),
-            utcNow,
-            utcNow);
+        var user = UserTestUtilities.CreateUser();
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
@@ -83,13 +75,7 @@ public abstract class BaseMessageFunctionalTest : IClassFixture<MessagesWebAppli
         User receiver,
         CancellationToken cancellationToken)
     {
-        var message = new Message(
-            SharedTestUtilities.GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength),
-            SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
-            sender,
-            receiver,
-            SharedTestUtilities.GetMaxDate(),
-            SharedTestUtilities.GetMaxDate());
+        var message = MessageTestUtilities.CreateMessage(sender, receiver);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var messageWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IMessageWriteRepository>();

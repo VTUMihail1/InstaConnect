@@ -7,6 +7,7 @@ using InstaConnect.Common.Domain.Models.Pagination;
 using InstaConnect.Common.Helpers;
 using InstaConnect.Messages.Application.Extensions;
 using InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
 using InstaConnect.Messages.Domain.Features.Users.Abstractions;
@@ -56,15 +57,7 @@ public abstract class BaseMessageUnitTest
 
     private User CreateUserUtil()
     {
-        var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength),
-            SharedTestUtilities.GetMaxDate(),
-            SharedTestUtilities.GetMaxDate());
+        var user = UserTestUtilities.CreateUser();
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -81,13 +74,7 @@ public abstract class BaseMessageUnitTest
 
     private Message CreateMessageUtil(User sender, User receiver)
     {
-        var message = new Message(
-            SharedTestUtilities.GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength),
-            SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
-            sender,
-            receiver,
-            SharedTestUtilities.GetMaxDate(),
-            SharedTestUtilities.GetMaxDate());
+        var message = MessageTestUtilities.CreateMessage(sender, receiver);
 
         var messagePaginationList = new PaginationList<Message>(
             [message],
@@ -141,13 +128,7 @@ public abstract class BaseMessageUnitTest
         var sender = CreateUser();
         var receiver = CreateUser();
 
-        var message = new Message(
-            SharedTestUtilities.GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength),
-            SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
-            sender,
-            receiver,
-            SharedTestUtilities.GetMaxDate(),
-            SharedTestUtilities.GetMaxDate());
+        var message = MessageTestUtilities.CreateMessage(sender, receiver);
 
         MessageFactory.Get(sender.Id, receiver.Id, MessageTestUtilities.ValidAddContent)
             .Returns(message);

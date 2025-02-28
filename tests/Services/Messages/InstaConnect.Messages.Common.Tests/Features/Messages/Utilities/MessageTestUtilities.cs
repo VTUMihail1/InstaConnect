@@ -19,4 +19,17 @@ public class MessageTestUtilities : SharedTestUtilities
     public static readonly string InvalidSortPropertyName = "CreatedAtt";
 
     public static readonly SortOrder ValidSortOrderProperty = SortOrder.ASC;
+
+    public static Message CreateMessage(User sender, User receiver)
+    {
+        var message = new Message(
+            GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength),
+            GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
+            sender,
+            receiver,
+            GetMaxDate(),
+            GetMaxDate());
+
+        return message;
+    }
 }

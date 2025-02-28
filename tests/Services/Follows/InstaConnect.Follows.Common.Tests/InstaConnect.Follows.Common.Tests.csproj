@@ -6,6 +6,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Follows -->
+    <Using Include="InstaConnect.Follows.Domain.Features.Follows.Models.Entities" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Entities" />
+    
     <!-- Common -->
     <Using Include="InstaConnect.Follows.Common.Features.Follows.Utilities" />
     <Using Include="InstaConnect.Follows.Common.Features.Users.Utilities" />

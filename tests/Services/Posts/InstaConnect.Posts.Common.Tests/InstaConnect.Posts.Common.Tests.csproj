@@ -6,6 +6,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Posts -->
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Entities" />
+
+    <!-- Post Likes -->
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Entities" />
+
+    <!-- Post Comments -->
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Entities" />
+
+    <!-- Post Comment Likes -->
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Posts.Domain.Features.Users.Models.Entities" />
+
     <!-- Common -->
     <Using Include="InstaConnect.Posts.Common.Features.Posts.Utilities" />
     <Using Include="InstaConnect.Posts.Common.Features.PostLikes.Utilities" />

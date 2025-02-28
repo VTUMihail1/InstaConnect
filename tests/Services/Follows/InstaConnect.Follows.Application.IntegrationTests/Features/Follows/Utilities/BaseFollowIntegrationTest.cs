@@ -59,15 +59,7 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
 
     private async Task<User> CreateUserUtilAsync(CancellationToken cancellationToken)
     {
-        var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength),
-            SharedTestUtilities.GetMaxDate(),
-            SharedTestUtilities.GetMaxDate());
+        var user = UserTestUtilities.CreateUser();
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
@@ -90,12 +82,7 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
         User following,
         CancellationToken cancellationToken)
     {
-        var follow = new Follow(
-            SharedTestUtilities.GetAverageString(FollowConfigurations.IdMaxLength, FollowConfigurations.IdMinLength),
-            follower,
-            following,
-            SharedTestUtilities.GetMaxDate(),
-            SharedTestUtilities.GetMaxDate());
+        var follow = FollowTestUtilities.CreateFollow(follower, following);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var followWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IFollowWriteRepository>();

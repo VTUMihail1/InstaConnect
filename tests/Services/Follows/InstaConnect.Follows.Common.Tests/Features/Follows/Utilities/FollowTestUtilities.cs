@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Follows.Common.Tests.Features.Follows.Utilities;
+﻿using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+
+namespace InstaConnect.Follows.Common.Tests.Features.Follows.Utilities;
 
 public class FollowTestUtilities : SharedTestUtilities
 {
@@ -12,4 +14,16 @@ public class FollowTestUtilities : SharedTestUtilities
     public static readonly string InvalidSortPropertyName = "CreatedAtt";
 
     public static readonly SortOrder ValidSortOrderProperty = SortOrder.ASC;
+
+    public static Follow CreateFollow(User follower, User following)
+    {
+        var follow = new Follow(
+            GetAverageString(FollowConfigurations.IdMaxLength, FollowConfigurations.IdMinLength),
+            follower,
+            following,
+            GetMaxDate(),
+            GetMaxDate());
+
+        return follow;
+    }
 }

@@ -6,6 +6,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Messages -->
+    <Using Include="InstaConnect.Messages.Domain.Features.Messages.Models.Entities" />
+
+    <!-- Users -->
+    <Using Include="InstaConnect.Messages.Domain.Features.Users.Models.Entities" />
+
     <!-- Common -->
     <Using Include="InstaConnect.Messages.Common.Features.Messages.Utilities" />
     <Using Include="InstaConnect.Messages.Common.Features.Users.Utilities" />

@@ -9,6 +9,7 @@ using InstaConnect.Messages.Application.Features.Messages.Models;
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
 using InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 using InstaConnect.Messages.Presentation.Extensions;
 
@@ -33,15 +34,7 @@ public abstract class BaseMessageUnitTest
 
     private static User CreateUserUtil()
     {
-        var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength),
-            SharedTestUtilities.GetMaxDate(),
-            SharedTestUtilities.GetMaxDate());
+        var user = UserTestUtilities.CreateUser();
 
         return user;
     }
@@ -55,13 +48,7 @@ public abstract class BaseMessageUnitTest
 
     private Message CreateMessageUtil(User sender, User receiver)
     {
-        var message = new Message(
-            SharedTestUtilities.GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength),
-            SharedTestUtilities.GetAverageString(MessageConfigurations.ContentMaxLength, MessageConfigurations.ContentMinLength),
-            sender,
-            receiver,
-            SharedTestUtilities.GetMaxDate(),
-            SharedTestUtilities.GetMaxDate());
+        var message = MessageTestUtilities.CreateMessage(sender, receiver);
 
         var messageQueryViewModel = new MessageQueryViewModel(
             message.Id,
