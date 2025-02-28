@@ -1,5 +1,5 @@
-﻿using InstaConnect.Emails.Infrastructure.Features.Emails.Extensions;
-using InstaConnect.Shared.Common.Extensions;
+﻿using InstaConnect.Common.Extensions;
+using InstaConnect.Emails.Infrastructure.Features.Emails.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
 using Microsoft.Extensions.Configuration;

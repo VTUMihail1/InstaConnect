@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Common.Exceptions.Base;
+﻿namespace InstaConnect.Common.Exceptions.Base;
 
 public class UnauthorizedException : BaseException
 {

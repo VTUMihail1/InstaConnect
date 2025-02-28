@@ -1,6 +1,6 @@
-﻿using InstaConnect.Shared.Domain.Abstractions;
+﻿using InstaConnect.Common.Domain.Abstractions;
 
-namespace InstaConnect.Shared.Domain.Models.Base;
+namespace InstaConnect.Common.Domain.Models.Base;
 
 public abstract class BaseEntity : IBaseEntity, IAuditableInfo
 {

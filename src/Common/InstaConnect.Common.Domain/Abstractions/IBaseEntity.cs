@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Domain.Abstractions;
+﻿namespace InstaConnect.Common.Domain.Abstractions;
 
 public interface IBaseEntity
 {

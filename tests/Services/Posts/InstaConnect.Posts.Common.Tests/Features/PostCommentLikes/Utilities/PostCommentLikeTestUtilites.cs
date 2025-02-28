@@ -1,8 +1,8 @@
-﻿namespace InstaConnect.Posts.Common.Features.PostLikes.Utilities;
+﻿namespace InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities;
 
-public class PostLikeTestUtilities : SharedTestUtilities
+public class PostCommentLikeTestUtilities : SharedTestUtilities
 {
-    public static readonly string InvalidId = GetAverageString(PostLikeBusinessConfigurations.IdMaxLength, PostLikeBusinessConfigurations.IdMinLength);
+    public static readonly string InvalidId = GetAverageString(PostCommentLikeConfigurations.IdMaxLength, PostCommentLikeConfigurations.IdMinLength);
 
     public static readonly int ValidPageValue = 1;
     public static readonly int ValidPageSizeValue = 20;

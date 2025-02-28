@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Application.Models.Filters;
+﻿using InstaConnect.Common.Application.Models.Filters;
 
 namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 

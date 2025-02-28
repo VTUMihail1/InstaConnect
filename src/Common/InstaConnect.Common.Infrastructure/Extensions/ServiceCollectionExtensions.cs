@@ -2,12 +2,13 @@
 
 using CloudinaryDotNet;
 
+using InstaConnect.Common.Application.Helpers;
 using InstaConnect.Common.Domain.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Infrastructure.Abstractions;
+using InstaConnect.Common.Infrastructure;
+using InstaConnect.Common.Infrastructure.Abstractions;
+using InstaConnect.Common.Infrastructure.Helpers;
+using InstaConnect.Common.Infrastructure.Models.Options;
 using InstaConnect.Shared.Infrastructure.Extensions;
-using InstaConnect.Shared.Infrastructure.Helpers;
-using InstaConnect.Shared.Infrastructure.Models.Options;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Caching.Distributed;

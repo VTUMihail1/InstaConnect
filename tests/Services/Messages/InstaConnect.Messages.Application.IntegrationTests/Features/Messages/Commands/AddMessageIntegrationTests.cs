@@ -1,4 +1,6 @@
 ﻿using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
+using InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Commands;
 public class AddMessageIntegrationTests : BaseMessageIntegrationTest

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Common.Exceptions.Base;
+﻿using InstaConnect.Common.Exceptions.Base;
 
 namespace InstaConnect.Follows.Domain.Features.Follows.Exceptions;
 public class FollowAlreadyExistsException : BadRequestException

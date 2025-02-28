@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <!-- Common -->
-    <Using Include="InstaConnect.Shared.Common.Models.Enums" />
-    <Using Include="InstaConnect.Shared.Common.Utilities" />
+    <Using Include="InstaConnect.Common.Models.Enums" />
+    <Using Include="InstaConnect.Common.Utilities" />
   </ItemGroup>
 
 </Project>

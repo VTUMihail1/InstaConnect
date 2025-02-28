@@ -1,6 +1,7 @@
-﻿using InstaConnect.Shared.Application.Models;
+﻿using InstaConnect.Common.Application.Models;
+using InstaConnect.Common.Domain.Abstractions;
 
-namespace InstaConnect.Shared.Application.Helpers;
+namespace InstaConnect.Common.Application.Helpers;
 
 public class CacheRequestFactory : ICacheRequestFactory
 {

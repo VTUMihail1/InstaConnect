@@ -1,6 +1,6 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
-using InstaConnect.Shared.Domain.Models.Pagination;
-using InstaConnect.Shared.Infrastructure.Extensions;
+﻿using InstaConnect.Common.Domain.Models.Pagination;
+using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
 
 namespace InstaConnect.Follows.Infrastructure.Features.Follows.Repositories;
 

@@ -1,18 +1,18 @@
 ﻿using AutoMapper;
 
+using InstaConnect.Common.Abstractions;
+using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Common.Helpers;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Models;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
-using InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Common.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 using InstaConnect.Posts.Presentation.Extensions;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Helpers;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostCommentLikes.Utilities;
 

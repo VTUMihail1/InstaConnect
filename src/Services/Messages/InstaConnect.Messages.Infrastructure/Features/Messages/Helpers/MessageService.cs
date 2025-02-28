@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Messages.Infrastructure.Features.Messages.Helpers;
+﻿using InstaConnect.Common.Domain.Abstractions;
+
+namespace InstaConnect.Messages.Infrastructure.Features.Messages.Helpers;
 internal class MessageService : IMessageService
 {
     private readonly IDateTimeProvider _dateTimeProvider;

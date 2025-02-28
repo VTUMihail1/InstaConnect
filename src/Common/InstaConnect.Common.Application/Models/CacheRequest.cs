@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Application.Models;
+﻿namespace InstaConnect.Common.Application.Models;
 
 public record CacheRequest(
     string Key,

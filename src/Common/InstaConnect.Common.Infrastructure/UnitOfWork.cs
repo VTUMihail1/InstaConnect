@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Infrastructure;
+﻿namespace InstaConnect.Common.Infrastructure;
 
 internal class UnitOfWork : IUnitOfWork
 {

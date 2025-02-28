@@ -1,9 +1,9 @@
-﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Extensions;
+﻿using InstaConnect.Common.Application.Extensions;
+using InstaConnect.Common.Extensions;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Extensions;
 using InstaConnect.Posts.Application.Features.PostComments.Extensions;
 using InstaConnect.Posts.Application.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Application.Features.Posts.Extensions;
-using InstaConnect.Shared.Application.Extensions;
-using InstaConnect.Shared.Common.Extensions;
 
 namespace InstaConnect.Posts.Application.Extensions;
 

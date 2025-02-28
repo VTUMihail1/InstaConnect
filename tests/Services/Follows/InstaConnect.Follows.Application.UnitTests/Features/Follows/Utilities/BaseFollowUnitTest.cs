@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 
+using InstaConnect.Common.Abstractions;
+using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Common.Application.Helpers;
+using InstaConnect.Common.Domain.Models.Pagination;
+using InstaConnect.Common.Helpers;
 using InstaConnect.Follows.Application.Extensions;
 using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 using InstaConnect.Follows.Domain.Features.Follows.Models.Filters;
 using InstaConnect.Follows.Domain.Features.Users.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Helpers;
-using InstaConnect.Shared.Domain.Models.Pagination;
 
 namespace InstaConnect.Follows.Application.UnitTests.Features.Follows.Utilities;
 

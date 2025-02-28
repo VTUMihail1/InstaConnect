@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 
+using InstaConnect.Common.Abstractions;
+using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Common.Helpers;
+using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.ForgotPasswordTokens.Models.Entities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 using InstaConnect.Identity.Presentation.Extensions;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Helpers;
 
 namespace InstaConnect.Identity.Presentation.UnitTests.Features.ForgotPasswordTokens.Utilities;
 

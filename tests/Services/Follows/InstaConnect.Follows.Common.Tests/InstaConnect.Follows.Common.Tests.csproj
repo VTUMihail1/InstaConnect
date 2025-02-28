@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Services\Follows\InstaConnect.Follows.Common\InstaConnect.Follows.Common.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Services\Follows\InstaConnect.Follows.Domain\InstaConnect.Follows.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Common -->
+    <Using Include="InstaConnect.Follows.Common.Features.Follows.Utilities" />
+    <Using Include="InstaConnect.Follows.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Common.Utilities" />
+    <Using Include="InstaConnect.Common.Models.Enums" />
+  </ItemGroup>
+
+</Project>

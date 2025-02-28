@@ -24,6 +24,7 @@
     <ProjectReference Include="..\..\..\..\src\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Identity\InstaConnect.Identity.Common\InstaConnect.Identity.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Identity\InstaConnect.Identity.Presentation\InstaConnect.Identity.Presentation.csproj" />
+    <ProjectReference Include="..\InstaConnect.Identity.Common.Tests\InstaConnect.Identity.Common.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,9 +55,9 @@
     <Using Include="InstaConnect.Identity.Common.Features.Users.Utilities" />
     <Using Include="InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities" />
     <Using Include="InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities" />
-    <Using Include="InstaConnect.Shared.Common.Exceptions.Base" />
-    <Using Include="InstaConnect.Shared.Common.Exceptions.Users" />
-    <Using Include="InstaConnect.Shared.Common.Utilities" />
+    <Using Include="InstaConnect.Common.Exceptions.Base" />
+    <Using Include="InstaConnect.Common.Exceptions.Users" />
+    <Using Include="InstaConnect.Common.Utilities" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Application.Validators;
+﻿using InstaConnect.Common.Application.Validators;
 
 namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 

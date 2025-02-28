@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 
+using InstaConnect.Common.Abstractions;
+using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Common.Helpers;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Presentation.Extensions;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Helpers;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Users.Utilities;
 

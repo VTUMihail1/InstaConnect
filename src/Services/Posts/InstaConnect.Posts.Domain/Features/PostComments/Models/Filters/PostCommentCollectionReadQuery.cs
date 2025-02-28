@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Common.Models.Enums;
+﻿using InstaConnect.Common.Models.Enums;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
 

@@ -26,8 +26,8 @@ public class GetPostLikeByIdQueryValidatorUnitTests : BasePostLikeUnitTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostLikeBusinessConfigurations.IdMinLength - 1)]
-    [InlineData(PostLikeBusinessConfigurations.IdMaxLength + 1)]
+    [InlineData(PostLikeConfigurations.IdMinLength - 1)]
+    [InlineData(PostLikeConfigurations.IdMaxLength + 1)]
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange

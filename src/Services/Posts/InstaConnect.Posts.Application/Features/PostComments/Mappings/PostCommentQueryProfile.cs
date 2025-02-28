@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 
+using InstaConnect.Common.Domain.Models.Pagination;
 using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
-using InstaConnect.Shared.Domain.Models.Pagination;
 
 namespace InstaConnect.Posts.Application.Features.PostComments.Mappings;
 

@@ -1,4 +1,7 @@
-﻿namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Controllers.v1;
+﻿using InstaConnect.Identity.Common.Tests.Features.EmailConfirmationTokens.Utilities;
+using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
+
+namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Controllers.v1;
 
 public class VerifyEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTokenFunctionalTest
 {

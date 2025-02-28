@@ -33,10 +33,10 @@
     <!-- Common -->
     <Using Include="InstaConnect.Messages.Common.Features.Messages.Utilities" />
     <Using Include="InstaConnect.Messages.Common.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Shared.Application.Abstractions" />
-    <Using Include="InstaConnect.Shared.Common.Abstractions" />
-    <Using Include="InstaConnect.Shared.Common.Exceptions.Users" />
-    <Using Include="InstaConnect.Shared.Common.Models.Enums" />
+    <Using Include="InstaConnect.Common.Application.Abstractions" />
+    <Using Include="InstaConnect.Common.Abstractions" />
+    <Using Include="InstaConnect.Common.Exceptions.Users" />
+    <Using Include="InstaConnect.Common.Models.Enums" />
   </ItemGroup>
 
 </Project>

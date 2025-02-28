@@ -1,4 +1,7 @@
-﻿namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Controllers.v1;
+﻿using InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
+using InstaConnect.Messages.Common.Tests.Features.Users.Utilities;
+
+namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Controllers.v1;
 
 public class AddMessageFunctionalTests : BaseMessageFunctionalTest
 {

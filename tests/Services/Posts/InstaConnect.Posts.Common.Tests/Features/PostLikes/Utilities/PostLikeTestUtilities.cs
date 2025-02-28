@@ -1,8 +1,8 @@
-﻿namespace InstaConnect.Follows.Common.Features.Follows.Utilities;
+﻿namespace InstaConnect.Posts.Common.Tests.Features.PostLikes.Utilities;
 
-public class FollowTestUtilities : SharedTestUtilities
+public class PostLikeTestUtilities : SharedTestUtilities
 {
-    public static readonly string InvalidId = GetAverageString(FollowConfigurations.IdMaxLength, FollowConfigurations.IdMinLength);
+    public static readonly string InvalidId = GetAverageString(PostLikeConfigurations.IdMaxLength, PostLikeConfigurations.IdMinLength);
 
     public static readonly int ValidPageValue = 1;
     public static readonly int ValidPageSizeValue = 20;

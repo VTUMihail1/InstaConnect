@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Infrastructure.Helpers;
+﻿namespace InstaConnect.Common.Infrastructure.Helpers;
 
 public class EventPublisher : IEventPublisher
 {

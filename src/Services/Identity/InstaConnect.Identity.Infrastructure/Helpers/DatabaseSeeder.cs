@@ -1,5 +1,5 @@
-﻿using InstaConnect.Identity.Infrastructure.Features.Users.Models.Options;
-using InstaConnect.Shared.Common.Utilities;
+﻿using InstaConnect.Common.Utilities;
+using InstaConnect.Identity.Infrastructure.Features.Users.Models.Options;
 
 using Microsoft.Extensions.Options;
 

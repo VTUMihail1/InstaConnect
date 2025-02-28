@@ -1,4 +1,6 @@
 ﻿using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Commands.AddPostLike;
 

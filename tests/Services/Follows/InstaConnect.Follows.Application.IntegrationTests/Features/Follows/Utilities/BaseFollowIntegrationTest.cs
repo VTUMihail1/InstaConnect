@@ -1,8 +1,8 @@
-﻿using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
+﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Follows.Domain.Features.Follows.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Abstractions;
 using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 using InstaConnect.Follows.Infrastructure;
-using InstaConnect.Shared.Application.Abstractions;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

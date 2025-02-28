@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.UnitTests.Features.Users.Consumers;
+﻿using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
+
+namespace InstaConnect.Posts.Presentation.UnitTests.Features.Users.Consumers;
 
 public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
 {

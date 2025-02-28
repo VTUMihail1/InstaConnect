@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
+using InstaConnect.Posts.Common.Tests.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Commands;
 
@@ -29,8 +30,8 @@ public class DeletePostLikeIntegrationTests : BasePostLikeIntegrationTest
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostLikeBusinessConfigurations.IdMinLength - 1)]
-    [InlineData(PostLikeBusinessConfigurations.IdMaxLength + 1)]
+    [InlineData(PostLikeConfigurations.IdMinLength - 1)]
+    [InlineData(PostLikeConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange

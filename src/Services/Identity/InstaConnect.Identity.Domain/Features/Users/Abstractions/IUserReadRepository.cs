@@ -1,6 +1,6 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
+﻿using InstaConnect.Common.Domain.Models.Pagination;
+using InstaConnect.Identity.Domain.Features.Users.Models.Entities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
-using InstaConnect.Shared.Domain.Models.Pagination;
 
 namespace InstaConnect.Identity.Domain.Features.Users.Abstractions;
 public interface IUserReadRepository

@@ -1,8 +1,9 @@
-﻿using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
+﻿using InstaConnect.Common.Extensions;
+using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Shared.Common.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
 namespace InstaConnect.Identity.Infrastructure.Extensions;

@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Presentation.Utilities;
+﻿namespace InstaConnect.Common.Presentation.Utilities;
 public abstract class AppPolicies
 {
     public const string AdminPolicy = nameof(AdminPolicy);

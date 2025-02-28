@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
+﻿using InstaConnect.Posts.Common.Tests.Features.PostLikes.Utilities;
+
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
 
 public class DeletePostLikeFunctionalTests : BasePostLikeFunctionalTest
 {
@@ -26,8 +28,8 @@ public class DeletePostLikeFunctionalTests : BasePostLikeFunctionalTest
     }
 
     [Theory]
-    [InlineData(PostLikeBusinessConfigurations.IdMinLength - 1)]
-    [InlineData(PostLikeBusinessConfigurations.IdMaxLength + 1)]
+    [InlineData(PostLikeConfigurations.IdMinLength - 1)]
+    [InlineData(PostLikeConfigurations.IdMaxLength + 1)]
     public async Task DeleteAsync_ShouldReturnBadRequestResponse_WhenIdIsInvalid(int length)
     {
         // Arrange

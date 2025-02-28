@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
-using InstaConnect.Shared.Domain.Abstractions;
 
 namespace InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 

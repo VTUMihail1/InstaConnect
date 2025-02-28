@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
+﻿using InstaConnect.Posts.Common.Tests.Features.PostLikes.Utilities;
+
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
 
 public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
 {
@@ -8,8 +10,8 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
     }
 
     [Theory]
-    [InlineData(PostLikeBusinessConfigurations.IdMinLength - 1)]
-    [InlineData(PostLikeBusinessConfigurations.IdMaxLength + 1)]
+    [InlineData(PostLikeConfigurations.IdMinLength - 1)]
+    [InlineData(PostLikeConfigurations.IdMaxLength + 1)]
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange

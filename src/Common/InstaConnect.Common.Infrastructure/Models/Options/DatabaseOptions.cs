@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Infrastructure.Models.Options;
+﻿namespace InstaConnect.Common.Infrastructure.Models.Options;
 
 public class DatabaseOptions
 {

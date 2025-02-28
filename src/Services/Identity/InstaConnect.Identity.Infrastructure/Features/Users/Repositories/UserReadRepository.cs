@@ -1,6 +1,6 @@
-﻿using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
-using InstaConnect.Shared.Domain.Models.Pagination;
-using InstaConnect.Shared.Infrastructure.Extensions;
+﻿using InstaConnect.Common.Domain.Models.Pagination;
+using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
 
 namespace InstaConnect.Identity.Infrastructure.Features.Users.Repositories;
 

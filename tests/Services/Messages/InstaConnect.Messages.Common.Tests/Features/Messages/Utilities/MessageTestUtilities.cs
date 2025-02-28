@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Messages.Common.Features.Messages.Utilities;
+﻿namespace InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
 
 public class MessageTestUtilities : SharedTestUtilities
 {

@@ -1,4 +1,4 @@
-namespace InstaConnect.Shared.Presentation.Binders.FromClaim;
+namespace InstaConnect.Common.Presentation.Binders.FromClaim;
 
 [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property, AllowMultiple = false)]
 public sealed class FromClaimAttribute : Attribute, IBindingSourceMetadata, IModelNameProvider

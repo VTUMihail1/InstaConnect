@@ -1,7 +1,6 @@
 ﻿using System.Security.Claims;
 
 using InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Bodies;
-using InstaConnect.Shared.Presentation.Binders.FromClaim;
 
 namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Models.Requests;
 

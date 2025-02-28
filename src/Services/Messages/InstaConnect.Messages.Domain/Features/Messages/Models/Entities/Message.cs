@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
-using InstaConnect.Shared.Domain.Abstractions;
 
 namespace InstaConnect.Messages.Domain.Features.Messages.Models.Entities;
 

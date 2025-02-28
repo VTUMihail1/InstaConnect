@@ -1,15 +1,16 @@
 ﻿using AutoMapper;
 
+using InstaConnect.Common.Abstractions;
+using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Common.Application.Helpers;
+using InstaConnect.Common.Domain.Models.Pagination;
+using InstaConnect.Common.Helpers;
 using InstaConnect.Messages.Application.Extensions;
+using InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
 using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
 using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
 using InstaConnect.Messages.Domain.Features.Users.Abstractions;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Helpers;
-using InstaConnect.Shared.Domain.Models.Pagination;
 
 namespace InstaConnect.Messages.Application.UnitTests.Features.Messages.Utilities;
 

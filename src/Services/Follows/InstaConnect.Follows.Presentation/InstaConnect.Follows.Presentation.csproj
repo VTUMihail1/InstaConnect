@@ -42,11 +42,12 @@
     <Using Include="InstaConnect.Follows.Domain.Features.Users.Models.Entities" />
 
     <!-- Common -->
-    <Using Include="InstaConnect.Shared.Application.Abstractions" />
-    <Using Include="InstaConnect.Shared.Application.Contracts.Users" />
-    <Using Include="InstaConnect.Shared.Common.Abstractions" />
-    <Using Include="InstaConnect.Shared.Common.Models.Enums" />
-    <Using Include="InstaConnect.Shared.Presentation.Utilities" />
+    <Using Include="InstaConnect.Common.Application.Abstractions" />
+    <Using Include="InstaConnect.Common.Application.Contracts.Users" />
+    <Using Include="InstaConnect.Common.Abstractions" />
+    <Using Include="InstaConnect.Common.Models.Enums" />
+    <Using Include="InstaConnect.Common.Presentation.Utilities" />
+    <Using Include="InstaConnect.Common.Presentation.Binders.FromClaim" />
   </ItemGroup>
 
 </Project>

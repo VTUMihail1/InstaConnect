@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 
 using NSubstitute;
 
-namespace InstaConnect.Shared.Common.Utilities;
+namespace InstaConnect.Common.Utilities;
 
 public abstract class SharedTestUtilities
 {

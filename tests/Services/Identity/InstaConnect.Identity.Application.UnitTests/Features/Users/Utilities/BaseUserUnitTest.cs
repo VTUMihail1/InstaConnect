@@ -1,20 +1,21 @@
 ﻿using AutoMapper;
 
+using InstaConnect.Common.Abstractions;
+using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Common.Application.Helpers;
+using InstaConnect.Common.Application.Models;
+using InstaConnect.Common.Domain.Models.Pagination;
+using InstaConnect.Common.Helpers;
 using InstaConnect.Identity.Application.Extensions;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Application.Features.Users.Abstractions;
+using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Abstractions;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Entities;
 using InstaConnect.Identity.Domain.Features.UserClaims.Models.Filters;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Models;
 using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
-using InstaConnect.Shared.Application.Abstractions;
-using InstaConnect.Shared.Application.Helpers;
-using InstaConnect.Shared.Application.Models;
-using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Helpers;
-using InstaConnect.Shared.Domain.Models.Pagination;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Utilities;
 

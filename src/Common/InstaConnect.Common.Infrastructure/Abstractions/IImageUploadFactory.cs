@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Http;
 
-namespace InstaConnect.Shared.Infrastructure.Abstractions;
+namespace InstaConnect.Common.Infrastructure.Abstractions;
 
 public interface IImageUploadFactory
 {

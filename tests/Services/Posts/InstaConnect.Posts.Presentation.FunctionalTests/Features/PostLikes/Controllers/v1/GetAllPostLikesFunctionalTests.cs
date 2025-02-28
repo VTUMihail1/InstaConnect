@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
+﻿using InstaConnect.Posts.Common.Tests.Features.PostLikes.Utilities;
+
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Controllers.v1;
 
 public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
 {

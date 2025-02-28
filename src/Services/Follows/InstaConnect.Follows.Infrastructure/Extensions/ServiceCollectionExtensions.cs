@@ -1,6 +1,6 @@
-﻿using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
+﻿using InstaConnect.Common.Extensions;
+using InstaConnect.Follows.Infrastructure.Features.Follows.Extensions;
 using InstaConnect.Follows.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Shared.Common.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
 namespace InstaConnect.Follows.Infrastructure.Extensions;

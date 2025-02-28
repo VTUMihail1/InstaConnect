@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
+﻿using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
+
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class DeletePostFunctionalTests : BasePostFunctionalTest
 {

@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Common.Utilities;
+﻿namespace InstaConnect.Common.Utilities;
 
 public static class SharedConfigurations
 {

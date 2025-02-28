@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 
-using InstaConnect.Shared.Application.Models.Filters;
-using InstaConnect.Shared.Common.Utilities;
+using InstaConnect.Common.Application.Models.Filters;
+using InstaConnect.Common.Utilities;
 
-namespace InstaConnect.Shared.Application.Validators;
+namespace InstaConnect.Common.Application.Validators;
 
 public class CollectionModelValidator : AbstractValidator<CollectionModel>
 {

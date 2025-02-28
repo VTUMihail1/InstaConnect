@@ -1,13 +1,13 @@
 ﻿using System.Reflection;
 
-using InstaConnect.Shared.Common.Abstractions;
-using InstaConnect.Shared.Common.Helpers;
+using InstaConnect.Common.Abstractions;
+using InstaConnect.Common.Helpers;
 
 using Microsoft.Extensions.DependencyInjection;
 
 using Scrutor;
 
-namespace InstaConnect.Shared.Common.Extensions;
+namespace InstaConnect.Common.Extensions;
 public static class ServiceCollectionExtentions
 {
     public static IServiceCollection AddMapper(this IServiceCollection serviceCollection, Assembly assembly)

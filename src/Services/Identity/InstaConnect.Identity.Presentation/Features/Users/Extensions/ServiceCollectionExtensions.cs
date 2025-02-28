@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Infrastructure.Models.Options;
+﻿using InstaConnect.Common.Infrastructure.Models.Options;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 

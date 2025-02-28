@@ -1,6 +1,6 @@
 ﻿using InstaConnect.Common.Domain.Abstractions;
 
-namespace InstaConnect.Shared.Infrastructure.Helpers;
+namespace InstaConnect.Common.Infrastructure.Helpers;
 
 public class GuidProvider : IGuidProvider
 {

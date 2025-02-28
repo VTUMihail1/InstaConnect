@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
+using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Queries.GetAll;

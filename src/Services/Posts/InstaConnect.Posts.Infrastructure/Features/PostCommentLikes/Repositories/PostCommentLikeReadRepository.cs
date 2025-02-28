@@ -1,6 +1,6 @@
-﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
-using InstaConnect.Shared.Domain.Models.Pagination;
-using InstaConnect.Shared.Infrastructure.Extensions;
+﻿using InstaConnect.Common.Domain.Models.Pagination;
+using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Repositories;
 

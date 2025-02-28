@@ -6,8 +6,8 @@ public class DeletePostLikeCommandValidator : AbstractValidator<DeletePostLikeCo
     {
         RuleFor(c => c.Id)
             .NotEmpty()
-            .MinimumLength(PostLikeBusinessConfigurations.IdMinLength)
-            .MaximumLength(PostLikeBusinessConfigurations.IdMaxLength);
+            .MinimumLength(PostLikeConfigurations.IdMinLength)
+            .MaximumLength(PostLikeConfigurations.IdMaxLength);
 
         RuleFor(c => c.CurrentUserId)
             .NotEmpty()

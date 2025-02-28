@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-using InstaConnect.Shared.Infrastructure.Abstractions;
+using InstaConnect.Common.Infrastructure.Abstractions;
 
 namespace InstaConnect.Shared.Infrastructure.Extensions;
 public static partial class ServiceCollectionExtensions

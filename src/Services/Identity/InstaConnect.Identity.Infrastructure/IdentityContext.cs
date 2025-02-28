@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Infrastructure.Extensions;
+﻿using InstaConnect.Common.Infrastructure.Extensions;
 
 namespace InstaConnect.Identity.Infrastructure;
 

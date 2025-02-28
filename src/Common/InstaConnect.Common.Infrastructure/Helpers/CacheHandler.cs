@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
+﻿using InstaConnect.Common.Infrastructure.Helpers;
 
-namespace InstaConnect.Shared.Infrastructure.Helpers;
+using Microsoft.Extensions.Caching.Distributed;
+
+namespace InstaConnect.Common.Infrastructure.Helpers;
 internal class CacheHandler : ICacheHandler
 {
     private readonly IJsonConverter _jsonConverter;

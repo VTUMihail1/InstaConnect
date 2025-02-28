@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Infrastructure.Extensions;
+﻿namespace InstaConnect.Common.Infrastructure.Extensions;
 public static class ModelBuilderExtensions
 {
     public static void ApplyTransactionalOutboxEntityConfiguration(this ModelBuilder modelBuilder)

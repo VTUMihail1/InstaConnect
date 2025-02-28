@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Common\InstaConnect.Posts.Common.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Domain\InstaConnect.Posts.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Common -->
+    <Using Include="InstaConnect.Posts.Common.Features.Posts.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Features.PostLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Features.PostComments.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Common.Utilities" />
+    <Using Include="InstaConnect.Common.Models.Enums" />
+  </ItemGroup>
+
+</Project>

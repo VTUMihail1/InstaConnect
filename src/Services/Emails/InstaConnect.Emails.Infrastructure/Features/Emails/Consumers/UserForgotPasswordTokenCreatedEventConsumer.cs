@@ -1,7 +1,7 @@
-﻿using InstaConnect.Emails.Application.Features.Emails.Abstractions;
+﻿using InstaConnect.Common.Application.Contracts.ForgotPasswordTokens;
+using InstaConnect.Common.Exceptions.Base;
+using InstaConnect.Emails.Application.Features.Emails.Abstractions;
 using InstaConnect.Emails.Infrastructure.Features.Emails.Utilities;
-using InstaConnect.Shared.Application.Contracts.ForgotPasswordTokens;
-using InstaConnect.Shared.Common.Exceptions.Base;
 
 using MassTransit;
 

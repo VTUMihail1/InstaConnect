@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Presentation.Extensions;
+﻿using InstaConnect.Common.Presentation.Extensions;
 
 namespace InstaConnect.Gateway.Presentation.Extensions;
 

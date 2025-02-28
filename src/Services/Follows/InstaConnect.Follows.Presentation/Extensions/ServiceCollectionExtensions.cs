@@ -1,7 +1,7 @@
-﻿using InstaConnect.Follows.Presentation.Features.Follows.Extensions;
+﻿using InstaConnect.Common.Extensions;
+using InstaConnect.Common.Presentation.Extensions;
+using InstaConnect.Follows.Presentation.Features.Follows.Extensions;
 using InstaConnect.Follows.Presentation.Features.Users.Extensions;
-using InstaConnect.Shared.Common.Extensions;
-using InstaConnect.Shared.Presentation.Extensions;
 
 namespace InstaConnect.Follows.Presentation.Extensions;
 

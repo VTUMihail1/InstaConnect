@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
+﻿using InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities;
+
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 
 public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTest
 {

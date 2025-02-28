@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Application.Helpers;
+﻿namespace InstaConnect.Common.Application.Helpers;
 
 internal class InstaConnectSender : IInstaConnectSender
 {

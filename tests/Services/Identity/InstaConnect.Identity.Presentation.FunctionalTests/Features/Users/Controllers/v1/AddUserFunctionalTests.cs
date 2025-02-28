@@ -1,5 +1,6 @@
-﻿using InstaConnect.Shared.Application.Contracts.EmailConfirmationTokens;
-using InstaConnect.Shared.Application.Contracts.Users;
+﻿using InstaConnect.Common.Application.Contracts.EmailConfirmationTokens;
+using InstaConnect.Common.Application.Contracts.Users;
+using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.Users.Controllers.v1;
 

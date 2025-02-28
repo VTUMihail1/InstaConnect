@@ -1,6 +1,6 @@
-﻿using InstaConnect.Shared.Domain.Abstractions;
+﻿using InstaConnect.Common.Domain.Abstractions;
 
-namespace InstaConnect.Shared.Application.Abstractions;
+namespace InstaConnect.Common.Application.Abstractions;
 
 public interface IEntityPropertyValidator
 {

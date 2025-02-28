@@ -6,7 +6,7 @@ public class GetPostLikeByIdQueryValidator : AbstractValidator<GetPostLikeByIdQu
     {
         RuleFor(q => q.Id)
             .NotEmpty()
-            .MinimumLength(PostLikeBusinessConfigurations.IdMinLength)
-            .MaximumLength(PostLikeBusinessConfigurations.IdMaxLength);
+            .MinimumLength(PostLikeConfigurations.IdMinLength)
+            .MaximumLength(PostLikeConfigurations.IdMaxLength);
     }
 }

@@ -24,6 +24,7 @@
     <ProjectReference Include="..\..\..\..\src\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Common\InstaConnect.Posts.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Presentation\InstaConnect.Posts.Presentation.csproj" />
+    <ProjectReference Include="..\InstaConnect.Posts.Common.Tests\InstaConnect.Posts.Common.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,8 +72,8 @@
     <!-- Common -->
     <Using Include="InstaConnect.Posts.Common.Features.Posts.Utilities" />
     <Using Include="InstaConnect.Posts.Common.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Shared.Application.Contracts.Users" />
-    <Using Include="InstaConnect.Shared.Common.Utilities" />
+    <Using Include="InstaConnect.Common.Application.Contracts.Users" />
+    <Using Include="InstaConnect.Common.Utilities" />
   </ItemGroup>
 
 </Project>

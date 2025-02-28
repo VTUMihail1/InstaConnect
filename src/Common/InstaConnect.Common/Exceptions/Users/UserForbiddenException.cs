@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Common.Exceptions.Users;
+﻿namespace InstaConnect.Common.Exceptions.Users;
 
 public class UserForbiddenException : ForbiddenException
 {

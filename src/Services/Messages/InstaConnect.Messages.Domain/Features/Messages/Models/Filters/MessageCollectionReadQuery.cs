@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Common.Models.Enums;
+﻿using InstaConnect.Common.Models.Enums;
 
 namespace InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
 

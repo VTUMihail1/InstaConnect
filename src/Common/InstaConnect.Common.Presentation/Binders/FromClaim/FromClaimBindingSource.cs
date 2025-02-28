@@ -1,4 +1,4 @@
-namespace InstaConnect.Shared.Presentation.Binders.FromClaim;
+namespace InstaConnect.Common.Presentation.Binders.FromClaim;
 
 public static class FromClaimBindingSource
 {

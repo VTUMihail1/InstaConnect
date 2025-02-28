@@ -1,7 +1,6 @@
 ﻿using System.Security.Claims;
 
 using InstaConnect.Posts.Presentation.Features.PostComments.Models.Bodies;
-using InstaConnect.Shared.Presentation.Binders.FromClaim;
 
 namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 

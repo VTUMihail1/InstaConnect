@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
+using InstaConnect.Posts.Common.Tests.Features.PostLikes.Utilities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Queries;
 
@@ -23,8 +24,8 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrati
 
     [Theory]
     [InlineData(default(int))]
-    [InlineData(PostLikeBusinessConfigurations.IdMinLength - 1)]
-    [InlineData(PostLikeBusinessConfigurations.IdMaxLength + 1)]
+    [InlineData(PostLikeConfigurations.IdMinLength - 1)]
+    [InlineData(PostLikeConfigurations.IdMaxLength + 1)]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange

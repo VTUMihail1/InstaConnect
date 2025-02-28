@@ -1,6 +1,7 @@
-﻿using InstaConnect.Identity.Application.Features.Users.Commands.Add;
-using InstaConnect.Shared.Application.Contracts.Users;
-using InstaConnect.Shared.Application.Models;
+﻿using InstaConnect.Common.Application.Contracts.Users;
+using InstaConnect.Common.Application.Models;
+using InstaConnect.Identity.Application.Features.Users.Commands.Add;
+using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.Users.Commands.Add;
 

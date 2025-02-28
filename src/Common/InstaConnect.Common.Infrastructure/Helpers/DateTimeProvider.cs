@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Shared.Infrastructure.Helpers;
+﻿using InstaConnect.Common.Domain.Abstractions;
+
+namespace InstaConnect.Common.Infrastructure.Helpers;
 public class DateTimeProvider : IDateTimeProvider
 {
     public DateTime GetUtcNow()

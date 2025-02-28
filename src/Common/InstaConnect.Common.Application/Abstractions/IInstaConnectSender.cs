@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Application.Abstractions;
+﻿namespace InstaConnect.Common.Application.Abstractions;
 public interface IInstaConnectSender
 {
     Task SendAsync<TRequest>(TRequest request, CancellationToken cancellationToken) where TRequest : IRequest;

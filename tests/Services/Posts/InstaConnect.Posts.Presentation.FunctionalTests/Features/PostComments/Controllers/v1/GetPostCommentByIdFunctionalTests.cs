@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Controllers.v1;
+﻿using InstaConnect.Posts.Common.Tests.Features.PostComments.Utilities;
+
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Controllers.v1;
 
 public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
 {

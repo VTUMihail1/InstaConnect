@@ -1,8 +1,8 @@
+using InstaConnect.Common.Presentation.Extensions;
 using InstaConnect.Messages.Application.Extensions;
 using InstaConnect.Messages.Infrastructure.Extensions;
 using InstaConnect.Messages.Presentation.Extensions;
 using InstaConnect.Messages.Presentation.Features.Messages.Helpers.Hubs;
-using InstaConnect.Shared.Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

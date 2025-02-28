@@ -1,6 +1,6 @@
-﻿using InstaConnect.Messages.Infrastructure.Features.Messages.Extensions;
+﻿using InstaConnect.Common.Extensions;
+using InstaConnect.Messages.Infrastructure.Features.Messages.Extensions;
 using InstaConnect.Messages.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Shared.Common.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
 namespace InstaConnect.Messages.Infrastructure.Extensions;

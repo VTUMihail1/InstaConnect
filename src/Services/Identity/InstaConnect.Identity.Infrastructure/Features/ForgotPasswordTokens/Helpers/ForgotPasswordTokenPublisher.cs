@@ -1,7 +1,7 @@
-﻿using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Abstractions;
+﻿using InstaConnect.Common.Abstractions;
+using InstaConnect.Common.Application.Contracts.ForgotPasswordTokens;
+using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Abstractions;
 using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Models;
-using InstaConnect.Shared.Application.Contracts.ForgotPasswordTokens;
-using InstaConnect.Shared.Common.Abstractions;
 
 namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Helpers;
 

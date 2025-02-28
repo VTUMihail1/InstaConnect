@@ -1,11 +1,11 @@
-﻿using InstaConnect.Shared.Common.Exceptions.Base;
+﻿using InstaConnect.Common.Exceptions.Base;
 
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace InstaConnect.Shared.Presentation.ExceptionHandlers;
+namespace InstaConnect.Common.Presentation.ExceptionHandlers;
 
 public sealed class AppExceptionHandler : IExceptionHandler
 {

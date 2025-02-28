@@ -1,6 +1,6 @@
-﻿using InstaConnect.Messages.Domain.Features.Users.Abstractions;
+﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Messages.Domain.Features.Users.Abstractions;
 using InstaConnect.Messages.Infrastructure;
-using InstaConnect.Shared.Application.Abstractions;
 
 using MassTransit.Testing;
 

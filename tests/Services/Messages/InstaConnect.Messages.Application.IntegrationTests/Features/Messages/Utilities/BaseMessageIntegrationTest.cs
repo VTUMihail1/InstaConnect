@@ -1,8 +1,8 @@
-﻿using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
+﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Messages.Domain.Features.Messages.Abstractions;
 using InstaConnect.Messages.Domain.Features.Users.Abstractions;
 using InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 using InstaConnect.Messages.Infrastructure;
-using InstaConnect.Shared.Application.Abstractions;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

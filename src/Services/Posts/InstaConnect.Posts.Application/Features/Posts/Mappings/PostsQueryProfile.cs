@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 
+using InstaConnect.Common.Domain.Models.Pagination;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
-using InstaConnect.Shared.Domain.Models.Pagination;
 
 namespace InstaConnect.Posts.Application.Features.Posts.Mappings;
 

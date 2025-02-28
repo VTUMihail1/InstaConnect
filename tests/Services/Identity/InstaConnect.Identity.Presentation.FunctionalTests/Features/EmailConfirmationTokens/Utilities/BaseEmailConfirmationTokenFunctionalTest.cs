@@ -1,9 +1,10 @@
-﻿using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
+﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
+using InstaConnect.Identity.Domain.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Domain.Features.Users.Abstractions;
 using InstaConnect.Identity.Infrastructure;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Abstractions;
 using InstaConnect.Identity.Presentation.FunctionalTests.Features.EmailConfirmationTokens.Helpers;
-using InstaConnect.Shared.Application.Abstractions;
 
 using MassTransit.Testing;
 

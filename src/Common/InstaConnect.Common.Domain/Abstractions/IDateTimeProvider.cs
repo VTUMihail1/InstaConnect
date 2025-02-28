@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Application.Abstractions;
+﻿namespace InstaConnect.Common.Domain.Abstractions;
 public interface IDateTimeProvider
 {
     public DateTime GetUtcNow();

@@ -1,6 +1,6 @@
-﻿using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
-using InstaConnect.Shared.Domain.Models.Pagination;
-using InstaConnect.Shared.Infrastructure.Extensions;
+﻿using InstaConnect.Common.Domain.Models.Pagination;
+using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Messages.Domain.Features.Messages.Models.Filters;
 
 namespace InstaConnect.Messages.Infrastructure.Features.Messages.Repositories;
 

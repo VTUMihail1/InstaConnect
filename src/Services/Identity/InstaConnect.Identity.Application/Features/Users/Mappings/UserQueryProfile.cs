@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 
+using InstaConnect.Common.Domain.Models.Pagination;
 using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 using InstaConnect.Identity.Domain.Features.Users.Models.Filters;
-using InstaConnect.Shared.Domain.Models.Pagination;
 
 namespace InstaConnect.Identity.Application.Features.Users.Mappings;
 

@@ -1,5 +1,5 @@
-﻿using InstaConnect.Shared.Common.Extensions;
-using InstaConnect.Shared.Presentation.Extensions;
+﻿using InstaConnect.Common.Extensions;
+using InstaConnect.Common.Presentation.Extensions;
 
 namespace InstaConnect.Emails.Presentation.Extensions;
 

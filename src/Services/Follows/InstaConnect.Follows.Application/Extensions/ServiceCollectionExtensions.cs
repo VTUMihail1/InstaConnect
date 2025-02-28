@@ -1,6 +1,6 @@
-﻿using InstaConnect.Follows.Application.Features.Follows.Extensions;
-using InstaConnect.Shared.Application.Extensions;
-using InstaConnect.Shared.Common.Extensions;
+﻿using InstaConnect.Common.Application.Extensions;
+using InstaConnect.Common.Extensions;
+using InstaConnect.Follows.Application.Features.Follows.Extensions;
 
 namespace InstaConnect.Follows.Application.Extensions;
 

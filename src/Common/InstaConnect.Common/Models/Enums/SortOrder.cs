@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Shared.Common.Models.Enums;
+﻿namespace InstaConnect.Common.Models.Enums;
 
 public enum SortOrder
 {

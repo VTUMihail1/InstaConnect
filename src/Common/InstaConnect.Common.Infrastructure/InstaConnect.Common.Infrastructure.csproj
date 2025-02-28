@@ -37,8 +37,8 @@
     <Using Include="Microsoft.EntityFrameworkCore" />
 
     <!-- Common -->
-    <Using Include="InstaConnect.Shared.Application.Abstractions" />
-    <Using Include="InstaConnect.Shared.Application.Models" />
+    <Using Include="InstaConnect.Common.Application.Abstractions" />
+    <Using Include="InstaConnect.Common.Application.Models" />
   </ItemGroup>
 
 </Project>

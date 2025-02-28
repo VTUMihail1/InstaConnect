@@ -1,6 +1,6 @@
-﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
+﻿using InstaConnect.Common.Domain.Models.Pagination;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
-using InstaConnect.Shared.Domain.Models.Pagination;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 public interface IPostCommentReadRepository

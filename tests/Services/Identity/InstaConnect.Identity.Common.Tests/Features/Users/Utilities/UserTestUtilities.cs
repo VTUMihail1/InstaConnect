@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace InstaConnect.Identity.Common.Features.Users.Utilities;
+namespace InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 
 public abstract class UserTestUtilities : SharedTestUtilities
 {

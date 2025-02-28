@@ -41,7 +41,7 @@
     <Using Include="InstaConnect.Posts.Common.Features.PostComments.Utilities" />
     <Using Include="InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities" />
     <Using Include="InstaConnect.Posts.Common.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Shared.Application.Abstractions" />
+    <Using Include="InstaConnect.Common.Application.Abstractions" />
   </ItemGroup>
 
 </Project>

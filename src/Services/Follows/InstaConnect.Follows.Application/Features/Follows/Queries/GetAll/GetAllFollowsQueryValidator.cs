@@ -1,4 +1,4 @@
-﻿using InstaConnect.Shared.Application.Validators;
+﻿using InstaConnect.Common.Application.Validators;
 
 namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 public class GetAllFollowsQueryValidator : AbstractValidator<GetAllFollowsQuery>

@@ -17,6 +17,6 @@
     <Using Include="Microsoft.Extensions.Logging" />
     
     <!-- Common -->
-    <Using Include="InstaConnect.Shared.Application.Abstractions" />
+    <Using Include="InstaConnect.Common.Application.Abstractions" />
   </ItemGroup>
 </Project>

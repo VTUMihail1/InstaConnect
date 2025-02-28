@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace InstaConnect.Shared.Presentation.Extensions;
+namespace InstaConnect.Common.Presentation.Extensions;
 
 public static class HostBuilderExtensions
 {

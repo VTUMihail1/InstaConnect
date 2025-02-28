@@ -4,11 +4,11 @@ using System.Threading.RateLimiting;
 
 using Asp.Versioning;
 
-using InstaConnect.Shared.Common.Utilities;
-using InstaConnect.Shared.Presentation.Binders.FromClaim;
-using InstaConnect.Shared.Presentation.ExceptionHandlers;
-using InstaConnect.Shared.Presentation.Models.Options;
-using InstaConnect.Shared.Presentation.Utilities;
+using InstaConnect.Common.Presentation.Binders.FromClaim;
+using InstaConnect.Common.Presentation.ExceptionHandlers;
+using InstaConnect.Common.Presentation.Models.Options;
+using InstaConnect.Common.Presentation.Utilities;
+using InstaConnect.Common.Utilities;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InstaConnect.Shared.Presentation.Extensions;
+namespace InstaConnect.Common.Presentation.Extensions;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddAuthorizationPolicies(this IServiceCollection serviceCollection)

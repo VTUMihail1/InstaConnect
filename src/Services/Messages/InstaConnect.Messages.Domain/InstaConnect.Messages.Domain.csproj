@@ -8,7 +8,8 @@
 
   <ItemGroup>
     <!-- Common -->
-    <Using Include="InstaConnect.Shared.Domain.Models.Base" />
+    <Using Include="InstaConnect.Common.Domain.Models.Base" />
+    <Using Include="InstaConnect.Common.Domain.Abstractions"/>
   </ItemGroup>
 
 </Project>
