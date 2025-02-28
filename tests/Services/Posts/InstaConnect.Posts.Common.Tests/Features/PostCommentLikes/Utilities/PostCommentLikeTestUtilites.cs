@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities;
+
+namespace InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities;
 
 public class PostCommentLikeTestUtilities : SharedTestUtilities
 {

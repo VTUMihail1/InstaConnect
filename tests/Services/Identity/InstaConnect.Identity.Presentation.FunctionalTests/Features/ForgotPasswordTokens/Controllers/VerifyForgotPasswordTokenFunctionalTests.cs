@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Common.Tests.Features.ForgotPasswordTokens.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Identity.Common.Tests.Features.ForgotPasswordTokens.Utilities;
 using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Presentation.FunctionalTests.Features.ForgotPasswordTokens.Controllers;

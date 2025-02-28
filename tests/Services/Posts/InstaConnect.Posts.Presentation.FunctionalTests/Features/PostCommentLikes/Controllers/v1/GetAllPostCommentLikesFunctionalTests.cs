@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 

@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+﻿using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetById;
 

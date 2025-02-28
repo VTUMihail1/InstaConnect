@@ -1,4 +1,5 @@
-﻿using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
+﻿using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Follows.Application.Features.Follows.Commands.Add;
 
 namespace InstaConnect.Follows.Application.IntegrationTests.Features.Follows.Commands;
 public class AddFollowIntegrationTests : BaseFollowIntegrationTest

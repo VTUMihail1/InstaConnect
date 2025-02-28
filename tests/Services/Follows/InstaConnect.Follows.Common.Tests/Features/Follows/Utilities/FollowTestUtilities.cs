@@ -1,4 +1,5 @@
-﻿using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
+﻿using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Follows.Common.Tests.Features.Follows.Utilities;
 

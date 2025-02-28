@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Common.Tests.Features.ForgotPasswordTokens.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities;
+
+namespace InstaConnect.Identity.Common.Tests.Features.ForgotPasswordTokens.Utilities;
 
 public abstract class ForgotPasswordTokenTestUtilities : SharedTestUtilities
 {

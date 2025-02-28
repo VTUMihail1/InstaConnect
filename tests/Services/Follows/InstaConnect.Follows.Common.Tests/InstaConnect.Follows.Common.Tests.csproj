@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Services\Follows\InstaConnect.Follows.Common\InstaConnect.Follows.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Follows\InstaConnect.Follows.Domain\InstaConnect.Follows.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Tests\InstaConnect.Common.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

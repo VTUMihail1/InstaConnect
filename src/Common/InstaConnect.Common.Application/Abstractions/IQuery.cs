@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Common.Application.Abstractions;
 
-public interface IQuery<TResponse> : IRequest<TResponse>;
+public interface IQuery<out TResponse> : IRequest<TResponse>;

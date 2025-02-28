@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities;
+
+namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 
 public class PostTestUtilities : SharedTestUtilities
 {

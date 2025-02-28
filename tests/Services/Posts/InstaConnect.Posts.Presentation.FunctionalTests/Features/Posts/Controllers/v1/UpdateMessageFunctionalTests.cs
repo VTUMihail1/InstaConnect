@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 

@@ -1,4 +1,5 @@
-﻿using InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
 using InstaConnect.Messages.Common.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Messages.Presentation.FunctionalTests.Features.Messages.Controllers.v1;

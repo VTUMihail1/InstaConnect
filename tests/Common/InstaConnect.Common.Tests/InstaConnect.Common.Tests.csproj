@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="NSubstitute" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Common\InstaConnect.Common.Domain\InstaConnect.Common.Domain.csproj" />
+    <ProjectReference Include="..\..\..\src\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
+  </ItemGroup>
+
+</Project>

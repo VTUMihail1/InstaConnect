@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Common.Application.Abstractions;
 
-public interface ICommandHandler<TCommand> : IRequestHandler<TCommand>
+public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand>
     where TCommand : ICommand;
 
 public interface ICommandHandler<TCommand, TResponse> : IRequestHandler<TCommand, TResponse>

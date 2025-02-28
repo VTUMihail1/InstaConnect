@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Common.Tests.Features.PostComments.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.PostComments.Utilities;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Controllers.v1;
 

@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
+﻿using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Verify;
 
 namespace InstaConnect.Identity.Application.UnitTests.Features.EmailConfirmationTokens.Commands.Verify;
 

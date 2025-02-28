@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Common\InstaConnect.Posts.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Domain\InstaConnect.Posts.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Tests\InstaConnect.Common.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

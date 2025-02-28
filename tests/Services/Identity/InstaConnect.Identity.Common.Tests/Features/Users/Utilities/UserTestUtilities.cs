@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using InstaConnect.Common.Tests.Utilities;
+
+using Microsoft.AspNetCore.Http;
 
 namespace InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 

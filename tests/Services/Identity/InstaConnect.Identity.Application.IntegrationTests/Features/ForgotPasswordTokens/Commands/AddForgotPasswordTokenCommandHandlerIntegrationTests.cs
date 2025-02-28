@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Application.Contracts.ForgotPasswordTokens;
+using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
 using InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 
