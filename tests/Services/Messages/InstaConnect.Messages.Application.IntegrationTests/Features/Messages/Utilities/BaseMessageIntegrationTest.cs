@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Utilities;
 
-public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
+public abstract class BaseMessageIntegrationTest : IClassFixture<MessagesWebApplicationFactory>, IAsyncLifetime
 {
     protected IServiceScope ServiceScope { get; }
 
@@ -52,7 +52,7 @@ public abstract class BaseMessageIntegrationTest : IClassFixture<IntegrationTest
         }
     }
 
-    protected BaseMessageIntegrationTest(IntegrationTestWebAppFactory integrationTestWebAppFactory)
+    protected BaseMessageIntegrationTest(MessagesWebApplicationFactory integrationTestWebAppFactory)
     {
         ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
         CancellationToken = new CancellationToken();

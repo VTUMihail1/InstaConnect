@@ -5,7 +5,7 @@ using InstaConnect.Messages.Common.Tests.Features.Users.Utilities;
 namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Commands;
 public class AddMessageIntegrationTests : BaseMessageIntegrationTest
 {
-    public AddMessageIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public AddMessageIntegrationTests(MessagesWebApplicationFactory messagesWebApplicationFactory) : base(messagesWebApplicationFactory)
     {
     }
 

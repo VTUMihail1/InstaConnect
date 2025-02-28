@@ -5,7 +5,7 @@ namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Q
 
 public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegrationTest
 {
-    public GetMessageByIdQueryHandlerIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public GetMessageByIdQueryHandlerIntegrationTests(MessagesWebApplicationFactory messagesWebApplicationFactory) : base(messagesWebApplicationFactory)
     {
     }
 

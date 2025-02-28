@@ -5,7 +5,7 @@ namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.C
 
 public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
 {
-    public UpdateMessageIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public UpdateMessageIntegrationTests(MessagesWebApplicationFactory messagesWebApplicationFactory) : base(messagesWebApplicationFactory)
     {
     }
 

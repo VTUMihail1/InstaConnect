@@ -5,7 +5,7 @@ namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.C
 
 public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
 {
-    public DeleteMessageIntegrationTests(IntegrationTestWebAppFactory integrationTestWebAppFactory) : base(integrationTestWebAppFactory)
+    public DeleteMessageIntegrationTests(MessagesWebApplicationFactory messagesWebApplicationFactory) : base(messagesWebApplicationFactory)
     {
     }
 
