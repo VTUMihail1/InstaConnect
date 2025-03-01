@@ -25,6 +25,7 @@
     <!-- Common -->
     <Using Include="InstaConnect.Follows.Common.Features.Follows.Utilities" />
     <Using Include="InstaConnect.Follows.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Common.Domain.Abstractions"/>
     <Using Include="InstaConnect.Common.Application.Abstractions" />
   </ItemGroup>
 

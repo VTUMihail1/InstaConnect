@@ -3,15 +3,18 @@
 public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, PostCommandViewModel>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IPostService _postService;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IPostWriteRepository _postWriteRepository;
 
     public UpdatePostCommandHandler(
         IUnitOfWork unitOfWork,
+        IPostService postService,
         IInstaConnectMapper instaConnectMapper,
         IPostWriteRepository postWriteRepository)
     {
         _unitOfWork = unitOfWork;
+        _postService = postService;
         _instaConnectMapper = instaConnectMapper;
         _postWriteRepository = postWriteRepository;
     }
@@ -30,7 +33,7 @@ public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, PostC
             throw new UserForbiddenException();
         }
 
-        _instaConnectMapper.Map(request, existingPost);
+        _postService.Update(existingPost, request.Title, request.Content);
         _postWriteRepository.Update(existingPost);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

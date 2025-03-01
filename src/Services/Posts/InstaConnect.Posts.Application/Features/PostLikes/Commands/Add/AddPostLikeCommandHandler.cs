@@ -3,6 +3,7 @@
 internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand, PostLikeCommandViewModel>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IPostLikeFactory _postLikeFactory;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
     private readonly IPostWriteRepository _postWriteRepository;
@@ -10,12 +11,14 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand, P
 
     public AddPostLikeCommandHandler(
         IUnitOfWork unitOfWork,
+        IPostLikeFactory postLikeFactory,
         IInstaConnectMapper instaConnectMapper,
         IUserWriteRepository userWriteRepository,
         IPostWriteRepository postWriteRepository,
         IPostLikeWriteRepository postLikeWriteRepository)
     {
         _unitOfWork = unitOfWork;
+        _postLikeFactory = postLikeFactory;
         _instaConnectMapper = instaConnectMapper;
         _userWriteRepository = userWriteRepository;
         _postWriteRepository = postWriteRepository;
@@ -47,7 +50,7 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand, P
             throw new PostLikeAlreadyExistsException();
         }
 
-        var postLike = _instaConnectMapper.Map<PostLike>(request);
+        var postLike = _postLikeFactory.Get(request.PostId, request.CurrentUserId);
         _postLikeWriteRepository.Add(postLike);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

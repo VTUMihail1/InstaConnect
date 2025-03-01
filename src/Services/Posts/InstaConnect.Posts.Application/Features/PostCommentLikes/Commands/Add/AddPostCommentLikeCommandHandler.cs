@@ -5,18 +5,21 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
     private readonly IUnitOfWork _unitOfWork;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IPostCommentLikeFactory _postCommentLikeFactory;
     private readonly IPostCommentWriteRepository _postCommentWriteRepository;
     private readonly IPostCommentLikeWriteRepository _postCommentLikeWriteRepository;
 
     public AddPostCommentLikeCommandHandler(
         IUnitOfWork unitOfWork,
         IInstaConnectMapper instaConnectMapper,
+        IPostCommentLikeFactory postCommentLikeFactory,
         IUserWriteRepository userWriteRepository,
         IPostCommentWriteRepository postCommentRepository,
         IPostCommentLikeWriteRepository postCommentLikeRepository)
     {
         _unitOfWork = unitOfWork;
         _instaConnectMapper = instaConnectMapper;
+        _postCommentLikeFactory = postCommentLikeFactory;
         _userWriteRepository = userWriteRepository;
         _postCommentWriteRepository = postCommentRepository;
         _postCommentLikeWriteRepository = postCommentLikeRepository;
@@ -47,7 +50,7 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
             throw new PostCommentLikeAlreadyExistsException();
         }
 
-        var postCommentLike = _instaConnectMapper.Map<PostCommentLike>(request);
+        var postCommentLike = _postCommentLikeFactory.Get(request.PostCommentId, request.CurrentUserId);
         _postCommentLikeWriteRepository.Add(postCommentLike);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

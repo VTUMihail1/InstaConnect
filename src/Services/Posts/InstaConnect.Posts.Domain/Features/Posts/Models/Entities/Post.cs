@@ -4,38 +4,79 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
-public class Post : BaseEntity
+public class Post : IBaseEntity, IAuditableInfo
 {
+    private Post()
+    {
+        Id = string.Empty;
+        Title = string.Empty;
+        Content = string.Empty;
+        UserId = string.Empty;
+        PostLikes = [];
+        PostComments = [];
+    }
+
     public Post(
+        string id,
         string title,
         string content,
-        string userId)
+        string userId,
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt)
     {
+        Id = id;
         Title = title;
         Content = content;
         UserId = userId;
+        PostLikes = [];
+        PostComments = [];
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
     }
 
     public Post(
+        string id,
         string title,
         string content,
-        User user)
+        User user,
+        ICollection<PostLike> postLikes,
+        ICollection<PostComment> postComments,
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt)
     {
+        Id = id;
         Title = title;
         Content = content;
-        User = user;
         UserId = user.Id;
+        User = user;
+        PostLikes = postLikes;
+        PostComments = postComments;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
     }
 
-    public string Title { get; set; }
+    public string Id { get; }
 
-    public string Content { get; set; }
+    public string Title { get; private set; }
+
+    public string Content { get; private set; }
 
     public string UserId { get; }
 
-    public User? User { get; set; }
+    public User? User { get; }
 
-    public ICollection<PostLike> PostLikes { get; set; } = [];
+    public ICollection<PostLike> PostLikes { get; }
 
-    public ICollection<PostComment> PostComments { get; set; } = [];
+    public ICollection<PostComment> PostComments { get; }
+
+    public DateTimeOffset CreatedAt { get; }
+
+    public DateTimeOffset UpdatedAt { get; private set; }
+
+    public void Update(string title, string content, DateTimeOffset updatedAt)
+    {
+        Title = title;
+        Content = content;
+        UpdatedAt = updatedAt;
+    }
 }

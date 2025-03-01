@@ -25,6 +25,7 @@
     <!-- Common -->
     <Using Include="InstaConnect.Messages.Common.Features.Messages.Utilities" />
     <Using Include="InstaConnect.Messages.Common.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Common.Domain.Abstractions"/>
     <Using Include="InstaConnect.Common.Application.Abstractions" />
   </ItemGroup>
 

@@ -11,6 +11,8 @@ public class User : IBaseEntity, IAuditableInfo
         LastName = string.Empty;
         Email = string.Empty;
         UserName = string.Empty;
+        Followers = [];
+        Followings = [];
     }
 
     public User(
@@ -29,6 +31,8 @@ public class User : IBaseEntity, IAuditableInfo
         Email = email;
         UserName = userName;
         ProfileImage = profileImage;
+        Followers = [];
+        Followings = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -69,9 +73,9 @@ public class User : IBaseEntity, IAuditableInfo
 
     public string? ProfileImage { get; set; }
 
-    public ICollection<Follow> Followers { get; set; } = [];
+    public ICollection<Follow> Followers { get; }
 
-    public ICollection<Follow> Followings { get; set; } = [];
+    public ICollection<Follow> Followings { get; }
 
     public DateTimeOffset CreatedAt { get; }
 

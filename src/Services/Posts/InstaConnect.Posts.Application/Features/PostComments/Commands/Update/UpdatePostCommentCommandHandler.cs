@@ -4,15 +4,18 @@ internal class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostComme
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IPostCommentService _postCommentService;
     private readonly IPostCommentWriteRepository _postCommentRepository;
 
     public UpdatePostCommentCommandHandler(
         IUnitOfWork unitOfWork,
         IInstaConnectMapper instaConnectMapper,
+        IPostCommentService postCommentService,
         IPostCommentWriteRepository postCommentRepository)
     {
         _unitOfWork = unitOfWork;
         _instaConnectMapper = instaConnectMapper;
+        _postCommentService = postCommentService;
         _postCommentRepository = postCommentRepository;
     }
 
@@ -32,7 +35,7 @@ internal class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostComme
             throw new UserForbiddenException();
         }
 
-        _instaConnectMapper.Map(request, existingPostComment);
+        _postCommentService.Update(existingPostComment, request.Content);
         _postCommentRepository.Update(existingPostComment);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

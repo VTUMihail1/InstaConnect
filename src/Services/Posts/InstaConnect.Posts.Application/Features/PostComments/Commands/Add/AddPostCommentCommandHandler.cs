@@ -4,6 +4,7 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IPostCommentFactory _postCommentFactory;
     private readonly IUserWriteRepository _userWriteRepository;
     private readonly IPostWriteRepository _postWriteRepository;
     private readonly IPostCommentWriteRepository _postCommentWriteRepository;
@@ -11,12 +12,14 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
     public AddPostCommentCommandHandler(
         IUnitOfWork unitOfWork,
         IInstaConnectMapper instaConnectMapper,
+        IPostCommentFactory postCommentFactory,
         IUserWriteRepository userWriteRepository,
         IPostWriteRepository postWriteRepository,
         IPostCommentWriteRepository postCommentWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _instaConnectMapper = instaConnectMapper;
+        _postCommentFactory = postCommentFactory;
         _userWriteRepository = userWriteRepository;
         _postWriteRepository = postWriteRepository;
         _postCommentWriteRepository = postCommentWriteRepository;
@@ -40,7 +43,7 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
             throw new UserNotFoundException();
         }
 
-        var postComment = _instaConnectMapper.Map<PostComment>(request);
+        var postComment = _postCommentFactory.Get(request.PostId, request.CurrentUserId, request.Content);
         _postCommentWriteRepository.Add(postComment);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

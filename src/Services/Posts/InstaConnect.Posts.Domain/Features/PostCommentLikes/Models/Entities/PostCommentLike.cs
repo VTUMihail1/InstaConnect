@@ -3,31 +3,56 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
 
-public class PostCommentLike : BaseEntity
+public class PostCommentLike : IBaseEntity, IAuditableInfo
 {
-    public PostCommentLike(
-        string postCommentId,
-        string userId)
+    private PostCommentLike()
     {
-        PostCommentId = postCommentId;
-        UserId = userId;
+        Id = string.Empty;
+        UserId = string.Empty;
+        PostCommentId = string.Empty;
     }
 
     public PostCommentLike(
-        PostComment postComment,
-        User user)
+        string id,
+        string postCommentId,
+        string userId,
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt)
     {
+        Id = id;
+        PostCommentId = postCommentId;
+        UserId = userId;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+    }
+
+    public PostCommentLike(
+        string id,
+        PostComment postComment,
+        User user,
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt)
+    {
+        Id = id;
         PostComment = postComment;
         User = user;
         PostCommentId = postComment.Id;
         UserId = user.Id;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
     }
+
+    public string Id { get; }
 
     public string PostCommentId { get; }
 
     public string UserId { get; }
 
-    public PostComment? PostComment { get; set; }
+    public PostComment? PostComment { get; }
 
-    public User? User { get; set; }
+    public User? User { get; }
+
+    public DateTimeOffset CreatedAt { get; }
+
+    public DateTimeOffset UpdatedAt { get; }
 }

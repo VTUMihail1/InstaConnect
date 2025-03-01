@@ -11,6 +11,8 @@ public class User : IBaseEntity, IAuditableInfo
         LastName = string.Empty;
         Email = string.Empty;
         UserName = string.Empty;
+        SenderMessages = [];
+        ReceiverMessages = [];
     }
 
     public User(
@@ -29,6 +31,8 @@ public class User : IBaseEntity, IAuditableInfo
         Email = email;
         UserName = userName;
         ProfileImage = profileImage;
+        SenderMessages = [];
+        ReceiverMessages = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -69,9 +73,9 @@ public class User : IBaseEntity, IAuditableInfo
 
     public string? ProfileImage { get; set; }
 
-    public ICollection<Message> SenderMessages { get; set; } = [];
+    public ICollection<Message> SenderMessages { get; }
 
-    public ICollection<Message> ReceiverMessages { get; set; } = [];
+    public ICollection<Message> ReceiverMessages { get; }
 
     public DateTimeOffset CreatedAt { get; }
 

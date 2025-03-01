@@ -38,6 +38,7 @@
     <Using Include="InstaConnect.Identity.Common.Features.Users.Utilities" />
     <Using Include="InstaConnect.Identity.Common.Features.EmailConfirmationTokens.Utilities" />
     <Using Include="InstaConnect.Identity.Common.Features.ForgotPasswordTokens.Utilities" />
+    <Using Include="InstaConnect.Common.Domain.Abstractions"/>
     <Using Include="InstaConnect.Common.Application.Abstractions" />
   </ItemGroup>
 

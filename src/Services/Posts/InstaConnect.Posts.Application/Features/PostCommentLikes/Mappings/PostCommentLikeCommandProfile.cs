@@ -8,9 +8,6 @@ public class PostCommentLikeCommandProfile : Profile
 {
     public PostCommentLikeCommandProfile()
     {
-        CreateMap<AddPostCommentLikeCommand, PostCommentLike>()
-            .ConstructUsing(src => new(src.PostCommentId, src.CurrentUserId));
-
         CreateMap<PostCommentLike, PostCommentLikeCommandViewModel>();
     }
 }
