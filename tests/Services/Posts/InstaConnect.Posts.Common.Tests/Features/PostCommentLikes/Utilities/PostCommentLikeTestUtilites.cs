@@ -14,4 +14,16 @@ public class PostCommentLikeTestUtilities : SharedTestUtilities
     public static readonly string InvalidSortPropertyName = "CreatedAtt";
 
     public static readonly SortOrder ValidSortOrderProperty = SortOrder.ASC;
+
+    public static PostCommentLike CreatePostCommentLike()
+    {
+        var postCommentLike = new PostCommentLike(
+            GetAverageString(PostCommentLikeConfigurations.IdMaxLength, PostCommentLikeConfigurations.IdMinLength),
+            GetAverageString(PostCommentConfigurations.IdMaxLength, PostCommentConfigurations.IdMinLength),
+            GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength),
+            GetMaxDate(),
+            GetMaxDate());
+
+        return postCommentLike;
+    }
 }

@@ -20,4 +20,17 @@ public class PostTestUtilities : SharedTestUtilities
     public static readonly string InvalidSortPropertyName = "CreatedAtt";
 
     public static readonly SortOrder ValidSortOrderProperty = SortOrder.ASC;
+
+    public static Post CreatePost()
+    {
+        var post = new Post(
+            GetAverageString(PostConfigurations.IdMaxLength, PostConfigurations.IdMinLength),
+            GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
+            GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength),
+            GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength),
+            GetMaxDate(),
+            GetMaxDate());
+
+        return post;
+    }
 }
