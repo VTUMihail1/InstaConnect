@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 
-public interface IPostCommentFactory
+internal interface IPostCommentFactory
 {
     public PostComment Get(string postId, string userId, string content);
 }
