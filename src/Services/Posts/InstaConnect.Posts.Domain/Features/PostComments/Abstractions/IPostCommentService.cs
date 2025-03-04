@@ -1,12 +1,19 @@
-﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
+﻿using InstaConnect.Common.Domain.Models.Pagination;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 public interface IPostCommentService
 {
-    public void Update(PostComment postComment, string content);
+    public Task<PaginationList<PostComment>> GetAllAsync(Post post, PostCommentCollectionReadQuery query, CancellationToken cancellationToken);
 
-    public void AddLike(PostComment postComment, string userId);
+    public Task<PostComment> GetByIdAsync(Post post, string id, CancellationToken cancellationToken);
 
-    public void RemoveLike(PostComment postComment, string postCommentLikeId);
+    public void Add(Post post, string content, string userId);
+
+    public Task UpdateAsync(Post post, string id, string content, CancellationToken cancellationToken);
+
+    public Task DeleteAsync(Post post, string id, CancellationToken cancellationToken);
 
 }

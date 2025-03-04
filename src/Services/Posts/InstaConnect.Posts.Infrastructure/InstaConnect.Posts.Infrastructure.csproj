@@ -18,18 +18,26 @@
     <!-- Posts -->
     <Using Include="InstaConnect.Posts.Domain.Features.Posts.Abstractions" />
     <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Filters" />
 
     <!-- Post Likes -->
     <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Abstractions" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters" />
 
     <!-- Post Comments -->
     <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Abstractions" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Filters" />
 
     <!-- Post Comment Likes -->
     <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions" />
+    <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters" />
 
     <!-- Users -->
     <Using Include="InstaConnect.Posts.Domain.Features.Users.Abstractions" />
