@@ -18,8 +18,8 @@ public interface IPostCommentLikeService
 
     public Task<PostCommentLike> GetByIdAsync(Post post, string postCommentId, string id, CancellationToken cancellationToken);
 
-    public Task AddAsync(Post post, string postCommentId, string userId, CancellationToken cancellationToken);
+    public Task<PostCommentLike> AddAsync(Post post, string postCommentId, string userId, CancellationToken cancellationToken);
 
-    public Task DeleteAsync(Post post, string postCommentId, string id, CancellationToken cancellationToken);
+    public Task DeleteAsync(Post post, string postCommentId, string id, string userId, CancellationToken cancellationToken);
 
 }

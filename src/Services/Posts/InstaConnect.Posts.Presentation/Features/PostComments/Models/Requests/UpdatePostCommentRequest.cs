@@ -5,6 +5,7 @@ using InstaConnect.Posts.Presentation.Features.PostComments.Models.Bodies;
 namespace InstaConnect.Posts.Presentation.Features.PostComments.Models.Requests;
 
 public record UpdatePostCommentRequest(
+    [FromRoute] string PostId,
     [FromRoute] string Id,
     [FromClaim(ClaimTypes.NameIdentifier)] string CurrentUserId,
     [FromBody] UpdatePostCommentBody Body

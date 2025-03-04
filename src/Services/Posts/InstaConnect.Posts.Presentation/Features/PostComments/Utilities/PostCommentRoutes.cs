@@ -2,7 +2,7 @@
 
 public abstract class PostCommentRoutes
 {
-    public const string Resource = "api/v{version:apiVersion}/post-comments";
+    public const string Resource = "api/v{version:apiVersion}/posts/{postId}/comments";
 
     public const string Id = "{id}";
 

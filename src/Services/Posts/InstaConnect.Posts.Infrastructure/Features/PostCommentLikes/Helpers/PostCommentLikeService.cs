@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models.Pagination;
+using InstaConnect.Common.Exceptions.Users;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
 using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
@@ -62,7 +63,7 @@ internal class PostCommentLikeService : IPostCommentLikeService
         return postCommentLike;
     }
 
-    public async Task AddAsync(Post post, string postCommentId, string userId, CancellationToken cancellationToken)
+    public async Task<PostCommentLike> AddAsync(Post post, string postCommentId, string userId, CancellationToken cancellationToken)
     {
         var postComment = await _postCommentWriteRepository.GetByIdAsync(postCommentId, cancellationToken);
 
@@ -71,11 +72,20 @@ internal class PostCommentLikeService : IPostCommentLikeService
             throw new PostCommentNotFoundException();
         }
 
+        var existingPostLike = await _postCommentLikeWriteRepository.GetByUserIdAndPostCommentIdAsync(userId, postCommentId, cancellationToken);
+
+        if (existingPostLike != null)
+        {
+            throw new PostCommentLikeAlreadyExistsException();
+        }
+
         var postCommentLike = _postCommentLikeFactory.Get(postCommentId, userId);
         _postCommentLikeWriteRepository.Add(postCommentLike);
+
+        return postCommentLike;
     }
 
-    public async Task DeleteAsync(Post post, string postCommentId, string id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(Post post, string postCommentId, string id, string userId, CancellationToken cancellationToken)
     {
         var postComment = await _postCommentWriteRepository.GetByIdAsync(postCommentId, cancellationToken);
 
@@ -89,6 +99,11 @@ internal class PostCommentLikeService : IPostCommentLikeService
         if (postCommentLike == null)
         {
             throw new PostCommentLikeNotFoundException();
+        }
+
+        if (userId != postCommentLike.UserId)
+        {
+            throw new UserForbiddenException();
         }
 
         _postCommentLikeWriteRepository.Delete(postCommentLike);

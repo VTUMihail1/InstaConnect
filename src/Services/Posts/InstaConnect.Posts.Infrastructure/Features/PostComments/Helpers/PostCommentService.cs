@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models.Pagination;
+using InstaConnect.Common.Exceptions.Users;
 using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
 
@@ -43,13 +44,15 @@ internal class PostCommentService : IPostCommentService
         return postComment;
     }
 
-    public void Add(Post post, string content, string userId)
+    public PostComment Add(Post post, string content, string userId)
     {
         var postComment = _postCommentFactory.Get(post.Id, userId, content);
         _postCommentWriteRepository.Add(postComment);
+
+        return postComment;
     }
 
-    public async Task UpdateAsync(Post post, string id, string content, CancellationToken cancellationToken)
+    public async Task<PostComment> UpdateAsync(Post post, string id, string userId, string content, CancellationToken cancellationToken)
     {
         var postComment = await _postCommentReadRepository.GetByIdAsync(id, cancellationToken);
 
@@ -58,18 +61,30 @@ internal class PostCommentService : IPostCommentService
             throw new PostCommentNotFoundException();
         }
 
+        if (userId != postComment.UserId)
+        {
+            throw new UserForbiddenException();
+        }
+
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         postComment.Update(content, utcNow);
         _postCommentWriteRepository.Update(postComment);
+
+        return postComment;
     }
 
-    public async Task DeleteAsync(Post post, string id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(Post post, string id, string userId, CancellationToken cancellationToken)
     {
         var postComment = await _postCommentReadRepository.GetByIdAsync(id, cancellationToken);
 
         if (postComment == null)
         {
             throw new PostCommentNotFoundException();
+        }
+
+        if (userId != postComment.UserId)
+        {
+            throw new UserForbiddenException();
         }
 
         _postCommentWriteRepository.Delete(postComment);

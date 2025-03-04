@@ -5,23 +5,34 @@ namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAl
 internal class GetAllPostCommentLikesQueryHandler : IQueryHandler<GetAllPostCommentLikesQuery, PostCommentLikePaginationQueryViewModel>
 {
     private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostCommentLikeReadRepository _postCommentLikeReadRepository;
+    private readonly IPostReadRepository _postReadRepository;
+    private readonly IPostCommentLikeService _postCommentLikeService;
 
     public GetAllPostCommentLikesQueryHandler(
         IInstaConnectMapper instaConnectMapper,
-        IPostCommentLikeReadRepository postCommentLikeReadRepository)
+        IPostReadRepository postReadRepository,
+        IPostCommentLikeService postCommentLikeService)
     {
         _instaConnectMapper = instaConnectMapper;
-        _postCommentLikeReadRepository = postCommentLikeReadRepository;
+        _postReadRepository = postReadRepository;
+        _postCommentLikeService = postCommentLikeService;
     }
 
     public async Task<PostCommentLikePaginationQueryViewModel> Handle(
         GetAllPostCommentLikesQuery request,
         CancellationToken cancellationToken)
     {
+        var existingPost = await _postReadRepository.GetByIdAsync(request.PostId, cancellationToken);
+
+        if (existingPost == null)
+        {
+            throw new PostNotFoundException();
+        }
+
         var filteredCollectionQuery = _instaConnectMapper.Map<PostCommentLikeCollectionReadQuery>(request);
 
-        var postCommentLikes = await _postCommentLikeReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
+        var postCommentLikes = await _postCommentLikeService.GetAllAsync(
+            existingPost, request.PostCommentId, filteredCollectionQuery, cancellationToken);
         var response = _instaConnectMapper.Map<PostCommentLikePaginationQueryViewModel>(postCommentLikes);
 
         return response;

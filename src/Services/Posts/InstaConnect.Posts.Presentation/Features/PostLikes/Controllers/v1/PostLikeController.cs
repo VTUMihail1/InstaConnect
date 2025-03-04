@@ -21,7 +21,7 @@ public class PostLikeController : ControllerBase
         _instaConnectSender = instaConnectSender;
     }
 
-    // GET: api/post-likes
+    // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -36,7 +36,7 @@ public class PostLikeController : ControllerBase
         return Ok(response);
     }
 
-    // GET: api/post-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpGet(PostLikeRoutes.Id)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -51,7 +51,7 @@ public class PostLikeController : ControllerBase
         return Ok(response);
     }
 
-    // POST: api/post-likes
+    // POST: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes
     [HttpPost]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -68,7 +68,7 @@ public class PostLikeController : ControllerBase
         return Ok(response);
     }
 
-    //DELETE: api/post-likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    //DELETE: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpDelete(PostLikeRoutes.Id)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]

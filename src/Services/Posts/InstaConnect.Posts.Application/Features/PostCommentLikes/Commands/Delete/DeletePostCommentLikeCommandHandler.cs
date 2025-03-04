@@ -3,33 +3,31 @@
 internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostCommentLikeCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPostCommentLikeWriteRepository _postCommentLikeWriteRepository;
+    private readonly IPostWriteRepository _postWriteRepository;
+    private readonly IPostCommentLikeService _postCommentLikeService;
 
     public DeletePostCommentLikeCommandHandler(
         IUnitOfWork unitOfWork,
-        IPostCommentLikeWriteRepository postCommentLikeWriteRepository)
+        IPostWriteRepository postWriteRepository,
+        IPostCommentLikeService postCommentLikeService)
     {
         _unitOfWork = unitOfWork;
-        _postCommentLikeWriteRepository = postCommentLikeWriteRepository;
+        _postWriteRepository = postWriteRepository;
+        _postCommentLikeService = postCommentLikeService;
     }
 
     public async Task Handle(
         DeletePostCommentLikeCommand request,
         CancellationToken cancellationToken)
     {
-        var existingPostCommentLike = await _postCommentLikeWriteRepository.GetByIdAsync(request.Id, cancellationToken);
+        var existingPost = await _postWriteRepository.GetByIdAsync(request.Id, cancellationToken);
 
-        if (existingPostCommentLike == null)
+        if (existingPost == null)
         {
-            throw new PostCommentLikeNotFoundException();
+            throw new PostNotFoundException();
         }
 
-        if (request.CurrentUserId != existingPostCommentLike.UserId)
-        {
-            throw new UserForbiddenException();
-        }
-
-        _postCommentLikeWriteRepository.Delete(existingPostCommentLike);
+        await _postCommentLikeService.DeleteAsync(existingPost, request.PostCommentId, request.Id, request.CurrentUserId, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

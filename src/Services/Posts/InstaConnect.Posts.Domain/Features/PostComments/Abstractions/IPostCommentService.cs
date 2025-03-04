@@ -10,10 +10,10 @@ public interface IPostCommentService
 
     public Task<PostComment> GetByIdAsync(Post post, string id, CancellationToken cancellationToken);
 
-    public void Add(Post post, string content, string userId);
+    public PostComment Add(Post post, string content, string userId);
 
-    public Task UpdateAsync(Post post, string id, string content, CancellationToken cancellationToken);
+    public Task<PostComment> UpdateAsync(Post post, string id, string userId, string content, CancellationToken cancellationToken);
 
-    public Task DeleteAsync(Post post, string id, CancellationToken cancellationToken);
+    public Task DeleteAsync(Post post, string id, string userId, CancellationToken cancellationToken);
 
 }

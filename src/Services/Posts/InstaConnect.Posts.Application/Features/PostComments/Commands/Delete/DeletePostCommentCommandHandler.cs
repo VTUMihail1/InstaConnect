@@ -3,33 +3,31 @@
 internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostCommentCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPostCommentWriteRepository _postCommentWriteRepository;
+    private readonly IPostCommentService _postCommentService;
+    private readonly IPostWriteRepository _postWriteRepository;
 
     public DeletePostCommentCommandHandler(
         IUnitOfWork unitOfWork,
-        IPostCommentWriteRepository postCommentWriteRepository)
+        IPostCommentService postCommentService,
+        IPostWriteRepository postWriteRepository)
     {
         _unitOfWork = unitOfWork;
-        _postCommentWriteRepository = postCommentWriteRepository;
+        _postCommentService = postCommentService;
+        _postWriteRepository = postWriteRepository;
     }
 
     public async Task Handle(
         DeletePostCommentCommand request,
         CancellationToken cancellationToken)
     {
-        var existingPostComment = await _postCommentWriteRepository.GetByIdAsync(request.Id, cancellationToken);
+        var existingPost = await _postWriteRepository.GetByIdAsync(request.PostId, cancellationToken);
 
-        if (existingPostComment == null)
+        if (existingPost == null)
         {
-            throw new PostCommentNotFoundException();
+            throw new PostNotFoundException();
         }
 
-        if (request.CurrentUserId != existingPostComment.UserId)
-        {
-            throw new UserForbiddenException();
-        }
-
-        _postCommentWriteRepository.Delete(existingPostComment);
+        await _postCommentService.DeleteAsync(existingPost, request.Id, request.CurrentUserId, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

@@ -2,7 +2,7 @@
 
 public abstract class PostCommentLikeRoutes
 {
-    public const string Resource = "api/v{version:apiVersion}/post-comment-likes";
+    public const string Resource = "api/v{version:apiVersion}/posts/{postId}/comments/{postCommentId}/likes";
 
     public const string Id = "{id}";
 

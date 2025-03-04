@@ -4,25 +4,23 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostCommentFactory _postCommentFactory;
+    private readonly IPostCommentService _postCommentService;
     private readonly IUserWriteRepository _userWriteRepository;
     private readonly IPostWriteRepository _postWriteRepository;
-    private readonly IPostCommentWriteRepository _postCommentWriteRepository;
 
     public AddPostCommentCommandHandler(
         IUnitOfWork unitOfWork,
         IInstaConnectMapper instaConnectMapper,
-        IPostCommentFactory postCommentFactory,
+        IPostCommentService postCommentService,
         IUserWriteRepository userWriteRepository,
         IPostWriteRepository postWriteRepository,
         IPostCommentWriteRepository postCommentWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _instaConnectMapper = instaConnectMapper;
-        _postCommentFactory = postCommentFactory;
+        _postCommentService = postCommentService;
         _userWriteRepository = userWriteRepository;
         _postWriteRepository = postWriteRepository;
-        _postCommentWriteRepository = postCommentWriteRepository;
     }
 
     public async Task<PostCommentCommandViewModel> Handle(
@@ -43,8 +41,7 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
             throw new UserNotFoundException();
         }
 
-        var postComment = _postCommentFactory.Get(request.PostId, request.CurrentUserId, request.Content);
-        _postCommentWriteRepository.Add(postComment);
+        var postComment = _postCommentService.Add(existingPost, request.Content, request.CurrentUserId);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
