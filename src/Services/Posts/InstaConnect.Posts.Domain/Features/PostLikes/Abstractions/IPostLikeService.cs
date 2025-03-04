@@ -12,8 +12,8 @@ public interface IPostLikeService
 
     public Task<PostLike> GetByIdAsync(Post post, string id, CancellationToken cancellationToken);
 
-    public void Add(Post post, string userId);
+    public Task<PostLike> AddAsync(Post post, string userId, CancellationToken cancellationToken);
 
-    public Task DeleteAsync(Post post, string id, CancellationToken cancellationToken);
+    public Task DeleteAsync(Post post, string id, string userId, CancellationToken cancellationToken);
 
 }

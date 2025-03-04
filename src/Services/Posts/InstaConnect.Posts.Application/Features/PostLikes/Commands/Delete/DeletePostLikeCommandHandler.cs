@@ -3,31 +3,29 @@
 internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPostLikeWriteRepository _postLikeWriteRepository;
+    private readonly IPostLikeService _postLikeService;
+    private readonly IPostWriteRepository _postWriteRepository;
 
     public DeletePostLikeCommandHandler(
         IUnitOfWork unitOfWork,
-        IPostLikeWriteRepository postLikeWriteRepository)
+        IPostLikeService postLikeService,
+        IPostWriteRepository postWriteRepository)
     {
         _unitOfWork = unitOfWork;
-        _postLikeWriteRepository = postLikeWriteRepository;
+        _postLikeService = postLikeService;
+        _postWriteRepository = postWriteRepository;
     }
 
     public async Task Handle(DeletePostLikeCommand request, CancellationToken cancellationToken)
     {
-        var existingPostLike = await _postLikeWriteRepository.GetByIdAsync(request.Id, cancellationToken);
+        var existingPost = await _postWriteRepository.GetByIdAsync(request.PostId, cancellationToken);
 
-        if (existingPostLike == null)
+        if (existingPost == null)
         {
-            throw new PostLikeNotFoundException();
+            throw new PostNotFoundException();
         }
 
-        if (request.CurrentUserId != existingPostLike.UserId)
-        {
-            throw new UserForbiddenException();
-        }
-
-        _postLikeWriteRepository.Delete(existingPostLike);
+        await _postLikeService.DeleteAsync(existingPost, request.Id, request.CurrentUserId, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

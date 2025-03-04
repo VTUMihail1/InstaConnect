@@ -3,26 +3,23 @@
 internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand, PostLikeCommandViewModel>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPostLikeFactory _postLikeFactory;
+    private readonly IPostLikeService _postLikeService;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IUserWriteRepository _userWriteRepository;
     private readonly IPostWriteRepository _postWriteRepository;
-    private readonly IPostLikeWriteRepository _postLikeWriteRepository;
 
     public AddPostLikeCommandHandler(
         IUnitOfWork unitOfWork,
-        IPostLikeFactory postLikeFactory,
+        IPostLikeService postLikeService,
         IInstaConnectMapper instaConnectMapper,
         IUserWriteRepository userWriteRepository,
-        IPostWriteRepository postWriteRepository,
-        IPostLikeWriteRepository postLikeWriteRepository)
+        IPostWriteRepository postWriteRepository)
     {
         _unitOfWork = unitOfWork;
-        _postLikeFactory = postLikeFactory;
+        _postLikeService = postLikeService;
         _instaConnectMapper = instaConnectMapper;
         _userWriteRepository = userWriteRepository;
         _postWriteRepository = postWriteRepository;
-        _postLikeWriteRepository = postLikeWriteRepository;
     }
 
     public async Task<PostLikeCommandViewModel> Handle(
@@ -43,15 +40,7 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand, P
             throw new UserNotFoundException();
         }
 
-        var existingPostLike = await _postLikeWriteRepository.GetByUserIdAndPostIdAsync(request.CurrentUserId, request.PostId, cancellationToken);
-
-        if (existingPostLike != null)
-        {
-            throw new PostLikeAlreadyExistsException();
-        }
-
-        var postLike = _postLikeFactory.Get(request.PostId, request.CurrentUserId);
-        _postLikeWriteRepository.Add(postLike);
+        var postLike = await _postLikeService.AddAsync(existingPost, request.CurrentUserId, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

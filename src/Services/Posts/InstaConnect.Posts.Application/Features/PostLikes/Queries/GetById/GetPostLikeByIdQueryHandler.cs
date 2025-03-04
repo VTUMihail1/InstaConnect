@@ -1,29 +1,35 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+
+namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 
 internal class GetPostLikeByIdQueryHandler : IQueryHandler<GetPostLikeByIdQuery, PostLikeQueryViewModel>
 {
+    private readonly IPostLikeService _postLikeService;
     private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostLikeReadRepository _postLikeReadRepository;
+    private readonly IPostReadRepository _postReadRepository;
 
     public GetPostLikeByIdQueryHandler(
+        IPostLikeService postLikeService,
         IInstaConnectMapper instaConnectMapper,
-        IPostLikeReadRepository postLikeReadRepository)
+        IPostReadRepository postReadRepository)
     {
+        _postLikeService = postLikeService;
         _instaConnectMapper = instaConnectMapper;
-        _postLikeReadRepository = postLikeReadRepository;
+        _postReadRepository = postReadRepository;
     }
 
     public async Task<PostLikeQueryViewModel> Handle(
         GetPostLikeByIdQuery request,
-        CancellationToken cancellationToken)
+    CancellationToken cancellationToken)
     {
-        var postLike = await _postLikeReadRepository.GetByIdAsync(request.Id, cancellationToken);
+        var existingPost = await _postReadRepository.GetByIdAsync(request.PostId, cancellationToken);
 
-        if (postLike == null)
+        if (existingPost == null)
         {
-            throw new PostLikeNotFoundException();
+            throw new PostNotFoundException();
         }
 
+        var postLike = await _postLikeService.GetByIdAsync(existingPost, request.Id, cancellationToken);
         var response = _instaConnectMapper.Map<PostLikeQueryViewModel>(postLike);
 
         return response;
