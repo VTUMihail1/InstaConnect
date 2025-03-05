@@ -10,10 +10,10 @@ internal class PostLikeCommandProfile : Profile
     public PostLikeCommandProfile()
     {
         CreateMap<AddPostLikeRequest, AddPostLikeCommand>()
-            .ConstructUsing(src => new(src.CurrentUserId, src.Body.PostId));
+            .ConstructUsing(src => new(src.CurrentUserId, src.PostId));
 
         CreateMap<DeletePostLikeRequest, DeletePostLikeCommand>()
-            .ConstructUsing(src => new(src.Id, src.CurrentUserId));
+            .ConstructUsing(src => new(src.Id, src.PostId, src.CurrentUserId));
 
         CreateMap<PostLikeCommandViewModel, PostLikeCommandResponse>();
     }

@@ -3,9 +3,9 @@
 namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 
 public record GetAllPostLikesQuery(
+    string PostId,
     string UserId,
     string UserName,
-    string PostId,
     SortOrder SortOrder,
     string SortPropertyName,
     int Page,

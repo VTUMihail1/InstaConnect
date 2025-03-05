@@ -22,16 +22,16 @@ internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostComments
         GetAllPostCommentsQuery request,
         CancellationToken cancellationToken)
     {
-        var post = await _postReadRepository.GetByIdAsync(request.PostId, cancellationToken);
+        var existingPost = await _postReadRepository.GetByIdAsync(request.PostId, cancellationToken);
 
-        if(post == null)
+        if (existingPost == null)
         {
-
+            throw new PostNotFoundException();
         }
 
         var filteredCollectionQuery = _instaConnectMapper.Map<PostCommentCollectionReadQuery>(request);
 
-        var postComments = await _postCommentService.GetAllAsync(filteredCollectionQuery, cancellationToken);
+        var postComments = await _postCommentService.GetAllAsync(existingPost, filteredCollectionQuery, cancellationToken);
         var response = _instaConnectMapper.Map<PostCommentPaginationQueryViewModel>(postComments);
 
         return response;

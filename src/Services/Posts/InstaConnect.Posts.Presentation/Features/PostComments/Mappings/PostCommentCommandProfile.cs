@@ -11,13 +11,13 @@ internal class PostCommentCommandProfile : Profile
     public PostCommentCommandProfile()
     {
         CreateMap<AddPostCommentRequest, AddPostCommentCommand>()
-            .ConstructUsing(src => new(src.CurrentUserId, src.Body.PostId, src.Body.Content));
+            .ConstructUsing(src => new(src.CurrentUserId, src.PostId, src.Body.Content));
 
         CreateMap<UpdatePostCommentRequest, UpdatePostCommentCommand>()
-            .ConstructUsing(src => new(src.Id, src.CurrentUserId, src.Body.Content));
+            .ConstructUsing(src => new(src.Id, src.PostId, src.CurrentUserId, src.Body.Content));
 
         CreateMap<DeletePostCommentRequest, DeletePostCommentCommand>()
-            .ConstructUsing(src => new(src.Id, src.CurrentUserId));
+            .ConstructUsing(src => new(src.Id, src.PostId, src.CurrentUserId));
 
         CreateMap<PostCommentCommandViewModel, PostCommentCommandResponse>();
     }

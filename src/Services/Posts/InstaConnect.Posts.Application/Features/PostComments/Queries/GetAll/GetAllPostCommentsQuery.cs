@@ -3,9 +3,9 @@
 namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 
 public record GetAllPostCommentsQuery(
+    string PostId,
     string UserId,
     string UserName,
-    string PostId,
     SortOrder SortOrder,
     string SortPropertyName,
     int Page,
