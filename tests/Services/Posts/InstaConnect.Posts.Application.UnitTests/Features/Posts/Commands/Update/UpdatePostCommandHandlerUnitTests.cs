@@ -10,6 +10,7 @@ public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
     {
         _commandHandler = new(
             UnitOfWork,
+            PostService,
             InstaConnectMapper,
             PostWriteRepository);
     }
@@ -51,6 +52,27 @@ public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
 
         // Assert
         await action.Should().ThrowAsync<UserForbiddenException>();
+    }
+
+    [Fact]
+    public async Task Handle_ShouldCallTheUpdateMethodOfPostService_WhenPostIdIsValid()
+    {
+        // Arrange
+        var existingPost = CreatePost();
+        var command = new UpdatePostCommand(
+            existingPost.Id,
+            existingPost.UserId,
+            PostTestUtilities.ValidUpdateTitle,
+            PostTestUtilities.ValidUpdateContent
+        );
+
+        // Act
+        await _commandHandler.Handle(command, CancellationToken);
+
+        // Assert
+        PostService
+            .Received(1)
+            .Update(existingPost, PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent);
     }
 
     [Fact]

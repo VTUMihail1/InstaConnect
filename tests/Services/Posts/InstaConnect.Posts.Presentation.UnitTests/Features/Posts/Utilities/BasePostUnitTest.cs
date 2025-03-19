@@ -32,12 +32,7 @@ public abstract class BasePostUnitTest
 
     private static User CreateUserUtil()
     {
-        var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+        var user = UserTestUtilities.CreateUser();
 
         return user;
     }
@@ -51,10 +46,7 @@ public abstract class BasePostUnitTest
 
     private Post CreatePostUtil(User user)
     {
-        var post = new Post(
-            SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
-            SharedTestUtilities.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength),
-            user);
+        var post = PostTestUtilities.CreatePost(user, [], []);
 
         var postQueryViewModel = new PostQueryViewModel(
             post.Id,

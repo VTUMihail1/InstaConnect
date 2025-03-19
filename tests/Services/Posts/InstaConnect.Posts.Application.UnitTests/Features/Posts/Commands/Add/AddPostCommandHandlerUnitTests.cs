@@ -10,6 +10,7 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
     {
         _commandHandler = new(
             UnitOfWork,
+            PostFactory,
             InstaConnectMapper,
             PostWriteRepository,
             UserWriteRepository);
@@ -53,6 +54,27 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
     }
 
     [Fact]
+    public async Task Handle_ShouldCallThePostFactory_WhenPostIsValid()
+    {
+        // Arrange
+        var existingPost = CreatePost();
+        var command = new AddPostCommand(
+            existingPost.UserId,
+            PostTestUtilities.ValidAddTitle,
+            PostTestUtilities.ValidAddContent);
+
+        // Act
+        await _commandHandler.Handle(command, CancellationToken);
+
+        // Assert
+        PostFactory
+            .Received(1)
+            .Get(existingPost.UserId,
+                 PostTestUtilities.ValidAddTitle,
+                 PostTestUtilities.ValidAddContent);
+    }
+
+    [Fact]
     public async Task Handle_ShouldAddPostToRepository_WhenPostIsValid()
     {
         // Arrange
@@ -69,7 +91,7 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
         PostWriteRepository
             .Received(1)
             .Add(Arg.Is<Post>(m =>
-                !string.IsNullOrEmpty(m.Id) &&
+                m.Id == existingPost.Id &&
                 m.UserId == existingPost.UserId &&
                 m.Title == PostTestUtilities.ValidAddTitle &&
                 m.Content == PostTestUtilities.ValidAddContent));
