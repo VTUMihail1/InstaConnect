@@ -32,7 +32,7 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new DeleteUserCommand(SharedTestUtilities.GetString(length));
+        var command = new DeleteUserCommand(DataFaker.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);

@@ -33,7 +33,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         // Arrange
         var existingFollowing = await CreateUserAsync(CancellationToken);
         var command = new AddFollowCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingFollowing.Id);
 
         // Act
@@ -69,7 +69,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
         var existingFollower = await CreateUserAsync(CancellationToken);
         var command = new AddFollowCommand(
             existingFollower.Id,
-            SharedTestUtilities.GetString(length));
+            DataFaker.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);

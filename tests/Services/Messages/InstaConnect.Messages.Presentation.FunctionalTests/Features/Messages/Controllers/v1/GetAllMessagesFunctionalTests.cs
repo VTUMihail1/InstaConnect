@@ -64,7 +64,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
@@ -91,7 +91,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -143,7 +143,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
             existingMessage.ReceiverId,
             existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             MessageTestUtilities.ValidPageValue,
             MessageTestUtilities.ValidPageSizeValue
         );
@@ -278,7 +278,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new GetAllMessagesRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.SenderId),
+            DataFaker.GetDifferentCaseString(existingMessage.SenderId),
             existingMessage.ReceiverId,
             existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
@@ -316,7 +316,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.ReceiverId),
+            DataFaker.GetDifferentCaseString(existingMessage.ReceiverId),
             existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
@@ -354,7 +354,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Receiver.UserName),
+            DataFaker.GetDifferentCaseString(existingMessage.Receiver.UserName),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -391,7 +391,7 @@ public class GetAllMessagesFunctionalTests : BaseMessageFunctionalTest
         var request = new GetAllMessagesRequest(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            SharedTestUtilities.GetHalfStartString(existingMessage.Receiver.UserName),
+            DataFaker.GetPrefixString(existingMessage.Receiver.UserName),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,

@@ -31,7 +31,7 @@ public class GetCurrentUserQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetCurrentUserQuery(SharedTestUtilities.GetString(length));
+        var query = new GetCurrentUserQuery(DataFaker.GetString(length));
 
         // Act
         var result = _validator.TestValidate(query);

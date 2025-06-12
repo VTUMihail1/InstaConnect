@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Follows.Common.Tests.Features.Follows.Utilities;
 
-public class FollowTestUtilities : SharedTestUtilities
+public class FollowTestUtilities : DataFaker
 {
     public static readonly string InvalidId = GetAverageString(FollowConfigurations.IdMaxLength, FollowConfigurations.IdMinLength);
 

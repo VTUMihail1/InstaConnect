@@ -4,6 +4,8 @@
     <ProjectReference Include="..\..\..\..\src\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Common\InstaConnect.Posts.Common.csproj" />
     <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Domain\InstaConnect.Posts.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Infrastructure\InstaConnect.Posts.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Services\Posts\InstaConnect.Posts.Presentation\InstaConnect.Posts.Presentation.csproj" />
     <ProjectReference Include="..\..\..\Common\InstaConnect.Common.Tests\InstaConnect.Common.Tests.csproj" />
   </ItemGroup>
 

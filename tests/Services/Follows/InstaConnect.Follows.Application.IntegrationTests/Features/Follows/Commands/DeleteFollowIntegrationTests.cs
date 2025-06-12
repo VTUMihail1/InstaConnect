@@ -35,7 +35,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
         var command = new DeleteFollowCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingFollow.FollowerId
         );
 
@@ -73,7 +73,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         var existingFollow = await CreateFollowAsync(CancellationToken);
         var command = new DeleteFollowCommand(
             existingFollow.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -145,7 +145,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
         var command = new DeleteFollowCommand(
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id),
+            DataFaker.GetDifferentCaseString(existingFollow.Id),
             existingFollow.FollowerId
         );
 

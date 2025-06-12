@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Messages.Common.Tests.Features.Messages.Utilities;
 
-public class MessageTestUtilities : SharedTestUtilities
+public class MessageTestUtilities : DataFaker
 {
     public static readonly string InvalidId = GetAverageString(MessageConfigurations.IdMaxLength, MessageConfigurations.IdMinLength);
 

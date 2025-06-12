@@ -1,7 +1,11 @@
-﻿namespace InstaConnect.Common.Infrastructure.Models.Options;
+﻿using InstaConnect.Common.Infrastructure.Abstractions;
+
+namespace InstaConnect.Common.Infrastructure.Models.Options;
 
 public class AccessTokenOptions
 {
+    public const string SectionName = "AccessTokenConfiguration";
+
     [Required]
     public string Issuer { get; set; } = string.Empty;
 

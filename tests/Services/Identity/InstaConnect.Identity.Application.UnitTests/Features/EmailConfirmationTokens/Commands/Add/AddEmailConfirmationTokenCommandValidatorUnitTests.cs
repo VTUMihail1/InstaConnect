@@ -31,7 +31,7 @@ public class AddEmailConfirmationTokenCommandValidatorUnitTests : BaseEmailConfi
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new AddEmailConfirmationTokenCommand(SharedTestUtilities.GetString(length));
+        var command = new AddEmailConfirmationTokenCommand(DataFaker.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);

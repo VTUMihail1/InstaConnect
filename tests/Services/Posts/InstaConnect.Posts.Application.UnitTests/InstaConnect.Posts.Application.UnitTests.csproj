@@ -39,36 +39,42 @@
     <Using Include="InstaConnect.Posts.Application.UnitTests.Features.Posts.Utilities" />
     <Using Include="InstaConnect.Posts.Domain.Features.Posts.Exceptions" />
     <Using Include="InstaConnect.Posts.Domain.Features.Posts.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Common.Features.Posts.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.Posts.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes" />
 
     <!-- Post Comments -->
     <Using Include="InstaConnect.Posts.Application.Features.PostComments.Models" />
     <Using Include="InstaConnect.Posts.Application.UnitTests.Features.PostComments.Utilities" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Exceptions" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostComments.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Common.Features.PostComments.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.PostComments.Utilities" />
 
     <!-- Post Comment Likes -->
     <Using Include="InstaConnect.Posts.Application.Features.PostCommentLikes.Models" />
     <Using Include="InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Utilities" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities" />
 
     <!-- Post Likes -->
     <Using Include="InstaConnect.Posts.Application.Features.PostLikes.Models" />
     <Using Include="InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Utilities" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Exceptions" />
     <Using Include="InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities" />
+    <Using Include="InstaConnect.Posts.Common.Features.PostLikes.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.PostLikes.Utilities" />
 
     <!-- Common -->
-    <Using Include="InstaConnect.Posts.Common.Features.Posts.Utilities" />
-    <Using Include="InstaConnect.Posts.Common.Features.PostCommentLikes.Utilities" />
-    <Using Include="InstaConnect.Posts.Common.Features.PostComments.Utilities" />
-    <Using Include="InstaConnect.Posts.Common.Features.PostLikes.Utilities" />
     <Using Include="InstaConnect.Posts.Common.Features.Users.Utilities" />
-    <Using Include="InstaConnect.Posts.Common.Tests.Features.Posts.Utilities" />
-    <Using Include="InstaConnect.Posts.Common.Tests.Features.PostLikes.Utilities" />
-    <Using Include="InstaConnect.Posts.Common.Tests.Features.PostComments.Utilities" />
-    <Using Include="InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities" />
     <Using Include="InstaConnect.Posts.Common.Tests.Features.Users.Utilities" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders" />
+    <Using Include="InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes" />
     <Using Include="InstaConnect.Common.Exceptions.Base" />
     <Using Include="InstaConnect.Common.Exceptions.Users" />
     <Using Include="InstaConnect.Common.Utilities" />

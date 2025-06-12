@@ -34,7 +34,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new DeleteMessageRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.SenderId
         );
 
@@ -76,7 +76,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new DeleteMessageRequest(
             existingMessage.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -173,7 +173,7 @@ public class DeleteMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new DeleteMessageRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
+            DataFaker.GetDifferentCaseString(existingMessage.Id),
             existingMessage.SenderId
         );
 

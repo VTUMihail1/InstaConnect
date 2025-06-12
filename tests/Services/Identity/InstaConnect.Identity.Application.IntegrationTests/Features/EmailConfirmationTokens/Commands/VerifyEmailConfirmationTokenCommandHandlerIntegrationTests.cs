@@ -33,7 +33,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
     {
         // Arrange
         var existingEmailConfirmationToken = await CreateEmailConfirmationTokenAsync(CancellationToken);
-        var command = new VerifyEmailConfirmationTokenCommand(SharedTestUtilities.GetString(length), existingEmailConfirmationToken.Value);
+        var command = new VerifyEmailConfirmationTokenCommand(DataFaker.GetString(length), existingEmailConfirmationToken.Value);
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
@@ -68,7 +68,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
     {
         // Arrange
         var existingEmailConfirmationToken = await CreateEmailConfirmationTokenAsync(CancellationToken);
-        var command = new VerifyEmailConfirmationTokenCommand(existingEmailConfirmationToken.UserId, SharedTestUtilities.GetString(length));
+        var command = new VerifyEmailConfirmationTokenCommand(existingEmailConfirmationToken.UserId, DataFaker.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);

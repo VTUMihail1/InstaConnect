@@ -1,13 +1,21 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetById;
 
 public class GetPostByIdQueryHandlerUnitTests : BasePostUnitTest
 {
+    private readonly User _user;
+    private readonly Post _post;
+    private readonly GetPostByIdQueryBuilder _queryBuilder;
     private readonly GetPostByIdQueryHandler _queryHandler;
 
     public GetPostByIdQueryHandlerUnitTests()
     {
+        _user = SetupUser();
+        _post = SetupPost(_user);
+        _queryBuilder = new(_post);
         _queryHandler = new(
             InstaConnectMapper,
             PostReadRepository);
@@ -17,49 +25,38 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostUnitTest
     public async Task Handle_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var query = new GetPostByIdQuery(PostTestUtilities.InvalidId);
+        var query = _queryBuilder.WithInvalidId().Create();
 
         // Act
         var action = async () => await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<PostNotFoundException>();
+        await action.ShouldThrowPostNotFoundExceptionAsync();
     }
 
     [Fact]
-    public async Task Handle_ShouldCallRepositoryWithGetByIdMethod_WhenQueryIsValid()
+    public async Task Handle_ShouldGetPostFromRepository_WhenQueryIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var query = new GetPostByIdQuery(existingPost.Id);
+        var query = _queryBuilder.Create();
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        await PostReadRepository
-            .Received(1)
-            .GetByIdAsync(existingPost.Id, CancellationToken);
+        await PostReadRepository.ShouldReceiveOneGetByIdAsync(query, CancellationToken);
     }
 
     [Fact]
-    public async Task Handle_ShouldReturnPostViewModelCollection_WhenQueryIsValid()
+    public async Task Handle_ShouldReturnResponse_WhenQueryIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var query = new GetPostByIdQuery(existingPost.Id);
+        var query = _queryBuilder.Create();
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostQueryViewModel>(m => m.Id == existingPost.Id &&
-                                              m.UserId == existingPost.UserId &&
-                                              m.UserName == existingPost.User.UserName &&
-                                              m.UserProfileImage == existingPost.User.ProfileImage &&
-                                              m.Title == existingPost.Title &&
-                                              m.Content == existingPost.Content);
+        response.ShouldSatisfy(_post, _user);
     }
 }

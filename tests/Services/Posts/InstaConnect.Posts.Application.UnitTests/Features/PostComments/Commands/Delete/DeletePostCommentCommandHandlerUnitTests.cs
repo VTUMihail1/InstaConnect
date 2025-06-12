@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
+using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Commands.Delete;
 
@@ -10,16 +11,36 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         _commandHandler = new(
             UnitOfWork,
-            PostCommentWriteRepository);
+            PostCommentService,
+            PostWriteRepository);
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowPostCommentNotFoundException_WhenPostIdIsInvalid()
+    public async Task Handle_ShouldThrowPostException_WhenPostIdIsInvalid()
+    {
+        // Arrange
+        var existingPostComment = CreatePostComment();
+        var command = new DeletePostCommentCommand(
+            existingPostComment.Id,
+            PostTestUtilities.InvalidId,
+            existingPostComment.UserId
+        );
+
+        // Act
+        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<PostNotFoundException>();
+    }
+
+    [Fact]
+    public async Task Handle_ShouldThrowPostCommentNotFoundException_WhenPostCommentIdIsInvalid()
     {
         // Arrange
         var existingPostComment = CreatePostComment();
         var command = new DeletePostCommentCommand(
             PostCommentTestUtilities.InvalidId,
+            existingPostComment.PostId,
             existingPostComment.UserId
         );
 
@@ -38,6 +59,7 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var command = new DeletePostCommentCommand(
             existingPostComment.Id,
+            existingPostComment.PostId,
             existingUser.Id
         );
 
@@ -49,31 +71,13 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     }
 
     [Fact]
-    public async Task Handle_ShouldGetPostCommentByIdFromRepository_WhenPostCommentIdIsValid()
-    {
-        // Arrange
-        var existingPostComment = CreatePostComment();
-        var command = new DeletePostCommentCommand(
-            existingPostComment.Id,
-            existingPostComment.UserId
-        );
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await PostCommentWriteRepository
-            .Received(1)
-            .GetByIdAsync(existingPostComment.Id, CancellationToken);
-    }
-
-    [Fact]
     public async Task Handle_ShouldDeletePostCommentFromRepository_WhenPostCommentIdIsValid()
     {
         // Arrange
         var existingPostComment = CreatePostComment();
         var command = new DeletePostCommentCommand(
             existingPostComment.Id,
+            existingPostComment.PostId,
             existingPostComment.UserId
         );
 
@@ -81,12 +85,12 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        PostCommentWriteRepository
+        await PostCommentService
             .Received(1)
-            .Delete(Arg.Is<PostComment>(m => m.Id == existingPostComment.Id &&
-                                             m.UserId == existingPostComment.UserId &&
-                                             m.PostId == existingPostComment.PostId &&
-                                             m.Content == existingPostComment.Content));
+            .DeleteAsync(existingPostComment.Post,
+                         existingPostComment.Id,
+                         existingPostComment.UserId,
+                         CancellationToken);
     }
 
     [Fact]
@@ -96,6 +100,7 @@ public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var command = new DeletePostCommentCommand(
             existingPostComment.Id,
+            existingPostComment.PostId,
             existingPostComment.UserId
         );
 

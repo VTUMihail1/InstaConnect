@@ -35,7 +35,7 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new LoginUserCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidPassword
         );
 
@@ -73,7 +73,7 @@ public class LoginUserCommandValidatorUnitTests : BaseUserUnitTest
         var existingUserClaim = CreateUserClaim();
         var command = new LoginUserCommand(
             existingUserClaim.User.Email,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

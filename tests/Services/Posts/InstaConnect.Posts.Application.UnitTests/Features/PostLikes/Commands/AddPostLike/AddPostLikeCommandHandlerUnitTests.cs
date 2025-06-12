@@ -10,20 +10,20 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     {
         _commandHandler = new(
             UnitOfWork,
+            PostLikeService,
             InstaConnectMapper,
             UserWriteRepository,
-            PostWriteRepository,
-            PostLikeWriteRepository);
+            PostWriteRepository);
     }
 
     [Fact]
     public async Task Handle_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var existingPost = CreatePost();
+        var existingPostLike = CreatePostLikeFactory();
         var command = new AddPostLikeCommand(
             UserTestUtilities.InvalidId,
-            existingPost.Id);
+            existingPostLike.Id);
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
@@ -36,9 +36,9 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     public async Task Handle_ShouldThrowPostNotFoundException_WhenPostIdIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingPostLike = CreatePostLikeFactory();
         var command = new AddPostLikeCommand(
-            existingUser.Id,
+            existingPostLike.UserId,
             PostTestUtilities.InvalidId);
 
         // Act
@@ -68,11 +68,10 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
     public async Task Handle_ShouldReturnPostLikeCommandViewModel_WhenPostLikeIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
-        var existingPost = CreatePost();
+        var existingPostLike = CreatePostLikeFactory();
         var command = new AddPostLikeCommand(
-            existingUser.Id,
-            existingPost.Id);
+            existingPostLike.UserId,
+            existingPostLike.PostId);
 
         // Act
         var response = await _commandHandler.Handle(command, CancellationToken);
@@ -80,40 +79,35 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
         // Assert
         response
             .Should()
-            .Match<PostLikeCommandViewModel>(m => !string.IsNullOrEmpty(m.Id));
+            .Match<PostLikeCommandViewModel>(m => m.Id == existingPostLike.Id);
     }
 
     [Fact]
-    public async Task Handle_ShouldAddPostToRepository_WhenPostIsValid()
+    public async Task Handle_ShouldAddPostLikeToRepository_WhenPostIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
-        var existingPost = CreatePost();
+        var existingPostLike = CreatePostLikeFactory();
         var command = new AddPostLikeCommand(
-            existingUser.Id,
-            existingPost.Id);
+            existingPostLike.UserId,
+            existingPostLike.PostId);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        PostLikeWriteRepository
+        await PostLikeService
             .Received(1)
-            .Add(Arg.Is<PostLike>(m =>
-                !string.IsNullOrEmpty(m.Id) &&
-                m.UserId == existingUser.Id &&
-                m.PostId == existingPost.Id));
+            .AddAsync(existingPostLike.Post, existingPostLike.UserId, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldCallSaveChangesAsync_WhenPostIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
-        var existingPost = CreatePost();
+        var existingPostLike = CreatePostLikeFactory();
         var command = new AddPostLikeCommand(
-            existingUser.Id,
-            existingPost.Id);
+            existingPostLike.UserId,
+            existingPostLike.PostId);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);

@@ -1,6 +1,8 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 
-public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, PostCommandViewModel>
+namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+
+public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, UpdatePostCommandResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPostService _postService;
@@ -19,27 +21,29 @@ public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, PostC
         _postWriteRepository = postWriteRepository;
     }
 
-    public async Task<PostCommandViewModel> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
+    public async Task<UpdatePostCommandResponse> Handle(
+        UpdatePostCommand request,
+        CancellationToken cancellationToken)
     {
-        var existingPost = await _postWriteRepository.GetByIdAsync(request.Id, cancellationToken);
+        var post = await _postWriteRepository.GetByIdAsync(request.Id, cancellationToken);
 
-        if (existingPost == null)
+        if (post == null)
         {
             throw new PostNotFoundException();
         }
 
-        if (request.CurrentUserId != existingPost.UserId)
+        if (request.CurrentUserId != post.UserId)
         {
             throw new UserForbiddenException();
         }
 
-        _postService.Update(existingPost, request.Title, request.Content);
-        _postWriteRepository.Update(existingPost);
+        _postService.Update(post, request.Title, request.Content);
+        _postWriteRepository.Update(post);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var postCommentViewModel = _instaConnectMapper.Map<PostCommandViewModel>(existingPost);
+        var response = _instaConnectMapper.Map<UpdatePostCommandResponse>(post);
 
-        return postCommentViewModel;
+        return response;
     }
 }

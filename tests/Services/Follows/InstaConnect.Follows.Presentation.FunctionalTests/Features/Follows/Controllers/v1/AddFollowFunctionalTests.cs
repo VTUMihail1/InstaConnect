@@ -54,7 +54,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollower = await CreateUserAsync(CancellationToken);
         var request = new AddFollowRequest(
             existingFollower.Id,
-            new(SharedTestUtilities.GetString(length)));
+            new(DataFaker.GetString(length)));
 
         // Act
         var statusCode = await FollowsClient.AddStatusCodeAsync(request, CancellationToken);
@@ -92,7 +92,7 @@ public class AddFollowFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollowing = await CreateUserAsync(CancellationToken);
         var request = new AddFollowRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             new(existingFollowing.Id));
 
         // Act

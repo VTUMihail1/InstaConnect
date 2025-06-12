@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Configuration;
+using System.Reflection;
 
 using CloudinaryDotNet;
 
@@ -6,8 +7,10 @@ using InstaConnect.Common.Application.Helpers;
 using InstaConnect.Common.Domain.Abstractions;
 using InstaConnect.Common.Infrastructure;
 using InstaConnect.Common.Infrastructure.Abstractions;
+using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Infrastructure.Helpers;
 using InstaConnect.Common.Infrastructure.Models.Options;
+using InstaConnect.Common.Infrastructure.SortOrders;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,6 +18,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 
 using WebMotions.Fake.Authentication.JwtBearer;
@@ -257,6 +261,46 @@ public static partial class ServiceCollectionExtensions
         }
 
         serviceCollection.AddStackExchangeRedisCache(options => optionsAction?.Invoke(options));
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddImplementationsOf<TInterface>(this IServiceCollection services, Assembly assembly)
+        where TInterface : class
+    {
+        var implementations = assembly
+            .DefinedTypes
+            .Where(type => type is { IsAbstract: false, IsInterface: false } &&
+                           type.IsAssignableTo(typeof(TInterface)))
+            .Select(type => ServiceDescriptor.Transient(typeof(TInterface), type))
+            .ToArray();
+
+        services.TryAddEnumerable(implementations);
+
+        return services;
+    }
+
+    public static TOptions AddOptions<TOptions>(this IServiceCollection serviceCollection, IConfiguration configuration, string sectionName)
+        where TOptions : class
+    {
+        serviceCollection
+            .AddOptions<TOptions>()
+            .BindConfiguration(sectionName)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        var options = configuration
+            .GetSection(sectionName)
+            .Get<TOptions>()!;
+
+        return options;
+    }
+
+    public static IServiceCollection AddSortOrders(this IServiceCollection serviceCollection)
+    {
+        serviceCollection
+            .AddScoped<ISortOrderFactory, SortOrderFactory>()
+            .AddImplementationsOf<ISortOrder>(CommonInfrastructureReference.Assembly);
 
         return serviceCollection;
     }

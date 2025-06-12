@@ -15,7 +15,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
@@ -41,7 +41,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -67,7 +67,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
             existingPostCommentLike.User.UserName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -117,7 +117,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
             existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostCommentLikeTestUtilities.ValidPageValue,
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
@@ -244,7 +244,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.UserId),
+            DataFaker.GetDifferentCaseString(existingPostCommentLike.UserId),
             existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
@@ -278,7 +278,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.User.UserName),
+            DataFaker.GetDifferentCaseString(existingPostCommentLike.User.UserName),
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -311,7 +311,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
-            SharedTestUtilities.GetHalfStartString(existingPostCommentLike.User.UserName),
+            DataFaker.GetPrefixString(existingPostCommentLike.User.UserName),
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -345,7 +345,7 @@ public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunction
         var request = new GetAllPostCommentLikesRequest(
             existingPostCommentLike.UserId,
             existingPostCommentLike.User.UserName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.PostCommentId),
+            DataFaker.GetDifferentCaseString(existingPostCommentLike.PostCommentId),
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,

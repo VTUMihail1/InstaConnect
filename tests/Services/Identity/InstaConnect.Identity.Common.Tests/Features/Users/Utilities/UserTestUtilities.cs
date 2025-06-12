@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace InstaConnect.Identity.Common.Tests.Features.Users.Utilities;
 
-public abstract class UserTestUtilities : SharedTestUtilities
+public abstract class UserTestUtilities : DataFaker
 {
     public static readonly string InvalidId = GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
 

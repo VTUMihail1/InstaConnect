@@ -34,7 +34,7 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollow = await CreateFollowAsync(CancellationToken);
 
         var request = new DeleteFollowRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingFollow.FollowerId);
 
         // Act
@@ -76,7 +76,7 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
 
         var request = new DeleteFollowRequest(
             existingFollow.Id,
-            SharedTestUtilities.GetString(length));
+            DataFaker.GetString(length));
 
         // Act
         var statusCode = await FollowsClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -152,7 +152,7 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollow = await CreateFollowAsync(CancellationToken);
 
         var request = new DeleteFollowRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id),
+            DataFaker.GetDifferentCaseString(existingFollow.Id),
             existingFollow.FollowerId);
 
         // Act
@@ -191,7 +191,7 @@ public class DeleteFollowFunctionalTests : BaseFollowFunctionalTest
         var existingFollow = await CreateFollowAsync(CancellationToken);
 
         var request = new DeleteFollowRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id),
+            DataFaker.GetDifferentCaseString(existingFollow.Id),
             existingFollow.FollowerId);
 
         // Act

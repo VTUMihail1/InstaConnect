@@ -16,7 +16,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunc
     {
         // Arrange
         var request = new AddForgotPasswordTokenRequest(
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

@@ -56,7 +56,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         var existingSender = await CreateUserAsync(CancellationToken);
         var request = new AddMessageRequest(
             existingSender.Id,
-            new(SharedTestUtilities.GetString(length), MessageTestUtilities.ValidAddContent)
+            new(DataFaker.GetString(length), MessageTestUtilities.ValidAddContent)
         );
 
         // Act
@@ -99,7 +99,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         var existingReceiver = await CreateUserAsync(CancellationToken);
         var request = new AddMessageRequest(
             existingSender.Id,
-            new(existingReceiver.Id, SharedTestUtilities.GetString(length))
+            new(existingReceiver.Id, DataFaker.GetString(length))
         );
 
         // Act
@@ -139,7 +139,7 @@ public class AddMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingReceiver = await CreateUserAsync(CancellationToken);
         var request = new AddMessageRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             new(existingReceiver.Id, MessageTestUtilities.ValidAddContent)
         );
 

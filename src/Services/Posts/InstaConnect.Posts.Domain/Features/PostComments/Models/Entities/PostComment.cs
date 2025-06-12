@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;

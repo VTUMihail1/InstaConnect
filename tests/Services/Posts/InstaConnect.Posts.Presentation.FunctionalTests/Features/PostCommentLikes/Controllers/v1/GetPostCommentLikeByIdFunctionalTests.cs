@@ -14,7 +14,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
     {
         // Arrange
         var request = new GetPostCommentLikeByIdRequest(
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -90,7 +90,7 @@ public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunction
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new GetPostCommentLikeByIdRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.Id)
+            DataFaker.GetDifferentCaseString(existingPostCommentLike.Id)
         );
 
         // Act

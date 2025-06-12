@@ -4,6 +4,7 @@ using InstaConnect.Common.Domain.Models.Pagination;
 using InstaConnect.Common.Exceptions.Users;
 using InstaConnect.Posts.Domain.Features.PostLikes.Exceptions;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Helpers;
 internal class PostLikeService : IPostLikeService

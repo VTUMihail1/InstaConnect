@@ -1,3 +1,5 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 
-public record GetPostByIdQuery(string Id) : IQuery<PostQueryViewModel>;
+namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+
+public record GetPostByIdQuery(string Id) : IQuery<GetPostByIdQueryResponse>;

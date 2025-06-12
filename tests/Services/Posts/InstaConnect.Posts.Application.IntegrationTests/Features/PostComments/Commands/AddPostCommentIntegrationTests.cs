@@ -36,7 +36,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostCommentCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPost.Id,
             PostCommentTestUtilities.ValidAddContent
         );
@@ -76,7 +76,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommentCommand(
             existingUser.Id,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostCommentTestUtilities.ValidAddContent
         );
 
@@ -118,7 +118,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new AddPostCommentCommand(
             existingUser.Id,
             existingPost.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

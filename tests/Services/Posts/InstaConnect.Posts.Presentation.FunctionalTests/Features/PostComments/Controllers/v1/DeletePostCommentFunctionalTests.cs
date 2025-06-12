@@ -33,7 +33,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentFunctionalTest
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new DeletePostCommentRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostComment.UserId);
 
         // Act
@@ -73,7 +73,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new DeletePostCommentRequest(
             existingPostComment.Id,
-            SharedTestUtilities.GetString(length));
+            DataFaker.GetString(length));
 
         // Act
         var response = await PostCommentsClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -165,7 +165,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentFunctionalTest
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new DeletePostCommentRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.Id),
+            DataFaker.GetDifferentCaseString(existingPostComment.Id),
             existingPostComment.UserId);
 
         // Act

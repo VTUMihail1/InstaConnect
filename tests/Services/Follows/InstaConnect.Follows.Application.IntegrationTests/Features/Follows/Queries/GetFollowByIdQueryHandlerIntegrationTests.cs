@@ -28,7 +28,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetFollowByIdQuery(SharedTestUtilities.GetString(length));
+        var query = new GetFollowByIdQuery(DataFaker.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -77,7 +77,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
     {
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
-        var query = new GetFollowByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id));
+        var query = new GetFollowByIdQuery(DataFaker.GetDifferentCaseString(existingFollow.Id));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);

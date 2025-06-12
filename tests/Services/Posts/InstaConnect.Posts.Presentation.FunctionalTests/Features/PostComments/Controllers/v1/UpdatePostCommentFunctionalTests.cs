@@ -34,7 +34,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new UpdatePostCommentRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostComment.UserId,
             new(existingPostComment.Content));
 
@@ -77,7 +77,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
             existingPostComment.UserId,
-            new(SharedTestUtilities.GetString(length)));
+            new(DataFaker.GetString(length)));
 
         // Act
         var response = await PostCommentsClient.UpdateStatusCodeAsync(request, CancellationToken);
@@ -117,7 +117,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new UpdatePostCommentRequest(
             existingPostComment.Id,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             new(existingPostComment.Content));
 
         // Act
@@ -237,7 +237,7 @@ public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new UpdatePostCommentRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.Id),
+            DataFaker.GetDifferentCaseString(existingPostComment.Id),
             existingPostComment.UserId,
             new(existingPostComment.Content));
 

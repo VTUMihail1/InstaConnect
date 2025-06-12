@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Identity.Common.Tests.Features.EmailConfirmationTokens.Utilities;
 
-public abstract class EmailConfirmationTokenTestUtilities : SharedTestUtilities
+public abstract class EmailConfirmationTokenTestUtilities : DataFaker
 {
     public static readonly string InvalidValue = GetAverageString(EmailConfirmationTokenConfigurations.ValueMaxLength, EmailConfirmationTokenConfigurations.ValueMaxLength);
 }

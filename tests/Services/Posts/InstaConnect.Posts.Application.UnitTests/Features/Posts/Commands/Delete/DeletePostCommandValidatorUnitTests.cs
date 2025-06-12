@@ -4,101 +4,81 @@ namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Delet
 
 public class DeletePostCommandValidatorUnitTests : BasePostUnitTest
 {
+    private readonly DeletePostCommandBuilder _commandBuilder;
     private readonly DeletePostCommandValidator _commandValidator;
 
     public DeletePostCommandValidatorUnitTests()
     {
-        _commandValidator = new DeletePostCommandValidator();
+        _commandBuilder = new();
+        _commandValidator = new();
     }
 
     [Fact]
-    public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
+    public void TestValidate_ShouldHaveAnError_WhenIdIsNull()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new DeletePostCommand(
-            null,
-            existingPost.UserId
-        );
+        var command = _commandBuilder.WithoutId().Create();
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Id);
+        result.ShouldHaveValidationErrorForId();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostConfigurations.IdMinLength - 1)]
-    [InlineData(PostConfigurations.IdMaxLength + 1)]
-    public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
+    [PostIdOutOfBoundsMinData]
+    [PostIdOutOfBoundsMaxData]
+    public void TestValidate_ShouldHaveAnError_WhenIdLengthIsInvalid(string id)
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new DeletePostCommand(
-            SharedTestUtilities.GetString(length),
-            existingPost.UserId
-        );
+        var command = _commandBuilder.WithId(id).Create();
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Id);
+        result.ShouldHaveValidationErrorForId();
     }
 
     [Fact]
-    public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
+    public void TestValidate_ShouldHaveAnError_WhenUserIdIsNull()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new DeletePostCommand(
-            existingPost.Id,
-            null
-        );
+        var command = _commandBuilder.WithoutUserId().Create();
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
+        result.ShouldHaveValidationErrorForUserId();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
+    [UserIdOutOfBoundsMinData]
+    [UserIdOutOfBoundsMaxData]
+    public void TestValidate_ShouldHaveAnError_WhenUserIdLengthIsInvalid(string userId)
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new DeletePostCommand(
-            existingPost.Id,
-            SharedTestUtilities.GetString(length)
-        );
+        var command = _commandBuilder.WithUserId(userId).Create();
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
+        result.ShouldHaveValidationErrorForUserId();
     }
 
     [Fact]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCommandIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new DeletePostCommand(
-            existingPost.Id,
-            existingPost.UserId
-        );
+        var command = _commandBuilder.Create();
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
-        result.ShouldNotHaveAnyValidationErrors();
+        result.ShouldNotHaveAnyValidationErrorProperties();
     }
 }

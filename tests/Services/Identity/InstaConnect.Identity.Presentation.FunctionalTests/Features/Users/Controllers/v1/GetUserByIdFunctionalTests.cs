@@ -14,7 +14,7 @@ public class GetUserByIdFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var request = new GetUserByIdRequest(
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -90,7 +90,7 @@ public class GetUserByIdFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetUserByIdRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingUser.Id)
+            DataFaker.GetDifferentCaseString(existingUser.Id)
         );
 
         // Act

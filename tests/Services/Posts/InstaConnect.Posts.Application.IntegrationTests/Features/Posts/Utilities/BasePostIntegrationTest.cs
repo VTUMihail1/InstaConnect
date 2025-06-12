@@ -1,5 +1,8 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 using InstaConnect.Posts.Infrastructure;
@@ -57,10 +60,9 @@ public abstract class BasePostIntegrationTest : IClassFixture<PostsWebApplicatio
         InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
     }
 
-    private async Task<User> CreateUserUtilAsync(CancellationToken cancellationToken)
+    protected async Task<User> SetupUserAsync(CancellationToken cancellationToken)
     {
-        var user = UserTestUtilities.CreateUser();
-
+        var user = new UserBuilder().Create();
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
 
@@ -70,16 +72,9 @@ public abstract class BasePostIntegrationTest : IClassFixture<PostsWebApplicatio
         return user;
     }
 
-    protected async Task<User> CreateUserAsync(CancellationToken cancellationToken)
+    protected async Task<Post> SetupPostAsync(User user, CancellationToken cancellationToken)
     {
-        var user = await CreateUserUtilAsync(cancellationToken);
-
-        return user;
-    }
-
-    private async Task<Post> CreatePostAsyncUtil(User user, CancellationToken cancellationToken)
-    {
-        var post = PostTestUtilities.CreatePost(user, [], []);
+        var post = new PostBuilder(user).Create();
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
         var postWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IPostWriteRepository>();
@@ -90,36 +85,31 @@ public abstract class BasePostIntegrationTest : IClassFixture<PostsWebApplicatio
         return post;
     }
 
-    protected async Task<Post> CreatePostAsync(CancellationToken cancellationToken)
-    {
-        var user = await CreateUserAsync(CancellationToken);
-        var post = await CreatePostAsyncUtil(user, cancellationToken);
-
-        return post;
-    }
-
     public async Task InitializeAsync()
     {
-        await EnsureDatabaseIsEmpty();
+        await ResetDatabaseAsync(CancellationToken);
+        await OnInitializeAsync();
     }
 
     public async Task DisposeAsync()
     {
-        await EnsureDatabaseIsEmpty();
+        await ResetDatabaseAsync(CancellationToken);
     }
 
-    private async Task EnsureDatabaseIsEmpty()
+    protected abstract Task OnInitializeAsync();
+
+    private async Task ResetDatabaseAsync(CancellationToken cancellationToken)
     {
         var dbContext = ServiceScope.ServiceProvider.GetRequiredService<PostsContext>();
 
-        if (await dbContext.Posts.AnyAsync(CancellationToken))
+        if (await dbContext.Posts.AnyAsync(cancellationToken))
         {
-            await dbContext.Posts.ExecuteDeleteAsync(CancellationToken);
+            await dbContext.Posts.ExecuteDeleteAsync(cancellationToken);
         }
 
-        if (await dbContext.Users.AnyAsync(CancellationToken))
+        if (await dbContext.Users.AnyAsync(cancellationToken))
         {
-            await dbContext.Users.ExecuteDeleteAsync(CancellationToken);
+            await dbContext.Users.ExecuteDeleteAsync(cancellationToken);
         }
     }
 }

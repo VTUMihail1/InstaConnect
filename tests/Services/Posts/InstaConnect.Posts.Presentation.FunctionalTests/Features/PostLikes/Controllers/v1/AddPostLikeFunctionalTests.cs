@@ -54,7 +54,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddPostLikeRequest(
             existingUser.Id,
-            new(SharedTestUtilities.GetString(length)));
+            new(DataFaker.GetString(length)));
 
         // Act
         var response = await PostLikesClient.AddStatusCodeAsync(request, CancellationToken);
@@ -92,7 +92,7 @@ public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostLikeRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             new(existingPost.Id));
 
         // Act

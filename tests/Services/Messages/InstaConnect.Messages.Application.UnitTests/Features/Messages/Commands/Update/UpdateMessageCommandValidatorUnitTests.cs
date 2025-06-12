@@ -38,7 +38,7 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             MessageTestUtilities.ValidUpdateContent,
             existingMessage.SenderId
         );
@@ -79,7 +79,7 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
         var command = new UpdateMessageCommand(
             existingMessage.Id,
             MessageTestUtilities.ValidUpdateContent,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -117,7 +117,7 @@ public class UpdateMessageCommandValidatorUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var command = new UpdateMessageCommand(
             existingMessage.Id,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.SenderId
         );
 

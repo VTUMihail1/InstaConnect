@@ -1,13 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="AutoFixture" />
     <PackageReference Include="Bogus" />
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="NSubstitute" />
+    <PackageReference Include="xunit.extensibility.core" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Common\InstaConnect.Common.Application\InstaConnect.Common.Application.csproj" />
     <ProjectReference Include="..\..\..\src\Common\InstaConnect.Common.Domain\InstaConnect.Common.Domain.csproj" />
+    <ProjectReference Include="..\..\..\src\Common\InstaConnect.Common.Infrastructure\InstaConnect.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\src\Common\InstaConnect.Common.Presentation\InstaConnect.Common.Presentation.csproj" />
     <ProjectReference Include="..\..\..\src\Common\InstaConnect.Common\InstaConnect.Common.csproj" />
   </ItemGroup>
 

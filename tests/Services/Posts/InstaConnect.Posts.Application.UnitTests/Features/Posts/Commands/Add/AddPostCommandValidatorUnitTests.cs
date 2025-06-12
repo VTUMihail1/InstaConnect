@@ -4,137 +4,109 @@ namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Add;
 
 public class AddPostCommandValidatorUnitTests : BasePostUnitTest
 {
+    private readonly AddPostCommandBuilder _commandBuilder;
     private readonly AddPostCommandValidator _commandValidator;
 
     public AddPostCommandValidatorUnitTests()
     {
-        _commandValidator = new AddPostCommandValidator();
+        _commandBuilder = new();
+        _commandValidator = new();
     }
 
     [Fact]
-    public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
+    public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var command = new AddPostCommand(
-            null,
-            PostTestUtilities.ValidAddTitle,
-            PostTestUtilities.ValidAddContent);
+        var command = _commandBuilder.WithoutUserId().Create();
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
+        result.ShouldHaveValidationErrorForUserId();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
+    [UserIdOutOfBoundsMinData]
+    [UserIdOutOfBoundsMaxData]
+    public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdLengthIsInvalid(string userId)
     {
         // Arrange
-        var command = new AddPostCommand(
-            SharedTestUtilities.GetString(length)!,
-            PostTestUtilities.ValidAddTitle,
-            PostTestUtilities.ValidAddContent);
+        var command = _commandBuilder.WithUserId(userId).Create();
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
+        result.ShouldHaveValidationErrorForUserId();
     }
 
     [Fact]
-    public void TestValidate_ShouldHaveAnErrorForTitle_WhenTitleIsNull()
+    public void TestValidate_ShouldHaveAnError_WhenTitleIsNull()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new AddPostCommand(
-            existingPost.UserId,
-            null,
-            PostTestUtilities.ValidAddContent);
+        var command = _commandBuilder.WithoutTitle().Create();
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Title);
+        result.ShouldHaveValidationErrorForTitle();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostConfigurations.TitleMinLength - 1)]
-    [InlineData(PostConfigurations.TitleMaxLength + 1)]
-    public void TestValidate_ShouldHaveAnErrorForTitle_WhenTitleLengthIsInvalid(int length)
+    [PostTitleOutOfBoundsMinData]
+    [PostTitleOutOfBoundsMaxData]
+    public void TestValidate_ShouldHaveAnError_WhenTitleLengthIsInvalid(string title)
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new AddPostCommand(
-            existingPost.UserId,
-            SharedTestUtilities.GetString(length)!,
-            PostTestUtilities.ValidAddContent);
+        var command = _commandBuilder.WithTitle(title).Create();
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Title);
+        result.ShouldHaveValidationErrorForTitle();
     }
 
     [Fact]
-    public void TestValidate_ShouldHaveAnErrorForContent_WhenContentIsNull()
+    public void TestValidate_ShouldHaveAnError_WhenContentIsNull()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new AddPostCommand(
-            existingPost.UserId,
-            PostTestUtilities.ValidAddTitle,
-            null);
+        var command = _commandBuilder.WithoutContent().Create();
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Content);
+        result.ShouldHaveValidationErrorForContent();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostConfigurations.ContentMinLength - 1)]
-    [InlineData(PostConfigurations.ContentMaxLength + 1)]
-    public void TestValidate_ShouldHaveAnErrorForContent_WhenContentLengthIsInvalid(int length)
+    [PostContentOutOfBoundsMinData]
+    [PostContentOutOfBoundsMaxData]
+    public void TestValidate_ShouldHaveAnError_WhenContentLengthIsInvalid(string content)
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new AddPostCommand(
-            existingPost.UserId,
-            PostTestUtilities.ValidAddTitle,
-            SharedTestUtilities.GetString(length)!);
+        var command = _commandBuilder.WithContent(content).Create();
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Content);
+        result.ShouldHaveValidationErrorForContent();
     }
 
     [Fact]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCommandIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new AddPostCommand(
-            existingPost.UserId,
-            PostTestUtilities.ValidAddTitle,
-            PostTestUtilities.ValidAddContent
-        );
+        var command = _commandBuilder.Create();
 
         // Act
         var result = _commandValidator.TestValidate(command);
 
         // Assert
-        result.ShouldNotHaveAnyValidationErrors();
+        result.ShouldNotHaveAnyValidationErrorProperties();
     }
 }

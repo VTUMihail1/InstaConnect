@@ -39,7 +39,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var command = new UpdateUserCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
@@ -87,7 +87,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var command = new UpdateUserCommand(
             existingUser.Id,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFormFile
@@ -135,7 +135,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var command = new UpdateUserCommand(
             existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFormFile
         );
@@ -183,7 +183,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
             existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidUpdateFormFile
         );
 

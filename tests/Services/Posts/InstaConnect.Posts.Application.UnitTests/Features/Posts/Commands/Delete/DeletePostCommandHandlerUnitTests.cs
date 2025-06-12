@@ -1,13 +1,21 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Delete;
 
 public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
 {
+    private readonly User _user;
+    private readonly Post _post;
+    private readonly DeletePostCommandBuilder _commandBuilder;
     private readonly DeletePostCommandHandler _commandHandler;
 
     public DeletePostCommandHandlerUnitTests()
     {
+        _user = SetupUser();
+        _post = SetupPost(_user);
+        _commandBuilder = new(_post);
         _commandHandler = new(
             UnitOfWork,
             PostWriteRepository);
@@ -17,94 +25,65 @@ public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
     public async Task Handle_ShouldThrowPostNotFoundException_WhenPostIdIsInvalid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new DeletePostCommand(
-            PostTestUtilities.InvalidId,
-            existingPost.UserId
-        );
+        var command = _commandBuilder.WithInvalidId().Create();
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<PostNotFoundException>();
+        await action.ShouldThrowPostNotFoundExceptionAsync();
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
+    public async Task Handle_ShouldThrowAccountForbiddenException_WhenUserIdIsInvalid()
     {
         // Arrange
-        var existingUser = CreateUser();
-        var existingPost = CreatePost();
-        var command = new DeletePostCommand(
-            existingPost.Id,
-            existingUser.Id
-        );
+        var user = SetupUser();
+        var command = _commandBuilder.WithUserId(user.Id).Create();
 
         // Act
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserForbiddenException>();
+        await action.ShouldThrowUserForbiddenExceptionAsync();
     }
 
     [Fact]
-    public async Task Handle_ShouldGetPostByIdFromRepository_WhenPostIdIsValid()
+    public async Task Handle_ShouldGetPostFromRepository_WhenCommandIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new DeletePostCommand(
-            existingPost.Id,
-            existingPost.UserId
-        );
+        var command = _commandBuilder.Create();
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await PostWriteRepository
-            .Received(1)
-            .GetByIdAsync(existingPost.Id, CancellationToken);
+        await PostWriteRepository.ShouldReceiveOneGetByIdAsync(_post, CancellationToken);
     }
 
     [Fact]
-    public async Task Handle_ShouldDeletePostFromRepository_WhenPostIdIsValid()
+    public async Task Handle_ShouldDeletePostFromRepository_WhenCommandIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new DeletePostCommand(
-            existingPost.Id,
-            existingPost.UserId
-        );
+        var command = _commandBuilder.Create();
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        PostWriteRepository
-            .Received(1)
-            .Delete(Arg.Is<Post>(m => m.Id == existingPost.Id &&
-                                      m.UserId == existingPost.UserId &&
-                                      m.Title == existingPost.Title &&
-                                      m.Content == existingPost.Content));
+        PostWriteRepository.ShouldReceiveOneDelete(_post);
     }
 
     [Fact]
-    public async Task Handle_ShouldCallSaveChangesAsync_WhenPostIdIsValid()
+    public async Task Handle_ShouldCallSaveChangesAsync_WhenCommandIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var command = new DeletePostCommand(
-            existingPost.Id,
-            existingPost.UserId
-        );
+        var command = _commandBuilder.Create();
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await UnitOfWork
-            .Received(1)
-            .SaveChangesAsync(CancellationToken);
+        await UnitOfWork.ShouldReceiveOneSaveChangesAsync(CancellationToken);
     }
 }

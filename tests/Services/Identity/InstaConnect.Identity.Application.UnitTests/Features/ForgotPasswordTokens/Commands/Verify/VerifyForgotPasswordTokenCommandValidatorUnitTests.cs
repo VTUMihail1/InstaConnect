@@ -39,7 +39,7 @@ public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseForgotPass
         // Arrange
         var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingForgotPasswordToken.Value,
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword
@@ -81,7 +81,7 @@ public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseForgotPass
         var existingForgotPasswordToken = CreateForgotPasswordToken();
         var command = new VerifyForgotPasswordTokenCommand(
             existingForgotPasswordToken.UserId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword
         );
@@ -120,7 +120,7 @@ public class VerifyForgotPasswordTokenCommandValidatorUnitTests : BaseForgotPass
     {
         // Arrange
         var existingForgotPasswordToken = CreateForgotPasswordToken();
-        var password = SharedTestUtilities.GetString(length);
+        var password = DataFaker.GetString(length);
         var command = new VerifyForgotPasswordTokenCommand(
             existingForgotPasswordToken.UserId,
             existingForgotPasswordToken.Value,

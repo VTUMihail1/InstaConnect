@@ -33,7 +33,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikeFunctiona
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new DeletePostCommentLikeRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostCommentLike.UserId);
 
         // Act
@@ -73,7 +73,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikeFunctiona
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new DeletePostCommentLikeRequest(
             existingPostCommentLike.Id,
-            SharedTestUtilities.GetString(length));
+            DataFaker.GetString(length));
 
         // Act
         var response = await PostCommentLikesClient.DeleteStatusCodeAsync(request, CancellationToken);
@@ -165,7 +165,7 @@ public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikeFunctiona
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var request = new DeletePostCommentLikeRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.Id),
+            DataFaker.GetDifferentCaseString(existingPostCommentLike.Id),
             existingPostCommentLike.UserId);
 
         // Act

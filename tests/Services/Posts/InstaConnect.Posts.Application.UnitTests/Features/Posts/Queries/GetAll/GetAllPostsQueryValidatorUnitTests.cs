@@ -4,212 +4,123 @@ namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetAll
 
 public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
 {
+    private readonly GetAllPostsQueryBuilder _queryBuilder;
     private readonly GetAllPostsQueryValidator _queryValidator;
 
     public GetAllPostsQueryValidatorUnitTests()
     {
-        _queryValidator = new(EntityPropertyValidator);
+        _queryBuilder = new();
+        _queryValidator = new();
     }
 
     [Theory]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public void TestValidate_ShouldHaveAnErrorForUserId_WhenUserIdLengthIsInvalid(int length)
+    [UserIdOutOfBoundsMaxData]
+    public void TestValidate_ShouldHaveAnError_WhenUserIdLengthIsInvalid(string userId)
     {
         // Arrange
-        var existingPost = CreatePost();
-        var query = new GetAllPostsQuery(
-            SharedTestUtilities.GetString(length),
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithUserId(userId).Create();
 
         // Act
         var result = _queryValidator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.UserId);
+        result.ShouldHaveValidationErrorForUserId();
     }
 
     [Theory]
-    [InlineData(UserConfigurations.NameMinLength - 1)]
-    [InlineData(UserConfigurations.NameMaxLength + 1)]
-    public void TestValidate_ShouldHaveAnErrorForUserName_WhenUserNameLengthIsInvalid(int length)
+    [UserNameOutOfBoundsMaxData]
+    public void TestValidate_ShouldHaveAnError_WhenUserNameLengthIsInvalid(string userName)
     {
         // Arrange
-        var existingPost = CreatePost();
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            SharedTestUtilities.GetString(length),
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithUserName(userName).Create();
 
         // Act
         var result = _queryValidator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.UserName);
+        result.ShouldHaveValidationErrorForUserName();
     }
 
     [Theory]
-    [InlineData(PostConfigurations.TitleMinLength - 1)]
-    [InlineData(PostConfigurations.TitleMaxLength + 1)]
-    public void TestValidate_ShouldHaveAnErrorForTitle_WhenTitleLengthIsInvalid(int length)
+    [PostTitleOutOfBoundsMaxData]
+    public void TestValidate_ShouldHaveAnError_WhenTitleLengthIsInvalid(string title)
     {
         // Arrange
-        var existingPost = CreatePost();
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            SharedTestUtilities.GetString(length),
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithTitle(title).Create();
 
         // Act
         var result = _queryValidator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Title);
+        result.ShouldHaveValidationErrorForTitle();
     }
 
     [Fact]
-    public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameIsNull()
+    public void TestValidate_ShouldHaveAnError_WhenSortOrderIsEmpty()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            null,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithEmptySortOrder().Create();
 
         // Act
         var result = _queryValidator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.SortPropertyName);
+        result.ShouldHaveValidationErrorForSortProperty();
     }
 
     [Fact]
-    public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameDoesNotExist()
+    public void TestValidate_ShouldHaveAnError_WhenSortPropertyIsEmpty()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.InvalidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithEmptySortProperty().Create();
 
         // Act
         var result = _queryValidator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.SortPropertyName);
+        result.ShouldHaveValidationErrorForSortProperty();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(SharedConfigurations.SortOrderMinLength - 1)]
-    [InlineData(SharedConfigurations.SortOrderMaxLength + 1)]
-    public void TestValidate_ShouldHaveAnErrorForSortPropertyName_WhenSortPropertyNameLengthIsInvalid(int length)
+    [PostPageOutOfBoundsMinData]
+    [PostPageOutOfBoundsMaxData]
+    public void TestValidate_ShouldHaveAnError_WhenPageIsInvalid(int page)
     {
         // Arrange
-        var existingPost = CreatePost();
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithPage(page).Create();
 
         // Act
         var result = _queryValidator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.SortPropertyName);
+        result.ShouldHaveValidationErrorForPage();
     }
 
     [Theory]
-    [InlineData(SharedConfigurations.PageMinValue - 1)]
-    [InlineData(SharedConfigurations.PageMaxValue + 1)]
-    public void TestValidate_ShouldHaveAnErrorForOffset_WhenPageValueIsInvalid(int value)
+    [PostPageSizeOutOfBoundsMinData]
+    [PostPageSizeOutOfBoundsMaxData]
+    public void TestValidate_ShouldHaveAnError_WhenPageSizeIsInvalid(int pageSize)
     {
         // Arrange
-        var existingPost = CreatePost();
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            value,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithPageSize(pageSize).Create();
 
         // Act
         var result = _queryValidator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Page);
-    }
-
-    [Theory]
-    [InlineData(SharedConfigurations.PageMinValue - 1)]
-    [InlineData(SharedConfigurations.PageMaxValue + 1)]
-    public void TestValidate_ShouldHaveAnErrorForLimit_WhenPageSizeValueIsInvalid(int value)
-    {
-        // Arrange
-        var existingPost = CreatePost();
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            value);
-
-        // Act
-        var result = _queryValidator.TestValidate(query);
-
-        // Assert
-        result.ShouldHaveValidationErrorFor(m => m.PageSize);
+        result.ShouldHaveValidationErrorForPageSize();
     }
 
     [Fact]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenQueryIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.Create();
 
         // Act
         var result = _queryValidator.TestValidate(query);
 
         // Assert
-        result.ShouldNotHaveAnyValidationErrors();
+        result.ShouldNotHaveAnyValidationErrorProperties();
     }
 }

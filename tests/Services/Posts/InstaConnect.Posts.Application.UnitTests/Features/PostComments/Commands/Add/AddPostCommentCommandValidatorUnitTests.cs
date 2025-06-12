@@ -15,10 +15,10 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var post = CreatePost();
+        var postComment = CreatePostCommentFactory();
         var command = new AddPostCommentCommand(
             null,
-            post.Id,
+            postComment.PostId,
             PostCommentTestUtilities.ValidAddContent);
 
         // Act
@@ -35,10 +35,10 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var post = CreatePost();
+        var postComment = CreatePostCommentFactory();
         var command = new AddPostCommentCommand(
-            SharedTestUtilities.GetString(length)!,
-            post.Id,
+            DataFaker.GetString(length)!,
+            postComment.PostId,
             PostCommentTestUtilities.ValidAddContent);
 
         // Act
@@ -52,9 +52,9 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdIsNull()
     {
         // Arrange
-        var user = CreateUser();
+        var postComment = CreatePostCommentFactory();
         var command = new AddPostCommentCommand(
-            user.Id,
+            postComment.UserId,
             null,
             PostCommentTestUtilities.ValidAddContent);
 
@@ -72,10 +72,10 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdLengthIsInvalid(int length)
     {
         // Arrange
-        var user = CreateUser();
+        var postComment = CreatePostCommentFactory();
         var command = new AddPostCommentCommand(
-            user.Id,
-            SharedTestUtilities.GetString(length)!,
+            postComment.UserId,
+            DataFaker.GetString(length)!,
             PostCommentTestUtilities.ValidAddContent);
 
         // Act
@@ -89,11 +89,10 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForContent_WhenContentIsNull()
     {
         // Arrange
-        var post = CreatePost();
-        var user = CreateUser();
+        var postComment = CreatePostCommentFactory();
         var command = new AddPostCommentCommand(
-            user.Id,
-            post.Id,
+            postComment.UserId,
+            postComment.PostId,
             null);
 
         // Act
@@ -110,12 +109,11 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForContent_WhenContentLengthIsInvalid(int length)
     {
         // Arrange
-        var post = CreatePost();
-        var user = CreateUser();
+        var postComment = CreatePostCommentFactory();
         var command = new AddPostCommentCommand(
-            user.Id,
-            post.Id,
-            SharedTestUtilities.GetString(length)!);
+            postComment.UserId,
+            postComment.PostId,
+            DataFaker.GetString(length)!);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -128,11 +126,10 @@ public class AddPostCommentCommandValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var post = CreatePost();
-        var user = CreateUser();
+        var postComment = CreatePostCommentFactory();
         var command = new AddPostCommentCommand(
-            user.Id,
-            post.Id,
+            postComment.UserId,
+            postComment.PostId,
             PostCommentTestUtilities.ValidAddContent);
 
         // Act

@@ -19,7 +19,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
         // Arrange
         var existingPostComment = CreatePostComment();
         var query = new GetAllPostCommentsQuery(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
@@ -43,7 +43,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -67,7 +67,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
             existingPostComment.User.UserName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
             PostCommentTestUtilities.ValidPageValue,
@@ -135,7 +135,7 @@ public class GetAllPostCommentsQueryValidatorUnitTests : BasePostCommentUnitTest
             existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostCommentTestUtilities.ValidPageValue,
             PostCommentTestUtilities.ValidPageSizeValue);
 

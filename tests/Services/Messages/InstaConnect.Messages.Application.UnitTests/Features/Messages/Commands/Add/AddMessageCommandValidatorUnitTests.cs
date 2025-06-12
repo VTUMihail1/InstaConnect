@@ -38,7 +38,7 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var existingReceiver = CreateUser();
         var command = new AddMessageCommand(
-            SharedTestUtilities.GetString(length)!,
+            DataFaker.GetString(length)!,
             existingReceiver.Id,
             MessageTestUtilities.ValidAddContent
         );
@@ -78,7 +78,7 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         var existingSender = CreateUser();
         var command = new AddMessageCommand(
             existingSender.Id,
-            SharedTestUtilities.GetString(length)!,
+            DataFaker.GetString(length)!,
             MessageTestUtilities.ValidAddContent
         );
 
@@ -120,7 +120,7 @@ public class AddMessageCommandValidatorUnitTests : BaseMessageUnitTest
         var command = new AddMessageCommand(
             existingSender.Id,
             existingReceiver.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

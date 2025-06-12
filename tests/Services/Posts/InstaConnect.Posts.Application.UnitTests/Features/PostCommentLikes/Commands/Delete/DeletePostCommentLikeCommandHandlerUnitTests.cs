@@ -10,7 +10,46 @@ public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeU
     {
         _commandHandler = new(
             UnitOfWork,
-            PostCommentLikeWriteRepository);
+            PostWriteRepository,
+            PostCommentLikeService);
+    }
+
+    [Fact]
+    public async Task Handle_ShouldThrowPostNotFoundException_WhenPostIdIsInvalid()
+    {
+        // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
+        var command = new DeletePostCommentLikeCommand(
+            existingPostCommentLike.Id,
+            PostTestUtilities.InvalidId,
+            existingPostCommentLike.PostCommentId,
+            existingPostCommentLike.UserId
+        );
+
+        // Act
+        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<PostNotFoundException>();
+    }
+
+    [Fact]
+    public async Task Handle_ShouldThrowPostCommentNotFoundException_WhenPostCommentIdIsInvalid()
+    {
+        // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
+        var command = new DeletePostCommentLikeCommand(
+            existingPostCommentLike.Id,
+            existingPostCommentLike.PostComment.PostId,
+            PostCommentTestUtilities.InvalidId,
+            existingPostCommentLike.UserId
+        );
+
+        // Act
+        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<PostNotFoundException>();
     }
 
     [Fact]
@@ -20,6 +59,8 @@ public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeU
         var existingPostCommentLike = CreatePostCommentLike();
         var command = new DeletePostCommentLikeCommand(
             PostCommentLikeTestUtilities.InvalidId,
+            existingPostCommentLike.PostComment.PostId,
+            existingPostCommentLike.PostCommentId,
             existingPostCommentLike.UserId
         );
 
@@ -31,30 +72,14 @@ public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeU
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
-    {
-        // Arrange
-        var existingUser = CreateUser();
-        var existingPostCommentLike = CreatePostCommentLike();
-        var command = new DeletePostCommentLikeCommand(
-            existingPostCommentLike.Id,
-            existingUser.Id
-        );
-
-        // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<UserForbiddenException>();
-    }
-
-    [Fact]
     public async Task Handle_ShouldGetPostLikeByIdFromRepository_WhenPostLikeIdIsValid()
     {
         // Arrange
         var existingPostCommentLike = CreatePostCommentLike();
         var command = new DeletePostCommentLikeCommand(
             existingPostCommentLike.Id,
+            existingPostCommentLike.PostComment.PostId,
+            existingPostCommentLike.PostCommentId,
             existingPostCommentLike.UserId
         );
 
@@ -62,9 +87,9 @@ public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeU
         await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await PostCommentLikeWriteRepository
+        await PostWriteRepository
             .Received(1)
-            .GetByIdAsync(existingPostCommentLike.Id, CancellationToken);
+            .GetByIdAsync(existingPostCommentLike.PostComment.PostId, CancellationToken);
     }
 
     [Fact]
@@ -74,6 +99,8 @@ public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeU
         var existingPostCommentLike = CreatePostCommentLike();
         var command = new DeletePostCommentLikeCommand(
             existingPostCommentLike.Id,
+            existingPostCommentLike.PostComment.PostId,
+            existingPostCommentLike.PostCommentId,
             existingPostCommentLike.UserId
         );
 
@@ -81,11 +108,14 @@ public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeU
         await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        PostCommentLikeWriteRepository
+        await PostCommentLikeService
             .Received(1)
-            .Delete(Arg.Is<PostCommentLike>(m => m.Id == existingPostCommentLike.Id &&
-                                          m.UserId == existingPostCommentLike.UserId &&
-                                          m.PostCommentId == existingPostCommentLike.PostCommentId));
+            .DeleteAsync(
+                  existingPostCommentLike.PostComment.Post,
+                  existingPostCommentLike.PostCommentId,
+                  existingPostCommentLike.Id,
+                  existingPostCommentLike.UserId,
+                  CancellationToken);
     }
 
     [Fact]
@@ -95,6 +125,8 @@ public class DeletePostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeU
         var existingPostCommentLike = CreatePostCommentLike();
         var command = new DeletePostCommentLikeCommand(
             existingPostCommentLike.Id,
+            existingPostCommentLike.PostComment.PostId,
+            existingPostCommentLike.PostCommentId,
             existingPostCommentLike.UserId
         );
 

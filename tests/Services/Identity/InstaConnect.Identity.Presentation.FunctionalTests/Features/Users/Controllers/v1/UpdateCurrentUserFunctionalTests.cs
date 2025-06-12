@@ -62,7 +62,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var request = new UpdateCurrentUserRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             new(
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
@@ -89,7 +89,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
         var request = new UpdateCurrentUserRequest(
             existingUser.Id,
             new(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateFormFile)
@@ -116,7 +116,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
             existingUser.Id,
             new(
             UserTestUtilities.ValidUpdateName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateFormFile)
         );
@@ -143,7 +143,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
             new(
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFirstName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidUpdateFormFile)
         );
 

@@ -18,6 +18,7 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var existingPostComment = CreatePostComment();
         var command = new DeletePostCommentCommand(
             null,
+            existingPostComment.PostId,
             existingPostComment.UserId
         );
 
@@ -37,7 +38,8 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         // Arrange
         var existingPostComment = CreatePostComment();
         var command = new DeletePostCommentCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
+            existingPostComment.PostId,
             existingPostComment.UserId
         );
 
@@ -49,12 +51,52 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
     }
 
     [Fact]
+    public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdIsNull()
+    {
+        // Arrange
+        var existingPostComment = CreatePostComment();
+        var command = new DeletePostCommentCommand(
+            existingPostComment.Id,
+            null,
+            existingPostComment.UserId
+        );
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldHaveValidationErrorFor(m => m.PostId);
+    }
+
+    [Theory]
+    [InlineData(default(int))]
+    [InlineData(PostCommentConfigurations.IdMinLength - 1)]
+    [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
+    public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdLengthIsInvalid(int length)
+    {
+        // Arrange
+        var existingPostComment = CreatePostComment();
+        var command = new DeletePostCommentCommand(
+            existingPostComment.Id,
+            DataFaker.GetString(length),
+            existingPostComment.UserId
+        );
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldHaveValidationErrorFor(m => m.PostId);
+    }
+
+    [Fact]
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
         var existingPostComment = CreatePostComment();
         var command = new DeletePostCommentCommand(
             existingPostComment.Id,
+            existingPostComment.PostId,
             null
         );
 
@@ -75,7 +117,8 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var existingPostComment = CreatePostComment();
         var command = new DeletePostCommentCommand(
             existingPostComment.Id,
-            SharedTestUtilities.GetString(length)
+            existingPostComment.PostId,
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -92,6 +135,7 @@ public class DeletePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var existingPostComment = CreatePostComment();
         var command = new DeletePostCommentCommand(
             existingPostComment.Id,
+            existingPostComment.PostId,
             existingPostComment.UserId
         );
 

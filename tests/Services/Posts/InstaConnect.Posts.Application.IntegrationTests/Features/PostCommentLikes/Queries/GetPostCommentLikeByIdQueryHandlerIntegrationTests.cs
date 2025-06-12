@@ -28,7 +28,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetPostCommentLikeByIdQuery(SharedTestUtilities.GetString(length));
+        var query = new GetPostCommentLikeByIdQuery(DataFaker.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -75,7 +75,7 @@ public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommen
     {
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
-        var query = new GetPostCommentLikeByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.Id));
+        var query = new GetPostCommentLikeByIdQuery(DataFaker.GetDifferentCaseString(existingPostCommentLike.Id));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);

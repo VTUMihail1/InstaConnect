@@ -16,7 +16,7 @@ public class AddEmailConfirmationTokenFunctionalTests : BaseEmailConfirmationTok
     {
         // Arrange
         var request = new AddEmailConfirmationTokenRequest(
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

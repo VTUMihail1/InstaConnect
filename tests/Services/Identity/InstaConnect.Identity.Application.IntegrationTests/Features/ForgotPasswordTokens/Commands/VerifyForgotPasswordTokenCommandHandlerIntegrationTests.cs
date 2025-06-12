@@ -38,7 +38,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Arrange
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingForgotPasswordToken.Value,
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword);
@@ -82,7 +82,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
             existingForgotPasswordToken.UserId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidUpdatePassword,
             UserTestUtilities.ValidUpdatePassword);
 
@@ -122,11 +122,11 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
     public async Task SendAsync_ShouldThrowValidationException_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
-        var password = SharedTestUtilities.GetString(length);
+        var password = DataFaker.GetString(length);
         var existingForgotPasswordToken = await CreateForgotPasswordTokenAsync(CancellationToken);
         var command = new VerifyForgotPasswordTokenCommand(
             existingForgotPasswordToken.UserId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             password,
             password);
 

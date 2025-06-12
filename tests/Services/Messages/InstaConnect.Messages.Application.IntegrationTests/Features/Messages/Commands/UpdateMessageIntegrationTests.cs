@@ -35,7 +35,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new UpdateMessageCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             MessageTestUtilities.ValidUpdateContent,
             existingMessage.SenderId
         );
@@ -76,7 +76,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var command = new UpdateMessageCommand(
             existingMessage.Id,
             MessageTestUtilities.ValidUpdateContent,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -114,7 +114,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new UpdateMessageCommand(
             existingMessage.Id,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.SenderId
         );
 
@@ -192,7 +192,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new UpdateMessageCommand(
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
+            DataFaker.GetDifferentCaseString(existingMessage.Id),
             MessageTestUtilities.ValidUpdateContent,
             existingMessage.SenderId
         );

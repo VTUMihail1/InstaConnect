@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models;
+
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class UpdatePostFunctionalTests : BasePostFunctionalTest
 {
@@ -35,7 +37,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new UpdatePostRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPost.UserId,
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
         );
@@ -80,7 +82,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         var request = new UpdatePostRequest(
             existingPost.Id,
             existingPost.UserId,
-            new(SharedTestUtilities.GetString(length), PostTestUtilities.ValidUpdateContent)
+            new(DataFaker.GetString(length), PostTestUtilities.ValidUpdateContent)
         );
 
         // Act
@@ -123,7 +125,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         var request = new UpdatePostRequest(
             existingPost.Id,
             existingPost.UserId,
-            new(PostTestUtilities.ValidUpdateTitle, SharedTestUtilities.GetString(length))
+            new(PostTestUtilities.ValidUpdateTitle, DataFaker.GetString(length))
         );
 
         // Act
@@ -165,7 +167,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new UpdatePostRequest(
             existingPost.Id,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
         );
 
@@ -291,7 +293,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new UpdatePostRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPost.Id),
+            DataFaker.GetDifferentCaseString(existingPost.Id),
             existingPost.UserId,
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
         );

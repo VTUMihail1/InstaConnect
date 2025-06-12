@@ -30,7 +30,7 @@ public class GetCurrentUserQueryHandlerIntegrationTests : BaseUserIntegrationTes
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetCurrentUserQuery(SharedTestUtilities.GetString(length));
+        var query = new GetCurrentUserQuery(DataFaker.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -81,7 +81,7 @@ public class GetCurrentUserQueryHandlerIntegrationTests : BaseUserIntegrationTes
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var query = new GetCurrentUserQuery(SharedTestUtilities.GetNonCaseMatchingString(existingUser.Id));
+        var query = new GetCurrentUserQuery(DataFaker.GetDifferentCaseString(existingUser.Id));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);

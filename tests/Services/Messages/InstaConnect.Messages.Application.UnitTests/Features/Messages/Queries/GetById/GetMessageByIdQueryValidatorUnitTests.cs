@@ -37,7 +37,7 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var existingMessage = CreateMessage();
         var query = new GetMessageByIdQuery(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.SenderId
         );
 
@@ -75,7 +75,7 @@ public class GetMessageByIdQueryValidatorUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var query = new GetMessageByIdQuery(
             existingMessage.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

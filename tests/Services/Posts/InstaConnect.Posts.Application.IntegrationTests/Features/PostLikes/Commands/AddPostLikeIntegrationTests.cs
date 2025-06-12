@@ -35,7 +35,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var command = new AddPostLikeCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPost.Id
         );
 
@@ -73,7 +73,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddPostLikeCommand(
             existingUser.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

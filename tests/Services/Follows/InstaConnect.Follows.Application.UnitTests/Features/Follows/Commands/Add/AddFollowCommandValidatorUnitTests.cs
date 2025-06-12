@@ -36,7 +36,7 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
         // Arrange
         var existingFollowing = CreateUser();
         var command = new AddFollowCommand(
-            SharedTestUtilities.GetString(length)!,
+            DataFaker.GetString(length)!,
             existingFollowing.Id);
 
         // Act
@@ -72,7 +72,7 @@ public class AddFollowCommandValidatorUnitTests : BaseFollowUnitTest
         var existingFollower = CreateUser();
         var command = new AddFollowCommand(
             existingFollower.Id,
-            SharedTestUtilities.GetString(length));
+            DataFaker.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);

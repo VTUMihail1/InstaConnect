@@ -41,7 +41,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var existingMessage = CreateMessage();
         var query = new GetAllMessagesQuery(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.ReceiverId,
             existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
@@ -65,7 +65,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
@@ -89,7 +89,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -157,7 +157,7 @@ public class GetAllMessagesQueryValidatorUnitTests : BaseMessageUnitTest
             existingMessage.ReceiverId,
             existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             MessageTestUtilities.ValidPageValue,
             MessageTestUtilities.ValidPageSizeValue);
 

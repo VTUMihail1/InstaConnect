@@ -8,6 +8,11 @@ public class DeletePostCommentCommandValidator : AbstractValidator<DeletePostCom
             .MinimumLength(PostCommentConfigurations.IdMinLength)
             .MaximumLength(PostCommentConfigurations.IdMaxLength);
 
+        RuleFor(c => c.PostId)
+            .NotEmpty()
+            .MinimumLength(PostConfigurations.IdMinLength)
+            .MaximumLength(PostConfigurations.IdMaxLength);
+
         RuleFor(c => c.CurrentUserId)
             .NotEmpty()
             .MinimumLength(UserConfigurations.IdMinLength)

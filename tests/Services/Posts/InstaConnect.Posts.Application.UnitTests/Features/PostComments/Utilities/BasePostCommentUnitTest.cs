@@ -8,7 +8,10 @@ using InstaConnect.Common.Helpers;
 using InstaConnect.Posts.Application.Extensions;
 using InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
@@ -28,32 +31,24 @@ public abstract class BasePostCommentUnitTest
 
     protected IPostWriteRepository PostWriteRepository { get; }
 
-    protected IPostCommentReadRepository PostCommentReadRepository { get; }
-
-    protected IPostCommentWriteRepository PostCommentWriteRepository { get; }
+    protected IPostCommentService PostCommentService { get; }
 
     protected BasePostCommentUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
+                new MapperConfiguration(cfg => cfg.AddMaps(PostApplicationReference.Assembly))));
         EntityPropertyValidator = new EntityPropertyValidator();
         CancellationToken = new CancellationToken();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         PostWriteRepository = Substitute.For<IPostWriteRepository>();
-        PostCommentReadRepository = Substitute.For<IPostCommentReadRepository>();
-        PostCommentWriteRepository = Substitute.For<IPostCommentWriteRepository>();
+        PostCommentService = Substitute.For<IPostCommentService>();
     }
 
     private User CreateUserUtil()
     {
-        var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+        var user = UserTestUtilities.CreateUser();
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -70,10 +65,7 @@ public abstract class BasePostCommentUnitTest
 
     private Post CreatePostUtil(User user)
     {
-        var post = new Post(
-            SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
-            SharedTestUtilities.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength),
-            user);
+        var post = PostTestUtilities.CreatePost(user, [], []);
 
         PostWriteRepository.GetByIdAsync(
             post.Id,
@@ -93,10 +85,10 @@ public abstract class BasePostCommentUnitTest
 
     private PostComment CreatePostCommentUtil(User user, Post post)
     {
-        var postComment = new PostComment(
+        var postComment = PostCommentTestUtilities.CreatePostComment(
             user,
             post,
-            SharedTestUtilities.GetAverageString(PostCommentConfigurations.ContentMaxLength, PostCommentConfigurations.ContentMinLength));
+            []);
 
         var postCommentPaginationList = new PaginationList<PostComment>(
         [postComment],
@@ -104,22 +96,32 @@ public abstract class BasePostCommentUnitTest
         PostCommentTestUtilities.ValidPageSizeValue,
         PostCommentTestUtilities.ValidTotalCountValue);
 
-        PostCommentWriteRepository.GetByIdAsync(postComment.Id, CancellationToken)
+        PostCommentService.GetByIdAsync(post, postComment.Id, CancellationToken)
             .Returns(postComment);
 
-        PostCommentReadRepository.GetByIdAsync(postComment.Id, CancellationToken)
-            .Returns(postComment);
-
-        PostCommentReadRepository
-            .GetAllAsync(Arg.Is<PostCommentCollectionReadQuery>(m =>
+        PostCommentService
+            .GetAllAsync(post, Arg.Is<PostCommentCollectionReadQuery>(m =>
+                                                                        m.PostId == post.Id &&
                                                                         m.UserId == user.Id &&
                                                                         m.UserName == user.UserName &&
-                                                                        m.PostId == post.Id &&
-                                                                        m.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                                        m.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                                        m.SortOrder == PostCommentTestUtilities.ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == PostCommentTestUtilities.ValidSortPropertyName), CancellationToken)
+                                                                        m.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == PostLikeTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == PostLikeTestUtilities.ValidSortPropertyName), CancellationToken)
             .Returns(postCommentPaginationList);
+
+        PostCommentService
+            .When(x => x.UpdateAsync(
+                post,
+                postComment.Id,
+                postComment.UserId,
+                PostCommentTestUtilities.ValidUpdateContent,
+                CancellationToken))
+            .Do(call =>
+            {
+                var updatedPostComment = call.Arg<PostComment>();
+                updatedPostComment.Update(PostCommentTestUtilities.ValidUpdateContent, PostCommentTestUtilities.ValidUpdateUpdatedAtUtc);
+            });
 
         return postComment;
     }
@@ -129,6 +131,19 @@ public abstract class BasePostCommentUnitTest
         var user = CreateUser();
         var post = CreatePost();
         var postComment = CreatePostCommentUtil(user, post);
+
+        return postComment;
+    }
+
+    protected PostComment CreatePostCommentFactory()
+    {
+        var user = CreateUser();
+
+        var post = PostTestUtilities.CreatePost(user, [], []);
+        var postComment = PostCommentTestUtilities.CreatePostComment(user, post, []);
+
+        PostCommentService.Add(post, PostCommentTestUtilities.ValidAddContent, user.Id)
+            .Returns(postComment);
 
         return postComment;
     }

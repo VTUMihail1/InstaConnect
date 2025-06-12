@@ -34,7 +34,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new DeleteMessageCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.SenderId
         );
 
@@ -72,7 +72,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new DeleteMessageCommand(
             existingMessage.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -144,7 +144,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var command = new DeleteMessageCommand(
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
+            DataFaker.GetDifferentCaseString(existingMessage.Id),
             existingMessage.SenderId
         );
 

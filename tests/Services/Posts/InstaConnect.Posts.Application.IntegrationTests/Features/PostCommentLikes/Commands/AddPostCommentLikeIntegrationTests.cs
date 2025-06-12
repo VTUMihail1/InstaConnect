@@ -35,7 +35,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostComment.Id
         );
 
@@ -73,7 +73,7 @@ public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegration
         var existingUser = await CreateUserAsync(CancellationToken);
         var command = new AddPostCommentLikeCommand(
             existingUser.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

@@ -38,7 +38,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.ReceiverId,
             existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
@@ -62,7 +62,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
@@ -86,7 +86,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -154,7 +154,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
             existingMessage.ReceiverId,
             existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             MessageTestUtilities.ValidPageValue,
             MessageTestUtilities.ValidPageSizeValue);
 
@@ -217,7 +217,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.SenderId),
+            DataFaker.GetDifferentCaseString(existingMessage.SenderId),
             existingMessage.ReceiverId,
             existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
@@ -323,7 +323,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.ReceiverId),
+            DataFaker.GetDifferentCaseString(existingMessage.ReceiverId),
             existingMessage.Receiver.UserName,
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
@@ -429,7 +429,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Receiver.UserName),
+            DataFaker.GetDifferentCaseString(existingMessage.Receiver.UserName),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,
@@ -464,7 +464,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var query = new GetAllMessagesQuery(
             existingMessage.SenderId,
             existingMessage.ReceiverId,
-            SharedTestUtilities.GetHalfStartString(existingMessage.Receiver.UserName),
+            DataFaker.GetPrefixString(existingMessage.Receiver.UserName),
             MessageTestUtilities.ValidSortOrderProperty,
             MessageTestUtilities.ValidSortPropertyName,
             MessageTestUtilities.ValidPageValue,

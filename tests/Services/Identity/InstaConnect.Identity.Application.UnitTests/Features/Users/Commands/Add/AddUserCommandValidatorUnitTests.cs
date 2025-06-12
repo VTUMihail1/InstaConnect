@@ -40,7 +40,7 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new AddUserCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
@@ -86,7 +86,7 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddFirstName,
@@ -129,7 +129,7 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForPassword_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
-        var password = SharedTestUtilities.GetString(length);
+        var password = DataFaker.GetString(length);
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -201,7 +201,7 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidAddLastName,
             UserTestUtilities.ValidAddFormFile
         );
@@ -247,7 +247,7 @@ public class AddUserCommandValidatorUnitTests : BaseUserUnitTest
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddFirstName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidAddFormFile
         );
 

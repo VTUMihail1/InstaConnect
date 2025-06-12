@@ -1,110 +1,86 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Application.Features.Posts.Models;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Controllers.v1;
 
 public class GetAllPostsControllerUnitTests : BasePostUnitTest
 {
+    private readonly User _user;
+    private readonly Post _post;
+    private readonly GetAllPostsRequestBuilder _requestBuilder;
     private readonly PostController _postController;
 
     public GetAllPostsControllerUnitTests()
     {
+        _user = SetupUser();
+        _post = SetupPost(_user);
+        _requestBuilder = new(_post, _user);
         _postController = new(
             InstaConnectMapper,
             InstaConnectSender);
+
+        var request = _requestBuilder.Create();
+        var postQueryResponse = new PostQueryResponse(
+            _post.Id,
+            _post.Title,
+            _post.Content,
+            new(
+                _user.Id,
+                _user.UserName,
+                _user.ProfileImage));
+        var postQueryResponses = new List<PostQueryResponse>() { postQueryResponse };
+
+        var response = new GetAllPostsQueryResponse(
+            postQueryResponses,
+            request.Pagination.Page,
+            request.Pagination.PageSize,
+            postQueryResponses.Count,
+            false,
+            false);
+
+        InstaConnectSender.SetupGetAllQuery(request, response, CancellationToken);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue
-        );
+        var request = _requestBuilder.Create();
 
         // Act
         var response = await _postController.GetAllAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Result
-            .Should()
-            .Match<OkObjectResult>(m => m.StatusCode == StatusCodes.Status200OK);
+        response.ShouldBeActionResultWithOkStatusCode();
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldReturnPostPaginationQueryResponse_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue
-        );
+        var request = _requestBuilder.Create();
 
         // Act
         var response = await _postController.GetAllAsync(request, CancellationToken);
 
         // Assert
-        response.Result
-            .Should()
-            .BeOfType<OkObjectResult>()
-            .Which
-            .Value
-            .Should()
-            .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                                 m.Id == existingPost.Id &&
-                                                                 m.Title == existingPost.Title &&
-                                                                 m.Content == existingPost.Content &&
-                                                                 m.UserId == existingPost.UserId &&
-                                                                 m.UserName == existingPost.User.UserName &&
-                                                                 m.UserProfileImage == existingPost.User.ProfileImage) &&
-                                                              mc.Page == PostTestUtilities.ValidPageValue &&
-                                                              mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                              mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                              !mc.HasNextPage &&
-                                                              !mc.HasPreviousPage);
+        response.ShouldSatisfy(_post, _user, request);
     }
 
     [Fact]
     public async Task GetAllAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue
-        );
+        var request = _requestBuilder.Create();
 
         // Act
         await _postController.GetAllAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
-              .Received(1)
-              .SendAsync(Arg.Is<GetAllPostsQuery>(m =>
-                  m.UserId == existingPost.UserId &&
-                  m.UserName == existingPost.User.UserName &&
-                  m.Title == existingPost.Title &&
-                  m.SortOrder == PostTestUtilities.ValidSortOrderProperty &&
-                  m.SortPropertyName == PostTestUtilities.ValidSortPropertyName &&
-                  m.Page == PostTestUtilities.ValidPageValue &&
-                  m.PageSize == PostTestUtilities.ValidPageSizeValue), CancellationToken);
+        await InstaConnectSender.ShouldReceiveOneSendAsync(request, CancellationToken);
     }
 }

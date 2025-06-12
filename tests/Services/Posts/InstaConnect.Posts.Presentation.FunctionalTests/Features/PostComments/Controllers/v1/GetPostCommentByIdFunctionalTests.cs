@@ -14,7 +14,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
     {
         // Arrange
         var request = new GetPostCommentByIdRequest(
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -91,7 +91,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new GetPostCommentByIdRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.Id)
+            DataFaker.GetDifferentCaseString(existingPostComment.Id)
         );
 
         // Act

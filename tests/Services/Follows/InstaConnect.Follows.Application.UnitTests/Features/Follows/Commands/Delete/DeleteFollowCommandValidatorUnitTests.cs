@@ -37,7 +37,7 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
         // Arrange
         var existingFollow = CreateFollow();
         var command = new DeleteFollowCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingFollow.FollowerId
         );
 
@@ -75,7 +75,7 @@ public class DeleteFollowCommandValidatorUnitTests : BaseFollowUnitTest
         var existingFollow = CreateFollow();
         var command = new DeleteFollowCommand(
             existingFollow.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

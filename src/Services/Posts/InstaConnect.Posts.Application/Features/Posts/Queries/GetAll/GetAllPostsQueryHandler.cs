@@ -1,8 +1,8 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 
-internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, PostPaginationQueryViewModel>
+internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, GetAllPostsQueryResponse>
 {
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IPostReadRepository _postReadRepository;
@@ -15,14 +15,14 @@ internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, PostPag
         _postReadRepository = postRepository;
     }
 
-    public async Task<PostPaginationQueryViewModel> Handle(
+    public async Task<GetAllPostsQueryResponse> Handle(
         GetAllPostsQuery request,
         CancellationToken cancellationToken)
     {
-        var filteredCollectionQuery = _instaConnectMapper.Map<PostCollectionReadQuery>(request);
+        var parameters = _instaConnectMapper.Map<PostQueryParameters>(request);
 
-        var posts = await _postReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
-        var response = _instaConnectMapper.Map<PostPaginationQueryViewModel>(posts);
+        var collection = await _postReadRepository.GetAllAsync(parameters, cancellationToken);
+        var response = _instaConnectMapper.Map<GetAllPostsQueryResponse>(collection);
 
         return response;
     }

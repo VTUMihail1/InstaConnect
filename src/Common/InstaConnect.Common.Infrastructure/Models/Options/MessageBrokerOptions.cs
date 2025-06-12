@@ -1,6 +1,10 @@
-﻿namespace InstaConnect.Common.Infrastructure.Models.Options;
+﻿using InstaConnect.Common.Infrastructure.Abstractions;
+
+namespace InstaConnect.Common.Infrastructure.Models.Options;
 public class MessageBrokerOptions
 {
+    public const string SectionName = "MessageBrokerConfiguration";
+
     [Required]
     public string Host { get; set; } = string.Empty;
 

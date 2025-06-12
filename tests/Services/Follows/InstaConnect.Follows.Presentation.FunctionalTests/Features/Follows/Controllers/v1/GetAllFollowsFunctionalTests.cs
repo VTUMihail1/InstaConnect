@@ -16,7 +16,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollow = await CreateFollowAsync(CancellationToken);
 
         var request = new GetAllFollowsRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingFollow.Follower.UserName,
             existingFollow.FollowingId,
             existingFollow.Following.UserName,
@@ -46,7 +46,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
 
         var request = new GetAllFollowsRequest(
             existingFollow.FollowerId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingFollow.FollowingId,
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
@@ -76,7 +76,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest(
             existingFollow.FollowerId,
             existingFollow.Follower.UserName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -106,7 +106,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             existingFollow.FollowerId,
             existingFollow.Follower.UserName,
             existingFollow.FollowingId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -164,7 +164,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             existingFollow.FollowingId,
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             FollowTestUtilities.ValidPageValue,
             FollowTestUtilities.ValidPageSizeValue
         );
@@ -270,7 +270,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollow = await CreateFollowAsync(CancellationToken);
         var request = new GetAllFollowsRequest(
             existingFollow.FollowerId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Follower.UserName),
+            DataFaker.GetDifferentCaseString(existingFollow.Follower.UserName),
             existingFollow.FollowingId,
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
@@ -296,7 +296,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollow = await CreateFollowAsync(CancellationToken);
         var request = new GetAllFollowsRequest(
             existingFollow.FollowerId,
-            SharedTestUtilities.GetHalfStartString(existingFollow.Follower.UserName),
+            DataFaker.GetPrefixString(existingFollow.Follower.UserName),
             existingFollow.FollowingId,
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
@@ -323,7 +323,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest(
             existingFollow.FollowerId,
             existingFollow.Follower.UserName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.FollowingId),
+            DataFaker.GetDifferentCaseString(existingFollow.FollowingId),
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -350,7 +350,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             existingFollow.FollowerId,
             existingFollow.Follower.UserName,
             existingFollow.FollowingId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Following.UserName),
+            DataFaker.GetDifferentCaseString(existingFollow.Following.UserName),
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -376,7 +376,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             existingFollow.FollowerId,
             existingFollow.Follower.UserName,
             existingFollow.FollowingId,
-            SharedTestUtilities.GetHalfStartString(existingFollow.Following.UserName),
+            DataFaker.GetPrefixString(existingFollow.Following.UserName),
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -415,7 +415,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollow = await CreateFollowAsync(CancellationToken);
         var request = new GetAllFollowsRequest(
             existingFollow.FollowerId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Follower.UserName),
+            DataFaker.GetDifferentCaseString(existingFollow.Follower.UserName),
             existingFollow.FollowingId,
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
@@ -453,7 +453,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var existingFollow = await CreateFollowAsync(CancellationToken);
         var request = new GetAllFollowsRequest(
             existingFollow.FollowerId,
-            SharedTestUtilities.GetHalfStartString(existingFollow.Follower.UserName),
+            DataFaker.GetPrefixString(existingFollow.Follower.UserName),
             existingFollow.FollowingId,
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
@@ -492,7 +492,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
         var request = new GetAllFollowsRequest(
             existingFollow.FollowerId,
             existingFollow.Follower.UserName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.FollowingId),
+            DataFaker.GetDifferentCaseString(existingFollow.FollowingId),
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -531,7 +531,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             existingFollow.FollowerId,
             existingFollow.Follower.UserName,
             existingFollow.FollowingId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Following.UserName),
+            DataFaker.GetDifferentCaseString(existingFollow.Following.UserName),
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -568,7 +568,7 @@ public class GetAllFollowsFunctionalTests : BaseFollowFunctionalTest
             existingFollow.FollowerId,
             existingFollow.Follower.UserName,
             existingFollow.FollowingId,
-            SharedTestUtilities.GetHalfStartString(existingFollow.Following.UserName),
+            DataFaker.GetPrefixString(existingFollow.Following.UserName),
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,

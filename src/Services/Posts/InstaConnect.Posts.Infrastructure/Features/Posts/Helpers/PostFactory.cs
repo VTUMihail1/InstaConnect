@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models;
+
+namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers;
 
 internal class PostFactory : IPostFactory
 {

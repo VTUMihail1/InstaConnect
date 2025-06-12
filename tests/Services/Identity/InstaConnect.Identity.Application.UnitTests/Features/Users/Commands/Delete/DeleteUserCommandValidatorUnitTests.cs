@@ -31,7 +31,7 @@ public class DeleteUserCommandValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new DeleteUserCommand(SharedTestUtilities.GetString(length));
+        var command = new DeleteUserCommand(DataFaker.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);

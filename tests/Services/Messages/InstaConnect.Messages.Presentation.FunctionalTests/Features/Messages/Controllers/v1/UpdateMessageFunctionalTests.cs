@@ -35,7 +35,7 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new UpdateMessageRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.SenderId,
             new(MessageTestUtilities.ValidUpdateContent)
         );
@@ -80,7 +80,7 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
         var request = new UpdateMessageRequest(
             existingMessage.Id,
             existingMessage.SenderId,
-            new(SharedTestUtilities.GetString(length))
+            new(DataFaker.GetString(length))
         );
 
         // Act
@@ -122,7 +122,7 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new UpdateMessageRequest(
             existingMessage.Id,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             new(MessageTestUtilities.ValidUpdateContent)
         );
 
@@ -246,7 +246,7 @@ public class UpdateMessageFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new UpdateMessageRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
+            DataFaker.GetDifferentCaseString(existingMessage.Id),
             existingMessage.SenderId,
             new(MessageTestUtilities.ValidUpdateContent)
         );

@@ -16,7 +16,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
@@ -40,7 +40,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -64,7 +64,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
             existingPostComment.User.UserName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
             PostCommentTestUtilities.ValidPageValue,
@@ -132,7 +132,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
             existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostCommentTestUtilities.ValidPageValue,
             PostCommentTestUtilities.ValidPageSizeValue);
 
@@ -261,7 +261,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.UserId),
+            DataFaker.GetDifferentCaseString(existingPostComment.UserId),
             existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
@@ -361,7 +361,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.User.UserName),
+            DataFaker.GetDifferentCaseString(existingPostComment.User.UserName),
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -461,7 +461,7 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentInt
         var query = new GetAllPostCommentsQuery(
             existingPostComment.UserId,
             existingPostComment.User.UserName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.PostId),
+            DataFaker.GetDifferentCaseString(existingPostComment.PostId),
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
             PostCommentTestUtilities.ValidPageValue,

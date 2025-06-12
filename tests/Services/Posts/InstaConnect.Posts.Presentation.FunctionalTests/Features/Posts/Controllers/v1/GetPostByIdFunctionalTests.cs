@@ -14,7 +14,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var request = new GetPostByIdRequest(
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -91,7 +91,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetPostByIdRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPost.Id)
+            DataFaker.GetDifferentCaseString(existingPost.Id)
         );
 
         // Act

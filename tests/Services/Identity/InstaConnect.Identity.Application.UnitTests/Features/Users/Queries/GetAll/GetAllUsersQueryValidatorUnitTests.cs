@@ -19,7 +19,7 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
         // Arrange
         var existingUser = CreateUser();
         var query = new GetAllUsersQuery(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingUser.FirstName,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
@@ -43,7 +43,7 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
         var existingUser = CreateUser();
         var query = new GetAllUsersQuery(
             existingUser.UserName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
@@ -67,7 +67,7 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
         var query = new GetAllUsersQuery(
             existingUser.UserName,
             existingUser.FirstName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -135,7 +135,7 @@ public class GetAllUsersQueryValidatorUnitTests : BaseUserUnitTest
             existingUser.FirstName,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidPageValue,
             UserTestUtilities.ValidPageSizeValue);
 

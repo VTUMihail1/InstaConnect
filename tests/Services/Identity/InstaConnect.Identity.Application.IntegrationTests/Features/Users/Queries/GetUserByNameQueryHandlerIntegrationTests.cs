@@ -30,7 +30,7 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetUserByNameQuery(SharedTestUtilities.GetString(length));
+        var query = new GetUserByNameQuery(DataFaker.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -81,7 +81,7 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var query = new GetUserByNameQuery(SharedTestUtilities.GetNonCaseMatchingString(existingUser.UserName));
+        var query = new GetUserByNameQuery(DataFaker.GetDifferentCaseString(existingUser.UserName));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);

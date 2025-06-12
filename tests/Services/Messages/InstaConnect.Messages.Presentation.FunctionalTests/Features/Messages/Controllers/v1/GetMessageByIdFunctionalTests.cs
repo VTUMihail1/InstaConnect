@@ -34,7 +34,7 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new GetMessageByIdRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.SenderId
         );
 
@@ -76,7 +76,7 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new GetMessageByIdRequest(
             existingMessage.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -179,7 +179,7 @@ public class GetMessageByIdFunctionalTests : BaseMessageFunctionalTest
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var request = new GetMessageByIdRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
+            DataFaker.GetDifferentCaseString(existingMessage.Id),
             existingMessage.SenderId
         );
 

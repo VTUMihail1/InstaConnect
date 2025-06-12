@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Infrastructure.Features.Posts.Repositories;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models;
+
+namespace InstaConnect.Posts.Infrastructure.Features.Posts.Repositories;
 
 internal class PostWriteRepository : IPostWriteRepository
 {

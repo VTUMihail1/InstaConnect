@@ -28,7 +28,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrati
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetPostLikeByIdQuery(SharedTestUtilities.GetString(length));
+        var query = new GetPostLikeByIdQuery(DataFaker.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -75,7 +75,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrati
     {
         // Arrange
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetPostLikeByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingPostLike.Id));
+        var query = new GetPostLikeByIdQuery(DataFaker.GetDifferentCaseString(existingPostLike.Id));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);

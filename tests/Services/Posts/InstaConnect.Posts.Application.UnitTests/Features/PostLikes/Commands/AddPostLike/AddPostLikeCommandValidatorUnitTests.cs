@@ -15,10 +15,10 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingPost = CreatePost();
+        var existingPostLike = CreatePostLikeFactory();
         var command = new AddPostLikeCommand(
             null,
-            existingPost.Id);
+            existingPostLike.PostId);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -34,10 +34,10 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPost = CreatePost();
+        var existingPostLike = CreatePostLikeFactory();
         var command = new AddPostLikeCommand(
-            SharedTestUtilities.GetString(length)!,
-            existingPost.Id);
+            DataFaker.GetString(length),
+            existingPostLike.PostId);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -50,9 +50,9 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingPostLike = CreatePostLikeFactory();
         var command = new AddPostLikeCommand(
-            existingUser.Id,
+            existingPostLike.UserId,
             null);
 
         // Act
@@ -69,10 +69,10 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingPostLike = CreatePostLikeFactory();
         var command = new AddPostLikeCommand(
-            existingUser.Id,
-            SharedTestUtilities.GetString(length));
+            existingPostLike.UserId,
+            DataFaker.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -85,11 +85,10 @@ public class AddPostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
-        var existingPost = CreatePost();
+        var existingPostLike = CreatePostLikeFactory();
         var command = new AddPostLikeCommand(
-            existingUser.Id,
-            existingPost.Id);
+            existingPostLike.UserId,
+            existingPostLike.PostId);
 
         // Act
         var result = _commandValidator.TestValidate(command);

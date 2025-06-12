@@ -1,4 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 public interface IPostWriteRepository

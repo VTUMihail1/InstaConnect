@@ -28,7 +28,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetDetailedUserByIdQuery(SharedTestUtilities.GetString(length));
+        var query = new GetDetailedUserByIdQuery(DataFaker.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -76,7 +76,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var query = new GetDetailedUserByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingUser.Id));
+        var query = new GetDetailedUserByIdQuery(DataFaker.GetDifferentCaseString(existingUser.Id));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);

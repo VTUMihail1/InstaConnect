@@ -19,9 +19,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
-            SharedTestUtilities.GetString(length),
-            existingPostLike.User.UserName,
             existingPostLike.PostId,
+            DataFaker.GetString(length),
+            existingPostLike.User.UserName,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
@@ -42,9 +42,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            SharedTestUtilities.GetString(length),
             existingPostLike.PostId,
+            existingPostLike.UserId,
+            DataFaker.GetString(length),
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
@@ -65,9 +65,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
+            DataFaker.GetString(length),
             existingPostLike.UserId,
             existingPostLike.User.UserName,
-            SharedTestUtilities.GetString(length),
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
@@ -86,9 +86,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
+            existingPostLike.PostId,
             existingPostLike.UserId,
             existingPostLike.User.UserName,
-            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             null,
             PostLikeTestUtilities.ValidPageValue,
@@ -107,9 +107,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
+            existingPostLike.PostId,
             existingPostLike.UserId,
             existingPostLike.User.UserName,
-            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.InvalidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
@@ -131,11 +131,11 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
+            existingPostLike.PostId,
             existingPostLike.UserId,
             existingPostLike.User.UserName,
-            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
@@ -154,9 +154,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
+            existingPostLike.PostId,
             existingPostLike.UserId,
             existingPostLike.User.UserName,
-            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             value,
@@ -177,9 +177,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
+            existingPostLike.PostId,
             existingPostLike.UserId,
             existingPostLike.User.UserName,
-            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
@@ -198,9 +198,9 @@ public class GetAllPostLikesQueryValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
+            existingPostLike.PostId,
             existingPostLike.UserId,
             existingPostLike.User.UserName,
-            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,

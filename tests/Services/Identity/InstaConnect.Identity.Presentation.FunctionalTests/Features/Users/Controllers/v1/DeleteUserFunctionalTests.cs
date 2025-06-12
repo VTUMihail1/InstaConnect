@@ -52,7 +52,7 @@ public class DeleteUserFunctionalTests : BaseUserFunctionalTest
     {
         // Arrange
         var request = new DeleteUserRequest(
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

@@ -36,7 +36,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new UpdatePostCommentCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostComment.UserId,
             existingPostComment.Content
         );
@@ -76,7 +76,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostComment.Content
         );
 
@@ -116,7 +116,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
             existingPostComment.UserId,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -193,7 +193,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var command = new UpdatePostCommentCommand(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.Id),
+            DataFaker.GetDifferentCaseString(existingPostComment.Id),
             existingPostComment.UserId,
             existingPostComment.Content
         );

@@ -1,9 +1,10 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Common.Tests.Features.PostLikes.Utilities;
 
-public class PostLikeTestUtilities : SharedTestUtilities
+public class PostLikeTestUtilities : DataFaker
 {
     public static readonly string InvalidId = GetAverageString(PostLikeConfigurations.IdMaxLength, PostLikeConfigurations.IdMinLength);
 
@@ -16,12 +17,12 @@ public class PostLikeTestUtilities : SharedTestUtilities
 
     public static readonly SortOrder ValidSortOrderProperty = SortOrder.ASC;
 
-    public static PostLike CreatePostLike()
+    public static PostLike CreatePostLike(User user, Post post)
     {
         var postLike = new PostLike(
             GetAverageString(PostLikeConfigurations.IdMaxLength, PostLikeConfigurations.IdMinLength),
-            GetAverageString(PostConfigurations.IdMaxLength, PostConfigurations.IdMinLength),
-            GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength),
+            post,
+            user,
             GetMaxDate(),
             GetMaxDate());
 

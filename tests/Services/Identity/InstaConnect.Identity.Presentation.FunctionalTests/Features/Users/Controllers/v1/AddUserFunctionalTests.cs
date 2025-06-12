@@ -19,7 +19,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var request = new AddUserRequest(
             new(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
@@ -47,7 +47,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
         var request = new AddUserRequest(
             new(
             UserTestUtilities.ValidAddName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddFirstName,
@@ -71,7 +71,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
-        var password = SharedTestUtilities.GetString(length);
+        var password = DataFaker.GetString(length);
         var request = new AddUserRequest(
             new(
             UserTestUtilities.ValidAddName,
@@ -129,7 +129,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidAddLastName,
             UserTestUtilities.ValidAddFormFile)
         );
@@ -157,7 +157,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddFirstName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidAddFormFile)
         );
 

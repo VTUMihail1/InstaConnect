@@ -16,7 +16,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingUser.FirstName,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
@@ -42,7 +42,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
             existingUser.UserName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
@@ -68,7 +68,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetAllUsersQuery(
             existingUser.UserName,
             existingUser.FirstName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -142,7 +142,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             existingUser.FirstName,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidPageValue,
             UserTestUtilities.ValidPageSizeValue);
 
@@ -275,7 +275,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            SharedTestUtilities.GetNonCaseMatchingString(existingUser.UserName),
+            DataFaker.GetDifferentCaseString(existingUser.UserName),
             existingUser.FirstName,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
@@ -307,7 +307,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
-            SharedTestUtilities.GetHalfStartString(existingUser.UserName),
+            DataFaker.GetPrefixString(existingUser.UserName),
             existingUser.FirstName,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
@@ -404,7 +404,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
             existingUser.UserName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingUser.FirstName),
+            DataFaker.GetDifferentCaseString(existingUser.FirstName),
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
@@ -436,7 +436,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var query = new GetAllUsersQuery(
             existingUser.UserName,
-            SharedTestUtilities.GetHalfStartString(existingUser.FirstName),
+            DataFaker.GetPrefixString(existingUser.FirstName),
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
@@ -533,7 +533,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetAllUsersQuery(
             existingUser.UserName,
             existingUser.FirstName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingUser.LastName),
+            DataFaker.GetDifferentCaseString(existingUser.LastName),
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -565,7 +565,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetAllUsersQuery(
             existingUser.UserName,
             existingUser.FirstName,
-            SharedTestUtilities.GetHalfStartString(existingUser.LastName),
+            DataFaker.GetPrefixString(existingUser.LastName),
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,

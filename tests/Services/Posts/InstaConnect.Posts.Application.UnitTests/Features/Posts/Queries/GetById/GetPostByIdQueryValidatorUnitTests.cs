@@ -4,53 +4,53 @@ namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetByI
 
 public class GetPostByIdQueryValidatorUnitTests : BasePostUnitTest
 {
-    private readonly GetPostByIdQueryValidator _validator;
+    private readonly GetPostByIdQueryBuilder _queryBuilder;
+    private readonly GetPostByIdQueryValidator _queryValidator;
 
     public GetPostByIdQueryValidatorUnitTests()
     {
-        _validator = new();
+        _queryBuilder = new();
+        _queryValidator = new();
     }
 
     [Fact]
-    public void TestValidate_ShouldHaveAnErrorForId_WhenIdIsNull()
+    public void TestValidate_ShouldHaveAnError_WhenIdIsNull()
     {
         // Arrange
-        var query = new GetPostByIdQuery(null);
+        var query = _queryBuilder.WithoutId().Create();
 
         // Act
-        var result = _validator.TestValidate(query);
+        var result = _queryValidator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Id);
+        result.ShouldHaveValidationErrorForId();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostConfigurations.IdMinLength - 1)]
-    [InlineData(PostConfigurations.IdMaxLength + 1)]
-    public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
+    [PostIdOutOfBoundsMinData]
+    [PostIdOutOfBoundsMaxData]
+    public void TestValidate_ShouldHaveAnError_WhenIdLengthIsInvalid(string id)
     {
         // Arrange
-        var query = new GetPostByIdQuery(SharedTestUtilities.GetString(length));
+        var query = _queryBuilder.WithId(id).Create();
 
         // Act
-        var result = _validator.TestValidate(query);
+        var result = _queryValidator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(m => m.Id);
+        result.ShouldHaveValidationErrorForId();
     }
 
     [Fact]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCommandIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var query = new GetPostByIdQuery(existingPost.Id);
+        var query = _queryBuilder.Create();
 
         // Act
-        var result = _validator.TestValidate(query);
+        var result = _queryValidator.TestValidate(query);
 
         // Assert
-        result.ShouldNotHaveAnyValidationErrors();
+        result.ShouldNotHaveAnyValidationErrorProperties();
     }
 }

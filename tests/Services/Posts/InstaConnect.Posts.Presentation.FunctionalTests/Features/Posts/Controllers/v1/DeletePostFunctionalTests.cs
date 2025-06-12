@@ -34,7 +34,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new DeletePostRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPost.UserId
         );
 
@@ -76,7 +76,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new DeletePostRequest(
             existingPost.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -173,7 +173,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new DeletePostRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPost.Id),
+            DataFaker.GetDifferentCaseString(existingPost.Id),
             existingPost.UserId
         );
 

@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models;
+
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class AddPostFunctionalTests : BasePostFunctionalTest
 {
@@ -55,7 +57,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddPostRequest(
             existingUser.Id,
-            new(SharedTestUtilities.GetString(length), PostTestUtilities.ValidAddContent)
+            new(DataFaker.GetString(length), PostTestUtilities.ValidAddContent)
         );
 
         // Act
@@ -96,7 +98,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddPostRequest(
             existingUser.Id,
-            new(PostTestUtilities.ValidAddTitle, SharedTestUtilities.GetString(length))
+            new(PostTestUtilities.ValidAddTitle, DataFaker.GetString(length))
         );
 
         // Act
@@ -134,7 +136,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var request = new AddPostRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
         );
 

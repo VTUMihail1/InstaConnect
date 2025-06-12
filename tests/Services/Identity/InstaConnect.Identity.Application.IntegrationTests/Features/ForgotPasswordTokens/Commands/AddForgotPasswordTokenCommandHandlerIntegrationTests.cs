@@ -32,7 +32,7 @@ public class AddForgotPasswordTokenCommandHandlerIntegrationTests : BaseUserInte
     public async Task SendAsync_ShouldThrowValidationException_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new AddForgotPasswordTokenCommand(SharedTestUtilities.GetString(length));
+        var command = new AddForgotPasswordTokenCommand(DataFaker.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);

@@ -2,7 +2,8 @@
 
 using InstaConnect.Common.Domain.Models.Pagination;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Application.Features.Posts.Mappings;
 
@@ -10,17 +11,35 @@ public class PostQueryProfile : Profile
 {
     public PostQueryProfile()
     {
-        CreateMap<GetAllPostsQuery, PostCollectionReadQuery>();
+        CreateMap<GetAllPostsQuery, PostQueryParameters>();
 
-        CreateMap<Post, PostQueryViewModel>()
+        CreateMap<Post, GetPostByIdQueryResponse>()
             .ConstructUsing(src => new(
-                src.Id,
-                src.Title,
-                src.Content,
-                src.UserId,
-                src.User!.UserName,
-                src.User.ProfileImage));
+                new(
+                    src.Id,
+                    src.Title,
+                    src.Content,
+                    new(
+                        src.UserId,
+                        src.User!.UserName,
+                        src.User.ProfileImage))));
 
-        CreateMap<PaginationList<Post>, PostPaginationQueryViewModel>();
+        CreateMap<PostQueryCollection, GetAllPostsQueryResponse>()
+            .ConstructUsing(pp => new(
+                pp.Data
+                  .Select(p => new PostQueryResponse(
+                    p.Id,
+                    p.Title,
+                    p.Content,
+                    new(
+                        p.UserId,
+                        p.User!.UserName,
+                        p.User.ProfileImage)))
+                  .ToList(),
+                pp.Page,
+                pp.PageSize,
+                pp.TotalCount,
+                pp.HasNextPage,
+                pp.HasPreviousPage));
     }
 }

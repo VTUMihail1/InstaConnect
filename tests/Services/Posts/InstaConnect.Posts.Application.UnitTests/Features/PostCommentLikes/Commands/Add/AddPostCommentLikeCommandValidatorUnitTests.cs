@@ -15,10 +15,11 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var existingPostComment = CreatePostComment();
+        var existingPostCommentLike = CreatePostCommentLikeFactory();
         var command = new AddPostCommentLikeCommand(
             null,
-            existingPostComment.Id);
+            existingPostCommentLike.PostComment.PostId,
+            existingPostCommentLike.PostCommentId);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -34,10 +35,11 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     public void TestValidate_ShouldHaveAnErrorForCurrentUserId_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingPostComment = CreatePostComment();
+        var existingPostCommentLike = CreatePostCommentLikeFactory();
         var command = new AddPostCommentLikeCommand(
-            SharedTestUtilities.GetString(length)!,
-            existingPostComment.Id);
+            DataFaker.GetString(length),
+            existingPostCommentLike.PostComment.PostId,
+            existingPostCommentLike.PostCommentId);
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -47,12 +49,50 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     }
 
     [Fact]
+    public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdIsNull()
+    {
+        // Arrange
+        var existingPostCommentLike = CreatePostCommentLikeFactory();
+        var command = new AddPostCommentLikeCommand(
+            existingPostCommentLike.UserId,
+            null!,
+            existingPostCommentLike.PostCommentId);
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldHaveValidationErrorFor(m => m.PostId);
+    }
+
+    [Theory]
+    [InlineData(default(int))]
+    [InlineData(PostConfigurations.IdMinLength - 1)]
+    [InlineData(PostConfigurations.IdMaxLength + 1)]
+    public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdLengthIsInvalid(int length)
+    {
+        // Arrange
+        var existingPostCommentLike = CreatePostCommentLikeFactory();
+        var command = new AddPostCommentLikeCommand(
+            existingPostCommentLike.UserId,
+            DataFaker.GetString(length),
+            existingPostCommentLike.PostCommentId);
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldHaveValidationErrorFor(m => m.PostId);
+    }
+
+    [Fact]
     public void TestValidate_ShouldHaveAnErrorForPostCommentId_WhenPostCommentIdIsNull()
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingPostCommentLike = CreatePostCommentLikeFactory();
         var command = new AddPostCommentLikeCommand(
-            existingUser.Id,
+            existingPostCommentLike.UserId,
+            existingPostCommentLike.PostComment.PostId,
             null);
 
         // Act
@@ -69,10 +109,11 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     public void TestValidate_ShouldHaveAnErrorForPostCommentId_WhenPostCommentIdLengthIsInvalid(int length)
     {
         // Arrange
-        var existingUser = CreateUser();
+        var existingPostCommentLike = CreatePostCommentLikeFactory();
         var command = new AddPostCommentLikeCommand(
-            existingUser.Id,
-            SharedTestUtilities.GetString(length)!);
+            existingPostCommentLike.UserId,
+            existingPostCommentLike.PostComment.PostId,
+            DataFaker.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);
@@ -85,11 +126,11 @@ public class AddPostCommentLikeCommandValidatorUnitTests : BasePostCommentLikeUn
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
-        var existingUser = CreateUser();
-        var existingPostComment = CreatePostComment();
+        var existingPostCommentLike = CreatePostCommentLikeFactory();
         var command = new AddPostCommentLikeCommand(
-             existingUser.Id,
-             existingPostComment.Id);
+             existingPostCommentLike.UserId,
+             existingPostCommentLike.PostComment.PostId,
+             existingPostCommentLike.PostCommentId);
 
         // Act
         var result = _commandValidator.TestValidate(command);

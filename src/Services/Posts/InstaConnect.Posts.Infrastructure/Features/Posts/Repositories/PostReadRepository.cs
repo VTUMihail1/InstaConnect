@@ -1,6 +1,9 @@
-﻿using InstaConnect.Common.Domain.Models.Pagination;
+﻿using System.Drawing.Printing;
+using System.Linq;
+
+using InstaConnect.Common.Domain.Models.Pagination;
 using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Repositories;
 
@@ -13,18 +16,22 @@ internal class PostReadRepository : IPostReadRepository
         _postsContext = postsContext;
     }
 
-    public async Task<PaginationList<Post>> GetAllAsync(PostCollectionReadQuery query, CancellationToken cancellationToken)
+    public async Task<PostQueryCollection> GetAllAsync(PostQueryParameters query, CancellationToken cancellationToken)
     {
-        var posts = await _postsContext
+        var queryable = _postsContext
             .Posts
             .Include(p => p.User)
-            .Where(p => (string.IsNullOrEmpty(query.UserId) || p.UserId == query.UserId) &&
-                         (string.IsNullOrEmpty(query.UserName) || p.User!.UserName.StartsWith(query.UserName)) &&
-                         (string.IsNullOrEmpty(query.Title) || p.Title.StartsWith(query.Title)))
-            .OrderEntities(query.SortOrder, query.SortPropertyName)
-            .ToPagedListAsync(query.Page, query.PageSize, cancellationToken);
+            .Where(p => (string.IsNullOrEmpty(query.Filter.UserId) || p.UserId == query.Filter.UserId) &&
+                         (string.IsNullOrEmpty(query.Filter.UserName) || p.User!.UserName.StartsWith(query.Filter.UserName)) &&
+                         (string.IsNullOrEmpty(query.Filter.Title) || p.Title.StartsWith(query.Filter.Title)));
 
-        return posts;
+        var totalCount = await queryable.CountAsync(cancellationToken);
+        var items = await queryable
+            .Skip((query.Pagination.Page - 1) * query.Pagination.PageSize)
+            .Take(query.Pagination.PageSize)
+            .ToListAsync(cancellationToken);
+
+        return new PostQueryCollection(items, query.Pagination.Page, query.Pagination.PageSize, totalCount);
     }
 
     public async Task<Post?> GetByIdAsync(string id, CancellationToken cancellationToken)

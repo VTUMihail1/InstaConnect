@@ -18,9 +18,9 @@ public static class ServiceCollectionExtensions
             .AddPostCommentLikeServices();
 
         serviceCollection
-            .AddMediatR(ApplicationReference.Assembly)
-            .AddMapper(ApplicationReference.Assembly)
-            .AddValidators(ApplicationReference.Assembly);
+            .AddMediatR(PostApplicationReference.Assembly)
+            .AddMapper(PostApplicationReference.Assembly)
+            .AddValidators(PostApplicationReference.Assembly);
 
         return serviceCollection;
     }

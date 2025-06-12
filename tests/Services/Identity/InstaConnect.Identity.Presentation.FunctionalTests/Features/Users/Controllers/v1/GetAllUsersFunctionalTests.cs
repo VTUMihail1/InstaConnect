@@ -16,7 +16,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetAllUsersRequest(
             existingUser.UserName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
@@ -42,7 +42,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
         var request = new GetAllUsersRequest(
             existingUser.UserName,
             existingUser.FirstName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -65,7 +65,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetAllUsersRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingUser.FirstName,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
@@ -117,7 +117,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
             existingUser.FirstName,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidPageValue,
             UserTestUtilities.ValidPageSizeValue);
 
@@ -244,7 +244,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetAllUsersRequest(
             existingUser.UserName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingUser.FirstName),
+            DataFaker.GetDifferentCaseString(existingUser.FirstName),
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
@@ -277,7 +277,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
         var request = new GetAllUsersRequest(
             existingUser.UserName,
             existingUser.FirstName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingUser.LastName),
+            DataFaker.GetDifferentCaseString(existingUser.LastName),
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -307,7 +307,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetAllUsersRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingUser.UserName),
+            DataFaker.GetDifferentCaseString(existingUser.UserName),
             existingUser.FirstName,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
@@ -340,7 +340,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetAllUsersRequest(
             existingUser.UserName,
-            SharedTestUtilities.GetHalfStartString(existingUser.FirstName),
+            DataFaker.GetPrefixString(existingUser.FirstName),
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
@@ -373,7 +373,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
         var request = new GetAllUsersRequest(
             existingUser.UserName,
             existingUser.FirstName,
-            SharedTestUtilities.GetHalfStartString(existingUser.LastName),
+            DataFaker.GetPrefixString(existingUser.LastName),
             UserTestUtilities.ValidSortOrderProperty,
             UserTestUtilities.ValidSortPropertyName,
             UserTestUtilities.ValidPageValue,
@@ -403,7 +403,7 @@ public class GetAllUsersFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetAllUsersRequest(
-            SharedTestUtilities.GetHalfStartString(existingUser.UserName),
+            DataFaker.GetPrefixString(existingUser.UserName),
             existingUser.FirstName,
             existingUser.LastName,
             UserTestUtilities.ValidSortOrderProperty,

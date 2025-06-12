@@ -38,7 +38,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         // Arrange
         var existingPostComment = CreatePostComment();
         var command = new UpdatePostCommentCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostComment.UserId,
             existingPostComment.Content
         );
@@ -78,7 +78,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var existingPostComment = CreatePostComment();
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostComment.Content
         );
 
@@ -118,7 +118,7 @@ public class UpdatePostCommentCommandValidatorUnitTests : BasePostCommentUnitTes
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
             existingPostComment.UserId,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

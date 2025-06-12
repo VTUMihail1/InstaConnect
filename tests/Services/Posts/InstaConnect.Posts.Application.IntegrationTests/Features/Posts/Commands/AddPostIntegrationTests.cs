@@ -1,167 +1,167 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+﻿using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Commands;
 
 public class AddPostIntegrationTests : BasePostIntegrationTest
 {
+    private User _user;
+    private Post _post;
+    private AddPostCommandBuilder _commandBuilder;
+
     public AddPostIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
 
+    protected override async Task OnInitializeAsync()
+    {
+        _user = await SetupUserAsync(CancellationToken);
+        _post = new PostBuilder(_user).Create();
+        _commandBuilder = new(_post);
+    }
+
     [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsNull()
     {
         // Arrange
-        var command = new AddPostCommand(
-            null,
-            PostTestUtilities.ValidAddTitle,
-            PostTestUtilities.ValidAddContent
-        );
+        var command = _commandBuilder.WithoutUserId().Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
+    [UserIdOutOfBoundsMinData]
+    [UserIdOutOfBoundsMaxData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdLengthIsInvalid(string userId)
     {
         // Arrange
-        var command = new AddPostCommand(
-            SharedTestUtilities.GetString(length),
-            PostTestUtilities.ValidAddTitle,
-            PostTestUtilities.ValidAddContent
-        );
+        var command = _commandBuilder.WithUserId(userId).Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var command = new AddPostCommand(
-            existingUser.Id,
-            null,
-            PostTestUtilities.ValidAddContent
-        );
+        var command = _commandBuilder.WithoutTitle().Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostConfigurations.TitleMinLength - 1)]
-    [InlineData(PostConfigurations.TitleMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenTitleLengthIsInvalid(int length)
+    [PostTitleOutOfBoundsMinData]
+    [PostTitleOutOfBoundsMaxData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenTitleLengthIsInvalid(string title)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var command = new AddPostCommand(
-            existingUser.Id,
-            SharedTestUtilities.GetString(length),
-            PostTestUtilities.ValidAddContent
-        );
+        var command = _commandBuilder.WithTitle(title).Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowValidationException_WhenContentIsNull()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var command = new AddPostCommand(
-            existingUser.Id,
-            PostTestUtilities.ValidAddTitle,
-            null
-        );
+        var command = _commandBuilder.WithoutContent().Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostConfigurations.ContentMinLength - 1)]
-    [InlineData(PostConfigurations.ContentMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenContentLengthIsInvalid(int length)
+    [PostContentOutOfBoundsMinData]
+    [PostContentOutOfBoundsMaxData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenContentLengthIsInvalid(string content)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var command = new AddPostCommand(
-            existingUser.Id,
-            PostTestUtilities.ValidAddTitle,
-            SharedTestUtilities.GetString(length)
-        );
+        var command = _commandBuilder.WithContent(content).Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
     {
         // Arrange
-        var command = new AddPostCommand(
-            UserTestUtilities.InvalidId,
-            PostTestUtilities.ValidAddTitle,
-            PostTestUtilities.ValidAddContent
-        );
+        var command = _commandBuilder.WithInvalidUserId().Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserNotFoundException>();
+        await action.ShouldThrowUserNotFoundExceptionAsync();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldAddPost_WhenPostIsValid()
+    public async Task SendAsync_ShouldReturnResponse_WhenCommandIsValid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var command = new AddPostCommand(
-            existingUser.Id,
-            PostTestUtilities.ValidAddTitle,
-            PostTestUtilities.ValidAddContent
-        );
+        var command = _commandBuilder.Create();
 
         // Act
         var response = await InstaConnectSender.SendAsync(command, CancellationToken);
         var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        post
-            .Should()
-            .Match<Post>(p => p.Id == response.Id &&
-                              p.UserId == existingUser.Id &&
-                              p.Title == PostTestUtilities.ValidAddTitle &&
-                              p.Content == PostTestUtilities.ValidAddContent);
+        response.ShouldSatisfy(post);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldAddPost_WhenCommandIsValid()
+    {
+        // Arrange
+        var command = _commandBuilder.Create();
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
+
+        // Assert
+        post.ShouldSatisfy(command);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldAddPost_WhenUserIdIsDifferentCase()
+    {
+        // Arrange
+        var command = _commandBuilder.WithDifferentCaseUserId(_user.Id).Create();
+
+        // Act
+        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
+
+        // Assert
+        post.ShouldSatisfy(command);
     }
 }

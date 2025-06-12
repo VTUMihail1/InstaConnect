@@ -2,6 +2,7 @@
 using InstaConnect.Common.Exceptions.Users;
 using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers;
 internal class PostCommentService : IPostCommentService

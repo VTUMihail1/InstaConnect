@@ -6,10 +6,10 @@ using InstaConnect.Common.Application.Helpers;
 using InstaConnect.Common.Domain.Models.Pagination;
 using InstaConnect.Common.Helpers;
 using InstaConnect.Posts.Application.Extensions;
-using InstaConnect.Posts.Domain.Features.PostLikes.Abstractions;
+using InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
@@ -31,33 +31,25 @@ public abstract class BasePostLikeUnitTest
 
     protected IPostWriteRepository PostWriteRepository { get; }
 
-    protected IPostLikeReadRepository PostLikeReadRepository { get; }
-
-    protected IPostLikeWriteRepository PostLikeWriteRepository { get; }
+    protected IPostLikeService PostLikeService { get; }
 
     protected BasePostLikeUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
+                new MapperConfiguration(cfg => cfg.AddMaps(PostApplicationReference.Assembly))));
         CancellationToken = new CancellationToken();
         EntityPropertyValidator = new EntityPropertyValidator();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         PostReadRepository = Substitute.For<IPostReadRepository>();
         PostWriteRepository = Substitute.For<IPostWriteRepository>();
-        PostLikeReadRepository = Substitute.For<IPostLikeReadRepository>();
-        PostLikeWriteRepository = Substitute.For<IPostLikeWriteRepository>();
+        PostLikeService = Substitute.For<IPostLikeService>();
     }
 
     private User CreateUserUtil()
     {
-        var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+        var user = UserTestUtilities.CreateUser();
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -74,10 +66,7 @@ public abstract class BasePostLikeUnitTest
 
     private Post CreatePostUtil(User user)
     {
-        var post = new Post(
-            SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
-            SharedTestUtilities.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength),
-            user);
+        var post = PostTestUtilities.CreatePost(user, [], []);
 
         var postPaginationList = new PaginationList<Post>(
             [post],
@@ -96,7 +85,7 @@ public abstract class BasePostLikeUnitTest
             .Returns(post);
 
         PostReadRepository
-            .GetAllAsync(Arg.Is<PostCollectionReadQuery>(m =>
+            .GetAllAsync(Arg.Is<PostQueryParameters>(m =>
                                                                         m.Title == post.Title &&
                                                                         m.UserId == user.Id &&
                                                                         m.UserName == user.UserName &&
@@ -119,7 +108,7 @@ public abstract class BasePostLikeUnitTest
 
     private PostLike CreatePostLikeUtil(User user, Post post)
     {
-        var postLike = new PostLike(post, user);
+        var postLike = PostLikeTestUtilities.CreatePostLike(user, post);
 
         var postLikePaginationList = new PaginationList<PostLike>(
         [postLike],
@@ -127,20 +116,12 @@ public abstract class BasePostLikeUnitTest
         PostLikeTestUtilities.ValidPageSizeValue,
         PostLikeTestUtilities.ValidTotalCountValue);
 
-        PostLikeReadRepository.GetByIdAsync(postLike.Id, CancellationToken)
+        PostLikeService.GetByIdAsync(post, postLike.Id, CancellationToken)
             .Returns(postLike);
 
-        PostLikeWriteRepository.GetByIdAsync(postLike.Id, CancellationToken)
-            .Returns(postLike);
-
-        PostLikeWriteRepository.GetByUserIdAndPostIdAsync(user.Id, post.Id, CancellationToken)
-            .Returns(postLike);
-
-        PostLikeReadRepository
-            .GetAllAsync(Arg.Is<PostLikeCollectionReadQuery>(m =>
-                                                                        m.UserId == user.Id &&
+        PostLikeService
+            .GetAllAsync(post, Arg.Is<PostLikeCollectionReadQuery>(m => m.UserId == user.Id &&
                                                                         m.UserName == user.UserName &&
-                                                                        m.PostId == post.Id &&
                                                                         m.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == PostLikeTestUtilities.ValidSortOrderProperty &&
@@ -155,6 +136,19 @@ public abstract class BasePostLikeUnitTest
         var user = CreateUser();
         var post = CreatePost();
         var postLike = CreatePostLikeUtil(user, post);
+
+        return postLike;
+    }
+
+    protected PostLike CreatePostLikeFactory()
+    {
+        var user = CreateUser();
+
+        var post = PostTestUtilities.CreatePost(user, [], []);
+        var postLike = PostLikeTestUtilities.CreatePostLike(user, post);
+
+        PostLikeService.AddAsync(post, user.Id, CancellationToken)
+            .Returns(postLike);
 
         return postLike;
     }

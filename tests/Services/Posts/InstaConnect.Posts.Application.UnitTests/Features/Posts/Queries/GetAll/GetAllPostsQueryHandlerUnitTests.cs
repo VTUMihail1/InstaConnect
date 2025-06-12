@@ -1,80 +1,61 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Filters;
+﻿using InstaConnect.Common.Domain.Models.Pagination;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetAll;
 
 public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
 {
+    private readonly User _user;
+    private readonly Post _post;
+    private readonly GetAllPostsQueryBuilder _queryBuilder;
     private readonly GetAllPostsQueryHandler _queryHandler;
 
     public GetAllPostsQueryHandlerUnitTests()
     {
+        _user = SetupUser();
+        _post = SetupPost(_user);
+        _queryBuilder = new(_post, _user);
         _queryHandler = new(
             InstaConnectMapper,
             PostReadRepository);
+
+        var query = _queryBuilder.Create();
+        var posts = new List<Post>() { _post };
+
+        var response = new PostQueryCollection(
+            posts,
+            query.Pagination.Page,
+            query.Pagination.PageSize,
+            posts.Count);
+
+        PostReadRepository.SetupGetAllAsync(query, response, CancellationToken);
     }
 
     [Fact]
-    public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
+    public async Task Handle_ShouldGetAllPosts_WhenQueryIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.Create();
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        await PostReadRepository
-            .Received(1)
-            .GetAllAsync(Arg.Is<PostCollectionReadQuery>(m =>
-                                                                        m.UserId == existingPost.UserId &&
-                                                                        m.UserName == existingPost.User.UserName &&
-                                                                        m.Title == existingPost.Title &&
-                                                                        m.Page == PostTestUtilities.ValidPageValue &&
-                                                                        m.Page == PostTestUtilities.ValidPageValue &&
-                                                                        m.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                                        m.SortOrder == PostTestUtilities.ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == PostTestUtilities.ValidSortPropertyName), CancellationToken);
+        await PostReadRepository.ShouldReceiveOneGetAllAsync(query, CancellationToken);
     }
 
     [Fact]
-    public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
+    public async Task Handle_ShouldReturnResponse_WhenQueryIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.Create();
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
-                                                           m.UserId == existingPost.UserId &&
-                                                           m.UserName == existingPost.User.UserName &&
-                                                           m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                           m.Title == existingPost.Title &&
-                                                           m.Content == existingPost.Content) &&
-                                                           mc.Page == PostTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(_post, _user, query);
     }
 }

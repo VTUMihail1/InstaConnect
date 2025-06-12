@@ -18,6 +18,7 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
         var existingPostLike = CreatePostLike();
         var command = new DeletePostLikeCommand(
             null,
+            existingPostLike.PostId,
             existingPostLike.UserId
         );
 
@@ -37,7 +38,8 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
         // Arrange
         var existingPostLike = CreatePostLike();
         var command = new DeletePostLikeCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
+            existingPostLike.PostId,
             existingPostLike.UserId
         );
 
@@ -55,6 +57,7 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
         var existingPostLike = CreatePostLike();
         var command = new DeletePostLikeCommand(
             existingPostLike.Id,
+            existingPostLike.PostId,
             null
         );
 
@@ -75,7 +78,47 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
         var existingPostLike = CreatePostLike();
         var command = new DeletePostLikeCommand(
             existingPostLike.Id,
-            SharedTestUtilities.GetString(length)
+            existingPostLike.PostId,
+            DataFaker.GetString(length)
+        );
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
+    }
+
+    [Fact]
+    public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdIsNull()
+    {
+        // Arrange
+        var existingPostLike = CreatePostLike();
+        var command = new DeletePostLikeCommand(
+            existingPostLike.Id,
+            existingPostLike.PostId,
+            null
+        );
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldHaveValidationErrorFor(m => m.CurrentUserId);
+    }
+
+    [Theory]
+    [InlineData(default(int))]
+    [InlineData(UserConfigurations.IdMinLength - 1)]
+    [InlineData(UserConfigurations.IdMaxLength + 1)]
+    public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdLengthIsInvalid(int length)
+    {
+        // Arrange
+        var existingPostLike = CreatePostLike();
+        var command = new DeletePostLikeCommand(
+            existingPostLike.Id,
+            existingPostLike.PostId,
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -92,6 +135,7 @@ public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
         var existingPostLike = CreatePostLike();
         var command = new DeletePostLikeCommand(
             existingPostLike.Id,
+            existingPostLike.PostId,
             existingPostLike.UserId
         );
 

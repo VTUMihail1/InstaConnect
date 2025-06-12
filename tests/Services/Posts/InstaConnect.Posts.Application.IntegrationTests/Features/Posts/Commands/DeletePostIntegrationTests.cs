@@ -1,161 +1,156 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+﻿using System.Data.Common;
+
+using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Commands;
 
 public class DeletePostIntegrationTests : BasePostIntegrationTest
 {
+    private User _user;
+    private Post _post;
+    private DeletePostCommandBuilder _commandBuilder;
+
     public DeletePostIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
+    }
+
+    protected override async Task OnInitializeAsync()
+    {
+        _user = await SetupUserAsync(CancellationToken);
+        _post = await SetupPostAsync(_user, CancellationToken);
+        _commandBuilder = new(_post);
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var command = new DeletePostCommand(
-            null,
-            existingPost.UserId
-        );
+        var command = _commandBuilder.WithoutId().Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostConfigurations.IdMinLength - 1)]
-    [InlineData(PostConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
+    [PostIdOutOfBoundsMinData]
+    [PostIdOutOfBoundsMaxData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(string id)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-
-        var command = new DeletePostCommand(
-            SharedTestUtilities.GetString(length),
-            existingPost.UserId
-        );
+        var command = _commandBuilder.WithId(id).Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsNull()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var command = new DeletePostCommand(
-            existingPost.Id,
-            null
-        );
+        var command = _commandBuilder.WithoutUserId().Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
+    [UserIdOutOfBoundsMinData]
+    [UserIdOutOfBoundsMaxData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdLengthIsInvalid(string userId)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var command = new DeletePostCommand(
-            existingPost.Id,
-            SharedTestUtilities.GetString(length)
-        );
+        var command = _commandBuilder.WithUserId(userId).Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var command = new DeletePostCommand(
-            PostTestUtilities.InvalidId,
-            existingPost.UserId
-        );
+        var command = _commandBuilder.WithInvalidId().Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<PostNotFoundException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
+    public async Task SendAsync_ShouldThrowAccountForbiddenException_WhenUserIdIsInvalid()
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var command = new DeletePostCommand(
-            existingPost.Id,
-            existingUser.Id
-        );
+        var user = await SetupUserAsync(CancellationToken);
+        var command = _commandBuilder.WithUserId(user.Id).Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserForbiddenException>();
+        await action.ShouldThrowUserForbiddenExceptionAsync();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldDeletePost_WhenPostIsValid()
+    public async Task SendAsync_ShouldDeletePost_WhenCommandIsValid()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var command = new DeletePostCommand(
-            existingPost.Id,
-            existingPost.UserId
-        );
+        var command = _commandBuilder.Create();
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
-        var post = await PostWriteRepository.GetByIdAsync(existingPost.Id, CancellationToken);
+        var post = await PostWriteRepository.GetByIdAsync(command.Id, CancellationToken);
 
         // Assert
-        post
-            .Should()
-            .BeNull();
+        post.ShouldBeNull();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldDeletePost_WhenPostIsValidAndIdCaseDoesNotMatch()
+    public async Task SendAsync_ShouldDeletePost_WhenIdIsDifferentCase()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var command = new DeletePostCommand(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPost.Id),
-            existingPost.UserId
-        );
+        var command = _commandBuilder.WithDifferentCaseId(_post.Id).Create();
 
         // Act
         await InstaConnectSender.SendAsync(command, CancellationToken);
-        var post = await PostWriteRepository.GetByIdAsync(existingPost.Id, CancellationToken);
+        var post = await PostWriteRepository.GetByIdAsync(command.Id, CancellationToken);
 
         // Assert
-        post
-            .Should()
-            .BeNull();
+        post.ShouldBeNull();
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldDeletePost_WhenUserIdIsDifferentCase()
+    {
+        // Arrange
+        var command = _commandBuilder.WithDifferentCaseId(_user.Id).Create();
+
+        // Act
+        await InstaConnectSender.SendAsync(command, CancellationToken);
+        var post = await PostWriteRepository.GetByIdAsync(command.Id, CancellationToken);
+
+        // Assert
+        post.ShouldBeNull();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Posts.Common.Tests.Features.PostCommentLikes.Utilities;
 
-public class PostCommentLikeTestUtilities : SharedTestUtilities
+public class PostCommentLikeTestUtilities : DataFaker
 {
     public static readonly string InvalidId = GetAverageString(PostCommentLikeConfigurations.IdMaxLength, PostCommentLikeConfigurations.IdMinLength);
 
@@ -15,12 +15,12 @@ public class PostCommentLikeTestUtilities : SharedTestUtilities
 
     public static readonly SortOrder ValidSortOrderProperty = SortOrder.ASC;
 
-    public static PostCommentLike CreatePostCommentLike()
+    public static PostCommentLike CreatePostCommentLike(User user, PostComment postComment)
     {
         var postCommentLike = new PostCommentLike(
             GetAverageString(PostCommentLikeConfigurations.IdMaxLength, PostCommentLikeConfigurations.IdMinLength),
-            GetAverageString(PostCommentConfigurations.IdMaxLength, PostCommentConfigurations.IdMinLength),
-            GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength),
+            postComment.Id,
+            user.Id,
             GetMaxDate(),
             GetMaxDate());
 

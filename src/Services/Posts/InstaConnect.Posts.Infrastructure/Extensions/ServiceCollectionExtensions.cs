@@ -20,10 +20,10 @@ public static class ServiceCollectionExtensions
             .AddPostCommentLikeServices();
 
         serviceCollection
-            .AddServicesWithMatchingInterfaces(InfrastructureReference.Assembly)
+            .AddServicesWithMatchingInterfaces(PostInfrastructureReference.Assembly)
             .AddDatabaseContext<PostsContext>(configuration)
             .AddUnitOfWork<PostsContext>()
-            .AddRabbitMQ(configuration, InfrastructureReference.Assembly)
+            .AddRabbitMQ(configuration, PostInfrastructureReference.Assembly)
             .AddJwtBearer(configuration)
             .AddDateTimeProvider();
 

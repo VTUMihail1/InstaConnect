@@ -10,7 +10,9 @@ using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
 using InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
+using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
@@ -32,39 +34,25 @@ public abstract class BasePostCommentLikeUnitTest
 
     protected IPostWriteRepository PostWriteRepository { get; }
 
-    protected IPostCommentReadRepository PostCommentReadRepository { get; }
-
-    protected IPostCommentWriteRepository PostCommentWriteRepository { get; }
-
-    protected IPostCommentLikeReadRepository PostCommentLikeReadRepository { get; }
-
-    protected IPostCommentLikeWriteRepository PostCommentLikeWriteRepository { get; }
+    protected IPostCommentLikeService PostCommentLikeService { get; }
 
     protected BasePostCommentLikeUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
-                new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
+                new MapperConfiguration(cfg => cfg.AddMaps(PostApplicationReference.Assembly))));
         CancellationToken = new CancellationToken();
         EntityPropertyValidator = new EntityPropertyValidator();
         UserWriteRepository = Substitute.For<IUserWriteRepository>();
         PostReadRepository = Substitute.For<IPostReadRepository>();
         PostWriteRepository = Substitute.For<IPostWriteRepository>();
-        PostCommentReadRepository = Substitute.For<IPostCommentReadRepository>();
-        PostCommentWriteRepository = Substitute.For<IPostCommentWriteRepository>();
-        PostCommentLikeReadRepository = Substitute.For<IPostCommentLikeReadRepository>();
-        PostCommentLikeWriteRepository = Substitute.For<IPostCommentLikeWriteRepository>();
+        PostCommentLikeService = Substitute.For<IPostCommentLikeService>();
     }
 
     private User CreateUserUtil()
     {
-        var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
+        var user = UserTestUtilities.CreateUser();
 
         UserWriteRepository.GetByIdAsync(user.Id, CancellationToken)
             .Returns(user);
@@ -81,10 +69,7 @@ public abstract class BasePostCommentLikeUnitTest
 
     private Post CreatePostUtil(User user)
     {
-        var post = new Post(
-            SharedTestUtilities.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength),
-            SharedTestUtilities.GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength),
-            user);
+        var post = PostTestUtilities.CreatePost(user, [], []);
 
         PostWriteRepository.GetByIdAsync(
             post.Id,
@@ -102,35 +87,9 @@ public abstract class BasePostCommentLikeUnitTest
         return post;
     }
 
-    private PostComment CreatePostCommentUtil(User user, Post post)
+    private static PostComment CreatePostCommentUtil(User user, Post post)
     {
-        var postComment = new PostComment(
-            user,
-            post,
-            SharedTestUtilities.GetAverageString(PostCommentConfigurations.ContentMaxLength, PostCommentConfigurations.ContentMinLength));
-
-        var postCommentPaginationList = new PaginationList<PostComment>(
-        [postComment],
-        PostCommentTestUtilities.ValidPageValue,
-        PostCommentTestUtilities.ValidPageSizeValue,
-        PostCommentTestUtilities.ValidTotalCountValue);
-
-        PostCommentWriteRepository.GetByIdAsync(postComment.Id, CancellationToken)
-            .Returns(postComment);
-
-        PostCommentReadRepository.GetByIdAsync(postComment.Id, CancellationToken)
-            .Returns(postComment);
-
-        PostCommentReadRepository
-            .GetAllAsync(Arg.Is<PostCommentCollectionReadQuery>(m =>
-                                                                        m.UserId == user.Id &&
-                                                                        m.UserName == user.UserName &&
-                                                                        m.PostId == post.Id &&
-                                                                        m.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                                        m.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                                        m.SortOrder == PostCommentTestUtilities.ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == PostCommentTestUtilities.ValidSortPropertyName), CancellationToken)
-            .Returns(postCommentPaginationList);
+        var postComment = PostCommentTestUtilities.CreatePostComment(user, post, []);
 
         return postComment;
     }
@@ -146,33 +105,28 @@ public abstract class BasePostCommentLikeUnitTest
 
     private PostCommentLike CreatePostCommentLikeUtil(User user, PostComment postComment)
     {
-        var postCommentLike = new PostCommentLike(postComment, user);
+        var postCommentLike = PostCommentLikeTestUtilities.CreatePostCommentLike(user, postComment);
 
-        var postCommentLikePaginationList = new PaginationList<PostCommentLike>(
+        var postLikePaginationList = new PaginationList<PostCommentLike>(
         [postCommentLike],
         PostCommentLikeTestUtilities.ValidPageValue,
         PostCommentLikeTestUtilities.ValidPageSizeValue,
         PostCommentLikeTestUtilities.ValidTotalCountValue);
 
-        PostCommentLikeReadRepository.GetByIdAsync(postCommentLike.Id, CancellationToken)
+        PostCommentLikeService.GetByIdAsync(
+            postCommentLike.PostComment.Post,
+            postCommentLike.PostCommentId,
+            postCommentLike.PostComment.PostId, CancellationToken)
             .Returns(postCommentLike);
 
-        PostCommentLikeWriteRepository.GetByIdAsync(postCommentLike.Id, CancellationToken)
-            .Returns(postCommentLike);
-
-        PostCommentLikeWriteRepository.GetByUserIdAndPostCommentIdAsync(user.Id, postComment.Id, CancellationToken)
-            .Returns(postCommentLike);
-
-        PostCommentLikeReadRepository
-            .GetAllAsync(Arg.Is<PostCommentLikeCollectionReadQuery>(m =>
-                                                                        m.UserId == user.Id &&
+        PostCommentLikeService
+            .GetAllAsync(postCommentLike.PostComment.Post, postCommentLike.PostCommentId, Arg.Is<PostCommentLikeCollectionReadQuery>(m => m.UserId == user.Id &&
                                                                         m.UserName == user.UserName &&
-                                                                        m.PostCommentId == postComment.Id &&
-                                                                        m.Page == PostCommentLikeTestUtilities.ValidPageValue &&
-                                                                        m.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
-                                                                        m.SortOrder == PostCommentLikeTestUtilities.ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == PostCommentLikeTestUtilities.ValidSortPropertyName), CancellationToken)
-            .Returns(postCommentLikePaginationList);
+                                                                        m.Page == PostLikeTestUtilities.ValidPageValue &&
+                                                                        m.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
+                                                                        m.SortOrder == PostLikeTestUtilities.ValidSortOrderProperty &&
+                                                                        m.SortPropertyName == PostLikeTestUtilities.ValidSortPropertyName), CancellationToken)
+            .Returns(postLikePaginationList);
 
         return postCommentLike;
     }
@@ -182,6 +136,20 @@ public abstract class BasePostCommentLikeUnitTest
         var user = CreateUser();
         var postComment = CreatePostComment();
         var postCommentLike = CreatePostCommentLikeUtil(user, postComment);
+
+        return postCommentLike;
+    }
+
+    protected PostCommentLike CreatePostCommentLikeFactory()
+    {
+        var user = CreateUser();
+
+        var post = PostTestUtilities.CreatePost(user, [], []);
+        var postComment = PostCommentTestUtilities.CreatePostComment(user, post, []);
+        var postCommentLike = PostCommentLikeTestUtilities.CreatePostCommentLike(user, postComment);
+
+        PostCommentLikeService.AddAsync(post, postCommentLike.Id, user.Id, CancellationToken)
+            .Returns(postCommentLike);
 
         return postCommentLike;
     }

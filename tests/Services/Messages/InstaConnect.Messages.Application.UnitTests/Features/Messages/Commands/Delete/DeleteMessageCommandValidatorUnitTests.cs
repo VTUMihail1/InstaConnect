@@ -37,7 +37,7 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
         // Arrange
         var existingMessage = CreateMessage();
         var command = new DeleteMessageCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.SenderId
         );
 
@@ -75,7 +75,7 @@ public class DeleteMessageCommandValidatorUnitTests : BaseMessageUnitTest
         var existingMessage = CreateMessage();
         var command = new DeleteMessageCommand(
             existingMessage.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

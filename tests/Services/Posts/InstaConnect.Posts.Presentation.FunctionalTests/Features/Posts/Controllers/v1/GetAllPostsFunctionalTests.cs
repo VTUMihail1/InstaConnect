@@ -15,7 +15,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
@@ -41,7 +41,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -67,7 +67,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             existingPost.User.UserName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -117,7 +117,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostTestUtilities.ValidPageValue,
             PostTestUtilities.ValidPageSizeValue);
 
@@ -245,7 +245,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPost.UserId),
+            DataFaker.GetDifferentCaseString(existingPost.UserId),
             existingPost.User.UserName,
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
@@ -280,7 +280,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPost.User.UserName),
+            DataFaker.GetDifferentCaseString(existingPost.User.UserName),
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -314,7 +314,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new GetAllPostsRequest(
             existingPost.UserId,
-            SharedTestUtilities.GetHalfStartString(existingPost.User.UserName),
+            DataFaker.GetPrefixString(existingPost.User.UserName),
             existingPost.Title,
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
@@ -349,7 +349,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             existingPost.User.UserName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPost.Title),
+            DataFaker.GetDifferentCaseString(existingPost.Title),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,
@@ -383,7 +383,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var request = new GetAllPostsRequest(
             existingPost.UserId,
             existingPost.User.UserName,
-            SharedTestUtilities.GetHalfStartString(existingPost.Title),
+            DataFaker.GetPrefixString(existingPost.Title),
             PostTestUtilities.ValidSortOrderProperty,
             PostTestUtilities.ValidSortPropertyName,
             PostTestUtilities.ValidPageValue,

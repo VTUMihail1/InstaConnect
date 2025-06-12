@@ -20,9 +20,9 @@ public static class ServiceCollectionExtensions
             .AddPostCommentLikeServices();
 
         serviceCollection
-            .AddServicesWithMatchingInterfaces(PresentationReference.Assembly)
+            .AddServicesWithMatchingInterfaces(PostPresentationReference.Assembly)
             .AddApiControllers()
-            .AddMapper(PresentationReference.Assembly)
+            .AddMapper(PostPresentationReference.Assembly)
             .AddAuthorizationPolicies()
             .AddCorsPolicies(configuration)
             .AddSwagger()

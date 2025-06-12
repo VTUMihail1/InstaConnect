@@ -3,6 +3,7 @@
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 
 namespace InstaConnect.Posts.Presentation.Features.Posts.Mappings;
 
@@ -19,6 +20,8 @@ internal class PostCommandProfile : Profile
         CreateMap<DeletePostRequest, DeletePostCommand>()
             .ConstructUsing(src => new(src.Id, src.CurrentUserId));
 
-        CreateMap<PostCommandViewModel, PostCommandResponse>();
+        CreateMap<AddPostCommandResponse, AddPostResponse>();
+
+        CreateMap<UpdatePostCommandResponse, UpdatePostResponse>();
     }
 }

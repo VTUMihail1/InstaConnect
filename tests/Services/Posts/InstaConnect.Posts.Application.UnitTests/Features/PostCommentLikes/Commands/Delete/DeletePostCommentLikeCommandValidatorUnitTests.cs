@@ -18,6 +18,8 @@ public class DeletePostCommentLikeCommandValidatorUnitTests : BasePostCommentLik
         var existingPostCommentLike = CreatePostCommentLike();
         var command = new DeletePostCommentLikeCommand(
             null,
+            existingPostCommentLike.PostComment.PostId,
+            existingPostCommentLike.PostCommentId,
             existingPostCommentLike.UserId
         );
 
@@ -37,7 +39,9 @@ public class DeletePostCommentLikeCommandValidatorUnitTests : BasePostCommentLik
         // Arrange
         var existingPostCommentLike = CreatePostCommentLike();
         var command = new DeletePostCommentLikeCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
+            existingPostCommentLike.PostComment.PostId,
+            existingPostCommentLike.PostCommentId,
             existingPostCommentLike.UserId
         );
 
@@ -55,6 +59,8 @@ public class DeletePostCommentLikeCommandValidatorUnitTests : BasePostCommentLik
         var existingPostCommentLike = CreatePostCommentLike();
         var command = new DeletePostCommentLikeCommand(
             existingPostCommentLike.Id,
+            existingPostCommentLike.PostComment.PostId,
+            existingPostCommentLike.PostCommentId,
             null
         );
 
@@ -75,7 +81,9 @@ public class DeletePostCommentLikeCommandValidatorUnitTests : BasePostCommentLik
         var existingPostCommentLike = CreatePostCommentLike();
         var command = new DeletePostCommentLikeCommand(
             existingPostCommentLike.Id,
-            SharedTestUtilities.GetString(length)
+            existingPostCommentLike.PostComment.PostId,
+            existingPostCommentLike.PostCommentId,
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -86,12 +94,96 @@ public class DeletePostCommentLikeCommandValidatorUnitTests : BasePostCommentLik
     }
 
     [Fact]
+    public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdIsNull()
+    {
+        // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
+        var command = new DeletePostCommentLikeCommand(
+            existingPostCommentLike.Id,
+            null,
+            existingPostCommentLike.PostCommentId,
+            existingPostCommentLike.UserId
+        );
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldHaveValidationErrorFor(m => m.PostId);
+    }
+
+    [Theory]
+    [InlineData(default(int))]
+    [InlineData(PostConfigurations.IdMinLength - 1)]
+    [InlineData(PostConfigurations.IdMaxLength + 1)]
+    public void TestValidate_ShouldHaveAnErrorForPostId_WhenPostIdLengthIsInvalid(int length)
+    {
+        // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
+        var command = new DeletePostCommentLikeCommand(
+            existingPostCommentLike.Id,
+            DataFaker.GetString(length),
+            existingPostCommentLike.PostCommentId,
+            existingPostCommentLike.UserId
+        );
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldHaveValidationErrorFor(m => m.PostId);
+    }
+
+    [Fact]
+    public void TestValidate_ShouldHaveAnErrorForPostCommentId_WhenPostCommentIdIsNull()
+    {
+        // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
+        var command = new DeletePostCommentLikeCommand(
+            existingPostCommentLike.Id,
+            existingPostCommentLike.PostComment.PostId,
+            null,
+            existingPostCommentLike.UserId
+        );
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldHaveValidationErrorFor(m => m.PostCommentId);
+    }
+
+    [Theory]
+    [InlineData(default(int))]
+    [InlineData(PostCommentConfigurations.IdMinLength - 1)]
+    [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
+    public void TestValidate_ShouldHaveAnErrorForPostCommentId_WhenPostCommentIdLengthIsInvalid(int length)
+    {
+        // Arrange
+        var existingPostCommentLike = CreatePostCommentLike();
+        var command = new DeletePostCommentLikeCommand(
+            existingPostCommentLike.Id,
+            existingPostCommentLike.PostComment.PostId,
+            DataFaker.GetString(length),
+            existingPostCommentLike.UserId
+        );
+
+        // Act
+        var result = _commandValidator.TestValidate(command);
+
+        // Assert
+        result.ShouldHaveValidationErrorFor(m => m.PostCommentId);
+    }
+
+    [Fact]
     public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenModelIsValid()
     {
         // Arrange
         var existingPostCommentLike = CreatePostCommentLike();
         var command = new DeletePostCommentLikeCommand(
             existingPostCommentLike.Id,
+            existingPostCommentLike.PostComment.PostId,
+            existingPostCommentLike.PostCommentId,
             existingPostCommentLike.UserId
         );
 

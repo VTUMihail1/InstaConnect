@@ -19,7 +19,7 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
         // Arrange
         var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingFollow.Follower.UserName,
             existingFollow.FollowingId,
             existingFollow.Following.UserName,
@@ -44,7 +44,7 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
         var existingFollow = CreateFollow();
         var query = new GetAllFollowsQuery(
             existingFollow.FollowerId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingFollow.FollowingId,
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
@@ -69,7 +69,7 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
         var query = new GetAllFollowsQuery(
             existingFollow.FollowerId,
             existingFollow.Follower.UserName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
@@ -94,7 +94,7 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             existingFollow.FollowerId,
             existingFollow.Follower.UserName,
             existingFollow.FollowingId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             FollowTestUtilities.ValidSortOrderProperty,
             FollowTestUtilities.ValidSortPropertyName,
             FollowTestUtilities.ValidPageValue,
@@ -165,7 +165,7 @@ public class GetAllFollowsQueryValidatorUnitTests : BaseFollowUnitTest
             existingFollow.FollowingId,
             existingFollow.Following.UserName,
             FollowTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             FollowTestUtilities.ValidPageValue,
             FollowTestUtilities.ValidPageSizeValue);
 

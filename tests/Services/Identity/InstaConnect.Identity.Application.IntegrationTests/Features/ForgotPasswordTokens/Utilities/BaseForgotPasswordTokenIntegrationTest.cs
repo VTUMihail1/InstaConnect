@@ -90,10 +90,10 @@ public abstract class BaseForgotPasswordTokenIntegrationTest : IClassFixture<Ide
         var passwordHash = passwordHasher.Hash(UserTestUtilities.ValidPassword).PasswordHash;
 
         var user = new User(
-            SharedTestUtilities.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
-            SharedTestUtilities.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
+            DataFaker.GetAverageString(UserConfigurations.FirstNameMaxLength, UserConfigurations.FirstNameMinLength),
+            DataFaker.GetAverageString(UserConfigurations.LastNameMaxLength, UserConfigurations.LastNameMinLength),
+            DataFaker.GetAverageString(UserConfigurations.EmailMaxLength, UserConfigurations.EmailMinLength),
+            DataFaker.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength),
             passwordHash,
             UserTestUtilities.ValidProfileImage)
         {
@@ -121,8 +121,8 @@ public abstract class BaseForgotPasswordTokenIntegrationTest : IClassFixture<Ide
         CancellationToken cancellationToken)
     {
         var forgotPasswordToken = new ForgotPasswordToken(
-            SharedTestUtilities.GetGuid(),
-            SharedTestUtilities.GetMaxDate(),
+            DataFaker.GetGuid(),
+            DataFaker.GetMaxDate(),
             user);
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();

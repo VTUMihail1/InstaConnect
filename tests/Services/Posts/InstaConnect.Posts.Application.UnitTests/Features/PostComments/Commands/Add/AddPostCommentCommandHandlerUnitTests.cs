@@ -11,19 +11,19 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         _commandHandler = new(
             UnitOfWork,
             InstaConnectMapper,
+            PostCommentService,
             UserWriteRepository,
-            PostWriteRepository,
-            PostCommentWriteRepository);
+            PostWriteRepository);
     }
 
     [Fact]
     public async Task Handle_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
     {
         // Arrange
-        var post = CreatePost();
+        var postComment = CreatePostCommentFactory();
         var command = new AddPostCommentCommand(
             UserTestUtilities.InvalidId,
-            post.Id,
+            postComment.PostId,
             PostCommentTestUtilities.ValidAddContent);
 
         // Act
@@ -37,9 +37,9 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     public async Task Handle_ShouldThrowPostNotFoundException_WhenPostIdIsInvalid()
     {
         // Arrange
-        var user = CreateUser();
+        var postComment = CreatePostCommentFactory();
         var command = new AddPostCommentCommand(
-            user.Id,
+            postComment.UserId,
             PostTestUtilities.InvalidId,
             PostCommentTestUtilities.ValidAddContent);
 
@@ -54,11 +54,10 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     public async Task Handle_ShouldReturnPostCommentCommandViewModel_WhenPostCommentIsValid()
     {
         // Arrange
-        var post = CreatePost();
-        var user = CreateUser();
+        var postComment = CreatePostCommentFactory();
         var command = new AddPostCommentCommand(
-            user.Id,
-            post.Id,
+            postComment.UserId,
+            postComment.PostId,
             PostCommentTestUtilities.ValidAddContent);
 
         // Act
@@ -67,42 +66,38 @@ public class AddPostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         // Assert
         response
             .Should()
-            .Match<PostCommentCommandViewModel>(m => !string.IsNullOrEmpty(m.Id));
+            .Match<PostCommentCommandViewModel>(m => m.Id == response.Id);
     }
 
     [Fact]
     public async Task Handle_ShouldAddPostToRepository_WhenPostIsValid()
     {
         // Arrange
-        var post = CreatePost();
-        var user = CreateUser();
+        var postComment = CreatePostCommentFactory();
         var command = new AddPostCommentCommand(
-            user.Id,
-            post.Id,
+            postComment.UserId,
+            postComment.PostId,
             PostCommentTestUtilities.ValidAddContent);
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        PostCommentWriteRepository
+        PostCommentService
             .Received(1)
-            .Add(Arg.Is<PostComment>(m =>
-                !string.IsNullOrEmpty(m.Id) &&
-                m.UserId == user.Id &&
-                m.PostId == post.Id &&
-                m.Content == PostCommentTestUtilities.ValidAddContent));
+            .Add(postComment.Post,
+                 PostCommentTestUtilities.ValidAddContent,
+                 postComment.UserId);
     }
 
     [Fact]
     public async Task Handle_ShouldCallSaveChangesAsync_WhenPostIsValid()
     {
         // Arrange
-        var post = CreatePost();
-        var user = CreateUser();
+        var postComment = CreatePostCommentFactory();
         var command = new AddPostCommentCommand(
-            user.Id,
-            post.Id,
+            postComment.UserId,
+            postComment.PostId,
             PostCommentTestUtilities.ValidAddContent);
 
         // Act

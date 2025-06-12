@@ -19,7 +19,7 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
         // Arrange
         var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
@@ -43,7 +43,7 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
         var existingPostCommentLike = CreatePostCommentLike();
         var query = new GetAllPostCommentLikesQuery(
             existingPostCommentLike.UserId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
@@ -67,7 +67,7 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
         var query = new GetAllPostCommentLikesQuery(
             existingPostCommentLike.UserId,
             existingPostCommentLike.User.UserName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
             PostCommentLikeTestUtilities.ValidSortPropertyName,
             PostCommentLikeTestUtilities.ValidPageValue,
@@ -135,7 +135,7 @@ public class GetAllPostCommentLikesQueryValidatorUnitTests : BasePostCommentLike
             existingPostCommentLike.User.UserName,
             existingPostCommentLike.PostCommentId,
             PostCommentLikeTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostCommentLikeTestUtilities.ValidPageValue,
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 

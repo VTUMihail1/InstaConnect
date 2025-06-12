@@ -55,7 +55,7 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
     public async Task GetCurrent_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new GetCurrentUserRequest(SharedTestUtilities.GetString(length)
+        var request = new GetCurrentUserRequest(DataFaker.GetString(length)
         );
 
         // Act
@@ -130,7 +130,7 @@ public class GetCurrentUserFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new GetCurrentUserRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingUser.Id)
+            DataFaker.GetDifferentCaseString(existingUser.Id)
         );
 
         // Act

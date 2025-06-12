@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Infrastructure;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models;
+
+namespace InstaConnect.Posts.Infrastructure;
 
 public class PostsContext : DbContext
 {

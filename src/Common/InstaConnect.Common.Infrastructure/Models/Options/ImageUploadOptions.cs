@@ -1,7 +1,11 @@
-﻿namespace InstaConnect.Common.Infrastructure.Models.Options;
+﻿using InstaConnect.Common.Infrastructure.Abstractions;
+
+namespace InstaConnect.Common.Infrastructure.Models.Options;
 
 internal class ImageUploadOptions
 {
+    public const string SectionName = "ImageUploadConfiguration";
+
     [Required]
     public string CloudName { get; set; } = string.Empty;
 

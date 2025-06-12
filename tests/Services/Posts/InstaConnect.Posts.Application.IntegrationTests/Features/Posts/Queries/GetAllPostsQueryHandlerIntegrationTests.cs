@@ -1,554 +1,229 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Queries;
 
 public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
 {
+    private User _user;
+    private Post _post;
+    private GetAllPostsQueryBuilder _queryBuilder;
+
     public GetAllPostsQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
+
+    }
+
+    protected override async Task OnInitializeAsync()
+    {
+        _user = await SetupUserAsync(CancellationToken);
+        _post = await SetupPostAsync(_user, CancellationToken);
+        _queryBuilder = new(_post, _user);
     }
 
     [Theory]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdLengthIsInvalid(int length)
+    [UserIdOutOfBoundsMaxData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdLengthIsInvalid(string userId)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            SharedTestUtilities.GetString(length),
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithUserId(userId).Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Theory]
-    [InlineData(UserConfigurations.NameMinLength - 1)]
-    [InlineData(UserConfigurations.NameMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserNameLengthIsInvalid(int length)
+    [UserNameOutOfBoundsMaxData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserNameLengthIsInvalid(string userName)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            SharedTestUtilities.GetString(length),
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithUserName(userName).Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Theory]
-    [InlineData(PostConfigurations.TitleMinLength - 1)]
-    [InlineData(PostConfigurations.TitleMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenTitleLengthIsInvalid(int length)
+    [PostTitleOutOfBoundsMaxData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenTitleLengthIsInvalid(string title)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            SharedTestUtilities.GetString(length),
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithTitle(title).Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyNameIsNull()
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsEmpty()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            null,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithEmptySortOrder().Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenMessageDoesNotContaintSortPropertyName()
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsEmpty()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.InvalidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithEmptySortProperty().Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(SharedConfigurations.SortOrderMinLength - 1)]
-    [InlineData(SharedConfigurations.SortOrderMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyNameLengthIsInvalid(int length)
+    [PostPageOutOfBoundsMinData]
+    [PostPageOutOfBoundsMaxData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenPageValueIsInvalid(int page)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithPage(page).Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
 
     [Theory]
-    [InlineData(SharedConfigurations.PageMinValue - 1)]
-    [InlineData(SharedConfigurations.PageMaxValue + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenPageValueIsInvalid(int value)
+    [PostPageSizeOutOfBoundsMinData]
+    [PostPageSizeOutOfBoundsMaxData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeValueIsInvalid(int pageSize)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            value,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithPageSize(pageSize).Create();
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.ShouldThrowValidationExceptionAsync();
     }
-
-    [Theory]
-    [InlineData(SharedConfigurations.PageSizeMinValue - 1)]
-    [InlineData(SharedConfigurations.PageSizeMaxValue + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeValueIsInvalid(int value)
-    {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            value);
-
-        // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
-    }
-
     [Fact]
-    public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenUserIdIsNull()
+    public async Task SendAsync_ShouldReturnResponse_WhenQueryIdIsNull()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            null,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.Create();
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
-                                                                    m.UserId == existingPost.UserId &&
-                                                                    m.UserName == existingPost.User.UserName &&
-                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                                    m.Title == existingPost.Title &&
-                                                                    m.Content == existingPost.Content) &&
-                                                           mc.Page == PostTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(_post, _user, query);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenUserIdIsEmpty()
+    public async Task SendAsync_ShouldReturnResponse_WhenUserIdIsNull()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            string.Empty,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithoutUserId().Create();
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
-                                                                    m.UserId == existingPost.UserId &&
-                                                                    m.UserName == existingPost.User.UserName &&
-                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                                    m.Title == existingPost.Title &&
-                                                                    m.Content == existingPost.Content) &&
-                                                           mc.Page == PostTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(_post, _user, query);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenUserIdCaseDoesNotMatch()
+    public async Task SendAsync_ShouldReturnResponse_WhenUserIdIsDifferentCase()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPost.UserId),
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithDifferentCaseUserId(_user.Id).Create();
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
-                                                                    m.UserId == existingPost.UserId &&
-                                                                    m.UserName == existingPost.User.UserName &&
-                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                                    m.Title == existingPost.Title &&
-                                                                    m.Content == existingPost.Content) &&
-                                                           mc.Page == PostTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(_post, _user, query);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenUserNameIsNull()
+    public async Task SendAsync_ShouldReturnResponse_WhenUserNameIsNull()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            null,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithoutUserName().Create();
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
-                                                                    m.UserId == existingPost.UserId &&
-                                                                    m.UserName == existingPost.User.UserName &&
-                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                                    m.Title == existingPost.Title &&
-                                                                    m.Content == existingPost.Content) &&
-                                                           mc.Page == PostTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(_post, _user, query);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenUserNameIsEmpty()
+    public async Task SendAsync_ShouldReturnResponse_WhenUserNameIsDifferentCase()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            string.Empty,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithDifferentCaseUserName(_user.UserName).Create();
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
-                                                                    m.UserId == existingPost.UserId &&
-                                                                    m.UserName == existingPost.User.UserName &&
-                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                                    m.Title == existingPost.Title &&
-                                                                    m.Content == existingPost.Content) &&
-                                                           mc.Page == PostTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(_post, _user, query);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenUserNameCaseDoesNotMatch()
+    public async Task SendAsync_ShouldReturnResponse_WhenTitleIsNull()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPost.User.UserName),
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithoutTitle().Create();
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
-                                                                    m.UserId == existingPost.UserId &&
-                                                                    m.UserName == existingPost.User.UserName &&
-                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                                    m.Title == existingPost.Title &&
-                                                                    m.Content == existingPost.Content) &&
-                                                           mc.Page == PostTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(_post, _user, query);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenTitleIsNull()
+    public async Task SendAsync_ShouldReturnResponse_WhenTitleIsDifferentCase()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            null,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithDifferentCaseTitle(_post.Title).Create();
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
-                                                                    m.UserId == existingPost.UserId &&
-                                                                    m.UserName == existingPost.User.UserName &&
-                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                                    m.Title == existingPost.Title &&
-                                                                    m.Content == existingPost.Content) &&
-                                                           mc.Page == PostTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(_post, _user, query);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenTitleIsEmpty()
+    public async Task SendAsync_ShouldReturnResponse_WhenTitleIsPartial()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            string.Empty,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var query = _queryBuilder.WithPrefixTitle(_post.Title).Create();
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
-                                                                    m.UserId == existingPost.UserId &&
-                                                                    m.UserName == existingPost.User.UserName &&
-                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                                    m.Title == existingPost.Title &&
-                                                                    m.Content == existingPost.Content) &&
-                                                           mc.Page == PostTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenTitleCaseDoesNotMatch()
-    {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPost.Title),
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
-                                                                    m.UserId == existingPost.UserId &&
-                                                                    m.UserName == existingPost.User.UserName &&
-                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                                    m.Title == existingPost.Title &&
-                                                                    m.Content == existingPost.Content) &&
-                                                           mc.Page == PostTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenTitleIsNotFull()
-    {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            SharedTestUtilities.GetHalfStartString(existingPost.Title),
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
-                                                                    m.UserId == existingPost.UserId &&
-                                                                    m.UserName == existingPost.User.UserName &&
-                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                                    m.Title == existingPost.Title &&
-                                                                    m.Content == existingPost.Content) &&
-                                                           mc.Page == PostTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenQueryIsValid()
-    {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetAllPostsQuery(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPost.Id &&
-                                                                    m.UserId == existingPost.UserId &&
-                                                                    m.UserName == existingPost.User.UserName &&
-                                                                    m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                                    m.Title == existingPost.Title &&
-                                                                    m.Content == existingPost.Content) &&
-                                                           mc.Page == PostTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(_post, _user, query);
     }
 }

@@ -1,9 +1,10 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 
-public class PostTestUtilities : SharedTestUtilities
+public class PostTestUtilities : DataFaker
 {
     public static readonly string InvalidId = GetAverageString(PostConfigurations.IdMaxLength, PostConfigurations.IdMinLength);
 
@@ -13,7 +14,7 @@ public class PostTestUtilities : SharedTestUtilities
     public static readonly string ValidAddContent = GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength);
     public static readonly string ValidUpdateContent = GetAverageString(PostConfigurations.ContentMaxLength, PostConfigurations.ContentMinLength);
 
-    public static readonly DateTimeOffset ValidUpdateUpdatedAtUtc = GetMaxDate();
+    public static readonly DateTimeOffset ValidUpdatedAtUtc = GetMaxDate();
 
     public static readonly int ValidPageValue = 1;
     public static readonly int ValidPageSizeValue = 20;
@@ -42,3 +43,4 @@ public class PostTestUtilities : SharedTestUtilities
         return post;
     }
 }
+

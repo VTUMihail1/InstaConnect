@@ -14,7 +14,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
     {
         // Arrange
         var request = new GetFollowByIdRequest(
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
 
@@ -70,7 +70,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
         var request = new GetFollowByIdRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id)
+            DataFaker.GetDifferentCaseString(existingFollow.Id)
         );
 
 
@@ -114,7 +114,7 @@ public class GetFollowByIdFunctionalTests : BaseFollowFunctionalTest
         // Arrange
         var existingFollow = await CreateFollowAsync(CancellationToken);
         var request = new GetFollowByIdRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingFollow.Id)
+            DataFaker.GetDifferentCaseString(existingFollow.Id)
         );
 
 

@@ -31,7 +31,7 @@ public class GetPostCommentByIdQueryValidatorUnitTests : BasePostCommentUnitTest
     public void TestValidate_ShouldHaveAnErrorForId_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetPostCommentByIdQuery(SharedTestUtilities.GetString(length));
+        var query = new GetPostCommentByIdQuery(DataFaker.GetString(length));
 
         // Act
         var result = _validator.TestValidate(query);

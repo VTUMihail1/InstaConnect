@@ -56,7 +56,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingUser = await CreateUserAsync(CancellationToken);
         var request = new AddPostCommentRequest(
             existingUser.Id,
-            new(SharedTestUtilities.GetString(length), PostCommentTestUtilities.ValidAddContent)
+            new(DataFaker.GetString(length), PostCommentTestUtilities.ValidAddContent)
         );
 
         // Act
@@ -99,7 +99,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostCommentRequest(
             existingUser.Id,
-            new(existingPost.Id, SharedTestUtilities.GetString(length))
+            new(existingPost.Id, DataFaker.GetString(length))
         );
 
         // Act
@@ -139,7 +139,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentFunctionalTest
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
         var request = new AddPostCommentRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             new(existingPost.Id, PostCommentTestUtilities.ValidAddContent)
         );
 

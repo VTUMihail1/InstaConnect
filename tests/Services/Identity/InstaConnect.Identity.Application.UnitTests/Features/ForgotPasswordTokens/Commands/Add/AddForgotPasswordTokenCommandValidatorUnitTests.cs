@@ -31,7 +31,7 @@ public class AddForgotPasswordTokenCommandValidatorUnitTests : BaseForgotPasswor
     public void TestValidate_ShouldHaveAnErrorForEmail_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new AddForgotPasswordTokenCommand(SharedTestUtilities.GetString(length));
+        var command = new AddForgotPasswordTokenCommand(DataFaker.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);

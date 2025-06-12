@@ -42,7 +42,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
     {
         // Arrange
         var command = new AddUserCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
@@ -92,7 +92,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         // Arrange
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddFirstName,
@@ -139,7 +139,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
     public async Task SendAsync_ShouldThrowValidationException_WhenPasswordLengthIsInvalid(int length)
     {
         // Arrange
-        var invalidPassword = SharedTestUtilities.GetString(length);
+        var invalidPassword = DataFaker.GetString(length);
 
         var command = new AddUserCommand(
             UserTestUtilities.ValidAddName,
@@ -218,7 +218,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
             UserTestUtilities.ValidAddEmail,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidAddLastName,
             UserTestUtilities.ValidAddFormFile
         );
@@ -268,7 +268,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddPassword,
             UserTestUtilities.ValidAddFirstName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidAddFormFile
         );
 

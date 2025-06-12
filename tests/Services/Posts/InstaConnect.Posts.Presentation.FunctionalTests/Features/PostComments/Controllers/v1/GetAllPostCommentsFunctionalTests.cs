@@ -15,7 +15,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new GetAllPostCommentsRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
@@ -39,7 +39,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new GetAllPostCommentsRequest(
             existingPostComment.UserId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -63,7 +63,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var request = new GetAllPostCommentsRequest(
             existingPostComment.UserId,
             existingPostComment.User.UserName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
             PostCommentTestUtilities.ValidPageValue,
@@ -109,7 +109,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
             existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostCommentTestUtilities.ValidPageValue,
             PostCommentTestUtilities.ValidPageSizeValue);
 
@@ -229,7 +229,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         // Arrange
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new GetAllPostCommentsRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.UserId),
+            DataFaker.GetDifferentCaseString(existingPostComment.UserId),
             existingPostComment.User.UserName,
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
@@ -264,7 +264,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new GetAllPostCommentsRequest(
             existingPostComment.UserId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.User.UserName),
+            DataFaker.GetDifferentCaseString(existingPostComment.User.UserName),
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -298,7 +298,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var existingPostComment = await CreatePostCommentAsync(CancellationToken);
         var request = new GetAllPostCommentsRequest(
             existingPostComment.UserId,
-            SharedTestUtilities.GetHalfStartString(existingPostComment.User.UserName),
+            DataFaker.GetPrefixString(existingPostComment.User.UserName),
             existingPostComment.PostId,
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
@@ -333,7 +333,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
         var request = new GetAllPostCommentsRequest(
             existingPostComment.UserId,
             existingPostComment.User.UserName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostComment.PostId),
+            DataFaker.GetDifferentCaseString(existingPostComment.PostId),
             PostCommentTestUtilities.ValidSortOrderProperty,
             PostCommentTestUtilities.ValidSortPropertyName,
             PostCommentTestUtilities.ValidPageValue,

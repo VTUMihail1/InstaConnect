@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
-public class UserTestUtilities : SharedTestUtilities
+public class UserTestUtilities : DataFaker
 {
     public static readonly string InvalidId = GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
 

@@ -9,15 +9,31 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeUnitTest
     public GetPostLikeByIdQueryHandlerUnitTests()
     {
         _queryHandler = new(
+            PostLikeService,
             InstaConnectMapper,
-            PostLikeReadRepository);
+            PostReadRepository);
+    }
+
+    [Fact]
+    public async Task Handle_ShouldThrowPostNotFoundException_WhenPostIdIsInvalid()
+    {
+        // Arrange
+        var existingPostLike = CreatePostLike();
+        var query = new GetPostLikeByIdQuery(existingPostLike.Id, PostTestUtilities.InvalidId);
+
+        // Act
+        var action = async () => await _queryHandler.Handle(query, CancellationToken);
+
+        // Assert
+        await action.Should().ThrowAsync<PostNotFoundException>();
     }
 
     [Fact]
     public async Task Handle_ShouldThrowPostLikeNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var query = new GetPostLikeByIdQuery(PostLikeTestUtilities.InvalidId);
+        var existingPostLike = CreatePostLike();
+        var query = new GetPostLikeByIdQuery(PostLikeTestUtilities.InvalidId, existingPostLike.PostId);
 
         // Act
         var action = async () => await _queryHandler.Handle(query, CancellationToken);
@@ -31,15 +47,15 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var existingPostLike = CreatePostLike();
-        var query = new GetPostLikeByIdQuery(existingPostLike.Id);
+        var query = new GetPostLikeByIdQuery(existingPostLike.Id, existingPostLike.PostId);
 
         // Act
         await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        await PostLikeReadRepository
+        await PostLikeService
             .Received(1)
-            .GetByIdAsync(existingPostLike.Id, CancellationToken);
+            .GetByIdAsync(existingPostLike.Post, existingPostLike.Id, CancellationToken);
     }
 
     [Fact]
@@ -47,7 +63,7 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeUnitTest
     {
         // Arrange
         var existingPostLike = CreatePostLike();
-        var query = new GetPostLikeByIdQuery(existingPostLike.Id);
+        var query = new GetPostLikeByIdQuery(existingPostLike.Id, existingPostLike.PostId);
 
         // Act
         var response = await _queryHandler.Handle(query, CancellationToken);

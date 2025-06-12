@@ -11,7 +11,8 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         _commandHandler = new(
             UnitOfWork,
             InstaConnectMapper,
-            PostCommentWriteRepository);
+            PostCommentService,
+            PostWriteRepository);
     }
 
     [Fact]
@@ -21,8 +22,9 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var command = new UpdatePostCommentCommand(
             PostCommentTestUtilities.InvalidId,
+            existingPostComment.PostId,
             existingPostComment.UserId,
-            existingPostComment.Content
+            PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act
@@ -40,8 +42,9 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
+            existingPostComment.PostId,
             existingUser.Id,
-            existingPostComment.Content
+            PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act
@@ -52,45 +55,29 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     }
 
     [Fact]
-    public async Task Handle_ShouldGetPostCommentByIdFromRepository_WhenPostCommentIdIsValid()
-    {
-        // Arrange
-        var existingPostComment = CreatePostComment();
-        var command = new UpdatePostCommentCommand(
-            existingPostComment.Id,
-            existingPostComment.UserId,
-            existingPostComment.Content
-        );
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await PostCommentWriteRepository
-            .Received(1)
-            .GetByIdAsync(existingPostComment.Id, CancellationToken);
-    }
-
-    [Fact]
     public async Task Handle_ShouldDeletePostFromRepository_WhenPostIdIsValid()
     {
         // Arrange
         var existingPostComment = CreatePostComment();
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
+            existingPostComment.PostId,
             existingPostComment.UserId,
-            existingPostComment.Content
+            PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act
         await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        PostCommentWriteRepository
+        await PostCommentService
             .Received(1)
-            .Update(Arg.Is<PostComment>(m => m.Id == existingPostComment.Id &&
-                                      m.UserId == existingPostComment.UserId &&
-                                      m.Content == existingPostComment.Content));
+            .UpdateAsync(
+                existingPostComment.Post,
+                existingPostComment.Id,
+                existingPostComment.UserId,
+                PostCommentTestUtilities.ValidUpdateContent,
+                CancellationToken);
     }
 
     [Fact]
@@ -100,8 +87,9 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         var existingPostComment = CreatePostComment();
         var command = new UpdatePostCommentCommand(
             existingPostComment.Id,
+            existingPostComment.PostId,
             existingPostComment.UserId,
-            existingPostComment.Content
+            PostCommentTestUtilities.ValidUpdateContent
         );
 
         // Act

@@ -34,7 +34,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         // Arrange
         var existingReceiver = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingReceiver.Id,
             MessageTestUtilities.ValidAddContent
         );
@@ -74,7 +74,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var existingSender = await CreateUserAsync(CancellationToken);
         var command = new AddMessageCommand(
             existingSender.Id,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             MessageTestUtilities.ValidAddContent
         );
 
@@ -116,7 +116,7 @@ public class AddMessageIntegrationTests : BaseMessageIntegrationTest
         var command = new AddMessageCommand(
             existingSender.Id,
             existingReceiver.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

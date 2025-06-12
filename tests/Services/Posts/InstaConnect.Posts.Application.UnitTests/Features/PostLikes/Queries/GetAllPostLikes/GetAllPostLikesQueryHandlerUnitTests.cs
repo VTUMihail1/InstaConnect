@@ -10,8 +10,9 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
     public GetAllPostLikesQueryHandlerUnitTests()
     {
         _queryHandler = new(
-            InstaConnectMapper,
-            PostLikeReadRepository);
+            PostLikeService,
+            PostReadRepository,
+            InstaConnectMapper);
     }
 
     [Fact]
@@ -20,9 +21,9 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         // Arrange
         var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
+            existingPostLike.PostId,
             existingPostLike.UserId,
             existingPostLike.User.UserName,
-            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
@@ -32,12 +33,11 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         await _queryHandler.Handle(query, CancellationToken);
 
         // Assert
-        await PostLikeReadRepository
+        await PostLikeService
             .Received(1)
-            .GetAllAsync(Arg.Is<PostLikeCollectionReadQuery>(m =>
+            .GetAllAsync(existingPostLike.Post, Arg.Is<PostLikeCollectionReadQuery>(m =>
                                                                         m.UserId == existingPostLike.UserId &&
                                                                         m.UserName == existingPostLike.User.UserName &&
-                                                                        m.PostId == existingPostLike.PostId &&
                                                                         m.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                         m.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
@@ -51,9 +51,9 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         // Arrange
         var existingPostLike = CreatePostLike();
         var query = new GetAllPostLikesQuery(
+            existingPostLike.PostId,
             existingPostLike.UserId,
             existingPostLike.User.UserName,
-            existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,

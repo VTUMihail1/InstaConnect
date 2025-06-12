@@ -35,7 +35,7 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
         // Arrange
         var request = new LoginUserRequest(
             new(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidPassword)
         );
 
@@ -78,7 +78,7 @@ public class LoginUserFunctionalTests : BaseUserFunctionalTest
         var request = new LoginUserRequest(
             new(
             existingUserClaim.User.Email,
-            SharedTestUtilities.GetString(length))
+            DataFaker.GetString(length))
         );
 
         // Act

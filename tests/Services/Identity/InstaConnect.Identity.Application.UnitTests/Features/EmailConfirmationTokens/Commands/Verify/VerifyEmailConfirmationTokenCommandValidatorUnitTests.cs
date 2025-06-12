@@ -36,7 +36,7 @@ public class VerifyEmailConfirmationTokenCommandValidatorUnitTests : BaseEmailCo
         // Arrange
         var existingEmailConfirmationToken = CreateEmailConfirmationToken();
         var command = new VerifyEmailConfirmationTokenCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingEmailConfirmationToken.Value);
 
         // Act
@@ -72,7 +72,7 @@ public class VerifyEmailConfirmationTokenCommandValidatorUnitTests : BaseEmailCo
         var existingEmailConfirmationToken = CreateEmailConfirmationToken();
         var command = new VerifyEmailConfirmationTokenCommand(
             existingEmailConfirmationToken.UserId,
-            SharedTestUtilities.GetString(length));
+            DataFaker.GetString(length));
 
         // Act
         var result = _commandValidator.TestValidate(command);

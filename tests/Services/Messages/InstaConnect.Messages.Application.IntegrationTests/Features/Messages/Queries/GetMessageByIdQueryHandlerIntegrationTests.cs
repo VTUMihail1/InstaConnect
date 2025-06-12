@@ -34,7 +34,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetMessageByIdQuery(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingMessage.SenderId
         );
 
@@ -72,7 +72,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetMessageByIdQuery(
             existingMessage.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -149,7 +149,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         // Arrange
         var existingMessage = await CreateMessageAsync(CancellationToken);
         var query = new GetMessageByIdQuery(
-            SharedTestUtilities.GetNonCaseMatchingString(existingMessage.Id),
+            DataFaker.GetDifferentCaseString(existingMessage.Id),
             existingMessage.SenderId
         );
 

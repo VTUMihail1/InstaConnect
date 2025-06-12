@@ -8,6 +8,13 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
     {
     }
 
+    protected override async Task OnInitializeAsync()
+    {
+        _user = await SetupUserAsync(CancellationToken);
+        _post = await SetupPostAsync(_user, CancellationToken);
+        _queryBuilder = new(_post, _user);
+    }
+
     [Fact]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
@@ -28,7 +35,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetPostByIdQuery(SharedTestUtilities.GetString(length));
+        var query = new GetPostByIdQuery(DataFaker.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -63,12 +70,12 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Assert
         response
             .Should()
-            .Match<PostQueryViewModel>(m => m.Id == existingPost.Id &&
+            .Match<PostQueryResponse>((System.Linq.Expressions.Expression<Func<PostQueryResponse, bool>>)(m => m.Id == existingPost.Id &&
                                           m.UserId == existingPost.UserId &&
                                           m.UserName == existingPost.User.UserName &&
                                           m.UserProfileImage == existingPost.User.ProfileImage &&
                                           m.Title == existingPost.Title &&
-                                          m.Content == existingPost.Content);
+                                          m.Content == existingPost.Content));
     }
 
     [Fact]
@@ -76,7 +83,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetPostByIdQuery(SharedTestUtilities.GetNonCaseMatchingString(existingPost.Id));
+        var query = new GetPostByIdQuery(DataFaker.GetNonCaseMatchingString(existingPost.Id));
 
         // Act
         var response = await InstaConnectSender.SendAsync(query, CancellationToken);
@@ -84,11 +91,11 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
         // Assert
         response
             .Should()
-            .Match<PostQueryViewModel>(m => m.Id == existingPost.Id &&
+            .Match<PostQueryResponse>((m => m.Id == existingPost.Id &&
                                           m.UserId == existingPost.UserId &&
                                           m.UserName == existingPost.User.UserName &&
                                           m.UserProfileImage == existingPost.User.ProfileImage &&
                                           m.Title == existingPost.Title &&
-                                          m.Content == existingPost.Content);
+                                          m.Content == existingPost.Content));
     }
 }

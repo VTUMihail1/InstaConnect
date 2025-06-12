@@ -38,7 +38,7 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
     {
         // Arrange
         var command = new UpdateUserCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
@@ -82,7 +82,7 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
         var existingUser = CreateUser();
         var command = new UpdateUserCommand(
             existingUser.Id,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidUpdateLastName,
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFormFile
@@ -126,7 +126,7 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
         var command = new UpdateUserCommand(
             existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidUpdateName,
             UserTestUtilities.ValidUpdateFormFile
         );
@@ -170,7 +170,7 @@ public class UpdateUserCommandValidatorUnitTests : BaseUserUnitTest
             existingUser.Id,
             UserTestUtilities.ValidUpdateFirstName,
             UserTestUtilities.ValidUpdateLastName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidUpdateFormFile
         );
 

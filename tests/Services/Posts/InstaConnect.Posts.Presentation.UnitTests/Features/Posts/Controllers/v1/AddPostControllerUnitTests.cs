@@ -1,80 +1,69 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Application.Features.Posts.Models;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Controllers.v1;
 
 public class AddPostControllerUnitTests : BasePostUnitTest
 {
+    private readonly User _user;
+    private readonly Post _post;
+    private readonly AddPostRequestBuilder _requestBuilder;
     private readonly PostController _postController;
 
     public AddPostControllerUnitTests()
     {
+        _user = SetupUser();
+        _post = SetupPost(_user);
+        _requestBuilder = new(_post);
         _postController = new(
             InstaConnectMapper,
             InstaConnectSender);
+
+        var request = _requestBuilder.Create();
+        var response = new AddPostCommandResponse(_post.Id, _post.CreatedAt, _post.UpdatedAt);
+
+        InstaConnectSender.SetupAddCommand(request, response, CancellationToken);
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var request = new AddPostRequest(
-            existingPost.UserId,
-            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
-        );
+        var request = _requestBuilder.Create();
 
         // Act
         var response = await _postController.AddAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Result
-            .Should()
-            .Match<OkObjectResult>(m => m.StatusCode == StatusCodes.Status200OK);
+        response.ShouldBeActionResultWithOkStatusCode();
     }
 
     [Fact]
-    public async Task AddAsync_ShouldReturnPostViewModel_WhenRequestIsValid()
+    public async Task AddAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var request = new AddPostRequest(
-            existingPost.UserId,
-            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
-        );
+        var request = _requestBuilder.Create();
 
         // Act
         var response = await _postController.AddAsync(request, CancellationToken);
 
         // Assert
-        response.Result
-            .Should()
-            .BeOfType<OkObjectResult>()
-            .Which
-            .Value
-            .Should()
-            .Match<PostCommandResponse>(m => m.Id == existingPost.Id);
+        response.ShouldSatisfy(_post);
     }
 
     [Fact]
     public async Task AddAsync_ShouldCallTheSender_WhenRequestIsValid()
     {
         // Arrange
-        var existingPost = CreatePost();
-        var request = new AddPostRequest(
-            existingPost.UserId,
-            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
-        );
+        var request = _requestBuilder.Create();
 
         // Act
         await _postController.AddAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
-            .Received(1)
-            .SendAsync(Arg.Is<AddPostCommand>(m => m.CurrentUserId == existingPost.UserId &&
-                                                     m.Title == PostTestUtilities.ValidAddTitle &&
-                                                     m.Content == PostTestUtilities.ValidAddContent),
-                                                     CancellationToken);
+        await InstaConnectSender.ShouldReceiveOneSendAsync(request, CancellationToken);
     }
 }

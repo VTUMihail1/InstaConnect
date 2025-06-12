@@ -14,7 +14,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
     {
         // Arrange
         var request = new GetPostLikeByIdRequest(
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -90,7 +90,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
         // Arrange
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetPostLikeByIdRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostLike.Id)
+            DataFaker.GetDifferentCaseString(existingPostLike.Id)
         );
 
         // Act

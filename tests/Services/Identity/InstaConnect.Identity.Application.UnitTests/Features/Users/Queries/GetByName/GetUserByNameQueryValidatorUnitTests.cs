@@ -31,7 +31,7 @@ public class GetUserByNameQueryValidatorUnitTests : BaseUserUnitTest
     public void TestValidate_ShouldHaveAnErrorForName_WhenNameLengthIsInvalid(int length)
     {
         // Arrange
-        var query = new GetUserByNameQuery(SharedTestUtilities.GetString(length));
+        var query = new GetUserByNameQuery(DataFaker.GetString(length));
 
         // Act
         var result = _validator.TestValidate(query);

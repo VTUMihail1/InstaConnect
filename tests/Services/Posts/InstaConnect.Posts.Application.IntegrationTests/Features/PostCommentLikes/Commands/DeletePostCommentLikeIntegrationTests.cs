@@ -37,7 +37,7 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
 
         var command = new DeletePostCommentLikeCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostCommentLike.UserId
         );
 
@@ -77,7 +77,7 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
 
         var command = new DeletePostCommentLikeCommand(
             existingPostCommentLike.Id,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act
@@ -148,7 +148,7 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
         // Arrange
         var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
         var command = new DeletePostCommentLikeCommand(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostCommentLike.Id),
+            DataFaker.GetDifferentCaseString(existingPostCommentLike.Id),
             existingPostCommentLike.UserId
         );
 

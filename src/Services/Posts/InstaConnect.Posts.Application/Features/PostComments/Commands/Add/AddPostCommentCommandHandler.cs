@@ -13,8 +13,7 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
         IInstaConnectMapper instaConnectMapper,
         IPostCommentService postCommentService,
         IUserWriteRepository userWriteRepository,
-        IPostWriteRepository postWriteRepository,
-        IPostCommentWriteRepository postCommentWriteRepository)
+        IPostWriteRepository postWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _instaConnectMapper = instaConnectMapper;

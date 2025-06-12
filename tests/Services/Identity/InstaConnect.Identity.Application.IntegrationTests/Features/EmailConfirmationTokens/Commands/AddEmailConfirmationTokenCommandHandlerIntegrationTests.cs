@@ -32,7 +32,7 @@ public class AddEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmail
     public async Task SendAsync_ShouldThrowValidationException_WhenEmailLengthIsInvalid(int length)
     {
         // Arrange
-        var command = new AddEmailConfirmationTokenCommand(SharedTestUtilities.GetString(length));
+        var command = new AddEmailConfirmationTokenCommand(DataFaker.GetString(length));
 
         // Act
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);

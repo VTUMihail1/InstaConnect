@@ -1,29 +1,33 @@
 ﻿using InstaConnect.Common.Application.Validators;
+using InstaConnect.Common.Utilities;
 
 namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 
 public class GetAllPostsQueryValidator : AbstractValidator<GetAllPostsQuery>
 {
-    public GetAllPostsQueryValidator(IEntityPropertyValidator entityPropertyValidator)
+    public GetAllPostsQueryValidator()
     {
-        Include(new CollectionModelValidator());
+        RuleFor(c => c.Filter.UserId)
+            .MaximumLength(UserConfigurations.IdMaxLength);
 
-        RuleFor(c => c.UserId)
-            .MinimumLength(UserConfigurations.IdMinLength)
-            .MaximumLength(UserConfigurations.IdMaxLength)
-            .When(q => !string.IsNullOrEmpty(q.UserId));
+        RuleFor(c => c.Filter.UserName)
+            .MaximumLength(UserConfigurations.NameMaxLength);
 
-        RuleFor(c => c.UserName)
-            .MinimumLength(UserConfigurations.NameMinLength)
-            .MaximumLength(UserConfigurations.NameMaxLength)
-            .When(q => !string.IsNullOrEmpty(q.UserName));
+        RuleFor(c => c.Filter.Title)
+            .MaximumLength(PostConfigurations.TitleMaxLength);
 
-        RuleFor(c => c.Title)
-            .MinimumLength(PostConfigurations.TitleMinLength)
-            .MaximumLength(PostConfigurations.TitleMaxLength)
-            .When(q => !string.IsNullOrEmpty(q.Title));
+        RuleFor(q => q.Sorting.Order)
+            .NotEmpty();
 
-        RuleFor(c => c.SortPropertyName)
-            .Must(entityPropertyValidator.IsEntityPropertyValid<PostCommentLike>);
+        RuleFor(q => q.Sorting.Property)
+            .NotEmpty();
+
+        RuleFor(q => q.Pagination.Page)
+            .LessThanOrEqualTo(PostConfigurations.PageMaxValue)
+            .GreaterThanOrEqualTo(PostConfigurations.PageMinValue);
+
+        RuleFor(q => q.Pagination.PageSize)
+            .LessThanOrEqualTo(PostConfigurations.PageSizeMaxValue)
+            .GreaterThanOrEqualTo(PostConfigurations.PageSizeMinValue);
     }
 }

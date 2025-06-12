@@ -35,7 +35,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
     {
         // Arrange
         var command = new LoginUserCommand(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             UserTestUtilities.ValidPassword
         );
 
@@ -73,7 +73,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var existingUserClaim = await CreateUserClaimAsync(CancellationToken);
         var command = new LoginUserCommand(
             existingUserClaim.User.Email,
-            SharedTestUtilities.GetString(length)
+            DataFaker.GetString(length)
         );
 
         // Act

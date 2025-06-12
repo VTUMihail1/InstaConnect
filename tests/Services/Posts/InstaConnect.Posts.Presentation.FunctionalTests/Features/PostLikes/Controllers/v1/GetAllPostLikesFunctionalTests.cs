@@ -15,7 +15,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         // Arrange
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
@@ -41,7 +41,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -67,7 +67,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
             existingPostLike.User.UserName,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
@@ -117,7 +117,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
             existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
-            SharedTestUtilities.GetString(length),
+            DataFaker.GetString(length),
             PostLikeTestUtilities.ValidPageValue,
             PostLikeTestUtilities.ValidPageSizeValue);
 
@@ -244,7 +244,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         // Arrange
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostLike.UserId),
+            DataFaker.GetDifferentCaseString(existingPostLike.UserId),
             existingPostLike.User.UserName,
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
@@ -278,7 +278,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostLike.User.UserName),
+            DataFaker.GetDifferentCaseString(existingPostLike.User.UserName),
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -311,7 +311,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var existingPostLike = await CreatePostLikeAsync(CancellationToken);
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
-            SharedTestUtilities.GetHalfStartString(existingPostLike.User.UserName),
+            DataFaker.GetPrefixString(existingPostLike.User.UserName),
             existingPostLike.PostId,
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
@@ -345,7 +345,7 @@ public class GetAllPostLikesFunctionalTests : BasePostLikeFunctionalTest
         var request = new GetAllPostLikesRequest(
             existingPostLike.UserId,
             existingPostLike.User.UserName,
-            SharedTestUtilities.GetNonCaseMatchingString(existingPostLike.PostId),
+            DataFaker.GetDifferentCaseString(existingPostLike.PostId),
             PostLikeTestUtilities.ValidSortOrderProperty,
             PostLikeTestUtilities.ValidSortPropertyName,
             PostLikeTestUtilities.ValidPageValue,
