@@ -9,7 +9,7 @@ using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 using InstaConnect.Posts.Presentation.Extensions;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostCommentLikes.Utilities;

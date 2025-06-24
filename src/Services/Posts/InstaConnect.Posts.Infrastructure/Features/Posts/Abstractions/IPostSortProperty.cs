@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
 
-internal interface IPostSortProperty
+public interface IPostSortProperty
 {
     public PostSortProperty SortProperty { get; }
 

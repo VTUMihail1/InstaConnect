@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
+﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Queries;
 

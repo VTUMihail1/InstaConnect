@@ -51,7 +51,7 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
         var action = async () => await _commandHandler.Handle(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserForbiddenException>();
+        await action.Should().ThrowAsync<PostForbiddenException>();
     }
 
     [Fact]

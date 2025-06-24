@@ -3,7 +3,7 @@ using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 public interface IPostLikeService

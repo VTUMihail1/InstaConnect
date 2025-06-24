@@ -1,24 +1,23 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Builders;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 
 public class GetPostByIdRequestBuilder
 {
-    private readonly ObjectBuilder<GetPostByIdRequest> _objectBuilder;
+    private readonly ObjectBuilder<GetPostByIdApiRequest> _objectBuilder;
 
     public GetPostByIdRequestBuilder()
     {
-        _objectBuilder = ObjectBuilderFactory.Build<GetPostByIdRequest>();
+        _objectBuilder = ObjectBuilderFactory.Build<GetPostByIdApiRequest>();
 
         WithId(PostDataFaker.GetId());
     }
 
     public GetPostByIdRequestBuilder(Post post)
     {
-        _objectBuilder = ObjectBuilderFactory.Build<GetPostByIdRequest>();
+        _objectBuilder = ObjectBuilderFactory.Build<GetPostByIdApiRequest>();
 
         WithId(post.Id);
     }
@@ -51,7 +50,7 @@ public class GetPostByIdRequestBuilder
         return this;
     }
 
-    public GetPostByIdRequest Create()
+    public GetPostByIdApiRequest Create()
     {
         return _objectBuilder.Create();
     }

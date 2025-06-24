@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete;
+﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Commands;
 
@@ -119,7 +120,7 @@ public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrat
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserForbiddenException>();
+        await action.Should().ThrowAsync<PostForbiddenException>();
     }
 
     [Fact]

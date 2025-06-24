@@ -4,7 +4,6 @@ using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Builders;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 public class AddPostCommandBuilder

@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Abstractions;
@@ -53,7 +52,7 @@ public abstract class BasePostFunctionalTest : IClassFixture<PostsWebApplication
         var user = UserTestUtilities.CreateUser();
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserRepository>();
 
         userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);

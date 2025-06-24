@@ -4,14 +4,14 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IUserRepository _userWriteRepository;
     private readonly IPostWriteRepository _postWriteRepository;
     private readonly IPostCommentLikeService _postCommentLikeService;
 
     public AddPostCommentLikeCommandHandler(
         IUnitOfWork unitOfWork,
         IInstaConnectMapper instaConnectMapper,
-        IUserWriteRepository userWriteRepository,
+        IUserRepository userWriteRepository,
         IPostWriteRepository postWriteRepository,
         IPostCommentLikeService postCommentLikeService)
     {

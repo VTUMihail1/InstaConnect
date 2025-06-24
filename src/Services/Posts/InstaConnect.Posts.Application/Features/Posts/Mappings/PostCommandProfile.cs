@@ -2,7 +2,6 @@
 
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Application.Features.Posts.Mappings;
 

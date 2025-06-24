@@ -1,4 +1,5 @@
-﻿using InstaConnect.Messages.Application.Features.Messages.Commands.Delete;
+﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Delete;
 
 namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Commands;
 

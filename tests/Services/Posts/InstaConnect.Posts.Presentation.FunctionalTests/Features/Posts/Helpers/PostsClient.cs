@@ -15,7 +15,7 @@ public class PostsClient : IPostsClient
     }
 
     public async Task<HttpStatusCode> GetAllStatusCodeAsync(
-        GetAllPostsRequest request,
+        GetAllPostsApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = GetAllRoute(request);
@@ -25,7 +25,7 @@ public class PostsClient : IPostsClient
     }
 
     public async Task<PostPaginationQueryResponse> GetAllAsync(
-        GetAllPostsRequest request,
+        GetAllPostsApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = GetAllRoute(request);
@@ -44,7 +44,7 @@ public class PostsClient : IPostsClient
     }
 
     public async Task<HttpStatusCode> GetByIdStatusCodeAsync(
-        GetPostByIdRequest request,
+        GetPostByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -54,7 +54,7 @@ public class PostsClient : IPostsClient
     }
 
     public async Task<PostQueryResponse> GetByIdAsync(
-        GetPostByIdRequest request,
+        GetPostByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -65,7 +65,7 @@ public class PostsClient : IPostsClient
     }
 
     public async Task<HttpStatusCode> AddStatusCodeAsync(
-        AddPostRequest request,
+        AddPostApiRequest request,
         CancellationToken cancellationToken)
     {
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
@@ -80,7 +80,7 @@ public class PostsClient : IPostsClient
     }
 
     public async Task<HttpStatusCode> AddStatusCodeUnauthorizedAsync(
-        AddPostRequest request,
+        AddPostApiRequest request,
         CancellationToken cancellationToken)
     {
         var response = await _httpClient
@@ -90,7 +90,7 @@ public class PostsClient : IPostsClient
     }
 
     public async Task<PostCommandResponse> AddAsync(
-        AddPostRequest request,
+        AddPostApiRequest request,
         CancellationToken cancellationToken)
     {
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
@@ -106,7 +106,7 @@ public class PostsClient : IPostsClient
     }
 
     public async Task<HttpStatusCode> UpdateStatusCodeAsync(
-        UpdatePostRequest request,
+        UpdatePostApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -123,7 +123,7 @@ public class PostsClient : IPostsClient
     }
 
     public async Task<HttpStatusCode> UpdateStatusCodeUnauthorizedAsync(
-        UpdatePostRequest request,
+        UpdatePostApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -135,7 +135,7 @@ public class PostsClient : IPostsClient
     }
 
     public async Task<PostCommandResponse> UpdateAsync(
-        UpdatePostRequest request,
+        UpdatePostApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -153,7 +153,7 @@ public class PostsClient : IPostsClient
     }
 
     public async Task<HttpStatusCode> DeleteStatusCodeAsync(
-        DeletePostRequest request,
+        DeletePostApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -169,7 +169,7 @@ public class PostsClient : IPostsClient
     }
 
     public async Task<HttpStatusCode> DeleteStatusCodeUnauthorizedAsync(
-        DeletePostRequest request,
+        DeletePostApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -180,7 +180,7 @@ public class PostsClient : IPostsClient
     }
 
     public async Task DeleteAsync(
-        DeletePostRequest request,
+        DeletePostApiRequest request,
         CancellationToken cancellationToken)
     {
         var route = IdRoute(request.Id);
@@ -193,7 +193,7 @@ public class PostsClient : IPostsClient
         await _httpClient.DeleteAsync(route, cancellationToken);
     }
 
-    private static string GetAllRoute(GetAllPostsRequest request)
+    private static string GetAllRoute(GetAllPostsApiRequest request)
     {
         var route = string.Format(
             CultureInfo.InvariantCulture,

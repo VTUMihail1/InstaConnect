@@ -11,17 +11,17 @@ internal class PostCommandProfile : Profile
 {
     public PostCommandProfile()
     {
-        CreateMap<AddPostRequest, AddPostCommand>()
+        CreateMap<AddPostApiRequest, AddPostCommand>()
             .ConstructUsing(src => new(src.CurrentUserId, src.Body.Title, src.Body.Content));
 
-        CreateMap<UpdatePostRequest, UpdatePostCommand>()
+        CreateMap<UpdatePostApiRequest, UpdatePostCommand>()
             .ConstructUsing(src => new(src.Id, src.CurrentUserId, src.Body.Title, src.Body.Content));
 
-        CreateMap<DeletePostRequest, DeletePostCommand>()
+        CreateMap<DeletePostApiRequest, DeletePostCommand>()
             .ConstructUsing(src => new(src.Id, src.CurrentUserId));
 
-        CreateMap<AddPostCommandResponse, AddPostResponse>();
+        CreateMap<AddPostCommandResponse, AddPostApiResponse>();
 
-        CreateMap<UpdatePostCommandResponse, UpdatePostResponse>();
+        CreateMap<UpdatePostCommandResponse, UpdatePostApiResponse>();
     }
 }

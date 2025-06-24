@@ -1,4 +1,5 @@
-﻿using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
+﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
 
 namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Queries;
 

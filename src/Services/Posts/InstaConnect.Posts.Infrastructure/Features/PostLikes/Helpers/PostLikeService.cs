@@ -4,7 +4,6 @@ using InstaConnect.Common.Domain.Models.Pagination;
 using InstaConnect.Common.Exceptions.Users;
 using InstaConnect.Posts.Domain.Features.PostLikes.Exceptions;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostLikes.Helpers;
 internal class PostLikeService : IPostLikeService
@@ -53,7 +52,7 @@ internal class PostLikeService : IPostLikeService
             throw new PostLikeAlreadyExistsException();
         }
 
-        var postLike = _postLikeFactory.Get(post.Id, userId);
+        var postLike = _postLikeFactory.Create(post.Id, userId);
         _postLikeWriteRepository.Add(postLike);
 
         return postLike;
@@ -70,7 +69,7 @@ internal class PostLikeService : IPostLikeService
 
         if (userId != postLike.UserId)
         {
-            throw new UserForbiddenException();
+            throw new PostForbiddenException();
         }
 
         _postLikeWriteRepository.Delete(postLike);

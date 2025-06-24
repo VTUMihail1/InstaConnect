@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class AddPostFunctionalTests : BasePostFunctionalTest
 {
@@ -14,7 +12,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostRequest(
+        var request = new AddPostApiRequest(
             existingUser.Id,
             new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
         );
@@ -33,7 +31,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostRequest(
+        var request = new AddPostApiRequest(
             existingUser.Id,
             new(null, PostTestUtilities.ValidAddContent)
         );
@@ -55,7 +53,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostRequest(
+        var request = new AddPostApiRequest(
             existingUser.Id,
             new(DataFaker.GetString(length), PostTestUtilities.ValidAddContent)
         );
@@ -74,7 +72,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostRequest(
+        var request = new AddPostApiRequest(
             existingUser.Id,
             new(PostTestUtilities.ValidAddTitle, null)
         );
@@ -96,7 +94,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostRequest(
+        var request = new AddPostApiRequest(
             existingUser.Id,
             new(PostTestUtilities.ValidAddTitle, DataFaker.GetString(length))
         );
@@ -114,7 +112,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdIsNull()
     {
         // Arrange
-        var request = new AddPostRequest(
+        var request = new AddPostApiRequest(
             null,
             new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
         );
@@ -135,7 +133,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new AddPostRequest(
+        var request = new AddPostApiRequest(
             DataFaker.GetString(length),
             new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
         );
@@ -153,7 +151,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     public async Task AddAsync_ShouldReturnNotFoundResponse_WhenCurrentUserIsInvalid()
     {
         // Arrange
-        var request = new AddPostRequest(
+        var request = new AddPostApiRequest(
             UserTestUtilities.InvalidId,
             new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
         );
@@ -172,7 +170,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostRequest(
+        var request = new AddPostApiRequest(
             existingUser.Id,
             new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
         );
@@ -191,7 +189,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostRequest(
+        var request = new AddPostApiRequest(
             existingUser.Id,
             new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
         );

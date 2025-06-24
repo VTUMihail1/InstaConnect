@@ -1,4 +1,5 @@
-﻿using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
+﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Messages.Application.Features.Messages.Commands.Add;
 
 namespace InstaConnect.Messages.Application.IntegrationTests.Features.Messages.Commands;
 public class AddMessageIntegrationTests : BaseMessageIntegrationTest

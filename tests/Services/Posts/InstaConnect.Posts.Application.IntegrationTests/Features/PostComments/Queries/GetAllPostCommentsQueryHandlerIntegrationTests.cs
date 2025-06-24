@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
+﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Queries;
 

@@ -16,7 +16,7 @@ public abstract class BaseUserUnitTest
 
     protected IInstaConnectMapper InstaConnectMapper { get; }
 
-    protected IUserWriteRepository UserWriteRepository { get; }
+    protected IUserRepository UserWriteRepository { get; }
 
     protected BaseUserUnitTest()
     {
@@ -25,7 +25,7 @@ public abstract class BaseUserUnitTest
         InstaConnectMapper = new InstaConnectMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(PostPresentationReference.Assembly))));
-        UserWriteRepository = Substitute.For<IUserWriteRepository>();
+        UserWriteRepository = Substitute.For<IUserRepository>();
     }
 
     private User CreateUserUtil()

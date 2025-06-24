@@ -1,18 +1,17 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 
 public class UpdatePostRequestBuilder
 {
-    private readonly ObjectBuilder<UpdatePostRequest> _objectBuilder;
+    private readonly ObjectBuilder<UpdatePostApiRequest> _objectBuilder;
 
     public UpdatePostRequestBuilder()
     {
-        _objectBuilder = ObjectBuilderFactory.Build<UpdatePostRequest>();
+        _objectBuilder = ObjectBuilderFactory.Build<UpdatePostApiRequest>();
 
         WithId(PostDataFaker.GetId());
         WithUserId(UserDataFaker.GetId());
@@ -22,7 +21,7 @@ public class UpdatePostRequestBuilder
 
     public UpdatePostRequestBuilder(Post post)
     {
-        _objectBuilder = ObjectBuilderFactory.Build<UpdatePostRequest>();
+        _objectBuilder = ObjectBuilderFactory.Build<UpdatePostApiRequest>();
 
         WithId(post.Id);
         WithUserId(post.UserId);
@@ -114,7 +113,7 @@ public class UpdatePostRequestBuilder
         return this;
     }
 
-    public UpdatePostRequest Create()
+    public UpdatePostApiRequest Create()
     {
         return _objectBuilder.Create();
     }

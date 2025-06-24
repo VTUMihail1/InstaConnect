@@ -2,7 +2,6 @@
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
 using InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Abstractions;
@@ -60,7 +59,7 @@ public abstract class BasePostCommentLikeFunctionalTest : IClassFixture<PostsWeb
             DataFaker.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserRepository>();
 
         userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);

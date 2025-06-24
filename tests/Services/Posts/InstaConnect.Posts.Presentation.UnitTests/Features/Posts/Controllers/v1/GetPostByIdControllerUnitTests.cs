@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Controllers.v1;
 

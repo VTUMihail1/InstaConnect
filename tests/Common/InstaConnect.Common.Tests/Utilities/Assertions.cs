@@ -4,7 +4,7 @@ using FluentAssertions;
 
 using FluentValidation.TestHelper;
 
-using InstaConnect.Common.Exceptions.Base;
+using InstaConnect.Common.Exceptions;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

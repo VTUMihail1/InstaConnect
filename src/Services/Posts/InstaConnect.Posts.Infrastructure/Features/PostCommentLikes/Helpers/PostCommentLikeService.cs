@@ -3,7 +3,6 @@ using InstaConnect.Common.Exceptions.Users;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
 using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Helpers;
 internal class PostCommentLikeService : IPostCommentLikeService
@@ -80,7 +79,7 @@ internal class PostCommentLikeService : IPostCommentLikeService
             throw new PostCommentLikeAlreadyExistsException();
         }
 
-        var postCommentLike = _postCommentLikeFactory.Get(postCommentId, userId);
+        var postCommentLike = _postCommentLikeFactory.Create(postCommentId, userId);
         _postCommentLikeWriteRepository.Add(postCommentLike);
 
         return postCommentLike;
@@ -104,7 +103,7 @@ internal class PostCommentLikeService : IPostCommentLikeService
 
         if (userId != postCommentLike.UserId)
         {
-            throw new UserForbiddenException();
+            throw new PostForbiddenException();
         }
 
         _postCommentLikeWriteRepository.Delete(postCommentLike);

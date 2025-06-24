@@ -5,14 +5,14 @@ internal class AddPostCommentCommandHandler : ICommandHandler<AddPostCommentComm
     private readonly IUnitOfWork _unitOfWork;
     private readonly IInstaConnectMapper _instaConnectMapper;
     private readonly IPostCommentService _postCommentService;
-    private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IUserRepository _userWriteRepository;
     private readonly IPostWriteRepository _postWriteRepository;
 
     public AddPostCommentCommandHandler(
         IUnitOfWork unitOfWork,
         IInstaConnectMapper instaConnectMapper,
         IPostCommentService postCommentService,
-        IUserWriteRepository userWriteRepository,
+        IUserRepository userWriteRepository,
         IPostWriteRepository postWriteRepository)
     {
         _unitOfWork = unitOfWork;

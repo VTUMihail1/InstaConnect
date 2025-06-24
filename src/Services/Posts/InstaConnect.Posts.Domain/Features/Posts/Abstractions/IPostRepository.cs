@@ -1,10 +1,12 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 
 public interface IPostRepository
 {
-    Task<PostQueryCollection> GetAllAsync(PostQueryParameters query, CancellationToken cancellationToken);
+    Task<PostCollection> GetAllAsync(GetAllPostsRequest request, CancellationToken cancellationToken);
 
     Task<Post?> GetByIdAsync(string id, CancellationToken cancellationToken);
 

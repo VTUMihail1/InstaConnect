@@ -5,7 +5,6 @@ using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 using NSubstitute;
@@ -16,7 +15,7 @@ public static class PostMockAssertions
 {
     public static void ShouldReceiveOneGet(this IPostFactory postFactory, AddPostCommand command)
     {
-        postFactory.Received(1).Get(command.CurrentUserId, command.Title, command.Content);
+        postFactory.Received(1).Create(command.CurrentUserId, command.Title, command.Content);
     }
 
     public static async Task ShouldReceiveOneSaveChangesAsync(this IUnitOfWork unitOfWork, CancellationToken cancellationToken)
@@ -71,7 +70,7 @@ public static class PostMockAssertions
 
     public static async Task ShouldReceiveOneSendAsync(
         this IInstaConnectSender postWriteRepository,
-        GetAllPostsRequest request,
+        GetAllPostsApiRequest request,
         CancellationToken cancellationToken)
     {
         await postWriteRepository.Received(1).SendAsync(PostMatcher.IsGetAllPostsQuery(request), cancellationToken);
@@ -79,7 +78,7 @@ public static class PostMockAssertions
 
     public static async Task ShouldReceiveOneSendAsync(
         this IInstaConnectSender postWriteRepository,
-        GetPostByIdRequest request,
+        GetPostByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         await postWriteRepository.Received(1).SendAsync(PostMatcher.IsGetPostByIdQuery(request), cancellationToken);
@@ -87,7 +86,7 @@ public static class PostMockAssertions
 
     public static async Task ShouldReceiveOneSendAsync(
         this IInstaConnectSender postWriteRepository,
-        AddPostRequest request,
+        AddPostApiRequest request,
         CancellationToken cancellationToken)
     {
         await postWriteRepository.Received(1).SendAsync(PostMatcher.IsAddPostCommand(request), cancellationToken);
@@ -95,7 +94,7 @@ public static class PostMockAssertions
 
     public static async Task ShouldReceiveOneSendAsync(
         this IInstaConnectSender postWriteRepository,
-        UpdatePostRequest request,
+        UpdatePostApiRequest request,
         CancellationToken cancellationToken)
     {
         await postWriteRepository.Received(1).SendAsync(PostMatcher.IsUpdatePostCommand(request), cancellationToken);
@@ -103,7 +102,7 @@ public static class PostMockAssertions
 
     public static async Task ShouldReceiveOneSendAsync(
         this IInstaConnectSender postWriteRepository,
-        DeletePostRequest request,
+        DeletePostApiRequest request,
         CancellationToken cancellationToken)
     {
         await postWriteRepository.Received(1).SendAsync(PostMatcher.IsDeletePostCommand(request), cancellationToken);

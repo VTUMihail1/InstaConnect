@@ -6,7 +6,6 @@ using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 using Microsoft.AspNetCore.Mvc;
@@ -30,14 +29,14 @@ public static class PostMatchAssertions
                                 p.Content == command.Content);
     }
 
-    public static void ShouldSatisfy(this Post post, AddPostRequest request)
+    public static void ShouldSatisfy(this Post post, AddPostApiRequest request)
     {
         post.ShouldSatisfy(p => p.UserId == request.CurrentUserId &&
                                 p.Title == request.Body.Title &&
                                 p.Content == request.Body.Content);
     }
 
-    public static void ShouldSatisfy(this Post post, UpdatePostRequest request)
+    public static void ShouldSatisfy(this Post post, UpdatePostApiRequest request)
     {
         post.ShouldSatisfy(p => p.Id == request.Id &&
                                 p.UserId == request.CurrentUserId &&
@@ -87,21 +86,21 @@ public static class PostMatchAssertions
             pp.HasNextPage == pp.Page * pp.PageSize < pp.TotalCount);
     }
 
-    public static void ShouldSatisfy(this AddPostResponse response, Post post)
+    public static void ShouldSatisfy(this AddPostApiResponse response, Post post)
     {
         response.ShouldSatisfy(p => p.Id == post.Id &&
                                     p.CreatedAt == post.CreatedAt &&
                                     p.UpdatedAt == post.UpdatedAt);
     }
 
-    public static void ShouldSatisfy(this UpdatePostResponse response, Post post)
+    public static void ShouldSatisfy(this UpdatePostApiResponse response, Post post)
     {
         response.ShouldSatisfy(p => p.Id == post.Id &&
                                     p.CreatedAt == post.CreatedAt &&
                                     p.UpdatedAt == post.UpdatedAt);
     }
 
-    public static void ShouldSatisfy(this GetPostByIdResponse response, Post post, User user)
+    public static void ShouldSatisfy(this GetPostByIdApiResponse response, Post post, User user)
     {
         response.ShouldSatisfy(p =>
             p.Data.Id == post.Id &&
@@ -112,7 +111,7 @@ public static class PostMatchAssertions
             p.Data.Content == post.Content);
     }
 
-    public static void ShouldSatisfy(this GetAllPostsResponse response, Post post, User user, GetAllPostsRequest query)
+    public static void ShouldSatisfy(this GetAllPostsApiResponse response, Post post, User user, GetAllPostsApiRequest query)
     {
         response.ShouldSatisfy(pp =>
             pp.Data.All(p =>
@@ -129,21 +128,21 @@ public static class PostMatchAssertions
             pp.HasNextPage == pp.Page * pp.PageSize < pp.TotalCount);
     }
 
-    public static void ShouldSatisfy(this ActionResult<AddPostResponse> response, Post post)
+    public static void ShouldSatisfy(this ActionResult<AddPostApiResponse> response, Post post)
     {
         response.ShouldBeActionResultAndSatisfy(p => p.Id == post.Id &&
                                                      p.CreatedAt == post.CreatedAt &&
                                                      p.UpdatedAt == post.UpdatedAt);
     }
 
-    public static void ShouldSatisfy(this ActionResult<UpdatePostResponse> response, Post post)
+    public static void ShouldSatisfy(this ActionResult<UpdatePostApiResponse> response, Post post)
     {
         response.ShouldBeActionResultAndSatisfy(p => p.Id == post.Id &&
                                                      p.CreatedAt == post.CreatedAt &&
                                                      p.UpdatedAt == post.UpdatedAt);
     }
 
-    public static void ShouldSatisfy(this ActionResult<GetPostByIdResponse> response, Post post, User user)
+    public static void ShouldSatisfy(this ActionResult<GetPostByIdApiResponse> response, Post post, User user)
     {
         response.ShouldBeActionResultAndSatisfy(p =>
             p.Data.Id == post.Id &&
@@ -154,7 +153,7 @@ public static class PostMatchAssertions
             p.Data.Content == post.Content);
     }
 
-    public static void ShouldSatisfy(this ActionResult<GetAllPostsResponse> response, Post post, User user, GetAllPostsRequest request)
+    public static void ShouldSatisfy(this ActionResult<GetAllPostsApiResponse> response, Post post, User user, GetAllPostsApiRequest request)
     {
         response.ShouldBeActionResultAndSatisfy(pp =>
             pp.Data.All(p =>

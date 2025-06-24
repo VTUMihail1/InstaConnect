@@ -3,7 +3,8 @@ using System.Linq;
 
 using InstaConnect.Common.Domain.Models.Pagination;
 using InstaConnect.Common.Infrastructure.Extensions;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Repositories;
 
@@ -16,7 +17,7 @@ internal class PostReadRepository : IPostReadRepository
         _postsContext = postsContext;
     }
 
-    public async Task<PostQueryCollection> GetAllAsync(PostQueryParameters query, CancellationToken cancellationToken)
+    public async Task<PostCollection> GetAllAsync(GetAllPostsRequest query, CancellationToken cancellationToken)
     {
         var queryable = _postsContext
             .Posts

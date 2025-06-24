@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Application.Features.Users.Commands.Login;
+﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Identity.Application.Features.Users.Commands.Login;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;
 

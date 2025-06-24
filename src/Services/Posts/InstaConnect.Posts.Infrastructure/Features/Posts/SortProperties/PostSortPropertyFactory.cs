@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Exceptions;
 using InstaConnect.Common.Models.Enums;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
 
 namespace InstaConnect.Common.Infrastructure.PostSortPropertys;
@@ -20,7 +20,7 @@ internal class PostSortPropertyFactory : IPostSortPropertyFactory
         _postSortProperty = postSortProperty;
     }
 
-    public IPostSortProperty Get(PostSortProperty sortProperty)
+    public IPostSortProperty Create(PostSortProperty sortProperty)
     {
         var property = _postSortProperty.FirstOrDefault(s => s.SortProperty == sortProperty);
 

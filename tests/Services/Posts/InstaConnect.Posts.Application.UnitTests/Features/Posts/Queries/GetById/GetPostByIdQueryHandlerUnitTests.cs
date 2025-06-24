@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetById;

@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Common.Infrastructure.Abstractions;
 
-internal interface ISortOrder
+public interface ISortOrder
 {
     public SortOrder SortOrder { get; }
 

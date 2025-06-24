@@ -3,11 +3,11 @@
 internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IUserRepository _userWriteRepository;
 
     public UserDeletedEventConsumer(
         IUnitOfWork unitOfWork,
-        IUserWriteRepository userWriteRepository)
+        IUserRepository userWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _userWriteRepository = userWriteRepository;

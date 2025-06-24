@@ -4,12 +4,12 @@ internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEvent>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IUserRepository _userWriteRepository;
 
     public UserUpdatedEventConsumer(
         IUnitOfWork unitOfWork,
         IInstaConnectMapper instaConnectMapper,
-        IUserWriteRepository userWriteRepository)
+        IUserRepository userWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _instaConnectMapper = instaConnectMapper;

@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models;
-
-namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers;
+﻿namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers;
 
 internal class PostFactory : IPostFactory
 {
@@ -15,7 +13,7 @@ internal class PostFactory : IPostFactory
         _dateTimeProvider = dateTimeProvider;
     }
 
-    public Post Get(string userId, string title, string content)
+    public Post Create(string userId, string title, string content)
     {
         var id = _guidProvider.NewGuid().ToString();
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();

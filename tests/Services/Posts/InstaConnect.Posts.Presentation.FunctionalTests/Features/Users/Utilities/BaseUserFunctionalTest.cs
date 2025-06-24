@@ -22,12 +22,12 @@ public abstract class BaseUserFunctionalTest : IClassFixture<PostsWebApplication
         }
     }
 
-    protected IUserWriteRepository UserWriteRepository
+    protected IUserRepository UserWriteRepository
     {
         get
         {
             var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var userRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+            var userRepository = serviceScope.ServiceProvider.GetRequiredService<IUserRepository>();
 
             return userRepository;
         }
@@ -56,7 +56,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<PostsWebApplication
             DataFaker.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMinLength));
 
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserRepository>();
 
         userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);

@@ -12,7 +12,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostRequest(
+        var request = new DeletePostApiRequest(
             existingPost.Id,
             existingPost.UserId
         );
@@ -33,7 +33,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostRequest(
+        var request = new DeletePostApiRequest(
             DataFaker.GetString(length),
             existingPost.UserId
         );
@@ -52,7 +52,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostRequest(
+        var request = new DeletePostApiRequest(
             existingPost.Id,
             null
         );
@@ -74,7 +74,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostRequest(
+        var request = new DeletePostApiRequest(
             existingPost.Id,
             DataFaker.GetString(length)
         );
@@ -93,7 +93,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostRequest(
+        var request = new DeletePostApiRequest(
             PostTestUtilities.InvalidId,
             existingPost.UserId
         );
@@ -113,7 +113,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostRequest(
+        var request = new DeletePostApiRequest(
             existingPost.Id,
             existingUser.Id
         );
@@ -132,7 +132,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostRequest(
+        var request = new DeletePostApiRequest(
             existingPost.Id,
             existingPost.UserId
         );
@@ -151,7 +151,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostRequest(
+        var request = new DeletePostApiRequest(
             existingPost.Id,
             existingPost.UserId
         );
@@ -172,7 +172,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostRequest(
+        var request = new DeletePostApiRequest(
             DataFaker.GetDifferentCaseString(existingPost.Id),
             existingPost.UserId
         );

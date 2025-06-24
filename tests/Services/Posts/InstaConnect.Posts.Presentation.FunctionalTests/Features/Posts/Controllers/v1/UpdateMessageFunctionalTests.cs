@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models;
-
-namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
+﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class UpdatePostFunctionalTests : BasePostFunctionalTest
 {
@@ -14,7 +12,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             existingPost.Id,
             existingPost.UserId,
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
@@ -36,7 +34,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             DataFaker.GetString(length),
             existingPost.UserId,
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
@@ -56,7 +54,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             existingPost.Id,
             existingPost.UserId,
             new(null, PostTestUtilities.ValidUpdateContent)
@@ -79,7 +77,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             existingPost.Id,
             existingPost.UserId,
             new(DataFaker.GetString(length), PostTestUtilities.ValidUpdateContent)
@@ -99,7 +97,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             existingPost.Id,
             existingPost.UserId,
             new(PostTestUtilities.ValidUpdateTitle, null)
@@ -122,7 +120,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             existingPost.Id,
             existingPost.UserId,
             new(PostTestUtilities.ValidUpdateTitle, DataFaker.GetString(length))
@@ -142,7 +140,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             existingPost.Id,
             null,
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
@@ -165,7 +163,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             existingPost.Id,
             DataFaker.GetString(length),
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
@@ -185,7 +183,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange\
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             PostTestUtilities.InvalidId,
             existingPost.UserId,
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
@@ -206,7 +204,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             existingPost.Id,
             existingUser.Id,
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
@@ -226,7 +224,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             existingPost.Id,
             existingPost.UserId,
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
@@ -246,7 +244,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             existingPost.Id,
             existingPost.UserId,
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
@@ -267,7 +265,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             existingPost.Id,
             existingPost.UserId,
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
@@ -292,7 +290,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostRequest(
+        var request = new UpdatePostApiRequest(
             DataFaker.GetDifferentCaseString(existingPost.Id),
             existingPost.UserId,
             new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)

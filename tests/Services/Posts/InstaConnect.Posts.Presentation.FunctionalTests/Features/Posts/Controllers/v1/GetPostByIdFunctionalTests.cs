@@ -13,7 +13,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
     public async Task GetByIdAsync_ShouldReturnBadRequestResponse_WhenIdLengthIsInvalid(int length)
     {
         // Arrange
-        var request = new GetPostByIdRequest(
+        var request = new GetPostByIdApiRequest(
             DataFaker.GetString(length)
         );
 
@@ -31,7 +31,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
     public async Task GetByIdAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
     {
         // Arrange
-        var request = new GetPostByIdRequest(
+        var request = new GetPostByIdApiRequest(
             PostTestUtilities.InvalidId
         );
 
@@ -49,7 +49,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetPostByIdRequest(
+        var request = new GetPostByIdApiRequest(
             existingPost.Id
         );
 
@@ -67,7 +67,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetPostByIdRequest(
+        var request = new GetPostByIdApiRequest(
             existingPost.Id
         );
 
@@ -90,7 +90,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetPostByIdRequest(
+        var request = new GetPostByIdApiRequest(
             DataFaker.GetDifferentCaseString(existingPost.Id)
         );
 

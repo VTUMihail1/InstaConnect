@@ -3,5 +3,5 @@
 namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
 public interface IPostCommentLikeFactory
 {
-    public PostCommentLike Get(string postCommentId, string userId);
+    public PostCommentLike Create(string postCommentId, string userId);
 }

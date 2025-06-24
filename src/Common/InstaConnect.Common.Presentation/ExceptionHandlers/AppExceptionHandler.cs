@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Exceptions.Base;
+﻿using InstaConnect.Common.Exceptions;
 
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;

@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
+﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Verify;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.ForgotPasswordTokens.Commands;
 

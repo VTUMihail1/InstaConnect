@@ -1,4 +1,6 @@
-﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
+﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
+using InstaConnect.Posts.Domain.Features.Users.Exceptions;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Commands;
 

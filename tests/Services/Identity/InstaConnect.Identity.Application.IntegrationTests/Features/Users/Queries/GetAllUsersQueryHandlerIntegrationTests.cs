@@ -1,4 +1,5 @@
-﻿using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
+﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Queries;
 

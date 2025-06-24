@@ -65,6 +65,10 @@ public static partial class ServiceCollectionExtensions
         });
 
         serviceCollection
+            .AddScoped<IPaginator, Paginator>()
+            .AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
+
+        serviceCollection
             .AddHealthChecks()
             .AddDbContextCheck<TContext>();
 

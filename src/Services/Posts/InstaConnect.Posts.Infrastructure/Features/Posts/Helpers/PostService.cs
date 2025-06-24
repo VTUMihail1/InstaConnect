@@ -1,48 +1,51 @@
 ﻿using InstaConnect.Common.Abstractions;
 using InstaConnect.Common.Exceptions.Users;
 using InstaConnect.Common.Helpers;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Events;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
+using InstaConnect.Posts.Domain.Features.Users.Exceptions;
 
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers;
 internal class PostService : IPostService
 {
     private readonly IPostFactory _postFactory;
     private readonly IEventPublisher _eventPublisher;
+    private readonly IPostRepository _postRepository;
+    private readonly IUserRepository _userRepository;
     private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostReadRepository _postReadRepository;
-    private readonly IPostWriteRepository _postWriteRepository;
-    private readonly IUserWriteRepository _userWriteRepository;
 
     public PostService(
         IPostFactory postFactory,
         IEventPublisher eventPublisher,
+        IPostRepository postRepository,
+        IUserRepository userRepository,
         IDateTimeProvider dateTimeProvider,
-        IInstaConnectMapper instaConnectMapper,
-        IPostReadRepository postReadRepository,
-        IPostWriteRepository postWriteRepository,
-        IUserWriteRepository userWriteRepository)
+        IInstaConnectMapper instaConnectMapper)
     {
         _postFactory = postFactory;
         _eventPublisher = eventPublisher;
+        _postRepository = postRepository;
+        _userRepository = userRepository;
         _dateTimeProvider = dateTimeProvider;
         _instaConnectMapper = instaConnectMapper;
-        _postReadRepository = postReadRepository;
-        _postWriteRepository = postWriteRepository;
-        _userWriteRepository = userWriteRepository;
     }
 
-    public async Task<PostQueryCollection> GetAllAsync(PostQueryParameters parameters, CancellationToken cancellationToken)
+    public async Task<PostCollection> GetAllAsync(GetAllPostsRequest request, CancellationToken cancellationToken)
     {
-        var posts = await _postReadRepository.GetAllAsync(parameters, cancellationToken);
+        var posts = await _postRepository.GetAllAsync(request, cancellationToken);
 
         return posts;
     }
 
-    public async Task<Post> GetByIdAsync(string id, CancellationToken cancellationToken)
+    public async Task<Post> GetByIdAsync(GetPostByIdRequest request, CancellationToken cancellationToken)
     {
-        var post = await _postReadRepository.GetByIdAsync(id, cancellationToken);
+        var post = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (post == null)
         {
@@ -52,21 +55,17 @@ internal class PostService : IPostService
         return post;
     }
 
-    public async Task<Post> AddAsync(
-        string userId,
-        string title,
-        string content,
-        CancellationToken cancellationToken)
+    public async Task<Post> AddAsync(AddPostRequest request, CancellationToken cancellationToken)
     {
-        var user = await _userWriteRepository.GetByIdAsync(userId, cancellationToken);
+        var user = await _userRepository.GetByIdAsync(request.CurrentUserId, cancellationToken);
 
         if (user == null)
         {
             throw new UserNotFoundException();
         }
 
-        var post = _postFactory.Get(userId, title, content);
-        _postWriteRepository.Add(post);
+        var post = _postFactory.Create(request.CurrentUserId, request.Title, request.Content);
+        _postRepository.Add(post);
 
         var integrationEvent = _instaConnectMapper.Map<AddedPostEvent>(post);
         await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
@@ -74,28 +73,23 @@ internal class PostService : IPostService
         return post;
     }
 
-    public async Task<Post> UpdateAsync(
-        string id,
-        string userId,
-        string title,
-        string content,
-        CancellationToken cancellationToken)
+    public async Task<Post> UpdateAsync(UpdatePostRequest request, CancellationToken cancellationToken)
     {
-        var post = await _postWriteRepository.GetByIdAsync(id, cancellationToken);
+        var post = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (post == null)
         {
             throw new PostNotFoundException();
         }
 
-        if (post.UserId != userId)
+        if (post.UserId != request.CurrentUserId)
         {
-            throw new UserForbiddenException();
+            throw new PostForbiddenException();
         }
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
-        post.Update(title, content, utcNow);
-        _postWriteRepository.Update(post);
+        post.Update(request.Title, request.Content, utcNow);
+        _postRepository.Update(post);
 
         var integrationEvent = _instaConnectMapper.Map<UpdatedPostEvent>(post);
         await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
@@ -103,26 +97,21 @@ internal class PostService : IPostService
         return post;
     }
 
-    public async Task DeleteAsync(
-        string id,
-        string userId,
-        CancellationToken cancellationToken)
+    public async Task DeleteAsync(DeletePostRequest request, CancellationToken cancellationToken)
     {
-        var post = await _postWriteRepository.GetByIdAsync(id, cancellationToken);
+        var post = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (post == null)
         {
             throw new PostNotFoundException();
         }
 
-        if (post.UserId != userId)
+        if (post.UserId != request.CurrentUserId)
         {
-            throw new UserForbiddenException();
+            throw new PostForbiddenException();
         }
 
         var integrationEvent = _instaConnectMapper.Map<DeletedPostEvent>(post);
         await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
-
-        return post;
     }
 }

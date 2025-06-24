@@ -3,6 +3,7 @@
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Presentation.Features.Posts.Mappings;
 
@@ -10,20 +11,20 @@ internal class PostQueryProfile : Profile
 {
     public PostQueryProfile()
     {
-        CreateMap<PostPagination, PostQueryPagination>();
+        CreateMap<PostPaginationRequest, PostQueryPagination>();
 
-        CreateMap<PostRequestSorting, PostQuerySorting>();
+        CreateMap<PostSortingApiRequest, PostQuerySorting>();
 
-        CreateMap<PostRequestPagination, PostQueryPagination>();
+        CreateMap<PostPaginationApiRequest, PostQueryPagination>();
 
-        CreateMap<PostPagination, PostQueryPagination>();
+        CreateMap<PostPaginationRequest, PostQueryPagination>();
 
-        CreateMap<GetAllPostsRequest, GetAllPostsQuery>();
+        CreateMap<GetAllPostsApiRequest, GetAllPostsQuery>();
 
-        CreateMap<GetPostByIdRequest, GetPostByIdQuery>();
+        CreateMap<GetPostByIdApiRequest, GetPostByIdQuery>();
 
-        CreateMap<GetPostByIdQueryResponse, GetPostByIdResponse>();
+        CreateMap<GetPostByIdQueryResponse, GetPostByIdApiResponse>();
 
-        CreateMap<GetAllPostsQueryResponse, GetAllPostsResponse>();
+        CreateMap<GetAllPostsQueryResponse, GetAllPostsApiResponse>();
     }
 }

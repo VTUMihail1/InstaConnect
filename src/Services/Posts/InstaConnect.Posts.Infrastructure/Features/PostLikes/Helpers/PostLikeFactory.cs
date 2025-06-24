@@ -13,7 +13,7 @@ internal class PostLikeFactory : IPostLikeFactory
         _dateTimeProvider = dateTimeProvider;
     }
 
-    public PostLike Get(string postId, string userId)
+    public PostLike Create(string postId, string userId)
     {
         var id = _guidProvider.NewGuid().ToString();
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();

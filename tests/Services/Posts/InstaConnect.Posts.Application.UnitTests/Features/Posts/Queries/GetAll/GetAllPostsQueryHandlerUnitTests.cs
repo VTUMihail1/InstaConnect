@@ -1,6 +1,5 @@
 ﻿using InstaConnect.Common.Domain.Models.Pagination;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetAll;

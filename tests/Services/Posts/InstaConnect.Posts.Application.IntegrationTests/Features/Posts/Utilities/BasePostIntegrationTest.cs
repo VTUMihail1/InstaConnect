@@ -2,7 +2,6 @@
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 using InstaConnect.Posts.Infrastructure;
@@ -20,12 +19,12 @@ public abstract class BasePostIntegrationTest : IClassFixture<PostsWebApplicatio
 
     protected IInstaConnectSender InstaConnectSender { get; }
 
-    protected IUserWriteRepository UserWriteRepository
+    protected IUserRepository UserWriteRepository
     {
         get
         {
             var serviceScope = ServiceScope.ServiceProvider.CreateScope();
-            var userWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+            var userWriteRepository = serviceScope.ServiceProvider.GetRequiredService<IUserRepository>();
 
             return userWriteRepository;
         }
@@ -64,7 +63,7 @@ public abstract class BasePostIntegrationTest : IClassFixture<PostsWebApplicatio
     {
         var user = new UserBuilder().Create();
         var unitOfWork = ServiceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserWriteRepository>();
+        var userWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserRepository>();
 
         userWriteRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);

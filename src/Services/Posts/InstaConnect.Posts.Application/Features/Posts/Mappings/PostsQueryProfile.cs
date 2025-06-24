@@ -3,7 +3,8 @@
 using InstaConnect.Common.Domain.Models.Pagination;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
 
 namespace InstaConnect.Posts.Application.Features.Posts.Mappings;
 
@@ -11,7 +12,7 @@ public class PostQueryProfile : Profile
 {
     public PostQueryProfile()
     {
-        CreateMap<GetAllPostsQuery, PostQueryParameters>();
+        CreateMap<GetAllPostsQuery, GetAllPostsRequest>();
 
         CreateMap<Post, GetPostByIdQueryResponse>()
             .ConstructUsing(src => new(
@@ -24,7 +25,7 @@ public class PostQueryProfile : Profile
                         src.User!.UserName,
                         src.User.ProfileImage))));
 
-        CreateMap<PostQueryCollection, GetAllPostsQueryResponse>()
+        CreateMap<PostCollection, GetAllPostsQueryResponse>()
             .ConstructUsing(pp => new(
                 pp.Data
                   .Select(p => new PostQueryResponse(

@@ -10,7 +10,7 @@ using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 using NSubstitute;
@@ -18,9 +18,9 @@ using NSubstitute;
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 public static class PostMatcher
 {
-    public static PostQueryParameters IsPostQueryParameters(GetAllPostsQuery query)
+    public static GetAllPostsRequest IsPostQueryParameters(GetAllPostsQuery query)
     {
-        return Matcher.Is<PostQueryParameters>(p => p.Filter.UserId == query.Filter.UserId &&
+        return Matcher.Is<GetAllPostsRequest>(p => p.Filter.UserId == query.Filter.UserId &&
                                                     p.Filter.UserName == query.Filter.UserName &&
                                                     p.Filter.Title == query.Filter.Title &&
                                                     p.Pagination.Page == query.Pagination.Page &&
@@ -59,7 +59,7 @@ public static class PostMatcher
                                      p.UpdatedAt == post.UpdatedAt);
     }
 
-    public static GetAllPostsQuery IsGetAllPostsQuery(GetAllPostsRequest request)
+    public static GetAllPostsQuery IsGetAllPostsQuery(GetAllPostsApiRequest request)
     {
         return Matcher.Is<GetAllPostsQuery>(p => p.Filter.UserId == request.Filter.UserId &&
                                                  p.Filter.UserName == request.Filter.UserName &&
@@ -70,19 +70,19 @@ public static class PostMatcher
                                                  p.Sorting.Property == request.Sorting.Property);
     }
 
-    public static GetPostByIdQuery IsGetPostByIdQuery(GetPostByIdRequest request)
+    public static GetPostByIdQuery IsGetPostByIdQuery(GetPostByIdApiRequest request)
     {
         return Matcher.Is<GetPostByIdQuery>(p => p.Id == request.Id);
     }
 
-    public static AddPostCommand IsAddPostCommand(AddPostRequest request)
+    public static AddPostCommand IsAddPostCommand(AddPostApiRequest request)
     {
         return Matcher.Is<AddPostCommand>(p => p.Title == request.Body.Title &&
                                                p.Content == request.Body.Content &&
                                                p.CurrentUserId == request.CurrentUserId);
     }
 
-    public static UpdatePostCommand IsUpdatePostCommand(UpdatePostRequest command)
+    public static UpdatePostCommand IsUpdatePostCommand(UpdatePostApiRequest command)
     {
         return Matcher.Is<UpdatePostCommand>(p => p.Id == command.Id &&
                                                   p.Title == command.Body.Title &&
@@ -90,7 +90,7 @@ public static class PostMatcher
                                                   p.CurrentUserId == command.CurrentUserId);
     }
 
-    public static DeletePostCommand IsDeletePostCommand(DeletePostRequest request)
+    public static DeletePostCommand IsDeletePostCommand(DeletePostApiRequest request)
     {
         return Matcher.Is<DeletePostCommand>(p => p.Id == request.Id &&
                                                   p.CurrentUserId == request.CurrentUserId);

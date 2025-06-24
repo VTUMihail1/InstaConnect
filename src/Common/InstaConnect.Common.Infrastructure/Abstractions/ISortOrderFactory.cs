@@ -1,7 +1,7 @@
 ﻿using InstaConnect.Common.Models.Enums;
 
 namespace InstaConnect.Common.Infrastructure.Abstractions;
-internal interface ISortOrderFactory
+public interface ISortOrderFactory
 {
-    ISortOrder Get(SortOrder sortOrder);
+    ISortOrder Create(SortOrder sortOrder);
 }

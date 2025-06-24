@@ -18,7 +18,8 @@ internal class AddPostCommandHandler : ICommandHandler<AddPostCommand, AddPostCo
 
     public async Task<AddPostCommandResponse> Handle(AddPostCommand request, CancellationToken cancellationToken)
     {
-        var post = _postService.AddAsync(request.CurrentUserId, request.Title, request.Content, cancellationToken);
+        var serviceRequest = _instaConnectMapper.Map<AddPostRequest>(request);
+        var post = _postService.AddAsync(serviceRequest, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var response = _instaConnectMapper.Map<AddPostCommandResponse>(post);

@@ -3,7 +3,7 @@ using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
@@ -14,7 +14,7 @@ public static class PostMockSetups
         User user,
         Post addPost)
     {
-        postFactory.Get(user.Id, addPost.Title, addPost.Content).ReturnsResponse(addPost);
+        postFactory.Create(user.Id, addPost.Title, addPost.Content).ReturnsResponse(addPost);
     }
 
     public static void SetupUpdate(
@@ -38,7 +38,7 @@ public static class PostMockSetups
     public static void SetupGetAllAsync(
         this IPostReadRepository postReadRepository,
         GetAllPostsQuery query,
-        PostQueryCollection response,
+        PostCollection response,
         CancellationToken cancellationToken)
     {
         postReadRepository
@@ -48,7 +48,7 @@ public static class PostMockSetups
 
     public static void SetupGetAllQuery(
         this IInstaConnectSender instaConnectSender,
-        GetAllPostsRequest request,
+        GetAllPostsApiRequest request,
         GetAllPostsQueryResponse response,
         CancellationToken cancellationToken)
     {
@@ -59,7 +59,7 @@ public static class PostMockSetups
 
     public static void SetupGetByIdQuery(
         this IInstaConnectSender instaConnectSender,
-        GetPostByIdRequest request,
+        GetPostByIdApiRequest request,
         GetPostByIdQueryResponse response,
         CancellationToken cancellationToken)
     {
@@ -70,7 +70,7 @@ public static class PostMockSetups
 
     public static void SetupAddCommand(
         this IInstaConnectSender instaConnectSender,
-        AddPostRequest request,
+        AddPostApiRequest request,
         AddPostCommandResponse response,
         CancellationToken cancellationToken)
     {
@@ -81,7 +81,7 @@ public static class PostMockSetups
 
     public static void SetupUpdateCommand(
         this IInstaConnectSender instaConnectSender,
-        UpdatePostRequest request,
+        UpdatePostApiRequest request,
         UpdatePostCommandResponse response,
         CancellationToken cancellationToken)
     {

@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
+using InstaConnect.Posts.Domain.Features.Users.Exceptions;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Commands.Add;
 

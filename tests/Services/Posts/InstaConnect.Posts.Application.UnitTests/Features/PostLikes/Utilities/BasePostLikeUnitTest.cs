@@ -9,7 +9,7 @@ using InstaConnect.Posts.Application.Extensions;
 using InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
@@ -25,7 +25,7 @@ public abstract class BasePostLikeUnitTest
 
     protected IEntityPropertyValidator EntityPropertyValidator { get; }
 
-    protected IUserWriteRepository UserWriteRepository { get; }
+    protected IUserRepository UserWriteRepository { get; }
 
     protected IPostReadRepository PostReadRepository { get; }
 
@@ -41,7 +41,7 @@ public abstract class BasePostLikeUnitTest
                 new MapperConfiguration(cfg => cfg.AddMaps(PostApplicationReference.Assembly))));
         CancellationToken = new CancellationToken();
         EntityPropertyValidator = new EntityPropertyValidator();
-        UserWriteRepository = Substitute.For<IUserWriteRepository>();
+        UserWriteRepository = Substitute.For<IUserRepository>();
         PostReadRepository = Substitute.For<IPostReadRepository>();
         PostWriteRepository = Substitute.For<IPostWriteRepository>();
         PostLikeService = Substitute.For<IPostLikeService>();
@@ -85,7 +85,7 @@ public abstract class BasePostLikeUnitTest
             .Returns(post);
 
         PostReadRepository
-            .GetAllAsync(Arg.Is<PostQueryParameters>(m =>
+            .GetAllAsync(Arg.Is<GetAllPostsRequest>(m =>
                                                                         m.Title == post.Title &&
                                                                         m.UserId == user.Id &&
                                                                         m.UserName == user.UserName &&

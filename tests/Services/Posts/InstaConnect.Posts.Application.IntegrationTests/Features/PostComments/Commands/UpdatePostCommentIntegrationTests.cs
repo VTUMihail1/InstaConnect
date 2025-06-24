@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
+﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Commands;
 
@@ -160,7 +161,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserForbiddenException>();
+        await action.Should().ThrowAsync<PostForbiddenException>();
     }
 
     [Fact]

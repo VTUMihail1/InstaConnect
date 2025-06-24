@@ -1,9 +1,9 @@
 ﻿using InstaConnect.Common.Models.Enums;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
 
 namespace InstaConnect.Common.Infrastructure.Abstractions;
-internal interface IPostSortPropertyFactory
+public interface IPostSortPropertyFactory
 {
-    IPostSortProperty Get(PostSortProperty sortProperty);
+    IPostSortProperty Create(PostSortProperty sortProperty);
 }

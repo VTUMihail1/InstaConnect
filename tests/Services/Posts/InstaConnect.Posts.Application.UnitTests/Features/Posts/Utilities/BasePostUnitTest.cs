@@ -6,7 +6,6 @@ using InstaConnect.Common.Application.Helpers;
 using InstaConnect.Common.Helpers;
 using InstaConnect.Posts.Application.Extensions;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
@@ -24,7 +23,7 @@ public abstract class BasePostUnitTest
 
     protected IInstaConnectMapper InstaConnectMapper { get; }
 
-    protected IUserWriteRepository UserWriteRepository { get; }
+    protected IUserRepository UserWriteRepository { get; }
 
     protected IPostReadRepository PostReadRepository { get; }
 
@@ -39,7 +38,7 @@ public abstract class BasePostUnitTest
         UnitOfWork = Mocker.Mock<IUnitOfWork>();
         PostFactory = Mocker.Mock<IPostFactory>();
         PostService = Mocker.Mock<IPostService>();
-        UserWriteRepository = Mocker.Mock<IUserWriteRepository>();
+        UserWriteRepository = Mocker.Mock<IUserRepository>();
         PostReadRepository = Mocker.Mock<IPostReadRepository>();
         PostWriteRepository = Mocker.Mock<IPostWriteRepository>();
     }

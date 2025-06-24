@@ -8,7 +8,7 @@ using InstaConnect.Posts.Application.Features.PostLikes.Models;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 using InstaConnect.Posts.Presentation.Extensions;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Utilities;

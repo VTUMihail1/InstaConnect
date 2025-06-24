@@ -2,7 +2,6 @@
 using InstaConnect.Common.Exceptions.Users;
 using InstaConnect.Posts.Domain.Features.PostComments.Exceptions;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 
 namespace InstaConnect.Posts.Infrastructure.Features.PostComments.Helpers;
 internal class PostCommentService : IPostCommentService
@@ -47,7 +46,7 @@ internal class PostCommentService : IPostCommentService
 
     public PostComment Add(Post post, string content, string userId)
     {
-        var postComment = _postCommentFactory.Get(post.Id, userId, content);
+        var postComment = _postCommentFactory.Create(post.Id, userId, content);
         _postCommentWriteRepository.Add(postComment);
 
         return postComment;
@@ -64,7 +63,7 @@ internal class PostCommentService : IPostCommentService
 
         if (userId != postComment.UserId)
         {
-            throw new UserForbiddenException();
+            throw new PostForbiddenException();
         }
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
@@ -85,7 +84,7 @@ internal class PostCommentService : IPostCommentService
 
         if (userId != postComment.UserId)
         {
-            throw new UserForbiddenException();
+            throw new PostForbiddenException();
         }
 
         _postCommentWriteRepository.Delete(postComment);

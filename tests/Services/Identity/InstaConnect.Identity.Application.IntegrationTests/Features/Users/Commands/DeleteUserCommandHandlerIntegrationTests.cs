@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Application.Contracts.Users;
+using InstaConnect.Common.Exceptions;
 using InstaConnect.Identity.Application.Features.Users.Commands.Delete;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.Users.Commands;

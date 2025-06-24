@@ -1,7 +1,6 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Update;

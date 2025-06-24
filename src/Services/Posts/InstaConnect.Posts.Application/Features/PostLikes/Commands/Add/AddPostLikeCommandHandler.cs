@@ -5,14 +5,14 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand, P
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPostLikeService _postLikeService;
     private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IUserWriteRepository _userWriteRepository;
+    private readonly IUserRepository _userWriteRepository;
     private readonly IPostWriteRepository _postWriteRepository;
 
     public AddPostLikeCommandHandler(
         IUnitOfWork unitOfWork,
         IPostLikeService postLikeService,
         IInstaConnectMapper instaConnectMapper,
-        IUserWriteRepository userWriteRepository,
+        IUserRepository userWriteRepository,
         IPostWriteRepository postWriteRepository)
     {
         _unitOfWork = unitOfWork;

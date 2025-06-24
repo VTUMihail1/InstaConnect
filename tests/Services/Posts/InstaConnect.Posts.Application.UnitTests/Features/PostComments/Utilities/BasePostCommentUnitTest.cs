@@ -11,7 +11,6 @@ using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
-using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
@@ -27,7 +26,7 @@ public abstract class BasePostCommentUnitTest
 
     protected IEntityPropertyValidator EntityPropertyValidator { get; }
 
-    protected IUserWriteRepository UserWriteRepository { get; }
+    protected IUserRepository UserWriteRepository { get; }
 
     protected IPostWriteRepository PostWriteRepository { get; }
 
@@ -41,7 +40,7 @@ public abstract class BasePostCommentUnitTest
                 new MapperConfiguration(cfg => cfg.AddMaps(PostApplicationReference.Assembly))));
         EntityPropertyValidator = new EntityPropertyValidator();
         CancellationToken = new CancellationToken();
-        UserWriteRepository = Substitute.For<IUserWriteRepository>();
+        UserWriteRepository = Substitute.For<IUserRepository>();
         PostWriteRepository = Substitute.For<IPostWriteRepository>();
         PostCommentService = Substitute.For<IPostCommentService>();
     }

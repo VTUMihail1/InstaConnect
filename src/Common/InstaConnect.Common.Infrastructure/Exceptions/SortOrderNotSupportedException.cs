@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Exceptions.Base;
+﻿using InstaConnect.Common.Exceptions;
 
 namespace InstaConnect.Common.Infrastructure.Exceptions;
 public class SortOrderNotSupportedException : BadRequestException

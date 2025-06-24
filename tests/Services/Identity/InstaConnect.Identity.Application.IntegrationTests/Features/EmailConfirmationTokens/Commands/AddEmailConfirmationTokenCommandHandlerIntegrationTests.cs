@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Application.Contracts.EmailConfirmationTokens;
+using InstaConnect.Common.Exceptions;
 using InstaConnect.Identity.Application.Features.EmailConfirmationTokens.Commands.Add;
 
 namespace InstaConnect.Identity.Application.IntegrationTests.Features.EmailConfirmationTokens.Commands;
