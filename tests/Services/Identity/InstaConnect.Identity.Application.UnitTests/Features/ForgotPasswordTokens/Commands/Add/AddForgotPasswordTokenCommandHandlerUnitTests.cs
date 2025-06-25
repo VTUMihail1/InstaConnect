@@ -10,7 +10,7 @@ public class AddForgotPasswordTokenCommandHandlerUnitTests : BaseForgotPasswordT
     {
         _commandHandler = new(
             UnitOfWork,
-            InstaConnectMapper,
+            ApplicationMapper,
             UserWriteRepository,
             ForgotPasswordTokenPublisher);
     }

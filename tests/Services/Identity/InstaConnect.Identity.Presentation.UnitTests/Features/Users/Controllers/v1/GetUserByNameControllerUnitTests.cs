@@ -9,8 +9,8 @@ public class GetUserByNameControllerUnitTests : BaseUserUnitTest
     public GetUserByNameControllerUnitTests()
     {
         _userController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -71,7 +71,7 @@ public class GetUserByNameControllerUnitTests : BaseUserUnitTest
         await _userController.GetByNameAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<GetUserByNameQuery>(m => m.UserName == existingUser.UserName), CancellationToken);
     }

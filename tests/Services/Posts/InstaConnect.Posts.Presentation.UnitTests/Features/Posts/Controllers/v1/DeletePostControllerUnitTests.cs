@@ -20,8 +20,8 @@ public class DeletePostControllerUnitTests : BasePostUnitTest
         _post = SetupPost(_user);
         _requestBuilder = new(_post);
         _postController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -47,6 +47,6 @@ public class DeletePostControllerUnitTests : BasePostUnitTest
         await _postController.DeleteAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender.ShouldReceiveOneSendAsync(request, CancellationToken);
+        await ApplicationSender.ShouldReceiveOneSendAsync(request, CancellationToken);
     }
 }

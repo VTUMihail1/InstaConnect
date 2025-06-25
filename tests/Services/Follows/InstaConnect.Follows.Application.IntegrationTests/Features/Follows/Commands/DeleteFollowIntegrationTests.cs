@@ -21,7 +21,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -41,7 +41,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -58,7 +58,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -78,7 +78,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -95,7 +95,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<FollowNotFoundException>();
@@ -113,7 +113,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserForbiddenException>();
@@ -130,7 +130,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         );
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         var follow = await FollowWriteRepository.GetByIdAsync(existingFollow.Id, CancellationToken);
@@ -151,7 +151,7 @@ public class DeleteFollowIntegrationTests : BaseFollowIntegrationTest
         );
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         var follow = await FollowWriteRepository.GetByIdAsync(existingFollow.Id, CancellationToken);

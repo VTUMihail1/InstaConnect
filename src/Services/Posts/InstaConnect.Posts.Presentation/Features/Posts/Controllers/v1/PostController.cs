@@ -11,15 +11,15 @@ namespace InstaConnect.Posts.Presentation.Features.Posts.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class PostController : ControllerBase
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IInstaConnectSender _instaConnectSender;
+    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationSender _applicationSender;
 
     public PostController(
-        IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender)
+        IApplicationMapper applicationMapper,
+        IApplicationSender applicationSender)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _instaConnectSender = instaConnectSender;
+        _applicationMapper = applicationMapper;
+        _applicationSender = applicationSender;
     }
 
     // GET: api/posts
@@ -30,9 +30,9 @@ public class PostController : ControllerBase
         GetAllPostsApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetAllPostsQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<GetAllPostsApiResponse>(queryResponse);
+        var queryRequest = _applicationMapper.Map<GetAllPostsQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var response = _applicationMapper.Map<GetAllPostsApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -45,9 +45,9 @@ public class PostController : ControllerBase
         GetPostByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetPostByIdQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<GetPostByIdApiResponse>(queryResponse);
+        var queryRequest = _applicationMapper.Map<GetPostByIdQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var response = _applicationMapper.Map<GetPostByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -62,9 +62,9 @@ public class PostController : ControllerBase
         AddPostApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddPostCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<AddPostApiResponse>(commandResponse);
+        var commandRequest = _applicationMapper.Map<AddPostCommand>(request);
+        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var response = _applicationMapper.Map<AddPostApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -79,9 +79,9 @@ public class PostController : ControllerBase
         UpdatePostApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<UpdatePostCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<UpdatePostApiResponse>(commandResponse);
+        var commandRequest = _applicationMapper.Map<UpdatePostCommand>(request);
+        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var response = _applicationMapper.Map<UpdatePostApiResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -96,8 +96,8 @@ public class PostController : ControllerBase
         DeletePostApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<DeletePostCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _applicationMapper.Map<DeletePostCommand>(request);
+        await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

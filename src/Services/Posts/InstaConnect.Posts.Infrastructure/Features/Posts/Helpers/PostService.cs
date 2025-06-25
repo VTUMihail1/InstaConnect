@@ -18,7 +18,7 @@ internal class PostService : IPostService
     private readonly IPostRepository _postRepository;
     private readonly IUserRepository _userRepository;
     private readonly IDateTimeProvider _dateTimeProvider;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
 
     public PostService(
         IPostFactory postFactory,
@@ -26,14 +26,14 @@ internal class PostService : IPostService
         IPostRepository postRepository,
         IUserRepository userRepository,
         IDateTimeProvider dateTimeProvider,
-        IInstaConnectMapper instaConnectMapper)
+        IApplicationMapper applicationMapper)
     {
         _postFactory = postFactory;
         _eventPublisher = eventPublisher;
         _postRepository = postRepository;
         _userRepository = userRepository;
         _dateTimeProvider = dateTimeProvider;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
     }
 
     public async Task<PostCollection> GetAllAsync(GetAllPostsRequest request, CancellationToken cancellationToken)
@@ -49,7 +49,7 @@ internal class PostService : IPostService
 
         if (post == null)
         {
-            throw new PostNotFoundException();
+            throw new PostNotFoundException(request.Id);
         }
 
         return post;
@@ -61,13 +61,13 @@ internal class PostService : IPostService
 
         if (user == null)
         {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(request.CurrentUserId);
         }
 
         var post = _postFactory.Create(request.CurrentUserId, request.Title, request.Content);
         _postRepository.Add(post);
 
-        var integrationEvent = _instaConnectMapper.Map<AddedPostEvent>(post);
+        var integrationEvent = _applicationMapper.Map<AddedPostEvent>(post);
         await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
 
         return post;
@@ -79,19 +79,19 @@ internal class PostService : IPostService
 
         if (post == null)
         {
-            throw new PostNotFoundException();
+            throw new PostNotFoundException(request.Id);
         }
 
         if (post.UserId != request.CurrentUserId)
         {
-            throw new PostForbiddenException();
+            throw new PostForbiddenException(request.Id, request.CurrentUserId);
         }
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         post.Update(request.Title, request.Content, utcNow);
         _postRepository.Update(post);
 
-        var integrationEvent = _instaConnectMapper.Map<UpdatedPostEvent>(post);
+        var integrationEvent = _applicationMapper.Map<UpdatedPostEvent>(post);
         await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
 
         return post;
@@ -103,15 +103,15 @@ internal class PostService : IPostService
 
         if (post == null)
         {
-            throw new PostNotFoundException();
+            throw new PostNotFoundException(request.Id);
         }
 
         if (post.UserId != request.CurrentUserId)
         {
-            throw new PostForbiddenException();
+            throw new PostForbiddenException(request.Id, request.CurrentUserId);
         }
 
-        var integrationEvent = _instaConnectMapper.Map<DeletedPostEvent>(post);
+        var integrationEvent = _applicationMapper.Map<DeletedPostEvent>(post);
         await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
     }
 }

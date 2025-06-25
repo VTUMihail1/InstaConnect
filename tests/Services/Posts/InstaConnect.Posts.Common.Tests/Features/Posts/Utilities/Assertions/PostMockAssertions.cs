@@ -69,7 +69,7 @@ public static class PostMockAssertions
     }
 
     public static async Task ShouldReceiveOneSendAsync(
-        this IInstaConnectSender postWriteRepository,
+        this IApplicationSender postWriteRepository,
         GetAllPostsApiRequest request,
         CancellationToken cancellationToken)
     {
@@ -77,7 +77,7 @@ public static class PostMockAssertions
     }
 
     public static async Task ShouldReceiveOneSendAsync(
-        this IInstaConnectSender postWriteRepository,
+        this IApplicationSender postWriteRepository,
         GetPostByIdApiRequest request,
         CancellationToken cancellationToken)
     {
@@ -85,7 +85,7 @@ public static class PostMockAssertions
     }
 
     public static async Task ShouldReceiveOneSendAsync(
-        this IInstaConnectSender postWriteRepository,
+        this IApplicationSender postWriteRepository,
         AddPostApiRequest request,
         CancellationToken cancellationToken)
     {
@@ -93,7 +93,7 @@ public static class PostMockAssertions
     }
 
     public static async Task ShouldReceiveOneSendAsync(
-        this IInstaConnectSender postWriteRepository,
+        this IApplicationSender postWriteRepository,
         UpdatePostApiRequest request,
         CancellationToken cancellationToken)
     {
@@ -101,7 +101,7 @@ public static class PostMockAssertions
     }
 
     public static async Task ShouldReceiveOneSendAsync(
-        this IInstaConnectSender postWriteRepository,
+        this IApplicationSender postWriteRepository,
         DeletePostApiRequest request,
         CancellationToken cancellationToken)
     {

@@ -16,7 +16,7 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetUserByIdQuery(null);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -34,7 +34,7 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetUserByIdQuery(DataFaker.GetString(length));
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -49,7 +49,7 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetUserByIdQuery(UserTestUtilities.InvalidId);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -65,7 +65,7 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetUserByIdQuery(existingUser.Id);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -85,7 +85,7 @@ public class GetUserByIdQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetUserByIdQuery(DataFaker.GetDifferentCaseString(existingUser.Id));
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response

@@ -10,15 +10,15 @@ namespace InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class PostLikeController : ControllerBase
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IInstaConnectSender _instaConnectSender;
+    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationSender _applicationSender;
 
     public PostLikeController(
-        IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender)
+        IApplicationMapper applicationMapper,
+        IApplicationSender applicationSender)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _instaConnectSender = instaConnectSender;
+        _applicationMapper = applicationMapper;
+        _applicationSender = applicationSender;
     }
 
     // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes
@@ -29,9 +29,9 @@ public class PostLikeController : ControllerBase
         GetAllPostLikesRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetAllPostLikesQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostLikePaginationQueryResponse>(queryResponse);
+        var queryRequest = _applicationMapper.Map<GetAllPostLikesQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var response = _applicationMapper.Map<PostLikePaginationQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -44,9 +44,9 @@ public class PostLikeController : ControllerBase
         GetPostLikeByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetPostLikeByIdQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostLikeQueryResponse>(queryResponse);
+        var queryRequest = _applicationMapper.Map<GetPostLikeByIdQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var response = _applicationMapper.Map<PostLikeQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -61,9 +61,9 @@ public class PostLikeController : ControllerBase
         AddPostLikeRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddPostLikeCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostLikeCommandResponse>(commandResponse);
+        var commandRequest = _applicationMapper.Map<AddPostLikeCommand>(request);
+        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var response = _applicationMapper.Map<PostLikeCommandResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -78,8 +78,8 @@ public class PostLikeController : ControllerBase
         DeletePostLikeRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<DeletePostLikeCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _applicationMapper.Map<DeletePostLikeCommand>(request);
+        await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

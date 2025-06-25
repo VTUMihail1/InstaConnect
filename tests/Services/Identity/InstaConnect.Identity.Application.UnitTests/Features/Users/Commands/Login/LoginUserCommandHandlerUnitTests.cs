@@ -11,7 +11,7 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
     {
         _commandHandler = new(
             PasswordHasher,
-            InstaConnectMapper,
+            ApplicationMapper,
             UserWriteRepository,
             AccessTokenGenerator,
             UserClaimWriteRepository);

@@ -23,7 +23,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetPostByIdQuery(null);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -39,7 +39,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetPostByIdQuery(DataFaker.GetString(length));
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -52,7 +52,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetPostByIdQuery(PostTestUtilities.InvalidId);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<PostNotFoundException>();
@@ -66,7 +66,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetPostByIdQuery(existingPost.Id);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -87,7 +87,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = new GetPostByIdQuery(DataFaker.GetNonCaseMatchingString(existingPost.Id));
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response

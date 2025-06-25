@@ -11,15 +11,15 @@ namespace InstaConnect.Follows.Presentation.Features.Follows.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class FollowController : ControllerBase
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IInstaConnectSender _instaConnectSender;
+    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationSender _applicationSender;
 
     public FollowController(
-        IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender)
+        IApplicationMapper applicationMapper,
+        IApplicationSender applicationSender)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _instaConnectSender = instaConnectSender;
+        _applicationMapper = applicationMapper;
+        _applicationSender = applicationSender;
     }
 
     // GET: api/follows
@@ -30,9 +30,9 @@ public class FollowController : ControllerBase
         GetAllFollowsRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetAllFollowsQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<FollowPaginationQueryResponse>(queryResponse);
+        var queryRequest = _applicationMapper.Map<GetAllFollowsQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var response = _applicationMapper.Map<FollowPaginationQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -45,9 +45,9 @@ public class FollowController : ControllerBase
         GetFollowByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetFollowByIdQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<FollowQueryResponse>(queryResponse);
+        var queryRequest = _applicationMapper.Map<GetFollowByIdQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var response = _applicationMapper.Map<FollowQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -62,9 +62,9 @@ public class FollowController : ControllerBase
         AddFollowRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddFollowCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<FollowCommandResponse>(commandResponse);
+        var commandRequest = _applicationMapper.Map<AddFollowCommand>(request);
+        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var response = _applicationMapper.Map<FollowCommandResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -79,8 +79,8 @@ public class FollowController : ControllerBase
         DeleteFollowRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<DeleteFollowCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _applicationMapper.Map<DeleteFollowCommand>(request);
+        await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

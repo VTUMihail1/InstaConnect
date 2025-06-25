@@ -4,23 +4,23 @@ namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetAll;
 
 internal class GetAllMessagesQueryHandler : IQueryHandler<GetAllMessagesQuery, MessagePaginationQueryViewModel>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IMessageReadRepository _messageReadRepository;
 
     public GetAllMessagesQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IMessageReadRepository messageReadRepository)
     {
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _messageReadRepository = messageReadRepository;
     }
 
     public async Task<MessagePaginationQueryViewModel> Handle(GetAllMessagesQuery request, CancellationToken cancellationToken)
     {
-        var filteredCollectionQuery = _instaConnectMapper.Map<MessageCollectionReadQuery>(request);
+        var filteredCollectionQuery = _applicationMapper.Map<MessageCollectionReadQuery>(request);
 
         var messages = await _messageReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
-        var response = _instaConnectMapper.Map<MessagePaginationQueryViewModel>(messages);
+        var response = _applicationMapper.Map<MessagePaginationQueryViewModel>(messages);
 
         return response;
     }

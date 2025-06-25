@@ -14,7 +14,7 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
             UnitOfWork,
             ImageHandler,
             EventPublisher,
-            InstaConnectMapper,
+            ApplicationMapper,
             UserWriteRepository);
     }
 

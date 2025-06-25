@@ -19,7 +19,7 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
         _commandHandler = new(
             UnitOfWork,
             PostFactory,
-            InstaConnectMapper,
+            ApplicationMapper,
             PostWriteRepository,
             UserWriteRepository);
 

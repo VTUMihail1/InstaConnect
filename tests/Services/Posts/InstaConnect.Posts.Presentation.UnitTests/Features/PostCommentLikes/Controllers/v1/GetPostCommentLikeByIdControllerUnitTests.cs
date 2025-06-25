@@ -9,8 +9,8 @@ public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikeUnit
     public GetPostCommentLikeByIdControllerUnitTests()
     {
         _postCommentLikeController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -71,7 +71,7 @@ public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikeUnit
         await _postCommentLikeController.GetByIdAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<GetPostCommentLikeByIdQuery>(m => m.Id == existingPostCommentLike.Id), CancellationToken);
     }

@@ -32,7 +32,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var command = _commandBuilder.WithoutUserId().Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.ShouldThrowValidationExceptionAsync();
@@ -47,7 +47,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var command = _commandBuilder.WithUserId(userId).Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.ShouldThrowValidationExceptionAsync();
@@ -60,7 +60,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var command = _commandBuilder.WithoutTitle().Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.ShouldThrowValidationExceptionAsync();
@@ -75,7 +75,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var command = _commandBuilder.WithTitle(title).Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.ShouldThrowValidationExceptionAsync();
@@ -88,7 +88,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var command = _commandBuilder.WithoutContent().Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.ShouldThrowValidationExceptionAsync();
@@ -103,7 +103,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var command = _commandBuilder.WithContent(content).Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.ShouldThrowValidationExceptionAsync();
@@ -116,7 +116,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var command = _commandBuilder.WithInvalidUserId().Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.ShouldThrowUserNotFoundExceptionAsync();
@@ -129,7 +129,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var command = _commandBuilder.Create();
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
         var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
@@ -143,7 +143,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var command = _commandBuilder.Create();
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
         var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
@@ -157,7 +157,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var command = _commandBuilder.WithDifferentCaseUserId(_user.Id).Create();
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
         var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert

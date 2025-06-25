@@ -9,8 +9,8 @@ public class GetAllPostCommentLikeControllerUnitTests : BasePostCommentLikeUnitT
     public GetAllPostCommentLikeControllerUnitTests()
     {
         _postCommentLikeController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public class GetAllPostCommentLikeControllerUnitTests : BasePostCommentLikeUnitT
         await _postCommentLikeController.GetAllAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<GetAllPostCommentLikesQuery>(m =>
                   m.UserId == existingPostCommentLike.UserId &&

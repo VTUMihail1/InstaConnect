@@ -8,15 +8,15 @@ namespace InstaConnect.Identity.Presentation.Features.EmailConfirmationTokens.Co
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class EmailConfirmationTokenController : ControllerBase
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IInstaConnectSender _instaConnectSender;
+    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationSender _applicationSender;
 
     public EmailConfirmationTokenController(
-        IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender)
+        IApplicationMapper applicationMapper,
+        IApplicationSender applicationSender)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _instaConnectSender = instaConnectSender;
+        _applicationMapper = applicationMapper;
+        _applicationSender = applicationSender;
     }
 
     // POST: api/users/user@example.com/email-confirmation-tokens
@@ -27,8 +27,8 @@ public class EmailConfirmationTokenController : ControllerBase
         AddEmailConfirmationTokenRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddEmailConfirmationTokenCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _applicationMapper.Map<AddEmailConfirmationTokenCommand>(request);
+        await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -41,8 +41,8 @@ public class EmailConfirmationTokenController : ControllerBase
         VerifyEmailConfirmationTokenRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<VerifyEmailConfirmationTokenCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _applicationMapper.Map<VerifyEmailConfirmationTokenCommand>(request);
+        await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

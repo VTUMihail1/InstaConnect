@@ -3,20 +3,20 @@
 internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostCommentLikeCommand, PostCommentLikeCommandViewModel>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserRepository _userWriteRepository;
     private readonly IPostWriteRepository _postWriteRepository;
     private readonly IPostCommentLikeService _postCommentLikeService;
 
     public AddPostCommentLikeCommandHandler(
         IUnitOfWork unitOfWork,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserRepository userWriteRepository,
         IPostWriteRepository postWriteRepository,
         IPostCommentLikeService postCommentLikeService)
     {
         _unitOfWork = unitOfWork;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userWriteRepository = userWriteRepository;
         _postWriteRepository = postWriteRepository;
         _postCommentLikeService = postCommentLikeService;
@@ -44,7 +44,7 @@ internal class AddPostCommentLikeCommandHandler : ICommandHandler<AddPostComment
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var postCommentLikeCommandViewModel = _instaConnectMapper.Map<PostCommentLikeCommandViewModel>(postCommentLike);
+        var postCommentLikeCommandViewModel = _applicationMapper.Map<PostCommentLikeCommandViewModel>(postCommentLike);
 
         return postCommentLikeCommandViewModel;
     }

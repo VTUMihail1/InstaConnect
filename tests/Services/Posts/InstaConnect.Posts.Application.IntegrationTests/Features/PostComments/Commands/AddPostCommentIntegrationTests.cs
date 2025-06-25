@@ -23,7 +23,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -44,7 +44,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -62,7 +62,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -83,7 +83,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -102,7 +102,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -124,7 +124,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -142,7 +142,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserNotFoundException>();
@@ -160,7 +160,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<PostNotFoundException>();
@@ -179,7 +179,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
         var postComment = await PostCommentWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert

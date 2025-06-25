@@ -12,7 +12,7 @@ public class AddPostLikeCommandHandlerUnitTests : BasePostLikeUnitTest
         _commandHandler = new(
             UnitOfWork,
             PostLikeService,
-            InstaConnectMapper,
+            ApplicationMapper,
             UserWriteRepository,
             PostWriteRepository);
     }

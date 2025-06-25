@@ -1,12 +1,12 @@
 using FluentValidation;
 
-using InstaConnect.Common.Exceptions.Base;
+using InstaConnect.Common.Exceptions;
 
 namespace InstaConnect.Common.Application.PipelineBehaviors;
 
 internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : notnull
+    where TRequest : IBaseCommand, IBaseQuery
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 

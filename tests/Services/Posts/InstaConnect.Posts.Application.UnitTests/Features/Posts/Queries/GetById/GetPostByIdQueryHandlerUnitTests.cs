@@ -16,7 +16,7 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostUnitTest
         _post = SetupPost(_user);
         _queryBuilder = new(_post);
         _queryHandler = new(
-            InstaConnectMapper,
+            ApplicationMapper,
             PostReadRepository);
     }
 

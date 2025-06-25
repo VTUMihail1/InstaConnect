@@ -4,14 +4,14 @@ namespace InstaConnect.Follows.Application.Features.Follows.Queries.GetAll;
 
 internal class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQuery, FollowPaginationQueryViewModel>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IFollowReadRepository _followReadRepository;
 
     public GetAllFollowsQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IFollowReadRepository followReadRepository)
     {
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _followReadRepository = followReadRepository;
     }
 
@@ -19,10 +19,10 @@ internal class GetAllFollowsQueryHandler : IQueryHandler<GetAllFollowsQuery, Fol
         GetAllFollowsQuery request,
         CancellationToken cancellationToken)
     {
-        var filteredQuery = _instaConnectMapper.Map<FollowCollectionReadQuery>(request);
+        var filteredQuery = _applicationMapper.Map<FollowCollectionReadQuery>(request);
 
         var follows = await _followReadRepository.GetAllAsync(filteredQuery, cancellationToken);
-        var response = _instaConnectMapper.Map<FollowPaginationQueryViewModel>(follows);
+        var response = _applicationMapper.Map<FollowPaginationQueryViewModel>(follows);
 
         return response;
     }

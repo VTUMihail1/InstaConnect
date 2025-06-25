@@ -21,9 +21,10 @@ public static class ServiceCollectionExtentions
                 cf.AddOpenBehavior(typeof(LoggingPipelineBehavior<,>));
                 cf.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
                 cf.AddOpenBehavior(typeof(CachingPipelineBehavior<,>));
+                cf.AddOpenBehavior(typeof(UnitOfWorkPipelineBehavior<,>));
             });
 
-        serviceCollection.AddScoped<IInstaConnectSender, InstaConnectSender>();
+        serviceCollection.AddScoped<IApplicationSender, ApplicationSender>();
 
         return serviceCollection;
     }

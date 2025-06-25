@@ -16,7 +16,7 @@ public abstract class BaseEmailConfirmationTokenUnitTest
 
     protected CancellationToken CancellationToken { get; }
 
-    protected IInstaConnectMapper InstaConnectMapper { get; }
+    protected IApplicationMapper ApplicationMapper { get; }
 
     protected IUserWriteRepository UserWriteRepository { get; }
 
@@ -27,7 +27,7 @@ public abstract class BaseEmailConfirmationTokenUnitTest
     protected BaseEmailConfirmationTokenUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
-        InstaConnectMapper = new InstaConnectMapper(
+        ApplicationMapper = new ApplicationMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
         CancellationToken = new CancellationToken();

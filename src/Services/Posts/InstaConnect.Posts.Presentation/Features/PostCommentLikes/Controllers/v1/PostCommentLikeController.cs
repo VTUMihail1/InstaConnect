@@ -10,15 +10,15 @@ namespace InstaConnect.Posts.Presentation.Features.PostCommentLikes.Controllers.
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class PostCommentLikeController : ControllerBase
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IInstaConnectSender _instaConnectSender;
+    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationSender _applicationSender;
 
     public PostCommentLikeController(
-        IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender)
+        IApplicationMapper applicationMapper,
+        IApplicationSender applicationSender)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _instaConnectSender = instaConnectSender;
+        _applicationMapper = applicationMapper;
+        _applicationSender = applicationSender;
     }
 
     // GET: api/post-comment-likes
@@ -29,9 +29,9 @@ public class PostCommentLikeController : ControllerBase
         GetAllPostCommentLikesRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetAllPostCommentLikesQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentLikePaginationQueryResponse>(queryResponse);
+        var queryRequest = _applicationMapper.Map<GetAllPostCommentLikesQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var response = _applicationMapper.Map<PostCommentLikePaginationQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -44,9 +44,9 @@ public class PostCommentLikeController : ControllerBase
         GetPostCommentLikeByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetPostCommentLikeByIdQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentLikeQueryResponse>(queryResponse);
+        var queryRequest = _applicationMapper.Map<GetPostCommentLikeByIdQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var response = _applicationMapper.Map<PostCommentLikeQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -61,9 +61,9 @@ public class PostCommentLikeController : ControllerBase
         AddPostCommentLikeRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddPostCommentLikeCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentLikeCommandResponse>(commandResponse);
+        var commandRequest = _applicationMapper.Map<AddPostCommentLikeCommand>(request);
+        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var response = _applicationMapper.Map<PostCommentLikeCommandResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -78,8 +78,8 @@ public class PostCommentLikeController : ControllerBase
         DeletePostCommentLikeRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<DeletePostCommentLikeCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _applicationMapper.Map<DeletePostCommentLikeCommand>(request);
+        await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

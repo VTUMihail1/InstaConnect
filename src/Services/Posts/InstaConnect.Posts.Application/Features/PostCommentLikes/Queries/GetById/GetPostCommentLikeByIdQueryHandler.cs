@@ -2,16 +2,16 @@
 
 internal class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostCommentLikeByIdQuery, PostCommentLikeQueryViewModel>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IPostReadRepository _postReadRepository;
     private readonly IPostCommentLikeService _postCommentLikeService;
 
     public GetPostCommentLikeByIdQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IPostReadRepository postReadRepository,
         IPostCommentLikeService postCommentLikeService)
     {
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _postReadRepository = postReadRepository;
         _postCommentLikeService = postCommentLikeService;
     }
@@ -26,7 +26,7 @@ internal class GetPostCommentLikeByIdQueryHandler : IQueryHandler<GetPostComment
         }
 
         var postCommentLike = await _postCommentLikeService.GetByIdAsync(existingPost, request.PostCommentId, request.Id, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentLikeQueryViewModel>(postCommentLike);
+        var response = _applicationMapper.Map<PostCommentLikeQueryViewModel>(postCommentLike);
 
         return response;
     }

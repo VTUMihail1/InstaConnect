@@ -1,14 +1,16 @@
-﻿namespace InstaConnect.Common.Exceptions.Users;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Utilities;
+
+namespace InstaConnect.Common.Exceptions.Users;
 
 public class PostForbiddenException : ForbiddenException
 {
-    private const string ErrorMessage = "Post access is forbidden";
-
-    public PostForbiddenException() : base(ErrorMessage)
+    public PostForbiddenException(string id, string userId)
+        : base(PostExceptionErrorMessages.GetForbiddenMessage(id, userId))
     {
     }
 
-    public PostForbiddenException(Exception exception) : base(ErrorMessage, exception)
+    public PostForbiddenException(string id, string userId, Exception exception)
+        : base(PostExceptionErrorMessages.GetForbiddenMessage(id, userId), exception)
     {
     }
 }

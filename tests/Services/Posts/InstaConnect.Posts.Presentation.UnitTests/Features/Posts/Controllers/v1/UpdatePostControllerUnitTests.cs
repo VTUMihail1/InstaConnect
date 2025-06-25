@@ -19,13 +19,13 @@ public class UpdatePostControllerUnitTests : BasePostUnitTest
         _post = SetupPost(_user);
         _requestBuilder = new(_post);
         _postController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
 
         var request = _requestBuilder.Create();
         var response = new UpdatePostCommandResponse(_post.Id, _post.CreatedAt, _post.UpdatedAt);
 
-        InstaConnectSender.SetupUpdateCommand(request, response, CancellationToken);
+        ApplicationSender.SetupUpdateCommand(request, response, CancellationToken);
     }
 
     [Fact]
@@ -64,6 +64,6 @@ public class UpdatePostControllerUnitTests : BasePostUnitTest
         await _postController.UpdateAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender.ShouldReceiveOneSendAsync(request, CancellationToken);
+        await ApplicationSender.ShouldReceiveOneSendAsync(request, CancellationToken);
     }
 }

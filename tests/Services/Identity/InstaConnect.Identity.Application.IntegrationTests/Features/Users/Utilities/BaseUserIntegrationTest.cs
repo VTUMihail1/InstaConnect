@@ -17,7 +17,7 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IdentityWebApplica
 
     protected CancellationToken CancellationToken { get; }
 
-    protected IInstaConnectSender InstaConnectSender { get; }
+    protected IApplicationSender ApplicationSender { get; }
 
     protected ITestHarness TestHarness
     {
@@ -80,7 +80,7 @@ public abstract class BaseUserIntegrationTest : IClassFixture<IdentityWebApplica
     {
         ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
         CancellationToken = new CancellationToken();
-        InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
+        ApplicationSender = ServiceScope.ServiceProvider.GetRequiredService<IApplicationSender>();
         PasswordHasher = ServiceScope.ServiceProvider.GetRequiredService<IPasswordHasher>();
     }
     private async Task<UserClaim> CreateUserClaimUtilAsync(

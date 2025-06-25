@@ -17,15 +17,15 @@ public abstract class BaseMessageUnitTest
 {
     protected CancellationToken CancellationToken { get; }
 
-    protected IInstaConnectSender InstaConnectSender { get; }
+    protected IApplicationSender ApplicationSender { get; }
 
-    protected IInstaConnectMapper InstaConnectMapper { get; }
+    protected IApplicationMapper ApplicationMapper { get; }
 
     protected BaseMessageUnitTest()
     {
         CancellationToken = new();
-        InstaConnectSender = Substitute.For<IInstaConnectSender>();
-        InstaConnectMapper = new InstaConnectMapper(
+        ApplicationSender = Substitute.For<IApplicationSender>();
+        ApplicationMapper = new ApplicationMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
     }
@@ -67,7 +67,7 @@ public abstract class BaseMessageUnitTest
             false,
             false);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetAllMessagesQuery>(m =>
                   m.CurrentUserId == sender.Id &&
                   m.ReceiverId == receiver.Id &&
@@ -78,20 +78,20 @@ public abstract class BaseMessageUnitTest
                   m.PageSize == MessageTestUtilities.ValidPageSizeValue), CancellationToken)
             .Returns(messagePaginationCollectionModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetMessageByIdQuery>(m =>
                   m.Id == message.Id &&
                   m.CurrentUserId == sender.Id), CancellationToken)
             .Returns(messageQueryViewModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<AddMessageCommand>(m =>
                   m.CurrentUserId == sender.Id &&
                   m.ReceiverId == receiver.Id &&
                   m.Content == MessageTestUtilities.ValidAddContent), CancellationToken)
             .Returns(messageCommandViewModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<UpdateMessageCommand>(m =>
                   m.Id == message.Id &&
                   m.CurrentUserId == sender.Id &&

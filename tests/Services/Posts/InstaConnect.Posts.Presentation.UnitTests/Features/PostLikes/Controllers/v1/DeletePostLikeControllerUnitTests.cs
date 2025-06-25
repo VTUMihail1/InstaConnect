@@ -9,8 +9,8 @@ public class DeletePostLikeControllerUnitTests : BasePostLikeUnitTest
     public DeletePostLikeControllerUnitTests()
     {
         _postLikeController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class DeletePostLikeControllerUnitTests : BasePostLikeUnitTest
         await _postLikeController.DeleteAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
             .Received(1)
             .SendAsync(Arg.Is<DeletePostLikeCommand>(m => m.Id == existingPostLike.Id &&
                                                     m.CurrentUserId == existingPostLike.UserId),

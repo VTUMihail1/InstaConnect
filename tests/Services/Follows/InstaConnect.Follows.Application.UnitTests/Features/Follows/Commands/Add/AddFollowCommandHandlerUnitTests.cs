@@ -11,7 +11,7 @@ public class AddFollowCommandHandlerUnitTests : BaseFollowUnitTest
         _commandHandler = new(
             UnitOfWork,
             FollowFactory,
-            InstaConnectMapper,
+            ApplicationMapper,
             UserWriteRepository,
             FollowWriteRepository);
     }

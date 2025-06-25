@@ -4,20 +4,20 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand, P
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPostLikeService _postLikeService;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserRepository _userWriteRepository;
     private readonly IPostWriteRepository _postWriteRepository;
 
     public AddPostLikeCommandHandler(
         IUnitOfWork unitOfWork,
         IPostLikeService postLikeService,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserRepository userWriteRepository,
         IPostWriteRepository postWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _postLikeService = postLikeService;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userWriteRepository = userWriteRepository;
         _postWriteRepository = postWriteRepository;
     }
@@ -44,7 +44,7 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand, P
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var postLikeCommandViewModel = _instaConnectMapper.Map<PostLikeCommandViewModel>(postLike);
+        var postLikeCommandViewModel = _applicationMapper.Map<PostLikeCommandViewModel>(postLike);
 
         return postLikeCommandViewModel;
     }

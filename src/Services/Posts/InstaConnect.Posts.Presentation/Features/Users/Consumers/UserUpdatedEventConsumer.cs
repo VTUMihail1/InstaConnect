@@ -3,16 +3,16 @@
 internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEvent>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserRepository _userWriteRepository;
 
     public UserUpdatedEventConsumer(
         IUnitOfWork unitOfWork,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserRepository userWriteRepository)
     {
         _unitOfWork = unitOfWork;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userWriteRepository = userWriteRepository;
     }
 
@@ -25,7 +25,7 @@ internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEvent>
             return;
         }
 
-        _instaConnectMapper.Map(context.Message, existingUser);
+        _applicationMapper.Map(context.Message, existingUser);
         _userWriteRepository.Update(existingUser);
 
         await _unitOfWork.SaveChangesAsync(context.CancellationToken);

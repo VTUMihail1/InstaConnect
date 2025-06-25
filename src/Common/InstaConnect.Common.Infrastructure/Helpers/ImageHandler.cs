@@ -11,16 +11,16 @@ namespace InstaConnect.Common.Infrastructure.Helpers;
 internal class ImageHandler : IImageHandler
 {
     private readonly Cloudinary _cloudinary;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IImageUploadFactory _imageUploadFactory;
 
     public ImageHandler(
         Cloudinary cloudinary,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IImageUploadFactory imageUploadFactory)
     {
         _cloudinary = cloudinary;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _imageUploadFactory = imageUploadFactory;
     }
 
@@ -34,7 +34,7 @@ internal class ImageHandler : IImageHandler
             throw new BadRequestException(imageUploadResult.Error.Message);
         }
 
-        var uploadResult = _instaConnectMapper.Map<ImageResult>(imageUploadResult);
+        var uploadResult = _applicationMapper.Map<ImageResult>(imageUploadResult);
 
         return uploadResult;
     }

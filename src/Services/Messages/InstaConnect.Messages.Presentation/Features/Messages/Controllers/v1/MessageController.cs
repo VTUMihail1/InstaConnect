@@ -12,15 +12,15 @@ namespace InstaConnect.Messages.Presentation.Features.Messages.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class MessageController : ControllerBase
 {
-    private readonly IInstaConnectSender _instaConnectSender;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationSender _applicationSender;
+    private readonly IApplicationMapper _applicationMapper;
 
     public MessageController(
-        IInstaConnectSender instaConnectSender,
-        IInstaConnectMapper instaConnectMapper)
+        IApplicationSender applicationSender,
+        IApplicationMapper applicationMapper)
     {
-        _instaConnectSender = instaConnectSender;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationSender = applicationSender;
+        _applicationMapper = applicationMapper;
     }
 
     // GET: api/messages
@@ -31,9 +31,9 @@ public class MessageController : ControllerBase
         GetAllMessagesRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetAllMessagesQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<MessagePaginationQueryResponse>(queryResponse);
+        var queryRequest = _applicationMapper.Map<GetAllMessagesQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var response = _applicationMapper.Map<MessagePaginationQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -46,9 +46,9 @@ public class MessageController : ControllerBase
         GetMessageByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetMessageByIdQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<MessageQueryResponse>(queryResponse);
+        var queryRequest = _applicationMapper.Map<GetMessageByIdQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var response = _applicationMapper.Map<MessageQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -62,9 +62,9 @@ public class MessageController : ControllerBase
         AddMessageRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddMessageCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<MessageCommandResponse>(commandResponse);
+        var commandRequest = _applicationMapper.Map<AddMessageCommand>(request);
+        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var response = _applicationMapper.Map<MessageCommandResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -78,9 +78,9 @@ public class MessageController : ControllerBase
         UpdateMessageRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<UpdateMessageCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<MessageCommandResponse>(commandResponse);
+        var commandRequest = _applicationMapper.Map<UpdateMessageCommand>(request);
+        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var response = _applicationMapper.Map<MessageCommandResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -94,8 +94,8 @@ public class MessageController : ControllerBase
         DeleteMessageRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<DeleteMessageCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _applicationMapper.Map<DeleteMessageCommand>(request);
+        await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

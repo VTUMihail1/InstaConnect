@@ -10,7 +10,7 @@ public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
     public GetAllPostCommentsQueryHandlerUnitTests()
     {
         _queryHandler = new(
-            InstaConnectMapper,
+            ApplicationMapper,
             PostCommentReadRepository);
     }
 

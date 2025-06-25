@@ -22,7 +22,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
             UserTestUtilities.ValidUpdatePassword);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -45,7 +45,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
             UserTestUtilities.ValidUpdatePassword);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -65,7 +65,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
             UserTestUtilities.ValidUpdatePassword);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -88,7 +88,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
             UserTestUtilities.ValidUpdatePassword);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -108,7 +108,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
             null);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -132,7 +132,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
             password);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -152,7 +152,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
             UserTestUtilities.ValidPassword);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -173,7 +173,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
 
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -193,7 +193,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
             UserTestUtilities.ValidUpdatePassword);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -214,7 +214,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
             UserTestUtilities.ValidUpdatePassword);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -234,7 +234,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
             UserTestUtilities.ValidUpdatePassword);
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
         var user = await UserWriteRepository.GetByIdAsync(existingForgotPasswordToken.UserId, CancellationToken);
 
         // Assert
@@ -261,7 +261,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
             UserTestUtilities.ValidUpdatePassword);
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
         var user = await UserWriteRepository.GetByIdAsync(existingForgotPasswordToken.UserId, CancellationToken);
 
         // Assert

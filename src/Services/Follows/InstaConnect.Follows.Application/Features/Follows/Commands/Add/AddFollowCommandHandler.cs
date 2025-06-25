@@ -4,20 +4,20 @@ internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand, Follo
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IFollowFactory _followFactory;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserWriteRepository _userWriteRepository;
     private readonly IFollowWriteRepository _followWriteRepository;
 
     public AddFollowCommandHandler(
         IUnitOfWork unitOfWork,
         IFollowFactory followFactory,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserWriteRepository userWriteRepository,
         IFollowWriteRepository followWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _followFactory = followFactory;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userWriteRepository = userWriteRepository;
         _followWriteRepository = followWriteRepository;
     }
@@ -55,7 +55,7 @@ internal class AddFollowCommandHandler : ICommandHandler<AddFollowCommand, Follo
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var followCommandViewModel = _instaConnectMapper.Map<FollowCommandViewModel>(follow);
+        var followCommandViewModel = _applicationMapper.Map<FollowCommandViewModel>(follow);
 
         return followCommandViewModel;
     }

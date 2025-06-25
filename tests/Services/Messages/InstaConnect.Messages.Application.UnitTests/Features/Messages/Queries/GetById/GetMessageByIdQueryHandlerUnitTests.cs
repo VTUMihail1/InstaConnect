@@ -9,7 +9,7 @@ public class GetMessageByIdQueryHandlerUnitTests : BaseMessageUnitTest
     public GetMessageByIdQueryHandlerUnitTests()
     {
         _queryHandler = new(
-            InstaConnectMapper,
+            ApplicationMapper,
             MessageReadRepository);
     }
 

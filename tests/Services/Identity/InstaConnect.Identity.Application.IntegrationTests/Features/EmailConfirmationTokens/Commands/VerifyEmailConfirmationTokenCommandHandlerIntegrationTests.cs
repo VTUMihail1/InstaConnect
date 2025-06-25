@@ -18,7 +18,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         var command = new VerifyEmailConfirmationTokenCommand(null, existingEmailConfirmationToken.Value);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -37,7 +37,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         var command = new VerifyEmailConfirmationTokenCommand(DataFaker.GetString(length), existingEmailConfirmationToken.Value);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -53,7 +53,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         var command = new VerifyEmailConfirmationTokenCommand(existingEmailConfirmationToken.UserId, null);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -72,7 +72,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         var command = new VerifyEmailConfirmationTokenCommand(existingEmailConfirmationToken.UserId, DataFaker.GetString(length));
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -88,7 +88,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         var command = new VerifyEmailConfirmationTokenCommand(UserTestUtilities.InvalidId, existingEmailConfirmationToken.Value);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -104,7 +104,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         var command = new VerifyEmailConfirmationTokenCommand(existingEmailConfirmationToken.UserId, existingEmailConfirmationToken.Value);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -120,7 +120,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         var command = new VerifyEmailConfirmationTokenCommand(existingEmailConfirmationToken.UserId, EmailConfirmationTokenTestUtilities.InvalidValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -137,7 +137,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         var command = new VerifyEmailConfirmationTokenCommand(existingUser.Id, existingEmailConfirmationToken.Value);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserForbiddenException>();
@@ -151,7 +151,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         var command = new VerifyEmailConfirmationTokenCommand(existingEmailConfirmationToken.UserId, existingEmailConfirmationToken.Value);
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
         var user = await UserWriteRepository.GetByIdAsync(existingEmailConfirmationToken.UserId, CancellationToken);
 
         // Assert
@@ -172,7 +172,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
 
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
         var user = await UserWriteRepository.GetByIdAsync(existingEmailConfirmationToken.UserId, CancellationToken);
 
         // Assert

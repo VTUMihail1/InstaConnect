@@ -9,8 +9,8 @@ public class VerifyEmailConfirmationTokenControllerUnitTests : BaseEmailConfirma
     public VerifyEmailConfirmationTokenControllerUnitTests()
     {
         _emailConfirmationTokenController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class VerifyEmailConfirmationTokenControllerUnitTests : BaseEmailConfirma
         await _emailConfirmationTokenController.VerifyAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<VerifyEmailConfirmationTokenCommand>(m => m.Token == existingEmailConfirmationToken.Value &&
                                                                 m.UserId == existingEmailConfirmationToken.UserId), CancellationToken);

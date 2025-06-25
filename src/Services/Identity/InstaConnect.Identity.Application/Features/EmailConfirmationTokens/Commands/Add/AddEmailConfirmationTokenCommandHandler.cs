@@ -3,18 +3,18 @@
 public class AddEmailConfirmationTokenCommandHandler : ICommandHandler<AddEmailConfirmationTokenCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserWriteRepository _userWriteRepository;
     private readonly IEmailConfirmationTokenPublisher _emailConfirmationTokenPublisher;
 
     public AddEmailConfirmationTokenCommandHandler(
         IUnitOfWork unitOfWork,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserWriteRepository userWriteRepository,
         IEmailConfirmationTokenPublisher emailConfirmationTokenPublisher)
     {
         _unitOfWork = unitOfWork;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userWriteRepository = userWriteRepository;
         _emailConfirmationTokenPublisher = emailConfirmationTokenPublisher;
     }
@@ -35,7 +35,7 @@ public class AddEmailConfirmationTokenCommandHandler : ICommandHandler<AddEmailC
             throw new UserEmailAlreadyConfirmedException();
         }
 
-        var createEmailConfirmationTokenModel = _instaConnectMapper.Map<CreateEmailConfirmationTokenModel>(existingUser);
+        var createEmailConfirmationTokenModel = _applicationMapper.Map<CreateEmailConfirmationTokenModel>(existingUser);
         await _emailConfirmationTokenPublisher.PublishEmailConfirmationTokenAsync(createEmailConfirmationTokenModel, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

@@ -24,7 +24,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -48,7 +48,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -70,7 +70,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -95,7 +95,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -117,7 +117,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -142,7 +142,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -164,7 +164,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -189,7 +189,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -210,7 +210,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -233,7 +233,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -255,7 +255,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         response
@@ -277,7 +277,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
         var user = await UserWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
@@ -306,7 +306,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
         var user = await UserWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
@@ -335,7 +335,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
         var user = await UserWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
@@ -364,7 +364,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserUpdatedEvent>(m =>
@@ -395,7 +395,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserUpdatedEvent>(m =>

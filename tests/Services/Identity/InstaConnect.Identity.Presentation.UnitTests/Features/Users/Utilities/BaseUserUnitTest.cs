@@ -23,15 +23,15 @@ public abstract class BaseUserUnitTest
 {
     protected CancellationToken CancellationToken { get; }
 
-    protected IInstaConnectSender InstaConnectSender { get; }
+    protected IApplicationSender ApplicationSender { get; }
 
-    protected IInstaConnectMapper InstaConnectMapper { get; }
+    protected IApplicationMapper ApplicationMapper { get; }
 
     protected BaseUserUnitTest()
     {
         CancellationToken = new CancellationToken();
-        InstaConnectSender = Substitute.For<IInstaConnectSender>();
-        InstaConnectMapper = new InstaConnectMapper(
+        ApplicationSender = Substitute.For<IApplicationSender>();
+        ApplicationMapper = new ApplicationMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
     }
@@ -73,7 +73,7 @@ public abstract class BaseUserUnitTest
             false,
             false);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetAllUsersQuery>(m =>
                   m.FirstName == user.FirstName &&
                   m.LastName == user.LastName &&
@@ -84,27 +84,27 @@ public abstract class BaseUserUnitTest
                   m.PageSize == UserTestUtilities.ValidPageSizeValue), CancellationToken)
             .Returns(userPaginationCollectionModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetCurrentUserQuery>(u => u.CurrentUserId == user.Id), CancellationToken)
             .Returns(userQueryViewModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetUserByIdQuery>(m => m.Id == user.Id), CancellationToken)
             .Returns(userQueryViewModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetUserByNameQuery>(m => m.UserName == user.UserName), CancellationToken)
             .Returns(userQueryViewModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetCurrentDetailedUserQuery>(u => u.CurrentUserId == user.Id), CancellationToken)
             .Returns(userDetailedQueryViewModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetDetailedUserByIdQuery>(m => m.Id == user.Id), CancellationToken)
             .Returns(userDetailedQueryViewModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<UpdateUserCommand>(m => m.CurrentUserId == user.Id &&
                                                                 m.UserName == UserTestUtilities.ValidUpdateName &&
                                                                 m.FirstName == UserTestUtilities.ValidUpdateFirstName &&
@@ -112,7 +112,7 @@ public abstract class BaseUserUnitTest
                                                                 m.ProfileImageFile == UserTestUtilities.ValidUpdateFormFile), CancellationToken)
             .Returns(userCommandViewModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<AddUserCommand>(m => m.Email == UserTestUtilities.ValidAddEmail &&
                                                                 m.Password == UserTestUtilities.ValidAddPassword &&
                                                                 m.ConfirmPassword == UserTestUtilities.ValidAddPassword &&
@@ -141,7 +141,7 @@ public abstract class BaseUserUnitTest
 
         var userTokenCommandViewModel = new UserTokenCommandViewModel(UserTestUtilities.ValidAccessTokenValue, UserTestUtilities.ValidUntil);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<LoginUserCommand>(m => m.Email == user.Email &&
                                                      m.Password == UserTestUtilities.ValidPassword), CancellationToken)
             .Returns(userTokenCommandViewModel);

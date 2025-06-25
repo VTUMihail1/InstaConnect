@@ -3,6 +3,8 @@
 using InstaConnect.Common.Abstractions;
 using InstaConnect.Common.Helpers;
 
+using Mapster;
+
 using Microsoft.Extensions.DependencyInjection;
 
 using Scrutor;
@@ -12,9 +14,13 @@ public static class ServiceCollectionExtentions
 {
     public static IServiceCollection AddMapper(this IServiceCollection serviceCollection, Assembly assembly)
     {
-        serviceCollection.AddAutoMapper(assembly);
+        serviceCollection.AddMapster();
 
-        serviceCollection.AddScoped<IInstaConnectMapper, InstaConnectMapper>();
+        var config = TypeAdapterConfig.GlobalSettings;
+        config.Scan(assembly);
+        serviceCollection.AddSingleton(config);
+
+        serviceCollection.AddScoped<IApplicationMapper, ApplicationMapper>();
 
         return serviceCollection;
     }

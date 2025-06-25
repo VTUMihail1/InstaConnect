@@ -18,15 +18,15 @@ public abstract class BasePostCommentLikeUnitTest
 {
     protected CancellationToken CancellationToken { get; }
 
-    protected IInstaConnectSender InstaConnectSender { get; }
+    protected IApplicationSender ApplicationSender { get; }
 
-    protected IInstaConnectMapper InstaConnectMapper { get; }
+    protected IApplicationMapper ApplicationMapper { get; }
 
     protected BasePostCommentLikeUnitTest()
     {
         CancellationToken = new CancellationToken();
-        InstaConnectSender = Substitute.For<IInstaConnectSender>();
-        InstaConnectMapper = new InstaConnectMapper(
+        ApplicationSender = Substitute.For<IApplicationSender>();
+        ApplicationMapper = new ApplicationMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(PostPresentationReference.Assembly))));
     }
@@ -107,7 +107,7 @@ public abstract class BasePostCommentLikeUnitTest
             false,
             false);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetAllPostCommentLikesQuery>(m =>
                   m.PostCommentId == postComment.Id &&
                   m.UserId == user.Id &&
@@ -118,11 +118,11 @@ public abstract class BasePostCommentLikeUnitTest
                   m.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue), CancellationToken)
             .Returns(postCommentLikePaginationCollectionModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetPostCommentLikeByIdQuery>(m => m.Id == postCommentLike.Id), CancellationToken)
             .Returns(postCommentLikeQueryViewModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<AddPostCommentLikeCommand>(m =>
                   m.CurrentUserId == user.Id &&
                   m.PostCommentId == postComment.Id), CancellationToken)

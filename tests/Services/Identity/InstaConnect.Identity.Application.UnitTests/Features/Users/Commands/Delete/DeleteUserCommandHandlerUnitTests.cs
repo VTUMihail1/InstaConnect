@@ -12,7 +12,7 @@ public class DeleteUserCommandHandlerUnitTests : BaseUserUnitTest
         _commandHandler = new(
             UnitOfWork,
             EventPublisher,
-            InstaConnectMapper,
+            ApplicationMapper,
             UserWriteRepository);
     }
 

@@ -26,7 +26,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -49,7 +49,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -72,7 +72,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -93,7 +93,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -114,7 +114,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -138,7 +138,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -161,7 +161,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -184,7 +184,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             value);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -205,7 +205,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -237,7 +237,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -269,7 +269,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -301,7 +301,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -333,7 +333,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -365,7 +365,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -397,7 +397,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -429,7 +429,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -461,7 +461,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -493,7 +493,7 @@ public class GetAllPostCommentLikesQueryHandlerIntegrationTests : BasePostCommen
             PostCommentLikeTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response

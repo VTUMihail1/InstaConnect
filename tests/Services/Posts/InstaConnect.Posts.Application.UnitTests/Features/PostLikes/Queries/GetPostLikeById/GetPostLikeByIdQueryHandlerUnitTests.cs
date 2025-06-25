@@ -10,7 +10,7 @@ public class GetPostLikeByIdQueryHandlerUnitTests : BasePostLikeUnitTest
     {
         _queryHandler = new(
             PostLikeService,
-            InstaConnectMapper,
+            ApplicationMapper,
             PostReadRepository);
     }
 

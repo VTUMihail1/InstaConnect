@@ -3,18 +3,18 @@
 public class AddForgotPasswordTokenCommandHandler : ICommandHandler<AddForgotPasswordTokenCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserWriteRepository _userWriteRepository;
     private readonly IForgotPasswordTokenPublisher _forgotPasswordTokenPublisher;
 
     public AddForgotPasswordTokenCommandHandler(
         IUnitOfWork unitOfWork,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserWriteRepository userWriteRepository,
         IForgotPasswordTokenPublisher forgotPasswordTokenPublisher)
     {
         _unitOfWork = unitOfWork;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userWriteRepository = userWriteRepository;
         _forgotPasswordTokenPublisher = forgotPasswordTokenPublisher;
     }
@@ -30,7 +30,7 @@ public class AddForgotPasswordTokenCommandHandler : ICommandHandler<AddForgotPas
             throw new UserNotFoundException();
         }
 
-        var createForgotPasswordTokenModel = _instaConnectMapper.Map<CreateForgotPasswordTokenModel>(existingUser);
+        var createForgotPasswordTokenModel = _applicationMapper.Map<CreateForgotPasswordTokenModel>(existingUser);
         await _forgotPasswordTokenPublisher.PublishForgotPasswordTokenAsync(createForgotPasswordTokenModel, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

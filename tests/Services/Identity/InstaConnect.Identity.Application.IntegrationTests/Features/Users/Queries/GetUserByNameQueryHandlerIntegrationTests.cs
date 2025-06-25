@@ -16,7 +16,7 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetUserByNameQuery(null);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -34,7 +34,7 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetUserByNameQuery(DataFaker.GetString(length));
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -49,7 +49,7 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetUserByNameQuery(UserTestUtilities.ValidAddName);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -65,7 +65,7 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetUserByNameQuery(existingUser.UserName);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -85,7 +85,7 @@ public class GetUserByNameQueryHandlerIntegrationTests : BaseUserIntegrationTest
         var query = new GetUserByNameQuery(DataFaker.GetDifferentCaseString(existingUser.UserName));
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response

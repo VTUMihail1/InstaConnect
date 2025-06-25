@@ -18,8 +18,8 @@ public class GetPostByIdControllerUnitTests : BasePostUnitTest
         _post = SetupPost(_user);
         _requestBuilder = new(_post);
         _postController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -58,6 +58,6 @@ public class GetPostByIdControllerUnitTests : BasePostUnitTest
         await _postController.GetByIdAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender.ShouldReceiveOneSendAsync(request, CancellationToken);
+        await ApplicationSender.ShouldReceiveOneSendAsync(request, CancellationToken);
     }
 }

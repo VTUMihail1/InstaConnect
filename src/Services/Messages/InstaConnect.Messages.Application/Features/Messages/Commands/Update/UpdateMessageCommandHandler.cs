@@ -4,18 +4,18 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMessageService _messageService;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IMessageWriteRepository _messageWriteRepository;
 
     public UpdateMessageCommandHandler(
         IUnitOfWork unitOfWork,
         IMessageService messageService,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IMessageWriteRepository messageWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _messageService = messageService;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _messageWriteRepository = messageWriteRepository;
     }
 
@@ -38,7 +38,7 @@ internal class UpdateMessageCommandHandler : ICommandHandler<UpdateMessageComman
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var messageViewModel = _instaConnectMapper.Map<MessageCommandViewModel>(existingMessage);
+        var messageViewModel = _applicationMapper.Map<MessageCommandViewModel>(existingMessage);
 
         return messageViewModel;
     }

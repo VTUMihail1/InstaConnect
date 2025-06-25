@@ -10,7 +10,7 @@ public class UpdatePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
     {
         _commandHandler = new(
             UnitOfWork,
-            InstaConnectMapper,
+            ApplicationMapper,
             PostCommentService,
             PostWriteRepository);
     }

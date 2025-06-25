@@ -11,7 +11,7 @@ public class UpdateMessageCommandHandlerUnitTests : BaseMessageUnitTest
         _commandHandler = new(
             UnitOfWork,
             MessageService,
-            InstaConnectMapper,
+            ApplicationMapper,
             MessageWriteRepository);
     }
 

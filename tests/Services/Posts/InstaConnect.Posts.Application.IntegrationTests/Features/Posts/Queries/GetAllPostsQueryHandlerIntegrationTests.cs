@@ -33,7 +33,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithUserId(userId).Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.ShouldThrowValidationExceptionAsync();
@@ -47,7 +47,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithUserName(userName).Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.ShouldThrowValidationExceptionAsync();
@@ -61,7 +61,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithTitle(title).Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.ShouldThrowValidationExceptionAsync();
@@ -74,7 +74,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithEmptySortOrder().Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.ShouldThrowValidationExceptionAsync();
@@ -87,7 +87,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithEmptySortProperty().Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.ShouldThrowValidationExceptionAsync();
@@ -102,7 +102,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithPage(page).Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.ShouldThrowValidationExceptionAsync();
@@ -117,7 +117,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithPageSize(pageSize).Create();
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.ShouldThrowValidationExceptionAsync();
@@ -129,7 +129,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.Create();
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(_post, _user, query);
@@ -142,7 +142,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithoutUserId().Create();
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(_post, _user, query);
@@ -155,7 +155,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithDifferentCaseUserId(_user.Id).Create();
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(_post, _user, query);
@@ -168,7 +168,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithoutUserName().Create();
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(_post, _user, query);
@@ -181,7 +181,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithDifferentCaseUserName(_user.UserName).Create();
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(_post, _user, query);
@@ -194,7 +194,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithoutTitle().Create();
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(_post, _user, query);
@@ -207,7 +207,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithDifferentCaseTitle(_post.Title).Create();
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(_post, _user, query);
@@ -220,7 +220,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var query = _queryBuilder.WithPrefixTitle(_post.Title).Create();
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(_post, _user, query);

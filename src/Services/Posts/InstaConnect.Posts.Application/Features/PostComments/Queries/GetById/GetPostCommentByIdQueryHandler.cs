@@ -4,16 +4,16 @@ namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 
 internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentByIdQuery, PostCommentQueryViewModel>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IPostCommentService _postCommentService;
     private readonly IPostReadRepository _postReadRepository;
 
     public GetPostCommentByIdQueryHandler(
-        IInstaConnectMapper mapper,
+        IApplicationMapper mapper,
         IPostCommentService postCommentService,
         IPostReadRepository postReadRepository)
     {
-        _instaConnectMapper = mapper;
+        _applicationMapper = mapper;
         _postCommentService = postCommentService;
         _postReadRepository = postReadRepository;
     }
@@ -29,7 +29,7 @@ internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentById
 
         var postComment = await _postCommentService.GetByIdAsync(existingPost, request.Id, cancellationToken);
 
-        var response = _instaConnectMapper.Map<PostCommentQueryViewModel>(postComment);
+        var response = _applicationMapper.Map<PostCommentQueryViewModel>(postComment);
 
         return response;
     }

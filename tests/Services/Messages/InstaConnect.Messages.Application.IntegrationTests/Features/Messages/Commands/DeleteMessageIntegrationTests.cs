@@ -20,7 +20,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -40,7 +40,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -57,7 +57,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -77,7 +77,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -94,7 +94,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<MessageNotFoundException>();
@@ -112,7 +112,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserForbiddenException>();
@@ -129,7 +129,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         var message = await MessageWriteRepository.GetByIdAsync(existingMessage.Id, CancellationToken);
@@ -150,7 +150,7 @@ public class DeleteMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         var message = await MessageWriteRepository.GetByIdAsync(existingMessage.Id, CancellationToken);

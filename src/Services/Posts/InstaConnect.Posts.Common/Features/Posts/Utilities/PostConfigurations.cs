@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Common.Features.Posts.Utilities;
 
-public abstract class PostConfigurations
+public static class PostConfigurations
 {
     public const int IdMinLength = 7;
     public const int IdMaxLength = 100;

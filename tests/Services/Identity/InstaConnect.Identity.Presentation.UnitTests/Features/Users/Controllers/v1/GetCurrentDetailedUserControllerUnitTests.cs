@@ -9,8 +9,8 @@ public class GetCurrentDetailedUserControllerUnitTests : BaseUserUnitTest
     public GetCurrentDetailedUserControllerUnitTests()
     {
         _userController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -72,7 +72,7 @@ public class GetCurrentDetailedUserControllerUnitTests : BaseUserUnitTest
         await _userController.GetCurrentDetailedAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<GetCurrentDetailedUserQuery>(u => u.CurrentUserId == existingUser.Id), CancellationToken);
     }

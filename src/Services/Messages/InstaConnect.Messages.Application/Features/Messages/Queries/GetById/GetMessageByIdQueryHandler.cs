@@ -2,14 +2,14 @@
 
 internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, MessageQueryViewModel>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IMessageReadRepository _messageReadRepository;
 
     public GetMessageByIdQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IMessageReadRepository messageReadRepository)
     {
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _messageReadRepository = messageReadRepository;
     }
 
@@ -27,7 +27,7 @@ internal class GetMessageByIdQueryHandler : IQueryHandler<GetMessageByIdQuery, M
             throw new UserForbiddenException();
         }
 
-        var response = _instaConnectMapper.Map<MessageQueryViewModel>(message);
+        var response = _applicationMapper.Map<MessageQueryViewModel>(message);
 
         return response;
     }

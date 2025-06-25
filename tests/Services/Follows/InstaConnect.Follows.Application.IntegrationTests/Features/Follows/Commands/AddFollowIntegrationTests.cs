@@ -19,7 +19,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
             existingFollowing.Id);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -38,7 +38,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
             existingFollowing.Id);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -54,7 +54,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
             null);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -73,7 +73,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
             DataFaker.GetString(length));
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -89,7 +89,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
             existingFollowing.Id);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserNotFoundException>();
@@ -105,7 +105,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
             UserTestUtilities.InvalidId);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserNotFoundException>();
@@ -121,7 +121,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
             existingFollow.FollowingId);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<FollowAlreadyExistsException>();
@@ -138,7 +138,7 @@ public class AddFollowIntegrationTests : BaseFollowIntegrationTest
             existingFollowing.Id);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
         var follow = await FollowWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert

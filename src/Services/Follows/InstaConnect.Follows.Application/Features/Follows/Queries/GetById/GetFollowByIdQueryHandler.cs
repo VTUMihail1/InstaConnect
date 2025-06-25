@@ -2,14 +2,14 @@
 
 public class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, FollowQueryViewModel>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IFollowReadRepository _followReadRepository;
 
     public GetFollowByIdQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IFollowReadRepository followReadRepository)
     {
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _followReadRepository = followReadRepository;
     }
 
@@ -24,7 +24,7 @@ public class GetFollowByIdQueryHandler : IQueryHandler<GetFollowByIdQuery, Follo
             throw new FollowNotFoundException();
         }
 
-        var response = _instaConnectMapper.Map<FollowQueryViewModel>(follow);
+        var response = _applicationMapper.Map<FollowQueryViewModel>(follow);
 
         return response;
     }

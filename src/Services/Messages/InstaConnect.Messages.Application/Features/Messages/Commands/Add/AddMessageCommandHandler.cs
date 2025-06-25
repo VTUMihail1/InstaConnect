@@ -7,7 +7,7 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand, Mes
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMessageSender _messageSender;
     private readonly IMessageFactory _messageFactory;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserWriteRepository _userWriteRepository;
     private readonly IMessageWriteRepository _messageWriteRepository;
 
@@ -15,14 +15,14 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand, Mes
         IUnitOfWork unitOfWork,
         IMessageSender messageSender,
         IMessageFactory messageFactory,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserWriteRepository userWriteRepository,
         IMessageWriteRepository messageWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _messageSender = messageSender;
         _messageFactory = messageFactory;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userWriteRepository = userWriteRepository;
         _messageWriteRepository = messageWriteRepository;
     }
@@ -48,12 +48,12 @@ internal class AddMessageCommandHandler : ICommandHandler<AddMessageCommand, Mes
         var message = _messageFactory.Get(request.CurrentUserId, request.ReceiverId, request.Content);
         _messageWriteRepository.Add(message);
 
-        var messageSendModel = _instaConnectMapper.Map<MessageSendModel>(message);
+        var messageSendModel = _applicationMapper.Map<MessageSendModel>(message);
         await _messageSender.SendMessageToUserAsync(messageSendModel, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var messageViewModel = _instaConnectMapper.Map<MessageCommandViewModel>(message);
+        var messageViewModel = _applicationMapper.Map<MessageCommandViewModel>(message);
 
         return messageViewModel;
     }

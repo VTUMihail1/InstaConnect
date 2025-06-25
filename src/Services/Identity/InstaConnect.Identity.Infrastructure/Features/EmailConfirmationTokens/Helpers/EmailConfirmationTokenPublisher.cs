@@ -8,18 +8,18 @@ namespace InstaConnect.Identity.Infrastructure.Features.EmailConfirmationTokens.
 internal class EmailConfirmationTokenPublisher : IEmailConfirmationTokenPublisher
 {
     private readonly IEventPublisher _eventPublisher;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IEmailConfirmationTokenGenerator _emailConfirmationTokenGenerator;
     private readonly IEmailConfirmationTokenWriteRepository _emailConfirmationTokenWriteRepository;
 
     public EmailConfirmationTokenPublisher(
         IEventPublisher eventPublisher,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IEmailConfirmationTokenGenerator emailConfirmationTokenGenerator,
         IEmailConfirmationTokenWriteRepository emailConfirmationTokenWriteRepository)
     {
         _eventPublisher = eventPublisher;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _emailConfirmationTokenGenerator = emailConfirmationTokenGenerator;
         _emailConfirmationTokenWriteRepository = emailConfirmationTokenWriteRepository;
     }
@@ -30,10 +30,10 @@ internal class EmailConfirmationTokenPublisher : IEmailConfirmationTokenPublishe
     {
         var emailConfirmationResponse = _emailConfirmationTokenGenerator.GenerateEmailConfirmationToken(createEmailConfirmationTokenModel.UserId, createEmailConfirmationTokenModel.Email);
 
-        var emailConfirmationToken = _instaConnectMapper.Map<EmailConfirmationToken>(emailConfirmationResponse);
+        var emailConfirmationToken = _applicationMapper.Map<EmailConfirmationToken>(emailConfirmationResponse);
         _emailConfirmationTokenWriteRepository.Add(emailConfirmationToken);
 
-        var userEmailConfirmationTokenCreatedEvent = _instaConnectMapper.Map<UserConfirmEmailTokenCreatedEvent>(emailConfirmationResponse);
+        var userEmailConfirmationTokenCreatedEvent = _applicationMapper.Map<UserConfirmEmailTokenCreatedEvent>(emailConfirmationResponse);
         await _eventPublisher.PublishAsync(userEmailConfirmationTokenCreatedEvent, cancellationToken);
     }
 }

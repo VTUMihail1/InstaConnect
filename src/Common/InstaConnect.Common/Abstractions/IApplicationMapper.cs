@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Common.Abstractions;
 
-public interface IInstaConnectMapper
+public interface IApplicationMapper
 {
     void Map(object source, object destination);
 

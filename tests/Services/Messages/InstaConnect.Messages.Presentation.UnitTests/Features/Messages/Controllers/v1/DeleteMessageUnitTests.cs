@@ -9,8 +9,8 @@ public class DeleteMessageUnitTests : BaseMessageUnitTest
     public DeleteMessageUnitTests()
     {
         _messageController = new(
-            InstaConnectSender,
-            InstaConnectMapper);
+            ApplicationSender,
+            ApplicationMapper);
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class DeleteMessageUnitTests : BaseMessageUnitTest
         await _messageController.DeleteAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
             .Received(1)
             .SendAsync(Arg.Is<DeleteMessageCommand>(m => m.Id == existingMessage.Id &&
                                                     m.CurrentUserId == existingMessage.SenderId),

@@ -9,8 +9,8 @@ public class AddPostLikeControllerUnitTests : BasePostLikeUnitTest
     public AddPostLikeControllerUnitTests()
     {
         _postLikeController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class AddPostLikeControllerUnitTests : BasePostLikeUnitTest
         await _postLikeController.AddAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
             .Received(1)
             .SendAsync(Arg.Is<AddPostLikeCommand>(m => m.CurrentUserId == existingPostLike.UserId &&
                                                      m.PostId == existingPostLike.PostId),

@@ -4,18 +4,18 @@ public class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IEventPublisher _eventPublisher;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserWriteRepository _userWriteRepository;
 
     public DeleteUserCommandHandler(
         IUnitOfWork unitOfWork,
         IEventPublisher eventPublisher,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserWriteRepository userWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _eventPublisher = eventPublisher;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userWriteRepository = userWriteRepository;
     }
 
@@ -32,7 +32,7 @@ public class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand>
 
         _userWriteRepository.Delete(existingUser);
 
-        var userDeletedEvent = _instaConnectMapper.Map<UserDeletedEvent>(existingUser);
+        var userDeletedEvent = _applicationMapper.Map<UserDeletedEvent>(existingUser);
         await _eventPublisher.PublishAsync(userDeletedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

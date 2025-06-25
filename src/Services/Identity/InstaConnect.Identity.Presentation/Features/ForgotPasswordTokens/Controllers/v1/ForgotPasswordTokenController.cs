@@ -8,15 +8,15 @@ namespace InstaConnect.Identity.Presentation.Features.ForgotPasswordTokens.Contr
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class ForgotPasswordTokenController : ControllerBase
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IInstaConnectSender _instaConnectSender;
+    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationSender _applicationSender;
 
     public ForgotPasswordTokenController(
-        IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender)
+        IApplicationMapper applicationMapper,
+        IApplicationSender applicationSender)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _instaConnectSender = instaConnectSender;
+        _applicationMapper = applicationMapper;
+        _applicationSender = applicationSender;
     }
 
     // POST: api/users/user@example.com/forgot-password-tokens
@@ -27,8 +27,8 @@ public class ForgotPasswordTokenController : ControllerBase
         AddForgotPasswordTokenRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddForgotPasswordTokenCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _applicationMapper.Map<AddForgotPasswordTokenCommand>(request);
+        await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -41,8 +41,8 @@ public class ForgotPasswordTokenController : ControllerBase
         VerifyForgotPasswordTokenRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<VerifyForgotPasswordTokenCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _applicationMapper.Map<VerifyForgotPasswordTokenCommand>(request);
+        await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

@@ -1,5 +1,7 @@
 ﻿namespace InstaConnect.Common.Application.Abstractions;
 
-public interface ICommand : IRequest;
+public interface IBaseCommand;
 
-public interface ICommand<out TResponse> : IRequest<TResponse>;
+public interface ICommand : IRequest, IBaseCommand;
+
+public interface ICommand<out TResponse> : IRequest<TResponse>, IBaseCommand;

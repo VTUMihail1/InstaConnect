@@ -9,8 +9,8 @@ public class GetAllPostCommentControllerUnitTests : BasePostCommentUnitTest
     public GetAllPostCommentControllerUnitTests()
     {
         _postCommentController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -96,7 +96,7 @@ public class GetAllPostCommentControllerUnitTests : BasePostCommentUnitTest
         await _postCommentController.GetAllAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<GetAllPostCommentsQuery>(m =>
                   m.UserId == existingPostComment.UserId &&

@@ -21,7 +21,7 @@ public abstract class BasePostUnitTest
 
     protected CancellationToken CancellationToken { get; }
 
-    protected IInstaConnectMapper InstaConnectMapper { get; }
+    protected IApplicationMapper ApplicationMapper { get; }
 
     protected IUserRepository UserWriteRepository { get; }
 
@@ -32,7 +32,7 @@ public abstract class BasePostUnitTest
     protected BasePostUnitTest()
     {
         CancellationToken = new CancellationToken();
-        InstaConnectMapper = new InstaConnectMapper(
+        ApplicationMapper = new ApplicationMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(PostApplicationReference.Assembly))));
         UnitOfWork = Mocker.Mock<IUnitOfWork>();

@@ -9,8 +9,8 @@ public class GetAllPostLikeControllerUnitTests : BasePostLikeUnitTest
     public GetAllPostLikeControllerUnitTests()
     {
         _postLikeController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public class GetAllPostLikeControllerUnitTests : BasePostLikeUnitTest
         await _postLikeController.GetAllAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<GetAllPostLikesQuery>(m =>
                   m.UserId == existingPostLike.UserId &&

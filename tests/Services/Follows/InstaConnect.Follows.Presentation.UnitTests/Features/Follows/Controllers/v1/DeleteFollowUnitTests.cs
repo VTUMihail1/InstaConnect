@@ -9,8 +9,8 @@ public class DeleteFollowUnitTests : BaseFollowUnitTest
     public DeleteFollowUnitTests()
     {
         _followController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class DeleteFollowUnitTests : BaseFollowUnitTest
         await _followController.DeleteAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
             .Received(1)
             .SendAsync(Arg.Is<DeleteFollowCommand>(m => m.Id == existingFollow.Id &&
                                                     m.CurrentUserId == existingFollow.FollowerId),

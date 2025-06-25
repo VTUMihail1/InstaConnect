@@ -12,7 +12,7 @@ public class GetAllPostLikesQueryHandlerUnitTests : BasePostLikeUnitTest
         _queryHandler = new(
             PostLikeService,
             PostReadRepository,
-            InstaConnectMapper);
+            ApplicationMapper);
     }
 
     [Fact]

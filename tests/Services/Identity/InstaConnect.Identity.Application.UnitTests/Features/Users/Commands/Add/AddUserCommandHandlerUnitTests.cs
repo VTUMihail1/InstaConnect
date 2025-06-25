@@ -15,7 +15,7 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
             ImageHandler,
             PasswordHasher,
             EventPublisher,
-            InstaConnectMapper,
+            ApplicationMapper,
             UserWriteRepository,
             EmailConfirmationTokenPublisher);
     }

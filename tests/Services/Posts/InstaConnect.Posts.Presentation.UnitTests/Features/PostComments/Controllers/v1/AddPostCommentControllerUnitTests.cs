@@ -9,8 +9,8 @@ public class AddPostCommentControllerUnitTests : BasePostCommentUnitTest
     public AddPostCommentControllerUnitTests()
     {
         _postCommentController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class AddPostCommentControllerUnitTests : BasePostCommentUnitTest
         await _postCommentController.AddAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
             .Received(1)
             .SendAsync(Arg.Is<AddPostCommentCommand>(m => m.CurrentUserId == existingPostComment.UserId &&
                                                      m.PostId == existingPostComment.PostId &&

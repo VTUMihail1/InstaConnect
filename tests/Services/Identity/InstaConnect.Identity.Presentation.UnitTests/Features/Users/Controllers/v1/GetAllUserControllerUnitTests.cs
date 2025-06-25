@@ -9,8 +9,8 @@ public class GetAllUserControllerUnitTests : BaseUserUnitTest
     public GetAllUserControllerUnitTests()
     {
         _userController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public class GetAllUserControllerUnitTests : BaseUserUnitTest
         await _userController.GetAllAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<GetAllUsersQuery>(m =>
                   m.FirstName == existingUser.FirstName &&

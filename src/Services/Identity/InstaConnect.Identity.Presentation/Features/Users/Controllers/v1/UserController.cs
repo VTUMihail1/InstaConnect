@@ -16,15 +16,15 @@ namespace InstaConnect.Identity.Presentation.Features.Users.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class UserController : ControllerBase
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IInstaConnectSender _instaConnectSender;
+    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationSender _applicationSender;
 
     public UserController(
-        IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender)
+        IApplicationMapper applicationMapper,
+        IApplicationSender applicationSender)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _instaConnectSender = instaConnectSender;
+        _applicationMapper = applicationMapper;
+        _applicationSender = applicationSender;
     }
 
     // GET: api/users
@@ -34,10 +34,10 @@ public class UserController : ControllerBase
         GetAllUsersRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetAllUsersQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
+        var queryRequest = _applicationMapper.Map<GetAllUsersQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _instaConnectMapper.Map<UserPaginationQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<UserPaginationQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -52,10 +52,10 @@ public class UserController : ControllerBase
         GetCurrentDetailedUserRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetCurrentDetailedUserQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
+        var queryRequest = _applicationMapper.Map<GetCurrentDetailedUserQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _instaConnectMapper.Map<UserDetailedQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<UserDetailedQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -70,10 +70,10 @@ public class UserController : ControllerBase
         GetDetailedUserByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetDetailedUserByIdQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
+        var queryRequest = _applicationMapper.Map<GetDetailedUserByIdQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _instaConnectMapper.Map<UserDetailedQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<UserDetailedQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -87,10 +87,10 @@ public class UserController : ControllerBase
         GetCurrentUserRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetCurrentUserQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
+        var queryRequest = _applicationMapper.Map<GetCurrentUserQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _instaConnectMapper.Map<UserQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<UserQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -103,10 +103,10 @@ public class UserController : ControllerBase
         GetUserByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetUserByIdQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
+        var queryRequest = _applicationMapper.Map<GetUserByIdQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _instaConnectMapper.Map<UserQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<UserQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -119,10 +119,10 @@ public class UserController : ControllerBase
         GetUserByNameRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetUserByNameQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
+        var queryRequest = _applicationMapper.Map<GetUserByNameQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
 
-        var response = _instaConnectMapper.Map<UserQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<UserQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -135,10 +135,10 @@ public class UserController : ControllerBase
         LoginUserRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<LoginUserCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _applicationMapper.Map<LoginUserCommand>(request);
+        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
-        var response = _instaConnectMapper.Map<UserTokenCommandResponse>(commandResponse);
+        var response = _applicationMapper.Map<UserTokenCommandResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -151,9 +151,9 @@ public class UserController : ControllerBase
         AddUserRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddUserCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<UserCommandResponse>(commandResponse);
+        var commandRequest = _applicationMapper.Map<AddUserCommand>(request);
+        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var response = _applicationMapper.Map<UserCommandResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -168,9 +168,9 @@ public class UserController : ControllerBase
         UpdateCurrentUserRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<UpdateUserCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<UserCommandResponse>(commandResponse);
+        var commandRequest = _applicationMapper.Map<UpdateUserCommand>(request);
+        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var response = _applicationMapper.Map<UserCommandResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -184,8 +184,8 @@ public class UserController : ControllerBase
         DeleteCurrentUserRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<DeleteUserCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _applicationMapper.Map<DeleteUserCommand>(request);
+        await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
@@ -199,8 +199,8 @@ public class UserController : ControllerBase
         DeleteUserRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<DeleteUserCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _applicationMapper.Map<DeleteUserCommand>(request);
+        await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

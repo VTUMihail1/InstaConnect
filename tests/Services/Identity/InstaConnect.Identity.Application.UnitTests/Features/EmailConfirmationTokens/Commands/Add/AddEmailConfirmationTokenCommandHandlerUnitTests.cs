@@ -10,7 +10,7 @@ public class AddEmailConfirmationTokenCommandHandlerUnitTests : BaseEmailConfirm
     {
         _commandHandler = new(
             UnitOfWork,
-            InstaConnectMapper,
+            ApplicationMapper,
             UserWriteRepository,
             EmailConfirmationTokenPublisher);
     }

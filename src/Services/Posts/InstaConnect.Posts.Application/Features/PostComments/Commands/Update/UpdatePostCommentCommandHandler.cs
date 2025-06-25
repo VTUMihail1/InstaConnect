@@ -3,18 +3,18 @@
 internal class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommand, PostCommentCommandViewModel>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IPostCommentService _postCommentService;
     private readonly IPostWriteRepository _postWriteRepository;
 
     public UpdatePostCommentCommandHandler(
         IUnitOfWork unitOfWork,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IPostCommentService postCommentService,
         IPostWriteRepository postWriteRepository)
     {
         _unitOfWork = unitOfWork;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _postCommentService = postCommentService;
         _postWriteRepository = postWriteRepository;
     }
@@ -34,7 +34,7 @@ internal class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostComme
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var postCommentCommand = _instaConnectMapper.Map<PostCommentCommandViewModel>(postComment);
+        var postCommentCommand = _applicationMapper.Map<PostCommentCommandViewModel>(postComment);
 
         return postCommentCommand;
     }

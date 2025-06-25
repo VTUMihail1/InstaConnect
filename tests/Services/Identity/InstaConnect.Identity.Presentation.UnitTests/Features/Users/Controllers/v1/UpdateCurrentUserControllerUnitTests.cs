@@ -9,8 +9,8 @@ public class UpdateCurrentUserControllerUnitTests : BaseUserUnitTest
     public UpdateCurrentUserControllerUnitTests()
     {
         _userController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -82,7 +82,7 @@ public class UpdateCurrentUserControllerUnitTests : BaseUserUnitTest
         await _userController.UpdateCurrentAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<UpdateUserCommand>(m => m.CurrentUserId == existingUser.Id &&
                                                                 m.UserName == UserTestUtilities.ValidUpdateName &&

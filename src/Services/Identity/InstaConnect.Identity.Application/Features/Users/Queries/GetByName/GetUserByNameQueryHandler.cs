@@ -2,14 +2,14 @@
 
 public class GetUserByNameQueryHandler : IQueryHandler<GetUserByNameQuery, UserQueryViewModel>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserReadRepository _userReadRepository;
 
     public GetUserByNameQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserReadRepository userReadRepository)
     {
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userReadRepository = userReadRepository;
     }
 
@@ -24,7 +24,7 @@ public class GetUserByNameQueryHandler : IQueryHandler<GetUserByNameQuery, UserQ
             throw new UserNotFoundException();
         }
 
-        var response = _instaConnectMapper.Map<UserQueryViewModel>(existingUser);
+        var response = _applicationMapper.Map<UserQueryViewModel>(existingUser);
 
         return response;
     }

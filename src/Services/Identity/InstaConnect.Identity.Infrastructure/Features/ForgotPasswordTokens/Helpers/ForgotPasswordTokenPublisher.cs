@@ -8,18 +8,18 @@ namespace InstaConnect.Identity.Infrastructure.Features.ForgotPasswordTokens.Hel
 internal class ForgotPasswordTokenPublisher : IForgotPasswordTokenPublisher
 {
     private readonly IEventPublisher _eventPublisher;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IForgotPasswordTokenGenerator _forgotPasswordTokenGenerator;
     private readonly IForgotPasswordTokenWriteRepository _forgotPasswordTokenWriteRepository;
 
     public ForgotPasswordTokenPublisher(
         IEventPublisher eventPublisher,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IForgotPasswordTokenGenerator forgotPasswordTokenGenerator,
         IForgotPasswordTokenWriteRepository forgotPasswordTokenWriteRepository)
     {
         _eventPublisher = eventPublisher;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _forgotPasswordTokenGenerator = forgotPasswordTokenGenerator;
         _forgotPasswordTokenWriteRepository = forgotPasswordTokenWriteRepository;
     }
@@ -30,10 +30,10 @@ internal class ForgotPasswordTokenPublisher : IForgotPasswordTokenPublisher
     {
         var forgotPasswordResponse = _forgotPasswordTokenGenerator.GenerateForgotPasswordToken(createForgotPasswordTokenModel.UserId, createForgotPasswordTokenModel.Email);
 
-        var forgotPasswordToken = _instaConnectMapper.Map<ForgotPasswordToken>(forgotPasswordResponse);
+        var forgotPasswordToken = _applicationMapper.Map<ForgotPasswordToken>(forgotPasswordResponse);
         _forgotPasswordTokenWriteRepository.Add(forgotPasswordToken);
 
-        var userForgotPasswordTokenCreatedEvent = _instaConnectMapper.Map<UserForgotPasswordTokenCreatedEvent>(forgotPasswordResponse);
+        var userForgotPasswordTokenCreatedEvent = _applicationMapper.Map<UserForgotPasswordTokenCreatedEvent>(forgotPasswordResponse);
         await _eventPublisher.PublishAsync(userForgotPasswordTokenCreatedEvent, cancellationToken);
     }
 }

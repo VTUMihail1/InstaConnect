@@ -1,14 +1,14 @@
-﻿using AutoMapper;
+﻿using InstaConnect.Common.Abstractions;
 
-using InstaConnect.Common.Abstractions;
+using MapsterMapper;
 
 namespace InstaConnect.Common.Helpers;
 
-public class InstaConnectMapper : IInstaConnectMapper
+public class ApplicationMapper : IApplicationMapper
 {
     private readonly IMapper _mapper;
 
-    public InstaConnectMapper(IMapper mapper)
+    public ApplicationMapper(IMapper mapper)
     {
         _mapper = mapper;
     }

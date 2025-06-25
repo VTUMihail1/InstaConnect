@@ -9,8 +9,8 @@ public class DeletePostCommentLikeControllerUnitTests : BasePostCommentLikeUnitT
     public DeletePostCommentLikeControllerUnitTests()
     {
         _postCommentLikeController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class DeletePostCommentLikeControllerUnitTests : BasePostCommentLikeUnitT
         await _postCommentLikeController.DeleteAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
             .Received(1)
             .SendAsync(Arg.Is<DeletePostCommentLikeCommand>(m => m.Id == existingPostCommentLike.Id &&
                                                     m.CurrentUserId == existingPostCommentLike.UserId),

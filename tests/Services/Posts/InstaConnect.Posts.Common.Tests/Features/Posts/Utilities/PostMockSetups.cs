@@ -47,45 +47,45 @@ public static class PostMockSetups
     }
 
     public static void SetupGetAllQuery(
-        this IInstaConnectSender instaConnectSender,
+        this IApplicationSender applicationSender,
         GetAllPostsApiRequest request,
         GetAllPostsQueryResponse response,
         CancellationToken cancellationToken)
     {
-        instaConnectSender
+        applicationSender
             .SendAsync(PostMatcher.IsGetAllPostsQuery(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
     public static void SetupGetByIdQuery(
-        this IInstaConnectSender instaConnectSender,
+        this IApplicationSender applicationSender,
         GetPostByIdApiRequest request,
         GetPostByIdQueryResponse response,
         CancellationToken cancellationToken)
     {
-        instaConnectSender
+        applicationSender
             .SendAsync(PostMatcher.IsGetPostByIdQuery(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
     public static void SetupAddCommand(
-        this IInstaConnectSender instaConnectSender,
+        this IApplicationSender applicationSender,
         AddPostApiRequest request,
         AddPostCommandResponse response,
         CancellationToken cancellationToken)
     {
-        instaConnectSender
+        applicationSender
             .SendAsync(PostMatcher.IsAddPostCommand(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
     public static void SetupUpdateCommand(
-        this IInstaConnectSender instaConnectSender,
+        this IApplicationSender applicationSender,
         UpdatePostApiRequest request,
         UpdatePostCommandResponse response,
         CancellationToken cancellationToken)
     {
-        instaConnectSender
+        applicationSender
             .SendAsync(PostMatcher.IsUpdatePostCommand(request), cancellationToken)
             .ReturnsResponse(response);
     }

@@ -24,7 +24,7 @@ public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
         _commandHandler = new(
             UnitOfWork,
             PostService,
-            InstaConnectMapper,
+            ApplicationMapper,
             PostWriteRepository);
 
         PostService.SetupUpdate(_post, updatePost);

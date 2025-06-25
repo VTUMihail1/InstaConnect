@@ -4,16 +4,16 @@ namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 
 internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostCommentsQuery, PostCommentPaginationQueryViewModel>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IPostCommentService _postCommentService;
     private readonly IPostReadRepository _postReadRepository;
 
     public GetAllPostCommentsQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IPostCommentService postCommentService,
         IPostReadRepository postReadRepository)
     {
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _postCommentService = postCommentService;
         _postReadRepository = postReadRepository;
     }
@@ -29,10 +29,10 @@ internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostComments
             throw new PostNotFoundException();
         }
 
-        var filteredCollectionQuery = _instaConnectMapper.Map<PostCommentCollectionReadQuery>(request);
+        var filteredCollectionQuery = _applicationMapper.Map<PostCommentCollectionReadQuery>(request);
 
         var postComments = await _postCommentService.GetAllAsync(existingPost, filteredCollectionQuery, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentPaginationQueryViewModel>(postComments);
+        var response = _applicationMapper.Map<PostCommentPaginationQueryViewModel>(postComments);
 
         return response;
     }

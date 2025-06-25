@@ -14,7 +14,7 @@ public abstract class BaseUserUnitTest
 
     protected CancellationToken CancellationToken { get; }
 
-    protected IInstaConnectMapper InstaConnectMapper { get; }
+    protected IApplicationMapper ApplicationMapper { get; }
 
     protected IUserWriteRepository UserWriteRepository { get; }
 
@@ -22,7 +22,7 @@ public abstract class BaseUserUnitTest
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
         CancellationToken = new();
-        InstaConnectMapper = new InstaConnectMapper(
+        ApplicationMapper = new ApplicationMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
         UserWriteRepository = Substitute.For<IUserWriteRepository>();

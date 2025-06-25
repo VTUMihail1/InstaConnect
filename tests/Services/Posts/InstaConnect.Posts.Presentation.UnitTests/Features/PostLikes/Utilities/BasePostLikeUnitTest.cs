@@ -15,16 +15,16 @@ namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Utilities
 
 public abstract class BasePostLikeUnitTest
 {
-    protected IInstaConnectSender InstaConnectSender { get; }
+    protected IApplicationSender ApplicationSender { get; }
 
-    protected IInstaConnectMapper InstaConnectMapper { get; }
+    protected IApplicationMapper ApplicationMapper { get; }
 
     protected CancellationToken CancellationToken { get; }
 
     protected BasePostLikeUnitTest()
     {
-        InstaConnectSender = Substitute.For<IInstaConnectSender>();
-        InstaConnectMapper = new InstaConnectMapper(
+        ApplicationSender = Substitute.For<IApplicationSender>();
+        ApplicationMapper = new ApplicationMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(PostPresentationReference.Assembly))));
         CancellationToken = new CancellationToken();
@@ -87,7 +87,7 @@ public abstract class BasePostLikeUnitTest
             false,
             false);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetAllPostLikesQuery>(m =>
                   m.PostId == post.Id &&
                   m.UserId == user.Id &&
@@ -98,11 +98,11 @@ public abstract class BasePostLikeUnitTest
                   m.PageSize == PostLikeTestUtilities.ValidPageSizeValue), CancellationToken)
             .Returns(postLikePaginationCollectionModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetPostLikeByIdQuery>(m => m.Id == postLike.Id), CancellationToken)
             .Returns(postLikeQueryViewModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<AddPostLikeCommand>(m =>
                   m.CurrentUserId == user.Id &&
                   m.PostId == post.Id), CancellationToken)

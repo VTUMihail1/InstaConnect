@@ -9,7 +9,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     {
         _userUpdatedEventConsumer = new(
             UnitOfWork,
-            InstaConnectMapper,
+            ApplicationMapper,
             UserWriteRepository);
 
         _userUpdatedEventConsumeContext = Substitute.For<ConsumeContext<UserUpdatedEvent>>();

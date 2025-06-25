@@ -1,0 +1,30 @@
+﻿using InstaConnect.Common.Extensions;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+
+namespace InstaConnect.Posts.Domain.Features.Posts.Utilities;
+public static class PostExceptionErrorMessages
+{
+    public static string GetNotFoundMessage(string id)
+    {
+        const string Format = "Post(id: {0}) with that id does not exist";
+        var result = Format.FormatInvariant(id);
+
+        return result;
+    }
+
+    public static string GetForbiddenMessage(string id, string userId)
+    {
+        const string Format = "Post(id: {0}) is not owned by User(id: {1})";
+        var result = Format.FormatInvariant(id, userId);
+
+        return result;
+    }
+
+    public static string GetSortPropertyNotSupportedMessage(PostSortProperty sortProperty)
+    {
+        const string Format = "PostSortProperty(type: {0}) is not supported";
+        var result = Format.FormatInvariant(sortProperty);
+
+        return result;
+    }
+}

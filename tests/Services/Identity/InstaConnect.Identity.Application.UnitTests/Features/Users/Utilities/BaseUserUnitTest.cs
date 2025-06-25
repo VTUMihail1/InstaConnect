@@ -24,7 +24,7 @@ public abstract class BaseUserUnitTest
 
     protected IUnitOfWork UnitOfWork { get; }
 
-    protected IInstaConnectMapper InstaConnectMapper { get; }
+    protected IApplicationMapper ApplicationMapper { get; }
 
     protected IEntityPropertyValidator EntityPropertyValidator { get; }
 
@@ -48,7 +48,7 @@ public abstract class BaseUserUnitTest
     {
         CancellationToken = new();
         UnitOfWork = Substitute.For<IUnitOfWork>();
-        InstaConnectMapper = new InstaConnectMapper(
+        ApplicationMapper = new ApplicationMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(ApplicationReference.Assembly))));
         EntityPropertyValidator = new EntityPropertyValidator();

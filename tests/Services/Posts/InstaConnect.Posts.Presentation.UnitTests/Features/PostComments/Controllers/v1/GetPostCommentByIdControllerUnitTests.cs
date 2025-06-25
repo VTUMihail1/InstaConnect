@@ -9,8 +9,8 @@ public class GetPostCommentByIdControllerUnitTests : BasePostCommentUnitTest
     public GetPostCommentByIdControllerUnitTests()
     {
         _postCommentController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -72,7 +72,7 @@ public class GetPostCommentByIdControllerUnitTests : BasePostCommentUnitTest
         await _postCommentController.GetByIdAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<GetPostCommentByIdQuery>(m => m.Id == existingPostComment.Id), CancellationToken);
     }

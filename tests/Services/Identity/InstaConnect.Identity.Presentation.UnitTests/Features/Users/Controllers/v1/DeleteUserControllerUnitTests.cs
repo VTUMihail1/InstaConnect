@@ -9,8 +9,8 @@ public class DeleteUserControllerUnitTests : BaseUserUnitTest
     public DeleteUserControllerUnitTests()
     {
         _userController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public class DeleteUserControllerUnitTests : BaseUserUnitTest
         await _userController.DeleteAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<DeleteUserCommand>(m => m.Id == existingUser.Id), CancellationToken);
     }

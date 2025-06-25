@@ -6,7 +6,7 @@ public class AddUserCommandHandler : ICommandHandler<AddUserCommand, UserCommand
     private readonly IImageHandler _imageHandler;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IEventPublisher _eventPublisher;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserWriteRepository _userWriteRepository;
     private readonly IEmailConfirmationTokenPublisher _emailConfirmationTokenPublisher;
 
@@ -15,7 +15,7 @@ public class AddUserCommandHandler : ICommandHandler<AddUserCommand, UserCommand
         IImageHandler imageHandler,
         IPasswordHasher passwordHasher,
         IEventPublisher eventPublisher,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserWriteRepository userWriteRepository,
         IEmailConfirmationTokenPublisher emailConfirmationTokenPublisher)
     {
@@ -23,7 +23,7 @@ public class AddUserCommandHandler : ICommandHandler<AddUserCommand, UserCommand
         _imageHandler = imageHandler;
         _passwordHasher = passwordHasher;
         _eventPublisher = eventPublisher;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userWriteRepository = userWriteRepository;
         _emailConfirmationTokenPublisher = emailConfirmationTokenPublisher;
     }
@@ -47,27 +47,27 @@ public class AddUserCommandHandler : ICommandHandler<AddUserCommand, UserCommand
         }
 
         var passwordHash = _passwordHasher.Hash(request.Password);
-        var user = _instaConnectMapper.Map<User>((passwordHash, request));
+        var user = _applicationMapper.Map<User>((passwordHash, request));
 
         if (request.ProfileImage != null)
         {
-            var imageUploadModel = _instaConnectMapper.Map<ImageUploadModel>(request);
+            var imageUploadModel = _applicationMapper.Map<ImageUploadModel>(request);
             var imageUploadResult = await _imageHandler.UploadAsync(imageUploadModel, cancellationToken);
 
-            _instaConnectMapper.Map(imageUploadResult, user);
+            _applicationMapper.Map(imageUploadResult, user);
         }
 
         _userWriteRepository.Add(user);
 
-        var userCreatedEvent = _instaConnectMapper.Map<UserCreatedEvent>(user);
+        var userCreatedEvent = _applicationMapper.Map<UserCreatedEvent>(user);
         await _eventPublisher.PublishAsync(userCreatedEvent, cancellationToken);
 
-        var createEmailConfirmationTokenModel = _instaConnectMapper.Map<CreateEmailConfirmationTokenModel>(user);
+        var createEmailConfirmationTokenModel = _applicationMapper.Map<CreateEmailConfirmationTokenModel>(user);
         await _emailConfirmationTokenPublisher.PublishEmailConfirmationTokenAsync(createEmailConfirmationTokenModel, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var accountCommandViewModel = _instaConnectMapper.Map<UserCommandViewModel>(user);
+        var accountCommandViewModel = _applicationMapper.Map<UserCommandViewModel>(user);
 
         return accountCommandViewModel;
     }

@@ -16,15 +16,15 @@ public abstract class BasePostUnitTest
 {
     protected CancellationToken CancellationToken { get; }
 
-    protected IInstaConnectSender InstaConnectSender { get; }
+    protected IApplicationSender ApplicationSender { get; }
 
-    protected IInstaConnectMapper InstaConnectMapper { get; }
+    protected IApplicationMapper ApplicationMapper { get; }
 
     protected BasePostUnitTest()
     {
         CancellationToken = new();
-        InstaConnectSender = Mocker.Mock<IInstaConnectSender>();
-        InstaConnectMapper = new InstaConnectMapper(
+        ApplicationSender = Mocker.Mock<IApplicationSender>();
+        ApplicationMapper = new ApplicationMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(PostPresentationReference.Assembly))));
     }

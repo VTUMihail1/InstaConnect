@@ -16,16 +16,16 @@ namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostComments.Utilit
 
 public abstract class BasePostCommentUnitTest
 {
-    protected IInstaConnectSender InstaConnectSender { get; }
+    protected IApplicationSender ApplicationSender { get; }
 
-    protected IInstaConnectMapper InstaConnectMapper { get; }
+    protected IApplicationMapper ApplicationMapper { get; }
 
     protected CancellationToken CancellationToken { get; }
 
     protected BasePostCommentUnitTest()
     {
-        InstaConnectSender = Substitute.For<IInstaConnectSender>();
-        InstaConnectMapper = new InstaConnectMapper(
+        ApplicationSender = Substitute.For<IApplicationSender>();
+        ApplicationMapper = new ApplicationMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(PostPresentationReference.Assembly))));
         CancellationToken = new CancellationToken();
@@ -92,7 +92,7 @@ public abstract class BasePostCommentUnitTest
             false,
             false);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetAllPostCommentsQuery>(m =>
                   m.PostId == post.Id &&
                   m.UserId == user.Id &&
@@ -103,18 +103,18 @@ public abstract class BasePostCommentUnitTest
                   m.PageSize == PostCommentTestUtilities.ValidPageSizeValue), CancellationToken)
             .Returns(postCommentPaginationCollectionModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetPostCommentByIdQuery>(m => m.Id == postComment.Id), CancellationToken)
             .Returns(postCommentQueryViewModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<AddPostCommentCommand>(m =>
                   m.CurrentUserId == user.Id &&
                   m.PostId == post.Id &&
                   m.Content == PostCommentTestUtilities.ValidAddContent), CancellationToken)
             .Returns(postCommentCommandViewModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<UpdatePostCommentCommand>(m =>
                   m.Id == postComment.Id &&
                   m.CurrentUserId == user.Id &&

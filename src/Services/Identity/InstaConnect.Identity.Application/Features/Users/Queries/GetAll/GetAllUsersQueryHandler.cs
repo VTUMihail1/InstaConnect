@@ -4,14 +4,14 @@ namespace InstaConnect.Identity.Application.Features.Users.Queries.GetAll;
 
 public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, UserPaginationQueryViewModel>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserReadRepository _userReadRepository;
 
     public GetAllUsersQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserReadRepository userReadRepository)
     {
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userReadRepository = userReadRepository;
     }
 
@@ -19,10 +19,10 @@ public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, UserPagin
         GetAllUsersQuery request,
         CancellationToken cancellationToken)
     {
-        var filteredCollectionQuery = _instaConnectMapper.Map<UserCollectionReadQuery>(request);
+        var filteredCollectionQuery = _applicationMapper.Map<UserCollectionReadQuery>(request);
         var users = await _userReadRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
 
-        var response = _instaConnectMapper.Map<UserPaginationQueryViewModel>(users);
+        var response = _applicationMapper.Map<UserPaginationQueryViewModel>(users);
 
         return response;
     }

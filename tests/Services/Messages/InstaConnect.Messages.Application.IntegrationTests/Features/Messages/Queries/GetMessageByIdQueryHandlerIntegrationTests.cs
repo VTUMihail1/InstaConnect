@@ -20,7 +20,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -40,7 +40,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -57,7 +57,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -77,7 +77,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -94,7 +94,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<MessageNotFoundException>();
@@ -112,7 +112,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserForbiddenException>();
@@ -129,7 +129,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -155,7 +155,7 @@ public class GetMessageByIdQueryHandlerIntegrationTests : BaseMessageIntegration
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response

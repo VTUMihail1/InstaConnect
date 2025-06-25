@@ -9,7 +9,7 @@ public class GetFollowByIdQueryHandlerUnitTests : BaseFollowUnitTest
     public GetFollowByIdQueryHandlerUnitTests()
     {
         _queryHandler = new(
-            InstaConnectMapper,
+            ApplicationMapper,
             FollowReadRepository);
     }
 

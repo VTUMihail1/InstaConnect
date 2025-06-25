@@ -22,7 +22,7 @@ public abstract class BasePostCommentUnitTest
 
     protected CancellationToken CancellationToken { get; }
 
-    protected IInstaConnectMapper InstaConnectMapper { get; }
+    protected IApplicationMapper ApplicationMapper { get; }
 
     protected IEntityPropertyValidator EntityPropertyValidator { get; }
 
@@ -35,7 +35,7 @@ public abstract class BasePostCommentUnitTest
     protected BasePostCommentUnitTest()
     {
         UnitOfWork = Substitute.For<IUnitOfWork>();
-        InstaConnectMapper = new InstaConnectMapper(
+        ApplicationMapper = new ApplicationMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(PostApplicationReference.Assembly))));
         EntityPropertyValidator = new EntityPropertyValidator();

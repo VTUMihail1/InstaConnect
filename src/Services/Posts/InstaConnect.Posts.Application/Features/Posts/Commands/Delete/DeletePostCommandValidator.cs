@@ -5,12 +5,18 @@ public class DeletePostCommandValidator : AbstractValidator<DeletePostCommand>
     {
         RuleFor(c => c.Id)
             .NotEmpty()
+            .WithMessage(PostErrorMessages.IdEmpty)
             .MinimumLength(PostConfigurations.IdMinLength)
-            .MaximumLength(PostConfigurations.IdMaxLength);
+            .WithMessage(PostErrorMessages.IdTooShort)
+            .MaximumLength(PostConfigurations.IdMaxLength)
+            .WithMessage(PostErrorMessages.IdTooLong);
 
         RuleFor(c => c.CurrentUserId)
             .NotEmpty()
+            .WithMessage(UserErrorMessages.IdEmpty)
             .MinimumLength(UserConfigurations.IdMinLength)
-            .MaximumLength(UserConfigurations.IdMaxLength);
+            .WithMessage(UserErrorMessages.IdTooShort)
+            .MaximumLength(UserConfigurations.IdMaxLength)
+            .WithMessage(UserErrorMessages.IdTooLong);
     }
 }

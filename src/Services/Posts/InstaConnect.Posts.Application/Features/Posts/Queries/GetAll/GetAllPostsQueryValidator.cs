@@ -8,26 +8,33 @@ public class GetAllPostsQueryValidator : AbstractValidator<GetAllPostsQuery>
     public GetAllPostsQueryValidator()
     {
         RuleFor(c => c.Filter.UserId)
-            .MaximumLength(UserConfigurations.IdMaxLength);
+            .MaximumLength(UserConfigurations.IdMaxLength)
+            .WithMessage(UserErrorMessages.IdTooLong);
 
         RuleFor(c => c.Filter.UserName)
-            .MaximumLength(UserConfigurations.NameMaxLength);
+            .MaximumLength(UserConfigurations.NameMaxLength)
+            .WithMessage(UserErrorMessages.NameTooLong);
 
         RuleFor(c => c.Filter.Title)
-            .MaximumLength(PostConfigurations.TitleMaxLength);
+            .MaximumLength(PostConfigurations.TitleMaxLength)
+            .WithMessage(PostErrorMessages.TitleTooLong);
 
         RuleFor(q => q.Sorting.Order)
-            .NotEmpty();
+            .NotEmpty()
+            .WithMessage(CommonErrorMessages.SortOrderEmpty);
 
         RuleFor(q => q.Sorting.Property)
-            .NotEmpty();
+            .NotEmpty()
+            .WithMessage(PostErrorMessages.SortPropertyEmpty);
 
         RuleFor(q => q.Pagination.Page)
+            .GreaterThanOrEqualTo(PostConfigurations.PageMinValue)
+            .WithMessage(PostErrorMessages.PageSizeTooSmall)
             .LessThanOrEqualTo(PostConfigurations.PageMaxValue)
-            .GreaterThanOrEqualTo(PostConfigurations.PageMinValue);
+            .WithMessage(PostErrorMessages.PageSizeTooLarge);
 
         RuleFor(q => q.Pagination.PageSize)
-            .LessThanOrEqualTo(PostConfigurations.PageSizeMaxValue)
-            .GreaterThanOrEqualTo(PostConfigurations.PageSizeMinValue);
+            .GreaterThanOrEqualTo(PostConfigurations.PageSizeMinValue)
+            .LessThanOrEqualTo(PostConfigurations.PageSizeMaxValue);
     }
 }

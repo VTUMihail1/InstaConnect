@@ -16,7 +16,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var query = new GetFollowByIdQuery(null);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -32,7 +32,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var query = new GetFollowByIdQuery(DataFaker.GetString(length));
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -45,7 +45,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var query = new GetFollowByIdQuery(FollowTestUtilities.InvalidId);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<FollowNotFoundException>();
@@ -59,7 +59,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var query = new GetFollowByIdQuery(existingFollow.Id);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -81,7 +81,7 @@ public class GetFollowByIdQueryHandlerIntegrationTests : BaseFollowIntegrationTe
         var query = new GetFollowByIdQuery(DataFaker.GetDifferentCaseString(existingFollow.Id));
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response

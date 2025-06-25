@@ -20,7 +20,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -41,7 +41,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -58,7 +58,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -78,7 +78,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -94,7 +94,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserInvalidDetailsException>();
@@ -111,7 +111,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserInvalidDetailsException>();
@@ -128,7 +128,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserEmailNotConfirmedException>();
@@ -145,7 +145,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         response

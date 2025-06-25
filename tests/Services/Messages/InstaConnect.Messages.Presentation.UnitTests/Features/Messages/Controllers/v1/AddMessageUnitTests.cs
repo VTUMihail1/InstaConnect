@@ -9,8 +9,8 @@ public class AddMessageUnitTests : BaseMessageUnitTest
     public AddMessageUnitTests()
     {
         _messageController = new(
-            InstaConnectSender,
-            InstaConnectMapper);
+            ApplicationSender,
+            ApplicationMapper);
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class AddMessageUnitTests : BaseMessageUnitTest
         await _messageController.AddAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
             .Received(1)
             .SendAsync(Arg.Is<AddMessageCommand>(m => m.CurrentUserId == existingMessage.SenderId &&
                                                  m.ReceiverId == existingMessage.ReceiverId &&

@@ -9,8 +9,8 @@ public class AddUserControllerUnitTests : BaseUserUnitTest
     public AddUserControllerUnitTests()
     {
         _userController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -86,7 +86,7 @@ public class AddUserControllerUnitTests : BaseUserUnitTest
         await _userController.AddAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<AddUserCommand>(m => m.Email == UserTestUtilities.ValidAddEmail &&
                                                                 m.Password == UserTestUtilities.ValidAddPassword &&

@@ -26,7 +26,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -51,7 +51,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -76,7 +76,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -99,7 +99,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -122,7 +122,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -148,7 +148,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -173,7 +173,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -198,7 +198,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             value);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action
@@ -221,7 +221,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -253,7 +253,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -285,7 +285,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -317,7 +317,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -349,7 +349,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -381,7 +381,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -413,7 +413,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -445,7 +445,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -477,7 +477,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -509,7 +509,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -541,7 +541,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -573,7 +573,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -605,7 +605,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
             UserTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response

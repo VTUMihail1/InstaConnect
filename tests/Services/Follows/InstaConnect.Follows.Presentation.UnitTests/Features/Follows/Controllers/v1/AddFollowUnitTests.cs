@@ -9,8 +9,8 @@ public class AddFollowUnitTests : BaseFollowUnitTest
     public AddFollowUnitTests()
     {
         _followController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class AddFollowUnitTests : BaseFollowUnitTest
         await _followController.AddAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
             .Received(1)
             .SendAsync(Arg.Is<AddFollowCommand>(m => m.CurrentUserId == existingFollow.FollowerId &&
                                                      m.FollowingId == existingFollow.FollowingId),

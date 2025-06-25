@@ -11,15 +11,15 @@ namespace InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1;
 [EnableRateLimiting(AppPolicies.RateLimiterPolicy)]
 public class PostCommentController : ControllerBase
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IInstaConnectSender _instaConnectSender;
+    private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationSender _applicationSender;
 
     public PostCommentController(
-        IInstaConnectMapper instaConnectMapper,
-        IInstaConnectSender instaConnectSender)
+        IApplicationMapper applicationMapper,
+        IApplicationSender applicationSender)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _instaConnectSender = instaConnectSender;
+        _applicationMapper = applicationMapper;
+        _applicationSender = applicationSender;
     }
 
     // GET: api/post-comments
@@ -30,9 +30,9 @@ public class PostCommentController : ControllerBase
         GetAllPostCommentsRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetAllPostCommentsQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentPaginationQueryResponse>(queryResponse);
+        var queryRequest = _applicationMapper.Map<GetAllPostCommentsQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var response = _applicationMapper.Map<PostCommentPaginationQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -45,9 +45,9 @@ public class PostCommentController : ControllerBase
         GetPostCommentByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _instaConnectMapper.Map<GetPostCommentByIdQuery>(request);
-        var queryResponse = await _instaConnectSender.SendAsync(queryRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentQueryResponse>(queryResponse);
+        var queryRequest = _applicationMapper.Map<GetPostCommentByIdQuery>(request);
+        var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
+        var response = _applicationMapper.Map<PostCommentQueryResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -62,9 +62,9 @@ public class PostCommentController : ControllerBase
         AddPostCommentRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<AddPostCommentCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentCommandResponse>(commandResponse);
+        var commandRequest = _applicationMapper.Map<AddPostCommentCommand>(request);
+        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var response = _applicationMapper.Map<PostCommentCommandResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -79,9 +79,9 @@ public class PostCommentController : ControllerBase
         UpdatePostCommentRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<UpdatePostCommentCommand>(request);
-        var commandResponse = await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
-        var response = _instaConnectMapper.Map<PostCommentCommandResponse>(commandResponse);
+        var commandRequest = _applicationMapper.Map<UpdatePostCommentCommand>(request);
+        var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
+        var response = _applicationMapper.Map<PostCommentCommandResponse>(commandResponse);
 
         return Ok(response);
     }
@@ -96,8 +96,8 @@ public class PostCommentController : ControllerBase
         DeletePostCommentRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _instaConnectMapper.Map<DeletePostCommentCommand>(request);
-        await _instaConnectSender.SendAsync(commandRequest, cancellationToken);
+        var commandRequest = _applicationMapper.Map<DeletePostCommentCommand>(request);
+        await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }

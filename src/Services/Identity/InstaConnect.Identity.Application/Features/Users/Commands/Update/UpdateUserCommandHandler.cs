@@ -5,20 +5,20 @@ public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, UserC
     private readonly IUnitOfWork _unitOfWork;
     private readonly IImageHandler _imageHandler;
     private readonly IEventPublisher _eventPublisher;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserWriteRepository _userWriteRepository;
 
     public UpdateUserCommandHandler(
         IUnitOfWork unitOfWork,
         IImageHandler imageHandler,
         IEventPublisher eventPublisher,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserWriteRepository userWriteRepository)
     {
         _unitOfWork = unitOfWork;
         _imageHandler = imageHandler;
         _eventPublisher = eventPublisher;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userWriteRepository = userWriteRepository;
     }
 
@@ -40,23 +40,23 @@ public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, UserC
             throw new UserNameAlreadyTakenException();
         }
 
-        _instaConnectMapper.Map(request, existingUserById);
+        _applicationMapper.Map(request, existingUserById);
 
         if (request.ProfileImageFile != null)
         {
-            var imageUploadModel = _instaConnectMapper.Map<ImageUploadModel>(request);
+            var imageUploadModel = _applicationMapper.Map<ImageUploadModel>(request);
             var imageUploadResult = await _imageHandler.UploadAsync(imageUploadModel, cancellationToken);
-            _instaConnectMapper.Map(imageUploadResult, existingUserById);
+            _applicationMapper.Map(imageUploadResult, existingUserById);
         }
 
         _userWriteRepository.Update(existingUserById);
 
-        var userUpdatedEvent = _instaConnectMapper.Map<UserUpdatedEvent>(existingUserById);
+        var userUpdatedEvent = _applicationMapper.Map<UserUpdatedEvent>(existingUserById);
         await _eventPublisher.PublishAsync(userUpdatedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var accountCommandViewModel = _instaConnectMapper.Map<UserCommandViewModel>(existingUserById);
+        var accountCommandViewModel = _applicationMapper.Map<UserCommandViewModel>(existingUserById);
 
         return accountCommandViewModel;
     }

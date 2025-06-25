@@ -4,9 +4,12 @@ public class GetPostByIdQueryValidator : AbstractValidator<GetPostByIdQuery>
 {
     public GetPostByIdQueryValidator()
     {
-        RuleFor(q => q.Id)
+        RuleFor(c => c.Id)
             .NotEmpty()
+            .WithMessage(PostErrorMessages.IdEmpty)
             .MinimumLength(PostConfigurations.IdMinLength)
-            .MaximumLength(PostConfigurations.IdMaxLength);
+            .WithMessage(PostErrorMessages.IdTooShort)
+            .MaximumLength(PostConfigurations.IdMaxLength)
+            .WithMessage(PostErrorMessages.IdTooLong);
     }
 }

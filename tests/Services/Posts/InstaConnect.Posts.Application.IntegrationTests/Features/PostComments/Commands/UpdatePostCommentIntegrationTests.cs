@@ -22,7 +22,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -43,7 +43,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -61,7 +61,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -82,7 +82,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -100,7 +100,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -121,7 +121,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -139,7 +139,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<PostCommentNotFoundException>();
@@ -158,7 +158,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<PostForbiddenException>();
@@ -176,7 +176,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
         var postComment = await PostCommentWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
@@ -200,7 +200,7 @@ public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
         var postComment = await PostCommentWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert

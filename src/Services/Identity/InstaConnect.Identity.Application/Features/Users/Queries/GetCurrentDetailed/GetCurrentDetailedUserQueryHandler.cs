@@ -2,14 +2,14 @@
 
 public class GetCurrentDetailedUserQueryHandler : IQueryHandler<GetCurrentDetailedUserQuery, UserDetailedQueryViewModel>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserReadRepository _userReadRepository;
 
     public GetCurrentDetailedUserQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserReadRepository userReadRepository)
     {
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userReadRepository = userReadRepository;
     }
 
@@ -24,7 +24,7 @@ public class GetCurrentDetailedUserQueryHandler : IQueryHandler<GetCurrentDetail
             throw new UserNotFoundException();
         }
 
-        var response = _instaConnectMapper.Map<UserDetailedQueryViewModel>(existingUser);
+        var response = _applicationMapper.Map<UserDetailedQueryViewModel>(existingUser);
 
         return response;
     }

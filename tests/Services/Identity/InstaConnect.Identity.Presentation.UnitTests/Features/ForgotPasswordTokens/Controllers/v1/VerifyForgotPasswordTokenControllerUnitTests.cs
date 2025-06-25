@@ -9,8 +9,8 @@ public class VerifyForgotPasswordTokenControllerUnitTests : BaseForgotPasswordTo
     public VerifyForgotPasswordTokenControllerUnitTests()
     {
         _ForgotPasswordTokenController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -52,7 +52,7 @@ public class VerifyForgotPasswordTokenControllerUnitTests : BaseForgotPasswordTo
 
         // Assert
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<VerifyForgotPasswordTokenCommand>(m => m.Token == existingForgotPasswordToken.Value &&
                                                                  m.UserId == existingForgotPasswordToken.UserId &&

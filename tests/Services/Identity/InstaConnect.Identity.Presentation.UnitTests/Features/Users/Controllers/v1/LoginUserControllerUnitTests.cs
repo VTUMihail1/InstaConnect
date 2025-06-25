@@ -9,8 +9,8 @@ public class LoginUserControllerUnitTests : BaseUserUnitTest
     public LoginUserControllerUnitTests()
     {
         _userController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -74,7 +74,7 @@ public class LoginUserControllerUnitTests : BaseUserUnitTest
         await _userController.LoginAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<LoginUserCommand>(m => m.Email == existingUserClaim.User.Email &&
                                                           m.Password == UserTestUtilities.ValidPassword), CancellationToken);

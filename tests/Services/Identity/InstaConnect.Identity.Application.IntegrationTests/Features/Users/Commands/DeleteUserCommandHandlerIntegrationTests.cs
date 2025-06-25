@@ -18,7 +18,7 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var command = new DeleteUserCommand(null);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -36,7 +36,7 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var command = new DeleteUserCommand(DataFaker.GetString(length));
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -51,7 +51,7 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var command = new DeleteUserCommand(UserTestUtilities.InvalidId);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -67,7 +67,7 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var command = new DeleteUserCommand(existingUser.Id);
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
         var user = await UserWriteRepository.GetByIdAsync(existingUser.Id, CancellationToken);
 
         // Assert
@@ -84,7 +84,7 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var command = new DeleteUserCommand(existingUser.Id);
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
 
         await TestHarness.InactivityTask;
         var result = await TestHarness.Published.Any<UserDeletedEvent>(m =>

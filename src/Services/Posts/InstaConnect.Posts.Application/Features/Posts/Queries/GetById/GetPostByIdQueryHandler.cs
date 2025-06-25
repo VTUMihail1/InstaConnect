@@ -1,32 +1,29 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 
 internal class GetPostByIdQueryHandler : IQueryHandler<GetPostByIdQuery, GetPostByIdQueryResponse>
 {
-    private readonly IInstaConnectMapper _instaConnectMapper;
-    private readonly IPostReadRepository _postReadRepository;
+    private readonly IPostService _postService;
+    private readonly IApplicationMapper _applicationMapper;
 
     public GetPostByIdQueryHandler(
-        IInstaConnectMapper instaConnectMapper,
-        IPostReadRepository postReadRepository)
+        IPostService postService,
+        IApplicationMapper applicationMapper)
     {
-        _instaConnectMapper = instaConnectMapper;
-        _postReadRepository = postReadRepository;
+        _postService = postService;
+        _applicationMapper = applicationMapper;
     }
 
     public async Task<GetPostByIdQueryResponse> Handle(
         GetPostByIdQuery request,
         CancellationToken cancellationToken)
     {
-        var post = await _postReadRepository.GetByIdAsync(request.Id, cancellationToken);
+        var serviceRequest = _applicationMapper.Map<GetPostByIdRequest>(request);
+        var post = await _postService.GetByIdAsync(serviceRequest, cancellationToken);
 
-        if (post == null)
-        {
-            throw new PostNotFoundException();
-        }
-
-        var response = _instaConnectMapper.Map<GetPostByIdQueryResponse>(post);
+        var response = _applicationMapper.Map<GetPostByIdQueryResponse>(post);
 
         return response;
     }

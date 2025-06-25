@@ -5,20 +5,20 @@ namespace InstaConnect.Identity.Application.Features.Users.Commands.Login;
 public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, UserTokenCommandViewModel>
 {
     private readonly IPasswordHasher _passwordHasher;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IUserWriteRepository _userWriteRepository;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
     private readonly IUserClaimWriteRepository _userClaimWriteRepository;
 
     public LoginUserCommandHandler(
         IPasswordHasher passwordHasher,
-        IInstaConnectMapper instaConnectMapper,
+        IApplicationMapper applicationMapper,
         IUserWriteRepository userWriteRepository,
         IAccessTokenGenerator accessTokenGenerator,
         IUserClaimWriteRepository userClaimWriteRepository)
     {
         _passwordHasher = passwordHasher;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
         _userWriteRepository = userWriteRepository;
         _accessTokenGenerator = accessTokenGenerator;
         _userClaimWriteRepository = userClaimWriteRepository;
@@ -47,13 +47,13 @@ public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, UserTok
             throw new UserEmailNotConfirmedException();
         }
 
-        var filteredCollectionQuery = _instaConnectMapper.Map<UserClaimCollectionWriteQuery>(existingUser);
+        var filteredCollectionQuery = _applicationMapper.Map<UserClaimCollectionWriteQuery>(existingUser);
         var userClaims = await _userClaimWriteRepository.GetAllAsync(filteredCollectionQuery, cancellationToken);
 
-        var createAccessModel = _instaConnectMapper.Map<CreateAccessTokenModel>((userClaims, existingUser));
+        var createAccessModel = _applicationMapper.Map<CreateAccessTokenModel>((userClaims, existingUser));
         var token = _accessTokenGenerator.GenerateAccessToken(createAccessModel);
 
-        var accountTokenCommandViewModel = _instaConnectMapper.Map<UserTokenCommandViewModel>(token);
+        var accountTokenCommandViewModel = _applicationMapper.Map<UserTokenCommandViewModel>(token);
 
         return accountTokenCommandViewModel;
     }

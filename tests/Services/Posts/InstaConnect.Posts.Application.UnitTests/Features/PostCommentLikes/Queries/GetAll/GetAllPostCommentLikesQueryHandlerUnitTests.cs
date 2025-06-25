@@ -12,7 +12,7 @@ public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUn
     public GetAllPostCommentLikesQueryHandlerUnitTests()
     {
         _queryHandler = new(
-            InstaConnectMapper,
+            ApplicationMapper,
             PostCommentLikeReadRepository);
     }
 

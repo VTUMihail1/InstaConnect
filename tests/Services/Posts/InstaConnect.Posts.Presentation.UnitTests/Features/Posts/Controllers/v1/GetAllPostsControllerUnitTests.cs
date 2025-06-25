@@ -20,8 +20,8 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
         _post = SetupPost(_user);
         _requestBuilder = new(_post, _user);
         _postController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
 
         var request = _requestBuilder.Create();
         var postQueryResponse = new PostQueryResponse(
@@ -42,7 +42,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
             false,
             false);
 
-        InstaConnectSender.SetupGetAllQuery(request, response, CancellationToken);
+        ApplicationSender.SetupGetAllQuery(request, response, CancellationToken);
     }
 
     [Fact]
@@ -81,6 +81,6 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
         await _postController.GetAllAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender.ShouldReceiveOneSendAsync(request, CancellationToken);
+        await ApplicationSender.ShouldReceiveOneSendAsync(request, CancellationToken);
     }
 }

@@ -16,16 +16,16 @@ public abstract class BaseFollowUnitTest
 {
     protected CancellationToken CancellationToken { get; }
 
-    protected IInstaConnectSender InstaConnectSender { get; }
+    protected IApplicationSender ApplicationSender { get; }
 
-    protected IInstaConnectMapper InstaConnectMapper { get; }
+    protected IApplicationMapper ApplicationMapper { get; }
 
     protected BaseFollowUnitTest()
     {
 
         CancellationToken = new();
-        InstaConnectSender = Substitute.For<IInstaConnectSender>();
-        InstaConnectMapper = new InstaConnectMapper(
+        ApplicationSender = Substitute.For<IApplicationSender>();
+        ApplicationMapper = new ApplicationMapper(
             new Mapper(
                 new MapperConfiguration(cfg => cfg.AddMaps(PresentationReference.Assembly))));
     }
@@ -67,7 +67,7 @@ public abstract class BaseFollowUnitTest
             false,
             false);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetAllFollowsQuery>(m =>
                   m.FollowerId == follower.Id &&
                   m.FollowerName == follower.UserName &&
@@ -79,12 +79,12 @@ public abstract class BaseFollowUnitTest
                   m.PageSize == FollowTestUtilities.ValidPageSizeValue), CancellationToken)
             .Returns(followPaginationCollectionModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<GetFollowByIdQuery>(m => m.Id == follow.Id),
                                                     CancellationToken)
             .Returns(followQueryViewModel);
 
-        InstaConnectSender
+        ApplicationSender
             .SendAsync(Arg.Is<AddFollowCommand>(m => m.CurrentUserId == follower.Id &&
                                                      m.FollowingId == following.Id),
                                                      CancellationToken)

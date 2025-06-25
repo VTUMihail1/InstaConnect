@@ -1,10 +1,10 @@
 ﻿namespace InstaConnect.Common.Application.Helpers;
 
-internal class InstaConnectSender : IInstaConnectSender
+internal class ApplicationSender : IApplicationSender
 {
     private readonly ISender _sender;
 
-    public InstaConnectSender(ISender sender)
+    public ApplicationSender(ISender sender)
     {
         _sender = sender;
     }

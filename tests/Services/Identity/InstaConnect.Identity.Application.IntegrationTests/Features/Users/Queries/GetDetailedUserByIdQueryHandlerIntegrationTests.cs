@@ -16,7 +16,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
         var query = new GetDetailedUserByIdQuery(null);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -32,7 +32,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
         var query = new GetDetailedUserByIdQuery(DataFaker.GetString(length));
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -45,7 +45,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
         var query = new GetDetailedUserByIdQuery(UserTestUtilities.InvalidId);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserNotFoundException>();
@@ -59,7 +59,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
         var query = new GetDetailedUserByIdQuery(existingUser.Id);
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response
@@ -80,7 +80,7 @@ public class GetDetailedUserByIdQueryHandlerIntegrationTests : BaseUserIntegrati
         var query = new GetDetailedUserByIdQuery(DataFaker.GetDifferentCaseString(existingUser.Id));
 
         // Act
-        var response = await InstaConnectSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
         response

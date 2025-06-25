@@ -21,7 +21,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -42,7 +42,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -60,7 +60,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -81,7 +81,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -99,7 +99,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -120,7 +120,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<AppValidationException>();
@@ -138,7 +138,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<MessageNotFoundException>();
@@ -157,7 +157,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action.Should().ThrowAsync<UserForbiddenException>();
@@ -175,7 +175,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
         var message = await MessageWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert
@@ -199,7 +199,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         );
 
         // Act
-        var response = await InstaConnectSender.SendAsync(command, CancellationToken);
+        var response = await ApplicationSender.SendAsync(command, CancellationToken);
         var message = await MessageWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
         // Assert

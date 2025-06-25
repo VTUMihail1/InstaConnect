@@ -5,17 +5,26 @@ public class AddPostCommandValidator : AbstractValidator<AddPostCommand>
     {
         RuleFor(c => c.CurrentUserId)
             .NotEmpty()
+            .WithMessage(UserErrorMessages.IdEmpty)
             .MinimumLength(UserConfigurations.IdMinLength)
-            .MaximumLength(UserConfigurations.IdMaxLength);
+            .WithMessage(UserErrorMessages.IdTooShort)
+            .MaximumLength(UserConfigurations.IdMaxLength)
+            .WithMessage(UserErrorMessages.IdTooLong);
 
         RuleFor(c => c.Title)
             .NotEmpty()
+            .WithMessage(PostErrorMessages.TitleEmpty)
             .MinimumLength(PostConfigurations.TitleMinLength)
-            .MaximumLength(PostConfigurations.TitleMaxLength);
+            .WithMessage(PostErrorMessages.TitleTooShort)
+            .MaximumLength(PostConfigurations.TitleMaxLength)
+            .WithMessage(PostErrorMessages.TitleTooLong);
 
         RuleFor(c => c.Content)
             .NotEmpty()
+            .WithMessage(PostErrorMessages.ContentEmpty)
             .MinimumLength(PostConfigurations.ContentMinLength)
-            .MaximumLength(PostConfigurations.ContentMaxLength);
+            .WithMessage(PostErrorMessages.ContentTooShort)
+            .MaximumLength(PostConfigurations.ContentMaxLength)
+            .WithMessage(PostErrorMessages.ContentTooLong);
     }
 }

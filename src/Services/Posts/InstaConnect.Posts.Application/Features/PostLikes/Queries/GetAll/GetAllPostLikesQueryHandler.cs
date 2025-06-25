@@ -6,16 +6,16 @@ internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQuery,
 {
     private readonly IPostLikeService _postLikeService;
     private readonly IPostReadRepository _postReadRepository;
-    private readonly IInstaConnectMapper _instaConnectMapper;
+    private readonly IApplicationMapper _applicationMapper;
 
     public GetAllPostLikesQueryHandler(
         IPostLikeService postLikeService,
         IPostReadRepository postReadRepository,
-        IInstaConnectMapper instaConnectMapper)
+        IApplicationMapper applicationMapper)
     {
         _postLikeService = postLikeService;
         _postReadRepository = postReadRepository;
-        _instaConnectMapper = instaConnectMapper;
+        _applicationMapper = applicationMapper;
     }
 
     public async Task<PostLikePaginationQueryViewModel> Handle(
@@ -29,10 +29,10 @@ internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQuery,
             throw new PostNotFoundException();
         }
 
-        var filteredCollectionQuery = _instaConnectMapper.Map<PostLikeCollectionReadQuery>(request);
+        var filteredCollectionQuery = _applicationMapper.Map<PostLikeCollectionReadQuery>(request);
 
         var postLikes = await _postLikeService.GetAllAsync(existingPost, filteredCollectionQuery, cancellationToken);
-        var response = _instaConnectMapper.Map<PostLikePaginationQueryViewModel>(postLikes);
+        var response = _applicationMapper.Map<PostLikePaginationQueryViewModel>(postLikes);
 
         return response;
     }

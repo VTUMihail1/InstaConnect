@@ -13,7 +13,7 @@ public class AddMessageCommandHandlerUnitTests : BaseMessageUnitTest
             UnitOfWork,
             MessageSender,
             MessageFactory,
-            InstaConnectMapper,
+            ApplicationMapper,
             UserWriteRepository,
             MessageWriteRepository);
     }

@@ -17,7 +17,7 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
         _post = SetupPost(_user);
         _queryBuilder = new(_post, _user);
         _queryHandler = new(
-            InstaConnectMapper,
+            ApplicationMapper,
             PostReadRepository);
 
         var query = _queryBuilder.Create();

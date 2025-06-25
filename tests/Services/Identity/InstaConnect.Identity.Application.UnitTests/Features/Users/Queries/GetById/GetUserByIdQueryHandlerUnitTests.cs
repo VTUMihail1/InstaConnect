@@ -9,7 +9,7 @@ public class GetUserByIdQueryHandlerUnitTests : BaseUserUnitTest
     public GetUserByIdQueryHandlerUnitTests()
     {
         _queryHandler = new(
-            InstaConnectMapper,
+            ApplicationMapper,
             UserReadRepository);
     }
 

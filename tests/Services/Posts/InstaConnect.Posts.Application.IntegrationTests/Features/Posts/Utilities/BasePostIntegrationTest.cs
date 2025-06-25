@@ -17,7 +17,7 @@ public abstract class BasePostIntegrationTest : IClassFixture<PostsWebApplicatio
 
     protected CancellationToken CancellationToken { get; }
 
-    protected IInstaConnectSender InstaConnectSender { get; }
+    protected IApplicationSender ApplicationSender { get; }
 
     protected IUserRepository UserWriteRepository
     {
@@ -56,7 +56,7 @@ public abstract class BasePostIntegrationTest : IClassFixture<PostsWebApplicatio
     {
         ServiceScope = postsWebApplicationFactory.Services.CreateScope();
         CancellationToken = new CancellationToken();
-        InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
+        ApplicationSender = ServiceScope.ServiceProvider.GetRequiredService<IApplicationSender>();
     }
 
     protected async Task<User> SetupUserAsync(CancellationToken cancellationToken)

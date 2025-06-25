@@ -18,7 +18,7 @@ public class AddForgotPasswordTokenCommandHandlerIntegrationTests : BaseUserInte
         var command = new AddForgotPasswordTokenCommand(null);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -36,7 +36,7 @@ public class AddForgotPasswordTokenCommandHandlerIntegrationTests : BaseUserInte
         var command = new AddForgotPasswordTokenCommand(DataFaker.GetString(length));
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -51,7 +51,7 @@ public class AddForgotPasswordTokenCommandHandlerIntegrationTests : BaseUserInte
         var command = new AddForgotPasswordTokenCommand(UserTestUtilities.ValidAddEmail);
 
         // Act
-        var action = async () => await InstaConnectSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
         await action
@@ -67,7 +67,7 @@ public class AddForgotPasswordTokenCommandHandlerIntegrationTests : BaseUserInte
         var command = new AddForgotPasswordTokenCommand(existingUser.Email);
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
         var user = await UserWriteRepository.GetByIdAsync(existingUser.Id, CancellationToken);
 
         // Assert
@@ -85,7 +85,7 @@ public class AddForgotPasswordTokenCommandHandlerIntegrationTests : BaseUserInte
         var command = new AddForgotPasswordTokenCommand(existingUser.Email);
 
         // Act
-        await InstaConnectSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(command, CancellationToken);
         await TestHarness.InactivityTask;
 
         var result = await TestHarness.Published.Any<UserForgotPasswordTokenCreatedEvent>(m =>

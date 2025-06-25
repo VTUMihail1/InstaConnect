@@ -8,8 +8,8 @@ public class AddForgotPasswordTokenControllerUnitTests : BaseForgotPasswordToken
     public AddForgotPasswordTokenControllerUnitTests()
     {
         _forgotPasswordTokenController = new(
-            InstaConnectMapper,
-            InstaConnectSender);
+            ApplicationMapper,
+            ApplicationSender);
     }
 
     [Fact]
@@ -43,7 +43,7 @@ public class AddForgotPasswordTokenControllerUnitTests : BaseForgotPasswordToken
         await _forgotPasswordTokenController.AddAsync(request, CancellationToken);
 
         // Assert
-        await InstaConnectSender
+        await ApplicationSender
               .Received(1)
               .SendAsync(Arg.Is<AddForgotPasswordTokenCommand>(m => m.Email == existingUser.Email), CancellationToken);
     }

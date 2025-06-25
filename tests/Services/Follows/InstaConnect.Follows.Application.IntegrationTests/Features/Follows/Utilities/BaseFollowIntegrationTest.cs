@@ -15,7 +15,7 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
 
     protected CancellationToken CancellationToken { get; }
 
-    protected IInstaConnectSender InstaConnectSender { get; }
+    protected IApplicationSender ApplicationSender { get; }
 
     protected IUserWriteRepository UserWriteRepository
     {
@@ -54,7 +54,7 @@ public abstract class BaseFollowIntegrationTest : IClassFixture<FollowsWebApplic
     {
         ServiceScope = integrationTestWebAppFactory.Services.CreateScope();
         CancellationToken = new CancellationToken();
-        InstaConnectSender = ServiceScope.ServiceProvider.GetRequiredService<IInstaConnectSender>();
+        ApplicationSender = ServiceScope.ServiceProvider.GetRequiredService<IApplicationSender>();
     }
 
     private async Task<User> CreateUserUtilAsync(CancellationToken cancellationToken)
