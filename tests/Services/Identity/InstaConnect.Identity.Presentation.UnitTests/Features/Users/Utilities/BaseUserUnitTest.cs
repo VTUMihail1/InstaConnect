@@ -135,8 +135,8 @@ public abstract class BaseUserUnitTest
     private UserClaim CreateUserClaimUtil(User user)
     {
         var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
+            ApplicationClaims.Admin,
+            ApplicationClaims.Admin,
             user);
 
         var userTokenCommandViewModel = new UserTokenCommandViewModel(UserTestUtilities.ValidAccessTokenValue, UserTestUtilities.ValidUntil);

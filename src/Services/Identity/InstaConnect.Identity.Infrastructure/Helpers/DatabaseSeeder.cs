@@ -61,7 +61,7 @@ internal class DatabaseSeeder : IDatabaseSeeder
             null);
         await _userWriteRepository.ConfirmEmailAsync(adminUser.Id, cancellationToken);
 
-        var adminClaim = new UserClaim(AppClaims.Admin, AppClaims.Admin, adminUser.Id);
+        var adminClaim = new UserClaim(ApplicationClaims.Admin, ApplicationClaims.Admin, adminUser.Id);
 
         _userWriteRepository.Add(adminUser);
         _userClaimWriteRepository.Add(adminClaim);

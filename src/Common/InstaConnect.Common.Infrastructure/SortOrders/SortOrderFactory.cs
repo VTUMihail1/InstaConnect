@@ -24,7 +24,7 @@ internal class SortOrderFactory : ISortOrderFactory
 
         if (order == null)
         {
-            throw new SortOrderNotSupportedException();
+            throw new SortOrderNotSupportedException(sortOrder);
         }
 
         return order;

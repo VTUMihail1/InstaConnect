@@ -85,8 +85,8 @@ public abstract class BaseUserFunctionalTest : IClassFixture<IdentityWebApplicat
         CancellationToken cancellationToken)
     {
         var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
+            ApplicationClaims.Admin,
+            ApplicationClaims.Admin,
             user);
 
         var userClaimWriteRepository = ServiceScope.ServiceProvider.GetRequiredService<IUserClaimWriteRepository>();

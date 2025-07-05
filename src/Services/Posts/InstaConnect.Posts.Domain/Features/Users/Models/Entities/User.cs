@@ -5,7 +5,7 @@ using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
 namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
-public class User : IBaseEntity, IAuditableInfo
+public class User : IEntity, IAuditableInfo
 {
     private User()
     {

@@ -1,5 +1,5 @@
 ﻿namespace InstaConnect.Common.Utilities;
-public abstract class AppClaims
+public abstract class ApplicationClaims
 {
     public const string Admin = nameof(Admin);
 }

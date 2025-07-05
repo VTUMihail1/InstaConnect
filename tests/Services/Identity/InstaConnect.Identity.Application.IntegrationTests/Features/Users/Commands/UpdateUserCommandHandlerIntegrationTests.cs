@@ -29,7 +29,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -53,7 +53,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -75,7 +75,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -100,7 +100,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -122,7 +122,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -147,7 +147,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -169,7 +169,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -194,7 +194,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]

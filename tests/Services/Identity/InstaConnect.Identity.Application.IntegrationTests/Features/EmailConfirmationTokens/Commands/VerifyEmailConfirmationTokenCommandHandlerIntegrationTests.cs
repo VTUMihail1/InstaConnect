@@ -23,7 +23,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -42,7 +42,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -58,7 +58,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -77,7 +77,7 @@ public class VerifyEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEm
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]

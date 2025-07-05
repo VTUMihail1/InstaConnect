@@ -31,7 +31,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -56,7 +56,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -81,7 +81,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -104,7 +104,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -127,7 +127,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -153,7 +153,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -178,7 +178,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -203,7 +203,7 @@ public class GetAllUsersQueryHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]

@@ -3,6 +3,7 @@
 using CloudinaryDotNet;
 
 using InstaConnect.Common.Abstractions;
+using InstaConnect.Common.Exceptions;
 using InstaConnect.Common.Exceptions.Base;
 using InstaConnect.Common.Infrastructure.Abstractions;
 

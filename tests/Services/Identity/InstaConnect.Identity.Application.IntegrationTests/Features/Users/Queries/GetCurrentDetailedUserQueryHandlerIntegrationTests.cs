@@ -21,7 +21,7 @@ public class GetCurrentDetailedUserQueryHandlerIntegrationTests : BaseUserIntegr
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -39,7 +39,7 @@ public class GetCurrentDetailedUserQueryHandlerIntegrationTests : BaseUserIntegr
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]

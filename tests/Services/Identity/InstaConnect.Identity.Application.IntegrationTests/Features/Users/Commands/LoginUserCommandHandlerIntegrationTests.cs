@@ -25,7 +25,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -44,7 +44,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -61,7 +61,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -81,7 +81,7 @@ public class LoginUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]

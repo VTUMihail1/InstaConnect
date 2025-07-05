@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Follows.Domain.Features.Follows.Models.Entities;
 
-public class Follow : IBaseEntity, IAuditableInfo
+public class Follow : IEntity, IAuditableInfo
 {
     private Follow()
     {

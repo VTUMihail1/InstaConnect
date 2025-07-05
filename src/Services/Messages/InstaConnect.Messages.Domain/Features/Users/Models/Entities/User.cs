@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Messages.Domain.Features.Users.Models.Entities;
 
-public class User : IBaseEntity, IAuditableInfo
+public class User : IEntity, IAuditableInfo
 {
     private User()
     {

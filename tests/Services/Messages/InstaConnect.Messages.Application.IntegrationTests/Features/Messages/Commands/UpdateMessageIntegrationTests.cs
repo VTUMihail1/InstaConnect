@@ -24,7 +24,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -45,7 +45,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -63,7 +63,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -84,7 +84,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -102,7 +102,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -123,7 +123,7 @@ public class UpdateMessageIntegrationTests : BaseMessageIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]

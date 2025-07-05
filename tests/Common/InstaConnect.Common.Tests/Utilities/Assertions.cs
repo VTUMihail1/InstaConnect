@@ -32,7 +32,7 @@ public static class Assertions
 
     public static async Task ShouldThrowValidationExceptionAsync(this Func<Task> action)
     {
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     public static void ShouldHaveValidationErrorForProperty<T, TProperty>(this TestValidationResult<T> testValidationResult, Expression<Func<T, TProperty>> memberAccessor)

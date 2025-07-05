@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
             .AddPostCommentLikeServices();
 
         serviceCollection
-            .AddMediatR(PostApplicationReference.Assembly)
+            .AddCQRS(PostApplicationReference.Assembly)
             .AddMapper(PostApplicationReference.Assembly)
             .AddValidators(PostApplicationReference.Assembly);
 

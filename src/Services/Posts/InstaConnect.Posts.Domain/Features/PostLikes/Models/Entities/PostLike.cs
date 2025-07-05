@@ -3,7 +3,7 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
 
-public class PostLike : IBaseEntity, IAuditableInfo
+public class PostLike : IEntity, IAuditableInfo
 {
     private PostLike()
     {

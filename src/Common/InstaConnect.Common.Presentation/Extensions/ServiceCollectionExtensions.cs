@@ -4,11 +4,17 @@ using System.Threading.RateLimiting;
 
 using Asp.Versioning;
 
+using InstaConnect.Common.Extensions;
+using InstaConnect.Common.Infrastructure.Abstractions;
+using InstaConnect.Common.Infrastructure.Extensions;
+using InstaConnect.Common.Presentation.Abstractions;
 using InstaConnect.Common.Presentation.Binders.FromClaim;
 using InstaConnect.Common.Presentation.ExceptionHandlers;
 using InstaConnect.Common.Presentation.Models.Options;
 using InstaConnect.Common.Presentation.Utilities;
 using InstaConnect.Common.Utilities;
+using InstaConnect.Posts.Presentation.Extensions;
+using InstaConnect.Shared.Infrastructure.Extensions;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -27,7 +33,7 @@ public static class ServiceCollectionExtensions
                 .RequireAuthenticatedUser()
                 .RequireClaim(ClaimTypes.NameIdentifier)
                 .Build())
-            .AddPolicy(AppPolicies.AdminPolicy, policy => policy.RequireClaim(AppClaims.Admin));
+            .AddPolicy(AppPolicies.AdminPolicy, policy => policy.RequireClaim(ApplicationClaims.Admin));
 
         return serviceCollection;
     }
@@ -64,8 +70,12 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddExceptionHandler(this IServiceCollection serviceCollection)
     {
+        serviceCollection
+            .AddScoped<IProblemDetailsFactory, ProblemDetailsFactory>()
+            .AddImplementationsOf<IExceptionStatus>(CommonPresentationReference.Assembly);
+
         serviceCollection.AddProblemDetails();
-        serviceCollection.AddExceptionHandler<AppExceptionHandler>();
+        serviceCollection.AddExceptionHandler<ApplicationExceptionHandler>();
 
         return serviceCollection;
     }

@@ -32,7 +32,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -58,7 +58,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -81,7 +81,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -107,7 +107,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -130,7 +130,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -158,7 +158,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -181,7 +181,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -204,7 +204,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -230,7 +230,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -253,7 +253,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -279,7 +279,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]

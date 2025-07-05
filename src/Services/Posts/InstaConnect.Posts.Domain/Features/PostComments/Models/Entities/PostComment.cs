@@ -4,7 +4,7 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
 
-public class PostComment : IBaseEntity, IAuditableInfo
+public class PostComment : IEntity, IAuditableInfo
 {
     private PostComment()
     {

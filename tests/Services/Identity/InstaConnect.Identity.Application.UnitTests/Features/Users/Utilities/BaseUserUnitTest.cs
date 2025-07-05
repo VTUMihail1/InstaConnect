@@ -90,8 +90,8 @@ public abstract class BaseUserUnitTest
             UserTestUtilities.ValidUntil);
 
         var userClaim = new UserClaim(
-            AppClaims.Admin,
-            AppClaims.Admin,
+            ApplicationClaims.Admin,
+            ApplicationClaims.Admin,
             user);
 
         UserClaimWriteRepository.GetAllAsync(Arg.Is<UserClaimCollectionWriteQuery>(uc => uc.UserId == user.Id), CancellationToken)
@@ -103,8 +103,8 @@ public abstract class BaseUserUnitTest
                                                                                       at.LastName == user.LastName &&
                                                                                       at.UserName == user.UserName &&
                                                                                       at.UserClaims.All(uc => uc.UserId == user.Id &&
-                                                                                                              uc.Claim == AppClaims.Admin &&
-                                                                                                              uc.Value == AppClaims.Admin)))
+                                                                                                              uc.Claim == ApplicationClaims.Admin &&
+                                                                                                              uc.Value == ApplicationClaims.Admin)))
             .Returns(accessTokenResult);
 
         return userClaim;

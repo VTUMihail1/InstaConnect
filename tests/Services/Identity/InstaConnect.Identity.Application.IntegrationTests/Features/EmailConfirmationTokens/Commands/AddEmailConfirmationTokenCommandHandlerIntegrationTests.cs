@@ -23,7 +23,7 @@ public class AddEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmail
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -41,7 +41,7 @@ public class AddEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmail
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]

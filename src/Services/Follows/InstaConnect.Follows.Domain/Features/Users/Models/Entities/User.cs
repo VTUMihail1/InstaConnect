@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Follows.Domain.Features.Users.Models.Entities;
 
-public class User : IBaseEntity, IAuditableInfo
+public class User : IEntity, IAuditableInfo
 {
     private User()
     {

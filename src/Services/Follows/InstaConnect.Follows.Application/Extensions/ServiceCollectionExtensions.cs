@@ -12,7 +12,7 @@ public static class ServiceCollectionExtensions
             .AddFollowServices();
 
         serviceCollection
-            .AddMediatR(ApplicationReference.Assembly)
+            .AddCQRS(ApplicationReference.Assembly)
             .AddMapper(ApplicationReference.Assembly)
             .AddValidators(ApplicationReference.Assembly);
 

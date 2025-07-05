@@ -5,6 +5,7 @@ using CloudinaryDotNet;
 
 using InstaConnect.Common.Application.Helpers;
 using InstaConnect.Common.Domain.Abstractions;
+using InstaConnect.Common.Extensions;
 using InstaConnect.Common.Infrastructure;
 using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
@@ -225,63 +226,6 @@ public static partial class ServiceCollectionExtensions
             .AddScoped<IGuidProvider, GuidProvider>();
 
         return serviceCollection;
-    }
-
-    public static IServiceCollection AddTestDbContext<TContext>(this IServiceCollection serviceCollection, Action<DbContextOptionsBuilder>? optionsAction = null)
-      where TContext : DbContext
-    {
-        var efCoreDescriptor = serviceCollection.SingleOrDefault(s => s.ServiceType == typeof(DbContextOptions<TContext>));
-
-        if (efCoreDescriptor != null)
-        {
-            serviceCollection.Remove(efCoreDescriptor);
-        }
-
-        serviceCollection.AddDbContext<TContext>(options => optionsAction?.Invoke(options));
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddTestJwtAuth(this IServiceCollection serviceCollection)
-    {
-        serviceCollection
-                .AddAuthentication(opt =>
-                {
-                    opt.DefaultAuthenticateScheme = FakeJwtBearerDefaults.AuthenticationScheme;
-                    opt.DefaultChallengeScheme = FakeJwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddFakeJwtBearer(opt => opt.BearerValueType = FakeJwtBearerBearerValueType.Jwt);
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddTestRedisCache(this IServiceCollection serviceCollection, Action<RedisCacheOptions>? optionsAction = null!)
-    {
-        var descriptor = serviceCollection.SingleOrDefault(s => s.ServiceType == typeof(IDistributedCache));
-
-        if (descriptor != null)
-        {
-            serviceCollection.Remove(descriptor);
-        }
-
-        serviceCollection.AddStackExchangeRedisCache(options => optionsAction?.Invoke(options));
-
-        return serviceCollection;
-    }
-
-    public static IServiceCollection AddImplementationsOf<TInterface>(this IServiceCollection services, Assembly assembly)
-        where TInterface : class
-    {
-        var implementations = assembly
-            .DefinedTypes
-            .Where(type => type is { IsAbstract: false, IsInterface: false } &&
-                           type.IsAssignableTo(typeof(TInterface)))
-            .Select(type => ServiceDescriptor.Transient(typeof(TInterface), type))
-            .ToArray();
-
-        services.TryAddEnumerable(implementations);
-
-        return services;
     }
 
     public static TOptions AddOptions<TOptions>(this IServiceCollection serviceCollection, IConfiguration configuration, string sectionName)

@@ -108,8 +108,8 @@ public class LoginUserCommandHandlerUnitTests : BaseUserUnitTest
                                                                       at.LastName == existingUserClaim.User.LastName &&
                                                                       at.UserName == existingUserClaim.User.UserName &&
                                                                       at.UserClaims.All(uc => uc.UserId == existingUserClaim.User.Id &&
-                                                                                              uc.Claim == AppClaims.Admin &&
-                                                                                              uc.Value == AppClaims.Admin)));
+                                                                                              uc.Claim == ApplicationClaims.Admin &&
+                                                                                              uc.Value == ApplicationClaims.Admin)));
     }
 
     [Fact]

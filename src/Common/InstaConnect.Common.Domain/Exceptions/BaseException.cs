@@ -1,19 +1,27 @@
-﻿namespace InstaConnect.Common.Exceptions;
+﻿using InstaConnect.Common.Models.Enums;
+
+namespace InstaConnect.Common.Exceptions;
 
 public class BaseException : Exception
 {
-    protected BaseException(string message, InstaConnectStatusCode statusCode) : base(message)
+    protected BaseException(string message, ExceptionStatus status) : base(message)
     {
         Message = message;
-        StatusCode = statusCode;
+        Status = status;
     }
 
-    protected BaseException(string message, Exception exception, InstaConnectStatusCode statusCode) : base(message, exception)
+    protected BaseException(string message, Exception exception, ExceptionStatus status) : base(message, exception)
     {
         Message = message;
-        StatusCode = statusCode;
+        Status = status;
     }
 
     public override string Message { get; }
-    public InstaConnectStatusCode StatusCode { get; }
+    public ExceptionStatus Status { get; }
+}
+
+public interface IApplicationException
+{
+    public string Message { get; }
+    public ExceptionStatus Status { get; }
 }

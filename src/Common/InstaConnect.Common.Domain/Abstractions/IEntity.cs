@@ -1,6 +1,5 @@
 ﻿namespace InstaConnect.Common.Domain.Abstractions;
 
-public interface IBaseEntity
+public interface IEntity
 {
-    string Id { get; }
 }

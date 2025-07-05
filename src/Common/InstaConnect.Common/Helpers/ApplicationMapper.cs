@@ -19,9 +19,4 @@ public class ApplicationMapper : IApplicationMapper
 
         return obj;
     }
-
-    public void Map(object source, object destination)
-    {
-        _mapper.Map(source, destination);
-    }
 }

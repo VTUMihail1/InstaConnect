@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddValidators(ApplicationReference.Assembly)
-            .AddMediatR(ApplicationReference.Assembly)
+            .AddCQRS(ApplicationReference.Assembly)
             .AddMapper(ApplicationReference.Assembly);
 
         return serviceCollection;

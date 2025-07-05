@@ -27,7 +27,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -51,7 +51,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -74,7 +74,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -97,7 +97,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -118,7 +118,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -139,7 +139,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -163,7 +163,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -186,7 +186,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -209,7 +209,7 @@ public class GetAllMessagesQueryHandlerIntegrationTests : BaseMessageIntegration
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<AppValidationException>();
+        await action.Should().ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]

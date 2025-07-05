@@ -73,7 +73,7 @@ public class UsersClient : IUsersClient
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
             {
                 { ClaimTypes.NameIdentifier, request.Id },
-                { AppClaims.Admin, AppClaims.Admin }
+                { ApplicationClaims.Admin, ApplicationClaims.Admin }
             });
 
         var route = IdDetailedRoute(request.Id);
@@ -114,7 +114,7 @@ public class UsersClient : IUsersClient
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
             {
                 { ClaimTypes.NameIdentifier, request.Id },
-                { AppClaims.Admin, AppClaims.Admin }
+                { ApplicationClaims.Admin, ApplicationClaims.Admin }
             });
 
         var route = IdDetailedRoute(request.Id);
@@ -327,7 +327,7 @@ public class UsersClient : IUsersClient
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
             {
                 { ClaimTypes.NameIdentifier, request.Id },
-                { AppClaims.Admin, AppClaims.Admin }
+                { ApplicationClaims.Admin, ApplicationClaims.Admin }
             });
 
         var response = await _httpClient.DeleteAsync(route, cancellationToken);
@@ -371,7 +371,7 @@ public class UsersClient : IUsersClient
         _httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
             {
                 { ClaimTypes.NameIdentifier, request.Id },
-                { AppClaims.Admin, AppClaims.Admin }
+                { ApplicationClaims.Admin, ApplicationClaims.Admin }
             });
 
         await _httpClient.DeleteAsync(route, cancellationToken);

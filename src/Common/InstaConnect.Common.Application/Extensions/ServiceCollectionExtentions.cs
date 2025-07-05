@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace InstaConnect.Common.Application.Extensions;
 public static class ServiceCollectionExtentions
 {
-    public static IServiceCollection AddMediatR(this IServiceCollection serviceCollection, Assembly assembly)
+    public static IServiceCollection AddCQRS(this IServiceCollection serviceCollection, Assembly assembly)
     {
         serviceCollection.AddMediatR(
             cf =>
@@ -32,8 +32,6 @@ public static class ServiceCollectionExtentions
     public static IServiceCollection AddValidators(this IServiceCollection serviceCollection, Assembly assembly)
     {
         serviceCollection.AddValidatorsFromAssembly(assembly);
-
-        serviceCollection.AddScoped<IEntityPropertyValidator, EntityPropertyValidator>();
 
         return serviceCollection;
     }

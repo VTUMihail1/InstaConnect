@@ -6,6 +6,7 @@ using InstaConnect.Common.Helpers;
 using Mapster;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 using Scrutor;
 
@@ -36,5 +37,20 @@ public static class ServiceCollectionExtentions
             .WithScopedLifetime());
 
         return serviceCollection;
+    }
+
+    public static IServiceCollection AddImplementationsOf<TInterface>(this IServiceCollection services, Assembly assembly)
+        where TInterface : class
+    {
+        var implementations = assembly
+            .DefinedTypes
+            .Where(type => type is { IsAbstract: false, IsInterface: false } &&
+                           type.IsAssignableTo(typeof(TInterface)))
+            .Select(type => ServiceDescriptor.Transient(typeof(TInterface), type))
+            .ToArray();
+
+        services.TryAddEnumerable(implementations);
+
+        return services;
     }
 }

@@ -27,7 +27,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -50,7 +50,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -93,7 +93,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -113,7 +113,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Theory]
@@ -137,7 +137,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
@@ -157,7 +157,7 @@ public class VerifyForgotPasswordTokenCommandHandlerIntegrationTests : BaseForgo
         // Assert
         await action
             .Should()
-            .ThrowAsync<AppValidationException>();
+            .ThrowAsync<InvalidValidationException>();
     }
 
     [Fact]
