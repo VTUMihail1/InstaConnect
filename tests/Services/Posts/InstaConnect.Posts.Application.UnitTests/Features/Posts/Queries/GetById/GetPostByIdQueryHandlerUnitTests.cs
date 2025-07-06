@@ -1,4 +1,6 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetById;
@@ -12,50 +14,41 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostUnitTest
 
     public GetPostByIdQueryHandlerUnitTests()
     {
-        _user = SetupUser();
-        _post = SetupPost(_user);
+        _user = new UserBuilder().Create();
+        _post = new PostBuilder(_user).Create();
         _queryBuilder = new(_post);
         _queryHandler = new(
-            ApplicationMapper,
-            PostReadRepository);
+            PostService,
+            ApplicationMapper);
+
+        var request = _queryBuilder.Create();
+
+        PostService.SetupGetByIdRequest(request, _post, _user, CancellationToken);
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
+    public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Arrange
-        var query = _queryBuilder.WithInvalidId().Create();
+        var request = _queryBuilder.Create();
 
         // Act
-        var action = async () => await _queryHandler.Handle(query, CancellationToken);
-
-        // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync();
-    }
-
-    [Fact]
-    public async Task Handle_ShouldGetPostFromRepository_WhenQueryIsValid()
-    {
-        // Arrange
-        var query = _queryBuilder.Create();
-
-        // Act
-        await _queryHandler.Handle(query, CancellationToken);
-
-        // Assert
-        await PostReadRepository.ShouldReceiveOneGetByIdAsync(query, CancellationToken);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldReturnResponse_WhenQueryIsValid()
-    {
-        // Arrange
-        var query = _queryBuilder.Create();
-
-        // Act
-        var response = await _queryHandler.Handle(query, CancellationToken);
+        var response = await _queryHandler.Handle(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(_post, _user);
+    }
+
+    [Fact]
+    public async Task Handle_ShouldCallPostServiceGetByIdAsync_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = _queryBuilder.Create();
+
+        // Act
+        await _queryHandler.Handle(request, CancellationToken);
+
+        // Assert
+        await PostService.ShouldReceiveOneGetByIdAsync(request, CancellationToken);
     }
 }

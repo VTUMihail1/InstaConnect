@@ -24,15 +24,15 @@ public static class Assertions
         obj.Should().BeNull();
     }
 
-    public static async Task ShouldThrowAsync<TException>(this Func<Task> action)
+    public static async Task ShouldThrowAsync<TException>(this Func<Task> action, string message)
         where TException : Exception
     {
-        await action.Should().ThrowAsync<TException>();
+        await action.Should().ThrowAsync<TException>().WithMessage(message);
     }
 
-    public static async Task ShouldThrowValidationExceptionAsync(this Func<Task> action)
+    public static async Task ShouldThrowInvalidValidationExceptionAsync(this Func<Task> action, string message)
     {
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowAsync<InvalidValidationException>(message);
     }
 
     public static void ShouldHaveValidationErrorForProperty<T, TProperty>(this TestValidationResult<T> testValidationResult, Expression<Func<T, TProperty>> memberAccessor)

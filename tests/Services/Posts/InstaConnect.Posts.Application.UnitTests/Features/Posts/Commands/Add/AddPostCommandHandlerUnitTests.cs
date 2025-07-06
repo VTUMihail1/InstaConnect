@@ -12,82 +12,41 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
 
     public AddPostCommandHandlerUnitTests()
     {
-        _user = SetupUser();
-        var postBuilder = new PostBuilder(_user);
-        _post = postBuilder.Create();
+        _user = new UserBuilder().Create();
+        _post = new PostBuilder(_user).Create();
         _commandBuilder = new(_post);
         _commandHandler = new(
-            UnitOfWork,
-            PostFactory,
-            ApplicationMapper,
-            PostWriteRepository,
-            UserWriteRepository);
+            PostService,
+            ApplicationMapper);
 
-        PostFactory.SetupGet(_user, _post);
+        var request = _commandBuilder.Create();
+
+        PostService.SetupAddRequest(request, _post, CancellationToken);
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
+    public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Arrange
-        var command = _commandBuilder.WithInvalidUserId().Create();
+        var request = _commandBuilder.Create();
 
         // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await action.ShouldThrowUserNotFoundExceptionAsync();
-    }
-
-    [Fact]
-    public async Task Handle_ShouldReturnResponse_WhenCommandIsValid()
-    {
-        // Arrange
-        var command = _commandBuilder.Create();
-
-        // Act
-        var response = await _commandHandler.Handle(command, CancellationToken);
+        var response = await _commandHandler.Handle(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(_post);
     }
 
     [Fact]
-    public async Task Handle_ShouldCallThePostFactory_WhenCommandIsValid()
+    public async Task Handle_ShouldCallPostServiceAddAsync_WhenRequestIsValid()
     {
         // Arrange
-        var command = _commandBuilder.Create();
+        var request = _commandBuilder.Create();
 
         // Act
-        await _commandHandler.Handle(command, CancellationToken);
+        await _commandHandler.Handle(request, CancellationToken);
 
         // Assert
-        PostFactory.ShouldReceiveOneGet(command);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldAddPostToRepository_WhenCommandIsValid()
-    {
-        // Arrange
-        var command = _commandBuilder.Create();
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        PostWriteRepository.ShouldReceiveOneAdd(_post, command);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldCallSaveChangesAsync_WhenCommandIsValid()
-    {
-        // Arrange
-        var command = _commandBuilder.Create();
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await UnitOfWork.ShouldReceiveOneSaveChangesAsync(CancellationToken);
+        await PostService.ShouldReceiveOneAddAsync(request, CancellationToken);
     }
 }

@@ -18,17 +18,6 @@ using NSubstitute;
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 public static class PostMatcher
 {
-    public static GetAllPostsRequest IsPostQueryParameters(GetAllPostsQuery query)
-    {
-        return Matcher.Is<GetAllPostsRequest>(p => p.Filter.UserId == query.Filter.UserId &&
-                                                    p.Filter.UserName == query.Filter.UserName &&
-                                                    p.Filter.Title == query.Filter.Title &&
-                                                    p.Pagination.Page == query.Pagination.Page &&
-                                                    p.Pagination.PageSize == query.Pagination.PageSize &&
-                                                    p.Sorting.Order == query.Sorting.Order &&
-                                                    p.Sorting.Property == query.Sorting.Property);
-    }
-
     public static Post IsPost(Post post, AddPostCommand command)
     {
         return Matcher.Is<Post>(p => p.Id == post.Id &&
@@ -82,17 +71,53 @@ public static class PostMatcher
                                                p.CurrentUserId == request.CurrentUserId);
     }
 
-    public static UpdatePostCommand IsUpdatePostCommand(UpdatePostApiRequest command)
+    public static UpdatePostCommand IsUpdatePostCommand(UpdatePostApiRequest request)
     {
-        return Matcher.Is<UpdatePostCommand>(p => p.Id == command.Id &&
-                                                  p.Title == command.Body.Title &&
-                                                  p.Content == command.Body.Content &&
-                                                  p.CurrentUserId == command.CurrentUserId);
+        return Matcher.Is<UpdatePostCommand>(p => p.Id == request.Id &&
+                                                  p.Title == request.Body.Title &&
+                                                  p.Content == request.Body.Content &&
+                                                  p.CurrentUserId == request.CurrentUserId);
     }
 
     public static DeletePostCommand IsDeletePostCommand(DeletePostApiRequest request)
     {
         return Matcher.Is<DeletePostCommand>(p => p.Id == request.Id &&
+                                                  p.CurrentUserId == request.CurrentUserId);
+    }
+    public static GetAllPostsRequest IsGetAllPostsRequest(GetAllPostsQuery request)
+    {
+        return Matcher.Is<GetAllPostsRequest>(p => p.Filter.UserId == request.Filter.UserId &&
+                                                   p.Filter.UserName == request.Filter.UserName &&
+                                                   p.Filter.Title == request.Filter.Title &&
+                                                   p.Pagination.Page == request.Pagination.Page &&
+                                                   p.Pagination.PageSize == request.Pagination.PageSize &&
+                                                   p.Sorting.Order == request.Sorting.Order &&
+                                                   p.Sorting.Property == request.Sorting.Property);
+    }
+
+    public static GetPostByIdRequest IsGetPostByIdRequest(GetPostByIdQuery request)
+    {
+        return Matcher.Is<GetPostByIdRequest>(p => p.Id == request.Id);
+    }
+
+    public static AddPostRequest IsAddPostRequest(AddPostCommand request)
+    {
+        return Matcher.Is<AddPostRequest>(p => p.Title == request.Title &&
+                                               p.Content == request.Content &&
+                                               p.CurrentUserId == request.CurrentUserId);
+    }
+
+    public static UpdatePostRequest IsUpdatePostRequest(UpdatePostCommand request)
+    {
+        return Matcher.Is<UpdatePostRequest>(p => p.Id == request.Id &&
+                                                  p.Title == request.Title &&
+                                                  p.Content == request.Content &&
+                                                  p.CurrentUserId == request.CurrentUserId);
+    }
+
+    public static DeletePostRequest IsDeletePostRequest(DeletePostCommand request)
+    {
+        return Matcher.Is<DeletePostRequest>(p => p.Id == request.Id &&
                                                   p.CurrentUserId == request.CurrentUserId);
     }
 }

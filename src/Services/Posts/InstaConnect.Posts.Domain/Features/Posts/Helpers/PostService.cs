@@ -5,12 +5,16 @@ using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Events;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
+using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Exceptions;
 
-namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers;
+namespace InstaConnect.Posts.Domain.Features.Posts.Helpers;
 internal class PostService : IPostService
 {
     private readonly IPostFactory _postFactory;

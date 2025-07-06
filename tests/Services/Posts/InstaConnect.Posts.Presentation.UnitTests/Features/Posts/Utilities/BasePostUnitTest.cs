@@ -22,24 +22,8 @@ public abstract class BasePostUnitTest
 
     protected BasePostUnitTest()
     {
-        CancellationToken = new();
-        ApplicationSender = Mocker.Mock<IApplicationSender>();
-        ApplicationMapper = new ApplicationMapper(
-            new Mapper(
-                new MapperConfiguration(cfg => cfg.AddMaps(PostPresentationReference.Assembly))));
-    }
-
-    protected static Post SetupPost(User user)
-    {
-        var post = new PostBuilder(user).Create();
-
-        return post;
-    }
-
-    protected static User SetupUser()
-    {
-        var user = new UserBuilder().Create();
-
-        return user;
+        CancellationToken = MockFactory.CreateCancellationToken();
+        ApplicationSender = MockFactory.CreateApplicationSender();
+        ApplicationMapper = MockFactory.CreateApplicationMapper(PostPresentationReference.Assembly);
     }
 }

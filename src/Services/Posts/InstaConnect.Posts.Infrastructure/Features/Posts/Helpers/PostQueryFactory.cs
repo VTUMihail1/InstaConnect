@@ -38,9 +38,7 @@ public class PostQueryFactory : IPostQueryFactory
 
         var specification = new GetAllQuerySpecification(
             PostQuerySql.GetAll,
-            (post, user) => new Post(post.Id, post.Title, post.Content, user, post.CreatedAt, post.UpdatedAt),
-            parameters,
-            nameof(Post.UserId));
+            parameters);
 
         return specification;
     }
@@ -54,8 +52,7 @@ public class PostQueryFactory : IPostQueryFactory
 
         var specification = new GetAllTotalCountQuerySpecification(
             PostQuerySql.GetAllTotalCount,
-            parameters,
-            nameof(Post.UserId));
+            parameters);
 
         return specification;
     }
@@ -66,9 +63,7 @@ public class PostQueryFactory : IPostQueryFactory
 
         var result = new GetPostByIdSpecification(
             PostQuerySql.GetAll,
-            (post, user) => new Post(post.Id, post.Title, post.Content, user, post.CreatedAt, post.UpdatedAt),
-            parameters,
-            nameof(Post.UserId));
+            parameters);
 
         return result;
     }

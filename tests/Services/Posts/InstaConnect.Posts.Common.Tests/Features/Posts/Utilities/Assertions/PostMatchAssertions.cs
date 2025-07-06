@@ -14,19 +14,19 @@ namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 
 public static class PostMatchAssertions
 {
-    public static void ShouldSatisfy(this Post post, AddPostCommand command)
+    public static void ShouldSatisfy(this Post post, AddPostCommand request)
     {
-        post.ShouldSatisfy(p => p.UserId == command.CurrentUserId &&
-                                p.Title == command.Title &&
-                                p.Content == command.Content);
+        post.ShouldSatisfy(p => p.UserId == request.CurrentUserId &&
+                                p.Title == request.Title &&
+                                p.Content == request.Content);
     }
 
-    public static void ShouldSatisfy(this Post post, UpdatePostCommand command)
+    public static void ShouldSatisfy(this Post post, UpdatePostCommand request)
     {
-        post.ShouldSatisfy(p => p.Id == command.Id &&
-                                p.UserId == command.CurrentUserId &&
-                                p.Title == command.Title &&
-                                p.Content == command.Content);
+        post.ShouldSatisfy(p => p.Id == request.Id &&
+                                p.UserId == request.CurrentUserId &&
+                                p.Title == request.Title &&
+                                p.Content == request.Content);
     }
 
     public static void ShouldSatisfy(this Post post, AddPostApiRequest request)

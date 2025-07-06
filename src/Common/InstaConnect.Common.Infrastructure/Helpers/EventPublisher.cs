@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Common.Infrastructure.Helpers;
+﻿using InstaConnect.Common.Domain.Abstractions;
+
+namespace InstaConnect.Common.Infrastructure.Helpers;
 
 public class EventPublisher : IEventPublisher
 {

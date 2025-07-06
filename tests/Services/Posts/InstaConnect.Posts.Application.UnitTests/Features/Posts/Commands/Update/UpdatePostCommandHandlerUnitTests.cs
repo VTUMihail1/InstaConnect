@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
@@ -14,98 +15,41 @@ public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
 
     public UpdatePostCommandHandlerUnitTests()
     {
-        _user = SetupUser();
-        _post = SetupPost(_user);
-        var updatePost = new PostBuilder(_post)
-            .WithTitle(PostDataFaker.GetTitle())
-            .WithContent(PostDataFaker.GetContent())
-            .Create();
-        _commandBuilder = new(updatePost);
+        _user = new UserBuilder().Create();
+        _post = new PostBuilder(_user).Create();
+        _commandBuilder = new(_post);
         _commandHandler = new(
-            UnitOfWork,
             PostService,
-            ApplicationMapper,
-            PostWriteRepository);
+            ApplicationMapper);
 
-        PostService.SetupUpdate(_post, updatePost);
+        var request = _commandBuilder.Create();
+
+        PostService.SetupUpdateRequest(request, _post, CancellationToken);
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowPostNotFoundException_WhenPostIdIsInvalid()
+    public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Arrange
-        var command = _commandBuilder.WithInvalidId().Create();
+        var request = _commandBuilder.Create();
 
         // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+        var response = await _commandHandler.Handle(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync();
+        response.ShouldSatisfy(_post);
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowAccountForbiddenException_WhenUserIdIsInvalid()
+    public async Task Handle_ShouldCallPostServiceUpdateAsync_WhenRequestIsValid()
     {
         // Arrange
-        var user = SetupUser();
-        var command = _commandBuilder.WithUserId(user.Id).Create();
+        var request = _commandBuilder.Create();
 
         // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+        await _commandHandler.Handle(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowUserForbiddenExceptionAsync();
-    }
-
-    [Fact]
-    public async Task Handle_ShouldUpdateToPostService_WhenCommandIsValid()
-    {
-        // Arrange
-        var command = _commandBuilder.Create();
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        PostService.ShouldReceiveOneUpdate(_post, command);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldGetPostFromRepository_WhenCommandIsValid()
-    {
-        // Arrange
-        var command = _commandBuilder.Create();
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await PostWriteRepository.ShouldReceiveOneGetByIdAsync(_post, CancellationToken);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldDeletePostFromRepository_WhenCommandIsValid()
-    {
-        // Arrange
-        var command = _commandBuilder.Create();
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        PostWriteRepository.ShouldReceiveOneUpdate(_post, command);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldCallSaveChangesAsync_WhenCommandIsValid()
-    {
-        // Arrange
-        var command = _commandBuilder.Create();
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await UnitOfWork.ShouldReceiveOneSaveChangesAsync(CancellationToken);
+        await PostService.ShouldReceiveOneUpdateAsync(request, CancellationToken);
     }
 }

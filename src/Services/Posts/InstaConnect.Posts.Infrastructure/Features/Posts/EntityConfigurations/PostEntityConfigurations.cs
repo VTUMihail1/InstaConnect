@@ -1,45 +1,40 @@
 ﻿namespace InstaConnect.Posts.Infrastructure.Features.Posts.EntityConfigurations;
 
-public class PostConfigurations : IEntityTypeConfiguration<Post>
+public class PostEntityConfigurations : IEntityTypeConfiguration<Post>
 {
     public void Configure(EntityTypeBuilder<Post> builder)
     {
-        builder
-            .ToTable("post");
-
         builder
             .HasKey(p => p.Id);
 
         builder
             .Property(p => p.Id)
-            .HasColumnName("id")
+            .HasMaxLength(PostConfigurations.IdMaxLength)
             .IsRequired()
             .ValueGeneratedNever();
 
         builder
             .Property(p => p.Title)
-            .HasColumnName("title")
-            .HasMaxLength(255)
+            .HasMaxLength(PostConfigurations.TitleMaxLength)
             .IsRequired();
 
         builder
             .Property(p => p.Content)
-            .HasColumnName("content")
-            .HasMaxLength(5000)
+            .HasMaxLength(PostConfigurations.ContentMaxLength)
             .IsRequired();
 
         builder
             .Property(p => p.UserId)
-            .HasColumnName("user_id")
+            .HasMaxLength(UserConfigurations.IdMaxLength)
             .IsRequired();
 
         builder
             .Property(t => t.CreatedAt)
-            .HasColumnName("created_at");
+            .IsRequired();
 
         builder
             .Property(t => t.UpdatedAt)
-            .HasColumnName("updated_at");
+            .IsRequired();
 
         builder
             .HasMany(p => p.PostLikes)

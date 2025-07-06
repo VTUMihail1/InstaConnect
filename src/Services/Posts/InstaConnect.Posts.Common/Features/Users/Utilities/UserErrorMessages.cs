@@ -1,28 +1,78 @@
-﻿namespace InstaConnect.Posts.Common.Features.Users.Utilities;
+﻿using InstaConnect.Common.Extensions;
+
+namespace InstaConnect.Posts.Common.Features.Users.Utilities;
 
 public static class UserErrorMessages
 {
-    public static readonly string IdEmpty = $"Id must not be empty.";
-    public static readonly string IdTooShort = $"Id must be at least {UserConfigurations.IdMinLength} characters long.";
-    public static readonly string IdTooLong = $"Id must be at most {UserConfigurations.IdMaxLength} characters long.";
+    public static string GetIdTooShort(string id)
+    {
+        const string Format = "Id length is {0} and it must be at least {1} characters long";
+        return Format.FormatInvariant(id.GetLength(), UserConfigurations.IdMinLength);
+    }
 
-    public static readonly string EmailEmpty = $"Email must not be empty.";
-    public static readonly string EmailTooShort = $"Email must be at least {UserConfigurations.EmailMinLength} characters long.";
-    public static readonly string EmailTooLong = $"Email must be at most {UserConfigurations.EmailMaxLength} characters long.";
+    public static string GetIdTooLong(string id)
+    {
+        const string Format = "Id length is {0} and it must be at most {1} characters long";
+        return Format.FormatInvariant(id.GetLength(), UserConfigurations.IdMaxLength);
+    }
 
-    public static readonly string FirstNameEmpty = $"First name must not be empty.";
-    public static readonly string FirstNameTooShort = $"First name must be at least {UserConfigurations.FirstNameMinLength} characters long.";
-    public static readonly string FirstNameTooLong = $"First name must be at most {UserConfigurations.FirstNameMaxLength} characters long.";
+    public static string GetEmailTooShort(string email)
+    {
+        const string Format = "Email length is {0} and it must be at least {1} characters long";
+        return Format.FormatInvariant(email.GetLength(), UserConfigurations.EmailMinLength);
+    }
 
-    public static readonly string LastNameEmpty = $"Last name must not be empty.";
-    public static readonly string LastNameTooShort = $"Last name must be at least {UserConfigurations.LastNameMinLength} characters long.";
-    public static readonly string LastNameTooLong = $"Last name must be at most {UserConfigurations.LastNameMaxLength} characters long.";
+    public static string GetEmailTooLong(string email)
+    {
+        const string Format = "Email length is {0} and it must be at most {1} characters long";
+        return Format.FormatInvariant(email.GetLength(), UserConfigurations.EmailMaxLength);
+    }
 
-    public static readonly string NameEmpty = $"Name must not be empty.";
-    public static readonly string NameTooShort = $"Name must be at least {UserConfigurations.NameMinLength} characters long.";
-    public static readonly string NameTooLong = $"Name must be at most {UserConfigurations.NameMaxLength} characters long.";
+    public static string GetFirstNameTooShort(string firstName)
+    {
+        const string Format = "First name length is {0} and it must be at least {1} characters long";
+        return Format.FormatInvariant(firstName.GetLength(), UserConfigurations.FirstNameMinLength);
+    }
 
-    public static readonly string ProfileImageEmpty = $"Profile image URL must not be empty.";
-    public static readonly string ProfileImageTooShort = $"Profile image URL must be at least {UserConfigurations.ProfileImageMinLength} characters long.";
-    public static readonly string ProfileImageTooLong = $"Profile image URL must be at most {UserConfigurations.ProfileImageMaxLength} characters long.";
+    public static string GetFirstNameTooLong(string firstName)
+    {
+        const string Format = "First name length is {0} and it must be at most {1} characters long";
+        return Format.FormatInvariant(firstName.GetLength(), UserConfigurations.FirstNameMaxLength);
+    }
+
+    public static string GetLastNameTooShort(string lastName)
+    {
+        const string Format = "Last name length is {0} and it must be at least {1} characters long";
+        return Format.FormatInvariant(lastName.GetLength(), UserConfigurations.LastNameMinLength);
+    }
+
+    public static string GetLastNameTooLong(string lastName)
+    {
+        const string Format = "Last name length is {0} and it must be at most {1} characters long";
+        return Format.FormatInvariant(lastName.GetLength(), UserConfigurations.LastNameMaxLength);
+    }
+
+    public static string GetNameTooShort(string name)
+    {
+        const string Format = "Name length is {0} and it must be at least {1} characters long";
+        return Format.FormatInvariant(name.GetLength(), UserConfigurations.NameMinLength);
+    }
+
+    public static string GetNameTooLong(string name)
+    {
+        const string Format = "Name length is {0} and it must be at most {1} characters long";
+        return Format.FormatInvariant(name.GetLength(), UserConfigurations.NameMaxLength);
+    }
+
+    public static string GetProfileImageTooShort(string imageUrl)
+    {
+        const string Format = "Profile image URL length is {0} and it must be at least {1} characters long";
+        return Format.FormatInvariant(imageUrl.GetLength(), UserConfigurations.ProfileImageMinLength);
+    }
+
+    public static string GetProfileImageTooLong(string imageUrl)
+    {
+        const string Format = "Profile image URL length is {0} and it must be at most {1} characters long";
+        return Format.FormatInvariant(imageUrl.GetLength(), UserConfigurations.ProfileImageMaxLength);
+    }
 }

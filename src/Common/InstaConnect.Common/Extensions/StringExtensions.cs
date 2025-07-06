@@ -9,4 +9,11 @@ public static class StringExtensions
 
         return result;
     }
+
+    public static int GetLength(this string? str)
+    {
+        var length = str?.Length ?? default;
+
+        return length;
+    }
 }

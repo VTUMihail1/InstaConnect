@@ -5,7 +5,6 @@
 	<PackageReference Include="AspNetCore.HealthChecks.Redis" />
 	<PackageReference Include="CloudinaryDotNet" />
 	<PackageReference Include="Dapper" />
-	<PackageReference Include="EntityFramework" />
 	<PackageReference Include="MassTransit" />
 	<PackageReference Include="MassTransit.EntityFrameworkCore" />
 	<PackageReference Include="MassTransit.RabbitMQ" />
@@ -20,10 +19,6 @@
 	<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
 	<PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" />
 	<PackageReference Include="Newtonsoft.Json" />
-	<PackageReference Include="Testcontainers.MsSql" />
-	<PackageReference Include="Testcontainers.RabbitMq" />
-	<PackageReference Include="Testcontainers.Redis" />
-	<PackageReference Include="WebMotions.Fake.Authentication.JwtBearer" />
   </ItemGroup>
 	
   <ItemGroup>

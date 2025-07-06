@@ -20,7 +20,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
 
     protected override async Task OnInitializeAsync()
     {
-        _user = await SetupUserAsync(CancellationToken);
+        _user = await ServiceScope.AddUserAsync(CancellationToken);
         _post = new PostBuilder(_user).Create();
         _commandBuilder = new(_post);
     }
@@ -35,7 +35,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Theory]
@@ -50,7 +50,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Fact]
@@ -63,7 +63,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Theory]
@@ -78,7 +78,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Fact]
@@ -91,7 +91,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Theory]
@@ -106,7 +106,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Fact]
@@ -119,46 +119,46 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowUserNotFoundExceptionAsync();
+        await action.ShouldThrowUserNotFoundExceptionAsync(command.CurrentUserId);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldReturnResponse_WhenCommandIsValid()
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Arrange
         var command = _commandBuilder.Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(command, CancellationToken);
-        var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
+        var post = await ServiceScope.GetPostAsync(response.Id, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(post);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldAddPost_WhenCommandIsValid()
+    public async Task SendAsync_ShouldAddPost_WhenRequestIsValid()
     {
         // Arrange
         var command = _commandBuilder.Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(command, CancellationToken);
-        var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
+        var post = await ServiceScope.GetPostAsync(response.Id, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(command);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldAddPost_WhenUserIdIsDifferentCase()
+    public async Task SendAsync_ShouldAddPost_WhenRequestIsValidUserIdIsDifferentCase()
     {
         // Arrange
         var command = _commandBuilder.WithDifferentCaseUserId(_user.Id).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(command, CancellationToken);
-        var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
+        var post = await ServiceScope.GetPostAsync(response.Id, CancellationToken);
 
         // Assert
         post.ShouldSatisfy(command);

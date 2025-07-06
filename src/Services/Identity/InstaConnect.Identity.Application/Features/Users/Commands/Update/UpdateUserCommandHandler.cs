@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.Update;
+﻿using InstaConnect.Common.Domain.Abstractions;
+
+namespace InstaConnect.Identity.Application.Features.Users.Commands.Update;
 
 public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, UserCommandViewModel>
 {

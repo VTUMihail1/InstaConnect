@@ -5,19 +5,13 @@ using Xunit.Sdk;
 namespace InstaConnect.Common.Tests.Utilities.DataAttributes;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public abstract class OutOfBoundsMaxIntDataAttribute : DataAttribute
+public abstract class OutOfBoundsIntDataAttribute : DataAttribute
 {
-    public int Max => _max;
-
-    private readonly int _max;
-
-    protected OutOfBoundsMaxIntDataAttribute(int max)
-    {
-        _max = max;
-    }
+    public abstract int Value { get; }
+    public abstract string Message { get; }
 
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
-        yield return new object[] { _max + 1 };
+        yield return new object[] { Value, Message };
     }
 }

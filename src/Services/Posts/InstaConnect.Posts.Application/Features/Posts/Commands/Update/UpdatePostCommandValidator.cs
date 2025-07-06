@@ -3,36 +3,28 @@ public class UpdatePostCommandValidator : AbstractValidator<UpdatePostCommand>
 {
     public UpdatePostCommandValidator()
     {
-        RuleFor(c => c.Id)
-            .NotEmpty()
-            .WithMessage(PostErrorMessages.IdEmpty)
+        RuleFor(r => r.Id)
             .MinimumLength(PostConfigurations.IdMinLength)
-            .WithMessage(PostErrorMessages.IdTooShort)
+            .WithMessage(r => PostErrorMessages.GetIdTooShort(r.Id))
             .MaximumLength(PostConfigurations.IdMaxLength)
-            .WithMessage(PostErrorMessages.IdTooLong);
+            .WithMessage(r => PostErrorMessages.GetIdTooLong(r.Id));
 
-        RuleFor(c => c.CurrentUserId)
-            .NotEmpty()
-            .WithMessage(UserErrorMessages.IdEmpty)
+        RuleFor(r => r.CurrentUserId)
             .MinimumLength(UserConfigurations.IdMinLength)
-            .WithMessage(UserErrorMessages.IdTooShort)
+            .WithMessage(r => UserErrorMessages.GetIdTooShort(r.CurrentUserId))
             .MaximumLength(UserConfigurations.IdMaxLength)
-            .WithMessage(UserErrorMessages.IdTooLong);
+            .WithMessage(r => UserErrorMessages.GetIdTooLong(r.CurrentUserId));
 
-        RuleFor(c => c.Title)
-            .NotEmpty()
-            .WithMessage(PostErrorMessages.TitleEmpty)
+        RuleFor(r => r.Title)
             .MinimumLength(PostConfigurations.TitleMinLength)
-            .WithMessage(PostErrorMessages.TitleTooShort)
+            .WithMessage(r => PostErrorMessages.GetTitleTooShort(r.Title))
             .MaximumLength(PostConfigurations.TitleMaxLength)
-            .WithMessage(PostErrorMessages.TitleTooLong);
+            .WithMessage(r => PostErrorMessages.GetTitleTooLong(r.Title));
 
         RuleFor(c => c.Content)
-            .NotEmpty()
-            .WithMessage(PostErrorMessages.ContentEmpty)
             .MinimumLength(PostConfigurations.ContentMinLength)
-            .WithMessage(PostErrorMessages.ContentTooShort)
+            .WithMessage(r => PostErrorMessages.GetContentTooShort(r.Content))
             .MaximumLength(PostConfigurations.ContentMaxLength)
-            .WithMessage(PostErrorMessages.ContentTooLong);
+            .WithMessage(r => PostErrorMessages.GetContentTooLong(r.Content));
     }
 }

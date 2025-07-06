@@ -32,7 +32,7 @@ public static class ServiceCollectionExtentions
             .Scan(selector => selector
             .FromAssemblies(assembly)
             .AddClasses(false)
-            .UsingRegistrationStrategy(RegistrationStrategy.Throw)
+            .UsingRegistrationStrategy(RegistrationStrategy.Skip)
             .AsMatchingInterface()
             .WithScopedLifetime());
 

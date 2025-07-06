@@ -17,10 +17,10 @@ public class GetPostByIdQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnError_WhenIdIsNull()
     {
         // Arrange
-        var query = _queryBuilder.WithoutId().Create();
+        var request = _queryBuilder.WithoutId().Create();
 
         // Act
-        var result = _queryValidator.TestValidate(query);
+        var result = _queryValidator.TestValidate(request);
 
         // Assert
         result.ShouldHaveValidationErrorForId();
@@ -32,23 +32,23 @@ public class GetPostByIdQueryValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnError_WhenIdLengthIsInvalid(string id)
     {
         // Arrange
-        var query = _queryBuilder.WithId(id).Create();
+        var request = _queryBuilder.WithId(id).Create();
 
         // Act
-        var result = _queryValidator.TestValidate(query);
+        var result = _queryValidator.TestValidate(request);
 
         // Assert
         result.ShouldHaveValidationErrorForId();
     }
 
     [Fact]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCommandIsValid()
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
     {
         // Arrange
-        var query = _queryBuilder.Create();
+        var request = _queryBuilder.Create();
 
         // Act
-        var result = _queryValidator.TestValidate(query);
+        var result = _queryValidator.TestValidate(request);
 
         // Assert
         result.ShouldNotHaveAnyValidationErrorProperties();

@@ -2,6 +2,7 @@
 using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Controllers.v1;
@@ -16,8 +17,8 @@ public class DeletePostControllerUnitTests : BasePostUnitTest
 
     public DeletePostControllerUnitTests()
     {
-        _user = SetupUser();
-        _post = SetupPost(_user);
+        _user = new UserBuilder().Create();
+        _post = new PostBuilder(_user).Create();
         _requestBuilder = new(_post);
         _postController = new(
             ApplicationMapper,
@@ -38,7 +39,7 @@ public class DeletePostControllerUnitTests : BasePostUnitTest
     }
 
     [Fact]
-    public async Task DeleteAsync_ShouldCallTheSender_WhenRequestIsValid()
+    public async Task DeleteAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
     {
         // Arrange
         var request = _requestBuilder.Create();

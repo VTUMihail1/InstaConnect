@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Delete;
@@ -12,77 +13,24 @@ public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
 
     public DeletePostCommandHandlerUnitTests()
     {
-        _user = SetupUser();
-        _post = SetupPost(_user);
+        _user = new UserBuilder().Create();
+        _post = new PostBuilder(_user).Create();
         _commandBuilder = new(_post);
         _commandHandler = new(
-            UnitOfWork,
-            PostWriteRepository);
+            PostService,
+            ApplicationMapper);
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowPostNotFoundException_WhenPostIdIsInvalid()
+    public async Task Handle_ShouldCallPostServiceDeleteAsync_WhenRequestIsValid()
     {
         // Arrange
-        var command = _commandBuilder.WithInvalidId().Create();
+        var request = _commandBuilder.Create();
 
         // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+        await _commandHandler.Handle(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync();
-    }
-
-    [Fact]
-    public async Task Handle_ShouldThrowAccountForbiddenException_WhenUserIdIsInvalid()
-    {
-        // Arrange
-        var user = SetupUser();
-        var command = _commandBuilder.WithUserId(user.Id).Create();
-
-        // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await action.ShouldThrowUserForbiddenExceptionAsync();
-    }
-
-    [Fact]
-    public async Task Handle_ShouldGetPostFromRepository_WhenCommandIsValid()
-    {
-        // Arrange
-        var command = _commandBuilder.Create();
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await PostWriteRepository.ShouldReceiveOneGetByIdAsync(_post, CancellationToken);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldDeletePostFromRepository_WhenCommandIsValid()
-    {
-        // Arrange
-        var command = _commandBuilder.Create();
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        PostWriteRepository.ShouldReceiveOneDelete(_post);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldCallSaveChangesAsync_WhenCommandIsValid()
-    {
-        // Arrange
-        var command = _commandBuilder.Create();
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await UnitOfWork.ShouldReceiveOneSaveChangesAsync(CancellationToken);
+        await PostService.ShouldReceiveOneDeleteAsync(request, CancellationToken);
     }
 }

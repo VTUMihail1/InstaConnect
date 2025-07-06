@@ -51,29 +51,29 @@ public static class PostDataFaker
 
     public static SortOrder GetSortOrder()
     {
-        const SortOrder sortOrder = SortOrder.ASC;
+        const SortOrder SortOrder = SortOrder.ASC;
 
-        return sortOrder;
+        return SortOrder;
     }
 
     public static SortOrder GetEmptySortOrder()
     {
-        const SortOrder sortOrder = SortOrder.None;
+        const SortOrder SortOrder = SortOrder.None;
 
-        return sortOrder;
+        return SortOrder;
     }
 
     public static PostSortProperty GetSortProperty()
     {
-        const PostSortProperty sortPropertyName = PostSortProperty.ByCreatedAt;
+        const PostSortProperty SortProperty = PostSortProperty.ByCreatedAt;
 
-        return sortPropertyName;
+        return SortProperty;
     }
 
     public static PostSortProperty GetEmptySortProperty()
     {
-        const PostSortProperty sortPropertyName = PostSortProperty.None;
+        const PostSortProperty SortProperty = PostSortProperty.None;
 
-        return sortPropertyName;
+        return SortProperty;
     }
 }

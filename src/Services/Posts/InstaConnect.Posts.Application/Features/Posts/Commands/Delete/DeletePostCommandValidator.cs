@@ -3,20 +3,16 @@ public class DeletePostCommandValidator : AbstractValidator<DeletePostCommand>
 {
     public DeletePostCommandValidator()
     {
-        RuleFor(c => c.Id)
-            .NotEmpty()
-            .WithMessage(PostErrorMessages.IdEmpty)
+        RuleFor(r => r.Id)
             .MinimumLength(PostConfigurations.IdMinLength)
-            .WithMessage(PostErrorMessages.IdTooShort)
+            .WithMessage(r => PostErrorMessages.GetIdTooShort(r.Id))
             .MaximumLength(PostConfigurations.IdMaxLength)
-            .WithMessage(PostErrorMessages.IdTooLong);
+            .WithMessage(r => PostErrorMessages.GetIdTooLong(r.Id));
 
-        RuleFor(c => c.CurrentUserId)
-            .NotEmpty()
-            .WithMessage(UserErrorMessages.IdEmpty)
+        RuleFor(r => r.CurrentUserId)
             .MinimumLength(UserConfigurations.IdMinLength)
-            .WithMessage(UserErrorMessages.IdTooShort)
+            .WithMessage(r => UserErrorMessages.GetIdTooShort(r.CurrentUserId))
             .MaximumLength(UserConfigurations.IdMaxLength)
-            .WithMessage(UserErrorMessages.IdTooLong);
+            .WithMessage(r => UserErrorMessages.GetIdTooLong(r.CurrentUserId));
     }
 }

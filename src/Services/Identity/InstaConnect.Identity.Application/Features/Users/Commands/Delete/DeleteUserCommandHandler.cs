@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.Delete;
+﻿using InstaConnect.Common.Domain.Abstractions;
+
+namespace InstaConnect.Identity.Application.Features.Users.Commands.Delete;
 
 public class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand>
 {

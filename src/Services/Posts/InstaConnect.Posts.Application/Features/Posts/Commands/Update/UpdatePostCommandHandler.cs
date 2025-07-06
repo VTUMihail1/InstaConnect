@@ -1,6 +1,4 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-
-namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 
 public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, UpdatePostCommandResponse>
 {

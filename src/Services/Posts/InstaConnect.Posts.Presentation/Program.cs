@@ -6,6 +6,7 @@ using InstaConnect.Posts.Presentation.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddDomain()
     .AddApplication()
     .AddInfrastructure(builder.Configuration)
     .AddPresentation(builder.Configuration);

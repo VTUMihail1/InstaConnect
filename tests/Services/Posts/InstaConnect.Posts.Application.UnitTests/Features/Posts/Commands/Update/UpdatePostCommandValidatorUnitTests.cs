@@ -20,10 +20,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnError_WhenIdIsNull()
     {
         // Arrange
-        var command = _commandBuilder.WithoutId().Create();
+        var request = _commandBuilder.WithoutId().Create();
 
         // Act
-        var result = _commandValidator.TestValidate(command);
+        var result = _commandValidator.TestValidate(request);
 
         // Assert
         result.ShouldHaveValidationErrorForId();
@@ -35,10 +35,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnError_WhenIdLengthIsInvalid(string id)
     {
         // Arrange
-        var command = _commandBuilder.WithId(id).Create();
+        var request = _commandBuilder.WithId(id).Create();
 
         // Act
-        var result = _commandValidator.TestValidate(command);
+        var result = _commandValidator.TestValidate(request);
 
         // Assert
         result.ShouldHaveValidationErrorForId();
@@ -48,10 +48,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnError_WhenUserIdIsNull()
     {
         // Arrange
-        var command = _commandBuilder.WithoutUserId().Create();
+        var request = _commandBuilder.WithoutUserId().Create();
 
         // Act
-        var result = _commandValidator.TestValidate(command);
+        var result = _commandValidator.TestValidate(request);
 
         // Assert
         result.ShouldHaveValidationErrorForUserId();
@@ -63,10 +63,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnError_WhenUserIdLengthIsInvalid(string userId)
     {
         // Arrange
-        var command = _commandBuilder.WithUserId(userId).Create();
+        var request = _commandBuilder.WithUserId(userId).Create();
 
         // Act
-        var result = _commandValidator.TestValidate(command);
+        var result = _commandValidator.TestValidate(request);
 
         // Assert
         result.ShouldHaveValidationErrorForUserId();
@@ -76,10 +76,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnError_WhenTitleIsNull()
     {
         // Arrange
-        var command = _commandBuilder.WithoutTitle().Create();
+        var request = _commandBuilder.WithoutTitle().Create();
 
         // Act
-        var result = _commandValidator.TestValidate(command);
+        var result = _commandValidator.TestValidate(request);
 
         // Assert
         result.ShouldHaveValidationErrorForTitle();
@@ -91,10 +91,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnError_WhenTitleLengthIsInvalid(string title)
     {
         // Arrange
-        var command = _commandBuilder.WithTitle(title).Create();
+        var request = _commandBuilder.WithTitle(title).Create();
 
         // Act
-        var result = _commandValidator.TestValidate(command);
+        var result = _commandValidator.TestValidate(request);
 
         // Assert
         result.ShouldHaveValidationErrorForTitle();
@@ -104,10 +104,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnError_WhenContentIsNull()
     {
         // Arrange
-        var command = _commandBuilder.WithoutContent().Create();
+        var request = _commandBuilder.WithoutContent().Create();
 
         // Act
-        var result = _commandValidator.TestValidate(command);
+        var result = _commandValidator.TestValidate(request);
 
         // Assert
         result.ShouldHaveValidationErrorForContent();
@@ -119,23 +119,23 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     public void TestValidate_ShouldHaveAnError_WhenContentLengthIsInvalid(string content)
     {
         // Arrange
-        var command = _commandBuilder.WithContent(content).Create();
+        var request = _commandBuilder.WithContent(content).Create();
 
         // Act
-        var result = _commandValidator.TestValidate(command);
+        var result = _commandValidator.TestValidate(request);
 
         // Assert
         result.ShouldHaveValidationErrorForContent();
     }
 
     [Fact]
-    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenCommandIsValid()
+    public void TestValidate_ShouldNotHaveAnyValidationsErrors_WhenRequestIsValid()
     {
         // Arrange
-        var command = _commandBuilder.Create();
+        var request = _commandBuilder.Create();
 
         // Act
-        var result = _commandValidator.TestValidate(command);
+        var result = _commandValidator.TestValidate(request);
 
         // Assert
         result.ShouldNotHaveAnyValidationErrorProperties();

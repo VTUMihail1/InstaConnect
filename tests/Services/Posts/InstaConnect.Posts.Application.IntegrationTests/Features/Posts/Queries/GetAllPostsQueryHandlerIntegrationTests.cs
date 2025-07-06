@@ -36,7 +36,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Theory]
@@ -50,7 +50,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Theory]
@@ -64,7 +64,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Fact]
@@ -77,7 +77,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Fact]
@@ -90,7 +90,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Theory]
@@ -105,7 +105,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Theory]
@@ -120,7 +120,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
     [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenQueryIdIsNull()

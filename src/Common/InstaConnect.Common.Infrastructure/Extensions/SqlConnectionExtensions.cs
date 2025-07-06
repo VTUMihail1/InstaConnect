@@ -2,34 +2,32 @@
 
 using Microsoft.Data.SqlClient;
 
-namespace InstaConnect.Shared.Infrastructure.Extensions;
+namespace InstaConnect.Common.Infrastructure.Extensions;
 
 public static class SqlConnectionExtensions
 {
-    public static async Task<ICollection<TResult>> ExecuteQueryAsync<TFirst, TSecond, TResult>(
+    public static async Task<IEnumerable<TResult>> ExecuteQueryAsync<TResult>(
         this SqlConnection sqlConnection,
         string sql,
-        Func<TFirst, TSecond, TResult> map,
         object parameters,
-        string splitOn,
         CancellationToken cancellationToken)
     {
-        var results = await sqlConnection.QueryAsync(sql, map, parameters, splitOn: splitOn);
+        var command = new CommandDefinition(sql, parameters, cancellationToken: cancellationToken);
+        var results = await sqlConnection.QueryAsync<TResult>(command);
 
-        return results.ToList();
+        return results;
     }
 
-    public static async Task<TResult?> ExecuteQueryFirstAsync<TFirst, TSecond, TResult>(
+    public static async Task<TResult?> ExecuteQueryFirstAsync<TResult>(
         this SqlConnection sqlConnection,
         string sql,
-        Func<TFirst, TSecond, TResult> map,
         object parameters,
-        string splitOn,
         CancellationToken cancellationToken)
     {
-        var results = await sqlConnection.QueryAsync(sql, map, parameters, splitOn: splitOn);
+        var command = new CommandDefinition(sql, parameters, cancellationToken: cancellationToken);
+        var result = await sqlConnection.QueryFirstOrDefaultAsync<TResult>(command);
 
-        return results.FirstOrDefault();
+        return result;
     }
 
     public static async Task<TResult> ExecuteFunctionAsync<TResult>(
@@ -38,7 +36,8 @@ public static class SqlConnectionExtensions
         object parameters,
         CancellationToken cancellationToken)
     {
-        var results = await sqlConnection.ExecuteScalarAsync<TResult>(sql, parameters);
+        var command = new CommandDefinition(sql, parameters, cancellationToken: cancellationToken);
+        var results = await sqlConnection.ExecuteScalarAsync<TResult>(command);
 
         return results!;
     }

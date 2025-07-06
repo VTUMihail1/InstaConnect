@@ -20,6 +20,7 @@ public static class ServiceCollectionExtensions
             .AddPostCommentLikeServices();
 
         serviceCollection
+            .AddMapper(PostInfrastructureReference.Assembly)
             .AddServicesWithMatchingInterfaces(PostInfrastructureReference.Assembly)
             .AddDatabaseContext<PostsContext>(configuration)
             .AddUnitOfWork<PostsContext>()

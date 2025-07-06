@@ -4,6 +4,7 @@ using InstaConnect.Common.Abstractions;
 using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Application.Helpers;
 using InstaConnect.Common.Application.Models;
+using InstaConnect.Common.Domain.Abstractions;
 using InstaConnect.Common.Domain.Models.Pagination;
 using InstaConnect.Common.Helpers;
 using InstaConnect.Identity.Application.Extensions;

@@ -38,7 +38,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Theory]
@@ -53,7 +53,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Fact]
@@ -66,7 +66,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Theory]
@@ -81,7 +81,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Fact]
@@ -94,7 +94,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync();
     }
 
     [Fact]

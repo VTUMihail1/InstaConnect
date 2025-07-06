@@ -4,7 +4,7 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
-public class Post : IEntity, IAuditableInfo
+public class Post : IEntity
 {
     private Post()
     {

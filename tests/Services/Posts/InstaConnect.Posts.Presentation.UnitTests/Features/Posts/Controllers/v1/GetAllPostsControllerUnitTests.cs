@@ -3,6 +3,7 @@ using InstaConnect.Posts.Application.Features.Posts.Models;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Controllers.v1;
@@ -16,33 +17,16 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
 
     public GetAllPostsControllerUnitTests()
     {
-        _user = SetupUser();
-        _post = SetupPost(_user);
+        _user = new UserBuilder().Create();
+        _post = new PostBuilder(_user).Create();
         _requestBuilder = new(_post, _user);
         _postController = new(
             ApplicationMapper,
             ApplicationSender);
 
         var request = _requestBuilder.Create();
-        var postQueryResponse = new PostQueryResponse(
-            _post.Id,
-            _post.Title,
-            _post.Content,
-            new(
-                _user.Id,
-                _user.UserName,
-                _user.ProfileImage));
-        var postQueryResponses = new List<PostQueryResponse>() { postQueryResponse };
 
-        var response = new GetAllPostsQueryResponse(
-            postQueryResponses,
-            request.Pagination.Page,
-            request.Pagination.PageSize,
-            postQueryResponses.Count,
-            false,
-            false);
-
-        ApplicationSender.SetupGetAllQuery(request, response, CancellationToken);
+        ApplicationSender.SetupGetAllQuery(request, _post, _user, CancellationToken);
     }
 
     [Fact]
@@ -72,7 +56,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldCallTheSender_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
     {
         // Arrange
         var request = _requestBuilder.Create();

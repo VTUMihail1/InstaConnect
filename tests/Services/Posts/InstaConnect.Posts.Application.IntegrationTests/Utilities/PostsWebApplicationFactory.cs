@@ -1,4 +1,5 @@
-﻿using InstaConnect.Posts.Infrastructure;
+﻿using InstaConnect.Common.Tests.Extensions;
+using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
 using MassTransit;
@@ -28,9 +29,10 @@ public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
     {
         builder.ConfigureTestServices(serviceCollection =>
         {
-            serviceCollection.AddTestDbContext<PostsContext>(opt => opt.UseSqlServer(_msSqlContainer.GetConnectionString()));
-
-            serviceCollection.AddMassTransitTestHarness();
+            serviceCollection
+                 .AddTestDbContext<PostsContext>(opt => opt.UseSqlServer(_msSqlContainer.GetConnectionString()))
+                 .AddEventHarness()
+                 .AddTestJwtAuth();
         });
     }
 

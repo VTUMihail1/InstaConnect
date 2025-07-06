@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Identity.Application.Features.Users.Commands.Add;
+﻿using InstaConnect.Common.Domain.Abstractions;
+
+namespace InstaConnect.Identity.Application.Features.Users.Commands.Add;
 
 public class AddUserCommandHandler : ICommandHandler<AddUserCommand, UserCommandViewModel>
 {

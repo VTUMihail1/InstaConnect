@@ -2,4 +2,6 @@
 
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Models;
 
-public record GetAllTotalCountQuerySpecification(string Sql, GetAllTotalCountQueryParameters Parameters);
+public record GetAllTotalCountQuerySpecification(
+    string Sql,
+    GetAllTotalCountQueryParameters Parameters);

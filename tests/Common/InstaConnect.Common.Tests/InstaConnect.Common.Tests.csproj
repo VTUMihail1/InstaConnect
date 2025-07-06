@@ -6,6 +6,10 @@
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="NSubstitute" />
     <PackageReference Include="xunit.extensibility.core" />
+    <PackageReference Include="Testcontainers.MsSql" />
+    <PackageReference Include="Testcontainers.RabbitMq" />
+    <PackageReference Include="Testcontainers.Redis" />
+    <PackageReference Include="WebMotions.Fake.Authentication.JwtBearer" />
   </ItemGroup>
 
   <ItemGroup>
