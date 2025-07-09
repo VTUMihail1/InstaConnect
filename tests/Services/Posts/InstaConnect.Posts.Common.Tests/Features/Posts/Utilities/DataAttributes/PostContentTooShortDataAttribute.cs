@@ -1,0 +1,14 @@
+﻿using InstaConnect.Common.Extensions;
+using InstaConnect.Common.Tests.Utilities.DataAttributes;
+
+namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes;
+
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+public sealed class PostContentTooShortDataAttribute : OutOfBoundsStringDataAttribute
+{
+    public PostContentTooShortDataAttribute()
+        : base(PostOutOfBoundUtilities.ContentTooShort, PostErrorMessages.GetContentTooShort(PostOutOfBoundUtilities.ContentTooShort))
+    {
+    }
+}
+

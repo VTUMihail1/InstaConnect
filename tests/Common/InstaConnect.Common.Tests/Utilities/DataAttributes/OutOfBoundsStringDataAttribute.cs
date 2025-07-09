@@ -7,8 +7,15 @@ namespace InstaConnect.Common.Tests.Utilities.DataAttributes;
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public abstract class OutOfBoundsStringDataAttribute : DataAttribute
 {
-    public abstract int Length { get; }
-    public abstract string Message { get; }
+    public int Length { get; }
+
+    public string Message { get; }
+
+    protected OutOfBoundsStringDataAttribute(int length, string message)
+    {
+        Length = length;
+        Message = message;
+    }
 
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {

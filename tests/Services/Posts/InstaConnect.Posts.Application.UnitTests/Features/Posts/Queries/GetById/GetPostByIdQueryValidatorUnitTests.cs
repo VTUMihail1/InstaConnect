@@ -27,8 +27,8 @@ public class GetPostByIdQueryValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [PostIdOutOfBoundsMinData]
-    [PostIdOutOfBoundsMaxData]
+    [PostIdTooShortData]
+    [PostIdTooLongData]
     public void TestValidate_ShouldHaveAnError_WhenIdLengthIsInvalid(string id)
     {
         // Arrange

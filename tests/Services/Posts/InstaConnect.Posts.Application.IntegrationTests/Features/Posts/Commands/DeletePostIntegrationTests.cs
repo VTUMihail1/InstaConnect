@@ -42,8 +42,8 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [PostIdOutOfBoundsMinData]
-    [PostIdOutOfBoundsMaxData]
+    [PostIdTooShortData]
+    [PostIdTooLongData]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(string id)
     {
         // Arrange
@@ -70,8 +70,8 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [UserIdOutOfBoundsMinData]
-    [UserIdOutOfBoundsMaxData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserIdLengthIsInvalid(string userId)
     {
         // Arrange

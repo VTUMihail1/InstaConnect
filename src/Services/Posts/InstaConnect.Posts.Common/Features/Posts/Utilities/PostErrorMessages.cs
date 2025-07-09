@@ -8,41 +8,46 @@ public static class PostErrorMessages
     {
         const string Format = "Id length is {0} and it must be at least {1} characters long";
         var result = Format.FormatInvariant(length, PostConfigurations.IdMinLength);
+
         return result;
     }
 
-    public static string GetIdTooLong(string id)
+    public static string GetIdTooLong(int length)
     {
         const string Format = "Id length is {0} and it must be at most {1} characters long";
-        var result = Format.FormatInvariant(id.GetLength(), PostConfigurations.IdMaxLength);
+        var result = Format.FormatInvariant(length, PostConfigurations.IdMaxLength);
+
         return result;
     }
 
-    public static string GetTitleTooShort(string title)
+    public static string GetTitleTooShort(int length)
     {
         const string Format = "Title length is {0} and it must be at least {1} characters long";
-        var result = Format.FormatInvariant(title.GetLength(), PostConfigurations.TitleMinLength);
+        var result = Format.FormatInvariant(length, PostConfigurations.TitleMinLength);
+
         return result;
     }
 
-    public static string GetTitleTooLong(string title)
+    public static string GetTitleTooLong(int length)
     {
         const string Format = "Title length is {0} and it must be at most {1} characters long";
-        var result = Format.FormatInvariant(title.GetLength(), PostConfigurations.TitleMaxLength);
+        var result = Format.FormatInvariant(length, PostConfigurations.TitleMaxLength);
         return result;
     }
 
-    public static string GetContentTooShort(string content)
+    public static string GetContentTooShort(int length)
     {
         const string Format = "Content length is {0} and it must be at least {1} characters long";
-        var result = Format.FormatInvariant(content.GetLength(), PostConfigurations.ContentMinLength);
+        var result = Format.FormatInvariant(length, PostConfigurations.ContentMinLength);
+
         return result;
     }
 
-    public static string GetContentTooLong(string content)
+    public static string GetContentTooLong(int length)
     {
         const string Format = "Content length is {0} and it must be at most {1} characters long";
-        var result = Format.FormatInvariant(content.GetLength(), PostConfigurations.ContentMaxLength);
+        var result = Format.FormatInvariant(length, PostConfigurations.ContentMaxLength);
+
         return result;
     }
 
@@ -57,6 +62,7 @@ public static class PostErrorMessages
     {
         const string Format = "Page value is {0} and it must be at least {1}";
         var result = Format.FormatInvariant(page, PostConfigurations.PageMinValue);
+
         return result;
     }
 
@@ -64,6 +70,7 @@ public static class PostErrorMessages
     {
         const string Format = "Page value is {0} and it must be at most {1}";
         var result = Format.FormatInvariant(page, PostConfigurations.PageMaxValue);
+
         return result;
     }
 
@@ -71,6 +78,7 @@ public static class PostErrorMessages
     {
         const string Format = "Page size is {0} and it must be at least {1}";
         var result = Format.FormatInvariant(pageSize, PostConfigurations.PageSizeMinValue);
+
         return result;
     }
 
@@ -78,6 +86,7 @@ public static class PostErrorMessages
     {
         const string Format = "Page size is {0} and it must be at most {1}";
         var result = Format.FormatInvariant(pageSize, PostConfigurations.PageSizeMaxValue);
+
         return result;
     }
 }

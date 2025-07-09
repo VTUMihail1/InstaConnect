@@ -42,8 +42,8 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [PostIdOutOfBoundsMinData]
-    [PostIdOutOfBoundsMaxData]
+    [PostIdTooShortData]
+    [PostIdTooLongData]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(string id)
     {
         // Arrange
@@ -70,8 +70,8 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [UserIdOutOfBoundsMinData]
-    [UserIdOutOfBoundsMaxData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserIdLengthIsInvalid(string userId)
     {
         // Arrange
@@ -98,8 +98,8 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [PostTitleOutOfBoundsMinData]
-    [PostTitleOutOfBoundsMaxData]
+    [PostTitleTooShortData]
+    [PostTitleTooLongData]
     public async Task SendAsync_ShouldThrowValidationException_WhenTitleLengthIsInvalid(string title)
     {
         // Arrange
@@ -127,7 +127,7 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
 
     [Theory]
     [PostContentOutOfBoundsMinData]
-    [PostContentOutOfBoundsMaxData]
+    [PostContentTooLongData]
     public async Task SendAsync_ShouldThrowValidationException_WhenContentLengthIsInvalid(string content)
     {
         // Arrange

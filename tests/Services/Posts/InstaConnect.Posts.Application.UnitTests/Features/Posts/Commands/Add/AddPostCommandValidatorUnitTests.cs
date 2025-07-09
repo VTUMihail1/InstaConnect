@@ -27,8 +27,8 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [UserIdOutOfBoundsMinData]
-    [UserIdOutOfBoundsMaxData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
     public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdLengthIsInvalid(string userId)
     {
         // Arrange
@@ -55,8 +55,8 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [PostTitleOutOfBoundsMinData]
-    [PostTitleOutOfBoundsMaxData]
+    [PostTitleTooShortData]
+    [PostTitleTooLongData]
     public void TestValidate_ShouldHaveAnError_WhenTitleLengthIsInvalid(string title)
     {
         // Arrange
@@ -84,7 +84,7 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
 
     [Theory]
     [PostContentOutOfBoundsMinData]
-    [PostContentOutOfBoundsMaxData]
+    [PostContentTooLongData]
     public void TestValidate_ShouldHaveAnError_WhenContentLengthIsInvalid(string content)
     {
         // Arrange

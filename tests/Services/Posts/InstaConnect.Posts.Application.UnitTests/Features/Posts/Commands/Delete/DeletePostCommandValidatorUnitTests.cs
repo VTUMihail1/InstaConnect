@@ -27,8 +27,8 @@ public class DeletePostCommandValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [PostIdOutOfBoundsMinData]
-    [PostIdOutOfBoundsMaxData]
+    [PostIdTooShortData]
+    [PostIdTooLongData]
     public void TestValidate_ShouldHaveAnError_WhenIdLengthIsInvalid(string id)
     {
         // Arrange
@@ -55,8 +55,8 @@ public class DeletePostCommandValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [UserIdOutOfBoundsMinData]
-    [UserIdOutOfBoundsMaxData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
     public void TestValidate_ShouldHaveAnError_WhenUserIdLengthIsInvalid(string userId)
     {
         // Arrange

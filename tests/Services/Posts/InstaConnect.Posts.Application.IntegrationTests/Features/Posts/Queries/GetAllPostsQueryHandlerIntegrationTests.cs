@@ -26,7 +26,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [UserIdOutOfBoundsMaxData]
+    [UserIdTooLongData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserIdLengthIsInvalid(string userId)
     {
         // Arrange
@@ -40,7 +40,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [UserNameOutOfBoundsMaxData]
+    [UserNameTooLongData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserNameLengthIsInvalid(string userName)
     {
         // Arrange
@@ -54,7 +54,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [PostTitleOutOfBoundsMaxData]
+    [PostTitleTooLongData]
     public async Task SendAsync_ShouldThrowValidationException_WhenTitleLengthIsInvalid(string title)
     {
         // Arrange
@@ -94,8 +94,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [PostPageOutOfBoundsMinData]
-    [PostPageOutOfBoundsMaxData]
+    [PostPageTooSmallData]
+    [PostPageTooLargeData]
     public async Task SendAsync_ShouldThrowValidationException_WhenPageValueIsInvalid(int page)
     {
         // Arrange
@@ -109,8 +109,8 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [PostPageSizeOutOfBoundsMinData]
-    [PostPageSizeOutOfBoundsMaxData]
+    [PostPageSizeTooSmallData]
+    [PostPageSizeTooLargeData]
     public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeValueIsInvalid(int pageSize)
     {
         // Arrange

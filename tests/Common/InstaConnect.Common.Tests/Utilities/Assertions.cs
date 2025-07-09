@@ -2,6 +2,7 @@
 
 using FluentAssertions;
 
+using FluentValidation.Results;
 using FluentValidation.TestHelper;
 
 using InstaConnect.Common.Exceptions;
@@ -24,6 +25,11 @@ public static class Assertions
         obj.Should().BeNull();
     }
 
+    public static void ShouldContain<T>(this IEnumerable<T> obj, Expression<Func<T, bool>> predicate)
+    {
+        obj.Should().Contain(predicate);
+    }
+
     public static async Task ShouldThrowAsync<TException>(this Func<Task> action, string message)
         where TException : Exception
     {
@@ -35,9 +41,11 @@ public static class Assertions
         await action.ShouldThrowAsync<InvalidValidationException>(message);
     }
 
-    public static void ShouldHaveValidationErrorForProperty<T, TProperty>(this TestValidationResult<T> testValidationResult, Expression<Func<T, TProperty>> memberAccessor)
+    public static void ShouldHaveValidationErrorForProperty<T, TProperty>(this TestValidationResult<T> testValidationResult, Expression<Func<T, TProperty>> memberAccessor, string errorMessage)
     {
-        testValidationResult.ShouldHaveValidationErrorFor(memberAccessor);
+        testValidationResult
+            .ShouldHaveValidationErrorFor(memberAccessor)
+            .ShouldContain(p => p.ErrorMessage == errorMessage);
     }
 
     public static void ShouldNotHaveAnyValidationErrorProperties<T>(this TestValidationResult<T> testValidationResult)

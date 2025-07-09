@@ -1,5 +1,7 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 
+using Xunit.Sdk;
+
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetAll;
 
 public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
@@ -14,8 +16,8 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [UserIdOutOfBoundsMaxData]
-    public void TestValidate_ShouldHaveAnError_WhenUserIdLengthIsInvalid(string userId)
+    [UserIdTooLongData]
+    public void TestValidate_ShouldHaveAnError_WhenUserIdLengthIsInvalid(string userId, string errorMessage)
     {
         // Arrange
         var request = _queryBuilder.WithUserId(userId).Create();
@@ -24,12 +26,12 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var result = _queryValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForUserId();
+        result.ShouldHaveValidationErrorForUserId(errorMessage);
     }
 
     [Theory]
-    [UserNameOutOfBoundsMaxData]
-    public void TestValidate_ShouldHaveAnError_WhenUserNameLengthIsInvalid(string userName)
+    [UserNameTooLongData]
+    public void TestValidate_ShouldHaveAnError_WhenUserNameLengthIsInvalid(string userName, string errorMessage)
     {
         // Arrange
         var request = _queryBuilder.WithUserName(userName).Create();
@@ -38,12 +40,12 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var result = _queryValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForUserName();
+        result.ShouldHaveValidationErrorForUserName(errorMessage);
     }
 
     [Theory]
-    [PostTitleOutOfBoundsMaxData]
-    public void TestValidate_ShouldHaveAnError_WhenTitleLengthIsInvalid(string title)
+    [PostTitleTooLongData]
+    public void TestValidate_ShouldHaveAnError_WhenTitleLengthIsInvalid(string title, string errorMessage)
     {
         // Arrange
         var request = _queryBuilder.WithTitle(title).Create();
@@ -52,7 +54,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var result = _queryValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForTitle();
+        result.ShouldHaveValidationErrorForTitle(errorMessage);
     }
 
     [Fact]
@@ -65,7 +67,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var result = _queryValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForSortProperty();
+        result.ShouldHaveValidationErrorForSortProperty(CommonErrorMessages.GetSortOrderEmpty());
     }
 
     [Fact]
@@ -78,13 +80,13 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var result = _queryValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForSortProperty();
+        result.ShouldHaveValidationErrorForSortProperty(PostErrorMessages.GetSortPropertyEmpty());
     }
 
     [Theory]
-    [PostPageOutOfBoundsMinData]
-    [PostPageOutOfBoundsMaxData]
-    public void TestValidate_ShouldHaveAnError_WhenPageIsInvalid(int page)
+    [PostPageTooSmallData]
+    [PostPageTooLargeData]
+    public void TestValidate_ShouldHaveAnError_WhenPageIsInvalid(int page, string errorMessage)
     {
         // Arrange
         var request = _queryBuilder.WithPage(page).Create();
@@ -93,13 +95,13 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var result = _queryValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForPage();
+        result.ShouldHaveValidationErrorForPage(errorMessage);
     }
 
     [Theory]
-    [PostPageSizeOutOfBoundsMinData]
-    [PostPageSizeOutOfBoundsMaxData]
-    public void TestValidate_ShouldHaveAnError_WhenPageSizeIsInvalid(int pageSize)
+    [PostPageSizeTooSmallData]
+    [PostPageSizeTooLargeData]
+    public void TestValidate_ShouldHaveAnError_WhenPageSizeIsInvalid(int pageSize, string errorMessage)
     {
         // Arrange
         var request = _queryBuilder.WithPageSize(pageSize).Create();
@@ -108,7 +110,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         var result = _queryValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForPageSize();
+        result.ShouldHaveValidationErrorForPageSize(errorMessage);
     }
 
     [Fact]

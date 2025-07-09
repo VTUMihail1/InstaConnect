@@ -3,10 +3,10 @@
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostContentOutOfBoundsMinDataAttribute : OutOfBoundsMinStringDataAttribute
+public sealed class PostIdTooShortDataAttribute : OutOfBoundsStringDataAttribute
 {
-    public PostContentOutOfBoundsMinDataAttribute()
-        : base(PostConfigurations.ContentMinLength)
+    public PostIdTooShortDataAttribute()
+        : base(PostOutOfBoundUtilities.IdTooShort, PostErrorMessages.GetIdTooShort(PostOutOfBoundUtilities.IdTooShort))
     {
     }
 }
