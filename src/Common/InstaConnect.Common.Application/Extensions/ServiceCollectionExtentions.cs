@@ -31,6 +31,8 @@ public static class ServiceCollectionExtentions
 
     public static IServiceCollection AddValidators(this IServiceCollection serviceCollection, Assembly assembly)
     {
+        ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
+
         serviceCollection.AddValidatorsFromAssembly(assembly);
 
         return serviceCollection;

@@ -4,6 +4,13 @@ namespace InstaConnect.Posts.Common.Features.Users.Utilities;
 
 public static class UserErrorMessages
 {
+    public static string GetIdEmpty()
+    {
+        const string Message = "Id must not be empty.";
+
+        return Message;
+    }
+
     public static string GetIdTooShort(int length)
     {
         const string Format = "Id length is {0} and it must be at least {1} characters long";
@@ -14,6 +21,13 @@ public static class UserErrorMessages
     {
         const string Format = "Id length is {0} and it must be at most {1} characters long";
         return Format.FormatInvariant(length, UserConfigurations.IdMaxLength);
+    }
+
+    public static string GetEmailEmpty()
+    {
+        const string Message = "Email must not be empty.";
+
+        return Message;
     }
 
     public static string GetEmailTooShort(int length)
@@ -28,6 +42,13 @@ public static class UserErrorMessages
         return Format.FormatInvariant(length, UserConfigurations.EmailMaxLength);
     }
 
+    public static string GetFirstNameEmpty()
+    {
+        const string Message = "First name must not be empty.";
+
+        return Message;
+    }
+    
     public static string GetFirstNameTooShort(int length)
     {
         const string Format = "First name length is {0} and it must be at least {1} characters long";
@@ -40,6 +61,13 @@ public static class UserErrorMessages
         return Format.FormatInvariant(length, UserConfigurations.FirstNameMaxLength);
     }
 
+    public static string GetLastNameEmpty()
+    {
+        const string Message = "Last name must not be empty.";
+
+        return Message;
+    }
+
     public static string GetLastNameTooShort(int length)
     {
         const string Format = "Last name length is {0} and it must be at least {1} characters long";
@@ -50,6 +78,13 @@ public static class UserErrorMessages
     {
         const string Format = "Last name length is {0} and it must be at most {1} characters long";
         return Format.FormatInvariant(length, UserConfigurations.LastNameMaxLength);
+    }
+
+    public static string GetNameEmpty()
+    {
+        const string Message = "Name must not be empty.";
+
+        return Message;
     }
 
     public static string GetNameTooShort(int length)
