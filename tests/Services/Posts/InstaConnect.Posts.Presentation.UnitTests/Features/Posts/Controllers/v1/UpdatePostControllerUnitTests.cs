@@ -12,7 +12,7 @@ public class UpdatePostControllerUnitTests : BasePostUnitTest
 {
     private readonly User _user;
     private readonly Post _post;
-    private readonly UpdatePostRequestBuilder _requestBuilder;
+    private readonly UpdatePostApiRequestBuilder _requestBuilder;
     private readonly PostController _postController;
 
     public UpdatePostControllerUnitTests()

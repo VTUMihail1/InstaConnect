@@ -31,7 +31,7 @@ public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsync
         {
             serviceCollection
                  .AddTestDbContext<PostsContext>(opt => opt.UseSqlServer(_msSqlContainer.GetConnectionString()))
-                 .AddEventHarness()
+                 .AddTestEventHarness()
                  .AddTestJwtAuth();
         });
     }

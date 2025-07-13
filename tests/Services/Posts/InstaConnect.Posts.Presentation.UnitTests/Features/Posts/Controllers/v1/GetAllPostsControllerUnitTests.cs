@@ -12,7 +12,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
 {
     private readonly User _user;
     private readonly Post _post;
-    private readonly GetAllPostsRequestBuilder _requestBuilder;
+    private readonly GetAllPostsApiRequestBuilder _requestBuilder;
     private readonly PostController _postController;
 
     public GetAllPostsControllerUnitTests()

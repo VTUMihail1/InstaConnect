@@ -1,18 +1,17 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Builders;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
+using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 
-public class UpdatePostCommandBuilder
+public class UpdatePostApiRequestBuilder
 {
-    private readonly ObjectBuilder<UpdatePostCommand> _objectBuilder;
+    private readonly ObjectBuilder<UpdatePostApiRequest> _objectBuilder;
 
-    public UpdatePostCommandBuilder()
+    public UpdatePostApiRequestBuilder()
     {
-        _objectBuilder = ObjectBuilderFactory.Build<UpdatePostCommand>();
+        _objectBuilder = ObjectBuilderFactory.Build<UpdatePostApiRequest>();
 
         WithId(PostDataFaker.GetId());
         WithUserId(UserDataFaker.GetId());
@@ -20,9 +19,9 @@ public class UpdatePostCommandBuilder
         WithContent(PostDataFaker.GetContent());
     }
 
-    public UpdatePostCommandBuilder(Post post)
+    public UpdatePostApiRequestBuilder(Post post)
     {
-        _objectBuilder = ObjectBuilderFactory.Build<UpdatePostCommand>();
+        _objectBuilder = ObjectBuilderFactory.Build<UpdatePostApiRequest>();
 
         WithId(post.Id);
         WithUserId(post.UserId);
@@ -30,35 +29,35 @@ public class UpdatePostCommandBuilder
         WithContent(post.Content);
     }
 
-    public UpdatePostCommandBuilder WithId(string id)
+    public UpdatePostApiRequestBuilder WithId(string id)
     {
         _objectBuilder.With(p => p.Id, id);
 
         return this;
     }
 
-    public UpdatePostCommandBuilder WithUserId(string userId)
+    public UpdatePostApiRequestBuilder WithUserId(string userId)
     {
         _objectBuilder.With(p => p.CurrentUserId, userId);
 
         return this;
     }
 
-    public UpdatePostCommandBuilder WithTitle(string title)
+    public UpdatePostApiRequestBuilder WithTitle(string title)
     {
-        _objectBuilder.With(p => p.Title, title);
+        _objectBuilder.With(p => p.Body.Title, title);
 
         return this;
     }
 
-    public UpdatePostCommandBuilder WithContent(string content)
+    public UpdatePostApiRequestBuilder WithContent(string content)
     {
-        _objectBuilder.With(p => p.Content, content);
+        _objectBuilder.With(p => p.Body.Content, content);
 
         return this;
     }
 
-    public UpdatePostCommand Create()
+    public UpdatePostApiRequest Create()
     {
         return _objectBuilder.Create();
     }

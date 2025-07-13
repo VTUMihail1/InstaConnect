@@ -35,23 +35,9 @@ public class AddPostCommandBuilder
         return this;
     }
 
-    public AddPostCommandBuilder WithDifferentCaseUserId(string userId)
-    {
-        _objectBuilder.With(p => p.CurrentUserId, DataFaker.GetDifferentCaseString(userId));
-
-        return this;
-    }
-
     public AddPostCommandBuilder WithInvalidUserId()
     {
         _objectBuilder.With(p => p.CurrentUserId, UserDataFaker.GetInvalidId());
-
-        return this;
-    }
-
-    public AddPostCommandBuilder WithoutUserId()
-    {
-        _objectBuilder.Without(p => p.CurrentUserId);
 
         return this;
     }
@@ -63,23 +49,9 @@ public class AddPostCommandBuilder
         return this;
     }
 
-    public AddPostCommandBuilder WithoutTitle()
-    {
-        _objectBuilder.Without(p => p.Title);
-
-        return this;
-    }
-
     public AddPostCommandBuilder WithContent(string content)
     {
         _objectBuilder.With(p => p.Content, content);
-
-        return this;
-    }
-
-    public AddPostCommandBuilder WithoutContent()
-    {
-        _objectBuilder.Without(p => p.Content);
 
         return this;
     }

@@ -29,27 +29,6 @@ public class GetPostByIdQueryBuilder
         return this;
     }
 
-    public GetPostByIdQueryBuilder WithDifferentCaseId(string id)
-    {
-        _objectBuilder.With(p => p.Id, DataFaker.GetDifferentCaseString(id));
-
-        return this;
-    }
-
-    public GetPostByIdQueryBuilder WithInvalidId()
-    {
-        _objectBuilder.With(p => p.Id, PostDataFaker.GetInvalidId());
-
-        return this;
-    }
-
-    public GetPostByIdQueryBuilder WithoutId()
-    {
-        _objectBuilder.Without(p => p.Id);
-
-        return this;
-    }
-
     public GetPostByIdQuery Create()
     {
         return _objectBuilder.Create();

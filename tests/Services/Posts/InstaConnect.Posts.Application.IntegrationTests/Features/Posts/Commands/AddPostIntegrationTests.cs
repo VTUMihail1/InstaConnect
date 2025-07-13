@@ -1,8 +1,12 @@
-﻿using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+﻿using InstaConnect.Common.Tests.Utilities.DataAttributes;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Commands;
@@ -13,7 +17,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     private Post _post;
     private AddPostCommandBuilder _commandBuilder;
 
-    public AddPostIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public AddPostIntegrationTests(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
 
     }
@@ -25,23 +29,12 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         _commandBuilder = new(_post);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsNull()
-    {
-        // Arrange
-        var command = _commandBuilder.WithoutUserId().Create();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
-
-        // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync();
-    }
-
     [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
     [UserIdTooShortData]
     [UserIdTooLongData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdLengthIsInvalid(string userId)
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(string userId, string errorMessage)
     {
         // Arrange
         var command = _commandBuilder.WithUserId(userId).Create();
@@ -50,26 +43,15 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync();
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsNull()
-    {
-        // Arrange
-        var command = _commandBuilder.WithoutTitle().Create();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
-
-        // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
+    [PostTitleNullData]
+    [PostTitleEmptyData]
     [PostTitleTooShortData]
     [PostTitleTooLongData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenTitleLengthIsInvalid(string title)
+    public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsInvalid(string title, string errorMessage)
     {
         // Arrange
         var command = _commandBuilder.WithTitle(title).Create();
@@ -78,26 +60,15 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync();
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenContentIsNull()
-    {
-        // Arrange
-        var command = _commandBuilder.WithoutContent().Create();
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
-
-        // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [PostContentOutOfBoundsMinData]
+    [PostContentNullData]
+    [PostContentEmptyData]
+    [PostContentTooShortData]
     [PostContentTooLongData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenContentLengthIsInvalid(string content)
+    public async Task SendAsync_ShouldThrowValidationException_WhenContentIsInvalid(string content, string errorMessage)
     {
         // Arrange
         var command = _commandBuilder.WithContent(content).Create();
@@ -106,7 +77,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
 
         // Assert
-        await action.ShouldThrowInvalidValidationExceptionAsync();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Fact]
@@ -136,7 +107,8 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         response.ShouldSatisfy(post);
     }
 
-    [Fact]
+    [Theory]
+    [DifferentCaseStringValueData(_user.Id)]
     public async Task SendAsync_ShouldAddPost_WhenRequestIsValid()
     {
         // Arrange

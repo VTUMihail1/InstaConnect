@@ -11,7 +11,7 @@ public class GetPostByIdControllerUnitTests : BasePostUnitTest
 {
     private readonly User _user;
     private readonly Post _post;
-    private readonly GetPostByIdRequestBuilder _requestBuilder;
+    private readonly GetPostByIdApiRequestBuilder _requestBuilder;
     private readonly PostController _postController;
 
     public GetPostByIdControllerUnitTests()

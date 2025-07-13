@@ -18,7 +18,7 @@ using WebMotions.Fake.Authentication.JwtBearer;
 namespace InstaConnect.Common.Tests.Extensions;
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddEventHarness(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddTestEventHarness(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddMassTransitTestHarness();
         serviceCollection.AddScoped<IEventHarness, EventHarness>();

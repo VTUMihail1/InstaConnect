@@ -1,4 +1,9 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Page;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.PageSize;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Name;
 
 using Xunit.Sdk;
 
@@ -17,7 +22,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
 
     [Theory]
     [UserIdTooLongData]
-    public void TestValidate_ShouldHaveAnError_WhenUserIdLengthIsInvalid(string userId, string errorMessage)
+    public void TestValidate_ShouldHaveAnError_WhenUserIdIsInvalid(string userId, string errorMessage)
     {
         // Arrange
         var request = _queryBuilder.WithUserId(userId).Create();
@@ -31,7 +36,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
 
     [Theory]
     [UserNameTooLongData]
-    public void TestValidate_ShouldHaveAnError_WhenUserNameLengthIsInvalid(string userName, string errorMessage)
+    public void TestValidate_ShouldHaveAnError_WhenUserNameIsInvalid(string userName, string errorMessage)
     {
         // Arrange
         var request = _queryBuilder.WithUserName(userName).Create();
@@ -45,7 +50,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
 
     [Theory]
     [PostTitleTooLongData]
-    public void TestValidate_ShouldHaveAnError_WhenTitleLengthIsInvalid(string title, string errorMessage)
+    public void TestValidate_ShouldHaveAnError_WhenTitleIsInvalid(string title, string errorMessage)
     {
         // Arrange
         var request = _queryBuilder.WithTitle(title).Create();

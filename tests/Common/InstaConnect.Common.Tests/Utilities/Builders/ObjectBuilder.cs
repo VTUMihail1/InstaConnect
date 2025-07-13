@@ -22,13 +22,6 @@ public class ObjectBuilder<T>
         return this;
     }
 
-    public ObjectBuilder<T> Without<TProperty>(Expression<Func<T, TProperty>> propertyPicker)
-    {
-        _composer.Without(propertyPicker);
-
-        return this;
-    }
-
     public T Create()
     {
         return _composer.Create();

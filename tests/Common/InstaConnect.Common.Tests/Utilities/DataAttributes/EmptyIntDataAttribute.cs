@@ -5,21 +5,19 @@ using Xunit.Sdk;
 namespace InstaConnect.Common.Tests.Utilities.DataAttributes;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public abstract class OutOfBoundsStringDataAttribute : DataAttribute
+public abstract class EmptyIntDataAttribute : DataAttribute
 {
-    public int Length { get; }
-
     public string Message { get; }
 
-    protected OutOfBoundsStringDataAttribute(int length, string message)
+    protected EmptyIntDataAttribute(string message)
     {
-        Length = length;
         Message = message;
     }
 
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
-        yield return new object[] { DataFaker.GetString(Length), Message };
+        yield return new object[] { default(int), Message };
     }
 }
+
 

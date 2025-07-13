@@ -1,4 +1,7 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Add;
 
@@ -13,23 +16,12 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
         _commandValidator = new();
     }
 
-    [Fact]
-    public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdIsNull()
-    {
-        // Arrange
-        var request = _commandBuilder.WithoutUserId().Create();
-
-        // Act
-        var result = _commandValidator.TestValidate(request);
-
-        // Assert
-        result.ShouldHaveValidationErrorForUserId();
-    }
-
     [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
     [UserIdTooShortData]
     [UserIdTooLongData]
-    public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdLengthIsInvalid(string userId)
+    public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdIsInvalid(string userId, string errorMessage)
     {
         // Arrange
         var request = _commandBuilder.WithUserId(userId).Create();
@@ -38,26 +30,15 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
         var result = _commandValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForUserId();
-    }
-
-    [Fact]
-    public void TestValidate_ShouldHaveAnError_WhenTitleIsNull()
-    {
-        // Arrange
-        var request = _commandBuilder.WithoutTitle().Create();
-
-        // Act
-        var result = _commandValidator.TestValidate(request);
-
-        // Assert
-        result.ShouldHaveValidationErrorForTitle();
+        result.ShouldHaveValidationErrorForUserId(errorMessage);
     }
 
     [Theory]
+    [PostTitleNullData]
+    [PostTitleEmptyData]
     [PostTitleTooShortData]
     [PostTitleTooLongData]
-    public void TestValidate_ShouldHaveAnError_WhenTitleLengthIsInvalid(string title)
+    public void TestValidate_ShouldHaveAnError_WhenTitleIsInvalid(string title, string errorMessage)
     {
         // Arrange
         var request = _commandBuilder.WithTitle(title).Create();
@@ -66,26 +47,15 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
         var result = _commandValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForTitle();
-    }
-
-    [Fact]
-    public void TestValidate_ShouldHaveAnError_WhenContentIsNull()
-    {
-        // Arrange
-        var request = _commandBuilder.WithoutContent().Create();
-
-        // Act
-        var result = _commandValidator.TestValidate(request);
-
-        // Assert
-        result.ShouldHaveValidationErrorForContent();
+        result.ShouldHaveValidationErrorForTitle(errorMessage);
     }
 
     [Theory]
-    [PostContentOutOfBoundsMinData]
+    [PostContentNullData]
+    [PostContentEmptyData]
+    [PostContentTooShortData]
     [PostContentTooLongData]
-    public void TestValidate_ShouldHaveAnError_WhenContentLengthIsInvalid(string content)
+    public void TestValidate_ShouldHaveAnError_WhenContentIsInvalid(string content, string errorMessage)
     {
         // Arrange
         var request = _commandBuilder.WithContent(content).Create();
@@ -94,7 +64,7 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
         var result = _commandValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForContent();
+        result.ShouldHaveValidationErrorForContent(errorMessage);
     }
 
     [Fact]

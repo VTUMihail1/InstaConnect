@@ -11,7 +11,7 @@ public class AddPostControllerUnitTests : BasePostUnitTest
 {
     private readonly User _user;
     private readonly Post _post;
-    private readonly AddPostRequestBuilder _requestBuilder;
+    private readonly AddPostApiRequestBuilder _requestBuilder;
     private readonly PostController _postController;
 
     public AddPostControllerUnitTests()

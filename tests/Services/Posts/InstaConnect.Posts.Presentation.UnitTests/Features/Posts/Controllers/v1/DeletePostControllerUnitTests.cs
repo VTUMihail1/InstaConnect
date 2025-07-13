@@ -12,7 +12,7 @@ public class DeletePostControllerUnitTests : BasePostUnitTest
 {
     private readonly User _user;
     private readonly Post _post;
-    private readonly DeletePostRequestBuilder _requestBuilder;
+    private readonly DeletePostApiRequestBuilder _requestBuilder;
     private readonly PostController _postController;
 
     public DeletePostControllerUnitTests()

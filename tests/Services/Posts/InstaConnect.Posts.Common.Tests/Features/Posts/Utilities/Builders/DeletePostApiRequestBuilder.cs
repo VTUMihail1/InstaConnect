@@ -5,11 +5,11 @@ using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 
-public class DeletePostRequestBuilder
+public class DeletePostApiRequestBuilder
 {
     private readonly ObjectBuilder<DeletePostApiRequest> _objectBuilder;
 
-    public DeletePostRequestBuilder()
+    public DeletePostApiRequestBuilder()
     {
         _objectBuilder = ObjectBuilderFactory.Build<DeletePostApiRequest>();
 
@@ -17,7 +17,7 @@ public class DeletePostRequestBuilder
         WithUserId(UserDataFaker.GetId());
     }
 
-    public DeletePostRequestBuilder(Post post)
+    public DeletePostApiRequestBuilder(Post post)
     {
         _objectBuilder = ObjectBuilderFactory.Build<DeletePostApiRequest>();
 
@@ -25,58 +25,30 @@ public class DeletePostRequestBuilder
         WithUserId(post.UserId);
     }
 
-    public DeletePostRequestBuilder WithId(string id)
+    public DeletePostApiRequestBuilder WithId(string id)
     {
         _objectBuilder.With(p => p.Id, id);
 
         return this;
     }
 
-    public DeletePostRequestBuilder WithDifferentCaseId(string id)
-    {
-        _objectBuilder.With(p => p.Id, DataFaker.GetDifferentCaseString(id));
-
-        return this;
-    }
-
-    public DeletePostRequestBuilder WithInvalidId()
+    public DeletePostApiRequestBuilder WithInvalidId()
     {
         _objectBuilder.With(p => p.Id, PostDataFaker.GetInvalidId());
 
         return this;
     }
 
-    public DeletePostRequestBuilder WithoutId()
-    {
-        _objectBuilder.Without(p => p.Id);
-
-        return this;
-    }
-
-    public DeletePostRequestBuilder WithUserId(string userId)
+    public DeletePostApiRequestBuilder WithUserId(string userId)
     {
         _objectBuilder.With(p => p.CurrentUserId, userId);
 
         return this;
     }
 
-    public DeletePostRequestBuilder WithDifferentCaseUserId(string userId)
-    {
-        _objectBuilder.With(p => p.CurrentUserId, DataFaker.GetDifferentCaseString(userId));
-
-        return this;
-    }
-
-    public DeletePostRequestBuilder WithInvalidUserId()
+    public DeletePostApiRequestBuilder WithInvalidUserId()
     {
         _objectBuilder.With(p => p.CurrentUserId, UserDataFaker.GetInvalidId());
-
-        return this;
-    }
-
-    public DeletePostRequestBuilder WithoutUserId()
-    {
-        _objectBuilder.Without(p => p.CurrentUserId);
 
         return this;
     }
