@@ -3,6 +3,8 @@ using System.Text;
 
 using Bogus;
 
+using InstaConnect.Common.Models.Enums;
+
 using Microsoft.AspNetCore.Http;
 
 using NSubstitute;
@@ -77,17 +79,41 @@ public abstract class DataFaker
         return result;
     }
 
-    public static string GetPrefixString(string value)
+    public static string GetPrefixString(string? value)
     {
+        if (string.IsNullOrEmpty(value))
+        {
+            return string.Empty;
+        }
+
         var result = value[..(value.Length / 2)];
 
         return result;
     }
 
-    public static string GetDifferentCaseString(string value)
+    public static string GetDifferentCaseString(string? value)
     {
+        if (string.IsNullOrEmpty(value))
+        {
+            return string.Empty;
+        }
+
         var result = value.ToUpper(CultureInfo.CurrentCulture);
 
         return result;
+    }
+
+    public static SortOrder GetSortOrder()
+    {
+        const SortOrder SortOrder = SortOrder.ASC;
+
+        return SortOrder;
+    }
+
+    public static SortOrder GetEmptySortOrder()
+    {
+        const SortOrder SortOrder = SortOrder.None;
+
+        return SortOrder;
     }
 }

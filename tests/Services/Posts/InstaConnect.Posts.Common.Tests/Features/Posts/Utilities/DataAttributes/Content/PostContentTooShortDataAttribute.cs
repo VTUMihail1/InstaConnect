@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Tests.Utilities.DataAttributes;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.String;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
 

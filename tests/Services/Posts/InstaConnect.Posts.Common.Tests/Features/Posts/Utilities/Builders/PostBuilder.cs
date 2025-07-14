@@ -1,30 +1,21 @@
 ﻿using System.Runtime.CompilerServices;
 
 using InstaConnect.Common.Tests.Utilities.Builders;
+using InstaConnect.Common.Tests.Utilities.Variants.String;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 public class PostBuilder
 {
-    private readonly ObjectBuilder<Post> _objectBuilder;
+    private readonly ObjectBuilder<Post> _objectBuilder = new();
 
-    public PostBuilder()
+    public PostBuilder(): this(new UserBuilder().Create())
     {
-        _objectBuilder = ObjectBuilderFactory.Build<Post>();
-
-        WithId(PostDataFaker.GetId());
-        WithTitle(PostDataFaker.GetTitle());
-        WithContent(PostDataFaker.GetContent());
-        WithUser(UserBuilderFactory.Build().Create());
-        WithCreatedAt(PostDataFaker.GetCreatedAt());
-        WithUpdatedAt(PostDataFaker.GetUpdatedAt());
     }
 
     public PostBuilder(User user)
     {
-        _objectBuilder = ObjectBuilderFactory.Build<Post>();
-
         WithId(PostDataFaker.GetId());
         WithTitle(PostDataFaker.GetTitle());
         WithContent(PostDataFaker.GetContent());
@@ -33,63 +24,30 @@ public class PostBuilder
         WithUpdatedAt(PostDataFaker.GetUpdatedAt());
     }
 
-    public PostBuilder(Post post)
+    public PostBuilder WithId(string id, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder = ObjectBuilderFactory.Build<Post>();
-
-        WithId(post.Id);
-        WithTitle(post.Title);
-        WithContent(post.Content);
-        WithUser(post.User!);
-        WithCreatedAt(post.CreatedAt);
-        WithUpdatedAt(post.UpdatedAt);
-    }
-
-    public PostBuilder WithId(string id)
-    {
-        _objectBuilder.With(p => p.Id, id);
+        _objectBuilder.With(p => p.Id, id, type);
 
         return this;
     }
 
-    public PostBuilder WithoutId()
+    public PostBuilder WithTitle(string title, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.Without(p => p.Id);
+        _objectBuilder.With(p => p.Title, title, type);
 
         return this;
     }
 
-    public PostBuilder WithTitle(string title)
+    public PostBuilder WithContent(string content, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.With(p => p.Title, title);
+        _objectBuilder.With(p => p.Content, content, type);
 
         return this;
     }
 
-    public PostBuilder WithoutTitle()
+    public PostBuilder WithUserId(string userId, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.Without(p => p.Title);
-
-        return this;
-    }
-
-    public PostBuilder WithContent(string content)
-    {
-        _objectBuilder.With(p => p.Content, content);
-
-        return this;
-    }
-
-    public PostBuilder WithoutContent()
-    {
-        _objectBuilder.Without(p => p.Content);
-
-        return this;
-    }
-
-    public PostBuilder WithUserId(string userId)
-    {
-        _objectBuilder.With(p => p.UserId, userId);
+        _objectBuilder.With(p => p.UserId, userId, type);
         _objectBuilder.Without(p => p.User);
 
         return this;
@@ -103,14 +61,6 @@ public class PostBuilder
         return this;
     }
 
-    public PostBuilder WithoutUser()
-    {
-        _objectBuilder.Without(p => p.UserId);
-        _objectBuilder.Without(p => p.User);
-
-        return this;
-    }
-
     public PostBuilder WithCreatedAt(DateTimeOffset createdAt)
     {
         _objectBuilder.With(p => p.CreatedAt, createdAt);
@@ -118,23 +68,9 @@ public class PostBuilder
         return this;
     }
 
-    public PostBuilder WithoutCreatedAt()
-    {
-        _objectBuilder.Without(p => p.CreatedAt);
-
-        return this;
-    }
-
     public PostBuilder WithUpdatedAt(DateTimeOffset updatedAt)
     {
         _objectBuilder.With(p => p.UpdatedAt, updatedAt);
-
-        return this;
-    }
-
-    public PostBuilder WithoutUpdatedAt()
-    {
-        _objectBuilder.Without(p => p.UpdatedAt);
 
         return this;
     }

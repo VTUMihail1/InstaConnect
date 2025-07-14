@@ -2,7 +2,7 @@
 
 using Xunit.Sdk;
 
-namespace InstaConnect.Common.Tests.Utilities.DataAttributes;
+namespace InstaConnect.Common.Tests.Utilities.DataAttributes.Int;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public abstract class OutOfBoundsIntDataAttribute : DataAttribute

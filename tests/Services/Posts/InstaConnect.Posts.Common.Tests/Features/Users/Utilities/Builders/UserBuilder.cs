@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Tests.Utilities.Builders;
+using InstaConnect.Common.Tests.Utilities.Variants.String;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
 public class UserBuilder
@@ -7,7 +8,7 @@ public class UserBuilder
 
     public UserBuilder()
     {
-        _objectBuilder = ObjectBuilderFactory.Build<User>();
+        _objectBuilder = new ObjectBuilder<User>();
 
         WithId(UserDataFaker.GetId());
         WithFirstName(UserDataFaker.GetFirstName());
@@ -19,86 +20,44 @@ public class UserBuilder
         WithUpdatedAt(UserDataFaker.GetUpdatedAt());
     }
 
-    public UserBuilder WithId(string id)
+    public UserBuilder WithId(string id, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.With(p => p.Id, id);
+        _objectBuilder.With(p => p.Id, id, variant);
 
         return this;
     }
 
-    public UserBuilder WithoutId()
+    public UserBuilder WithFirstName(string firstName, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.Without(p => p.Id);
+        _objectBuilder.With(p => p.FirstName, firstName, variant);
 
         return this;
     }
 
-    public UserBuilder WithFirstName(string firstName)
+    public UserBuilder WithLastName(string lastName, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.With(p => p.FirstName, firstName);
+        _objectBuilder.With(p => p.LastName, lastName, variant);
 
         return this;
     }
 
-    public UserBuilder WithoutFirstName()
+    public UserBuilder WithEmail(string email, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.Without(p => p.FirstName);
+        _objectBuilder.With(p => p.Email, email, variant);
 
         return this;
     }
 
-    public UserBuilder WithLastName(string lastName)
+    public UserBuilder WithName(string userName, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.With(p => p.LastName, lastName);
+        _objectBuilder.With(p => p.UserName, userName, variant);
 
         return this;
     }
 
-    public UserBuilder WithoutLastName()
+    public UserBuilder WithProfileImage(string profileImage, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.Without(p => p.LastName);
-
-        return this;
-    }
-
-    public UserBuilder WithEmail(string email)
-    {
-        _objectBuilder.With(p => p.Email, email);
-
-        return this;
-    }
-
-    public UserBuilder WithoutEmail()
-    {
-        _objectBuilder.Without(p => p.Email);
-
-        return this;
-    }
-
-    public UserBuilder WithName(string userName)
-    {
-        _objectBuilder.With(p => p.UserName, userName);
-
-        return this;
-    }
-
-    public UserBuilder WithoutUserName()
-    {
-        _objectBuilder.Without(p => p.UserName);
-
-        return this;
-    }
-
-    public UserBuilder WithProfileImage(string? profileImage)
-    {
-        _objectBuilder.With(p => p.ProfileImage, profileImage);
-
-        return this;
-    }
-
-    public UserBuilder WithoutProfileImage()
-    {
-        _objectBuilder.Without(p => p.ProfileImage);
+        _objectBuilder.With(p => p.ProfileImage, profileImage, variant);
 
         return this;
     }
@@ -110,23 +69,9 @@ public class UserBuilder
         return this;
     }
 
-    public UserBuilder WithoutCreatedAt()
-    {
-        _objectBuilder.Without(p => p.CreatedAt);
-
-        return this;
-    }
-
     public UserBuilder WithUpdatedAt(DateTimeOffset updatedAt)
     {
         _objectBuilder.With(p => p.UpdatedAt, updatedAt);
-
-        return this;
-    }
-
-    public UserBuilder WithoutUpdatedAt()
-    {
-        _objectBuilder.Without(p => p.UpdatedAt);
 
         return this;
     }

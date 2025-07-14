@@ -2,56 +2,52 @@
 
 using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Builders;
+using InstaConnect.Common.Tests.Utilities.Variants.String;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 public class AddPostCommandBuilder
 {
-    private readonly ObjectBuilder<AddPostCommand> _objectBuilder;
+    private readonly ObjectBuilder<AddPostCommand> _objectBuilder = new();
 
-    public AddPostCommandBuilder()
+    public AddPostCommandBuilder() : this(new PostBuilder().Create())
     {
-        _objectBuilder = ObjectBuilderFactory.Build<AddPostCommand>();
-
-        WithUserId(UserDataFaker.GetId());
-        WithTitle(PostDataFaker.GetTitle());
-        WithContent(PostDataFaker.GetContent());
     }
 
     public AddPostCommandBuilder(Post post)
     {
-        _objectBuilder = ObjectBuilderFactory.Build<AddPostCommand>();
-
         WithUserId(post.UserId);
         WithTitle(post.Title);
         WithContent(post.Content);
     }
 
-    public AddPostCommandBuilder WithUserId(string userId)
+    public AddPostCommandBuilder WithUserId(string userId, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.With(p => p.CurrentUserId, userId);
+        _objectBuilder.With(p => p.CurrentUserId, userId, type);
 
         return this;
     }
 
-    public AddPostCommandBuilder WithInvalidUserId()
+    public AddPostCommandBuilder WithInvalidUserId(StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.With(p => p.CurrentUserId, UserDataFaker.GetInvalidId());
+        _objectBuilder.With(p => p.CurrentUserId, UserDataFaker.GetInvalidId(), type);
 
         return this;
     }
 
-    public AddPostCommandBuilder WithTitle(string title)
+    public AddPostCommandBuilder WithTitle(string title, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.With(p => p.Title, title);
+        _objectBuilder.With(p => p.Title, title, type);
 
         return this;
     }
 
-    public AddPostCommandBuilder WithContent(string content)
+    public AddPostCommandBuilder WithContent(string content, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.With(p => p.Content, content);
+        _objectBuilder.With(p => p.Content, content, type);
 
         return this;
     }

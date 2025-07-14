@@ -1,30 +1,33 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Builders;
+using InstaConnect.Common.Tests.Utilities.Variants.String;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 
 public class GetPostByIdQueryBuilder
 {
-    private readonly ObjectBuilder<GetPostByIdQuery> _objectBuilder;
+    private readonly ObjectBuilder<GetPostByIdQuery> _objectBuilder = new();
 
-    public GetPostByIdQueryBuilder()
+    public GetPostByIdQueryBuilder() : this(new PostBuilder().Create())
     {
-        _objectBuilder = ObjectBuilderFactory.Build<GetPostByIdQuery>();
-
-        WithId(PostDataFaker.GetId());
     }
 
     public GetPostByIdQueryBuilder(Post post)
     {
-        _objectBuilder = ObjectBuilderFactory.Build<GetPostByIdQuery>();
-
         WithId(post.Id);
     }
 
-    public GetPostByIdQueryBuilder WithId(string id)
+    public GetPostByIdQueryBuilder WithId(string id, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.With(p => p.Id, id);
+        _objectBuilder.With(p => p.Id, id, type);
+
+        return this;
+    }
+
+    public GetPostByIdQueryBuilder WithInvalidId(StringVariantType type = StringVariantType.Default)
+    {
+        _objectBuilder.With(p => p.Id, PostDataFaker.GetInvalidId(), type);
 
         return this;
     }

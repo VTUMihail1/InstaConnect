@@ -49,20 +49,6 @@ public static class PostDataFaker
         return PageSize;
     }
 
-    public static SortOrder GetSortOrder()
-    {
-        const SortOrder SortOrder = SortOrder.ASC;
-
-        return SortOrder;
-    }
-
-    public static SortOrder GetEmptySortOrder()
-    {
-        const SortOrder SortOrder = SortOrder.None;
-
-        return SortOrder;
-    }
-
     public static PostSortProperty GetSortProperty()
     {
         const PostSortProperty SortProperty = PostSortProperty.ByCreatedAt;

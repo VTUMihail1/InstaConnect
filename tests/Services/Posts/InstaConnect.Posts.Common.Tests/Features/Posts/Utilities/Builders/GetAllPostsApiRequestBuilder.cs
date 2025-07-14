@@ -2,9 +2,12 @@
 
 using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Builders;
+using InstaConnect.Common.Tests.Utilities.Variants.Int;
+using InstaConnect.Common.Tests.Utilities.Variants.String;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
@@ -12,59 +15,54 @@ namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 
 public class GetAllPostsApiRequestBuilder
 {
-    private readonly ObjectBuilder<GetAllPostsApiRequest> _objectBuilder;
+    private readonly ObjectBuilder<GetAllPostsApiRequest> _objectBuilder = new();
 
-    public GetAllPostsApiRequestBuilder()
+    public GetAllPostsApiRequestBuilder() : this(new PostBuilder().Create(), new UserBuilder().Create())
     {
-        _objectBuilder = ObjectBuilderFactory.Build<GetAllPostsApiRequest>();
-
-        WithUserId(UserDataFaker.GetId());
     }
 
     public GetAllPostsApiRequestBuilder(Post post, User user)
     {
-        _objectBuilder = ObjectBuilderFactory.Build<GetAllPostsApiRequest>();
-
         WithUserId(user.Id);
         WithUserName(user.UserName);
         WithTitle(post.Title);
         WithPage(PostDataFaker.GetPage());
         WithPageSize(PostDataFaker.GetPageSize());
-        WithSortOrder(PostDataFaker.GetSortOrder());
+        WithSortOrder(DataFaker.GetSortOrder());
         WithSortProperty(PostDataFaker.GetSortProperty());
     }
 
-    public GetAllPostsApiRequestBuilder WithUserId(string userId)
+    public GetAllPostsApiRequestBuilder WithUserId(string userId, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.With(p => p.Filter.UserId, userId);
+        _objectBuilder.With(p => p.Filter.UserId, userId, type);
 
         return this;
     }
 
-    public GetAllPostsApiRequestBuilder WithUserName(string userName)
+    public GetAllPostsApiRequestBuilder WithUserName(string userName, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.With(p => p.Filter.UserName, userName);
+        _objectBuilder.With(p => p.Filter.UserName, userName, type);
 
         return this;
     }
 
-    public GetAllPostsApiRequestBuilder WithTitle(string title)
+    public GetAllPostsApiRequestBuilder WithTitle(string title, StringVariantType type = StringVariantType.Default)
     {
-        _objectBuilder.With(p => p.Filter.Title, title);
+        _objectBuilder.With(p => p.Filter.Title, title, type);
 
         return this;
     }
 
-    public GetAllPostsApiRequestBuilder WithPage(int page)
+    public GetAllPostsApiRequestBuilder WithPage(int page, IntVariantType type = IntVariantType.Default)
     {
-        _objectBuilder.With(p => p.Pagination.Page, page);
+        _objectBuilder.With(p => p.Pagination.Page, page, type);
 
         return this;
     }
 
-    public GetAllPostsApiRequestBuilder WithPageSize(int pageSize)
+    public GetAllPostsApiRequestBuilder WithPageSize(int pageSize, IntVariantType type = IntVariantType.Default)
     {
-        _objectBuilder.With(p => p.Pagination.PageSize, pageSize);
+        _objectBuilder.With(p => p.Pagination.PageSize, pageSize, type);
 
         return this;
     }
@@ -78,7 +76,7 @@ public class GetAllPostsApiRequestBuilder
 
     public GetAllPostsApiRequestBuilder WithoutSortOrder()
     {
-        _objectBuilder.With(p => p.Sorting.Order, PostDataFaker.GetEmptySortOrder());
+        _objectBuilder.With(p => p.Sorting.Order, DataFaker.GetEmptySortOrder());
 
         return this;
     }

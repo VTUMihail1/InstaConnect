@@ -1,4 +1,6 @@
 ﻿using InstaConnect.Common.Tests.Utilities.DataAttributes;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.String.Value;
+using InstaConnect.Common.Tests.Utilities.Variants.String;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes;
@@ -93,11 +95,13 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         await action.ShouldThrowUserNotFoundExceptionAsync(command.CurrentUserId);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
+    [Theory]
+    [DefaultStringValueData]
+    [DifferentCaseStringValueData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValidAndUserIdHasDifferentVariants(StringVariantType type)
     {
         // Arrange
-        var command = _commandBuilder.Create();
+        var command = _commandBuilder.WithUserId(_user.Id, type).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(command, CancellationToken);
@@ -108,25 +112,12 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [DifferentCaseStringValueData(_user.Id)]
-    public async Task SendAsync_ShouldAddPost_WhenRequestIsValid()
+    [DefaultStringValueData]
+    [DifferentCaseStringValueData]
+    public async Task SendAsync_ShouldAddPost_WhenRequestIsValidAndUserIdHasDifferentVariants(StringVariantType type)
     {
         // Arrange
-        var command = _commandBuilder.Create();
-
-        // Act
-        var response = await ApplicationSender.SendAsync(command, CancellationToken);
-        var post = await ServiceScope.GetPostAsync(response.Id, CancellationToken);
-
-        // Assert
-        post.ShouldSatisfy(command);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldAddPost_WhenRequestIsValidUserIdIsDifferentCase()
-    {
-        // Arrange
-        var command = _commandBuilder.WithDifferentCaseUserId(_user.Id).Create();
+        var command = _commandBuilder.WithUserId(_user.Id, type).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(command, CancellationToken);
