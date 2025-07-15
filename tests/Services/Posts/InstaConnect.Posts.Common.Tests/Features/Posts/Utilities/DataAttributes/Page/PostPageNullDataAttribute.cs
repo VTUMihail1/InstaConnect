@@ -3,7 +3,7 @@
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Page;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostPageNullDataAttribute : NullDataAttribute
+public sealed class PostPageNullDataAttribute : NullWithMessageDataAttribute
 {
     public PostPageNullDataAttribute()
         : base(PostErrorMessages.GetPageEmpty())

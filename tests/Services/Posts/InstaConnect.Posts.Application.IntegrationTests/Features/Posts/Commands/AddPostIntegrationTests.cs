@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Tests.Utilities.DataAttributes;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.String;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.String.Value;
 using InstaConnect.Common.Tests.Utilities.Variants.String;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
@@ -19,7 +20,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     private Post _post;
     private AddPostCommandBuilder _commandBuilder;
 
-    public AddPostIntegrationTests(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
+    public AddPostIntegrationTests(PostWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
 
     }
@@ -39,10 +40,10 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(string userId, string errorMessage)
     {
         // Arrange
-        var command = _commandBuilder.WithUserId(userId).Create();
+        var request = _commandBuilder.WithUserId(userId).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
         await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
@@ -56,27 +57,27 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsInvalid(string title, string errorMessage)
     {
         // Arrange
-        var command = _commandBuilder.WithTitle(title).Create();
+        var request = _commandBuilder.WithTitle(title).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
         await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [PostContentNullData]
-    [PostContentEmptyData]
-    [PostContentTooShortData]
-    [PostContentTooLongData]
+    [PostContentNullWithMessageData]
+    [PostContentEmptyWithMessageData]
+    [PostContentTooShortWithMessageData]
+    [PostContentTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenContentIsInvalid(string content, string errorMessage)
     {
         // Arrange
-        var command = _commandBuilder.WithContent(content).Create();
+        var request = _commandBuilder.WithContent(content).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
         await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
@@ -86,44 +87,70 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
     {
         // Arrange
-        var command = _commandBuilder.WithInvalidUserId().Create();
+        var request = _commandBuilder.WithInvalidUserId().Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowUserNotFoundExceptionAsync(command.CurrentUserId);
+        await action.ShouldThrowUserNotFoundExceptionAsync(request.CurrentUserId);
     }
 
-    [Theory]
-    [DefaultStringValueData]
-    [DifferentCaseStringValueData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValidAndUserIdHasDifferentVariants(StringVariantType type)
+    [Fact]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Arrange
-        var command = _commandBuilder.WithUserId(_user.Id, type).Create();
+        var request = _commandBuilder.Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(command, CancellationToken);
-        var post = await ServiceScope.GetPostAsync(response.Id, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(post);
     }
 
     [Theory]
-    [DefaultStringValueData]
-    [DifferentCaseStringValueData]
+    [DifferentCaseStringVariantTypeData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValidAndUserIdHasDifferentVariants(StringVariantType type)
+    {
+        // Arrange
+        var request = _commandBuilder.WithUserId(_user.Id, type).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(post);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldAddPost_WhenRequestIsValid()
+    {
+        // Arrange
+        var request = _commandBuilder.Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+
+        // Assert
+        post.ShouldSatisfy(request);
+    }
+
+    [Theory]
+    [DifferentCaseStringVariantTypeData]
     public async Task SendAsync_ShouldAddPost_WhenRequestIsValidAndUserIdHasDifferentVariants(StringVariantType type)
     {
         // Arrange
-        var command = _commandBuilder.WithUserId(_user.Id, type).Create();
+        var request = _commandBuilder.WithUserId(_user.Id, type).Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(command, CancellationToken);
-        var post = await ServiceScope.GetPostAsync(response.Id, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        post.ShouldSatisfy(command);
+        post.ShouldSatisfy(request);
     }
 }

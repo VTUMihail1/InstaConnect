@@ -51,10 +51,10 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [PostContentNullData]
-    [PostContentEmptyData]
-    [PostContentTooShortData]
-    [PostContentTooLongData]
+    [PostContentNullWithMessageData]
+    [PostContentEmptyWithMessageData]
+    [PostContentTooShortWithMessageData]
+    [PostContentTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenContentIsInvalid(string content, string errorMessage)
     {
         // Arrange

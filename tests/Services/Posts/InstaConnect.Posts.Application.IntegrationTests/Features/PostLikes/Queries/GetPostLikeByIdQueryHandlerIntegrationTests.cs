@@ -5,7 +5,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Que
 
 public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrationTest
 {
-    public GetPostLikeByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetPostLikeByIdQueryHandlerIntegrationTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
     }
 

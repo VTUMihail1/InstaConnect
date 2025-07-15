@@ -2,7 +2,7 @@
 
 public class DeletePostCommentLikeFunctionalTests : BasePostCommentLikeFunctionalTest
 {
-    public DeletePostCommentLikeFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public DeletePostCommentLikeFunctionalTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

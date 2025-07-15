@@ -1,0 +1,40 @@
+﻿using System.Reflection;
+
+using Xunit.Sdk;
+
+namespace InstaConnect.Common.Tests.Utilities.DataAttributes.Int;
+
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+public abstract class OutOfBoundsIntWithMessageDataAttribute : DataAttribute
+{
+    public int Value { get; }
+
+    public string Message { get; }
+
+    protected OutOfBoundsIntWithMessageDataAttribute(int value, string message)
+    {
+        Value = value;
+        Message = message;
+    }
+
+    public override IEnumerable<object[]> GetData(MethodInfo testMethod)
+    {
+        yield return new object[] { Value, Message };
+    }
+}
+
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+public abstract class OutOfBoundsIntDataAttribute : DataAttribute
+{
+    public int Value { get; }
+
+    protected OutOfBoundsIntDataAttribute(int value)
+    {
+        Value = value;
+    }
+
+    public override IEnumerable<object[]> GetData(MethodInfo testMethod)
+    {
+        yield return new object[] { Value };
+    }
+}

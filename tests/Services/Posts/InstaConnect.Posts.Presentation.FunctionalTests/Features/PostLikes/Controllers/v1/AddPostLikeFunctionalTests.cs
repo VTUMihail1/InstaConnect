@@ -2,7 +2,7 @@
 
 public class AddPostLikeFunctionalTests : BasePostLikeFunctionalTest
 {
-    public AddPostLikeFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public AddPostLikeFunctionalTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

@@ -2,7 +2,7 @@
 
 public class GetPostCommentByIdFunctionalTests : BasePostCommentFunctionalTest
 {
-    public GetPostCommentByIdFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetPostCommentByIdFunctionalTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

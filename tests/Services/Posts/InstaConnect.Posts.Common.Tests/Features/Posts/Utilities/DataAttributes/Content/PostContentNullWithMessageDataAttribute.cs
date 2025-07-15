@@ -1,11 +1,11 @@
-﻿using InstaConnect.Common.Tests.Utilities.DataAttributes.String;
+﻿using InstaConnect.Common.Tests.Utilities.DataAttributes;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostContentEmptyDataAttribute : EmptyStringDataAttribute
+public sealed class PostContentNullWithMessageDataAttribute : NullWithMessageDataAttribute
 {
-    public PostContentEmptyDataAttribute()
+    public PostContentNullWithMessageDataAttribute()
         : base(PostErrorMessages.GetContentEmpty())
     {
     }

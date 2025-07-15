@@ -2,22 +2,20 @@
 
 using Xunit.Sdk;
 
-namespace InstaConnect.Common.Tests.Utilities.DataAttributes.Int;
+namespace InstaConnect.Common.Tests.Utilities.DataAttributes.String;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public abstract class EmptyIntDataAttribute : DataAttribute
+public abstract class EmptyStringWithMessageDataAttribute : DataAttribute
 {
     public string Message { get; }
 
-    protected EmptyIntDataAttribute(string message)
+    protected EmptyStringWithMessageDataAttribute(string message)
     {
         Message = message;
     }
 
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
-        yield return new object[] { default(int), Message };
+        yield return new object[] { string.Empty, Message };
     }
 }
-
-

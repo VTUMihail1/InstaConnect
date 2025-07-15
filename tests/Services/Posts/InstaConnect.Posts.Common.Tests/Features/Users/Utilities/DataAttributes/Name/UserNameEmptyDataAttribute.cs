@@ -3,7 +3,7 @@
 namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Name;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class UserNameEmptyDataAttribute : EmptyStringDataAttribute
+public sealed class UserNameEmptyDataAttribute : EmptyStringWithMessageDataAttribute
 {
     public UserNameEmptyDataAttribute()
         : base(UserErrorMessages.GetNameEmpty())

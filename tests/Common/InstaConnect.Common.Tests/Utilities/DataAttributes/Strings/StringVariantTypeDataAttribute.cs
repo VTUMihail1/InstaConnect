@@ -4,14 +4,14 @@ using InstaConnect.Common.Tests.Utilities.Variants.String;
 
 using Xunit.Sdk;
 
-namespace InstaConnect.Common.Tests.Utilities.DataAttributes.String.Value;
+namespace InstaConnect.Common.Tests.Utilities.DataAttributes.String;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public abstract class StringValueDataAttribute : DataAttribute
+public abstract class StringVariantTypeDataAttribute : DataAttribute
 {
     public StringVariantType Type { get; set; }
 
-    protected StringValueDataAttribute(StringVariantType type)
+    protected StringVariantTypeDataAttribute(StringVariantType type)
     {
         Type = type;
     }

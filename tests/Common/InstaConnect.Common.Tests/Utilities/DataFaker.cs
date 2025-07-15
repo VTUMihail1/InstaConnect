@@ -109,11 +109,4 @@ public abstract class DataFaker
 
         return SortOrder;
     }
-
-    public static SortOrder GetEmptySortOrder()
-    {
-        const SortOrder SortOrder = SortOrder.None;
-
-        return SortOrder;
-    }
 }

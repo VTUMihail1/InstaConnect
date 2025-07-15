@@ -26,7 +26,7 @@ public static class PostSetups
         return postRepository;
     }
 
-    public static async Task<Post?> GetPostAsync(
+    public static async Task<Post?> GetPostByIdAsync(
         this IServiceScope serviceScope,
         string id,
         CancellationToken cancellationToken)

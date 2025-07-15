@@ -6,7 +6,7 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Com
 
 public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
 {
-    public AddPostLikeIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public AddPostLikeIntegrationTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

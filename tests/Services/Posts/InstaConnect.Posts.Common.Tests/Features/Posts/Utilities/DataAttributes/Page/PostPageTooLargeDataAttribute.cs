@@ -3,7 +3,7 @@
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Page;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostPageTooLargeDataAttribute : OutOfBoundsIntDataAttribute
+public sealed class PostPageTooLargeDataAttribute : OutOfBoundsIntWithMessageDataAttribute
 {
     public PostPageTooLargeDataAttribute()
         : base(PostOutOfBoundUtilities.PageTooLarge, PostErrorMessages.GetPageTooLarge(PostOutOfBoundUtilities.PageTooLarge))

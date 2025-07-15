@@ -1,10 +1,101 @@
-﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
+﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
+
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class AddPostFunctionalTests : BasePostFunctionalTest
 {
-    public AddPostFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    private User _user;
+    private Post _post;
+    private AddPostApiRequestBuilder _requestBuilder;
+
+    public AddPostFunctionalTests(PostWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
 
+    }
+
+    protected override async Task OnInitializeAsync()
+    {
+        _user = await ServiceScope.AddUserAsync(CancellationToken);
+        _post = new PostBuilder(_user).Create();
+        _requestBuilder = new(_post);
+    }
+
+    [Fact]
+    public async Task AddAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
+    {
+        // Arrange
+        var request = _requestBuilder.Create();
+
+        // Act
+        var response = await HttpClient.AddPostStatusCodeUnauthorizedAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeUnauthorized();
+    }
+
+    [Fact]
+    public async Task AddAsync_ShouldReturnUnauthorizedProblemDetails_WhenRequestIsUnauthorized()
+    {
+        // Arrange
+        var request = _requestBuilder.Create();
+
+        // Act
+        var response = await HttpClient.AddPostProblemDetailsUnauthorizedAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyUnauthorized();
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
+    public async Task AddAsync_ShouldHaveBadRequestStatusCode_WhenUserIdIsInvalid(string userId)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(userId).Create();
+
+        // Act
+        var response = await HttpClient.AddPostStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
+    public async Task AddAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(string userId, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(userId).Create();
+
+        // Act
+        var response = await HttpClient.AddPostProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyBadRequest(errorMessage);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
+    {
+        // Arrange
+        var request = _requestBuilder.WithInvalidUserId().Create();
+
+        // Act
+        var action = await HttpClient.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowUserNotFoundExceptionAsync(request.CurrentUserId);
     }
 
     [Fact]
@@ -18,7 +109,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.AddStatusCodeUnauthorizedAsync(request, CancellationToken);
+        var response = await HttpClient.AddStatusCodeUnauthorizedAsync(request, CancellationToken);
 
         // Assert
         response
@@ -37,7 +128,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -59,7 +150,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -78,7 +169,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -100,7 +191,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -118,7 +209,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -139,7 +230,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -157,7 +248,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -176,7 +267,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.AddStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -195,7 +286,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.AddAsync(request, CancellationToken);
+        var response = await HttpClient.AddAsync(request, CancellationToken);
 
         var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 

@@ -2,7 +2,7 @@
 
 public class GetPostLikeByIdFunctionalTests : BasePostLikeFunctionalTest
 {
-    public GetPostLikeByIdFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetPostLikeByIdFunctionalTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

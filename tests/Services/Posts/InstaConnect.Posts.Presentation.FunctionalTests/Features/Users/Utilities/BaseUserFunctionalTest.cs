@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Users.Utilities;
 
-public abstract class BaseUserFunctionalTest : IClassFixture<PostsWebApplicationFactory>, IAsyncLifetime
+public abstract class BaseUserFunctionalTest : IClassFixture<PostWebApplicationFactory>, IAsyncLifetime
 {
     protected ITestHarness TestHarness
     {
@@ -39,7 +39,7 @@ public abstract class BaseUserFunctionalTest : IClassFixture<PostsWebApplication
 
     protected Dictionary<string, object> ValidJwtConfig { get; set; }
 
-    protected BaseUserFunctionalTest(PostsWebApplicationFactory functionalTestWebAppFactory)
+    protected BaseUserFunctionalTest(PostWebApplicationFactory functionalTestWebAppFactory)
     {
         ServiceScope = functionalTestWebAppFactory.Services.CreateScope();
         CancellationToken = new();

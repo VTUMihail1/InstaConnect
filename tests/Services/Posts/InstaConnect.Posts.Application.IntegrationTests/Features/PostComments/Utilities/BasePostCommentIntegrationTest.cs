@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Utilities;
 
-public abstract class BasePostCommentIntegrationTest : IClassFixture<PostsWebApplicationFactory>, IAsyncLifetime
+public abstract class BasePostCommentIntegrationTest : IClassFixture<PostWebApplicationFactory>, IAsyncLifetime
 {
     protected IServiceScope ServiceScope { get; }
 
@@ -51,7 +51,7 @@ public abstract class BasePostCommentIntegrationTest : IClassFixture<PostsWebApp
         }
     }
 
-    protected BasePostCommentIntegrationTest(PostsWebApplicationFactory postsWebApplicationFactory)
+    protected BasePostCommentIntegrationTest(PostWebApplicationFactory postsWebApplicationFactory)
     {
         ServiceScope = postsWebApplicationFactory.Services.CreateScope();
         CancellationToken = new CancellationToken();

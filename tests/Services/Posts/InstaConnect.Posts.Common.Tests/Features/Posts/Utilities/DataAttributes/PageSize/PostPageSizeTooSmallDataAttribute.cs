@@ -3,7 +3,7 @@
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.PageSize;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostPageSizeTooSmallDataAttribute : OutOfBoundsIntDataAttribute
+public sealed class PostPageSizeTooSmallDataAttribute : OutOfBoundsIntWithMessageDataAttribute
 {
     public PostPageSizeTooSmallDataAttribute()
         : base(PostOutOfBoundUtilities.PageSizeTooSmall, PostErrorMessages.GetPageSizeTooSmall(PostOutOfBoundUtilities.PageSizeTooSmall))

@@ -1,102 +1,88 @@
-﻿using InstaConnect.Common.Exceptions;
+﻿using System.Data.Common;
+
+using InstaConnect.Common.Exceptions;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.String;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.String.Value;
+using InstaConnect.Common.Tests.Utilities.Variants.String;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Queries;
 
 public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
 {
-    public GetPostByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    private User _user;
+    private Post _post;
+    private GetPostByIdQueryBuilder _queryBuilder;
+
+    public GetPostByIdQueryHandlerIntegrationTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
     }
 
     protected override async Task OnInitializeAsync()
     {
-        _user = await SetupUserAsync(CancellationToken);
-        _post = await SetupPostAsync(_user, CancellationToken);
-        _queryBuilder = new(_post, _user);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
-    {
-        // Arrange
-        var query = new GetPostByIdQuery(null);
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        _user = await ServiceScope.AddUserAsync(CancellationToken);
+        _post = await ServiceScope.AddPostAsync(_user, CancellationToken);
+        _queryBuilder = new(_post);
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostConfigurations.IdMinLength - 1)]
-    [InlineData(PostConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
+    [PostIdNullData]
+    [PostIdEmptyData]
+    [PostIdTooShortData]
+    [PostIdTooLongData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(string id, string errorMessage)
     {
         // Arrange
-        var query = new GetPostByIdQuery(DataFaker.GetString(length));
+        var request = _queryBuilder.WithId(id).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
     {
         // Arrange
-        var query = new GetPostByIdQuery(PostTestUtilities.InvalidId);
+        var request = _queryBuilder.WithInvalidId().Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<PostNotFoundException>();
+        await action.ShouldThrowPostNotFoundExceptionAsync(_post.Id);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenQueryIsValid()
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetPostByIdQuery(existingPost.Id);
+        var request = _queryBuilder.Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostQueryResponse>((System.Linq.Expressions.Expression<Func<PostQueryResponse, bool>>)(m => m.Id == existingPost.Id &&
-                                          m.UserId == existingPost.UserId &&
-                                          m.UserName == existingPost.User.UserName &&
-                                          m.UserProfileImage == existingPost.User.ProfileImage &&
-                                          m.Title == existingPost.Title &&
-                                          m.Content == existingPost.Content));
+        response.ShouldSatisfy(_post, _user);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostViewModelCollection_WhenQueryIsValidAndCaseDoesNotMatch()
+    [Theory]
+    [DifferentCaseStringVariantTypeData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValidAndIdHasDifferentVariants(StringVariantType type)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var query = new GetPostByIdQuery(DataFaker.GetNonCaseMatchingString(existingPost.Id));
+        var request = _queryBuilder.WithId(_post.Id, type).Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostQueryResponse>((m => m.Id == existingPost.Id &&
-                                          m.UserId == existingPost.UserId &&
-                                          m.UserName == existingPost.User.UserName &&
-                                          m.UserProfileImage == existingPost.User.ProfileImage &&
-                                          m.Title == existingPost.Title &&
-                                          m.Content == existingPost.Content));
+        response.ShouldSatisfy(_post, _user);
     }
 }

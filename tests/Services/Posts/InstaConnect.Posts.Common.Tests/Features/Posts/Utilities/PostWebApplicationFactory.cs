@@ -11,18 +11,20 @@ using Microsoft.EntityFrameworkCore;
 
 using Testcontainers.MsSql;
 
-namespace InstaConnect.Posts.Application.IntegrationTests.Utilities;
+using Xunit;
 
-public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
+namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
+
+public class PostWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly MsSqlContainer _msSqlContainer;
 
-    public PostsWebApplicationFactory()
+    public PostWebApplicationFactory()
     {
         _msSqlContainer = new MsSqlBuilder()
-        .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
-        .WithPassword("Password123!")
-        .Build();
+            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
+            .WithPassword("Password123!")
+            .Build();
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)

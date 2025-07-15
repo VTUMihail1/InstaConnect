@@ -73,23 +73,9 @@ public class GetAllPostsQueryBuilder
         return this;
     }
 
-    public GetAllPostsQueryBuilder WithEmptySortOrder()
-    {
-        _objectBuilder.With(p => p.Sorting.Order, DataFaker.GetEmptySortOrder());
-
-        return this;
-    }
-
     public GetAllPostsQueryBuilder WithSortProperty(PostSortProperty property)
     {
         _objectBuilder.With(p => p.Sorting.Property, property);
-
-        return this;
-    }
-
-    public GetAllPostsQueryBuilder WithEmptySortProperty()
-    {
-        _objectBuilder.With(p => p.Sorting.Property, PostDataFaker.GetEmptySortProperty());
 
         return this;
     }

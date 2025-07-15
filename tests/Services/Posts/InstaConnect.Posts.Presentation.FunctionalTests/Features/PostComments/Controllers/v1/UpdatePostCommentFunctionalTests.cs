@@ -2,7 +2,7 @@
 
 public class UpdatePostCommentFunctionalTests : BasePostCommentFunctionalTest
 {
-    public UpdatePostCommentFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public UpdatePostCommentFunctionalTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

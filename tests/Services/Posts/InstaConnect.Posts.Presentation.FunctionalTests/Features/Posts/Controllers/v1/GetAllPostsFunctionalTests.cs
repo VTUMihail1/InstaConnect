@@ -2,7 +2,7 @@
 
 public class GetAllPostsFunctionalTests : BasePostFunctionalTest
 {
-    public GetAllPostsFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetAllPostsFunctionalTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -24,7 +24,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -49,7 +49,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -74,7 +74,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -97,7 +97,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -122,7 +122,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -147,7 +147,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -174,7 +174,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             value);
 
         // Act
-        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -197,7 +197,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await PostsClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -220,7 +220,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await PostsClient.GetAllAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -254,7 +254,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await PostsClient.GetAllAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -288,7 +288,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await PostsClient.GetAllAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -322,7 +322,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await PostsClient.GetAllAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -356,7 +356,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await PostsClient.GetAllAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -390,7 +390,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
             PostTestUtilities.ValidPageSizeValue);
 
         // Act
-        var response = await PostsClient.GetAllAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllAsync(request, CancellationToken);
 
         // Assert
         response
@@ -416,7 +416,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var existingPost = await CreatePostAsync(CancellationToken);
 
         // Act
-        var response = await PostsClient.GetAllAsync(CancellationToken);
+        var response = await HttpClient.GetAllAsync(CancellationToken);
 
         // Assert
         response

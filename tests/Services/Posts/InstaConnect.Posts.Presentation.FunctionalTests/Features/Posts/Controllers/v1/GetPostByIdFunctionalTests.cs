@@ -2,7 +2,7 @@
 
 public class GetPostByIdFunctionalTests : BasePostFunctionalTest
 {
-    public GetPostByIdFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetPostByIdFunctionalTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -18,7 +18,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.GetByIdStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -36,7 +36,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.GetByIdStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -54,7 +54,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.GetByIdStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetByIdStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -72,7 +72,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.GetByIdAsync(request, CancellationToken);
+        var response = await HttpClient.GetByIdAsync(request, CancellationToken);
 
         // Assert
         response
@@ -95,7 +95,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.GetByIdAsync(request, CancellationToken);
+        var response = await HttpClient.GetByIdAsync(request, CancellationToken);
 
         // Assert
         response

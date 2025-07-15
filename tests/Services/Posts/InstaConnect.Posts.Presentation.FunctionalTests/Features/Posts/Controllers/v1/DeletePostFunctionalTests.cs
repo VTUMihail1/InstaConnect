@@ -2,7 +2,7 @@
 
 public class DeletePostFunctionalTests : BasePostFunctionalTest
 {
-    public DeletePostFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public DeletePostFunctionalTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -18,7 +18,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.DeleteStatusCodeUnauthorizedAsync(request, CancellationToken);
+        var response = await HttpClient.DeleteStatusCodeUnauthorizedAsync(request, CancellationToken);
 
         // Assert
         response
@@ -39,7 +39,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.DeleteStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -58,7 +58,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.DeleteStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -80,7 +80,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.DeleteStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -99,7 +99,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.DeleteStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -119,7 +119,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.DeleteStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -138,7 +138,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.DeleteStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -157,7 +157,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        await PostsClient.DeleteAsync(request, CancellationToken);
+        await HttpClient.DeleteAsync(request, CancellationToken);
 
         var message = await PostWriteRepository.GetByIdAsync(existingPost.Id, CancellationToken);
 
@@ -178,7 +178,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        await PostsClient.DeleteAsync(request, CancellationToken);
+        await HttpClient.DeleteAsync(request, CancellationToken);
 
         var message = await PostWriteRepository.GetByIdAsync(existingPost.Id, CancellationToken);
 

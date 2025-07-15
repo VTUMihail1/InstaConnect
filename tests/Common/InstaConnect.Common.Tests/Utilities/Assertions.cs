@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Net;
 
 using FluentAssertions;
 
@@ -23,6 +24,72 @@ public static class Assertions
     public static void ShouldBeNull<T>(this T obj)
     {
         obj.Should().BeNull();
+    }
+
+    public static void ShouldBe<T>(this T obj, T value)
+    {
+        obj.Should().Be(value);
+    }
+
+    public static void ShouldBeOk(this HttpStatusCode statusCode)
+    {
+        statusCode.ShouldBe(HttpStatusCode.OK);
+    }
+
+    public static void ShouldBeBadRequest(this HttpStatusCode statusCode)
+    {
+        statusCode.ShouldBe(HttpStatusCode.BadRequest);
+    }
+
+    public static void ShouldBeNoContent(this HttpStatusCode statusCode)
+    {
+        statusCode.ShouldBe(HttpStatusCode.NoContent);
+    }
+
+    public static void ShouldBeNotFound(this HttpStatusCode statusCode)
+    {
+        statusCode.ShouldBe(HttpStatusCode.NotFound);
+    }
+
+    public static void ShouldBeUnauthorized(this HttpStatusCode statusCode)
+    {
+        statusCode.ShouldBe(HttpStatusCode.Unauthorized);
+    }
+
+    public static void ShouldBeForbidden(this HttpStatusCode statusCode)
+    {
+        statusCode.ShouldBe(HttpStatusCode.Forbidden);
+    }
+
+    public static void ShouldSatisfy(this ProblemDetails details, int statusCode)
+    {
+        details.ShouldSatisfy(d => d.Status == statusCode);
+    }
+
+    public static void ShouldSatisfy(this ProblemDetails details, int statusCode, string errorMessage)
+    {
+        details.ShouldSatisfy(d => d.Status == statusCode &&
+                                   d.Detail == errorMessage);
+    }
+
+    public static void ShouldSatisfyBadRequest(this ProblemDetails problemDetails, string errorMessage)
+    {
+        problemDetails.ShouldSatisfy(StatusCodes.Status400BadRequest, errorMessage);
+    }
+
+    public static void ShouldSatisfyUnauthorized(this ProblemDetails problemDetails)
+    {
+        problemDetails.ShouldSatisfy(StatusCodes.Status401Unauthorized);
+    }
+
+    public static void ShouldSatisfyForbidden(this ProblemDetails problemDetails, string errorMessage)
+    {
+        problemDetails.ShouldSatisfy(StatusCodes.Status403Forbidden, errorMessage);
+    }
+
+    public static void ShouldSatisfyNotFound(this ProblemDetails problemDetails, string errorMessage)
+    {
+        problemDetails.ShouldSatisfy(StatusCodes.Status404NotFound, errorMessage);
     }
 
     public static void ShouldContain<T>(this IEnumerable<T> obj, Expression<Func<T, bool>> predicate)

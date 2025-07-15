@@ -1,9 +1,13 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+﻿using InstaConnect.Common.Models.Enums;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Page;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.PageSize;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.SortProperty;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Name;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 using Xunit.Sdk;
 
@@ -62,30 +66,32 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
         result.ShouldHaveValidationErrorForTitle(errorMessage);
     }
 
-    [Fact]
-    public void TestValidate_ShouldHaveAnError_WhenSortOrderIsEmpty()
+    [Theory]
+    [SortOrderEmptyWithMessageData]
+    public void TestValidate_ShouldHaveAnError_WhenSortOrderIsInvalid(SortOrder sortOrder, string errorMessage)
     {
         // Arrange
-        var request = _queryBuilder.WithEmptySortOrder().Create();
+        var request = _queryBuilder.WithSortOrder(sortOrder).Create();
 
         // Act
         var result = _queryValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForSortProperty(CommonErrorMessages.GetSortOrderEmpty());
+        result.ShouldHaveValidationErrorForSortOrder(errorMessage);
     }
 
-    [Fact]
-    public void TestValidate_ShouldHaveAnError_WhenSortPropertyIsEmpty()
+    [Theory]
+    [PostSortPropertyEmptyData]
+    public void TestValidate_ShouldHaveAnError_WhenSortPropertyIsInvalid(PostSortProperty sortProperty, string errorMessage)
     {
         // Arrange
-        var request = _queryBuilder.WithEmptySortProperty().Create();
+        var request = _queryBuilder.WithSortProperty(sortProperty).Create();
 
         // Act
         var result = _queryValidator.TestValidate(request);
 
         // Assert
-        result.ShouldHaveValidationErrorForSortProperty(PostErrorMessages.GetSortPropertyEmpty());
+        result.ShouldHaveValidationErrorForSortProperty(errorMessage);
     }
 
     [Theory]

@@ -11,31 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Utilities;
 
-public abstract class BasePostIntegrationTest : IClassFixture<PostsWebApplicationFactory>, IAsyncLifetime
+public abstract class BasePostIntegrationTest : PostWebTest
 {
-    protected IServiceScope ServiceScope { get; }
-
-    protected CancellationToken CancellationToken { get; }
-
     protected IApplicationSender ApplicationSender { get; }
 
-    protected BasePostIntegrationTest(PostsWebApplicationFactory postsWebApplicationFactory)
+    protected BasePostIntegrationTest(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
-        ServiceScope = postsWebApplicationFactory.Services.CreateScope();
-        CancellationToken = MockFactory.CreateCancellationToken();
         ApplicationSender = ServiceScope.GetApplicationSender();
     }
-
-    public async Task InitializeAsync()
-    {
-        await ServiceScope.ResetPostDatabase(CancellationToken);
-        await OnInitializeAsync();
-    }
-
-    public async Task DisposeAsync()
-    {
-        await ServiceScope.ResetPostDatabase(CancellationToken);
-    }
-
-    protected abstract Task OnInitializeAsync();
 }

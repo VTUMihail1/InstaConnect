@@ -2,7 +2,7 @@
 
 public class GetAllPostCommentLikesFunctionalTests : BasePostCommentLikeFunctionalTest
 {
-    public GetAllPostCommentLikesFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetAllPostCommentLikesFunctionalTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

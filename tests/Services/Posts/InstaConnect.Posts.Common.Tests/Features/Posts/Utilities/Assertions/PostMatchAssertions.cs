@@ -69,7 +69,7 @@ public static class PostMatchAssertions
             p.Data.Content == post.Content);
     }
 
-    public static void ShouldSatisfy(this GetAllPostsQueryResponse response, Post post, User user, GetAllPostsQuery query)
+    public static void ShouldSatisfy(this GetAllPostsQueryResponse response, Post post, User user, GetAllPostsQuery request)
     {
         response.ShouldSatisfy(pp =>
             pp.Data.All(p =>
@@ -79,8 +79,8 @@ public static class PostMatchAssertions
                 p.User.ProfileImage == user.ProfileImage &&
                 p.Title == post.Title &&
                 p.Content == post.Content) &&
-            pp.Page == query.Pagination.Page &&
-            pp.PageSize == query.Pagination.PageSize &&
+            pp.Page == request.Pagination.Page &&
+            pp.PageSize == request.Pagination.PageSize &&
             pp.TotalCount == pp.Data.Count &&
             pp.HasPreviousPage == pp.Page > 1 &&
             pp.HasNextPage == pp.Page * pp.PageSize < pp.TotalCount);
@@ -111,7 +111,7 @@ public static class PostMatchAssertions
             p.Data.Content == post.Content);
     }
 
-    public static void ShouldSatisfy(this GetAllPostsApiResponse response, Post post, User user, GetAllPostsApiRequest query)
+    public static void ShouldSatisfy(this GetAllPostsApiResponse response, Post post, User user, GetAllPostsApiRequest request)
     {
         response.ShouldSatisfy(pp =>
             pp.Data.All(p =>
@@ -121,8 +121,8 @@ public static class PostMatchAssertions
                 p.User.ProfileImage == user.ProfileImage &&
                 p.Title == post.Title &&
                 p.Content == post.Content) &&
-            pp.Page == query.Pagination.Page &&
-            pp.PageSize == query.Pagination.PageSize &&
+            pp.Page == request.Pagination.Page &&
+            pp.PageSize == request.Pagination.PageSize &&
             pp.TotalCount == pp.Data.Count &&
             pp.HasPreviousPage == pp.Page > 1 &&
             pp.HasNextPage == pp.Page * pp.PageSize < pp.TotalCount);

@@ -2,7 +2,7 @@
 
 public class UpdatePostFunctionalTests : BasePostFunctionalTest
 {
-    public UpdatePostFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public UpdatePostFunctionalTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -19,7 +19,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateStatusCodeUnauthorizedAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateStatusCodeUnauthorizedAsync(request, CancellationToken);
 
         // Assert
         response
@@ -41,7 +41,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -61,7 +61,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -84,7 +84,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -104,7 +104,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -127,7 +127,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -147,7 +147,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -170,7 +170,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -190,7 +190,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -211,7 +211,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -231,7 +231,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
 
         // Assert
         response
@@ -251,7 +251,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateAsync(request, CancellationToken);
 
         // Assert
 
@@ -272,7 +272,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateAsync(request, CancellationToken);
 
         var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 
@@ -297,7 +297,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         );
 
         // Act
-        var response = await PostsClient.UpdateAsync(request, CancellationToken);
+        var response = await HttpClient.UpdateAsync(request, CancellationToken);
 
         var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
 

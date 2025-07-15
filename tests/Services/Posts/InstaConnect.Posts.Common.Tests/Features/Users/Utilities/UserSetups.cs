@@ -27,7 +27,7 @@ public static class UserSetups
         return userRepository;
     }
 
-    public static async Task<User?> GetUserAsync(
+    public static async Task<User?> GetUserByIdAsync(
         this IServiceScope serviceScope,
         string id,
         CancellationToken cancellationToken)
