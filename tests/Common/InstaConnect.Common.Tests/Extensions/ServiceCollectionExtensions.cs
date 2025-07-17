@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using InstaConnect.Common.Extensions;
-using InstaConnect.Common.Tests.Utilities.Events;
-using InstaConnect.Common.Tests.Utilities.StringVariant;
+﻿using InstaConnect.Common.Tests.Utilities.Events;
 
 using MassTransit;
 

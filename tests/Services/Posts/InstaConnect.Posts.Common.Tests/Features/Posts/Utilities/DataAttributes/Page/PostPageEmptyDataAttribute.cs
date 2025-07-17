@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities.DataAttributes.Int;
+﻿using InstaConnect.Common.Tests.Utilities.Types.Ints.Empty;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Page;
 

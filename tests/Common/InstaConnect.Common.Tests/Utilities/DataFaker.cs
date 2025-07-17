@@ -103,6 +103,14 @@ public abstract class DataFaker
         return result;
     }
 
+    public static TEnum GetEmptyEnum<TEnum>()
+        where TEnum : Enum
+    {
+        var emptyEnum = default(TEnum);
+
+        return emptyEnum!;
+    }
+
     public static SortOrder GetSortOrder()
     {
         const SortOrder SortOrder = SortOrder.ASC;

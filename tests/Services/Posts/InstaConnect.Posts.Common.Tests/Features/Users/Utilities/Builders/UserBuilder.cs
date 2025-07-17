@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities.Builders;
+﻿using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Variants.String;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
