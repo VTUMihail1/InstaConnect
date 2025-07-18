@@ -19,24 +19,39 @@ public class ObjectBuilder<T>
         _composer = fixture.Build<T>();
     }
 
-    public ObjectBuilder<T> With(Expression<Func<T, string?>> propertyPicker, string? value, IStringTransformer transformer)
+    public ObjectBuilder<T> With(Expression<Func<T, string?>> propertyPicker, string? value, IStringTransformer? transformer = null)
     {
-        _composer.With(propertyPicker, transformer.Transform(value));
+        if (transformer != null)
+        {
+            value = transformer.Transform(value);
+        }
+
+        _composer.With(propertyPicker, value);
 
         return this;
     }
 
-    public ObjectBuilder<T> With(Expression<Func<T, int>> propertyPicker, int value, IIntTransformer transformer)
+    public ObjectBuilder<T> With(Expression<Func<T, int>> propertyPicker, int value, IIntTransformer? transformer = null)
     {
-        _composer.With(propertyPicker, transformer.Transform(value));
+        if (transformer != null)
+        {
+            value = transformer.Transform(value);
+        }
+
+        _composer.With(propertyPicker, value);
 
         return this;
     }
 
-    public ObjectBuilder<T> With<TEnum>(Expression<Func<T, TEnum>> propertyPicker, TEnum value, IEnumTransformer<TEnum> transformer)
+    public ObjectBuilder<T> With<TEnum>(Expression<Func<T, TEnum>> propertyPicker, TEnum value, IEnumTransformer<TEnum>? transformer = null)
         where TEnum : Enum
     {
-        _composer.With(propertyPicker, transformer.Transform(value));
+        if (transformer != null)
+        {
+            value = transformer.Transform(value);
+        }
+
+        _composer.With(propertyPicker, value);
 
         return this;
     }
