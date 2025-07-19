@@ -6,11 +6,16 @@ using InstaConnect.Identity.Infrastructure.Features.UserClaims.Extensions;
 using InstaConnect.Identity.Infrastructure.Features.Users.Extensions;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
+using Microsoft.AspNetCore.Hosting;
+
 namespace InstaConnect.Identity.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection serviceCollection,
+        IConfiguration configuration,
+        IWebHostEnvironment webHostEnvironment)
     {
         serviceCollection
             .AddForgotPasswordTokenServices()
@@ -19,6 +24,7 @@ public static class ServiceCollectionExtensions
             .AddUserServices();
 
         serviceCollection
+            .AddObservability(configuration, webHostEnvironment)
             .AddDatabaseContext<IdentityContext>(configuration)
             .AddServicesWithMatchingInterfaces(InfrastructureReference.Assembly)
             .AddRedisCaching(configuration)

@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Reflection;
+﻿using System.Reflection;
 
 using CloudinaryDotNet;
 
@@ -15,14 +14,14 @@ using InstaConnect.Common.Infrastructure.SortOrders;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.StackExchangeRedis;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 
-using WebMotions.Fake.Authentication.JwtBearer;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 namespace InstaConnect.Shared.Infrastructure.Extensions;
 public static partial class ServiceCollectionExtensions
@@ -32,6 +31,46 @@ public static partial class ServiceCollectionExtensions
     {
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>(sp =>
         new UnitOfWork(sp.GetRequiredService<TContext>()));
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddObservability(
+        this IServiceCollection serviceCollection,
+        IConfiguration configuration,
+        IWebHostEnvironment webHostEnvironment)
+    {
+        serviceCollection
+            .AddOptions<OpenTelemetryOptions>()
+            .BindConfiguration(OpenTelemetryOptions.SectionName)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        var openTelemetryOptions = configuration
+                    .GetSection(OpenTelemetryOptions.SectionName)
+                    .Get<OpenTelemetryOptions>()!;
+
+        serviceCollection.AddOpenTelemetry()
+              .ConfigureResource(r => r.AddService(webHostEnvironment.ApplicationName))
+              .WithTracing(tracing => tracing
+                  .AddAspNetCoreInstrumentation()
+                  .AddHttpClientInstrumentation()
+                  .AddEntityFrameworkCoreInstrumentation()
+                  .AddSqlClientInstrumentation()
+                  .AddRedisInstrumentation()
+                  .AddMassTransitInstrumentation()
+                  .AddOtlpExporter(options =>
+                  {
+                      options.Endpoint = new Uri(openTelemetryOptions.Endpoint);
+                  }))
+              .WithMetrics(metrics => metrics
+                  .AddAspNetCoreInstrumentation()
+                  .AddHttpClientInstrumentation()
+                  .AddMassTransitInstrumentation()
+                  .AddOtlpExporter(options =>
+                  {
+                      options.Endpoint = new Uri(openTelemetryOptions.Endpoint);
+                  }));
 
         return serviceCollection;
     }

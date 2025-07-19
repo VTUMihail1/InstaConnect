@@ -1,0 +1,37 @@
+﻿using InstaConnect.Common.Infrastructure.Models.Options;
+
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+
+namespace InstaConnect.Common.Infrastructure.Extensions;
+
+public static class LoggingBuilderExtensions
+{
+    public static ILoggingBuilder AddLogging(
+        this ILoggingBuilder loggingBuilder,
+        IConfiguration configuration,
+        IWebHostEnvironment webHostEnvironment)
+    {
+        var openTelemetryOptions = configuration
+                    .GetSection(OpenTelemetryOptions.SectionName)
+                    .Get<OpenTelemetryOptions>()!;
+
+        var resourceBuilder = ResourceBuilder.CreateDefault().AddService(webHostEnvironment.ApplicationName);
+
+        loggingBuilder.AddOpenTelemetry(options =>
+        {
+            options.SetResourceBuilder(resourceBuilder);
+            options.AddOtlpExporter(options =>
+            {
+                options.Endpoint = new Uri(openTelemetryOptions.Endpoint);
+            });
+        });
+
+        return loggingBuilder;
+    }
+}

@@ -2,6 +2,15 @@ networks:
   instaconnect:
 
 services:
+  otel-lgtm:
+    image: grafana/otel-lgtm
+    ports:
+      - "3000:3000"
+      - "4317:4317"
+      - "4318:4318"
+    volumes:
+      - ./.containers/grafana:/data
+
   sqlserver:
     hostname: sqlserver
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -53,6 +62,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
+      OTEL_EXPORTER_OTLP_ENDPOINT: grpc://otel-lgtm:4317
+      OpenTelemetryOptions__Endpoint: grpc://otel-lgtm:4317
       AccessTokenOptions__Issuer: http://identity-svc:5200
       AccessTokenOptions__Audience: http://gateway-svc:5100
       AccessTokenOptions__SecurityKey: 6R9f6d1Y4Z$0^8Y&S2e3nF4*G6u7D0#L
@@ -73,6 +84,8 @@ services:
       context: .
       dockerfile: src/Services/Identity/InstaConnect.Identity.Web/Dockerfile
     environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: grpc://otel-lgtm:4317
+      OpenTelemetryOptions__Endpoint: grpc://otel-lgtm:4317
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.users;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
       CorsOptions__AllowedOrigins: gateway-svc:5100
       CacheOptions__ConnectionString: redis://guest:guest@redis:6379
@@ -105,6 +118,8 @@ services:
       context: .
       dockerfile: src/Services/Posts/InstaConnect.Posts.Web/Dockerfile
     environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: grpc://otel-lgtm:4317
+      OpenTelemetryOptions__Endpoint: grpc://otel-lgtm:4317
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.posts;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
       CorsOptions__AllowedOrigins: gateway-svc:5100
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
@@ -131,6 +146,8 @@ services:
       context: .
       dockerfile: src/Services/Messages/InstaConnect.Messages.Web/Dockerfile
     environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: grpc://otel-lgtm:4317
+      OpenTelemetryOptions__Endpoint: grpc://otel-lgtm:4317
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.messages;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
@@ -157,6 +174,8 @@ services:
       context: .
       dockerfile: src/Services/Follows/InstaConnect.Follows.Web/Dockerfile
     environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: grpc://otel-lgtm:4317
+      OpenTelemetryOptions__Endpoint: grpc://otel-lgtm:4317
       DatabaseOptions__ConnectionString: Server=sqlserver;Database=instaconnect.follows;User Id=sa;Password=password123!;MultipleActiveResultSets=true;TrustServerCertificate=True;
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
@@ -183,6 +202,8 @@ services:
       context: .
       dockerfile: src/Services/Emails/InstaConnect.Emails.Web/Dockerfile
     environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: grpc://otel-lgtm:4317
+      OpenTelemetryOptions__Endpoint: grpc://otel-lgtm:4317
       MessageBrokerOptions__Host: amqp://rabbitmq:5672
       MessageBrokerOptions__Username: guest
       MessageBrokerOptions__Password: guest

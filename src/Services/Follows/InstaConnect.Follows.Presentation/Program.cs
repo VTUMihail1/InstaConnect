@@ -1,3 +1,4 @@
+using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Presentation.Extensions;
 using InstaConnect.Follows.Application.Extensions;
 using InstaConnect.Follows.Infrastructure.Extensions;
@@ -7,10 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddApplication()
-    .AddInfrastructure(builder.Configuration)
+    .AddInfrastructure(builder.Configuration, builder.Environment)
     .AddPresentation(builder.Configuration);
 
 builder.Host.AddSerilog();
+
+builder.Logging.AddLogging(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 

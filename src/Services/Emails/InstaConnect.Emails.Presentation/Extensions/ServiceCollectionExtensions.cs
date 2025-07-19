@@ -5,7 +5,7 @@ namespace InstaConnect.Emails.Presentation.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWebServices(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static IServiceCollection AddPresentation(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
             .AddServicesWithMatchingInterfaces(PresentationReference.Assembly)
