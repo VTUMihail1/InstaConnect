@@ -53,10 +53,10 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     }
 
     [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    [UserIdTooShortData]
-    [UserIdTooLongData]
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
     public async Task AddAsync_ShouldHaveBadRequestStatusCode_WhenUserIdIsInvalid(string userId)
     {
         // Arrange
@@ -70,10 +70,10 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     }
 
     [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    [UserIdTooShortData]
-    [UserIdTooLongData]
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
     public async Task AddAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(string userId, string errorMessage)
     {
         // Arrange

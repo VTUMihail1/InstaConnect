@@ -3,10 +3,6 @@
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostTitleNullWithMessageDataAttribute : NullStringWithMessageDataAttribute
+public sealed class PostTitleNullDataAttribute : NullStringDataAttribute
 {
-    public PostTitleNullWithMessageDataAttribute()
-        : base(PostErrorMessages.GetTitleEmpty())
-    {
-    }
 }

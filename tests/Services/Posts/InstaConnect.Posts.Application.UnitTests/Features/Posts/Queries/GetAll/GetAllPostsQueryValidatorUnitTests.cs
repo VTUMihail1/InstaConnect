@@ -25,7 +25,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [UserIdTooLongData]
+    [UserIdTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenUserIdIsInvalid(string userId, string errorMessage)
     {
         // Arrange
@@ -39,7 +39,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [UserNameTooLongData]
+    [UserNameTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenUserNameIsInvalid(string userName, string errorMessage)
     {
         // Arrange

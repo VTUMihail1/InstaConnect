@@ -17,10 +17,10 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    [UserIdTooShortData]
-    [UserIdTooLongData]
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenCurrentUserIdIsInvalid(string userId, string errorMessage)
     {
         // Arrange

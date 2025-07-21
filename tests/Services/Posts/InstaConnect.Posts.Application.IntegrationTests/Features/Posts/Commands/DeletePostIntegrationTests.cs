@@ -52,10 +52,10 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    [UserIdTooShortData]
-    [UserIdTooLongData]
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(string userId, string errorMessage)
     {
         // Arrange

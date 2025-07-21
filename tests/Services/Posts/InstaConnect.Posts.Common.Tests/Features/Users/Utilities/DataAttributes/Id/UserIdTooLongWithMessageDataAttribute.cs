@@ -1,11 +1,11 @@
-﻿using InstaConnect.Common.Tests.Utilities.DataAttributes.String;
+﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Length;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class UserIdTooLongDataAttribute : OutOfBoundsStringWithMessageDataAttribute
+public sealed class UserIdTooLongWithMessageDataAttribute : LengthStringWithMessageDataAttribute
 {
-    public UserIdTooLongDataAttribute()
+    public UserIdTooLongWithMessageDataAttribute()
         : base(UserOutOfBoundUtilities.IdTooLong, UserErrorMessages.GetIdTooLong(UserOutOfBoundUtilities.IdTooLong))
     {
     }

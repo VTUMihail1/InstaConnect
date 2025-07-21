@@ -40,7 +40,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [UserIdTooLongData]
+    [UserIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(string userId, string errorMessage)
     {
         // Arrange
@@ -54,7 +54,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [UserNameTooLongData]
+    [UserNameTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenUserNameIsInvalid(string userName, string errorMessage)
     {
         // Arrange

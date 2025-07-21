@@ -33,10 +33,10 @@ public class DeletePostCommandValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [UserIdNullData]
-    [UserIdEmptyData]
-    [UserIdTooShortData]
-    [UserIdTooLongData]
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenUserIdIsInvalid(string userId, string errorMessage)
     {
         // Arrange
