@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Tests.Extensions;
+using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
@@ -13,18 +14,15 @@ using Testcontainers.MsSql;
 
 using Xunit;
 
-namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
+namespace InstaConnect.Posts.Common.Tests.Features.Utilities;
 
-public class PostWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
+public class PostsWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly MsSqlContainer _msSqlContainer;
 
-    public PostWebApplicationFactory()
+    public PostsWebApplicationFactory()
     {
-        _msSqlContainer = new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
-            .WithPassword("Password123!")
-            .Build();
+        _msSqlContainer = ContainerFactory.GetMsSqlContainer();
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)

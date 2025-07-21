@@ -2,6 +2,7 @@
 using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
@@ -14,13 +15,13 @@ using Xunit;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 
-public abstract class PostWebTest : IClassFixture<PostWebApplicationFactory>, IAsyncLifetime
+public abstract class PostWebTest : IClassFixture<PostsWebApplicationFactory>, IAsyncLifetime
 {
     protected IServiceScope ServiceScope { get; }
 
     protected CancellationToken CancellationToken { get; }
 
-    protected PostWebTest(PostWebApplicationFactory webApplicationFactory)
+    protected PostWebTest(PostsWebApplicationFactory webApplicationFactory)
     {
         ServiceScope = webApplicationFactory.Services.CreateScope();
         CancellationToken = MockFactory.CreateCancellationToken();

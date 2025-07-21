@@ -1,11 +1,12 @@
 ﻿using InstaConnect.Common.Exceptions;
 using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Commands;
 
 public class UpdatePostCommentIntegrationTests : BasePostCommentIntegrationTest
 {
-    public UpdatePostCommentIntegrationTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public UpdatePostCommentIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

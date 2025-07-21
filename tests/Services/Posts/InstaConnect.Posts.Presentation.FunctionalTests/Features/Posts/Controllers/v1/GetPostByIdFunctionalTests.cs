@@ -1,8 +1,10 @@
-﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
+﻿using InstaConnect.Posts.Common.Tests.Features.Utilities;
+
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class GetPostByIdFunctionalTests : BasePostFunctionalTest
 {
-    public GetPostByIdFunctionalTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetPostByIdFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

@@ -1,8 +1,10 @@
-﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Controllers.v1;
+﻿using InstaConnect.Posts.Common.Tests.Features.Utilities;
+
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostComments.Controllers.v1;
 
 public class GetAllPostCommentsFunctionalTests : BasePostCommentFunctionalTest
 {
-    public GetAllPostCommentsFunctionalTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetAllPostCommentsFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

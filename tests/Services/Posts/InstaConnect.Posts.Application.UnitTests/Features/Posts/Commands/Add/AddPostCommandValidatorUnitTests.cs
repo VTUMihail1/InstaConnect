@@ -34,10 +34,10 @@ public class AddPostCommandValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [PostTitleNullData]
-    [PostTitleEmptyData]
-    [PostTitleTooShortData]
-    [PostTitleTooLongData]
+    [PostTitleNullWithMessageData]
+    [PostTitleEmptyWithMessageData]
+    [PostTitleTooShortWithMessageData]
+    [PostTitleTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenTitleIsInvalid(string title, string errorMessage)
     {
         // Arrange

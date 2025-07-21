@@ -1,11 +1,12 @@
 ﻿using InstaConnect.Common.Exceptions;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Commands;
 
 public class DeletePostCommentLikeIntegrationTests : BasePostCommentLikeIntegrationTest
 {
-    public DeletePostCommentLikeIntegrationTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public DeletePostCommentLikeIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

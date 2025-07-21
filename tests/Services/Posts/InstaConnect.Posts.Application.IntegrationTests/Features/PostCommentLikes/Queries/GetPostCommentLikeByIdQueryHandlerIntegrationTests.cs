@@ -1,11 +1,12 @@
 ﻿using InstaConnect.Common.Exceptions;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Queries;
 
 public class GetPostCommentLikeByIdQueryHandlerIntegrationTests : BasePostCommentLikeIntegrationTest
 {
-    public GetPostCommentLikeByIdQueryHandlerIntegrationTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetPostCommentLikeByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
     }
 

@@ -4,6 +4,7 @@ using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Co
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
@@ -13,7 +14,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     private Post _post;
     private AddPostApiRequestBuilder _requestBuilder;
 
-    public AddPostFunctionalTests(PostWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
+    public AddPostFunctionalTests(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
 
     }

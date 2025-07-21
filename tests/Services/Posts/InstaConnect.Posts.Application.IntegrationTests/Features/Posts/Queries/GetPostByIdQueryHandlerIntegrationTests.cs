@@ -8,6 +8,7 @@ using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Queries;
@@ -18,7 +19,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
     private Post _post;
     private GetPostByIdQueryBuilder _queryBuilder;
 
-    public GetPostByIdQueryHandlerIntegrationTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetPostByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
     }
 
@@ -30,10 +31,10 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [PostIdNullData]
-    [PostIdEmptyData]
-    [PostIdTooShortData]
-    [PostIdTooLongData]
+    [PostIdNullWithMessageData]
+    [PostIdEmptyWithMessageData]
+    [PostIdTooShortWithMessageData]
+    [PostIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(string id, string errorMessage)
     {
         // Arrange

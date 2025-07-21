@@ -1,12 +1,13 @@
 ﻿using InstaConnect.Common.Exceptions;
 using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.Users.Exceptions;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Commands;
 
 public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegrationTest
 {
-    public AddPostCommentLikeIntegrationTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public AddPostCommentLikeIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

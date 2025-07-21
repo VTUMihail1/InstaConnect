@@ -1,12 +1,13 @@
 ﻿using InstaConnect.Common.Exceptions;
 using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.Users.Exceptions;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Commands;
 
 public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
 {
-    public AddPostLikeIntegrationTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public AddPostLikeIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

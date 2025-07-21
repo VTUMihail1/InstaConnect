@@ -53,7 +53,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [PostTitleTooLongData]
+    [PostTitleTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenTitleIsInvalid(string title, string errorMessage)
     {
         // Arrange
@@ -81,7 +81,7 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [PostSortPropertyEmptyData]
+    [PostSortPropertyEmptyWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenSortPropertyIsInvalid(PostSortProperty sortProperty, string errorMessage)
     {
         // Arrange
@@ -95,8 +95,8 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [PostPageTooSmallData]
-    [PostPageTooLargeData]
+    [PostPageTooSmallWithMessageData]
+    [PostPageTooLargeWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenPageIsInvalid(int page, string errorMessage)
     {
         // Arrange
@@ -110,8 +110,8 @@ public class GetAllPostsQueryValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [PostPageSizeTooSmallData]
-    [PostPageSizeTooLargeData]
+    [PostPageSizeTooSmallWithMessageData]
+    [PostPageSizeTooLargeWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenPageSizeIsInvalid(int pageSize, string errorMessage)
     {
         // Arrange

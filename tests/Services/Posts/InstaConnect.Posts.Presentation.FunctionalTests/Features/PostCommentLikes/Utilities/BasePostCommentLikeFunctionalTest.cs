@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Abstractions;
 using InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
@@ -12,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Utilities;
 
-public abstract class BasePostCommentLikeFunctionalTest : IClassFixture<PostWebApplicationFactory>, IAsyncLifetime
+public abstract class BasePostCommentLikeFunctionalTest : IClassFixture<PostsWebApplicationFactory>, IAsyncLifetime
 {
     protected CancellationToken CancellationToken { get; }
 
@@ -42,7 +43,7 @@ public abstract class BasePostCommentLikeFunctionalTest : IClassFixture<PostWebA
         }
     }
 
-    protected BasePostCommentLikeFunctionalTest(PostWebApplicationFactory postsWebApplicationFactory)
+    protected BasePostCommentLikeFunctionalTest(PostsWebApplicationFactory postsWebApplicationFactory)
     {
         ServiceScope = postsWebApplicationFactory.Services.CreateScope();
         CancellationToken = new();

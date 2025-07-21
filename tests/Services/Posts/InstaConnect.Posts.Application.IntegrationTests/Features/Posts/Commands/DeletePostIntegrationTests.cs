@@ -11,6 +11,7 @@ using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Commands;
@@ -21,7 +22,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
     private Post _post;
     private DeletePostCommandBuilder _commandBuilder;
 
-    public DeletePostIntegrationTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public DeletePostIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -34,10 +35,10 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [PostIdNullData]
-    [PostIdEmptyData]
-    [PostIdTooShortData]
-    [PostIdTooLongData]
+    [PostIdNullWithMessageData]
+    [PostIdEmptyWithMessageData]
+    [PostIdTooShortWithMessageData]
+    [PostIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(string id, string errorMessage)
     {
         // Arrange

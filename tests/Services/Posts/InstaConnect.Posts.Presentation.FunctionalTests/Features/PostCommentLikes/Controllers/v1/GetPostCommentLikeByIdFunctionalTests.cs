@@ -1,8 +1,10 @@
-﻿namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
+﻿using InstaConnect.Posts.Common.Tests.Features.Utilities;
+
+namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.PostCommentLikes.Controllers.v1;
 
 public class GetPostCommentLikeByIdFunctionalTests : BasePostCommentLikeFunctionalTest
 {
-    public GetPostCommentLikeByIdFunctionalTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetPostCommentLikeByIdFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }

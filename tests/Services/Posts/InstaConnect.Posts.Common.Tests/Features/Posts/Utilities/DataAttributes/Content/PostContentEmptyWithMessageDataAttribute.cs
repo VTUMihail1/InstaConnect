@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities.DataAttributes.String;
+﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Empty;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
 
@@ -10,4 +10,3 @@ public sealed class PostContentEmptyWithMessageDataAttribute : EmptyStringWithMe
     {
     }
 }
-

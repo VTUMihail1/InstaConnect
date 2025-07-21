@@ -26,13 +26,6 @@ public class AddPostApiRequestBuilder
         return this;
     }
 
-    public AddPostApiRequestBuilder WithInvalidUserId(StringVariantType type = StringVariantType.Default)
-    {
-        _objectBuilder.With(p => p.CurrentUserId, UserDataFaker.GetInvalidId(), type);
-
-        return this;
-    }
-
     public AddPostApiRequestBuilder WithTitle(string title, StringVariantType type = StringVariantType.Default)
     {
         _objectBuilder.With(p => p.Body.Title, title, type);

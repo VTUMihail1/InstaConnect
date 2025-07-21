@@ -3,9 +3,9 @@
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Page;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public sealed class PostPageEmptyDataAttribute : EmptyIntWithMessageDataAttribute
+public sealed class PostPageEmptyWithMessageDataAttribute : EmptyIntWithMessageDataAttribute
 {
-    public PostPageEmptyDataAttribute()
+    public PostPageEmptyWithMessageDataAttribute()
         : base(PostErrorMessages.GetPageEmpty())
     {
     }

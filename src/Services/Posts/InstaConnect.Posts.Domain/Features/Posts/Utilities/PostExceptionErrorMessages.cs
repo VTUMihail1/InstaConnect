@@ -1,7 +1,8 @@
 ﻿using InstaConnect.Common.Extensions;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
-namespace InstaConnect.Posts.Domain.Features.Posts.Utilities;
+namespace InstaConnect.Posts.Common.Features.Posts.Utilities;
+
 public static class PostExceptionErrorMessages
 {
     public static string GetNotFoundMessage(string id)

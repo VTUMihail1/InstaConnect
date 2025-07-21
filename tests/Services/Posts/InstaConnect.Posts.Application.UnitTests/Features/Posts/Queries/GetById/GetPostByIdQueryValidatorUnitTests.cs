@@ -16,10 +16,10 @@ public class GetPostByIdQueryValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [PostIdNullData]
-    [PostIdEmptyData]
-    [PostIdTooShortData]
-    [PostIdTooLongData]
+    [PostIdNullWithMessageData]
+    [PostIdEmptyWithMessageData]
+    [PostIdTooShortWithMessageData]
+    [PostIdTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenIdIsInvalid(string id, string errorMessage)
     {
         // Arrange

@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
@@ -15,7 +16,7 @@ public abstract class BasePostIntegrationTest : PostWebTest
 {
     protected IApplicationSender ApplicationSender { get; }
 
-    protected BasePostIntegrationTest(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    protected BasePostIntegrationTest(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
         ApplicationSender = ServiceScope.GetApplicationSender();
     }

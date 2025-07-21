@@ -19,9 +19,3 @@ public class BaseException : Exception
     public override string Message { get; }
     public ExceptionStatus Status { get; }
 }
-
-public interface IApplicationException
-{
-    public string Message { get; }
-    public ExceptionStatus Status { get; }
-}

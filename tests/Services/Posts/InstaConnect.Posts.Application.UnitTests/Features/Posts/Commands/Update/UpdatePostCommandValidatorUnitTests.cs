@@ -21,10 +21,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [PostIdNullData]
-    [PostIdEmptyData]
-    [PostIdTooShortData]
-    [PostIdTooLongData]
+    [PostIdNullWithMessageData]
+    [PostIdEmptyWithMessageData]
+    [PostIdTooShortWithMessageData]
+    [PostIdTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenIdIsInvalid(string id, string errorMessage)
     {
         // Arrange
@@ -55,10 +55,10 @@ public class UpdatePostCommandValidatorUnitTests : BasePostUnitTest
     }
 
     [Theory]
-    [PostTitleNullData]
-    [PostTitleEmptyData]
-    [PostTitleTooShortData]
-    [PostTitleTooLongData]
+    [PostTitleNullWithMessageData]
+    [PostTitleEmptyWithMessageData]
+    [PostTitleTooShortWithMessageData]
+    [PostTitleTooLongWithMessageData]
     public void TestValidate_ShouldHaveAnError_WhenTitleIsInvalid(string title, string errorMessage)
     {
         // Arrange

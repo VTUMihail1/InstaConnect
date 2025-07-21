@@ -15,6 +15,7 @@ using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Ti
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Name;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
@@ -26,7 +27,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     private Post _post;
     private GetAllPostsQueryBuilder _queryBuilder;
 
-    public GetAllPostsQueryHandlerIntegrationTests(PostWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    public GetAllPostsQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {
 
     }
@@ -67,7 +68,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [PostTitleTooLongData]
+    [PostTitleTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsInvalid(string title, string errorMessage)
     {
         // Arrange
@@ -95,7 +96,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [PostSortPropertyEmptyData]
+    [PostSortPropertyEmptyWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(PostSortProperty sortProperty, string errorMessage)
     {
         // Arrange
@@ -110,9 +111,9 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
 
     [Theory]
     [PostPageNullData]
-    [PostPageEmptyData]
-    [PostPageTooSmallData]
-    [PostPageTooLargeData]
+    [PostPageEmptyWithMessageData]
+    [PostPageTooSmallWithMessageData]
+    [PostPageTooLargeWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenPageIsInvalid(int page, string errorMessage)
     {
         // Arrange
@@ -127,9 +128,9 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
 
     [Theory]
     [PostPageSizeNullData]
-    [PostPageSizeEmptyData]
-    [PostPageSizeTooSmallData]
-    [PostPageSizeTooLargeData]
+    [PostPageSizeEmptyWithMessageData]
+    [PostPageSizeTooSmallWithMessageData]
+    [PostPageSizeTooLargeWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeIsInvalid(int pageSize, string errorMessage)
     {
         // Arrange

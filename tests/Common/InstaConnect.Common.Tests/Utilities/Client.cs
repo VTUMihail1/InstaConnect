@@ -8,7 +8,6 @@ namespace InstaConnect.Common.Tests.Utilities;
 
 public static class Client
 {
-
     public static HttpClient AddUserId(this HttpClient httpClient, string userId)
     {
         httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
