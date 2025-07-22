@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 
-internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, GetAllPostsQueryResponse>
+internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQueryRequest, GetAllPostsQueryResponse>
 {
     private readonly IPostService _postService;
     private readonly IApplicationMapper _applicationMapper;
@@ -16,10 +16,10 @@ internal class GetAllPostsQueryHandler : IQueryHandler<GetAllPostsQuery, GetAllP
     }
 
     public async Task<GetAllPostsQueryResponse> Handle(
-        GetAllPostsQuery request,
+        GetAllPostsQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<GetAllPostsRequest>(request);
+        var serviceRequest = _applicationMapper.Map<GetAllPostsQuery>(request);
         var collection = await _postService.GetAllAsync(serviceRequest, cancellationToken);
 
         var response = _applicationMapper.Map<GetAllPostsQueryResponse>(collection);

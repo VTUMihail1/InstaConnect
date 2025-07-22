@@ -10,4 +10,4 @@ public record GetAllPostLikesQuery(
     string SortPropertyName,
     int Page,
     int PageSize)
-    : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQuery<PostLikePaginationQueryViewModel>;
+    : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQueryRequest<PostLikePaginationQueryViewModel>;

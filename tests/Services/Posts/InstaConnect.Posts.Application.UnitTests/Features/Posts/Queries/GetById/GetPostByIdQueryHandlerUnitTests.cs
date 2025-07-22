@@ -1,5 +1,8 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
@@ -9,31 +12,30 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostUnitTest
 {
     private readonly User _user;
     private readonly Post _post;
-    private readonly GetPostByIdQueryBuilder _queryBuilder;
-    private readonly GetPostByIdQueryHandler _queryHandler;
+
+    private readonly GetPostByIdQueryRequest _request;
+    private readonly GetPostByIdQueryRequestBuilder _requestBuilder;
+
+    private readonly GetPostByIdQueryHandler _requestHandler;
 
     public GetPostByIdQueryHandlerUnitTests()
     {
-        _user = new UserBuilder().Create();
-        _post = new PostBuilder(_user).Create();
-        _queryBuilder = new(_post);
-        _queryHandler = new(
-            PostService,
-            ApplicationMapper);
+        _user = UserTestFactory.Create();
+        _post = PostTestFactory.Create(_user);
 
-        var request = _queryBuilder.Create();
+        _requestBuilder = new(_post);
+        _request = _requestBuilder.Create();
 
-        PostService.SetupGetByIdRequest(request, _post, _user, CancellationToken);
+        _requestHandler = new(PostService, ApplicationMapper);
+
+        PostService.SetupGetByIdRequest(_request, _post, _user, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var request = _queryBuilder.Create();
-
         // Act
-        var response = await _queryHandler.Handle(request, CancellationToken);
+        var response = await _requestHandler.Handle(_request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(_post, _user);
@@ -42,13 +44,10 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostUnitTest
     [Fact]
     public async Task Handle_ShouldCallPostServiceGetByIdAsync_WhenRequestIsValid()
     {
-        // Arrange
-        var request = _queryBuilder.Create();
-
         // Act
-        await _queryHandler.Handle(request, CancellationToken);
+        await _requestHandler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostService.ShouldReceiveOneGetByIdAsync(request, CancellationToken);
+        await PostService.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
     }
 }

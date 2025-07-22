@@ -11,4 +11,4 @@ public record GetAllPostCommentLikesQuery(
     string SortPropertyName,
     int Page,
     int PageSize)
-    : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQuery<PostCommentLikePaginationQueryViewModel>;
+    : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQueryRequest<PostCommentLikePaginationQueryViewModel>;

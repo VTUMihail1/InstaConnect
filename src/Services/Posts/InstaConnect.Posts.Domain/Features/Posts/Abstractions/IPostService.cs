@@ -9,13 +9,13 @@ using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
 namespace InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 public interface IPostService
 {
-    public Task<PostCollection> GetAllAsync(GetAllPostsRequest request, CancellationToken cancellationToken);
+    public Task<PostCollection> GetAllAsync(GetAllPostsQuery query, CancellationToken cancellationToken);
 
-    public Task<Post> GetByIdAsync(GetPostByIdRequest request, CancellationToken cancellationToken);
+    public Task<Post> GetByIdAsync(GetPostByIdQuery query, CancellationToken cancellationToken);
 
-    public Task<Post> AddAsync(AddPostRequest request, CancellationToken cancellationToken);
+    public Task<Post> AddAsync(AddPostCommand command, CancellationToken cancellationToken);
 
-    public Task<Post> UpdateAsync(UpdatePostRequest request, CancellationToken cancellationToken);
+    public Task<Post> UpdateAsync(UpdatePostCommand command, CancellationToken cancellationToken);
 
-    public Task DeleteAsync(DeletePostRequest request, CancellationToken cancellationToken);
+    public Task DeleteAsync(DeletePostCommand command, CancellationToken cancellationToken);
 }

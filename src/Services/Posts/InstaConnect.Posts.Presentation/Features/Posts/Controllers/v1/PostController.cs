@@ -30,7 +30,7 @@ public class PostController : ControllerBase
         GetAllPostsApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetAllPostsQuery>(request);
+        var queryRequest = _applicationMapper.Map<GetAllPostsQueryRequest>(request);
         var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
         var response = _applicationMapper.Map<GetAllPostsApiResponse>(queryResponse);
 
@@ -45,7 +45,7 @@ public class PostController : ControllerBase
         GetPostByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetPostByIdQuery>(request);
+        var queryRequest = _applicationMapper.Map<GetPostByIdQueryRequest>(request);
         var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
         var response = _applicationMapper.Map<GetPostByIdApiResponse>(queryResponse);
 
@@ -62,7 +62,7 @@ public class PostController : ControllerBase
         AddPostApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddPostCommand>(request);
+        var commandRequest = _applicationMapper.Map<AddPostCommandRequest>(request);
         var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
         var response = _applicationMapper.Map<AddPostApiResponse>(commandResponse);
 
@@ -79,7 +79,7 @@ public class PostController : ControllerBase
         UpdatePostApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<UpdatePostCommand>(request);
+        var commandRequest = _applicationMapper.Map<UpdatePostCommandRequest>(request);
         var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
         var response = _applicationMapper.Map<UpdatePostApiResponse>(commandResponse);
 
@@ -96,7 +96,7 @@ public class PostController : ControllerBase
         DeletePostApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeletePostCommand>(request);
+        var commandRequest = _applicationMapper.Map<DeletePostCommandRequest>(request);
         await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();

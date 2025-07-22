@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 
-public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, UpdatePostCommandResponse>
+public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommandRequest, UpdatePostCommandResponse>
 {
     private readonly IPostService _postService;
     private readonly IApplicationMapper _applicationMapper;
@@ -14,10 +14,10 @@ public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, Updat
     }
 
     public async Task<UpdatePostCommandResponse> Handle(
-        UpdatePostCommand request,
+        UpdatePostCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<UpdatePostRequest>(request);
+        var serviceRequest = _applicationMapper.Map<UpdatePostCommand>(request);
         var post = await _postService.UpdateAsync(serviceRequest, cancellationToken);
 
         var response = _applicationMapper.Map<UpdatePostCommandResponse>(post);

@@ -3,6 +3,7 @@
 using AutoFixture;
 using AutoFixture.Dsl;
 
+using InstaConnect.Common.Tests.Utilities.Types.DateTimes.Base;
 using InstaConnect.Common.Tests.Utilities.Types.Enums.Base;
 using InstaConnect.Common.Tests.Utilities.Types.Ints.Base;
 using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
@@ -43,6 +44,18 @@ public class ObjectBuilder<T>
         return this;
     }
 
+    public ObjectBuilder<T> With(Expression<Func<T, DateTimeOffset>> propertyPicker, DateTimeOffset value, IDateTimeOffsetTransformer? transformer = null)
+    {
+        if (transformer != null)
+        {
+            value = transformer.Transform(value);
+        }
+
+        _composer.With(propertyPicker, value);
+
+        return this;
+    }
+
     public ObjectBuilder<T> With<TEnum>(Expression<Func<T, TEnum>> propertyPicker, TEnum value, IEnumTransformer<TEnum>? transformer = null)
         where TEnum : Enum
     {
@@ -51,6 +64,13 @@ public class ObjectBuilder<T>
             value = transformer.Transform(value);
         }
 
+        _composer.With(propertyPicker, value);
+
+        return this;
+    }
+
+    public ObjectBuilder<T> With<TValue>(Expression<Func<T, TValue>> propertyPicker, TValue value)
+    {
         _composer.With(propertyPicker, value);
 
         return this;

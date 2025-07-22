@@ -20,7 +20,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
 {
     private User _user;
     private Post _post;
-    private DeletePostCommandBuilder _commandBuilder;
+    private DeletePostCommandRequestBuilder _commandBuilder;
 
     public DeletePostIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {

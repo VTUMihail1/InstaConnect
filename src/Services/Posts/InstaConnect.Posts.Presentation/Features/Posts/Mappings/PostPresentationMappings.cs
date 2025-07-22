@@ -16,7 +16,7 @@ internal class PostPresentationMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<GetAllPostsApiRequest, GetAllPostsQuery>()
+        config.NewConfig<GetAllPostsApiRequest, GetAllPostsQueryRequest>()
             .ConstructUsing(src => new(
                 new(src.Filter.UserId, src.Filter.UserName, src.Filter.Title),
                 new(src.Sorting.Order, src.Sorting.Property),
@@ -39,7 +39,7 @@ internal class PostPresentationMappings : IRegister
                   pc.HasNextPage,
                   pc.HasPreviousPage));
 
-        config.NewConfig<GetPostByIdApiRequest, GetPostByIdQuery>()
+        config.NewConfig<GetPostByIdApiRequest, GetPostByIdQueryRequest>()
             .ConstructUsing(src => new(src.Id));
 
         config.NewConfig<GetPostByIdQueryResponse, GetPostByIdApiResponse>()
@@ -52,19 +52,19 @@ internal class PostPresentationMappings : IRegister
                         src.Data.User.Name,
                         src.Data.User.ProfileImage))));
 
-        config.NewConfig<AddPostApiRequest, AddPostCommand>()
+        config.NewConfig<AddPostApiRequest, AddPostCommandRequest>()
             .ConstructUsing(src => new(src.CurrentUserId, src.Body.Title, src.Body.Content));
 
         config.NewConfig<AddPostCommandResponse, AddPostApiResponse>()
             .ConstructUsing(src => new(src.Id, src.CreatedAt, src.UpdatedAt));
 
-        config.NewConfig<UpdatePostApiRequest, UpdatePostCommand>()
+        config.NewConfig<UpdatePostApiRequest, UpdatePostCommandRequest>()
             .ConstructUsing(src => new(src.Id, src.CurrentUserId, src.Body.Title, src.Body.Content));
 
         config.NewConfig<UpdatePostCommandResponse, UpdatePostApiResponse>()
             .ConstructUsing(src => new(src.Id, src.CreatedAt, src.UpdatedAt));
 
-        config.NewConfig<DeletePostApiRequest, DeletePostCommand>()
+        config.NewConfig<DeletePostApiRequest, DeletePostCommandRequest>()
             .ConstructUsing(src => new(src.Id, src.CurrentUserId));
     }
 }

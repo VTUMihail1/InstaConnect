@@ -40,35 +40,35 @@ internal class PostService : IPostService
         _applicationMapper = applicationMapper;
     }
 
-    public async Task<PostCollection> GetAllAsync(GetAllPostsRequest request, CancellationToken cancellationToken)
+    public async Task<PostCollection> GetAllAsync(GetAllPostsQuery query, CancellationToken cancellationToken)
     {
-        var posts = await _postRepository.GetAllAsync(request, cancellationToken);
+        var posts = await _postRepository.GetAllAsync(query, cancellationToken);
 
         return posts;
     }
 
-    public async Task<Post> GetByIdAsync(GetPostByIdRequest request, CancellationToken cancellationToken)
+    public async Task<Post> GetByIdAsync(GetPostByIdQuery query, CancellationToken cancellationToken)
     {
-        var post = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
+        var post = await _postRepository.GetByIdAsync(query.Id, cancellationToken);
 
         if (post == null)
         {
-            throw new PostNotFoundException(request.Id);
+            throw new PostNotFoundException(query.Id);
         }
 
         return post;
     }
 
-    public async Task<Post> AddAsync(AddPostRequest request, CancellationToken cancellationToken)
+    public async Task<Post> AddAsync(AddPostCommand command, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByIdAsync(request.CurrentUserId, cancellationToken);
+        var user = await _userRepository.GetByIdAsync(command.CurrentUserId, cancellationToken);
 
         if (user == null)
         {
-            throw new UserNotFoundException(request.CurrentUserId);
+            throw new UserNotFoundException(command.CurrentUserId);
         }
 
-        var post = _postFactory.Create(request.CurrentUserId, request.Title, request.Content);
+        var post = _postFactory.Create(command.CurrentUserId, command.Title, command.Content);
         _postRepository.Add(post);
 
         var integrationEvent = _applicationMapper.Map<AddedPostEvent>(post);
@@ -77,22 +77,22 @@ internal class PostService : IPostService
         return post;
     }
 
-    public async Task<Post> UpdateAsync(UpdatePostRequest request, CancellationToken cancellationToken)
+    public async Task<Post> UpdateAsync(UpdatePostCommand command, CancellationToken cancellationToken)
     {
-        var post = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
+        var post = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (post == null)
         {
-            throw new PostNotFoundException(request.Id);
+            throw new PostNotFoundException(command.Id);
         }
 
-        if (post.UserId != request.CurrentUserId)
+        if (post.UserId != command.CurrentUserId)
         {
-            throw new PostForbiddenException(request.Id, request.CurrentUserId);
+            throw new PostForbiddenException(command.Id, command.CurrentUserId);
         }
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
-        post.Update(request.Title, request.Content, utcNow);
+        post.Update(command.Title, command.Content, utcNow);
         _postRepository.Update(post);
 
         var integrationEvent = _applicationMapper.Map<UpdatedPostEvent>(post);
@@ -101,18 +101,18 @@ internal class PostService : IPostService
         return post;
     }
 
-    public async Task DeleteAsync(DeletePostRequest request, CancellationToken cancellationToken)
+    public async Task DeleteAsync(DeletePostCommand command, CancellationToken cancellationToken)
     {
-        var post = await _postRepository.GetByIdAsync(request.Id, cancellationToken);
+        var post = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
 
         if (post == null)
         {
-            throw new PostNotFoundException(request.Id);
+            throw new PostNotFoundException(command.Id);
         }
 
-        if (post.UserId != request.CurrentUserId)
+        if (post.UserId != command.CurrentUserId)
         {
-            throw new PostForbiddenException(request.Id, request.CurrentUserId);
+            throw new PostForbiddenException(command.Id, command.CurrentUserId);
         }
 
         var integrationEvent = _applicationMapper.Map<DeletedPostEvent>(post);

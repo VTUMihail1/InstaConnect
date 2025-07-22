@@ -3,6 +3,6 @@
 public record AddMessageCommand(
     string CurrentUserId,
     string ReceiverId,
-    string Content) : ICommand<MessageCommandViewModel>
+    string Content) : ICommandRequest<MessageCommandViewModel>
 {
 }

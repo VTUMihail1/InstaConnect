@@ -22,7 +22,7 @@ public class PostQueryFactory : IPostQueryFactory
         _postSortPropertyFactory = postSortPropertyFactory;
     }
 
-    public GetAllQuerySpecification CreateGetAll(GetAllPostsRequest queryParameters)
+    public GetAllQuerySpecification CreateGetAll(GetAllPostsQuery queryParameters)
     {
         var sortOrder = _sortOrderFactory.Create(queryParameters.Sorting.Order);
         var sortProperty = _postSortPropertyFactory.Create(queryParameters.Sorting.Property);

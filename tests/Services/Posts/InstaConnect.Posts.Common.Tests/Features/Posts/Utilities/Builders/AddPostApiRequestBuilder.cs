@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Common.Tests.Utilities.Variants.String;
+using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
@@ -19,28 +19,28 @@ public class AddPostApiRequestBuilder
         WithContent(post.Content);
     }
 
-    public AddPostApiRequestBuilder WithUserId(string userId, StringVariantType type = StringVariantType.Default)
+    public AddPostApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.CurrentUserId, userId, type);
+        _objectBuilder.With(p => p.CurrentUserId, userId, transformer);
 
         return this;
     }
 
-    public AddPostApiRequestBuilder WithTitle(string title, StringVariantType type = StringVariantType.Default)
+    public AddPostApiRequestBuilder WithTitle(string title, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.Body.Title, title, type);
+        _objectBuilder.With(p => p.Body.Title, title, transformer);
 
         return this;
     }
 
-    public AddPostApiRequestBuilder WithContent(string content, StringVariantType type = StringVariantType.Default)
+    public AddPostApiRequestBuilder WithContent(string content, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.Body.Content, content, type);
+        _objectBuilder.With(p => p.Body.Content, content, transformer);
 
         return this;
     }
 
-    public AddPostApiRequest Create(StringVariantType type = StringVariantType.Default)
+    public AddPostApiRequest Create(IStringTransformer? transformer = null)
     {
         return _objectBuilder.Create();
     }

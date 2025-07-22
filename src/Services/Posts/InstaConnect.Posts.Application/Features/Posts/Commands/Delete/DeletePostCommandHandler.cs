@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 
-internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
+internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommandRequest>
 {
     private readonly IPostService _postService;
     private readonly IApplicationMapper _applicationMapper;
@@ -16,10 +16,10 @@ internal class DeletePostCommandHandler : ICommandHandler<DeletePostCommand>
     }
 
     public async Task Handle(
-        DeletePostCommand request, 
+        DeletePostCommandRequest request, 
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<DeletePostRequest>(request);
+        var serviceRequest = _applicationMapper.Map<DeletePostCommand>(request);
         await _postService.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

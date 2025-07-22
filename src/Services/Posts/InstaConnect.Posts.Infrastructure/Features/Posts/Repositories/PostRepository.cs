@@ -33,21 +33,21 @@ internal class PostRepository : IPostRepository
         _postCollectionFactory = postCollectionFactory;
     }
 
-    public async Task<PostCollection> GetAllAsync(GetAllPostsRequest request, CancellationToken cancellationToken)
+    public async Task<PostCollection> GetAllAsync(GetAllPostsQuery query, CancellationToken cancellationToken)
     {
         using var connection = _sqlConnectionFactory.Create();
 
-        var getAllQuery = _postQueryFactory.CreateGetAll(request);
+        var getAllQuery = _postQueryFactory.CreateGetAll(query);
         var queryEntity = await connection.ExecuteQueryAsync<PostQueryEntity>(
             getAllQuery.Sql,
             getAllQuery.Parameters,
             cancellationToken);
         var posts = _applicationMapper.Map<ICollection<Post>>(queryEntity.ToList());
 
-        var getAllTotalCountQuery = _postQueryFactory.CreateGetAllTotalCount(request.Filter);
+        var getAllTotalCountQuery = _postQueryFactory.CreateGetAllTotalCount(query.Filter);
         var postsTotalCount = await connection.ExecuteFunctionAsync<int>(getAllTotalCountQuery.Sql, getAllTotalCountQuery.Parameters, cancellationToken);
 
-        var response = _postCollectionFactory.Create(posts, postsTotalCount, request.Pagination);
+        var response = _postCollectionFactory.Create(posts, postsTotalCount, query.Pagination);
 
         return response;
     }

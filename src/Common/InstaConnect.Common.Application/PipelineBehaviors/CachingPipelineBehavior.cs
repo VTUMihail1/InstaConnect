@@ -2,7 +2,7 @@
 
 internal class CachingPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IQuery<TResponse>, ICachable
+    where TRequest : IQueryRequest<TResponse>, ICachable
     where TResponse : class
 {
     private readonly ICacheHandler _cacheHandler;

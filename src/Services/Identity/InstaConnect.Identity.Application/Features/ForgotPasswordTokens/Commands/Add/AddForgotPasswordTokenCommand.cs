@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Identity.Application.Features.ForgotPasswordTokens.Commands.Add;
 
-public record AddForgotPasswordTokenCommand(string Email) : ICommand;
+public record AddForgotPasswordTokenCommand(string Email) : ICommandRequest;

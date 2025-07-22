@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 
-public record AddPostLikeCommand(string CurrentUserId, string PostId) : ICommand<PostLikeCommandViewModel>;
+public record AddPostLikeCommand(string CurrentUserId, string PostId) : ICommandRequest<PostLikeCommandViewModel>;

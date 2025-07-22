@@ -10,11 +10,6 @@ public static class PostDataFaker
         return DataFaker.GetAverageString(PostConfigurations.IdMaxLength, PostConfigurations.IdMinLength);
     }
 
-    public static string GetInvalidId()
-    {
-        return DataFaker.GetAverageString(PostConfigurations.IdMaxLength, PostConfigurations.IdMinLength);
-    }
-
     public static string GetTitle()
     {
         return DataFaker.GetAverageString(PostConfigurations.TitleMaxLength, PostConfigurations.TitleMinLength);
@@ -52,13 +47,6 @@ public static class PostDataFaker
     public static PostSortProperty GetSortProperty()
     {
         const PostSortProperty SortProperty = PostSortProperty.ByCreatedAt;
-
-        return SortProperty;
-    }
-
-    public static PostSortProperty GetEmptySortProperty()
-    {
-        const PostSortProperty SortProperty = PostSortProperty.None;
 
         return SortProperty;
     }

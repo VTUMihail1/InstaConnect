@@ -6,7 +6,7 @@ namespace InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 
 public interface IPostRepository
 {
-    Task<PostCollection> GetAllAsync(GetAllPostsRequest request, CancellationToken cancellationToken);
+    Task<PostCollection> GetAllAsync(GetAllPostsQuery query, CancellationToken cancellationToken);
 
     Task<Post?> GetByIdAsync(string id, CancellationToken cancellationToken);
 

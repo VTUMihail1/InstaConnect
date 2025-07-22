@@ -19,7 +19,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
 {
     private User _user;
     private Post _post;
-    private AddPostCommandBuilder _commandBuilder;
+    private AddPostCommandRequestBuilder _commandBuilder;
 
     public AddPostIntegrationTests(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {

@@ -17,7 +17,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
 {
     private User _user;
     private Post _post;
-    private GetPostByIdQueryBuilder _queryBuilder;
+    private GetPostByIdQueryRequestBuilder _queryBuilder;
 
     public GetPostByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {

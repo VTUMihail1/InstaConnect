@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Common.Tests.Utilities.Variants.String;
+using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
@@ -21,44 +21,30 @@ public class UpdatePostApiRequestBuilder
         WithContent(post.Content);
     }
 
-    public UpdatePostApiRequestBuilder WithId(string id, StringVariantType type = StringVariantType.Default)
+    public UpdatePostApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.Id, id, type);
+        _objectBuilder.With(p => p.Id, id, transformer);
 
         return this;
     }
 
-    public UpdatePostApiRequestBuilder WithInvalidId(StringVariantType type = StringVariantType.Default)
+    public UpdatePostApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.Id, PostDataFaker.GetInvalidId(), type);
+        _objectBuilder.With(p => p.CurrentUserId, userId, transformer);
 
         return this;
     }
 
-    public UpdatePostApiRequestBuilder WithUserId(string userId, StringVariantType type = StringVariantType.Default)
+    public UpdatePostApiRequestBuilder WithTitle(string title, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.CurrentUserId, userId, type);
+        _objectBuilder.With(p => p.Body.Title, title, transformer);
 
         return this;
     }
 
-    public UpdatePostApiRequestBuilder WithInvalidUserId(StringVariantType type = StringVariantType.Default)
+    public UpdatePostApiRequestBuilder WithContent(string content, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.CurrentUserId, UserDataFaker.GetInvalidId(), type);
-
-        return this;
-    }
-
-    public UpdatePostApiRequestBuilder WithTitle(string title, StringVariantType type = StringVariantType.Default)
-    {
-        _objectBuilder.With(p => p.Body.Title, title, type);
-
-        return this;
-    }
-
-    public UpdatePostApiRequestBuilder WithContent(string content, StringVariantType type = StringVariantType.Default)
-    {
-        _objectBuilder.With(p => p.Body.Content, content, type);
+        _objectBuilder.With(p => p.Body.Content, content, transformer);
 
         return this;
     }

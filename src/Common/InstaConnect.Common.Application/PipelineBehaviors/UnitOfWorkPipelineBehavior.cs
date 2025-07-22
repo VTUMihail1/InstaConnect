@@ -2,7 +2,7 @@
 
 internal sealed class UnitOfWorkPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IBaseCommand
+    where TRequest : ICommand
 {
     private readonly IUnitOfWork _unitOfWork;
 

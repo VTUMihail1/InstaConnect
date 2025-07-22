@@ -9,4 +9,4 @@ public record GetAllUsersQuery(
     SortOrder SortOrder,
     string SortPropertyName,
     int Page,
-    int PageSize) : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQuery<UserPaginationQueryViewModel>;
+    int PageSize) : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQueryRequest<UserPaginationQueryViewModel>;

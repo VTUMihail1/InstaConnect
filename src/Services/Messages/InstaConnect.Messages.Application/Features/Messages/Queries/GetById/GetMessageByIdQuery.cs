@@ -1,3 +1,3 @@
 ﻿namespace InstaConnect.Messages.Application.Features.Messages.Queries.GetById;
 
-public record GetMessageByIdQuery(string Id, string CurrentUserId) : IQuery<MessageQueryViewModel>;
+public record GetMessageByIdQuery(string Id, string CurrentUserId) : IQueryRequest<MessageQueryViewModel>;

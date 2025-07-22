@@ -16,7 +16,7 @@ public class PostApplicationMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<GetAllPostsQuery, GetAllPostsRequest>()
+        config.NewConfig<GetAllPostsQueryRequest, GetAllPostsQuery>()
             .ConstructUsing(src => new(
                 new(src.Filter.UserId, src.Filter.UserName, src.Filter.Title),
                 new(src.Sorting.Order, src.Sorting.Property),
@@ -39,7 +39,7 @@ public class PostApplicationMappings : IRegister
                   pc.HasNextPage,
                   pc.HasPreviousPage));
 
-        config.NewConfig<GetPostByIdQuery, GetPostByIdRequest>()
+        config.NewConfig<GetPostByIdQueryRequest, GetPostByIdQuery>()
             .ConstructUsing(src => new(src.Id));
 
         config.NewConfig<Post, GetPostByIdQueryResponse>()
@@ -52,19 +52,19 @@ public class PostApplicationMappings : IRegister
                         src.User!.UserName,
                         src.User.ProfileImage))));
 
-        config.NewConfig<AddPostCommand, AddPostRequest>()
+        config.NewConfig<AddPostCommandRequest, AddPostCommand>()
             .ConstructUsing(src => new(src.CurrentUserId, src.Title, src.Content));
 
         config.NewConfig<Post, AddPostCommandResponse>()
             .ConstructUsing(src => new(src.Id, src.CreatedAt, src.UpdatedAt));
 
-        config.NewConfig<UpdatePostCommand, UpdatePostRequest>()
+        config.NewConfig<UpdatePostCommandRequest, UpdatePostCommand>()
             .ConstructUsing(src => new(src.Id, src.CurrentUserId, src.Title, src.Content));
 
         config.NewConfig<Post, UpdatePostCommandResponse>()
             .ConstructUsing(src => new(src.Id, src.CreatedAt, src.UpdatedAt));
 
-        config.NewConfig<DeletePostCommand, DeletePostRequest>()
+        config.NewConfig<DeletePostCommandRequest, DeletePostCommand>()
             .ConstructUsing(src => new(src.Id, src.CurrentUserId));
     }
 }

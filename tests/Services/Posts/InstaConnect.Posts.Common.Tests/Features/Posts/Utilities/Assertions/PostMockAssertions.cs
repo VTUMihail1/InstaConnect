@@ -56,7 +56,7 @@ public static class PostMockAssertions
 
     public static async Task ShouldReceiveOneGetAllAsync(
         this IPostService postService,
-        GetAllPostsQuery request,
+        GetAllPostsQueryRequest request,
         CancellationToken cancellationToken)
     {
         await postService.Received(1).GetAllAsync(PostMatcher.IsGetAllPostsRequest(request), cancellationToken);
@@ -64,7 +64,7 @@ public static class PostMockAssertions
 
     public static async Task ShouldReceiveOneGetByIdAsync(
         this IPostService postService,
-        GetPostByIdQuery request,
+        GetPostByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
         await postService.Received(1).GetByIdAsync(PostMatcher.IsGetPostByIdRequest(request), cancellationToken);
@@ -72,7 +72,7 @@ public static class PostMockAssertions
 
     public static async Task ShouldReceiveOneAddAsync(
         this IPostService postService,
-        AddPostCommand request,
+        AddPostCommandRequest request,
         CancellationToken cancellationToken)
     {
         await postService.Received(1).AddAsync(PostMatcher.IsAddPostRequest(request), cancellationToken);
@@ -80,7 +80,7 @@ public static class PostMockAssertions
 
     public static async Task ShouldReceiveOneUpdateAsync(
         this IPostService postService,
-        UpdatePostCommand request,
+        UpdatePostCommandRequest request,
         CancellationToken cancellationToken)
     {
         await postService.Received(1).UpdateAsync(PostMatcher.IsUpdatePostRequest(request), cancellationToken);
@@ -88,7 +88,7 @@ public static class PostMockAssertions
 
     public static async Task ShouldReceiveOneDeleteAsync(
         this IPostService postService,
-        DeletePostCommand request,
+        DeletePostCommandRequest request,
         CancellationToken cancellationToken)
     {
         await postService.Received(1).DeleteAsync(PostMatcher.IsDeletePostRequest(request), cancellationToken);

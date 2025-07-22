@@ -22,7 +22,7 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
 {
     private User _user;
     private Post _post;
-    private UpdatePostCommandBuilder _commandBuilder;
+    private UpdatePostCommandRequestBuilder _commandBuilder;
 
     public UpdatePostIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
     {

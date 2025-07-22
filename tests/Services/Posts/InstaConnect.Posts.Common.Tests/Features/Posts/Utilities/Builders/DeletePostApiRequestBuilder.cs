@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Common.Tests.Utilities.Variants.String;
+using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
@@ -19,30 +19,16 @@ public class DeletePostApiRequestBuilder
         WithUserId(post.UserId);
     }
 
-    public DeletePostApiRequestBuilder WithId(string id, StringVariantType type = StringVariantType.Default)
+    public DeletePostApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.Id, id, type);
+        _objectBuilder.With(p => p.Id, id, transformer);
 
         return this;
     }
 
-    public DeletePostApiRequestBuilder WithInvalidId(StringVariantType type = StringVariantType.Default)
+    public DeletePostApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.Id, PostDataFaker.GetInvalidId(), type);
-
-        return this;
-    }
-
-    public DeletePostApiRequestBuilder WithUserId(string userId, StringVariantType type = StringVariantType.Default)
-    {
-        _objectBuilder.With(p => p.CurrentUserId, userId, type);
-
-        return this;
-    }
-
-    public DeletePostApiRequestBuilder WithInvalidUserId(StringVariantType type = StringVariantType.Default)
-    {
-        _objectBuilder.With(p => p.CurrentUserId, UserDataFaker.GetInvalidId(), type);
+        _objectBuilder.With(p => p.CurrentUserId, userId, transformer);
 
         return this;
     }

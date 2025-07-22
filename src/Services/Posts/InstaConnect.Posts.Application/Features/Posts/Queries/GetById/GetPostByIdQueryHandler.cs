@@ -3,7 +3,7 @@ using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 
-internal class GetPostByIdQueryHandler : IQueryHandler<GetPostByIdQuery, GetPostByIdQueryResponse>
+internal class GetPostByIdQueryHandler : IQueryHandler<GetPostByIdQueryRequest, GetPostByIdQueryResponse>
 {
     private readonly IPostService _postService;
     private readonly IApplicationMapper _applicationMapper;
@@ -17,10 +17,10 @@ internal class GetPostByIdQueryHandler : IQueryHandler<GetPostByIdQuery, GetPost
     }
 
     public async Task<GetPostByIdQueryResponse> Handle(
-        GetPostByIdQuery request,
+        GetPostByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var serviceRequest = _applicationMapper.Map<GetPostByIdRequest>(request);
+        var serviceRequest = _applicationMapper.Map<GetPostByIdQuery>(request);
         var post = await _postService.GetByIdAsync(serviceRequest, cancellationToken);
 
         var response = _applicationMapper.Map<GetPostByIdQueryResponse>(post);

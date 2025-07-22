@@ -14,14 +14,14 @@ namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 
 public static class PostMatchAssertions
 {
-    public static void ShouldSatisfy(this Post post, AddPostCommand request)
+    public static void ShouldSatisfy(this Post post, AddPostCommandRequest request)
     {
         post.ShouldSatisfy(p => p.UserId == request.CurrentUserId &&
                                 p.Title == request.Title &&
                                 p.Content == request.Content);
     }
 
-    public static void ShouldSatisfy(this Post post, UpdatePostCommand request)
+    public static void ShouldSatisfy(this Post post, UpdatePostCommandRequest request)
     {
         post.ShouldSatisfy(p => p.Id == request.Id &&
                                 p.UserId == request.CurrentUserId &&
@@ -69,7 +69,7 @@ public static class PostMatchAssertions
             p.Data.Content == post.Content);
     }
 
-    public static void ShouldSatisfy(this GetAllPostsQueryResponse response, Post post, User user, GetAllPostsQuery request)
+    public static void ShouldSatisfy(this GetAllPostsQueryResponse response, Post post, User user, GetAllPostsQueryRequest request)
     {
         response.ShouldSatisfy(pp =>
             pp.Data.All(p =>

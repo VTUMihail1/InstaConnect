@@ -9,4 +9,4 @@ public record AddUserCommand(
     string ConfirmPassword,
     string FirstName,
     string LastName,
-    IFormFile? ProfileImage) : ICommand<UserCommandViewModel>;
+    IFormFile? ProfileImage) : ICommandRequest<UserCommandViewModel>;

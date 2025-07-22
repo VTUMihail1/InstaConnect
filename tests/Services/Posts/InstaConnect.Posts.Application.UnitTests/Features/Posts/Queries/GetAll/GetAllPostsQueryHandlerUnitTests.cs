@@ -1,4 +1,6 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
@@ -8,46 +10,42 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
 {
     private readonly User _user;
     private readonly Post _post;
-    private readonly GetAllPostsQueryBuilder _queryBuilder;
-    private readonly GetAllPostsQueryHandler _queryHandler;
+
+    private readonly GetAllPostsQueryRequest _request;
+    private readonly GetAllPostsQueryRequestBuilder _requestBuilder;
+
+    private readonly GetAllPostsQueryHandler _requestHandler;
 
     public GetAllPostsQueryHandlerUnitTests()
     {
-        _user = new UserBuilder().Create();
-        _post = new PostBuilder(_user).Create();
-        _queryBuilder = new(_post, _user);
-        _queryHandler = new(
-            PostService,
-            ApplicationMapper);
+        _user = UserTestFactory.Create();
+        _post = PostTestFactory.Create(_user);
 
-        var request = _queryBuilder.Create();
+        _requestBuilder = new(_post, _user);
+        _request = _requestBuilder.Create();
 
-        PostService.SetupGetAllRequest(request, _post, _user, CancellationToken);
+        _requestHandler = new(PostService, ApplicationMapper);
+
+        PostService.SetupGetAllRequest(_request, _post, _user, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var request = _queryBuilder.Create();
-
         // Act
-        var response = await _queryHandler.Handle(request, CancellationToken);
+        var response = await _requestHandler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, request);
+        response.ShouldSatisfy(_post, _user, _request);
     }
 
     [Fact]
     public async Task Handle_ShouldCallPostServiceGetAllAsync_WhenRequestIsValid()
     {
-        // Arrange
-        var request = _queryBuilder.Create();
-
         // Act
-        await _queryHandler.Handle(request, CancellationToken);
+        await _requestHandler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostService.ShouldReceiveOneGetAllAsync(request, CancellationToken);
+        await PostService.ShouldReceiveOneGetAllAsync(_request, CancellationToken);
     }
 }

@@ -12,11 +12,6 @@ public static class UserDataFaker
         return DataFaker.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
     }
 
-    public static string GetInvalidId()
-    {
-        return DataFaker.GetAverageString(UserConfigurations.IdMaxLength, UserConfigurations.IdMinLength);
-    }
-
     public static string GetName()
     {
         return DataFaker.GetAverageString(UserConfigurations.NameMaxLength, UserConfigurations.NameMinLength);

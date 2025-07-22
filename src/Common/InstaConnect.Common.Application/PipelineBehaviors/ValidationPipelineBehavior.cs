@@ -6,7 +6,7 @@ namespace InstaConnect.Common.Application.PipelineBehaviors;
 
 internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IBaseCommand, IBaseQuery
+    where TRequest : ICommand, IQuery
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 

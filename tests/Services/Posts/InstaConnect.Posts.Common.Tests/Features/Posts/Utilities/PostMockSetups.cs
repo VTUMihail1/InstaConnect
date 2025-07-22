@@ -100,7 +100,7 @@ public static class PostMockSetups
 
     public static void SetupGetAllRequest(
         this IPostService postService,
-        GetAllPostsQuery request,
+        GetAllPostsQueryRequest request,
         Post post,
         User user,
         CancellationToken cancellationToken)
@@ -121,7 +121,7 @@ public static class PostMockSetups
 
     public static void SetupGetByIdRequest(
         this IPostService postService,
-        GetPostByIdQuery request,
+        GetPostByIdQueryRequest request,
         Post post,
         User user,
         CancellationToken cancellationToken)
@@ -133,7 +133,7 @@ public static class PostMockSetups
 
     public static void SetupAddRequest(
         this IPostService postService,
-        AddPostCommand request,
+        AddPostCommandRequest request,
         Post post,
         CancellationToken cancellationToken)
     {
@@ -144,7 +144,7 @@ public static class PostMockSetups
 
     public static void SetupUpdateRequest(
         this IPostService postService,
-        UpdatePostCommand request,
+        UpdatePostCommandRequest request,
         Post post,
         CancellationToken cancellationToken)
     {

@@ -1,4 +1,6 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Add;
@@ -7,31 +9,30 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
 {
     private readonly User _user;
     private readonly Post _post;
-    private readonly AddPostCommandBuilder _commandBuilder;
-    private readonly AddPostCommandHandler _commandHandler;
+
+    private readonly AddPostCommandRequest _request;
+    private readonly AddPostCommandRequestBuilder _requestBuilder;
+
+    private readonly AddPostCommandHandler _handler;
 
     public AddPostCommandHandlerUnitTests()
     {
-        _user = new UserBuilder().Create();
-        _post = new PostBuilder(_user).Create();
-        _commandBuilder = new(_post);
-        _commandHandler = new(
-            PostService,
-            ApplicationMapper);
+        _user = UserTestFactory.Create();
+        _post = PostTestFactory.Create(_user);
 
-        var request = _commandBuilder.Create();
+        _requestBuilder = new(_post);
+        _request = _requestBuilder.Create();
 
-        PostService.SetupAddRequest(request, _post, CancellationToken);
+        _handler = new(PostService, ApplicationMapper);
+
+        PostService.SetupAddRequest(_request, _post, CancellationToken);
     }
 
     [Fact]
     public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var request = _commandBuilder.Create();
-
         // Act
-        var response = await _commandHandler.Handle(request, CancellationToken);
+        var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(_post);
@@ -40,13 +41,10 @@ public class AddPostCommandHandlerUnitTests : BasePostUnitTest
     [Fact]
     public async Task Handle_ShouldCallPostServiceAddAsync_WhenRequestIsValid()
     {
-        // Arrange
-        var request = _commandBuilder.Create();
-
         // Act
-        await _commandHandler.Handle(request, CancellationToken);
+        await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostService.ShouldReceiveOneAddAsync(request, CancellationToken);
+        await PostService.ShouldReceiveOneAddAsync(_request, CancellationToken);
     }
 }

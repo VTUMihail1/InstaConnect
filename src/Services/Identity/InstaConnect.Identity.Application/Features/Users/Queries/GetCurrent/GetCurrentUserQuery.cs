@@ -4,7 +4,7 @@ using InstaConnect.Identity.Application.Features.Users.Utilities;
 
 namespace InstaConnect.Identity.Application.Features.Users.Queries.GetCurrent;
 
-public record GetCurrentUserQuery(string CurrentUserId) : IQuery<UserQueryViewModel>, ICachable
+public record GetCurrentUserQuery(string CurrentUserId) : IQueryRequest<UserQueryViewModel>, ICachable
 {
     private const int EXPIRATION_SECONDS = 1500;
 

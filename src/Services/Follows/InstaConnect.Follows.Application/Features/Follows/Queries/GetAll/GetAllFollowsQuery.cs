@@ -11,4 +11,4 @@ public record GetAllFollowsQuery(
     string SortPropertyName,
     int Page,
     int PageSize)
-    : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQuery<FollowPaginationQueryViewModel>;
+    : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQueryRequest<FollowPaginationQueryViewModel>;

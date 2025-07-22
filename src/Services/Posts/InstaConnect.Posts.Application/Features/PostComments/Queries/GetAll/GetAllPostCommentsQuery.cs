@@ -10,4 +10,4 @@ public record GetAllPostCommentsQuery(
     string SortPropertyName,
     int Page,
     int PageSize)
-    : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQuery<PostCommentPaginationQueryViewModel>;
+    : CollectionModel(SortOrder, SortPropertyName, Page, PageSize), IQueryRequest<PostCommentPaginationQueryViewModel>;

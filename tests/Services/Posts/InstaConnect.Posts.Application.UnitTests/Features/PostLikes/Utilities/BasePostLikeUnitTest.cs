@@ -85,7 +85,7 @@ public abstract class BasePostLikeUnitTest
             .Returns(post);
 
         PostReadRepository
-            .GetAllAsync(Arg.Is<GetAllPostsRequest>(m =>
+            .GetAllAsync(Arg.Is<GetAllPostsQuery>(m =>
                                                                         m.Title == post.Title &&
                                                                         m.UserId == user.Id &&
                                                                         m.UserName == user.UserName &&
