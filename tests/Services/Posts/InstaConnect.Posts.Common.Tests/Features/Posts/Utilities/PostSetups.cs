@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Infrastructure;
@@ -31,7 +32,7 @@ public static class PostSetups
         string id,
         CancellationToken cancellationToken)
     {
-        var postRepository = serviceScope.ServiceProvider.GetRequiredService<IPostRepository>();
+        var postRepository = serviceScope.GetPostRepository();
         var post = await postRepository.GetByIdAsync(id, cancellationToken);
 
         return post;
@@ -42,7 +43,7 @@ public static class PostSetups
         User user,
         CancellationToken cancellationToken)
     {
-        var post = new PostBuilder(user).Create();
+        var post = PostTestFactory.Create(user);
 
         var unitOfWork = serviceScope.GetUnitOfWork();
         var postRepository = serviceScope.GetPostRepository();

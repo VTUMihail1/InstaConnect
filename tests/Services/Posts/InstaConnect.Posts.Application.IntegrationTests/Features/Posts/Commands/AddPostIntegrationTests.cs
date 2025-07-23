@@ -1,14 +1,12 @@
-﻿using InstaConnect.Common.Tests.Utilities.DataAttributes;
-using InstaConnect.Common.Tests.Utilities.DataAttributes.String;
-using InstaConnect.Common.Tests.Utilities.DataAttributes.String.Value;
-using InstaConnect.Common.Tests.Utilities.Variants.String;
+﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
@@ -19,9 +17,12 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
 {
     private User _user;
     private Post _post;
-    private AddPostCommandRequestBuilder _commandBuilder;
 
-    public AddPostIntegrationTests(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
+    private AddPostCommandRequest _request;
+    private AddPostCommandRequestBuilder _requestBuilder;
+
+    public AddPostIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
     {
 
     }
@@ -29,8 +30,10 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     protected override async Task OnInitializeAsync()
     {
         _user = await ServiceScope.AddUserAsync(CancellationToken);
-        _post = new PostBuilder(_user).Create();
-        _commandBuilder = new(_post);
+        _post = PostTestFactory.Create(_user);
+
+        _requestBuilder = new(_post);
+        _request = _requestBuilder.Create();
     }
 
     [Theory]
@@ -38,10 +41,11 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     [UserIdEmptyWithMessageData]
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(string userId, string errorMessage)
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _commandBuilder.WithUserId(userId).Create();
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -55,10 +59,11 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     [PostTitleEmptyWithMessageData]
     [PostTitleTooShortWithMessageData]
     [PostTitleTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsInvalid(string title, string errorMessage)
+    public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _commandBuilder.WithTitle(title).Create();
+        var request = _requestBuilder.WithTitle(_request.Title, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -72,10 +77,11 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     [PostContentEmptyWithMessageData]
     [PostContentTooShortWithMessageData]
     [PostContentTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenContentIsInvalid(string content, string errorMessage)
+    public async Task SendAsync_ShouldThrowValidationException_WhenContentIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _commandBuilder.WithContent(content).Create();
+        var request = _requestBuilder.WithContent(_request.Content, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -84,11 +90,13 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
+    [Theory]
+    [UserIdNotFoundData]
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _commandBuilder.WithInvalidUserId().Create();
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -100,11 +108,8 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var request = _commandBuilder.Create();
-
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
         var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
@@ -112,11 +117,12 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [DifferentCaseStringVariantTypeData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValidAndUserIdHasDifferentVariants(StringVariantType type)
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _commandBuilder.WithUserId(_user.Id, type).Create();
+        var request = _requestBuilder.WithUserId(_user.Id, transformer).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
@@ -129,23 +135,21 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     [Fact]
     public async Task SendAsync_ShouldAddPost_WhenRequestIsValid()
     {
-        // Arrange
-        var request = _commandBuilder.Create();
-
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
         var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        post.ShouldSatisfy(request);
+        post.ShouldSatisfy(_request);
     }
 
     [Theory]
-    [DifferentCaseStringVariantTypeData]
-    public async Task SendAsync_ShouldAddPost_WhenRequestIsValidAndUserIdHasDifferentVariants(StringVariantType type)
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldAddPost_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _commandBuilder.WithUserId(_user.Id, type).Create();
+        var request = _requestBuilder.WithUserId(_user.Id, transformer).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);

@@ -1,18 +1,15 @@
-﻿using System.Data.Common;
-
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums;
-using InstaConnect.Common.Tests.Utilities.DataAttributes.String;
-using InstaConnect.Common.Tests.Utilities.Variants.String;
+﻿using InstaConnect.Common.Models.Enums;
+using InstaConnect.Common.Tests.Utilities.Types.Enums;
+using InstaConnect.Common.Tests.Utilities.Types.Enums.Base;
+using InstaConnect.Common.Tests.Utilities.Types.Ints.Base;
+using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Page;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.PageSize;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.SortProperty;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
-using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Name;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
@@ -25,9 +22,12 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
 {
     private User _user;
     private Post _post;
-    private GetAllPostsQueryRequestBuilder _queryBuilder;
 
-    public GetAllPostsQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    private GetAllPostsQueryRequest _request;
+    private GetAllPostsQueryRequestBuilder _requestBuilder;
+
+    public GetAllPostsQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory)
+        : base(postsWebApplicationFactory)
     {
 
     }
@@ -36,15 +36,18 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     {
         _user = await ServiceScope.AddUserAsync(CancellationToken);
         _post = await ServiceScope.AddPostAsync(_user, CancellationToken);
-        _queryBuilder = new(_post, _user);
+
+        _requestBuilder = new(_post, _user);
+        _request = _requestBuilder.Create();
     }
 
     [Theory]
     [UserIdTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(string userId, string errorMessage)
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _queryBuilder.WithUserId(userId).Create();
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -55,10 +58,11 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
 
     [Theory]
     [UserNameTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserNameIsInvalid(string userName, string errorMessage)
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserNameIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _queryBuilder.WithUserName(userName).Create();
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -69,10 +73,11 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
 
     [Theory]
     [PostTitleTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsInvalid(string title, string errorMessage)
+    public async Task SendAsync_ShouldThrowValidationException_WhenTitleIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _queryBuilder.WithTitle(title).Create();
+        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -83,10 +88,11 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
 
     [Theory]
     [SortOrderEmptyWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(SortOrder sortOrder, string errorMessage)
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
+        IEnumTransformer<SortOrder> transformer, string errorMessage)
     {
         // Arrange
-        var request = _queryBuilder.WithSortOrder(sortOrder).Create();
+        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -97,10 +103,11 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
 
     [Theory]
     [PostSortPropertyEmptyWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(PostSortProperty sortProperty, string errorMessage)
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(
+        IEnumTransformer<PostSortProperty> transformer, string errorMessage)
     {
         // Arrange
-        var request = _queryBuilder.WithSortProperty(sortProperty).Create();
+        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -110,14 +117,14 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [PostPageNullData]
     [PostPageEmptyWithMessageData]
     [PostPageTooSmallWithMessageData]
     [PostPageTooLargeWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenPageIsInvalid(int page, string errorMessage)
+    public async Task SendAsync_ShouldThrowValidationException_WhenPageIsInvalid(
+        IIntTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _queryBuilder.WithPage(page).Create();
+        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -127,14 +134,14 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [PostPageSizeNullData]
     [PostPageSizeEmptyWithMessageData]
     [PostPageSizeTooSmallWithMessageData]
     [PostPageSizeTooLargeWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeIsInvalid(int pageSize, string errorMessage)
+    public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeIsInvalid(
+        IIntTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _queryBuilder.WithPageSize(pageSize).Create();
+        var request = _requestBuilder.WithPageSize(_request.Pagination.PageSize, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -146,8 +153,22 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
+        // Act
+        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(_post, _user, _request);
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
         // Arrange
-        var request = _queryBuilder.Create();
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
@@ -157,13 +178,14 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [NullStringVariantTypeData]
-    [EmptyStringVariantTypeData]
-    [DifferentCaseStringVariantTypeData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValidAndUserIdHasDifferentVariants(StringVariantType type)
+    [UserNameNullData]
+    [UserNameEmptyData]
+    [UserNameDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserNameAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _queryBuilder.WithUserId(_user.Id, type).Create();
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
@@ -173,30 +195,14 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
     }
 
     [Theory]
-    [NullStringVariantTypeData]
-    [EmptyStringVariantTypeData]
-    [DifferentCaseStringVariantTypeData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValidAndUserNameHasDifferentVariants(StringVariantType type)
+    [PostTitleNullData]
+    [PostTitleEmptyData]
+    [PostTitleDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndTitleAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _queryBuilder.WithUserName(_user.UserName, type).Create();
-
-        // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfy(_post, _user, request);
-    }
-
-    [Theory]
-    [NullStringVariantTypeData]
-    [EmptyStringVariantTypeData]
-    [PrefixStringVariantTypeData]
-    [DifferentCaseStringVariantTypeData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValidAndTitleHasDifferentVariants(StringVariantType type)
-    {
-        // Arrange
-        var request = _queryBuilder.WithTitle(_post.Title, type).Create();
+        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);

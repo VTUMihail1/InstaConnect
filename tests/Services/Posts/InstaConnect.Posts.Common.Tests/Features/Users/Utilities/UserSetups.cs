@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-using InstaConnect.Common.Application.Abstractions;
+﻿using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
-using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
-using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Infrastructure;
 
@@ -32,7 +22,7 @@ public static class UserSetups
         string id,
         CancellationToken cancellationToken)
     {
-        var userRepository = serviceScope.ServiceProvider.GetRequiredService<IUserRepository>();
+        var userRepository = serviceScope.GetUserRepository();
         var user = await userRepository.GetByIdAsync(id, cancellationToken);
 
         return user;
@@ -42,9 +32,9 @@ public static class UserSetups
         this IServiceScope serviceScope,
         CancellationToken cancellationToken)
     {
-        var user = new UserBuilder().Create();
-        var unitOfWork = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        var userRepository = serviceScope.ServiceProvider.GetRequiredService<IUserRepository>();
+        var user = UserTestFactory.Create();
+        var unitOfWork = serviceScope.GetUnitOfWork();
+        var userRepository = serviceScope.GetUserRepository();
 
         userRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);

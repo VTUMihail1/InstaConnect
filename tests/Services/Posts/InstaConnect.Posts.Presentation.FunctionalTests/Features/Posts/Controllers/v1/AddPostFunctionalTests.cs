@@ -1,7 +1,9 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
@@ -22,7 +24,7 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     protected override async Task OnInitializeAsync()
     {
         _user = await ServiceScope.AddUserAsync(CancellationToken);
-        _post = new PostBuilder(_user).Create();
+        _post = PostTestFactory.Create(_user);
         _requestBuilder = new(_post);
     }
 
@@ -53,10 +55,10 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     }
 
     [Theory]
-    [UserIdNullWithMessageData]
-    [UserIdEmptyWithMessageData]
-    [UserIdTooShortWithMessageData]
-    [UserIdTooLongWithMessageData]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
     public async Task AddAsync_ShouldHaveBadRequestStatusCode_WhenUserIdIsInvalid(string userId)
     {
         // Arrange

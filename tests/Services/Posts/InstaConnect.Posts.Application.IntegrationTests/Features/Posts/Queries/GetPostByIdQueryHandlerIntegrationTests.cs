@@ -1,9 +1,4 @@
-﻿using System.Data.Common;
-
-using InstaConnect.Common.Exceptions;
-using InstaConnect.Common.Tests.Utilities.DataAttributes.String;
-using InstaConnect.Common.Tests.Utilities.DataAttributes.String.Value;
-using InstaConnect.Common.Tests.Utilities.Variants.String;
+﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
@@ -17,9 +12,12 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
 {
     private User _user;
     private Post _post;
-    private GetPostByIdQueryRequestBuilder _queryBuilder;
 
-    public GetPostByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    private GetPostByIdQueryRequest _request;
+    private GetPostByIdQueryRequestBuilder _requestBuilder;
+
+    public GetPostByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory)
+        : base(postsWebApplicationFactory)
     {
     }
 
@@ -27,7 +25,9 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
     {
         _user = await ServiceScope.AddUserAsync(CancellationToken);
         _post = await ServiceScope.AddPostAsync(_user, CancellationToken);
-        _queryBuilder = new(_post);
+
+        _requestBuilder = new(_post);
+        _request = _requestBuilder.Create();
     }
 
     [Theory]
@@ -35,10 +35,11 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
     [PostIdEmptyWithMessageData]
     [PostIdTooShortWithMessageData]
     [PostIdTooLongWithMessageData]
-    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(string id, string errorMessage)
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _queryBuilder.WithId(id).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -47,38 +48,38 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
         await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid()
+    [Theory]
+    [PostIdNotFoundData]
+    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _queryBuilder.WithInvalidId().Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(_post.Id);
+        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
     }
 
     [Fact]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var request = _queryBuilder.Create();
-
         // Act
-        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(_post, _user);
     }
 
     [Theory]
-    [DifferentCaseStringVariantTypeData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValidAndIdHasDifferentVariants(StringVariantType type)
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValidAndIdHasDifferentVariants(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _queryBuilder.WithId(_post.Id, type).Create();
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);

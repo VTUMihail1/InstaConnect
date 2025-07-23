@@ -10,4 +10,3 @@ public sealed class PostIdTooShortWithMessageDataAttribute : LengthStringWithMes
     {
     }
 }
-

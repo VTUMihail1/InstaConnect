@@ -8,9 +8,9 @@ using Xunit.Sdk;
 namespace InstaConnect.Common.Tests.Utilities.Types.Ints.Empty;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public abstract class EmptyIntWithDataAttribute : IntDataAttribute
+public abstract class EmptyIntDataAttribute : IntDataAttribute
 {
-    protected EmptyIntWithDataAttribute() : base(new EmptyIntTransformer())
+    protected EmptyIntDataAttribute() : base(new EmptyIntTransformer())
     {
     }
 }

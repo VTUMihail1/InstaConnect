@@ -1,5 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Average;
-using InstaConnect.Common.Tests.Utilities.Types.Strings.Length;
+﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Length;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 
