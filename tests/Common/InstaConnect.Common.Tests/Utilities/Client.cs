@@ -10,16 +10,6 @@ namespace InstaConnect.Common.Tests.Utilities;
 
 public static class Client
 {
-    public static HttpClient AddUserId(this HttpClient httpClient, string userId)
-    {
-        httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
-        {
-            { ClaimTypes.NameIdentifier, userId }
-        });
-
-        return httpClient;
-    }
-
     public static async Task<HttpStatusCode> GetStatusCodeAsync(this HttpClient httpClient, string route, CancellationToken cancellationToken)
     {
         var response = await httpClient.GetAsync(route, cancellationToken);
@@ -27,10 +17,9 @@ public static class Client
         return response.StatusCode;
     }
 
-    public static async Task<ProblemDetails> GetProblemDetailsAsync<T>(
+    public static async Task<ProblemDetails> GetProblemDetailsAsync(
         this HttpClient httpClient,
         string route,
-        T request,
         CancellationToken cancellationToken)
     {
         var responseMessage = await httpClient.GetAsync(route, cancellationToken);
@@ -106,6 +95,27 @@ public static class Client
         var response = await httpClient.DeleteAsync(route, cancellationToken);
 
         return response.StatusCode;
+    }
+
+    public static async Task<ProblemDetails> DeleteProblemDetailsAsync(
+        this HttpClient httpClient,
+        string route,
+        CancellationToken cancellationToken)
+    {
+        var responseMessage = await httpClient.DeleteAsync(route, cancellationToken);
+        var response = await responseMessage.ReadProblemDetailsFromJsonAsync(cancellationToken);
+
+        return response!;
+    }
+
+    public static HttpClient AddUserId(this HttpClient httpClient, string userId)
+    {
+        httpClient.SetFakeJwtBearerToken(new Dictionary<string, object>()
+        {
+            { ClaimTypes.NameIdentifier, userId }
+        });
+
+        return httpClient;
     }
 
     public static HttpClient AddAdmin(this HttpClient httpClient, string userId)

@@ -1,4 +1,8 @@
-﻿using InstaConnect.Common.Application.Abstractions;
+﻿using System.Security.Cryptography.Xml;
+
+using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
@@ -8,12 +12,16 @@ using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
+using Microsoft.Extensions.Localization;
+
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class AddPostFunctionalTests : BasePostFunctionalTest
 {
     private User _user;
     private Post _post;
+
+    private AddPostApiRequest _request;
     private AddPostApiRequestBuilder _requestBuilder;
 
     public AddPostFunctionalTests(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
@@ -25,17 +33,16 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     {
         _user = await ServiceScope.AddUserAsync(CancellationToken);
         _post = PostTestFactory.Create(_user);
+
         _requestBuilder = new(_post);
+        _request = _requestBuilder.Create();
     }
 
     [Fact]
     public async Task AddAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
     {
-        // Arrange
-        var request = _requestBuilder.Create();
-
         // Act
-        var response = await HttpClient.AddPostStatusCodeUnauthorizedAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostStatusCodeUnauthorizedAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeUnauthorized();
@@ -44,11 +51,8 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     [Fact]
     public async Task AddAsync_ShouldReturnUnauthorizedProblemDetails_WhenRequestIsUnauthorized()
     {
-        // Arrange
-        var request = _requestBuilder.Create();
-
         // Act
-        var response = await HttpClient.AddPostProblemDetailsUnauthorizedAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostProblemDetailsUnauthorizedAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldSatisfyUnauthorized();
@@ -59,10 +63,11 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     [UserIdEmptyData]
     [UserIdTooShortData]
     [UserIdTooLongData]
-    public async Task AddAsync_ShouldHaveBadRequestStatusCode_WhenUserIdIsInvalid(string userId)
+    public async Task AddAsync_ShouldHaveBadRequestStatusCode_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(userId).Create();
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
 
         // Act
         var response = await HttpClient.AddPostStatusCodeAsync(request, CancellationToken);
@@ -76,10 +81,11 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     [UserIdEmptyWithMessageData]
     [UserIdTooShortWithMessageData]
     [UserIdTooLongWithMessageData]
-    public async Task AddAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(string userId, string errorMessage)
+    public async Task AddAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(userId).Create();
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
 
         // Act
         var response = await HttpClient.AddPostProblemDetailsAsync(request, CancellationToken);
@@ -88,217 +94,184 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
         response.ShouldSatisfyBadRequest(errorMessage);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid()
+    [Theory]
+    [PostTitleNullData]
+    [PostTitleEmptyData]
+    [PostTitleTooShortData]
+    [PostTitleTooLongData]
+    public async Task AddAsync_ShouldHaveBadRequestStatusCode_WhenTitleIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithInvalidUserId().Create();
+        var request = _requestBuilder.WithUserId(_request.Body.Title, transformer).Create();
 
         // Act
-        var action = await HttpClient.SendAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowUserNotFoundExceptionAsync(request.CurrentUserId);
-    }
-
-    [Fact]
-    public async Task AddAsync_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
-    {
-        // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostApiRequest(
-            existingUser.Id,
-            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
-        );
-
-        // Act
-        var response = await HttpClient.AddStatusCodeUnauthorizedAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Fact]
-    public async Task AddAsync_ShouldReturnBadRequestResponse_WhenTitleIsNull()
-    {
-        // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostApiRequest(
-            existingUser.Id,
-            new(null, PostTestUtilities.ValidAddContent)
-        );
-
-        // Act
-        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldBeBadRequest();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostConfigurations.TitleMinLength - 1)]
-    [InlineData(PostConfigurations.TitleMaxLength + 1)]
-    public async Task AddAsync_ShouldReturnBadRequestResponse_WhenTitleLengthIsInvalid(int length)
+    [PostTitleNullWithMessageData]
+    [PostTitleEmptyWithMessageData]
+    [PostTitleTooShortWithMessageData]
+    [PostTitleTooLongWithMessageData]
+    public async Task AddAsync_ShouldHaveBadRequestProblemDetails_WhenTitleIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostApiRequest(
-            existingUser.Id,
-            new(DataFaker.GetString(length), PostTestUtilities.ValidAddContent)
-        );
+        var request = _requestBuilder.WithUserId(_request.Body.Title, transformer).Create();
 
         // Act
-        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
-    }
-
-    [Fact]
-    public async Task AddAsync_ShouldReturnBadRequestResponse_WhenContentIsNull()
-    {
-        // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostApiRequest(
-            existingUser.Id,
-            new(PostTestUtilities.ValidAddTitle, null)
-        );
-
-        // Act
-        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldSatisfyBadRequest(errorMessage);
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostConfigurations.ContentMinLength - 1)]
-    [InlineData(PostConfigurations.ContentMaxLength + 1)]
-    public async Task AddAsync_ShouldReturnBadRequestResponse_WhenContentLengthIsInvalid(int length)
+    [PostContentNullData]
+    [PostContentEmptyData]
+    [PostContentTooShortData]
+    [PostContentTooLongData]
+    public async Task AddAsync_ShouldHaveBadRequestStatusCode_WhenContentIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostApiRequest(
-            existingUser.Id,
-            new(PostTestUtilities.ValidAddTitle, DataFaker.GetString(length))
-        );
+        var request = _requestBuilder.WithUserId(_request.Body.Content, transformer).Create();
 
         // Act
-        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
-    }
-
-    [Fact]
-    public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdIsNull()
-    {
-        // Arrange
-        var request = new AddPostApiRequest(
-            null,
-            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
-        );
-
-        // Act
-        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldBeBadRequest();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task AddAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
+    [PostContentNullWithMessageData]
+    [PostContentEmptyWithMessageData]
+    [PostContentTooShortWithMessageData]
+    [PostContentTooLongWithMessageData]
+    public async Task AddAsync_ShouldHaveBadRequestProblemDetails_WhenContentIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = new AddPostApiRequest(
-            DataFaker.GetString(length),
-            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
-        );
+        var request = _requestBuilder.WithUserId(_request.Body.Content, transformer).Create();
 
         // Act
-        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldSatisfyBadRequest(errorMessage);
+    }
+
+    [Theory]
+    [UserIdNotFoundData]
+    public async Task AddAsync_ShouldHaveNotFoundStatusCode_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        var response = await HttpClient.AddPostStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNotFound();
+    }
+
+    [Theory]
+    [UserIdNotFoundData]
+    public async Task AddAsync_ShouldHaveNotFoundProblemDetails_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        var response = await HttpClient.AddPostProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyPostNotFoundProblemDetails(request.CurrentUserId);
     }
 
     [Fact]
-    public async Task AddAsync_ShouldReturnNotFoundResponse_WhenCurrentUserIsInvalid()
+    public async Task AddAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
     {
-        // Arrange
-        var request = new AddPostApiRequest(
-            UserTestUtilities.InvalidId,
-            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
-        );
-
         // Act
-        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostStatusCodeAsync(_request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.NotFound);
+        response.ShouldBeOk();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task AddAsync_ShouldHaveOkStatusCode_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_user.Id, transformer).Create();
+
+        // Act
+        var response = await HttpClient.AddPostStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeOk();
     }
 
     [Fact]
-    public async Task AddAsync_ShouldReturnOkResponse_WhenRequestIsValid()
+    public async Task AddAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostApiRequest(
-            existingUser.Id,
-            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
-        );
-
         // Act
-        var response = await HttpClient.AddStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.AddPostAsync(_request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.OK);
+        response.ShouldSatisfy(post);
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task AddAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_user.Id, transformer).Create();
+
+        // Act
+        var response = await HttpClient.AddPostAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(post);
     }
 
     [Fact]
     public async Task AddAsync_ShouldAddPost_WhenRequestIsValid()
     {
-        // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var request = new AddPostApiRequest(
-            existingUser.Id,
-            new(PostTestUtilities.ValidAddTitle, PostTestUtilities.ValidAddContent)
-        );
-
         // Act
-        var response = await HttpClient.AddAsync(request, CancellationToken);
-
-        var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
+        var response = await HttpClient.AddPostAsync(_request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        post
-            .Should()
-            .Match<Post>(m => m.Id == response.Id &&
-                                 m.UserId == existingUser.Id &&
-                                 m.Content == PostTestUtilities.ValidAddContent &&
-                                 m.Title == PostTestUtilities.ValidAddTitle);
+        post.ShouldSatisfy(_request);
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task AddAsync_ShouldAddPost_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_user.Id, transformer).Create();
+
+        // Act
+        var response = await HttpClient.AddPostAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+
+        // Assert
+        post.ShouldSatisfy(request);
     }
 }

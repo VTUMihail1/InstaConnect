@@ -21,6 +21,17 @@ public static class Assertions
         obj.Should().Match(predicate);
     }
 
+    public static void ShouldSatisfy(this ProblemDetails details, int statusCode)
+    {
+        details.ShouldSatisfy(d => d.Status == statusCode);
+    }
+
+    public static void ShouldSatisfy(this ProblemDetails details, int statusCode, string errorMessage)
+    {
+        details.ShouldSatisfy(d => d.Status == statusCode &&
+                                   d.Detail == errorMessage);
+    }
+
     public static void ShouldBeNull<T>(this T obj)
     {
         obj.Should().BeNull();
@@ -59,17 +70,6 @@ public static class Assertions
     public static void ShouldBeForbidden(this HttpStatusCode statusCode)
     {
         statusCode.ShouldBe(HttpStatusCode.Forbidden);
-    }
-
-    public static void ShouldSatisfy(this ProblemDetails details, int statusCode)
-    {
-        details.ShouldSatisfy(d => d.Status == statusCode);
-    }
-
-    public static void ShouldSatisfy(this ProblemDetails details, int statusCode, string errorMessage)
-    {
-        details.ShouldSatisfy(d => d.Status == statusCode &&
-                                   d.Detail == errorMessage);
     }
 
     public static void ShouldSatisfyBadRequest(this ProblemDetails problemDetails, string errorMessage)

@@ -20,7 +20,8 @@ public static class PostClient
         CancellationToken cancellationToken)
     {
         var route = PostTestRoutes.GetAll(request);
-        var response = await httpClient.GetStatusCodeAsync(route, cancellationToken);
+        var response = await httpClient
+            .GetStatusCodeAsync(route, cancellationToken);
 
         return response;
     }
@@ -31,7 +32,8 @@ public static class PostClient
         CancellationToken cancellationToken)
     {
         var route = PostTestRoutes.GetAll(request);
-        var response = await httpClient.GetFromJsonAsync<ProblemDetails>(route, cancellationToken);
+        var response = await httpClient
+            .GetProblemDetailsAsync(route, cancellationToken);
 
         return response!;
     }
@@ -42,7 +44,8 @@ public static class PostClient
         CancellationToken cancellationToken)
     {
         var route = PostTestRoutes.GetAll(request);
-        var response = await httpClient.GetFromJsonAsync<GetAllPostsApiResponse>(route, cancellationToken);
+        var response = await httpClient
+            .GetFromJsonAsync<GetAllPostsApiResponse>(route, cancellationToken);
 
         return response!;
     }
@@ -64,7 +67,8 @@ public static class PostClient
         CancellationToken cancellationToken)
     {
         var route = PostTestRoutes.GetId(request.Id);
-        var response = await httpClient.GetStatusCodeAsync(route, cancellationToken);
+        var response = await httpClient
+            .GetStatusCodeAsync(route, cancellationToken);
 
         return response;
     }
@@ -75,7 +79,8 @@ public static class PostClient
         CancellationToken cancellationToken)
     {
         var route = PostTestRoutes.GetId(request.Id);
-        var response = await httpClient.GetFromJsonAsync<ProblemDetails>(route, cancellationToken);
+        var response = await httpClient
+            .GetProblemDetailsAsync(route, cancellationToken);
 
         return response!;
     }
@@ -86,7 +91,8 @@ public static class PostClient
         CancellationToken cancellationToken)
     {
         var route = PostTestRoutes.GetId(request.Id);
-        var response = await httpClient.GetFromJsonAsync<GetPostByIdApiResponse>(route, cancellationToken);
+        var response = await httpClient
+            .GetFromJsonAsync<GetPostByIdApiResponse>(route, cancellationToken);
 
         return response!;
     }
@@ -124,7 +130,7 @@ public static class PostClient
         var route = PostTestRoutes.GetDefault();
         var response = await httpClient
             .AddUserId(request.CurrentUserId)
-            .PostAsync<AddPostApiBody, ProblemDetails>(route, request.Body, cancellationToken);
+            .PostProblemDetailsAsync(route, request.Body, cancellationToken);
 
         return response!;
     }
@@ -136,7 +142,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetDefault();
         var response = await httpClient
-            .PostAsync<AddPostApiBody, ProblemDetails>(route, request.Body, cancellationToken);
+            .PostProblemDetailsAsync(route, request.Body, cancellationToken);
 
         return response!;
     }
@@ -167,6 +173,18 @@ public static class PostClient
         return response;
     }
 
+    public static async Task<HttpStatusCode> UpdatePostStatusCodeUnauthorizedAsync(
+        this HttpClient httpClient,
+        UpdatePostApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        var route = PostTestRoutes.GetId(request.Id);
+        var response = await httpClient
+            .PutStatusCodeAsync(route, request.Body, cancellationToken);
+
+        return response;
+    }
+
     public static async Task<ProblemDetails> UpdatePostProblemDetailsAsync(
         this HttpClient httpClient,
         UpdatePostApiRequest request,
@@ -175,7 +193,7 @@ public static class PostClient
         var route = PostTestRoutes.GetId(request.Id);
         var response = await httpClient
             .AddUserId(request.CurrentUserId)
-            .PutAsync<UpdatePostApiBody, ProblemDetails>(route, request.Body, cancellationToken);
+            .PutProblemDetailsAsync(route, request.Body, cancellationToken);
 
         return response!;
     }
@@ -187,21 +205,9 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetId(request.Id);
         var response = await httpClient
-            .PutAsync<UpdatePostApiBody, ProblemDetails>(route, request.Body, cancellationToken);
+            .PutProblemDetailsAsync(route, request.Body, cancellationToken);
 
         return response!;
-    }
-
-    public static async Task<HttpStatusCode> UpdatePostStatusCodeUnauthorizedAsync(
-        this HttpClient httpClient,
-        UpdatePostApiRequest request,
-        CancellationToken cancellationToken)
-    {
-        var route = PostTestRoutes.GetId(request.Id);
-        var response = await httpClient
-            .PutStatusCodeAsync(route, request.Body, cancellationToken);
-
-        return response;
     }
 
     public static async Task<UpdatePostApiResponse> UpdatePostAsync(
@@ -230,6 +236,18 @@ public static class PostClient
         return response;
     }
 
+    public static async Task<HttpStatusCode> DeletePostStatusCodeUnauthorizedAsync(
+        this HttpClient httpClient,
+        DeletePostApiRequest request,
+        CancellationToken cancellationToken)
+    {
+        var route = PostTestRoutes.GetId(request.Id);
+        var response = await httpClient
+            .DeleteStatusCodeAsync(route, cancellationToken);
+
+        return response;
+    }
+
     public static async Task<ProblemDetails> DeletePostProblemDetailsAsync(
         this HttpClient httpClient,
         DeletePostApiRequest request,
@@ -238,7 +256,7 @@ public static class PostClient
         var route = PostTestRoutes.GetId(request.Id);
         var response = await httpClient
             .AddUserId(request.CurrentUserId)
-            .DeleteFromJsonAsync<ProblemDetails>(route, cancellationToken);
+            .DeleteProblemDetailsAsync(route, cancellationToken);
 
         return response!;
     }
@@ -250,21 +268,9 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetId(request.Id);
         var response = await httpClient
-            .DeleteFromJsonAsync<ProblemDetails>(route, cancellationToken);
+            .DeleteProblemDetailsAsync(route, cancellationToken);
 
         return response!;
-    }
-
-    public static async Task<HttpStatusCode> DeletePostStatusCodeUnauthorizedAsync(
-        this HttpClient httpClient,
-        DeletePostApiRequest request,
-        CancellationToken cancellationToken)
-    {
-        var route = PostTestRoutes.GetId(request.Id);
-        var response = await httpClient
-            .DeleteStatusCodeAsync(route, cancellationToken);
-
-        return response;
     }
 
     public static async Task DeletePostAsync(

@@ -1,11 +1,13 @@
 ﻿using FluentAssertions;
 
+using InstaConnect.Common.Exceptions.Users;
 using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 using Microsoft.AspNetCore.Mvc;
@@ -168,5 +170,19 @@ public static class PostMatchAssertions
             pp.TotalCount == pp.Data.Count &&
             pp.HasPreviousPage == pp.Page > 1 &&
             pp.HasNextPage == pp.Page * pp.PageSize < pp.TotalCount);
+    }
+    public static void ShouldSatisfyPostNotFoundProblemDetails(
+        this ProblemDetails problemDetails,
+        string id)
+    {
+        problemDetails.ShouldSatisfyNotFound(PostExceptionErrorMessages.GetNotFoundMessage(id));
+    }
+
+    public static void ShouldSatisfyPostForbiddenProblemDetails(
+        this ProblemDetails problemDetails,
+        string id,
+        string userId)
+    {
+        problemDetails.ShouldSatisfyForbidden(PostExceptionErrorMessages.GetForbiddenMessage(id, userId));
     }
 }
