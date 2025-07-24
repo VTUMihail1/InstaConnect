@@ -3,9 +3,30 @@
 namespace InstaConnect.Common.Extensions;
 public static class StringExtensions
 {
-    public static string FormatInvariant(this string format, params object[] args)
+    public static string FormatInvariantCulture(this string format, params object[] args)
     {
         var result = string.Format(CultureInfo.InvariantCulture, format, args);
+
+        return result;
+    }
+
+    public static bool EqualsNull(this object? obj)
+    {
+        var result = Equals(obj, null);
+
+        return result;
+    }
+
+    public static bool EqualsOrdinalIgnoreCase(this string a, string b)
+    {
+        var result = string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
+
+        return result;
+    }
+
+    public static bool NotEqualsOrdinalIgnoreCase(this string a, string b)
+    {
+        var result = !a.EqualsOrdinalIgnoreCase(b);
 
         return result;
     }

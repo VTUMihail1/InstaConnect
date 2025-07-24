@@ -174,7 +174,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, request);
+        response.ShouldSatisfy(_post, _user, _request);
     }
 
     [Theory]
@@ -191,7 +191,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, request);
+        response.ShouldSatisfy(_post, _user, _request);
     }
 
     [Theory]
@@ -208,6 +208,6 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, request);
+        response.ShouldSatisfy(_post, _user, _request);
     }
 }

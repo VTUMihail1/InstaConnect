@@ -1,192 +1,272 @@
-﻿using InstaConnect.Posts.Common.Tests.Features.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
+
+using Microsoft.AspNetCore.TestHost;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class DeletePostFunctionalTests : BasePostFunctionalTest
 {
-    public DeletePostFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    private User _user;
+    private Post _post;
+
+    private DeletePostApiRequest _request;
+    private DeletePostApiRequestBuilder _requestBuilder;
+
+    public DeletePostFunctionalTests(PostsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
     {
 
     }
 
-    [Fact]
-    public async Task DeleteAsync_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
+    protected override async Task OnInitializeAsync()
     {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostApiRequest(
-            existingPost.Id,
-            existingPost.UserId
-        );
+        _user = await ServiceScope.AddUserAsync(CancellationToken);
+        _post = PostTestFactory.Create(_user);
 
+        _requestBuilder = new(_post);
+        _request = _requestBuilder.Create();
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
+    {
         // Act
-        var response = await HttpClient.DeleteStatusCodeUnauthorizedAsync(request, CancellationToken);
+        var response = await HttpClient.DeletePostStatusCodeUnauthorizedAsync(_request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.Unauthorized);
+        response.ShouldBeUnauthorized();
+    }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldReturnUnauthorizedProblemDetails_WhenRequestIsUnauthorized()
+    {
+        // Act
+        var response = await HttpClient.DeletePostProblemDetailsUnauthorizedAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyUnauthorized();
     }
 
     [Theory]
-    [InlineData(PostConfigurations.IdMinLength - 1)]
-    [InlineData(PostConfigurations.IdMaxLength + 1)]
-    public async Task DeleteAsync_ShouldReturnBadRequestResponse_WhenIdIsInvalid(int length)
+    [PostIdNullData]
+    [PostIdEmptyData]
+    [PostIdTooShortData]
+    [PostIdTooLongData]
+    public async Task DeleteAsync_ShouldHaveBadRequestStatusCode_WhenIdIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostApiRequest(
-            DataFaker.GetString(length),
-            existingPost.UserId
-        );
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.DeletePostStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
-    }
-
-    [Fact]
-    public async Task DeleteAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdIsNull()
-    {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostApiRequest(
-            existingPost.Id,
-            null
-        );
-
-        // Act
-        var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldBeBadRequest();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task DeleteAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
+    [PostIdNullWithMessageData]
+    [PostIdEmptyWithMessageData]
+    [PostIdTooShortWithMessageData]
+    [PostIdTooLongWithMessageData]
+    public async Task DeleteAsync_ShouldHaveBadRequestProblemDetails_WhenIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostApiRequest(
-            existingPost.Id,
-            DataFaker.GetString(length)
-        );
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.DeletePostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldSatisfyBadRequest(errorMessage);
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
+    public async Task DeleteAsync_ShouldHaveBadRequestStatusCode_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        var response = await HttpClient.DeletePostStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public async Task DeleteAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        var response = await HttpClient.DeletePostProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyBadRequest(errorMessage);
+    }
+
+    [Theory]
+    [PostIdNotFoundData]
+    public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var response = await HttpClient.DeletePostStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNotFound();
+    }
+
+    [Theory]
+    [PostIdNotFoundData]
+    public async Task DeleteAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var response = await HttpClient.DeletePostProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyPostNotFoundProblemDetails(request.Id);
+    }
+
+    [Theory]
+    [UserIdNotFoundData]
+    public async Task DeleteAsync_ShouldHaveForbiddenStatusCode_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        var response = await HttpClient.DeletePostStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeForbidden();
+    }
+
+    [Theory]
+    [UserIdNotFoundData]
+    public async Task DeleteAsync_ShouldHavePostForbiddenProblemDetails_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        var response = await HttpClient.DeletePostProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyPostForbiddenProblemDetails(request.Id, request.CurrentUserId);
     }
 
     [Fact]
-    public async Task DeleteAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
+    public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostApiRequest(
-            PostTestUtilities.InvalidId,
-            existingPost.UserId
-        );
-
         // Act
-        var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.DeletePostStatusCodeAsync(_request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.NotFound);
+        response.ShouldBeNoContent();
     }
 
-    [Fact]
-    public async Task DeleteAsync_ShouldReturnForbiddenResponse_WhenCurrentUserIdDoesNotOwnThePostIdInvalid()
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostApiRequest(
-            existingPost.Id,
-            existingUser.Id
-        );
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.DeletePostStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.Forbidden);
+        response.ShouldBeNoContent();
     }
 
-    [Fact]
-    public async Task DeleteAsync_ShouldReturnNoContentResponse_WhenRequestIsValid()
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldHaveNoContentStatusCode_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostApiRequest(
-            existingPost.Id,
-            existingPost.UserId
-        );
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
 
         // Act
-        var response = await HttpClient.DeleteStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.DeletePostStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.NoContent);
+        response.ShouldBeNoContent();
     }
 
     [Fact]
     public async Task DeleteAsync_ShouldDeletePost_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostApiRequest(
-            existingPost.Id,
-            existingPost.UserId
-        );
-
         // Act
-        await HttpClient.DeleteAsync(request, CancellationToken);
-
-        var message = await PostWriteRepository.GetByIdAsync(existingPost.Id, CancellationToken);
+        await HttpClient.DeletePostAsync(_request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(_request.Id, CancellationToken);
 
         // Assert
-        message
-            .Should()
-            .BeNull();
+        post.ShouldBeNull();
     }
 
-    [Fact]
-    public async Task DeleteAsync_ShouldDeletePost_WhenRequestIsValidAndIdDoesNotMatchCase()
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldDeletePost_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new DeletePostApiRequest(
-            DataFaker.GetDifferentCaseString(existingPost.Id),
-            existingPost.UserId
-        );
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        await HttpClient.DeleteAsync(request, CancellationToken);
-
-        var message = await PostWriteRepository.GetByIdAsync(existingPost.Id, CancellationToken);
+        await HttpClient.DeletePostAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(_request.Id, CancellationToken);
 
         // Assert
-        message
-            .Should()
-            .BeNull();
+        post.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldDeletePost_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        await HttpClient.DeletePostAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(_request.Id, CancellationToken);
+
+        // Assert
+        post.ShouldBeNull();
     }
 }

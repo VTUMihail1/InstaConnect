@@ -15,7 +15,7 @@ public static class CommonExceptionErrorMessages
     public static string GetSortOrderNotSupportedMessage(SortOrder sortOrder)
     {
         const string Format = "SortOrder(type: {0}) is not supported";
-        var result = Format.FormatInvariant(sortOrder);
+        var result = Format.FormatInvariantCulture(sortOrder);
 
         return result;
     }

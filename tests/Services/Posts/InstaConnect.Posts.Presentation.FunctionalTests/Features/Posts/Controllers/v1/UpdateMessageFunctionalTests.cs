@@ -1,314 +1,383 @@
-﻿using InstaConnect.Posts.Common.Tests.Features.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class UpdatePostFunctionalTests : BasePostFunctionalTest
 {
-    public UpdatePostFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    private User _user;
+    private Post _post;
+
+    private UpdatePostApiRequest _request;
+    private UpdatePostApiRequestBuilder _requestBuilder;
+
+    public UpdatePostFunctionalTests(PostsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
     {
 
     }
 
-    [Fact]
-    public async Task UpdateAsync_ShouldReturnUnauthorizedResponse_WhenUserIsUnauthorized()
+    protected override async Task OnInitializeAsync()
     {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            existingPost.Id,
-            existingPost.UserId,
-            new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
-        );
+        _user = await ServiceScope.AddUserAsync(CancellationToken);
+        _post = PostTestFactory.Create(_user);
 
+        _requestBuilder = new(_post);
+        _request = _requestBuilder.Create();
+    }
+
+    [Fact]
+    public async Task UpdateAsync_ShouldReturnUnauthorizedStatusCode_WhenRequestIsUnauthorized()
+    {
         // Act
-        var response = await HttpClient.UpdateStatusCodeUnauthorizedAsync(request, CancellationToken);
+        var response = await HttpClient.UpdatePostStatusCodeUnauthorizedAsync(_request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.Unauthorized);
+        response.ShouldBeUnauthorized();
+    }
+
+    [Fact]
+    public async Task UpdateAsync_ShouldReturnUnauthorizedProblemDetails_WhenRequestIsUnauthorized()
+    {
+        // Act
+        var response = await HttpClient.UpdatePostProblemDetailsUnauthorizedAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyUnauthorized();
     }
 
     [Theory]
-    [InlineData(PostConfigurations.IdMinLength - 1)]
-    [InlineData(PostConfigurations.IdMaxLength + 1)]
-    public async Task UpdateAsync_ShouldReturnBadRequestResponse_WhenIdIsInvalid(int length)
+    [PostIdNullData]
+    [PostIdEmptyData]
+    [PostIdTooShortData]
+    [PostIdTooLongData]
+    public async Task UpdateAsync_ShouldHaveBadRequestStatusCode_WhenIdIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            DataFaker.GetString(length),
-            existingPost.UserId,
-            new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
-        );
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
-    }
-
-    [Fact]
-    public async Task UpdateAsync_ShouldReturnBadRequestResponse_WhenTitleIsNull()
-    {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            existingPost.Id,
-            existingPost.UserId,
-            new(null, PostTestUtilities.ValidUpdateContent)
-        );
-
-        // Act
-        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldBeBadRequest();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostConfigurations.TitleMinLength - 1)]
-    [InlineData(PostConfigurations.TitleMaxLength + 1)]
-    public async Task UpdateAsync_ShouldReturnBadRequestResponse_WhenTitleLengthIsInvalid(int length)
+    [PostIdNullWithMessageData]
+    [PostIdEmptyWithMessageData]
+    [PostIdTooShortWithMessageData]
+    [PostIdTooLongWithMessageData]
+    public async Task UpdateAsync_ShouldHaveBadRequestProblemDetails_WhenIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            existingPost.Id,
-            existingPost.UserId,
-            new(DataFaker.GetString(length), PostTestUtilities.ValidUpdateContent)
-        );
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
-    }
-
-    [Fact]
-    public async Task UpdateAsync_ShouldReturnBadRequestResponse_WhenContentIsNull()
-    {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            existingPost.Id,
-            existingPost.UserId,
-            new(PostTestUtilities.ValidUpdateTitle, null)
-        );
-
-        // Act
-        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldSatisfyBadRequest(errorMessage);
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostConfigurations.ContentMinLength - 1)]
-    [InlineData(PostConfigurations.ContentMaxLength + 1)]
-    public async Task UpdateAsync_ShouldReturnBadRequestResponse_WhenContentLengthIsInvalid(int length)
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdTooShortData]
+    [UserIdTooLongData]
+    public async Task UpdateAsync_ShouldHaveBadRequestStatusCode_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            existingPost.Id,
-            existingPost.UserId,
-            new(PostTestUtilities.ValidUpdateTitle, DataFaker.GetString(length))
-        );
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
 
         // Act
-        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
-    }
-
-    [Fact]
-    public async Task UpdateAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdIsNull()
-    {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            existingPost.Id,
-            null,
-            new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
-        );
-
-        // Act
-        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldBeBadRequest();
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task UpdateAsync_ShouldReturnBadRequestResponse_WhenCurrentUserIdLengthIsInvalid(int length)
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public async Task UpdateAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            existingPost.Id,
-            DataFaker.GetString(length),
-            new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
-        );
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
 
         // Act
-        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldSatisfyBadRequest(errorMessage);
+    }
+
+    [Theory]
+    [PostTitleNullData]
+    [PostTitleEmptyData]
+    [PostTitleTooShortData]
+    [PostTitleTooLongData]
+    public async Task UpdateAsync_ShouldHaveBadRequestStatusCode_WhenTitleIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithTitle(_request.Body.Title, transformer).Create();
+
+        // Act
+        var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [PostTitleNullWithMessageData]
+    [PostTitleEmptyWithMessageData]
+    [PostTitleTooShortWithMessageData]
+    [PostTitleTooLongWithMessageData]
+    public async Task UpdateAsync_ShouldHaveBadRequestProblemDetails_WhenTitleIsInvalid(
+        IStringTransformer transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithTitle(_request.Body.Title, transformer).Create();
+
+        // Act
+        var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyBadRequest(errorMessage);
+    }
+
+    [Theory]
+    [PostContentNullData]
+    [PostContentEmptyData]
+    [PostContentTooShortData]
+    [PostContentTooLongData]
+    public async Task UpdateAsync_ShouldHaveBadRequestStatusCode_WhenContentIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithContent(_request.Body.Content, transformer).Create();
+
+        // Act
+        var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [PostContentNullWithMessageData]
+    [PostContentEmptyWithMessageData]
+    [PostContentTooShortWithMessageData]
+    [PostContentTooLongWithMessageData]
+    public async Task UpdateAsync_ShouldHaveBadRequestProblemDetails_WhenContentIsInvalid(
+        IStringTransformer transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithContent(_request.Body.Content, transformer).Create();
+
+        // Act
+        var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyBadRequest(errorMessage);
+    }
+
+    [Theory]
+    [PostIdNotFoundData]
+    public async Task UpdateAsync_ShouldHaveNotFoundStatusCode_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNotFound();
+    }
+
+    [Theory]
+    [PostIdNotFoundData]
+    public async Task UpdateAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyPostNotFoundProblemDetails(request.Id);
+    }
+
+    [Theory]
+    [UserIdNotFoundData]
+    public async Task UpdateAsync_ShouldHaveForbiddenStatusCode_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeForbidden();
+    }
+
+    [Theory]
+    [UserIdNotFoundData]
+    public async Task UpdateAsync_ShouldHavePostForbiddenProblemDetails_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyPostForbiddenProblemDetails(request.Id, request.CurrentUserId);
     }
 
     [Fact]
-    public async Task UpdateAsync_ShouldReturnNotFoundResponse_WhenIdIsInvalid()
+    public async Task UpdateAsync_ShouldHaveNoContentStatusCode_WhenRequestIsValid()
     {
-        // Arrange\
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            PostTestUtilities.InvalidId,
-            existingPost.UserId,
-            new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
-        );
-
         // Act
-        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdatePostStatusCodeAsync(_request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.NotFound);
+        response.ShouldBeNoContent();
+    }
+
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task UpdateAsync_ShouldHaveNoContentStatusCode_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNoContent();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task UpdateAsync_ShouldHaveNoContentStatusCode_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeNoContent();
     }
 
     [Fact]
-    public async Task UpdateAsync_ShouldReturnForbiddenResponse_WhenCurrentUserIdDoesNotOwnThePostIdInvalid()
+    public async Task UpdateAsync_ShouldHaveResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            existingPost.Id,
-            existingUser.Id,
-            new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
-        );
-
         // Act
-        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdatePostAsync(_request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.Forbidden);
+        response.ShouldSatisfy(_post);
     }
 
-    [Fact]
-    public async Task UpdateAsync_ShouldReturnOkResponse_WhenRequestIsValid()
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task UpdateAsync_ShouldHaveResponse_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            existingPost.Id,
-            existingPost.UserId,
-            new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
-        );
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var response = await HttpClient.UpdateStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.OK);
+        response.ShouldSatisfy(_post);
     }
 
-    [Fact]
-    public async Task UpdateAsync_ShouldReturnPostViewModel_WhenRequestIsValid()
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task UpdateAsync_ShouldHaveResponse_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            existingPost.Id,
-            existingPost.UserId,
-            new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
-        );
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
 
         // Act
-        var response = await HttpClient.UpdateAsync(request, CancellationToken);
+        var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
 
         // Assert
-
-        response
-            .Should()
-            .Match<PostCommandResponse>(m => m.Id == existingPost.Id);
+        response.ShouldSatisfy(_post);
     }
 
     [Fact]
     public async Task UpdateAsync_ShouldUpdatePost_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            existingPost.Id,
-            existingPost.UserId,
-            new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
-        );
-
         // Act
-        var response = await HttpClient.UpdateAsync(request, CancellationToken);
+        await HttpClient.UpdatePostAsync(_request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(_request.Id, CancellationToken);
 
-        var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
-
-        // Arrange
-        post
-            .Should()
-            .Match<Post>(m => m.Id == response.Id &&
-                                 m.UserId == existingPost.UserId &&
-                                 m.Title == PostTestUtilities.ValidUpdateTitle &&
-                                 m.Content == PostTestUtilities.ValidUpdateContent);
+        // Assert
+        post.ShouldSatisfy(_request);
     }
 
-    [Fact]
-    public async Task UpdateAsync_ShouldUpdatePost_WhenRequestIsValidAndIdCaseDoesNotMatch()
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task UpdateAsync_ShouldUpdatePost_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new UpdatePostApiRequest(
-            DataFaker.GetDifferentCaseString(existingPost.Id),
-            existingPost.UserId,
-            new(PostTestUtilities.ValidUpdateTitle, PostTestUtilities.ValidUpdateContent)
-        );
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var response = await HttpClient.UpdateAsync(request, CancellationToken);
+        await HttpClient.UpdatePostAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(_request.Id, CancellationToken);
 
-        var post = await PostWriteRepository.GetByIdAsync(response.Id, CancellationToken);
+        // Assert
+        post.ShouldSatisfy(_request);
+    }
 
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task UpdateAsync_ShouldUpdatePost_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
         // Arrange
-        post
-            .Should()
-            .Match<Post>(m => m.Id == response.Id &&
-                                 m.UserId == existingPost.UserId &&
-                                 m.Title == PostTestUtilities.ValidUpdateTitle &&
-                                 m.Content == PostTestUtilities.ValidUpdateContent);
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        await HttpClient.UpdatePostAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(_request.Id, CancellationToken);
+
+        // Assert
+        post.ShouldSatisfy(_request);
     }
 }

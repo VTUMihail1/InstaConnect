@@ -156,6 +156,6 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
 
         // Assert
-        post.ShouldSatisfy(request);
+        post.ShouldSatisfy(_request);
     }
 }

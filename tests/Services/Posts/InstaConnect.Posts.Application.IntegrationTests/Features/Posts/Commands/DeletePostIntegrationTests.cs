@@ -83,12 +83,13 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         await action.ShouldThrowPostNotFoundExceptionAsync(request.Id);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowPostForbiddenException_WhenUserIdIsInvalid()
+    [Theory]
+    [UserIdNotFoundData]
+    public async Task SendAsync_ShouldThrowPostForbiddenException_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var user = await ServiceScope.AddUserAsync(CancellationToken);
-        var request = _requestBuilder.WithUserId(user.Id).Create();
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);

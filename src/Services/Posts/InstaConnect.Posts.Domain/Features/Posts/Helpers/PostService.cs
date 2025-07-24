@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Common.Abstractions;
 using InstaConnect.Common.Exceptions.Users;
+using InstaConnect.Common.Extensions;
 using InstaConnect.Common.Helpers;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
@@ -51,19 +52,19 @@ internal class PostService : IPostService
     {
         var post = await _postRepository.GetByIdAsync(query.Id, cancellationToken);
 
-        if (post == null)
+        if (post.EqualsNull())
         {
             throw new PostNotFoundException(query.Id);
         }
 
-        return post;
+        return post!;
     }
 
     public async Task<Post> AddAsync(AddPostCommand command, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetByIdAsync(command.CurrentUserId, cancellationToken);
 
-        if (user == null)
+        if (user.EqualsNull())
         {
             throw new UserNotFoundException(command.CurrentUserId);
         }
@@ -81,12 +82,12 @@ internal class PostService : IPostService
     {
         var post = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
 
-        if (post == null)
+        if (post.EqualsNull())
         {
             throw new PostNotFoundException(command.Id);
         }
 
-        if (post.UserId != command.CurrentUserId)
+        if (post!.UserId.NotEqualsOrdinalIgnoreCase(command.CurrentUserId))
         {
             throw new PostForbiddenException(command.Id, command.CurrentUserId);
         }
@@ -105,12 +106,12 @@ internal class PostService : IPostService
     {
         var post = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
 
-        if (post == null)
+        if (post.EqualsNull())
         {
             throw new PostNotFoundException(command.Id);
         }
 
-        if (post.UserId != command.CurrentUserId)
+        if (post!.UserId.NotEqualsOrdinalIgnoreCase(command.CurrentUserId))
         {
             throw new PostForbiddenException(command.Id, command.CurrentUserId);
         }

@@ -1,439 +1,386 @@
-﻿using InstaConnect.Posts.Common.Tests.Features.Utilities;
+﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Common.Models.Enums;
+using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Common.Tests.Utilities.Types.Enums;
+using InstaConnect.Common.Tests.Utilities.Types.Enums.Base;
+using InstaConnect.Common.Tests.Utilities.Types.Ints.Base;
+using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Page;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.PageSize;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.SortProperty;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Name;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
 public class GetAllPostsFunctionalTests : BasePostFunctionalTest
 {
-    public GetAllPostsFunctionalTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    private User _user;
+    private Post _post;
+
+    private GetAllPostsApiRequest _request;
+    private GetAllPostsApiRequestBuilder _requestBuilder;
+
+    public GetAllPostsFunctionalTests(PostsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
     {
 
+    }
+
+    protected override async Task OnInitializeAsync()
+    {
+        _user = await ServiceScope.AddUserAsync(CancellationToken);
+        _post = PostTestFactory.Create(_user);
+
+        _requestBuilder = new(_post, _user);
+        _request = _requestBuilder.Create();
     }
 
     [Theory]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenUserIdLengthIsInvalid(int length)
+    [UserIdTooLongData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            DataFaker.GetString(length),
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
 
         // Act
-        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldBeBadRequest();
     }
 
     [Theory]
-    [InlineData(UserConfigurations.NameMinLength - 1)]
-    [InlineData(UserConfigurations.NameMaxLength + 1)]
-    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenUserNameLengthIsInvalid(int length)
+    [UserIdTooLongWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenUserIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            DataFaker.GetString(length),
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
 
         // Act
-        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldSatisfyBadRequest(errorMessage);
     }
 
     [Theory]
-    [InlineData(PostConfigurations.TitleMinLength - 1)]
-    [InlineData(PostConfigurations.TitleMaxLength + 1)]
-    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenTitleLengthIsInvalid(int length)
+    [UserNameTooLongData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenUserNameIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            DataFaker.GetString(length),
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
 
         // Act
-        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPostDoesNotContainProperty()
-    {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.InvalidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldBeBadRequest();
     }
 
     [Theory]
-    [InlineData(SharedConfigurations.SortPropertyMinLength - 1)]
-    [InlineData(SharedConfigurations.SortPropertyMaxLength + 1)]
-    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenSortPropertyNameLengthIsInvalid(int length)
+    [UserNameTooLongWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenUserNameIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            DataFaker.GetString(length),
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
 
         // Act
-        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldSatisfyBadRequest(errorMessage);
     }
 
     [Theory]
-    [InlineData(SharedConfigurations.PageMinValue - 1)]
-    [InlineData(SharedConfigurations.PageMaxValue + 1)]
-    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageValueIsInvalid(int value)
+    [PostTitleTooLongData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenTitleIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            value,
-            PostTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
 
         // Act
-        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldBeBadRequest();
     }
-
-
 
     [Theory]
-    [InlineData(SharedConfigurations.PageSizeMinValue - 1)]
-    [InlineData(SharedConfigurations.PageSizeMaxValue + 1)]
-    public async Task GetAllAsync_ShouldReturnBadRequestResponse_WhenPageSizeValueIsInvalid(int value)
+    [PostTitleTooLongWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenTitleIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            value);
+        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
 
         // Act
-        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.BadRequest);
+        response.ShouldSatisfyBadRequest(errorMessage);
+    }
+
+    [Theory]
+    [PostPageEmptyData]
+    [PostPageTooSmallData]
+    [PostPageTooLargeData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageIsInvalid(
+        IIntTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [PostPageEmptyWithMessageData]
+    [PostPageTooSmallWithMessageData]
+    [PostPageTooLargeWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageIsInvalid(
+        IIntTransformer transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyBadRequest(errorMessage);
+    }
+
+    [Theory]
+    [SortOrderEmptyData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortOrderIsInvalid(
+        IEnumTransformer<SortOrder> transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [SortOrderEmptyWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortOrderIsInvalid(
+        IEnumTransformer<SortOrder> transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyBadRequest(errorMessage);
+    }
+
+    [Theory]
+    [PostSortPropertyEmptyData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenSortPropertyIsInvalid(
+        IEnumTransformer<PostSortProperty> transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [PostSortPropertyEmptyWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenSortPropertyIsInvalid(
+        IEnumTransformer<PostSortProperty> transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyBadRequest(errorMessage);
+    }
+
+    [Theory]
+    [PostPageSizeEmptyData]
+    [PostPageSizeTooSmallData]
+    [PostPageSizeTooLargeData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenPageSizeIsInvalid(
+        IIntTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [PostPageSizeEmptyWithMessageData]
+    [PostPageSizeTooSmallWithMessageData]
+    [PostPageSizeTooLargeWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenPageSizeIsInvalid(
+        IIntTransformer transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPageSize(_request.Pagination.Page, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostsProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyBadRequest(errorMessage);
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldReturnOkResponse_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
-
         // Act
-        var response = await HttpClient.GetAllStatusCodeAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllPostsStatusCodeAsync(_request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Be(HttpStatusCode.OK);
+        response.ShouldBeOk();
+    }
+
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeOk();
+    }
+
+    [Theory]
+    [UserNameNullData]
+    [UserNameEmptyData]
+    [UserNameDifferentCaseData]
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndUserNameAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeOk();
+    }
+
+    [Theory]
+    [PostTitleNullData]
+    [PostTitleEmptyData]
+    [PostTitleDifferentCaseData]
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndTitleAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostsStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeOk();
     }
 
     [Fact]
-    public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
-
         // Act
-        var response = await HttpClient.GetAllAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllPostsAsync(_request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPost.Id &&
-                                                               m.UserId == existingPost.UserId &&
-                                                               m.UserName == existingPost.User.UserName &&
-                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                               m.Title == existingPost.Title &&
-                                                               m.Content == existingPost.Content) &&
-                                                               mc.Page == PostTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
+        response.ShouldSatisfy(_post, _user, _request);
     }
 
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndUserIdCaseDoesNotMatch()
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            DataFaker.GetDifferentCaseString(existingPost.UserId),
-            existingPost.User.UserName,
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
 
         // Act
-        var response = await HttpClient.GetAllAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPost.Id &&
-                                                               m.UserId == existingPost.UserId &&
-                                                               m.UserName == existingPost.User.UserName &&
-                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                               m.Title == existingPost.Title &&
-                                                               m.Content == existingPost.Content) &&
-                                                               mc.Page == PostTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
+        response.ShouldSatisfy(_post, _user, _request);
     }
 
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndUserNameCaseDoesNotMatch()
+    [Theory]
+    [UserNameNullData]
+    [UserNameEmptyData]
+    [UserNameDifferentCaseData]
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndUserNameAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            DataFaker.GetDifferentCaseString(existingPost.User.UserName),
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
 
         // Act
-        var response = await HttpClient.GetAllAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPost.Id &&
-                                                               m.UserId == existingPost.UserId &&
-                                                               m.UserName == existingPost.User.UserName &&
-                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                               m.Title == existingPost.Title &&
-                                                               m.Content == existingPost.Content) &&
-                                                               mc.Page == PostTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
+        response.ShouldSatisfy(_post, _user, _request);
     }
 
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndUserNameIsNotFull()
+    [Theory]
+    [PostTitleNullData]
+    [PostTitleEmptyData]
+    [PostTitleDifferentCaseData]
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndTitleAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            DataFaker.GetPrefixString(existingPost.User.UserName),
-            existingPost.Title,
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
 
         // Act
-        var response = await HttpClient.GetAllAsync(request, CancellationToken);
+        var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPost.Id &&
-                                                               m.UserId == existingPost.UserId &&
-                                                               m.UserName == existingPost.User.UserName &&
-                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                               m.Title == existingPost.Title &&
-                                                               m.Content == existingPost.Content) &&
-                                                               mc.Page == PostTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndTitleCaseDoesNotMatch()
-    {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            DataFaker.GetDifferentCaseString(existingPost.Title),
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await HttpClient.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPost.Id &&
-                                                               m.UserId == existingPost.UserId &&
-                                                               m.UserName == existingPost.User.UserName &&
-                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                               m.Title == existingPost.Title &&
-                                                               m.Content == existingPost.Content) &&
-                                                               mc.Page == PostTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRequestIsValidAndTitleIsNotFull()
-    {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-        var request = new GetAllPostsRequest(
-            existingPost.UserId,
-            existingPost.User.UserName,
-            DataFaker.GetPrefixString(existingPost.Title),
-            PostTestUtilities.ValidSortOrderProperty,
-            PostTestUtilities.ValidSortPropertyName,
-            PostTestUtilities.ValidPageValue,
-            PostTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await HttpClient.GetAllAsync(request, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPost.Id &&
-                                                               m.UserId == existingPost.UserId &&
-                                                               m.UserName == existingPost.User.UserName &&
-                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                               m.Title == existingPost.Title &&
-                                                               m.Content == existingPost.Content) &&
-                                                               mc.Page == PostTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnPostPaginationCollectionResponse_WhenRouteHasNoParameters()
-    {
-        // Arrange
-        var existingPost = await CreatePostAsync(CancellationToken);
-
-        // Act
-        var response = await HttpClient.GetAllAsync(CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostPaginationQueryResponse>(mc => mc.Items.All(m =>
-                                                               m.Id == existingPost.Id &&
-                                                               m.UserId == existingPost.UserId &&
-                                                               m.UserName == existingPost.User.UserName &&
-                                                               m.UserProfileImage == existingPost.User.ProfileImage &&
-                                                               m.Title == existingPost.Title &&
-                                                               m.Content == existingPost.Content) &&
-                                                               mc.Page == PostTestUtilities.ValidPageValue &&
-                                                               mc.PageSize == PostTestUtilities.ValidPageSizeValue &&
-                                                               mc.TotalCount == PostTestUtilities.ValidTotalCountValue &&
-                                                               !mc.HasPreviousPage &&
-                                                               !mc.HasNextPage);
+        response.ShouldSatisfy(_post, _user, _request);
     }
 }
