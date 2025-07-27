@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Extensions;
+using InstaConnect.PostLikes.Domain.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Domain.Extensions;
 using InstaConnect.Posts.Domain.Features.Posts.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
@@ -17,7 +18,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDomain(this IServiceCollection serviceCollection)
     {
         serviceCollection
-            .AddPostServices();
+            .AddPostServices()
+            .AddPostLikeServices();
 
         serviceCollection
             .AddMapper(PostDomainReference.Assembly)

@@ -1,5 +1,9 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 
-namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+namespace InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
-public record UpdatePostCommand(string Id, string CurrentUserId, string Title, string Content);
+public record UpdatePostCommand(
+    string Id,
+    string CurrentUserId,
+    string Title,
+    string Content);

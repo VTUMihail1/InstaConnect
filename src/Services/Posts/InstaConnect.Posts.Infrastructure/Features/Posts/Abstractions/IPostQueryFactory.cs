@@ -5,6 +5,6 @@ namespace InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
 public interface IPostQueryFactory
 {
     GetAllQuerySpecification CreateGetAll(GetAllPostsQuery queryParameters);
-    GetAllTotalCountQuerySpecification CreateGetAllTotalCount(PostFilterRequest filter);
+    GetAllTotalCountQuerySpecification CreateGetAllTotalCount(PostFilterQuery filter);
     GetPostByIdSpecification CreateGetById(string id);
 }

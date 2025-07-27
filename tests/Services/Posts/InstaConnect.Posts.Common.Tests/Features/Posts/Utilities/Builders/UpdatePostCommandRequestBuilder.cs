@@ -10,16 +10,20 @@ public class UpdatePostCommandRequestBuilder
 {
     private readonly ObjectBuilder<UpdatePostCommandRequest> _objectBuilder = new();
 
-    public UpdatePostCommandRequestBuilder() : this(new PostBuilder().Create())
+    public UpdatePostCommandRequestBuilder()
     {
+        WithId(PostDataFaker.GetId());
+        WithUserId(UserDataFaker.GetId());
+        WithTitle(PostDataFaker.GetTitle());
+        WithContent(PostDataFaker.GetContent());
     }
 
     public UpdatePostCommandRequestBuilder(Post post)
     {
         WithId(post.Id);
         WithUserId(post.UserId);
-        WithTitle(post.Title);
-        WithContent(post.Content);
+        WithTitle(PostDataFaker.GetTitle());
+        WithContent(PostDataFaker.GetContent());
     }
 
     public UpdatePostCommandRequestBuilder WithId(string id, IStringTransformer? transformer = null)

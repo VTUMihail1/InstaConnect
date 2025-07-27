@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿using System.Threading.Tasks;
+
+using FluentAssertions;
 
 using InstaConnect.Common.Exceptions.Users;
 using InstaConnect.Common.Tests.Utilities;

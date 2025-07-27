@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
+using InstaConnect.Common.Tests.Utilities.Events;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;

@@ -29,7 +29,7 @@ public class PostLikeController : ControllerBase
         GetAllPostLikesRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetAllPostLikesQuery>(request);
+        var queryRequest = _applicationMapper.Map<GetAllPostLikesQueryRequest>(request);
         var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
         var response = _applicationMapper.Map<PostLikePaginationQueryResponse>(queryResponse);
 
@@ -44,7 +44,7 @@ public class PostLikeController : ControllerBase
         GetPostLikeByIdRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetPostLikeByIdQuery>(request);
+        var queryRequest = _applicationMapper.Map<GetPostLikeByIdQueryRequest>(request);
         var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
         var response = _applicationMapper.Map<PostLikeQueryResponse>(queryResponse);
 
@@ -61,7 +61,7 @@ public class PostLikeController : ControllerBase
         AddPostLikeRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddPostLikeCommand>(request);
+        var commandRequest = _applicationMapper.Map<AddPostLikeCommandRequest>(request);
         var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
         var response = _applicationMapper.Map<PostLikeCommandResponse>(commandResponse);
 
@@ -78,7 +78,7 @@ public class PostLikeController : ControllerBase
         DeletePostLikeRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeletePostLikeCommand>(request);
+        var commandRequest = _applicationMapper.Map<DeletePostLikeCommandRequest>(request);
         await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();

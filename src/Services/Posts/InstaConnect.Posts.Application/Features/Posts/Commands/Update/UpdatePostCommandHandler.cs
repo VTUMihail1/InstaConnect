@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+
+namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 
 public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommandRequest, UpdatePostCommandResponse>
 {

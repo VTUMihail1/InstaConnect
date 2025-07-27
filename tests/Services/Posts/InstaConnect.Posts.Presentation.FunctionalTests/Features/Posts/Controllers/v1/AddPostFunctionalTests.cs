@@ -19,7 +19,6 @@ namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Control
 public class AddPostFunctionalTests : BasePostFunctionalTest
 {
     private User _user;
-    private Post _post;
 
     private AddPostApiRequest _request;
     private AddPostApiRequestBuilder _requestBuilder;
@@ -33,9 +32,8 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
     protected override async Task OnInitializeAsync()
     {
         _user = await ServiceScope.AddUserAsync(CancellationToken);
-        _post = PostTestFactory.Create(_user);
 
-        _requestBuilder = new(_post);
+        _requestBuilder = new(_user);
         _request = _requestBuilder.Create();
     }
 
@@ -274,5 +272,34 @@ public class AddPostFunctionalTests : BasePostFunctionalTest
 
         // Assert
         post.ShouldSatisfy(_request);
+    }
+
+    [Fact]
+    public async Task AddAsync_ShouldPublishEvent_WhenRequestIsValid()
+    {
+        // Act
+        var response = await HttpClient.AddPostAsync(_request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+        var eventWasPublished = await EventHarness.HasPublishPostAddedEventAsync(post, CancellationToken);
+
+        // Assert
+        eventWasPublished.ShouldBeTrue();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task AddAsync_ShouldPublishEvent_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        var response = await HttpClient.AddPostAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+        var eventWasPublished = await EventHarness.HasPublishPostAddedEventAsync(post, CancellationToken);
+
+        // Assert
+        eventWasPublished.ShouldBeTrue();
     }
 }

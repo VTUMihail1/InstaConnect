@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
+﻿using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
+
+namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 public static class PostTestFactory
 {
     public static Post Create(User user)

@@ -8,6 +8,7 @@ using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
@@ -16,8 +17,15 @@ public class GetAllPostsQueryRequestBuilder
 {
     private readonly ObjectBuilder<GetAllPostsQueryRequest> _objectBuilder = new();
 
-    public GetAllPostsQueryRequestBuilder() : this(new PostBuilder().Create(), new UserBuilder().Create())
+    public GetAllPostsQueryRequestBuilder()
     {
+        WithUserId(UserDataFaker.GetId());
+        WithUserName(UserDataFaker.GetName());
+        WithTitle(PostDataFaker.GetTitle());
+        WithPage(PostDataFaker.GetPage());
+        WithPageSize(PostDataFaker.GetPageSize());
+        WithSortOrder(DataFaker.GetSortOrder());
+        WithSortProperty(PostDataFaker.GetSortProperty());
     }
 
     public GetAllPostsQueryRequestBuilder(Post post, User user)

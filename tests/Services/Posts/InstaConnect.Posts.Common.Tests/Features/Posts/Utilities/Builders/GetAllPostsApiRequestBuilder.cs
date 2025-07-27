@@ -17,8 +17,15 @@ public class GetAllPostsApiRequestBuilder
 {
     private readonly ObjectBuilder<GetAllPostsApiRequest> _objectBuilder = new();
 
-    public GetAllPostsApiRequestBuilder() : this(new PostBuilder().Create(), new UserBuilder().Create())
+    public GetAllPostsApiRequestBuilder()
     {
+        WithUserId(UserDataFaker.GetId());
+        WithUserName(UserDataFaker.GetName());
+        WithTitle(PostDataFaker.GetTitle());
+        WithPage(PostDataFaker.GetPage());
+        WithPageSize(PostDataFaker.GetPageSize());
+        WithSortOrder(DataFaker.GetSortOrder());
+        WithSortProperty(PostDataFaker.GetSortProperty());
     }
 
     public GetAllPostsApiRequestBuilder(Post post, User user)

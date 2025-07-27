@@ -9,16 +9,20 @@ public class UpdatePostApiRequestBuilder
 {
     private readonly ObjectBuilder<UpdatePostApiRequest> _objectBuilder = new();
 
-    public UpdatePostApiRequestBuilder() : this(new PostBuilder().Create())
+    public UpdatePostApiRequestBuilder()
     {
+        WithId(PostDataFaker.GetId());
+        WithUserId(UserDataFaker.GetId());
+        WithTitle(PostDataFaker.GetTitle());
+        WithContent(PostDataFaker.GetContent());
     }
 
     public UpdatePostApiRequestBuilder(Post post)
     {
         WithId(post.Id);
         WithUserId(post.UserId);
-        WithTitle(post.Title);
-        WithContent(post.Content);
+        WithTitle(PostDataFaker.GetTitle());
+        WithContent(PostDataFaker.GetContent());
     }
 
     public UpdatePostApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)

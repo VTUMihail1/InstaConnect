@@ -8,8 +8,9 @@ public class GetPostByIdQueryRequestBuilder
 {
     private readonly ObjectBuilder<GetPostByIdQueryRequest> _objectBuilder = new();
 
-    public GetPostByIdQueryRequestBuilder() : this(new PostBuilder().Create())
+    public GetPostByIdQueryRequestBuilder()
     {
+        WithId(PostDataFaker.GetId());
     }
 
     public GetPostByIdQueryRequestBuilder(Post post)

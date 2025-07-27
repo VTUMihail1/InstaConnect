@@ -44,18 +44,6 @@ public class ObjectBuilder<T>
         return this;
     }
 
-    public ObjectBuilder<T> With(Expression<Func<T, DateTimeOffset>> propertyPicker, DateTimeOffset value, IDateTimeOffsetTransformer? transformer = null)
-    {
-        if (transformer != null)
-        {
-            value = transformer.Transform(value);
-        }
-
-        _composer.With(propertyPicker, value);
-
-        return this;
-    }
-
     public ObjectBuilder<T> With<TEnum>(Expression<Func<T, TEnum>> propertyPicker, TEnum value, IEnumTransformer<TEnum>? transformer = null)
         where TEnum : Enum
     {

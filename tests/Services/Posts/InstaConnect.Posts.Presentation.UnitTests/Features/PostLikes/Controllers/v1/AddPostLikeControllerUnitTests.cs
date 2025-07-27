@@ -72,7 +72,7 @@ public class AddPostLikeControllerUnitTests : BasePostLikeUnitTest
         // Assert
         await ApplicationSender
             .Received(1)
-            .SendAsync(Arg.Is<AddPostLikeCommand>(m => m.CurrentUserId == existingPostLike.UserId &&
+            .SendAsync(Arg.Is<AddPostLikeCommandRequest>(m => m.CurrentUserId == existingPostLike.UserId &&
                                                      m.PostId == existingPostLike.PostId),
                                                      CancellationToken);
     }

@@ -42,6 +42,16 @@ public static class Assertions
         obj.Should().Be(value);
     }
 
+    public static void ShouldBeTrue(this bool obj)
+    {
+        obj.Should().Be(true);
+    }
+
+    public static void ShouldBeFalse(this bool obj)
+    {
+        obj.Should().Be(false);
+    }
+
     public static void ShouldBeOk(this HttpStatusCode statusCode)
     {
         statusCode.ShouldBe(HttpStatusCode.OK);

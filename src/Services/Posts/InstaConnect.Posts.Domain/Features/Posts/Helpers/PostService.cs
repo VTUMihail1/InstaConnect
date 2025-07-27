@@ -3,8 +3,6 @@ using InstaConnect.Common.Exceptions.Users;
 using InstaConnect.Common.Extensions;
 using InstaConnect.Common.Helpers;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
@@ -72,7 +70,7 @@ internal class PostService : IPostService
         var post = _postFactory.Create(command.CurrentUserId, command.Title, command.Content);
         _postRepository.Add(post);
 
-        var integrationEvent = _applicationMapper.Map<AddedPostEvent>(post);
+        var integrationEvent = _applicationMapper.Map<PostAddedEvent>(post);
         await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
 
         return post;
@@ -96,7 +94,7 @@ internal class PostService : IPostService
         post.Update(command.Title, command.Content, utcNow);
         _postRepository.Update(post);
 
-        var integrationEvent = _applicationMapper.Map<UpdatedPostEvent>(post);
+        var integrationEvent = _applicationMapper.Map<PostUpdatedEvent>(post);
         await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
 
         return post;
@@ -116,7 +114,7 @@ internal class PostService : IPostService
             throw new PostForbiddenException(command.Id, command.CurrentUserId);
         }
 
-        var integrationEvent = _applicationMapper.Map<DeletedPostEvent>(post);
+        var integrationEvent = _applicationMapper.Map<PostDeletedEvent>(post);
         await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
     }
 }

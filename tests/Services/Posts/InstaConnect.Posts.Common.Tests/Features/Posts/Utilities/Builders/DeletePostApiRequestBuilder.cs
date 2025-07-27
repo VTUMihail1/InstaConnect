@@ -1,6 +1,8 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
@@ -9,8 +11,10 @@ public class DeletePostApiRequestBuilder
 {
     private readonly ObjectBuilder<DeletePostApiRequest> _objectBuilder = new();
 
-    public DeletePostApiRequestBuilder() : this(new PostBuilder().Create())
+    public DeletePostApiRequestBuilder()
     {
+        WithId(PostDataFaker.GetId());
+        WithUserId(UserDataFaker.GetId());
     }
 
     public DeletePostApiRequestBuilder(Post post)

@@ -48,7 +48,7 @@ public class DeletePostLikeControllerUnitTests : BasePostLikeUnitTest
         // Assert
         await ApplicationSender
             .Received(1)
-            .SendAsync(Arg.Is<DeletePostLikeCommand>(m => m.Id == existingPostLike.Id &&
+            .SendAsync(Arg.Is<DeletePostLikeCommandRequest>(m => m.Id == existingPostLike.Id &&
                                                     m.CurrentUserId == existingPostLike.UserId),
                                                     CancellationToken);
     }

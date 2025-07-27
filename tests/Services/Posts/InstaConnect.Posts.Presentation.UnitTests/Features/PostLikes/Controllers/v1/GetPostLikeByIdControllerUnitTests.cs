@@ -73,6 +73,6 @@ public class GetPostLikeByIdControllerUnitTests : BasePostLikeUnitTest
         // Assert
         await ApplicationSender
               .Received(1)
-              .SendAsync(Arg.Is<GetPostLikeByIdQuery>(m => m.Id == existingPostLike.Id), CancellationToken);
+              .SendAsync(Arg.Is<GetPostLikeByIdQueryRequest>(m => m.Id == existingPostLike.Id), CancellationToken);
     }
 }

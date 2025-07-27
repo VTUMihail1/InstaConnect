@@ -222,4 +222,50 @@ public class UpdatePostIntegrationTests : BasePostIntegrationTest
         // Assert
         post.ShouldSatisfy(_request);
     }
+
+    [Fact]
+    public async Task SendAsync_ShouldPublishEvent_WhenRequestIsValid()
+    {
+        // Act
+        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+        var hasPublished = await EventHarness.HasPublishPostUpdatedEventAsync(post, CancellationToken);
+
+        // Assert
+        hasPublished.ShouldBeTrue();
+    }
+
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldPublishEvent_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_post.Id, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+        var hasPublished = await EventHarness.HasPublishPostUpdatedEventAsync(post, CancellationToken);
+
+        // Assert
+        hasPublished.ShouldBeTrue();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldPublishEvent_WhenRequestAndUserIdAreValids(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_user.Id, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+        var hasPublished = await EventHarness.HasPublishPostUpdatedEventAsync(post, CancellationToken);
+
+        // Assert
+        hasPublished.ShouldBeTrue();
+    }
 }

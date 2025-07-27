@@ -1,5 +1,4 @@
 ﻿using InstaConnect.Common.Tests.Utilities.Types.Enums.Base;
-using InstaConnect.Common.Tests.Utilities.Types.Enums.Transformers;
 
 namespace InstaConnect.Common.Tests.Utilities.Types.Enums.Default;
 

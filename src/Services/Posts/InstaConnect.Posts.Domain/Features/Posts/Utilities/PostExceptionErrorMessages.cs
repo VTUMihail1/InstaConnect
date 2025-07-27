@@ -8,7 +8,7 @@ public static class PostExceptionErrorMessages
     public static string GetNotFoundMessage(string id)
     {
         const string Format = "Post(id: {0}) with that id does not exist";
-        var result = Format.EqualOrdinalIgnoreCase(id);
+        var result = Format.FormatInvariantCulture(id);
 
         return result;
     }

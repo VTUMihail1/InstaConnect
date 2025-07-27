@@ -14,19 +14,19 @@ public class EventHarness : IEventHarness
     public async Task<bool> PublishedAsync<T>(Func<T, bool> predicate, CancellationToken cancellationToken)
         where T : class
     {
-        var isMessagePublished = await _testHarness.Published
+        var isPublished = await _testHarness.Published
                 .Any<T>(e => predicate(e.Context.Message), cancellationToken);
 
-        return isMessagePublished;
+        return isPublished;
     }
 
     public async Task<bool> ConsumedAsync<T>(Func<T, bool> predicate, CancellationToken cancellationToken)
         where T : class
     {
-        var isMessageConsumed = await _testHarness.Consumed
+        var isConsumed = await _testHarness.Consumed
                 .Any<T>(e => predicate(e.Context.Message), cancellationToken);
 
-        return isMessageConsumed;
+        return isConsumed;
     }
 
     public async Task StartAsync(CancellationToken cancellationToken)

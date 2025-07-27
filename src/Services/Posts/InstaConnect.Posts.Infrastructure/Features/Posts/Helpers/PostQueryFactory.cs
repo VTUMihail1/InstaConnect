@@ -43,7 +43,7 @@ public class PostQueryFactory : IPostQueryFactory
         return specification;
     }
 
-    public GetAllTotalCountQuerySpecification CreateGetAllTotalCount(PostFilterRequest filter)
+    public GetAllTotalCountQuerySpecification CreateGetAllTotalCount(PostFilterQuery filter)
     {
         var parameters = new GetAllTotalCountQueryParameters(
             filter.UserId,

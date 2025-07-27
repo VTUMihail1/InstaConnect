@@ -4,11 +4,11 @@ namespace InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Commands.D
 
 public class DeletePostLikeCommandValidatorUnitTests : BasePostLikeUnitTest
 {
-    private readonly DeletePostLikeCommandValidator _commandValidator;
+    private readonly DeletePostLikeCommandRequestValidator _commandValidator;
 
     public DeletePostLikeCommandValidatorUnitTests()
     {
-        _commandValidator = new DeletePostLikeCommandValidator();
+        _commandValidator = new DeletePostLikeCommandRequestValidator();
     }
 
     [Fact]

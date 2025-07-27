@@ -269,4 +269,47 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         // Assert
         post.ShouldBeNull();
     }
+
+    [Fact]
+    public async Task DeleteAsync_ShouldPublishEvent_WhenRequestIsValid()
+    {
+        // Act
+        await HttpClient.DeletePostAsync(_request, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(_post, CancellationToken);
+
+        // Assert
+        hasPublshed.ShouldBeTrue();
+    }
+
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldPublishEvent_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        await HttpClient.DeletePostAsync(request, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(_post, CancellationToken);
+
+        // Assert
+        hasPublshed.ShouldBeTrue();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task DeleteAsync_ShouldPublishEvent_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        await HttpClient.DeletePostAsync(request, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(_post, CancellationToken);
+
+        // Assert
+        hasPublshed.ShouldBeTrue();
+    }
 }

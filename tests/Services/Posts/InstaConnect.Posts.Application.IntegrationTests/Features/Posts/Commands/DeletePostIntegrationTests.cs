@@ -140,4 +140,47 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         // Assert
         post.ShouldBeNull();
     }
+
+    [Fact]
+    public async Task SendAsync_ShouldPublishEvent_WhenRequestIsValid()
+    {
+        // Act
+        await ApplicationSender.SendAsync(_request, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(_post, CancellationToken);
+
+        // Assert
+        hasPublshed.ShouldBeTrue();
+    }
+
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldPublishEvent_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        await ApplicationSender.SendAsync(request, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(_post, CancellationToken);
+
+        // Assert
+        hasPublshed.ShouldBeTrue();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldPublishEvent_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+
+        // Act
+        await ApplicationSender.SendAsync(request, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(_post, CancellationToken);
+
+        // Assert
+        hasPublshed.ShouldBeTrue();
+    }
 }

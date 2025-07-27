@@ -17,7 +17,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var command = new AddPostLikeCommand(
+        var command = new AddPostLikeCommandRequest(
             null,
             existingPost.Id
         );
@@ -37,7 +37,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var command = new AddPostLikeCommand(
+        var command = new AddPostLikeCommandRequest(
             DataFaker.GetString(length),
             existingPost.Id
         );
@@ -54,7 +54,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var command = new AddPostLikeCommand(
+        var command = new AddPostLikeCommandRequest(
             existingUser.Id,
             null
         );
@@ -74,7 +74,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     {
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
-        var command = new AddPostLikeCommand(
+        var command = new AddPostLikeCommandRequest(
             existingUser.Id,
             DataFaker.GetString(length)
         );
@@ -91,7 +91,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
     {
         // Arrange
         var existingPost = await CreatePostAsync(CancellationToken);
-        var command = new AddPostLikeCommand(
+        var command = new AddPostLikeCommandRequest(
             UserTestUtilities.InvalidId,
             existingPost.Id
         );
@@ -143,7 +143,7 @@ public class AddPostLikeIntegrationTests : BasePostLikeIntegrationTest
         // Arrange
         var existingUser = await CreateUserAsync(CancellationToken);
         var existingPost = await CreatePostAsync(CancellationToken);
-        var command = new AddPostLikeCommand(
+        var command = new AddPostLikeCommandRequest(
             existingUser.Id,
             existingPost.Id
         );

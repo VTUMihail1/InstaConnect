@@ -1,9 +1,14 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+﻿using InstaConnect.PostLikes.Domain.Features.PostLikeComments.Models.Entities;
+using InstaConnect.PostLikes.Domain.Features.PostLikeLikes.Models.Entities;
+using InstaConnect.PostLikes.Domain.Features.Users.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
-namespace InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
+using System.Security.Principal;
 
-public class PostLike : IEntity, IAuditableInfo
+namespace InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
+
+public class PostLike : IEntity
 {
     private PostLike()
     {

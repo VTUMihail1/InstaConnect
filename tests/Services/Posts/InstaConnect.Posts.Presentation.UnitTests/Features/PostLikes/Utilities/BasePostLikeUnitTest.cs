@@ -88,7 +88,7 @@ public abstract class BasePostLikeUnitTest
             false);
 
         ApplicationSender
-            .SendAsync(Arg.Is<GetAllPostLikesQuery>(m =>
+            .SendAsync(Arg.Is<GetAllPostLikesQueryRequest>(m =>
                   m.PostId == post.Id &&
                   m.UserId == user.Id &&
                   m.UserName == user.UserName &&
@@ -99,11 +99,11 @@ public abstract class BasePostLikeUnitTest
             .Returns(postLikePaginationCollectionModel);
 
         ApplicationSender
-            .SendAsync(Arg.Is<GetPostLikeByIdQuery>(m => m.Id == postLike.Id), CancellationToken)
+            .SendAsync(Arg.Is<GetPostLikeByIdQueryRequest>(m => m.Id == postLike.Id), CancellationToken)
             .Returns(postLikeQueryViewModel);
 
         ApplicationSender
-            .SendAsync(Arg.Is<AddPostLikeCommand>(m =>
+            .SendAsync(Arg.Is<AddPostLikeCommandRequest>(m =>
                   m.CurrentUserId == user.Id &&
                   m.PostId == post.Id), CancellationToken)
             .Returns(postLikeCommandViewModel);

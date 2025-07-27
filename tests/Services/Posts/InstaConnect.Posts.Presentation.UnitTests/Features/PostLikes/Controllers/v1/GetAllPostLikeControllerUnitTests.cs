@@ -97,7 +97,7 @@ public class GetAllPostLikeControllerUnitTests : BasePostLikeUnitTest
         // Assert
         await ApplicationSender
               .Received(1)
-              .SendAsync(Arg.Is<GetAllPostLikesQuery>(m =>
+              .SendAsync(Arg.Is<GetAllPostLikesQueryRequest>(m =>
                   m.UserId == existingPostLike.UserId &&
                   m.UserName == existingPostLike.User.UserName &&
                   m.PostId == existingPostLike.PostId &&

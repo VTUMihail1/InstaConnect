@@ -14,7 +14,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrati
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
     {
         // Arrange
-        var query = new GetPostLikeByIdQuery(null);
+        var query = new GetPostLikeByIdQueryRequest(null);
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);

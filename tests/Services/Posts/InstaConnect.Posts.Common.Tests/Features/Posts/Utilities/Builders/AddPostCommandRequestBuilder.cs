@@ -3,6 +3,7 @@
 using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -12,15 +13,18 @@ public class AddPostCommandRequestBuilder
 {
     private readonly ObjectBuilder<AddPostCommandRequest> _objectBuilder = new();
 
-    public AddPostCommandRequestBuilder() : this(new PostBuilder().Create())
+    public AddPostCommandRequestBuilder()
     {
+        WithUserId(UserDataFaker.GetId());
+        WithTitle(PostDataFaker.GetTitle());
+        WithContent(PostDataFaker.GetContent());
     }
 
-    public AddPostCommandRequestBuilder(Post post)
+    public AddPostCommandRequestBuilder(User user)
     {
-        WithUserId(post.UserId);
-        WithTitle(post.Title);
-        WithContent(post.Content);
+        WithUserId(user.Id);
+        WithTitle(PostDataFaker.GetTitle());
+        WithContent(PostDataFaker.GetContent());
     }
 
     public AddPostCommandRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)

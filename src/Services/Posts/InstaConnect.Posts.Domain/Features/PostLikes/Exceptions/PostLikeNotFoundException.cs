@@ -1,16 +1,17 @@
 ﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.PostLikes.Common.Features.PostLikes.Utilities;
 
-namespace InstaConnect.Posts.Domain.Features.PostLikes.Exceptions;
+namespace InstaConnect.PostLikes.Domain.Features.PostLikes.Exceptions;
 
 public class PostLikeNotFoundException : NotFoundException
 {
-    private const string ErrorMessage = "Post like not found";
-
-    public PostLikeNotFoundException() : base(ErrorMessage)
+    public PostLikeNotFoundException(string id, string postId)
+        : base(PostLikeExceptionErrorMessages.GetNotFoundMessage(id, postId))
     {
     }
 
-    public PostLikeNotFoundException(Exception exception) : base(ErrorMessage, exception)
+    public PostLikeNotFoundException(string id, string postId, Exception exception)
+        : base(PostLikeExceptionErrorMessages.GetNotFoundMessage(id, postId), exception)
     {
     }
 }

@@ -9,9 +9,9 @@ internal class PostLikeQueryProfile : Profile
 {
     public PostLikeQueryProfile()
     {
-        CreateMap<GetAllPostLikesRequest, GetAllPostLikesQuery>();
+        CreateMap<GetAllPostLikesRequest, GetAllPostLikesQueryRequest>();
 
-        CreateMap<GetPostLikeByIdRequest, GetPostLikeByIdQuery>();
+        CreateMap<GetPostLikeByIdRequest, GetPostLikeByIdQueryRequest>();
 
         CreateMap<PostLikeQueryViewModel, PostLikeQueryResponse>();
 

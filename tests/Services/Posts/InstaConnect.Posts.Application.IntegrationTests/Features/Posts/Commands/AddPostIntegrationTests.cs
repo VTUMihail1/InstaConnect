@@ -9,6 +9,7 @@ using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Commands;
@@ -16,7 +17,6 @@ namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Command
 public class AddPostIntegrationTests : BasePostIntegrationTest
 {
     private User _user;
-    private Post _post;
 
     private AddPostCommandRequest _request;
     private AddPostCommandRequestBuilder _requestBuilder;
@@ -30,9 +30,8 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
     protected override async Task OnInitializeAsync()
     {
         _user = await ServiceScope.AddUserAsync(CancellationToken);
-        _post = PostTestFactory.Create(_user);
 
-        _requestBuilder = new(_post);
+        _requestBuilder = new(_user);
         _request = _requestBuilder.Create();
     }
 
@@ -157,5 +156,34 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
 
         // Assert
         post.ShouldSatisfy(_request);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldPublishEvent_WhenRequestIsValid()
+    {
+        // Act
+        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+        var eventWasPublished = await EventHarness.HasPublishPostAddedEventAsync(post, CancellationToken);
+
+        // Assert
+        eventWasPublished.ShouldBeTrue();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldPublishEvent_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_user.Id, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var post = await ServiceScope.GetPostByIdAsync(response.Id, CancellationToken);
+        var eventWasPublished = await EventHarness.HasPublishPostAddedEventAsync(post, CancellationToken);
+
+        // Assert
+        eventWasPublished.ShouldBeTrue();
     }
 }

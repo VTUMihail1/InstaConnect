@@ -4,7 +4,7 @@ namespace InstaConnect.Posts.Application.UnitTests.Features.PostLikes.Queries.Ge
 
 public class GetPostLikeByIdQueryValidatorUnitTests : BasePostLikeUnitTest
 {
-    private readonly GetPostLikeByIdQueryValidator _validator;
+    private readonly GetPostLikeByIdQueryRequestValidator _validator;
 
     public GetPostLikeByIdQueryValidatorUnitTests()
     {

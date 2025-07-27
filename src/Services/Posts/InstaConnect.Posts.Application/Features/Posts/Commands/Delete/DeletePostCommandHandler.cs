@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 

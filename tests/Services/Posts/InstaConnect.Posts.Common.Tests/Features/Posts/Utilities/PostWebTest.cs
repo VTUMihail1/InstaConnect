@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Common.Tests.Utilities.Events;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
@@ -19,11 +20,14 @@ public abstract class PostWebTest : IClassFixture<PostsWebApplicationFactory>, I
 {
     protected IServiceScope ServiceScope { get; }
 
+    protected IEventHarness EventHarness { get; }
+
     protected CancellationToken CancellationToken { get; }
 
     protected PostWebTest(PostsWebApplicationFactory webApplicationFactory)
     {
         ServiceScope = webApplicationFactory.Services.CreateScope();
+        EventHarness = ServiceScope.GetEventHarness();
         CancellationToken = MockFactory.CreateCancellationToken();
     }
 
@@ -31,11 +35,13 @@ public abstract class PostWebTest : IClassFixture<PostsWebApplicationFactory>, I
     {
         await ServiceScope.ResetPostDatabase(CancellationToken);
         await OnInitializeAsync();
+        await EventHarness.StartAsync(CancellationToken);
     }
 
     public async Task DisposeAsync()
     {
         await ServiceScope.ResetPostDatabase(CancellationToken);
+        await EventHarness.StopAsync(CancellationToken);
     }
 
     protected abstract Task OnInitializeAsync();

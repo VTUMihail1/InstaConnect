@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
 
-internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand, PostLikeCommandViewModel>
+internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommandRequest, PostLikeCommandViewModel>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPostLikeService _postLikeService;
@@ -23,7 +23,7 @@ internal class AddPostLikeCommandHandler : ICommandHandler<AddPostLikeCommand, P
     }
 
     public async Task<PostLikeCommandViewModel> Handle(
-        AddPostLikeCommand request,
+        AddPostLikeCommandRequest request,
         CancellationToken cancellationToken)
     {
         var existingPost = await _postWriteRepository.GetByIdAsync(request.PostId, cancellationToken);

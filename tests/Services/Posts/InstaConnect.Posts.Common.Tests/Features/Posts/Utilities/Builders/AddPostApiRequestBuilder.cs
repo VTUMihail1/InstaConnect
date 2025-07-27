@@ -1,6 +1,8 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
+using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
@@ -8,15 +10,18 @@ public class AddPostApiRequestBuilder
 {
     private readonly ObjectBuilder<AddPostApiRequest> _objectBuilder = new();
 
-    public AddPostApiRequestBuilder() : this(new PostBuilder().Create())
+    public AddPostApiRequestBuilder()
     {
+        WithUserId(UserDataFaker.GetId());
+        WithTitle(PostDataFaker.GetTitle());
+        WithContent(PostDataFaker.GetContent());
     }
 
-    public AddPostApiRequestBuilder(Post post)
+    public AddPostApiRequestBuilder(User user)
     {
-        WithUserId(post.UserId);
-        WithTitle(post.Title);
-        WithContent(post.Content);
+        WithUserId(user.Id);
+        WithTitle(PostDataFaker.GetTitle());
+        WithContent(PostDataFaker.GetContent());
     }
 
     public AddPostApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)

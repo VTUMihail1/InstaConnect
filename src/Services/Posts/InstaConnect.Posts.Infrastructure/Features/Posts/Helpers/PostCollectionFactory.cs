@@ -6,11 +6,17 @@ namespace InstaConnect.Posts.Infrastructure.Features.Posts.Helpers;
 
 internal class PostCollectionFactory : IPostCollectionFactory
 {
-    public PostCollection Create(ICollection<Post> posts, int totalCount, PostPaginationRequest pagination)
+    public PostCollection Create(ICollection<Post> posts, int totalCount, PostPaginationQuery pagination)
     {
         var hasNextPage = pagination.Page * pagination.PageSize < totalCount;
         var hasPreviousPage = pagination.Page > 1;
 
-        return new PostCollection(posts, pagination.Page, pagination.PageSize, totalCount, hasNextPage, hasPreviousPage);
+        return new PostCollection(
+            posts,
+            pagination.Page,
+            pagination.PageSize,
+            totalCount,
+            hasNextPage,
+            hasPreviousPage);
     }
 }

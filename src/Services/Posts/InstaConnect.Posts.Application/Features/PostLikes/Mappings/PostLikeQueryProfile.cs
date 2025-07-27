@@ -10,7 +10,7 @@ public class PostLikeQueryProfile : Profile
 {
     public PostLikeQueryProfile()
     {
-        CreateMap<GetAllPostLikesQuery, PostLikeCollectionReadQuery>();
+        CreateMap<GetAllPostLikesQueryRequest, PostLikeCollectionReadQuery>();
 
         CreateMap<PostLike, PostLikeQueryViewModel>()
             .ConstructUsing(src => new(

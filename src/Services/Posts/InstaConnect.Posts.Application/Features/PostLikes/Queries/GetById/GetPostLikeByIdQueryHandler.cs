@@ -2,7 +2,7 @@
 
 namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 
-internal class GetPostLikeByIdQueryHandler : IQueryHandler<GetPostLikeByIdQuery, PostLikeQueryViewModel>
+internal class GetPostLikeByIdQueryHandler : IQueryHandler<GetPostLikeByIdQueryRequest, PostLikeQueryViewModel>
 {
     private readonly IPostLikeService _postLikeService;
     private readonly IApplicationMapper _applicationMapper;
@@ -19,7 +19,7 @@ internal class GetPostLikeByIdQueryHandler : IQueryHandler<GetPostLikeByIdQuery,
     }
 
     public async Task<PostLikeQueryViewModel> Handle(
-        GetPostLikeByIdQuery request,
+        GetPostLikeByIdQueryRequest request,
     CancellationToken cancellationToken)
     {
         var existingPost = await _postReadRepository.GetByIdAsync(request.PostId, cancellationToken);
