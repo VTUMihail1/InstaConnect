@@ -4,7 +4,10 @@ namespace InstaConnect.Posts.Domain.Features.Users.Abstractions;
 public interface IUserRepository
 {
     void Add(User user);
+
     void Delete(User user);
+
     Task<User?> GetByIdAsync(string id, CancellationToken cancellationToken);
+
     void Update(User user);
 }

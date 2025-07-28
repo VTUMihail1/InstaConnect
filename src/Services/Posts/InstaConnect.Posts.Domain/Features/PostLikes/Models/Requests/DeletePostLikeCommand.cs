@@ -2,5 +2,5 @@
 
 public record DeletePostLikeCommand(
     string Id,
-    string PostId,
+    string LikeId,
     string CurrentUserId);

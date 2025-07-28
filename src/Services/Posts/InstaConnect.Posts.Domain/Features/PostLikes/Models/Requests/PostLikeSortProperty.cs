@@ -3,5 +3,6 @@
 public enum PostLikeSortProperty
 {
     None,
-    ByCreatedAt
+    ByCreatedAt,
+    ByUserName
 }

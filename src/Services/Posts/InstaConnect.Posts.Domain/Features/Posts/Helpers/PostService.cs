@@ -114,6 +114,8 @@ internal class PostService : IPostService
             throw new PostForbiddenException(command.Id, command.CurrentUserId);
         }
 
+        _postRepository.Delete(post);
+
         var integrationEvent = _applicationMapper.Map<PostDeletedEvent>(post);
         await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
     }

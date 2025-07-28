@@ -8,7 +8,9 @@ public interface IPostLikeRepository
 {
     Task<PostLikeCollection> GetAllAsync(GetAllPostLikesQuery query, CancellationToken cancellationToken);
 
-    Task<PostLike?> GetByIdAsync(string id, string postId, CancellationToken cancellationToken);
+    Task<PostLike?> GetByIdAsync(string id, string likeId, CancellationToken cancellationToken);
+
+    Task<PostLike?> GetByIdAndUserIdAsync(string id, string userId, CancellationToken cancellationToken);
 
     void Add(PostLike postLike);
 

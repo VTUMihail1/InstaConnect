@@ -3,9 +3,9 @@ using InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
 
 namespace InstaConnect.Common.Infrastructure.SortOrders;
 
-public class ByUserSortOrder : IPostSortProperty
+public class ByUserNameSortOrder : IPostSortProperty
 {
-    public PostSortProperty SortProperty => PostSortProperty.ByUser;
+    public PostSortProperty SortProperty => PostSortProperty.ByUserName;
 
-    public string Property => PostSortPropertyUtilities.ByUser;
+    public string Property => PostSortPropertyUtilities.ByUserName;
 }

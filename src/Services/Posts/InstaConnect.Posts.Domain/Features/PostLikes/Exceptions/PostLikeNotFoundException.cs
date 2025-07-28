@@ -5,13 +5,13 @@ namespace InstaConnect.PostLikes.Domain.Features.PostLikes.Exceptions;
 
 public class PostLikeNotFoundException : NotFoundException
 {
-    public PostLikeNotFoundException(string id, string postId)
-        : base(PostLikeExceptionErrorMessages.GetNotFoundMessage(id, postId))
+    public PostLikeNotFoundException(string id, string likeId)
+        : base(PostLikeExceptionErrorMessages.GetNotFoundMessage(id, likeId))
     {
     }
 
-    public PostLikeNotFoundException(string id, string postId, Exception exception)
-        : base(PostLikeExceptionErrorMessages.GetNotFoundMessage(id, postId), exception)
+    public PostLikeNotFoundException(string id, string likeId, Exception exception)
+        : base(PostLikeExceptionErrorMessages.GetNotFoundMessage(id, likeId), exception)
     {
     }
 }

@@ -10,13 +10,6 @@ public static class StringExtensions
         return result;
     }
 
-    public static bool EqualsNull(this object? obj)
-    {
-        var result = Equals(obj, null);
-
-        return result;
-    }
-
     public static bool EqualsOrdinalIgnoreCase(this string a, string b)
     {
         var result = string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
