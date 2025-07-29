@@ -9,6 +9,7 @@ using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
 using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 using InstaConnect.Posts.Presentation.Extensions;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Utilities;
@@ -75,7 +76,7 @@ public abstract class BasePostLikeUnitTest
             postLike.Id,
             post.Id,
             user.Id,
-            user.UserName,
+            user.Name,
             user.ProfileImage);
 
         var postLikeCommandViewModel = new PostLikeCommandViewModel(postLike.Id);
@@ -91,7 +92,7 @@ public abstract class BasePostLikeUnitTest
             .SendAsync(Arg.Is<GetAllPostLikesQueryRequest>(m =>
                   m.PostId == post.Id &&
                   m.UserId == user.Id &&
-                  m.UserName == user.UserName &&
+                  m.UserName == user.Name &&
                   m.SortOrder == PostLikeTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == PostLikeTestUtilities.ValidSortPropertyName &&
                   m.Page == PostLikeTestUtilities.ValidPageValue &&

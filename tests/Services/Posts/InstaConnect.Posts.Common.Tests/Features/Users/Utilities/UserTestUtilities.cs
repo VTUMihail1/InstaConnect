@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 public class UserTestUtilities : DataFaker

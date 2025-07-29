@@ -4,7 +4,7 @@ using InstaConnect.Posts.Infrastructure.Features.Posts.Models;
 namespace InstaConnect.Posts.Infrastructure.Features.Posts.Abstractions;
 public interface IPostQueryFactory
 {
-    GetAllQuerySpecification CreateGetAll(GetAllPostsQuery queryParameters);
-    GetAllTotalCountQuerySpecification CreateGetAllTotalCount(PostFilterQuery filter);
-    GetPostByIdSpecification CreateGetById(string id);
+    GetAllPostsQuerySpecification CreateGetAll(GetAllPostsQuery query);
+    GetAllPostsTotalCountQuerySpecification CreateGetAllTotalCount(PostFilterQuery query);
+    GetPostByIdQuerySpecification CreateGetById(string id);
 }

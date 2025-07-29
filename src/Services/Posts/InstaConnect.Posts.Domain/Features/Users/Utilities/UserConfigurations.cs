@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Common.Features.Users.Utilities;
+﻿namespace InstaConnect.Posts.Domain.Features.Users.Utilities;
 
 public abstract class UserConfigurations
 {

@@ -59,7 +59,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -89,13 +89,13 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostForbiddenExceptionAsync(request.Id, request.CurrentUserId);
+        await action.ShouldThrowPostForbiddenExceptionAsync(request.Id, request.UserId);
     }
 
     [Fact]
@@ -131,7 +131,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
@@ -174,7 +174,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);

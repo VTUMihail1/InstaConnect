@@ -43,61 +43,61 @@ internal class PostLikeService : IPostLikeService
 
     public async Task<PostLikeCollection> GetAllAsync(GetAllPostLikesQuery query, CancellationToken cancellationToken)
     {
-        var post = await _postRepository.GetByIdAsync(query.Filter.Id, cancellationToken);
+        var existingPost = await _postRepository.GetByIdAsync(query.Filter.Id, cancellationToken);
 
-        if (post.EqualsNull())
+        if (existingPost.IsNull())
         {
             throw new PostNotFoundException(query.Filter.Id);
         }
 
-        var postLikes = await _postLikeRepository.GetAllAsync(query, cancellationToken);
+        var existingPostLikes = await _postLikeRepository.GetAllAsync(query, cancellationToken);
 
-        return postLikes;
+        return existingPostLikes;
     }
 
     public async Task<PostLike> GetByIdAsync(GetPostLikeByIdQuery query, CancellationToken cancellationToken)
     {
-        var post = await _postRepository.GetByIdAsync(query.Id, cancellationToken);
+        var existingPost = await _postRepository.GetByIdAsync(query.Id, cancellationToken);
 
-        if (post.EqualsNull())
+        if (existingPost.IsNull())
         {
             throw new PostNotFoundException(query.Id);
         }
 
-        var postLike = await _postLikeRepository.GetByIdAsync(query.Id, query.LikeId, cancellationToken);
+        var existingPostLike = await _postLikeRepository.GetByIdAsync(query.Id, query.LikeId, cancellationToken);
 
-        if (postLike.EqualsNull())
+        if (existingPostLike.IsNull())
         {
             throw new PostLikeNotFoundException(query.Id, query.LikeId);
         }
 
-        return postLike!;
+        return existingPostLike!;
     }
 
     public async Task<PostLike> AddAsync(AddPostLikeCommand command, CancellationToken cancellationToken)
     {
-        var post = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingPost = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
 
-        if (post.EqualsNull())
+        if (existingPost.IsNull())
         {
             throw new PostNotFoundException(command.Id);
         }
 
-        var user = await _userRepository.GetByIdAsync(command.CurrentUserId, cancellationToken);
+        var existingUser = await _userRepository.GetByIdAsync(command.UserId, cancellationToken);
 
-        if (user.EqualsNull())
+        if (existingUser.IsNull())
         {
-            throw new UserNotFoundException(command.CurrentUserId);
+            throw new UserNotFoundException(command.UserId);
         }
 
-        var existingPostLike = await _postLikeRepository.GetByIdAndUserIdAsync(command.Id, command.CurrentUserId, cancellationToken);
+        var existingPostLike = await _postLikeRepository.GetByIdAndUserIdAsync(command.Id, command.UserId, cancellationToken);
 
-        if (existingPostLike.EqualsNull())
+        if (existingPostLike.IsNotNull())
         {
-            throw new PostLikeAlreadyExistsException(command.Id, command.CurrentUserId);
+            throw new PostLikeAlreadyExistsException(command.Id, command.UserId);
         }
 
-        var postLike = _postLikeFactory.Create(command.Id, command.CurrentUserId);
+        var postLike = _postLikeFactory.Create(command.Id, command.UserId);
         _postLikeRepository.Add(postLike);
 
         var integrationEvent = _applicationMapper.Map<PostLikeAddedEvent>(postLike);
@@ -108,28 +108,28 @@ internal class PostLikeService : IPostLikeService
 
     public async Task DeleteAsync(DeletePostLikeCommand command, CancellationToken cancellationToken)
     {
-        var post = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingPost = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
 
-        if (post.EqualsNull())
+        if (existingPost.IsNull())
         {
             throw new PostNotFoundException(command.Id);
         }
 
-        var postLike = await _postLikeRepository.GetByIdAsync(command.Id, command.LikeId, cancellationToken);
+        var existingPostLike = await _postLikeRepository.GetByIdAsync(command.Id, command.LikeId, cancellationToken);
 
-        if (postLike.EqualsNull())
+        if (existingPostLike.IsNull())
         {
             throw new PostLikeNotFoundException(command.Id, command.LikeId);
         }
 
-        if (postLike!.UserId.NotEqualsOrdinalIgnoreCase(command.CurrentUserId))
+        if (existingPostLike!.UserId.NotEqualsOrdinalIgnoreCase(command.UserId))
         {
-            throw new PostLikeForbiddenException(command.Id, command.LikeId, command.CurrentUserId);
+            throw new PostLikeForbiddenException(command.Id, command.LikeId, command.UserId);
         }
 
-        _postLikeRepository.Delete(postLike);
+        _postLikeRepository.Delete(existingPostLike);
 
-        var integrationEvent = _applicationMapper.Map<PostLikeDeletedEvent>(postLike);
+        var integrationEvent = _applicationMapper.Map<PostLikeDeletedEvent>(existingPostLike);
         await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
     }
 }

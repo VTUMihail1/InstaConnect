@@ -99,7 +99,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
@@ -117,7 +117,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);
@@ -234,7 +234,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithId(_request.UserId, transformer).Create();
 
         // Act
         var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
@@ -249,13 +249,13 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithId(_request.UserId, transformer).Create();
 
         // Act
         var response = await HttpClient.UpdatePostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostForbiddenProblemDetails(request.Id, request.CurrentUserId);
+        response.ShouldSatisfyPostForbiddenProblemDetails(request.Id, request.UserId);
     }
 
     [Fact]
@@ -289,7 +289,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var response = await HttpClient.UpdatePostStatusCodeAsync(request, CancellationToken);
@@ -329,7 +329,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
@@ -371,7 +371,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         await HttpClient.UpdatePostAsync(request, CancellationToken);
@@ -416,7 +416,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         await HttpClient.UpdatePostAsync(request, CancellationToken);

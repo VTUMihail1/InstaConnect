@@ -28,15 +28,14 @@ public class PostLike : IEntity
 
     public PostLike(
         string id,
-        Post post,
+        string likeId,
         User user,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
         Id = id;
-        Post = post;
+        LikeId = likeId;
         User = user;
-        LikeId = post.Id;
         UserId = user.Id;
     }
 
@@ -45,8 +44,6 @@ public class PostLike : IEntity
     public string LikeId { get; }
 
     public string UserId { get; }
-
-    public Post? Post { get; }
 
     public User? User { get; }
 

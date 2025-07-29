@@ -21,7 +21,7 @@ public static class PostMatcher
     public static Post IsPost(Post post, AddPostCommandRequest command)
     {
         return Matcher.Is<Post>(p => p.Id == post.Id &&
-                                     p.UserId == command.CurrentUserId &&
+                                     p.UserId == command.UserId &&
                                      p.Title == command.Title &&
                                      p.Content == command.Content &&
                                      p.CreatedAt == post.CreatedAt &&
@@ -68,7 +68,7 @@ public static class PostMatcher
     {
         return Matcher.Is<AddPostCommandRequest>(p => p.Title == request.Body.Title &&
                                                p.Content == request.Body.Content &&
-                                               p.CurrentUserId == request.CurrentUserId);
+                                               p.UserId == request.UserId);
     }
 
     public static UpdatePostCommandRequest IsUpdatePostCommand(UpdatePostApiRequest request)
@@ -76,13 +76,13 @@ public static class PostMatcher
         return Matcher.Is<UpdatePostCommandRequest>(p => p.Id == request.Id &&
                                                   p.Title == request.Body.Title &&
                                                   p.Content == request.Body.Content &&
-                                                  p.CurrentUserId == request.CurrentUserId);
+                                                  p.UserId == request.UserId);
     }
 
     public static DeletePostCommandRequest IsDeletePostCommand(DeletePostApiRequest request)
     {
         return Matcher.Is<DeletePostCommandRequest>(p => p.Id == request.Id &&
-                                                  p.CurrentUserId == request.CurrentUserId);
+                                                  p.UserId == request.UserId);
     }
     public static GetAllPostsQuery IsGetAllPostsRequest(GetAllPostsQueryRequest request)
     {
@@ -104,7 +104,7 @@ public static class PostMatcher
     {
         return Matcher.Is<AddPostCommand>(p => p.Title == request.Title &&
                                                p.Content == request.Content &&
-                                               p.CurrentUserId == request.CurrentUserId);
+                                               p.UserId == request.UserId);
     }
 
     public static UpdatePostCommand IsUpdatePostRequest(UpdatePostCommandRequest request)
@@ -112,12 +112,12 @@ public static class PostMatcher
         return Matcher.Is<UpdatePostCommand>(p => p.Id == request.Id &&
                                                   p.Title == request.Title &&
                                                   p.Content == request.Content &&
-                                                  p.CurrentUserId == request.CurrentUserId);
+                                                  p.UserId == request.UserId);
     }
 
     public static DeletePostCommand IsDeletePostRequest(DeletePostCommandRequest request)
     {
         return Matcher.Is<DeletePostCommand>(p => p.Id == request.Id &&
-                                                  p.CurrentUserId == request.CurrentUserId);
+                                                  p.UserId == request.UserId);
     }
 }

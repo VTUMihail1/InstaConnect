@@ -2,9 +2,16 @@
 
 public static class ObjectExtensions
 {
-    public static bool EqualsNull(this object? obj)
+    public static bool IsNull(this object? obj)
     {
-        var result = Equals(obj, null);
+        var result = obj is null;
+
+        return result;
+    }
+
+    public static bool IsNotNull(this object? obj)
+    {
+        var result = obj is not null;
 
         return result;
     }

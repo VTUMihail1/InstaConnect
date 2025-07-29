@@ -3,6 +3,7 @@ using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.PostLikes.Abstractions;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 using InstaConnect.Posts.Infrastructure;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Abstractions;
 using InstaConnect.Posts.Presentation.FunctionalTests.Features.PostLikes.Helpers;

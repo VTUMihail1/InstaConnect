@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+﻿using InstaConnect.Posts.Domain.Features.Users.Utilities;
+
+namespace InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 public class UpdatePostCommandRequestValidator : AbstractValidator<UpdatePostCommandRequest>
 {
     public UpdatePostCommandRequestValidator()
@@ -11,13 +13,13 @@ public class UpdatePostCommandRequestValidator : AbstractValidator<UpdatePostCom
             .MaximumLength(PostConfigurations.IdMaxLength)
             .WithMessage(r => PostErrorMessages.GetIdTooLong(r.Id.Length));
 
-        RuleFor(r => r.CurrentUserId)
+        RuleFor(r => r.UserId)
             .NotEmpty()
             .WithMessage(UserErrorMessages.GetIdEmpty())
             .MinimumLength(UserConfigurations.IdMinLength)
-            .WithMessage(r => UserErrorMessages.GetIdTooShort(r.CurrentUserId.Length))
+            .WithMessage(r => UserErrorMessages.GetIdTooShort(r.UserId.Length))
             .MaximumLength(UserConfigurations.IdMaxLength)
-            .WithMessage(r => UserErrorMessages.GetIdTooLong(r.CurrentUserId.Length));
+            .WithMessage(r => UserErrorMessages.GetIdTooLong(r.UserId.Length));
 
         RuleFor(r => r.Title)
             .NotEmpty()

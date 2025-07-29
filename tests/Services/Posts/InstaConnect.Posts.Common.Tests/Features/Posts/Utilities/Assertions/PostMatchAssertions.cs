@@ -20,7 +20,7 @@ public static class PostMatchAssertions
 {
     public static void ShouldSatisfy(this Post post, AddPostCommandRequest request)
     {
-        post.ShouldSatisfy(p => p.UserId == request.CurrentUserId &&
+        post.ShouldSatisfy(p => p.UserId == request.UserId &&
                                 p.Title == request.Title &&
                                 p.Content == request.Content);
     }
@@ -28,14 +28,14 @@ public static class PostMatchAssertions
     public static void ShouldSatisfy(this Post post, UpdatePostCommandRequest request)
     {
         post.ShouldSatisfy(p => p.Id == request.Id &&
-                                p.UserId == request.CurrentUserId &&
+                                p.UserId == request.UserId &&
                                 p.Title == request.Title &&
                                 p.Content == request.Content);
     }
 
     public static void ShouldSatisfy(this Post post, AddPostApiRequest request)
     {
-        post.ShouldSatisfy(p => p.UserId == request.CurrentUserId &&
+        post.ShouldSatisfy(p => p.UserId == request.UserId &&
                                 p.Title == request.Body.Title &&
                                 p.Content == request.Body.Content);
     }
@@ -43,7 +43,7 @@ public static class PostMatchAssertions
     public static void ShouldSatisfy(this Post post, UpdatePostApiRequest request)
     {
         post.ShouldSatisfy(p => p.Id == request.Id &&
-                                p.UserId == request.CurrentUserId &&
+                                p.UserId == request.UserId &&
                                 p.Title == request.Body.Title &&
                                 p.Content == request.Body.Content);
     }
@@ -67,7 +67,7 @@ public static class PostMatchAssertions
         response.ShouldSatisfy(p =>
             p.Data.Id == post.Id &&
             p.Data.User.Id == user.Id &&
-            p.Data.User.Name == user.UserName &&
+            p.Data.User.Name == user.Name &&
             p.Data.User.ProfileImage == user.ProfileImage &&
             p.Data.Title == post.Title &&
             p.Data.Content == post.Content);
@@ -79,7 +79,7 @@ public static class PostMatchAssertions
             pp.Data.All(p =>
                 p.Id == post.Id &&
                 p.User.Id == user.Id &&
-                p.User.Name == user.UserName &&
+                p.User.Name == user.Name &&
                 p.User.ProfileImage == user.ProfileImage &&
                 p.Title == post.Title &&
                 p.Content == post.Content) &&
@@ -109,7 +109,7 @@ public static class PostMatchAssertions
         response.ShouldSatisfy(p =>
             p.Data.Id == post.Id &&
             p.Data.User.Id == user.Id &&
-            p.Data.User.Name == user.UserName &&
+            p.Data.User.Name == user.Name &&
             p.Data.User.ProfileImage == user.ProfileImage &&
             p.Data.Title == post.Title &&
             p.Data.Content == post.Content);
@@ -121,7 +121,7 @@ public static class PostMatchAssertions
             pp.Data.All(p =>
                 p.Id == post.Id &&
                 p.User.Id == user.Id &&
-                p.User.Name == user.UserName &&
+                p.User.Name == user.Name &&
                 p.User.ProfileImage == user.ProfileImage &&
                 p.Title == post.Title &&
                 p.Content == post.Content) &&
@@ -151,7 +151,7 @@ public static class PostMatchAssertions
         response.ShouldBeActionResultAndSatisfy(p =>
             p.Data.Id == post.Id &&
             p.Data.User.Id == user.Id &&
-            p.Data.User.Name == user.UserName &&
+            p.Data.User.Name == user.Name &&
             p.Data.User.ProfileImage == user.ProfileImage &&
             p.Data.Title == post.Title &&
             p.Data.Content == post.Content);
@@ -163,7 +163,7 @@ public static class PostMatchAssertions
             pp.Data.All(p =>
                 p.Id == post.Id &&
                 p.User.Id == user.Id &&
-                p.User.Name == user.UserName &&
+                p.User.Name == user.Name &&
                 p.User.ProfileImage == user.ProfileImage &&
                 p.Title == post.Title &&
                 p.Content == post.Content) &&

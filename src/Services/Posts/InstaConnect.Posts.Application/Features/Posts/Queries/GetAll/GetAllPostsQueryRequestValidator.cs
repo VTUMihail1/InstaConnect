@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Utilities;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 

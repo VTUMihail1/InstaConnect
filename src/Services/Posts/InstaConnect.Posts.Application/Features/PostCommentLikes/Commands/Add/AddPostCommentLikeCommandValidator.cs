@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
+﻿using InstaConnect.Posts.Domain.Features.Users.Utilities;
+
+namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
 public class AddPostCommentLikeCommandValidator : AbstractValidator<AddPostCommentLikeCommand>
 {
     public AddPostCommentLikeCommandValidator()

@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 using InstaConnect.Posts.Infrastructure;
 
 using MassTransit.Testing;

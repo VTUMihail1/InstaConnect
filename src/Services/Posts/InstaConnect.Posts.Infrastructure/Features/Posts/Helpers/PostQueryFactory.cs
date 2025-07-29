@@ -22,47 +22,47 @@ public class PostQueryFactory : IPostQueryFactory
         _postSortPropertyFactory = postSortPropertyFactory;
     }
 
-    public GetAllQuerySpecification CreateGetAll(GetAllPostsQuery queryParameters)
+    public GetAllPostsQuerySpecification CreateGetAll(GetAllPostsQuery query)
     {
-        var sortOrder = _sortOrderFactory.Create(queryParameters.Sorting.Order);
-        var sortProperty = _postSortPropertyFactory.Create(queryParameters.Sorting.Property);
-        var offset = _paginator.GetOffset(queryParameters.Pagination.Page, queryParameters.Pagination.PageSize);
-        var parameters = new GetAllQueryParameters(
-            queryParameters.Filter.UserId,
-            queryParameters.Filter.UserName,
-            queryParameters.Filter.Title,
+        var sortOrder = _sortOrderFactory.Create(query.Sorting.Order);
+        var sortProperty = _postSortPropertyFactory.Create(query.Sorting.Property);
+        var offset = _paginator.GetOffset(query.Pagination.Page, query.Pagination.PageSize);
+        var parameters = new GetAllPostsQueryParameters(
+            query.Filter.UserId,
+            query.Filter.UserName,
+            query.Filter.Title,
             sortOrder.Order,
             sortProperty.Property,
             offset,
-            queryParameters.Pagination.PageSize);
+            query.Pagination.PageSize);
 
-        var specification = new GetAllQuerySpecification(
+        var specification = new GetAllPostsQuerySpecification(
             PostQuerySql.GetAll,
             parameters);
 
         return specification;
     }
 
-    public GetAllTotalCountQuerySpecification CreateGetAllTotalCount(PostFilterQuery filter)
+    public GetAllPostsTotalCountQuerySpecification CreateGetAllTotalCount(PostFilterQuery query)
     {
-        var parameters = new GetAllTotalCountQueryParameters(
-            filter.UserId,
-            filter.UserName,
-            filter.Title);
+        var parameters = new GetAllPostsTotalCountQueryParameters(
+            query.UserId,
+            query.UserName,
+            query.Title);
 
-        var specification = new GetAllTotalCountQuerySpecification(
+        var specification = new GetAllPostsTotalCountQuerySpecification(
             PostQuerySql.GetAllTotalCount,
             parameters);
 
         return specification;
     }
 
-    public GetPostByIdSpecification CreateGetById(string id)
+    public GetPostByIdQuerySpecification CreateGetById(string id)
     {
-        var parameters = new GetPostByIdParameters(id);
+        var parameters = new GetPostByIdQueryParameters(id);
 
-        var result = new GetPostByIdSpecification(
-            PostQuerySql.GetAll,
+        var result = new GetPostByIdQuerySpecification(
+            PostQuerySql.GetById,
             parameters);
 
         return result;

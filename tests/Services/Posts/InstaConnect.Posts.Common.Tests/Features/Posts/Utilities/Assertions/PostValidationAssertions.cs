@@ -55,17 +55,17 @@ public static class PostValidationAssertions
 
     public static void ShouldHaveValidationErrorForUserId(this TestValidationResult<AddPostCommandRequest> result, string errorMessage)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.UserId, errorMessage);
     }
 
     public static void ShouldHaveValidationErrorForUserId(this TestValidationResult<UpdatePostCommandRequest> result, string errorMessage)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.UserId, errorMessage);
     }
 
     public static void ShouldHaveValidationErrorForUserId(this TestValidationResult<DeletePostCommandRequest> result, string errorMessage)
     {
-        result.ShouldHaveValidationErrorForProperty(p => p.CurrentUserId, errorMessage);
+        result.ShouldHaveValidationErrorForProperty(p => p.UserId, errorMessage);
     }
 
     public static void ShouldHaveValidationErrorForUserId(this TestValidationResult<GetAllPostsQueryRequest> result, string errorMessage)

@@ -2,6 +2,7 @@
 using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 

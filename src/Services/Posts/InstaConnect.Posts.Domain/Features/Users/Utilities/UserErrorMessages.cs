@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Common.Extensions;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Common.Features.Users.Utilities;
 

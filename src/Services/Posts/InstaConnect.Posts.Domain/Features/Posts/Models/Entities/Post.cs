@@ -1,5 +1,5 @@
-﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
+﻿using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
+using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
@@ -12,8 +12,8 @@ public class Post : IEntity
         Title = string.Empty;
         Content = string.Empty;
         UserId = string.Empty;
-        PostLikes = [];
-        PostComments = [];
+        Likes = [];
+        Comments = [];
     }
 
     public Post(
@@ -28,8 +28,8 @@ public class Post : IEntity
         Title = title;
         Content = content;
         UserId = userId;
-        PostLikes = [];
-        PostComments = [];
+        Likes = [];
+        Comments = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -47,8 +47,8 @@ public class Post : IEntity
         Content = content;
         UserId = user.Id;
         User = user;
-        PostLikes = [];
-        PostComments = [];
+        Likes = [];
+        Comments = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -58,8 +58,8 @@ public class Post : IEntity
         string title,
         string content,
         User user,
-        ICollection<PostLike> postLikes,
-        ICollection<PostComment> postComments,
+        ICollection<PostLike> likes,
+        ICollection<PostComment> comments,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
@@ -68,8 +68,8 @@ public class Post : IEntity
         Content = content;
         UserId = user.Id;
         User = user;
-        PostLikes = postLikes;
-        PostComments = postComments;
+        Likes = likes;
+        Comments = comments;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -84,9 +84,9 @@ public class Post : IEntity
 
     public User? User { get; }
 
-    public ICollection<PostLike> PostLikes { get; }
+    public ICollection<PostLike> Likes { get; }
 
-    public ICollection<PostComment> PostComments { get; }
+    public ICollection<PostComment> Comments { get; }
 
     public DateTimeOffset CreatedAt { get; }
 

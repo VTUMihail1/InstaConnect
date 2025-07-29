@@ -135,7 +135,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
             .Update(Arg.Is<User>(m => m.Id == existingUser.Id &&
                                    m.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                                    m.LastName == UserTestUtilities.ValidUpdateLastName &&
-                                   m.UserName == UserTestUtilities.ValidUpdateName &&
+                                   m.Name == UserTestUtilities.ValidUpdateName &&
                                    m.Email == existingUser.Email &&
                                    m.ProfileImage == UserTestUtilities.ValidUpdateProfileImage));
     }

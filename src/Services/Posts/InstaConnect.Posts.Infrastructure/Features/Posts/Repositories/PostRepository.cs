@@ -57,7 +57,7 @@ internal class PostRepository : IPostRepository
         using var connection = _sqlConnectionFactory.Create();
 
         var getByIdQuery = _postQueryFactory.CreateGetById(id);
-        var queryResponse = await connection.ExecuteQueryFirstAsync<PostQueryResponse>(
+        var queryResponse = await connection.ExecuteQueryFirstAsync<PostQueryEntity>(
             getByIdQuery.Sql,
             getByIdQuery.Parameters,
             cancellationToken);

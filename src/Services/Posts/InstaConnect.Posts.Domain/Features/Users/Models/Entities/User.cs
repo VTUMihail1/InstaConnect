@@ -1,11 +1,11 @@
-﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.Posts.Domain.Features.PostLikes.Models.Entities;
+﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
+using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
+using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
 
 namespace InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
-public class User : IEntity, IAuditableInfo
+public class User : IEntity
 {
     private User()
     {
@@ -13,7 +13,11 @@ public class User : IEntity, IAuditableInfo
         FirstName = string.Empty;
         LastName = string.Empty;
         Email = string.Empty;
-        UserName = string.Empty;
+        Name = string.Empty;
+        Posts = [];
+        PostLikes = [];
+        PostComments = [];
+        PostCommentLikes = [];
     }
 
     public User(
@@ -21,7 +25,7 @@ public class User : IEntity, IAuditableInfo
         string firstName,
         string lastName,
         string email,
-        string userName,
+        string name,
         string? profileImage,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
@@ -30,8 +34,12 @@ public class User : IEntity, IAuditableInfo
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        UserName = userName;
+        Name = name;
         ProfileImage = profileImage;
+        Posts = [];
+        PostLikes = [];
+        PostComments = [];
+        PostCommentLikes = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
@@ -54,7 +62,7 @@ public class User : IEntity, IAuditableInfo
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        UserName = userName;
+        Name = userName;
         ProfileImage = profileImage;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
@@ -64,29 +72,43 @@ public class User : IEntity, IAuditableInfo
         PostCommentLikes = postCommentLikes;
     }
 
-    public string Id { get; set; }
+    public string Id { get; }
 
-    public string FirstName { get; set; }
+    public string FirstName { get; private set; }
 
-    public string LastName { get; set; }
+    public string LastName { get; private set; }
 
-    public string Email { get; set; }
+    public string Email { get; }
 
-    public string UserName { get; set; }
+    public string Name { get; private set; }
 
-    public string? ProfileImage { get; set; }
+    public string? ProfileImage { get; private set; }
 
-    public ICollection<Post> Posts { get; set; } = [];
+    public ICollection<Post> Posts { get; }
 
-    public ICollection<PostLike> PostLikes { get; set; } = [];
+    public ICollection<PostLike> PostLikes { get; }
 
-    public ICollection<PostComment> PostComments { get; set; } = [];
+    public ICollection<PostComment> PostComments { get; }
 
-    public ICollection<PostCommentLike> PostCommentLikes { get; set; } = [];
+    public ICollection<PostCommentLike> PostCommentLikes { get; }
 
-    public DateTimeOffset CreatedAt { get; set; }
+    public DateTimeOffset CreatedAt { get; }
 
-    public DateTimeOffset UpdatedAt { get; set; }
+    public DateTimeOffset UpdatedAt { get; private set; }
+
+    public void Update(
+        string firstName,
+        string lastName,
+        string name,
+        string? profileImage,
+        DateTimeOffset updatedAt)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Name = name;
+        ProfileImage = profileImage;
+        UpdatedAt = updatedAt;
+    }
 }
 
 

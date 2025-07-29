@@ -53,18 +53,18 @@ internal class PostPresentationMappings : IRegister
                         src.Data.User.ProfileImage))));
 
         config.NewConfig<AddPostApiRequest, AddPostCommandRequest>()
-            .ConstructUsing(src => new(src.CurrentUserId, src.Body.Title, src.Body.Content));
+            .ConstructUsing(src => new(src.UserId, src.Body.Title, src.Body.Content));
 
         config.NewConfig<AddPostCommandResponse, AddPostApiResponse>()
             .ConstructUsing(src => new(src.Id, src.CreatedAt, src.UpdatedAt));
 
         config.NewConfig<UpdatePostApiRequest, UpdatePostCommandRequest>()
-            .ConstructUsing(src => new(src.Id, src.CurrentUserId, src.Body.Title, src.Body.Content));
+            .ConstructUsing(src => new(src.Id, src.UserId, src.Body.Title, src.Body.Content));
 
         config.NewConfig<UpdatePostCommandResponse, UpdatePostApiResponse>()
             .ConstructUsing(src => new(src.Id, src.CreatedAt, src.UpdatedAt));
 
         config.NewConfig<DeletePostApiRequest, DeletePostCommandRequest>()
-            .ConstructUsing(src => new(src.Id, src.CurrentUserId));
+            .ConstructUsing(src => new(src.Id, src.UserId));
     }
 }

@@ -44,7 +44,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
@@ -95,13 +95,13 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowUserNotFoundExceptionAsync(request.CurrentUserId);
+        await action.ShouldThrowUserNotFoundExceptionAsync(request.UserId);
     }
 
     [Fact]

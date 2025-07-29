@@ -88,7 +88,7 @@ public abstract class BasePostLikeUnitTest
             .GetAllAsync(Arg.Is<GetAllPostsQuery>(m =>
                                                                         m.Title == post.Title &&
                                                                         m.UserId == user.Id &&
-                                                                        m.UserName == user.UserName &&
+                                                                        m.UserName == user.Name &&
                                                                         m.Page == PostTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == PostTestUtilities.ValidSortOrderProperty &&
@@ -121,7 +121,7 @@ public abstract class BasePostLikeUnitTest
 
         PostLikeService
             .GetAllAsync(post, Arg.Is<PostLikeCollectionReadQuery>(m => m.UserId == user.Id &&
-                                                                        m.UserName == user.UserName &&
+                                                                        m.UserName == user.Name &&
                                                                         m.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == PostLikeTestUtilities.ValidSortOrderProperty &&

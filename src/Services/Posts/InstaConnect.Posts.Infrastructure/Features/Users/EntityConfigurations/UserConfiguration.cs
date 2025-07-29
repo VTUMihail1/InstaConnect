@@ -1,39 +1,40 @@
-﻿namespace InstaConnect.Posts.Infrastructure.Features.Users.EntityConfigurations;
+﻿using InstaConnect.Posts.Domain.Features.Users.Utilities;
+
+namespace InstaConnect.Posts.Infrastructure.Features.Users.EntityConfigurations;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder
-            .ToTable("user");
-
-        builder
             .Property(p => p.Id)
-            .HasColumnName("id");
+            .HasMaxLength(UserConfigurations.IdMaxLength)
+            .IsRequired()
+            .ValueGeneratedNever();
 
         builder
             .Property(p => p.FirstName)
-            .HasColumnName("first_name")
-            .HasMaxLength(255)
+            .HasMaxLength(UserConfigurations.FirstNameMaxLength)
             .IsRequired();
 
         builder
             .Property(p => p.LastName)
-            .HasColumnName("last_name")
-            .HasMaxLength(255)
+            .HasMaxLength(UserConfigurations.LastNameMaxLength)
             .IsRequired();
 
         builder
             .Property(p => p.Email)
-            .HasColumnName("email");
+            .HasMaxLength(UserConfigurations.EmailMaxLength)
+            .IsRequired();
 
         builder
-            .Property(p => p.UserName)
-            .HasColumnName("user_name");
+            .Property(p => p.Name)
+            .HasMaxLength(UserConfigurations.NameMaxLength)
+            .IsRequired();
 
         builder
             .Property(p => p.ProfileImage)
-            .HasColumnName("profile_image");
+            .HasMaxLength(UserConfigurations.ProfileImageMaxLength);
 
         builder.HasMany(f => f.Posts)
                 .WithOne(u => u.User)

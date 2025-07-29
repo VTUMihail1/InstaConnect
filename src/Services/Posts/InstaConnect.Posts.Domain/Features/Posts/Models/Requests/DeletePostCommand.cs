@@ -2,4 +2,4 @@
 
 public record DeletePostCommand(
     string Id,
-    string CurrentUserId);
+    string UserId);

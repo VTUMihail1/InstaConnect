@@ -1,26 +1,28 @@
-﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+﻿using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
-namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
+namespace InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
 
-public class PostCommentLike : IEntity, IAuditableInfo
+public class PostCommentLike : IEntity
 {
     private PostCommentLike()
     {
         Id = string.Empty;
+        CommentId = string.Empty;
+        CommentLikeId = string.Empty;
         UserId = string.Empty;
-        PostCommentId = string.Empty;
     }
 
     public PostCommentLike(
         string id,
-        string postCommentId,
+        string commentId,
+        string commentLikeId,
         string userId,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
         Id = id;
-        PostCommentId = postCommentId;
+        CommentId = commentId;
+        CommentLikeId = commentLikeId;
         UserId = userId;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
@@ -28,31 +30,32 @@ public class PostCommentLike : IEntity, IAuditableInfo
 
     public PostCommentLike(
         string id,
-        PostComment postComment,
+        string commentId,
+        string commentLikeId,
         User user,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
         Id = id;
-        PostComment = postComment;
-        User = user;
-        PostCommentId = postComment.Id;
+        CommentId = commentId;
+        CommentLikeId = commentLikeId;
         UserId = user.Id;
+        User = user;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
 
     public string Id { get; }
 
-    public string PostCommentId { get; }
+    public string CommentId { get; private set; }
+
+    public string CommentLikeId { get; private set; }
 
     public string UserId { get; }
-
-    public PostComment? PostComment { get; }
 
     public User? User { get; }
 
     public DateTimeOffset CreatedAt { get; }
 
-    public DateTimeOffset UpdatedAt { get; }
+    public DateTimeOffset UpdatedAt { get; private set; }
 }

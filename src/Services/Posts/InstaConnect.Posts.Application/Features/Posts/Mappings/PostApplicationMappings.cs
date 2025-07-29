@@ -30,7 +30,7 @@ public class PostApplicationMappings : IRegister
                                       p.Content,
                                       new(
                                           p.UserId,
-                                          p.User!.UserName,
+                                          p.User!.Name,
                                           p.User.ProfileImage)))
                          .ToList(),
                   pc.Page,
@@ -49,22 +49,22 @@ public class PostApplicationMappings : IRegister
                     src.Content,
                     new(
                         src.UserId,
-                        src.User!.UserName,
+                        src.User!.Name,
                         src.User.ProfileImage))));
 
         config.NewConfig<AddPostCommandRequest, AddPostCommand>()
-            .ConstructUsing(src => new(src.CurrentUserId, src.Title, src.Content));
+            .ConstructUsing(src => new(src.UserId, src.Title, src.Content));
 
         config.NewConfig<Post, AddPostCommandResponse>()
             .ConstructUsing(src => new(src.Id, src.CreatedAt, src.UpdatedAt));
 
         config.NewConfig<UpdatePostCommandRequest, UpdatePostCommand>()
-            .ConstructUsing(src => new(src.Id, src.CurrentUserId, src.Title, src.Content));
+            .ConstructUsing(src => new(src.Id, src.UserId, src.Title, src.Content));
 
         config.NewConfig<Post, UpdatePostCommandResponse>()
             .ConstructUsing(src => new(src.Id, src.CreatedAt, src.UpdatedAt));
 
         config.NewConfig<DeletePostCommandRequest, DeletePostCommand>()
-            .ConstructUsing(src => new(src.Id, src.CurrentUserId));
+            .ConstructUsing(src => new(src.Id, src.UserId));
     }
 }

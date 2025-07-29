@@ -1,16 +1,31 @@
 ﻿using InstaConnect.Common.Exceptions;
+using InstaConnect.PostCommentLikes.Common.Features.PostCommentLikes.Utilities;
+using InstaConnect.PostLikes.Common.Features.PostLikes.Utilities;
 
-namespace InstaConnect.Posts.Domain.Features.PostCommentLikes.Exceptions;
+namespace InstaConnect.PostLikes.Domain.Features.PostLikes.Exceptions;
 
-public class PostCommentLikeAlreadyExistsException : BadRequestException
+public class PostCommentLikeAlreadyExistsException : NotFoundException
 {
-    private const string ErrorMessage = "Post comment like already exists";
-
-    public PostCommentLikeAlreadyExistsException() : base(ErrorMessage)
+    public PostCommentLikeAlreadyExistsException(
+        string id,
+        string commentId,
+        string userId)
+        : base(PostCommentLikeExceptionErrorMessages.GetAlreadyExistsMessage(
+            id,
+            commentId,
+            userId))
     {
     }
 
-    public PostCommentLikeAlreadyExistsException(Exception exception) : base(ErrorMessage, exception)
+    public PostCommentLikeAlreadyExistsException(
+        string id,
+        string commentId,
+        string userId,
+        Exception exception)
+        : base(PostCommentLikeExceptionErrorMessages.GetAlreadyExistsMessage(
+            id,
+            commentId,
+            userId), exception)
     {
     }
 }

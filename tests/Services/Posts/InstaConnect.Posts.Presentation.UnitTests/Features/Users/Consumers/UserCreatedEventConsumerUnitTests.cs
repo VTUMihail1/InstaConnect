@@ -131,7 +131,7 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
         UserWriteRepository
             .Received(1)
             .Add(Arg.Is<User>(m => m.Id == UserTestUtilities.InvalidId &&
-                                   m.UserName == UserTestUtilities.ValidAddName &&
+                                   m.Name == UserTestUtilities.ValidAddName &&
                                    m.FirstName == UserTestUtilities.ValidAddFirstName &&
                                    m.LastName == UserTestUtilities.ValidAddLastName &&
                                    m.Email == UserTestUtilities.ValidAddEmail &&

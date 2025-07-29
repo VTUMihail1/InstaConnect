@@ -4,6 +4,7 @@ using InstaConnect.Common.Abstractions;
 using InstaConnect.Common.Application.Abstractions;
 using InstaConnect.Common.Helpers;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 using InstaConnect.Posts.Presentation.Extensions;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Users.Utilities;

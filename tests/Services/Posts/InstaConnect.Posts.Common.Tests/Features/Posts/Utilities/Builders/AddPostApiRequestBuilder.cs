@@ -26,7 +26,7 @@ public class AddPostApiRequestBuilder
 
     public AddPostApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.CurrentUserId, userId, transformer);
+        _objectBuilder.With(p => p.UserId, userId, transformer);
 
         return this;
     }

@@ -100,7 +100,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var response = await HttpClient.DeletePostStatusCodeAsync(request, CancellationToken);
@@ -118,7 +118,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var response = await HttpClient.DeletePostProblemDetailsAsync(request, CancellationToken);
@@ -163,7 +163,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithId(_request.UserId, transformer).Create();
 
         // Act
         var response = await HttpClient.DeletePostStatusCodeAsync(request, CancellationToken);
@@ -178,13 +178,13 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithId(_request.UserId, transformer).Create();
 
         // Act
         var response = await HttpClient.DeletePostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostForbiddenProblemDetails(request.Id, request.CurrentUserId);
+        response.ShouldSatisfyPostForbiddenProblemDetails(request.Id, request.UserId);
     }
 
     [Fact]
@@ -218,7 +218,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var response = await HttpClient.DeletePostStatusCodeAsync(request, CancellationToken);
@@ -260,7 +260,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         await HttpClient.DeletePostAsync(request, CancellationToken);
@@ -303,7 +303,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         await HttpClient.DeletePostAsync(request, CancellationToken);

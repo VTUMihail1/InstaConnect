@@ -10,6 +10,7 @@ using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 using InstaConnect.Posts.Presentation.Extensions;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostComments.Utilities;
@@ -80,7 +81,7 @@ public abstract class BasePostCommentUnitTest
             postComment.Content,
             post.Id,
             user.Id,
-            user.UserName,
+            user.Name,
             user.ProfileImage);
 
         var postCommentCommandViewModel = new PostCommentCommandViewModel(postComment.Id);
@@ -96,7 +97,7 @@ public abstract class BasePostCommentUnitTest
             .SendAsync(Arg.Is<GetAllPostCommentsQuery>(m =>
                   m.PostId == post.Id &&
                   m.UserId == user.Id &&
-                  m.UserName == user.UserName &&
+                  m.UserName == user.Name &&
                   m.SortOrder == PostCommentTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == PostCommentTestUtilities.ValidSortPropertyName &&
                   m.Page == PostCommentTestUtilities.ValidPageValue &&

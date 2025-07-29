@@ -1,4 +1,5 @@
 ﻿using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Queries.GetAll;
 

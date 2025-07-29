@@ -10,6 +10,7 @@ using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
 using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.Posts.Domain.Features.Users.Utilities;
 using InstaConnect.Posts.Presentation.Extensions;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostCommentLikes.Utilities;
@@ -95,7 +96,7 @@ public abstract class BasePostCommentLikeUnitTest
             postCommentLike.Id,
             postComment.Id,
             user.Id,
-            user.UserName,
+            user.Name,
             user.ProfileImage);
 
         var postCommentLikeCommandViewModel = new PostCommentLikeCommandViewModel(postCommentLike.Id);
@@ -111,7 +112,7 @@ public abstract class BasePostCommentLikeUnitTest
             .SendAsync(Arg.Is<GetAllPostCommentLikesQuery>(m =>
                   m.PostCommentId == postComment.Id &&
                   m.UserId == user.Id &&
-                  m.UserName == user.UserName &&
+                  m.UserName == user.Name &&
                   m.SortOrder == PostCommentLikeTestUtilities.ValidSortOrderProperty &&
                   m.SortPropertyName == PostCommentLikeTestUtilities.ValidSortPropertyName &&
                   m.Page == PostCommentLikeTestUtilities.ValidPageValue &&

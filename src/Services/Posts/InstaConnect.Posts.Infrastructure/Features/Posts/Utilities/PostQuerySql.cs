@@ -20,20 +20,20 @@ public static class PostQuerySql
                                        u.created_at AS {nameof(PostQueryEntity.UserCreatedAt)},
                                        u.updated_at AS {nameof(PostQueryEntity.UserUpdatedAt)},
                                    FROM posts p
-                                   INNER JOIN users u ON p.{nameof(Post.UserId)} = u.{nameof(User.Id)}
-                                   WHERE p.{nameof(Post.UserId)} = @{nameof(GetAllQueryParameters.UserId)}
-                                     AND u.{nameof(User.UserName)} LIKE @{nameof(GetAllQueryParameters.UserName)}
-                                     AND p.{nameof(Post.Title)} LIKE @{nameof(GetAllQueryParameters.Title)}
-                                   ORDER BY @{nameof(GetAllQueryParameters.SortProperty)} @{nameof(GetAllQueryParameters.SortOrder)}
-                                   OFFSET @{nameof(GetAllQueryParameters.Offset)} ROWS
-                                   FETCH NEXT @{nameof(GetAllQueryParameters.Limit)} ROWS ONLY;";
+                                   INNER JOIN users u ON p.{nameof(PostQueryEntity.UserId)} = u.{nameof(UserQueryEntity.Id)}
+                                   WHERE p.{nameof(PostQueryEntity.UserId)} = @{nameof(GetAllPostsQueryParameters.UserId)}
+                                     AND u.{nameof(PostQueryEntity.UserName)} LIKE @{nameof(GetAllPostsQueryParameters.UserName)}
+                                     AND p.{nameof(PostQueryEntity.Title)} LIKE @{nameof(GetAllPostsQueryParameters.Title)}
+                                   ORDER BY @{nameof(GetAllPostsQueryParameters.SortProperty)} @{nameof(GetAllPostsQueryParameters.SortOrder)}
+                                   OFFSET @{nameof(GetAllPostsQueryParameters.Offset)} ROWS
+                                   FETCH NEXT @{nameof(GetAllPostsQueryParameters.Limit)} ROWS ONLY;";
 
     public const string GetAllTotalCount = $@"SELECT COUNT(*)
                                               FROM posts p
-                                              INNER JOIN users u ON p.{nameof(Post.UserId)} = u.{nameof(User.Id)}
-                                              WHERE p.{nameof(Post.UserId)} = @{nameof(GetAllQueryParameters.UserId)}
-                                                AND u.{nameof(User.UserName)} LIKE @{nameof(GetAllQueryParameters.UserName)}
-                                                AND p.{nameof(Post.Title)} LIKE @{nameof(GetAllQueryParameters.Title)};";
+                                              INNER JOIN users u ON p.{nameof(PostQueryEntity.UserId)} = u.{nameof(UserQueryEntity.Id)}
+                                              WHERE p.{nameof(PostQueryEntity.UserId)} = @{nameof(GetAllPostsQueryParameters.UserId)}
+                                                AND u.{nameof(PostQueryEntity.UserName)} LIKE @{nameof(GetAllPostsQueryParameters.UserName)}
+                                                AND p.{nameof(PostQueryEntity.Title)} LIKE @{nameof(GetAllPostsQueryParameters.Title)};";
 
     public const string GetById = $@"SELECT
                                        p.id AS {nameof(PostQueryEntity.Id)},
@@ -51,6 +51,6 @@ public static class PostQuerySql
                                        u.created_at AS {nameof(PostQueryEntity.UserCreatedAt)},
                                        u.updated_at AS {nameof(PostQueryEntity.UserUpdatedAt)},
                                    FROM posts p
-                                   INNER JOIN users u ON p.{nameof(Post.UserId)} = u.{nameof(User.Id)}
-                                   WHERE p.{nameof(Post.Id)} = @{nameof(GetPostByIdParameters.Id)};";
+                                   INNER JOIN users u ON p.{nameof(PostQueryEntity.UserId)} = u.{nameof(UserQueryEntity.Id)}
+                                   WHERE p.{nameof(PostQueryEntity.Id)} = @{nameof(GetPostByIdQueryParameters.Id)};";
 }

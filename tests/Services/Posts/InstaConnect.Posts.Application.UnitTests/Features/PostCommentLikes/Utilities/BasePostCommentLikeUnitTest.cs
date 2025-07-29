@@ -120,7 +120,7 @@ public abstract class BasePostCommentLikeUnitTest
 
         PostCommentLikeService
             .GetAllAsync(postCommentLike.PostComment.Post, postCommentLike.PostCommentId, Arg.Is<PostCommentLikeCollectionReadQuery>(m => m.UserId == user.Id &&
-                                                                        m.UserName == user.UserName &&
+                                                                        m.UserName == user.Name &&
                                                                         m.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == PostLikeTestUtilities.ValidSortOrderProperty &&

@@ -48,13 +48,13 @@ public class PostCommentConfiguration : IEntityTypeConfiguration<PostComment>
 
         builder
             .HasOne(pc => pc.Post)
-            .WithMany(p => p.PostComments)
+            .WithMany(p => p.Comments)
             .HasForeignKey(pc => pc.PostId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
             .HasOne(pc => pc.Post)
-            .WithMany(p => p.PostComments)
+            .WithMany(p => p.Comments)
             .HasForeignKey(pc => pc.PostId)
             .OnDelete(DeleteBehavior.Cascade);
 

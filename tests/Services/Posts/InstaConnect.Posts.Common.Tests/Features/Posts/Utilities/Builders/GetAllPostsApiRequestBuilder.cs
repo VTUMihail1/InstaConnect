@@ -31,7 +31,7 @@ public class GetAllPostsApiRequestBuilder
     public GetAllPostsApiRequestBuilder(Post post, User user)
     {
         WithUserId(user.Id);
-        WithUserName(user.UserName);
+        WithUserName(user.Name);
         WithTitle(post.Title);
         WithPage(PostDataFaker.GetPage());
         WithPageSize(PostDataFaker.GetPageSize());

@@ -1,53 +1,56 @@
-﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+﻿using InstaConnect.PostComments.Domain.Features.PostCommentComments.Models.Entities;
+using InstaConnect.PostComments.Domain.Features.PostCommentLikes.Models.Entities;
+using InstaConnect.PostComments.Domain.Features.Users.Models.Entities;
+using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
-namespace InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
+using System.Security.Principal;
 
-public class PostComment : IEntity, IAuditableInfo
+namespace InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
+
+public class PostComment : IEntity
 {
     private PostComment()
     {
         Id = string.Empty;
-        UserId = string.Empty;
-        PostId = string.Empty;
+        CommentId = string.Empty;
         Content = string.Empty;
-        PostCommentLikes = [];
+        UserId = string.Empty;
+        Likes = [];
     }
 
     public PostComment(
         string id,
-        string userId,
-        string postId,
+        string commentId,
         string content,
+        string userId,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
         Id = id;
-        UserId = userId;
-        PostId = postId;
+        CommentId = commentId;
         Content = content;
-        PostCommentLikes = [];
+        UserId = userId;
+        Likes = [];
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
 
     public PostComment(
         string id,
-        User user,
-        Post post,
+        string commentId,
         string content,
-        ICollection<PostCommentLike> postCommentLikes,
+        User user,
+        ICollection<PostCommentLike> likes,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
         Id = id;
-        User = user;
-        Post = post;
-        UserId = user.Id;
-        PostId = post.Id;
+        CommentId = commentId;
         Content = content;
-        PostCommentLikes = postCommentLikes;
+        UserId = user.Id;
+        User = user;
+        Likes = likes;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
 
@@ -55,17 +58,15 @@ public class PostComment : IEntity, IAuditableInfo
 
     public string Id { get; }
 
-    public string UserId { get; }
-
-    public string PostId { get; }
+    public string CommentId { get; }
 
     public string Content { get; private set; }
 
+    public string UserId { get; }
+
     public User? User { get; }
 
-    public Post? Post { get; }
-
-    public ICollection<PostCommentLike> PostCommentLikes { get; }
+    public ICollection<PostCommentLike> Likes { get; }
 
     public DateTimeOffset CreatedAt { get; }
 

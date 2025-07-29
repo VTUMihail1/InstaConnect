@@ -99,7 +99,7 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
         UserWriteRepository
             .Received(1)
             .Delete(Arg.Is<User>(m => m.Id == existingUser.Id &&
-                                   m.UserName == existingUser.UserName &&
+                                   m.Name == existingUser.Name &&
                                    m.FirstName == existingUser.FirstName &&
                                    m.LastName == existingUser.LastName &&
                                    m.Email == existingUser.Email &&

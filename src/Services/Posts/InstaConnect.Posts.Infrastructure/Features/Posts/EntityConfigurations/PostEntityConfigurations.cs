@@ -1,4 +1,6 @@
-﻿namespace InstaConnect.Posts.Infrastructure.Features.Posts.EntityConfigurations;
+﻿using InstaConnect.Posts.Domain.Features.Users.Utilities;
+
+namespace InstaConnect.Posts.Infrastructure.Features.Posts.EntityConfigurations;
 
 public class PostEntityConfigurations : IEntityTypeConfiguration<Post>
 {
@@ -37,9 +39,9 @@ public class PostEntityConfigurations : IEntityTypeConfiguration<Post>
             .IsRequired();
 
         builder
-            .HasMany(p => p.PostLikes)
-            .WithOne(pl => pl.Post)
-            .HasForeignKey(pl => pl.PostId)
+            .HasMany(p => p.Likes)
+            .WithOne()
+            .HasForeignKey(pl => pl.Id)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
@@ -50,9 +52,10 @@ public class PostEntityConfigurations : IEntityTypeConfiguration<Post>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
-            .HasMany(p => p.PostComments)
-            .WithOne(c => c.Post)
-            .HasForeignKey(c => c.PostId)
+            .HasMany(p => p.Comments)
+            .WithOne()
+            .HasForeignKey(pl => pl.Id)
+            .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

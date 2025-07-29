@@ -1,19 +1,19 @@
-﻿using InstaConnect.Common.Domain.Models.Pagination;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+﻿using InstaConnect.PostComments.Application.Features.PostComments.Commands.Add;
+using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetById;
+using InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
+using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
+using InstaConnect.PostComments.Domain.Features.PostComments.Models.Responses;
 
-namespace InstaConnect.Posts.Domain.Features.PostComments.Abstractions;
+namespace InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
 public interface IPostCommentService
 {
-    public Task<PaginationList<PostComment>> GetAllAsync(Post post, PostCommentCollectionReadQuery query, CancellationToken cancellationToken);
+    public Task<PostCommentCollection> GetAllAsync(GetAllPostCommentsQuery query, CancellationToken cancellationToken);
 
-    public Task<PostComment> GetByIdAsync(Post post, string id, CancellationToken cancellationToken);
+    public Task<PostComment> GetByIdAsync(GetPostCommentByIdQuery query, CancellationToken cancellationToken);
 
-    public PostComment Add(Post post, string content, string userId);
+    public Task<PostComment> AddAsync(AddPostCommentCommand command, CancellationToken cancellationToken);
 
-    public Task<PostComment> UpdateAsync(Post post, string id, string userId, string content, CancellationToken cancellationToken);
+    public Task<PostComment> UpdateAsync(UpdatePostCommentCommand command, CancellationToken cancellationToken);
 
-    public Task DeleteAsync(Post post, string id, string userId, CancellationToken cancellationToken);
-
+    public Task DeleteAsync(DeletePostCommentCommand command, CancellationToken cancellationToken);
 }

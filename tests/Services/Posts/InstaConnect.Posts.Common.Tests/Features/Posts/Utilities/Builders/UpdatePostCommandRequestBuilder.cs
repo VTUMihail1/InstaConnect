@@ -35,7 +35,7 @@ public class UpdatePostCommandRequestBuilder
 
     public UpdatePostCommandRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
     {
-        _objectBuilder.With(p => p.CurrentUserId, userId);
+        _objectBuilder.With(p => p.UserId, userId);
 
         return this;
     }

@@ -26,7 +26,7 @@ internal class PostSortPropertyFactory : IPostSortPropertyFactory
 
         if (property == null)
         {
-            throw new PostSortPropertyNotSupportedException();
+            throw new PostSortPropertyNotSupportedException(sortProperty);
         }
 
         return property;

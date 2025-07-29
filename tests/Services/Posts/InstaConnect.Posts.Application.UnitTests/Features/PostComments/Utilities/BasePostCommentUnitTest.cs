@@ -102,7 +102,7 @@ public abstract class BasePostCommentUnitTest
             .GetAllAsync(post, Arg.Is<PostCommentCollectionReadQuery>(m =>
                                                                         m.PostId == post.Id &&
                                                                         m.UserId == user.Id &&
-                                                                        m.UserName == user.UserName &&
+                                                                        m.UserName == user.Name &&
                                                                         m.Page == PostLikeTestUtilities.ValidPageValue &&
                                                                         m.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
                                                                         m.SortOrder == PostLikeTestUtilities.ValidSortOrderProperty &&

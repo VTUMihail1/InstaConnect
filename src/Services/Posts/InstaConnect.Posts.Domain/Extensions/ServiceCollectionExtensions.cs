@@ -1,13 +1,10 @@
 ﻿using InstaConnect.Common.Extensions;
+using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Extensions;
+using InstaConnect.PostComments.Domain.Features.PostComments.Extensions;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Domain.Extensions;
 using InstaConnect.Posts.Domain.Features.Posts.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.Posts.Extensions;
-using InstaConnect.Posts.Infrastructure.Features.Users.Extensions;
-using InstaConnect.Shared.Infrastructure.Extensions;
+using InstaConnect.Posts.Domain.Features.Users.Extensions;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,8 +15,11 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDomain(this IServiceCollection serviceCollection)
     {
         serviceCollection
+            .AddUserServices()
             .AddPostServices()
-            .AddPostLikeServices();
+            .AddPostLikeServices()
+            .AddPostCommentServices()
+            .AddPostCommentLikeServices();
 
         serviceCollection
             .AddMapper(PostDomainReference.Assembly)

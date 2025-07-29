@@ -41,33 +41,33 @@ internal class PostService : IPostService
 
     public async Task<PostCollection> GetAllAsync(GetAllPostsQuery query, CancellationToken cancellationToken)
     {
-        var posts = await _postRepository.GetAllAsync(query, cancellationToken);
+        var existingPosts = await _postRepository.GetAllAsync(query, cancellationToken);
 
-        return posts;
+        return existingPosts;
     }
 
     public async Task<Post> GetByIdAsync(GetPostByIdQuery query, CancellationToken cancellationToken)
     {
-        var post = await _postRepository.GetByIdAsync(query.Id, cancellationToken);
+        var existingPost = await _postRepository.GetByIdAsync(query.Id, cancellationToken);
 
-        if (post.EqualsNull())
+        if (existingPost.IsNull())
         {
             throw new PostNotFoundException(query.Id);
         }
 
-        return post!;
+        return existingPost!;
     }
 
     public async Task<Post> AddAsync(AddPostCommand command, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetByIdAsync(command.CurrentUserId, cancellationToken);
+        var existingUser = await _userRepository.GetByIdAsync(command.UserId, cancellationToken);
 
-        if (user.EqualsNull())
+        if (existingUser.IsNull())
         {
-            throw new UserNotFoundException(command.CurrentUserId);
+            throw new UserNotFoundException(command.UserId);
         }
 
-        var post = _postFactory.Create(command.CurrentUserId, command.Title, command.Content);
+        var post = _postFactory.Create(command.UserId, command.Title, command.Content);
         _postRepository.Add(post);
 
         var integrationEvent = _applicationMapper.Map<PostAddedEvent>(post);
@@ -78,45 +78,45 @@ internal class PostService : IPostService
 
     public async Task<Post> UpdateAsync(UpdatePostCommand command, CancellationToken cancellationToken)
     {
-        var post = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingPost = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
 
-        if (post.EqualsNull())
+        if (existingPost.IsNull())
         {
             throw new PostNotFoundException(command.Id);
         }
 
-        if (post!.UserId.NotEqualsOrdinalIgnoreCase(command.CurrentUserId))
+        if (existingPost!.UserId.NotEqualsOrdinalIgnoreCase(command.UserId))
         {
-            throw new PostForbiddenException(command.Id, command.CurrentUserId);
+            throw new PostForbiddenException(command.Id, command.UserId);
         }
 
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
-        post.Update(command.Title, command.Content, utcNow);
-        _postRepository.Update(post);
+        existingPost.Update(command.Title, command.Content, utcNow);
+        _postRepository.Update(existingPost);
 
-        var integrationEvent = _applicationMapper.Map<PostUpdatedEvent>(post);
+        var integrationEvent = _applicationMapper.Map<PostUpdatedEvent>(existingPost);
         await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
 
-        return post;
+        return existingPost;
     }
 
     public async Task DeleteAsync(DeletePostCommand command, CancellationToken cancellationToken)
     {
-        var post = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
+        var existingPost = await _postRepository.GetByIdAsync(command.Id, cancellationToken);
 
-        if (post.EqualsNull())
+        if (existingPost.IsNull())
         {
             throw new PostNotFoundException(command.Id);
         }
 
-        if (post!.UserId.NotEqualsOrdinalIgnoreCase(command.CurrentUserId))
+        if (existingPost!.UserId.NotEqualsOrdinalIgnoreCase(command.UserId))
         {
-            throw new PostForbiddenException(command.Id, command.CurrentUserId);
+            throw new PostForbiddenException(command.Id, command.UserId);
         }
 
-        _postRepository.Delete(post);
+        _postRepository.Delete(existingPost);
 
-        var integrationEvent = _applicationMapper.Map<PostDeletedEvent>(post);
+        var integrationEvent = _applicationMapper.Map<PostDeletedEvent>(existingPost);
         await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
     }
 }

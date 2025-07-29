@@ -33,7 +33,7 @@ public static class PostMockSetups
             post.Content,
             new(
                 user.Id,
-                user.UserName,
+                user.Name,
                 user.ProfileImage));
         var postQueryResponses = new List<PostQueryResponse>() { postQueryResponse };
 
@@ -64,7 +64,7 @@ public static class PostMockSetups
                 post.Content,
                 new(
                     user.Id,
-                    user.UserName,
+                    user.Name,
                     user.ProfileImage)));
 
         applicationSender

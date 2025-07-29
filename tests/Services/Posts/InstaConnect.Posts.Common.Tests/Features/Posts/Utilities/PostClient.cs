@@ -104,7 +104,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetDefault();
         var response = await httpClient
-            .AddUserId(request.CurrentUserId)
+            .AddUserId(request.UserId)
             .PostStatusCodeAsync(route, request.Body, cancellationToken);
 
         return response;
@@ -129,7 +129,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetDefault();
         var response = await httpClient
-            .AddUserId(request.CurrentUserId)
+            .AddUserId(request.UserId)
             .PostProblemDetailsAsync(route, request.Body, cancellationToken);
 
         return response!;
@@ -154,7 +154,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetDefault();
         var response = await httpClient
-            .AddUserId(request.CurrentUserId)
+            .AddUserId(request.UserId)
             .PostAsync<AddPostApiBody, AddPostApiResponse>(route, request.Body, cancellationToken);
 
         return response!;
@@ -167,7 +167,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetId(request.Id);
         var response = await httpClient
-            .AddUserId(request.CurrentUserId)
+            .AddUserId(request.UserId)
             .PutStatusCodeAsync(route, request.Body, cancellationToken);
 
         return response;
@@ -192,7 +192,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetId(request.Id);
         var response = await httpClient
-            .AddUserId(request.CurrentUserId)
+            .AddUserId(request.UserId)
             .PutProblemDetailsAsync(route, request.Body, cancellationToken);
 
         return response!;
@@ -217,7 +217,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetId(request.Id);
         var response = await httpClient
-            .AddUserId(request.CurrentUserId)
+            .AddUserId(request.UserId)
             .PutAsync<UpdatePostApiBody, UpdatePostApiResponse>(route, request.Body, cancellationToken);
 
         return response!;
@@ -230,7 +230,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetId(request.Id);
         var response = await httpClient
-            .AddUserId(request.CurrentUserId)
+            .AddUserId(request.UserId)
             .DeleteStatusCodeAsync(route, cancellationToken);
 
         return response;
@@ -255,7 +255,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetId(request.Id);
         var response = await httpClient
-            .AddUserId(request.CurrentUserId)
+            .AddUserId(request.UserId)
             .DeleteProblemDetailsAsync(route, cancellationToken);
 
         return response!;
@@ -280,7 +280,7 @@ public static class PostClient
     {
         var route = PostTestRoutes.GetId(request.Id);
         await httpClient
-            .AddUserId(request.CurrentUserId)
+            .AddUserId(request.UserId)
             .DeleteAsync(route, cancellationToken);
     }
 }

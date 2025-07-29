@@ -48,7 +48,7 @@ public class DeletePostCommandRequestValidatorUnitTests : BasePostUnitTest
         IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_request.CurrentUserId, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var result = _requestValidator.TestValidate(request);
