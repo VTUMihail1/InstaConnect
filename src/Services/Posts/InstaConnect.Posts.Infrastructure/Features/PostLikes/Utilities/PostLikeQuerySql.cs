@@ -20,7 +20,7 @@ public static class PostLikeQuerySql
                                        u.created_at AS {nameof(PostLikeQueryEntity.UserCreatedAt)},
                                        u.updated_at AS {nameof(PostLikeQueryEntity.UserUpdatedAt)},
                                    FROM post_likes pl
-                                   INNER JOIN users u ON p.{nameof(PostLikeQueryEntity.UserId)} = u.{nameof(UserQueryEntity.Id)}
+                                   INNER JOIN users u ON pl.{nameof(PostLikeQueryEntity.UserId)} = u.{nameof(UserQueryEntity.Id)}
                                    WHERE pl.{nameof(PostLikeQueryEntity.Id)} = {nameof(GetAllPostLikesQueryParameters.Id)}
                                      AND pl.{nameof(PostLikeQueryEntity.UserId)} = @{nameof(GetAllPostLikesQueryParameters.UserId)}
                                      AND u.{nameof(PostLikeQueryEntity.UserName)} LIKE @{nameof(GetAllPostLikesQueryParameters.UserName)}
@@ -49,7 +49,7 @@ public static class PostLikeQuerySql
                                        u.profile_image AS {nameof(PostLikeQueryEntity.UserProfileImage)},
                                        u.created_at AS {nameof(PostLikeQueryEntity.UserCreatedAt)},
                                        u.updated_at AS {nameof(PostLikeQueryEntity.UserUpdatedAt)},
-                                   FROM postLikes pl
+                                   FROM post_likes pl
                                    INNER JOIN users u ON pl.{nameof(PostLikeQueryEntity.UserId)} = u.{nameof(UserQueryEntity.Id)}
                                    WHERE pl.{nameof(PostLikeQueryEntity.Id)} = @{nameof(GetPostLikeByIdQueryParameters.Id)}
                                      AND pl.{nameof(PostLikeQueryEntity.LikeId)} = @{nameof(GetPostLikeByIdQueryParameters.LikeId)};";
@@ -68,7 +68,7 @@ public static class PostLikeQuerySql
                                        u.profile_image AS {nameof(PostLikeQueryEntity.UserProfileImage)},
                                        u.created_at AS {nameof(PostLikeQueryEntity.UserCreatedAt)},
                                        u.updated_at AS {nameof(PostLikeQueryEntity.UserUpdatedAt)},
-                                   FROM postLikes pl
+                                   FROM post_likes pl
                                    INNER JOIN users u ON pl.{nameof(PostLikeQueryEntity.UserId)} = u.{nameof(UserQueryEntity.Id)}
                                    WHERE pl.{nameof(PostLikeQueryEntity.Id)} = @{nameof(GetPostLikeByIdAndUserIdQueryParameters.Id)}
                                      AND pl.{nameof(PostLikeQueryEntity.UserId)} = @{nameof(GetPostLikeByIdAndUserIdQueryParameters.UserId)};";

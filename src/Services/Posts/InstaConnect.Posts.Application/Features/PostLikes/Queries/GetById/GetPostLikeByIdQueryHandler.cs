@@ -1,36 +1,30 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+﻿using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetAll;
+using InstaConnect.PostLikes.Domain.Features.PostLikes.Abstractions;
+using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
 
-namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
+namespace InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetById;
 
-internal class GetPostLikeByIdQueryHandler : IQueryHandler<GetPostLikeByIdQueryRequest, PostLikeQueryViewModel>
+internal class GetPostLikeByIdQueryHandler : IQueryHandler<GetPostLikeByIdQueryRequest, GetPostLikeByIdQueryResponse>
 {
     private readonly IPostLikeService _postLikeService;
     private readonly IApplicationMapper _applicationMapper;
-    private readonly IPostReadRepository _postReadRepository;
 
     public GetPostLikeByIdQueryHandler(
         IPostLikeService postLikeService,
-        IApplicationMapper applicationMapper,
-        IPostReadRepository postReadRepository)
+        IApplicationMapper applicationMapper)
     {
         _postLikeService = postLikeService;
         _applicationMapper = applicationMapper;
-        _postReadRepository = postReadRepository;
     }
 
-    public async Task<PostLikeQueryViewModel> Handle(
+    public async Task<GetPostLikeByIdQueryResponse> Handle(
         GetPostLikeByIdQueryRequest request,
-    CancellationToken cancellationToken)
+        CancellationToken cancellationToken)
     {
-        var existingPost = await _postReadRepository.GetByIdAsync(request.PostId, cancellationToken);
+        var serviceRequest = _applicationMapper.Map<GetPostLikeByIdQuery>(request);
+        var postLike = await _postLikeService.GetByIdAsync(serviceRequest, cancellationToken);
 
-        if (existingPost == null)
-        {
-            throw new PostNotFoundException();
-        }
-
-        var postLike = await _postLikeService.GetByIdAsync(existingPost, request.Id, cancellationToken);
-        var response = _applicationMapper.Map<PostLikeQueryViewModel>(postLike);
+        var response = _applicationMapper.Map<GetPostLikeByIdQueryResponse>(postLike);
 
         return response;
     }

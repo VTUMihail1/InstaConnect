@@ -10,19 +10,19 @@ internal class PostLikeInfrastructureMappings : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<PostLikeQueryEntity, PostLike>()
-              .ConstructUsing(p => new(
-                            p.Id,
-                            p.LikeId,
+              .ConstructUsing(pl => new(
+                            pl.Id,
+                            pl.LikeId,
                             new User(
-                                p.UserId,
-                                p.UserFirstName,
-                                p.UserLastName,
-                                p.UserEmail,
-                                p.UserName,
-                                p.UserProfileImage,
-                                p.UserCreatedAt,
-                                p.UserUpdatedAt),
-                            p.CreatedAt,
-                            p.UpdatedAt));
+                                pl.UserId,
+                                pl.UserFirstName,
+                                pl.UserLastName,
+                                pl.UserEmail,
+                                pl.UserName,
+                                pl.UserProfileImage,
+                                pl.UserCreatedAt,
+                                pl.UserUpdatedAt),
+                            pl.CreatedAt,
+                            pl.UpdatedAt));
     }
 }

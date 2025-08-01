@@ -1,32 +1,27 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
+﻿using InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Add;
+using InstaConnect.PostLikes.Domain.Features.PostLikes.Abstractions;
+using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
+
+namespace InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Delete;
 
 internal class DeletePostLikeCommandHandler : ICommandHandler<DeletePostLikeCommandRequest>
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IPostLikeService _postLikeService;
-    private readonly IPostWriteRepository _postWriteRepository;
+    private readonly IApplicationMapper _applicationMapper;
 
     public DeletePostLikeCommandHandler(
-        IUnitOfWork unitOfWork,
         IPostLikeService postLikeService,
-        IPostWriteRepository postWriteRepository)
+        IApplicationMapper applicationMapper)
     {
-        _unitOfWork = unitOfWork;
         _postLikeService = postLikeService;
-        _postWriteRepository = postWriteRepository;
+        _applicationMapper = applicationMapper;
     }
 
-    public async Task Handle(DeletePostLikeCommandRequest request, CancellationToken cancellationToken)
+    public async Task Handle(
+        DeletePostLikeCommandRequest request, 
+        CancellationToken cancellationToken)
     {
-        var existingPost = await _postWriteRepository.GetByIdAsync(request.PostId, cancellationToken);
-
-        if (existingPost == null)
-        {
-            throw new PostNotFoundException();
-        }
-
-        await _postLikeService.DeleteAsync(existingPost, request.Id, request.CurrentUserId, cancellationToken);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var serviceRequest = _applicationMapper.Map<DeletePostLikeCommand>(request);
+        await _postLikeService.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

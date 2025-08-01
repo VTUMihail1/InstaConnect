@@ -1,6 +1,6 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
+﻿namespace InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Delete;
 
 public record DeletePostLikeCommandRequest(
     string Id,
-    string PostId,
-    string CurrentUserId) : ICommandRequest;
+    string LikeId,
+    string UserId) : ICommandRequest;

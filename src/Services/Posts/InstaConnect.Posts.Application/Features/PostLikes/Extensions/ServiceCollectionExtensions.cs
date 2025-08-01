@@ -1,4 +1,4 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostLikes.Extensions;
+﻿namespace InstaConnect.PostLikes.Application.Features.PostLikes.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

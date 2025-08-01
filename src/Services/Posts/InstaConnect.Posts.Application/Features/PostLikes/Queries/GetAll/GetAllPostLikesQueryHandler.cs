@@ -1,38 +1,29 @@
-﻿using InstaConnect.Posts.Domain.Features.PostLikes.Models.Filters;
+﻿using InstaConnect.PostLikes.Domain.Features.PostLikes.Abstractions;
+using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
 
-namespace InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
+namespace InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetAll;
 
-internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQueryRequest, PostLikePaginationQueryViewModel>
+internal class GetAllPostLikesQueryHandler : IQueryHandler<GetAllPostLikesQueryRequest, GetAllPostLikesQueryResponse>
 {
     private readonly IPostLikeService _postLikeService;
-    private readonly IPostReadRepository _postReadRepository;
     private readonly IApplicationMapper _applicationMapper;
 
     public GetAllPostLikesQueryHandler(
         IPostLikeService postLikeService,
-        IPostReadRepository postReadRepository,
         IApplicationMapper applicationMapper)
     {
         _postLikeService = postLikeService;
-        _postReadRepository = postReadRepository;
         _applicationMapper = applicationMapper;
     }
 
-    public async Task<PostLikePaginationQueryViewModel> Handle(
+    public async Task<GetAllPostLikesQueryResponse> Handle(
         GetAllPostLikesQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var existingPost = await _postReadRepository.GetByIdAsync(request.PostId, cancellationToken);
+        var serviceRequest = _applicationMapper.Map<GetAllPostLikesQuery>(request);
+        var collection = await _postLikeService.GetAllAsync(serviceRequest, cancellationToken);
 
-        if (existingPost == null)
-        {
-            throw new PostNotFoundException();
-        }
-
-        var filteredCollectionQuery = _applicationMapper.Map<PostLikeCollectionReadQuery>(request);
-
-        var postLikes = await _postLikeService.GetAllAsync(existingPost, filteredCollectionQuery, cancellationToken);
-        var response = _applicationMapper.Map<PostLikePaginationQueryViewModel>(postLikes);
+        var response = _applicationMapper.Map<GetAllPostLikesQueryResponse>(collection);
 
         return response;
     }

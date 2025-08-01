@@ -1,4 +1,7 @@
 ﻿using InstaConnect.Common.Extensions;
+using InstaConnect.PostCommentLikes.Infrastructure.Features.PostCommentLikes.Extensions;
+using InstaConnect.PostComments.Infrastructure.Features.PostComments.Extensions;
+using InstaConnect.PostLikes.Infrastructure.Features.PostLikes.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.PostCommentLikes.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.PostComments.Extensions;
 using InstaConnect.Posts.Infrastructure.Features.PostLikes.Extensions;

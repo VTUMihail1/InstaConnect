@@ -1,10 +1,5 @@
-﻿using InstaConnect.PostComments.Domain.Features.PostCommentComments.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.PostCommentLikes.Models.Entities;
-using InstaConnect.PostComments.Domain.Features.Users.Models.Entities;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Entities;
+﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
-
-using System.Security.Principal;
 
 namespace InstaConnect.PostComments.Domain.Features.PostComments.Models.Entities;
 
@@ -41,6 +36,24 @@ public class PostComment : IEntity
         string commentId,
         string content,
         User user,
+        DateTimeOffset createdAt,
+        DateTimeOffset updatedAt)
+    {
+        Id = id;
+        CommentId = commentId;
+        Content = content;
+        UserId = user.Id;
+        User = user;
+        Likes = [];
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+    }
+
+    public PostComment(
+        string id,
+        string commentId,
+        string content,
+        User user,
         ICollection<PostCommentLike> likes,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
@@ -53,7 +66,6 @@ public class PostComment : IEntity
         Likes = likes;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
-
     }
 
     public string Id { get; }

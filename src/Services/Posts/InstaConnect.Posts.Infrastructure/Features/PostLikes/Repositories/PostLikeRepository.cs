@@ -14,22 +14,22 @@ namespace InstaConnect.PostLikes.Infrastructure.Features.PostLikes.Repositories;
 internal class PostLikeRepository : IPostLikeRepository
 {
     private readonly PostsContext _postsContext;
-    private readonly IPostLikeQueryFactory _postLikeQueryFactory;
     private readonly IApplicationMapper _applicationMapper;
     private readonly ISqlConnectionFactory _sqlConnectionFactory;
+    private readonly IPostLikeQueryFactory _postLikeQueryFactory;
     private readonly IPostLikeCollectionFactory _postLikeCollectionFactory;
 
     public PostLikeRepository(
         PostsContext postsContext,
-        IPostLikeQueryFactory postLikeQueryFactory,
         IApplicationMapper applicationMapper,
         ISqlConnectionFactory sqlConnectionFactory,
+        IPostLikeQueryFactory postLikeQueryFactory,
         IPostLikeCollectionFactory postLikeCollectionFactory)
     {
         _postsContext = postsContext;
-        _postLikeQueryFactory = postLikeQueryFactory;
         _applicationMapper = applicationMapper;
         _sqlConnectionFactory = sqlConnectionFactory;
+        _postLikeQueryFactory = postLikeQueryFactory;
         _postLikeCollectionFactory = postLikeCollectionFactory;
     }
 
