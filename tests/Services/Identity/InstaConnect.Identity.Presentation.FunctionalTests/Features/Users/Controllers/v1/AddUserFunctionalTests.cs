@@ -331,7 +331,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
                               m.Context.Message.Id == response.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidAddFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidAddLastName &&
-                              m.Context.Message.UserName == UserTestUtilities.ValidAddName &&
+                              m.Context.Message.Name == UserTestUtilities.ValidAddName &&
                               m.Context.Message.Email == UserTestUtilities.ValidAddEmail &&
                               m.Context.Message.ProfileImage == UserTestUtilities.ValidAddProfileImage, CancellationToken);
 
@@ -364,7 +364,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
                               m.Context.Message.Id == response.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidAddFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidAddLastName &&
-                              m.Context.Message.UserName == UserTestUtilities.ValidAddName &&
+                              m.Context.Message.Name == UserTestUtilities.ValidAddName &&
                               m.Context.Message.Email == UserTestUtilities.ValidAddEmail &&
                               m.Context.Message.ProfileImage == null, CancellationToken);
 

@@ -1,34 +1,27 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Delete;
+﻿using InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Commands.Add;
+using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Abstractions;
+using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
 
-internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostCommentLikeCommand>
+namespace InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Commands.Delete;
+
+internal class DeletePostCommentLikeCommandHandler : ICommandHandler<DeletePostCommentLikeCommandRequest>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IPostWriteRepository _postWriteRepository;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IPostCommentLikeService _postCommentLikeService;
 
     public DeletePostCommentLikeCommandHandler(
-        IUnitOfWork unitOfWork,
-        IPostWriteRepository postWriteRepository,
+        IApplicationMapper applicationMapper,
         IPostCommentLikeService postCommentLikeService)
     {
-        _unitOfWork = unitOfWork;
-        _postWriteRepository = postWriteRepository;
+        _applicationMapper = applicationMapper;
         _postCommentLikeService = postCommentLikeService;
     }
 
     public async Task Handle(
-        DeletePostCommentLikeCommand request,
+        DeletePostCommentLikeCommandRequest request, 
         CancellationToken cancellationToken)
     {
-        var existingPost = await _postWriteRepository.GetByIdAsync(request.Id, cancellationToken);
-
-        if (existingPost == null)
-        {
-            throw new PostNotFoundException();
-        }
-
-        await _postCommentLikeService.DeleteAsync(existingPost, request.PostCommentId, request.Id, request.CurrentUserId, cancellationToken);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var serviceRequest = _applicationMapper.Map<DeletePostCommentLikeCommand>(request);
+        await _postCommentLikeService.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

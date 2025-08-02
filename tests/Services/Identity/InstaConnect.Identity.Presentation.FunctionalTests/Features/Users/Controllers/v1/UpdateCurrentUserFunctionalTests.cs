@@ -340,7 +340,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
                               m.Context.Message.Id == response.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidUpdateLastName &&
-                              m.Context.Message.UserName == UserTestUtilities.ValidUpdateName &&
+                              m.Context.Message.Name == UserTestUtilities.ValidUpdateName &&
                               m.Context.Message.Email == existingUser.Email &&
                               m.Context.Message.ProfileImage == UserTestUtilities.ValidUpdateProfileImage, CancellationToken);
 
@@ -372,7 +372,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
                               m.Context.Message.Id == response.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidUpdateLastName &&
-                              m.Context.Message.UserName == UserTestUtilities.ValidUpdateName &&
+                              m.Context.Message.Name == UserTestUtilities.ValidUpdateName &&
                               m.Context.Message.Email == existingUser.Email &&
                               m.Context.Message.ProfileImage == existingUser.ProfileImage, CancellationToken);
 

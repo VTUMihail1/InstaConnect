@@ -1,34 +1,27 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
+﻿using InstaConnect.PostComments.Application.Features.PostComments.Commands.Add;
+using InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
+using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
 
-internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostCommentCommand>
+namespace InstaConnect.PostComments.Application.Features.PostComments.Commands.Delete;
+
+internal class DeletePostCommentCommandHandler : ICommandHandler<DeletePostCommentCommandRequest>
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IApplicationMapper _applicationMapper;
     private readonly IPostCommentService _postCommentService;
-    private readonly IPostWriteRepository _postWriteRepository;
 
     public DeletePostCommentCommandHandler(
-        IUnitOfWork unitOfWork,
-        IPostCommentService postCommentService,
-        IPostWriteRepository postWriteRepository)
+        IApplicationMapper applicationMapper,
+        IPostCommentService postCommentService)
     {
-        _unitOfWork = unitOfWork;
+        _applicationMapper = applicationMapper;
         _postCommentService = postCommentService;
-        _postWriteRepository = postWriteRepository;
     }
 
     public async Task Handle(
-        DeletePostCommentCommand request,
+        DeletePostCommentCommandRequest request, 
         CancellationToken cancellationToken)
     {
-        var existingPost = await _postWriteRepository.GetByIdAsync(request.PostId, cancellationToken);
-
-        if (existingPost == null)
-        {
-            throw new PostNotFoundException();
-        }
-
-        await _postCommentService.DeleteAsync(existingPost, request.Id, request.CurrentUserId, cancellationToken);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var serviceRequest = _applicationMapper.Map<DeletePostCommentCommand>(request);
+        await _postCommentService.DeleteAsync(serviceRequest, cancellationToken);
     }
 }

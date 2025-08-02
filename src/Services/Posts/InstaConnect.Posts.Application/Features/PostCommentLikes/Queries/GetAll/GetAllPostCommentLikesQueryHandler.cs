@@ -1,39 +1,29 @@
-﻿using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
+﻿using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Abstractions;
+using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Requests;
 
-namespace InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
+namespace InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Queries.GetAll;
 
-internal class GetAllPostCommentLikesQueryHandler : IQueryHandler<GetAllPostCommentLikesQuery, PostCommentLikePaginationQueryViewModel>
+internal class GetAllPostCommentLikesQueryHandler : IQueryHandler<GetAllPostCommentLikesQueryRequest, GetAllPostCommentLikesQueryResponse>
 {
     private readonly IApplicationMapper _applicationMapper;
-    private readonly IPostReadRepository _postReadRepository;
     private readonly IPostCommentLikeService _postCommentLikeService;
 
     public GetAllPostCommentLikesQueryHandler(
         IApplicationMapper applicationMapper,
-        IPostReadRepository postReadRepository,
         IPostCommentLikeService postCommentLikeService)
     {
         _applicationMapper = applicationMapper;
-        _postReadRepository = postReadRepository;
         _postCommentLikeService = postCommentLikeService;
     }
 
-    public async Task<PostCommentLikePaginationQueryViewModel> Handle(
-        GetAllPostCommentLikesQuery request,
+    public async Task<GetAllPostCommentLikesQueryResponse> Handle(
+        GetAllPostCommentLikesQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var existingPost = await _postReadRepository.GetByIdAsync(request.PostId, cancellationToken);
+        var serviceRequest = _applicationMapper.Map<GetAllPostCommentLikesQuery>(request);
+        var collection = await _postCommentLikeService.GetAllAsync(serviceRequest, cancellationToken);
 
-        if (existingPost == null)
-        {
-            throw new PostNotFoundException();
-        }
-
-        var filteredCollectionQuery = _applicationMapper.Map<PostCommentLikeCollectionReadQuery>(request);
-
-        var postCommentLikes = await _postCommentLikeService.GetAllAsync(
-            existingPost, request.PostCommentId, filteredCollectionQuery, cancellationToken);
-        var response = _applicationMapper.Map<PostCommentLikePaginationQueryViewModel>(postCommentLikes);
+        var response = _applicationMapper.Map<GetAllPostCommentLikesQueryResponse>(collection);
 
         return response;
     }

@@ -1,32 +1,28 @@
-﻿namespace InstaConnect.Posts.Presentation.Features.Users.Consumers;
+﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+
+namespace InstaConnect.Posts.Presentation.Features.Users.Consumers;
 
 internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEvent>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserService _userService;
     private readonly IApplicationMapper _applicationMapper;
-    private readonly IUserRepository _userWriteRepository;
 
     public UserUpdatedEventConsumer(
         IUnitOfWork unitOfWork,
-        IApplicationMapper applicationMapper,
-        IUserRepository userWriteRepository)
+        IUserService userService,
+        IApplicationMapper applicationMapper)
     {
         _unitOfWork = unitOfWork;
+        _userService = userService;
         _applicationMapper = applicationMapper;
-        _userWriteRepository = userWriteRepository;
     }
 
     public async Task Consume(ConsumeContext<UserUpdatedEvent> context)
     {
-        var existingUser = await _userWriteRepository.GetByIdAsync(context.Message.Id, context.CancellationToken);
-
-        if (existingUser == null)
-        {
-            return;
-        }
-
-        _applicationMapper.Map(context.Message, existingUser);
-        _userWriteRepository.Update(existingUser);
+        var command = _applicationMapper.Map<UpdateUserCommand>(context.Message);
+        await _userService.UpdateAsync(command, context.CancellationToken);
 
         await _unitOfWork.SaveChangesAsync(context.CancellationToken);
     }

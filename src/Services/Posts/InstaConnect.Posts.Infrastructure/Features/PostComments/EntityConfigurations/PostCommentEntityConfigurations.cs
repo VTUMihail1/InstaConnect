@@ -9,7 +9,7 @@ public class PostCommentEntityConfigurations : IEntityTypeConfiguration<PostComm
     public void Configure(EntityTypeBuilder<PostComment> builder)
     {
         builder
-            .HasKey(p => p.Id);
+            .HasKey(p => p.CommentId);
 
         builder
             .Property(p => p.Id)

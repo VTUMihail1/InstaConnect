@@ -7,33 +7,36 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder
-            .Property(p => p.Id)
+            .HasKey(u => u.Id);
+
+        builder
+            .Property(u => u.Id)
             .HasMaxLength(UserConfigurations.IdMaxLength)
             .IsRequired()
             .ValueGeneratedNever();
 
         builder
-            .Property(p => p.FirstName)
+            .Property(u => u.FirstName)
             .HasMaxLength(UserConfigurations.FirstNameMaxLength)
             .IsRequired();
 
         builder
-            .Property(p => p.LastName)
+            .Property(u => u.LastName)
             .HasMaxLength(UserConfigurations.LastNameMaxLength)
             .IsRequired();
 
         builder
-            .Property(p => p.Email)
+            .Property(u => u.Email)
             .HasMaxLength(UserConfigurations.EmailMaxLength)
             .IsRequired();
 
         builder
-            .Property(p => p.Name)
+            .Property(u => u.Name)
             .HasMaxLength(UserConfigurations.NameMaxLength)
             .IsRequired();
 
         builder
-            .Property(p => p.ProfileImage)
+            .Property(u => u.ProfileImage)
             .HasMaxLength(UserConfigurations.ProfileImageMaxLength);
 
         builder.HasMany(f => f.Posts)

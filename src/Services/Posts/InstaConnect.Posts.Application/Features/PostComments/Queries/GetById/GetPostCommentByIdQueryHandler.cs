@@ -1,35 +1,30 @@
-﻿using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+﻿using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetAll;
+using InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
+using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
 
-namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
+namespace InstaConnect.PostComments.Application.Features.PostComments.Queries.GetById;
 
-internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentByIdQuery, PostCommentQueryViewModel>
+internal class GetPostCommentByIdQueryHandler : IQueryHandler<GetPostCommentByIdQueryRequest, GetPostCommentByIdQueryResponse>
 {
     private readonly IApplicationMapper _applicationMapper;
     private readonly IPostCommentService _postCommentService;
-    private readonly IPostReadRepository _postReadRepository;
 
     public GetPostCommentByIdQueryHandler(
-        IApplicationMapper mapper,
-        IPostCommentService postCommentService,
-        IPostReadRepository postReadRepository)
+        IApplicationMapper applicationMapper,
+        IPostCommentService postCommentService)
     {
-        _applicationMapper = mapper;
+        _applicationMapper = applicationMapper;
         _postCommentService = postCommentService;
-        _postReadRepository = postReadRepository;
     }
 
-    public async Task<PostCommentQueryViewModel> Handle(GetPostCommentByIdQuery request, CancellationToken cancellationToken)
+    public async Task<GetPostCommentByIdQueryResponse> Handle(
+        GetPostCommentByIdQueryRequest request,
+        CancellationToken cancellationToken)
     {
-        var existingPost = await _postReadRepository.GetByIdAsync(request.PostId, cancellationToken);
+        var serviceRequest = _applicationMapper.Map<GetPostCommentByIdQuery>(request);
+        var postComment = await _postCommentService.GetByIdAsync(serviceRequest, cancellationToken);
 
-        if (existingPost == null)
-        {
-            throw new PostNotFoundException();
-        }
-
-        var postComment = await _postCommentService.GetByIdAsync(existingPost, request.Id, cancellationToken);
-
-        var response = _applicationMapper.Map<PostCommentQueryViewModel>(postComment);
+        var response = _applicationMapper.Map<GetPostCommentByIdQueryResponse>(postComment);
 
         return response;
     }

@@ -9,7 +9,7 @@ public class PostLikeEntityConfigurations : IEntityTypeConfiguration<PostLike>
     public void Configure(EntityTypeBuilder<PostLike> builder)
     {
         builder
-            .HasKey(p => p.Id);
+            .HasKey(p => p.LikeId);
 
         builder
             .Property(p => p.Id)

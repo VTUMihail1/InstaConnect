@@ -1,9 +1,11 @@
-﻿using InstaConnect.Posts.Application.Features.PostLikes.Commands.Add;
-using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
+﻿using InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Add;
+using InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Delete;
+using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetAll;
+using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetById;
+using InstaConnect.PostLikes.Presentation.Features.PostLikes.Models.Requests;
+using InstaConnect.PostLikes.Presentation.Features.PostLikes.Utilities;
 
-namespace InstaConnect.Posts.Presentation.Features.PostLikes.Controllers.v1;
+namespace InstaConnect.PostLikes.Presentation.Features.PostLikes.Controllers.v1;
 
 [ApiVersion(PostLikeRoutes.Version1)]
 [Route(PostLikeRoutes.Resource)]
@@ -25,13 +27,13 @@ public class PostLikeController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PostLikePaginationQueryResponse>> GetAllAsync(
-        GetAllPostLikesRequest request,
+    public async Task<ActionResult<GetAllPostLikesApiResponse>> GetAllAsync(
+        GetAllPostLikesApiRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _applicationMapper.Map<GetAllPostLikesQueryRequest>(request);
         var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<PostLikePaginationQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<GetAllPostLikesApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -40,13 +42,13 @@ public class PostLikeController : ControllerBase
     [HttpGet(PostLikeRoutes.Id)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PostLikeQueryResponse>> GetByIdAsync(
-        GetPostLikeByIdRequest request,
+    public async Task<ActionResult<GetPostLikeByIdApiResponse>> GetByIdAsync(
+        GetPostLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
         var queryRequest = _applicationMapper.Map<GetPostLikeByIdQueryRequest>(request);
         var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<PostLikeQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<GetPostLikeByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
@@ -57,25 +59,25 @@ public class PostLikeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PostLikeCommandResponse>> AddAsync(
-        AddPostLikeRequest request,
+    public async Task<ActionResult<AddPostLikeApiResponse>> AddAsync(
+        AddPostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _applicationMapper.Map<AddPostLikeCommandRequest>(request);
         var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<PostLikeCommandResponse>(commandResponse);
+        var response = _applicationMapper.Map<AddPostLikeApiResponse>(commandResponse);
 
         return Ok(response);
     }
 
-    //DELETE: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    // DELETE: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/likes/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpDelete(PostLikeRoutes.Id)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteAsync(
-        DeletePostLikeRequest request,
+    public async Task<ActionResult> DeleteAsync(
+        DeletePostLikeApiRequest request,
         CancellationToken cancellationToken)
     {
         var commandRequest = _applicationMapper.Map<DeletePostLikeCommandRequest>(request);

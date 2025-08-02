@@ -1,10 +1,10 @@
-﻿namespace InstaConnect.Posts.Presentation.Features.PostComments.Utilities;
+﻿namespace InstaConnect.PostComments.Presentation.Features.PostComments.Utilities;
 
-public abstract class PostCommentRoutes
+public static class PostCommentRoutes
 {
-    public const string Resource = "api/v{version:apiVersion}/posts/{postId}/comments";
+    public const string Resource = "api/v{version:apiVersion}/posts/{id}/comments";
 
-    public const string Id = "{id}";
+    public const string Id = "{commentId}";
 
     public const string Version1 = "1.0";
 }

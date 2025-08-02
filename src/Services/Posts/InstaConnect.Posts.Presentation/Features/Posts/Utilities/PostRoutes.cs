@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Posts.Presentation.Features.Posts.Utilities;
 
-public abstract class PostRoutes
+public static class PostRoutes
 {
     public const string Resource = "api/v{version:apiVersion}/posts";
 

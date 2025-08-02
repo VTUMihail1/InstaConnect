@@ -184,7 +184,7 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
             .PublishAsync(Arg.Is<UserCreatedEvent>(u => !string.IsNullOrEmpty(u.Id) &&
                                    u.FirstName == UserTestUtilities.ValidAddFirstName &&
                                    u.LastName == UserTestUtilities.ValidAddLastName &&
-                                   u.UserName == UserTestUtilities.ValidAddName &&
+                                   u.Name == UserTestUtilities.ValidAddName &&
                                    u.Email == UserTestUtilities.ValidAddEmail &&
                                    u.ProfileImage == UserTestUtilities.ValidAddProfileImage), CancellationToken);
     }

@@ -1,28 +1,28 @@
-﻿namespace InstaConnect.Posts.Presentation.Features.Users.Consumers;
+﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+
+namespace InstaConnect.Posts.Presentation.Features.Users.Consumers;
 
 internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserRepository _userWriteRepository;
+    private readonly IUserService _userService;
+    private readonly IApplicationMapper _applicationMapper;
 
     public UserDeletedEventConsumer(
         IUnitOfWork unitOfWork,
-        IUserRepository userWriteRepository)
+        IUserService userService,
+        IApplicationMapper applicationMapper)
     {
         _unitOfWork = unitOfWork;
-        _userWriteRepository = userWriteRepository;
+        _userService = userService;
+        _applicationMapper = applicationMapper;
     }
 
     public async Task Consume(ConsumeContext<UserDeletedEvent> context)
     {
-        var existingUser = await _userWriteRepository.GetByIdAsync(context.Message.Id, context.CancellationToken);
-
-        if (existingUser == null)
-        {
-            return;
-        }
-
-        _userWriteRepository.Delete(existingUser);
+        var command = _applicationMapper.Map<DeleteUserCommand>(context.Message);
+        await _userService.DeleteAsync(command, context.CancellationToken);
 
         await _unitOfWork.SaveChangesAsync(context.CancellationToken);
     }

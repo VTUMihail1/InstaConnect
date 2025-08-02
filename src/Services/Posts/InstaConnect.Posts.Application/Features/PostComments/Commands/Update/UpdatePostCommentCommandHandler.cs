@@ -1,41 +1,30 @@
-﻿namespace InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
+﻿using InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
+using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
 
-internal class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommand, PostCommentCommandViewModel>
+namespace InstaConnect.PostComments.Application.Features.PostComments.Commands.Update;
+
+public class UpdatePostCommentCommandHandler : ICommandHandler<UpdatePostCommentCommandRequest, UpdatePostCommentCommandResponse>
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IApplicationMapper _applicationMapper;
     private readonly IPostCommentService _postCommentService;
-    private readonly IPostWriteRepository _postWriteRepository;
 
     public UpdatePostCommentCommandHandler(
-        IUnitOfWork unitOfWork,
         IApplicationMapper applicationMapper,
-        IPostCommentService postCommentService,
-        IPostWriteRepository postWriteRepository)
+        IPostCommentService postCommentService)
     {
-        _unitOfWork = unitOfWork;
         _applicationMapper = applicationMapper;
         _postCommentService = postCommentService;
-        _postWriteRepository = postWriteRepository;
     }
 
-    public async Task<PostCommentCommandViewModel> Handle(
-        UpdatePostCommentCommand request,
+    public async Task<UpdatePostCommentCommandResponse> Handle(
+        UpdatePostCommentCommandRequest request,
         CancellationToken cancellationToken)
     {
-        var existingPost = await _postWriteRepository.GetByIdAsync(request.PostId, cancellationToken);
+        var serviceRequest = _applicationMapper.Map<UpdatePostCommentCommand>(request);
+        var postComment = await _postCommentService.UpdateAsync(serviceRequest, cancellationToken);
 
-        if (existingPost == null)
-        {
-            throw new PostNotFoundException();
-        }
+        var response = _applicationMapper.Map<UpdatePostCommentCommandResponse>(postComment);
 
-        var postComment = await _postCommentService.UpdateAsync(existingPost, request.Id, request.CurrentUserId, request.Content, cancellationToken);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        var postCommentCommand = _applicationMapper.Map<PostCommentCommandViewModel>(postComment);
-
-        return postCommentCommand;
+        return response;
     }
 }

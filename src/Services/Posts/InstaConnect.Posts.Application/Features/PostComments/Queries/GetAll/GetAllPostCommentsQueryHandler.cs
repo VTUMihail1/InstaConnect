@@ -1,38 +1,29 @@
-﻿using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
+﻿using InstaConnect.PostComments.Domain.Features.PostComments.Abstractions;
+using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
 
-namespace InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
+namespace InstaConnect.PostComments.Application.Features.PostComments.Queries.GetAll;
 
-internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostCommentsQuery, PostCommentPaginationQueryViewModel>
+internal class GetAllPostCommentsQueryHandler : IQueryHandler<GetAllPostCommentsQueryRequest, GetAllPostCommentsQueryResponse>
 {
     private readonly IApplicationMapper _applicationMapper;
     private readonly IPostCommentService _postCommentService;
-    private readonly IPostReadRepository _postReadRepository;
 
     public GetAllPostCommentsQueryHandler(
         IApplicationMapper applicationMapper,
-        IPostCommentService postCommentService,
-        IPostReadRepository postReadRepository)
+        IPostCommentService postCommentService)
     {
         _applicationMapper = applicationMapper;
         _postCommentService = postCommentService;
-        _postReadRepository = postReadRepository;
     }
 
-    public async Task<PostCommentPaginationQueryViewModel> Handle(
-        GetAllPostCommentsQuery request,
+    public async Task<GetAllPostCommentsQueryResponse> Handle(
+        GetAllPostCommentsQueryRequest request,
         CancellationToken cancellationToken)
     {
-        var existingPost = await _postReadRepository.GetByIdAsync(request.PostId, cancellationToken);
+        var serviceRequest = _applicationMapper.Map<GetAllPostCommentsQuery>(request);
+        var collection = await _postCommentService.GetAllAsync(serviceRequest, cancellationToken);
 
-        if (existingPost == null)
-        {
-            throw new PostNotFoundException();
-        }
-
-        var filteredCollectionQuery = _applicationMapper.Map<PostCommentCollectionReadQuery>(request);
-
-        var postComments = await _postCommentService.GetAllAsync(existingPost, filteredCollectionQuery, cancellationToken);
-        var response = _applicationMapper.Map<PostCommentPaginationQueryViewModel>(postComments);
+        var response = _applicationMapper.Map<GetAllPostCommentsQueryResponse>(collection);
 
         return response;
     }

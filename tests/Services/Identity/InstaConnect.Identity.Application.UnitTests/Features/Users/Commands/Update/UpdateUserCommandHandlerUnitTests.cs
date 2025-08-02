@@ -151,7 +151,7 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
             .PublishAsync(Arg.Is<UserUpdatedEvent>(u => u.Id == existingUser.Id &&
                                                         u.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                                                         u.LastName == UserTestUtilities.ValidUpdateLastName &&
-                                                        u.UserName == UserTestUtilities.ValidUpdateName &&
+                                                        u.Name == UserTestUtilities.ValidUpdateName &&
                                                         u.Email == existingUser.Email &&
                                                         u.ProfileImage == UserTestUtilities.ValidUpdateProfileImage), CancellationToken);
     }

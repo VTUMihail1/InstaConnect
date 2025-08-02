@@ -10,7 +10,7 @@ public class PostCommentLikeEntityConfigurations : IEntityTypeConfiguration<Post
     public void Configure(EntityTypeBuilder<PostCommentLike> builder)
     {
         builder
-            .HasKey(p => p.Id);
+            .HasKey(p => p.CommentLikeId);
 
         builder
             .Property(p => p.Id)

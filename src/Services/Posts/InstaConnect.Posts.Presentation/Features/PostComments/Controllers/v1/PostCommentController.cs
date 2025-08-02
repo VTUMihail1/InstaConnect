@@ -1,10 +1,12 @@
-﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.Update;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
+﻿using InstaConnect.PostComments.Application.Features.PostComments.Commands.Add;
+using InstaConnect.PostComments.Application.Features.PostComments.Commands.Delete;
+using InstaConnect.PostComments.Application.Features.PostComments.Commands.Update;
+using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetAll;
+using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetById;
+using InstaConnect.PostComments.Presentation.Features.PostComments.Models.Requests;
+using InstaConnect.PostComments.Presentation.Features.PostComments.Utilities;
 
-namespace InstaConnect.Posts.Presentation.Features.PostComments.Controllers.v1;
+namespace InstaConnect.PostComments.Presentation.Features.PostComments.Controllers.v1;
 
 [ApiVersion(PostCommentRoutes.Version1)]
 [Route(PostCommentRoutes.Resource)]
@@ -22,84 +24,83 @@ public class PostCommentController : ControllerBase
         _applicationSender = applicationSender;
     }
 
-    // GET: api/post-comments
+    // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PostCommentPaginationQueryResponse>> GetAllAsync(
-        GetAllPostCommentsRequest request,
+    public async Task<ActionResult<GetAllPostCommentsApiResponse>> GetAllAsync(
+        GetAllPostCommentsApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetAllPostCommentsQuery>(request);
+        var queryRequest = _applicationMapper.Map<GetAllPostCommentsQueryRequest>(request);
         var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<PostCommentPaginationQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<GetAllPostCommentsApiResponse>(queryResponse);
 
         return Ok(response);
     }
 
-    // GET: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    // GET: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpGet(PostCommentRoutes.Id)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PostCommentQueryResponse>> GetByIdAsync(
-        GetPostCommentByIdRequest request,
+    public async Task<ActionResult<GetPostCommentByIdApiResponse>> GetByIdAsync(
+        GetPostCommentByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        var queryRequest = _applicationMapper.Map<GetPostCommentByIdQuery>(request);
+        var queryRequest = _applicationMapper.Map<GetPostCommentByIdQueryRequest>(request);
         var queryResponse = await _applicationSender.SendAsync(queryRequest, cancellationToken);
-        var response = _applicationMapper.Map<PostCommentQueryResponse>(queryResponse);
+        var response = _applicationMapper.Map<GetPostCommentByIdApiResponse>(queryResponse);
 
         return Ok(response);
     }
 
-    // POST: api/post-comments
+    // POST: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments
     [HttpPost]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PostCommentCommandResponse>> AddAsync(
-        AddPostCommentRequest request,
+    public async Task<ActionResult<AddPostCommentApiResponse>> AddAsync(
+        AddPostCommentApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<AddPostCommentCommand>(request);
+        var commandRequest = _applicationMapper.Map<AddPostCommentCommandRequest>(request);
         var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<PostCommentCommandResponse>(commandResponse);
+        var response = _applicationMapper.Map<AddPostCommentApiResponse>(commandResponse);
 
         return Ok(response);
     }
 
-    // PUT: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    // PUT: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpPut(PostCommentRoutes.Id)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PostCommentCommandResponse>> UpdateAsync(
-        UpdatePostCommentRequest request,
+    public async Task<ActionResult<UpdatePostCommentApiResponse>> UpdateAsync(
+        UpdatePostCommentApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<UpdatePostCommentCommand>(request);
+        var commandRequest = _applicationMapper.Map<UpdatePostCommentCommandRequest>(request);
         var commandResponse = await _applicationSender.SendAsync(commandRequest, cancellationToken);
-        var response = _applicationMapper.Map<PostCommentCommandResponse>(commandResponse);
+        var response = _applicationMapper.Map<UpdatePostCommentApiResponse>(commandResponse);
 
         return Ok(response);
     }
 
-    //DELETE: api/post-comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
+    // DELETE: api/posts/5f0f2dd0-e957-4d72-8141-767a36fc6e95/comments/5f0f2dd0-e957-4d72-8141-767a36fc6e95
     [HttpDelete(PostCommentRoutes.Id)]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAsync(
-        DeletePostCommentRequest request,
+        DeletePostCommentApiRequest request,
         CancellationToken cancellationToken)
     {
-        var commandRequest = _applicationMapper.Map<DeletePostCommentCommand>(request);
+        var commandRequest = _applicationMapper.Map<DeletePostCommentCommandRequest>(request);
         await _applicationSender.SendAsync(commandRequest, cancellationToken);
 
         return NoContent();
     }
 }
-
