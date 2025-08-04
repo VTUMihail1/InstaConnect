@@ -1,4 +1,5 @@
-﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+﻿using InstaConnect.Common.Tests.Utilities.Assertions;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddCommandRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;

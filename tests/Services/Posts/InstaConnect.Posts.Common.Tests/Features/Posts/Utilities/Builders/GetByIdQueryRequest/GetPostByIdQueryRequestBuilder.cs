@@ -1,5 +1,5 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+﻿using InstaConnect.Common.Tests.Utilities.Builders;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetByIdQueryRequest;

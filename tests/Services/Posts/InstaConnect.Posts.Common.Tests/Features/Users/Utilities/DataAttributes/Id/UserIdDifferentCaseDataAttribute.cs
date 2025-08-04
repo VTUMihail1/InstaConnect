@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.DifferentCase;
+﻿using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.DifferentCase;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 

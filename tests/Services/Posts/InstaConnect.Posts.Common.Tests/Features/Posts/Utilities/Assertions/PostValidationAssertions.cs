@@ -2,7 +2,7 @@
 
 using FluentValidation.TestHelper;
 
-using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Common.Tests.Utilities.Assertions;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;

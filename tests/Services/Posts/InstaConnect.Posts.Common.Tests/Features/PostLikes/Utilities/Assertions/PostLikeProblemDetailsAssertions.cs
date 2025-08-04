@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities.Assertions;
 using InstaConnect.PostLikes.Common.Features.PostLikes.Utilities;
 
 using Microsoft.AspNetCore.Mvc;

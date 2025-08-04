@@ -1,8 +1,9 @@
 ﻿using InstaConnect.Common.Models.Enums;
+using InstaConnect.Common.Tests.Utilities.Assertions;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums.Base;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Ints.Base;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
 using InstaConnect.Common.Tests.Utilities.Types.Enums;
-using InstaConnect.Common.Tests.Utilities.Types.Enums.Base;
-using InstaConnect.Common.Tests.Utilities.Types.Ints.Base;
-using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetAllApiRequest;

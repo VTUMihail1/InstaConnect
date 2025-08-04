@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities.Builders;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;

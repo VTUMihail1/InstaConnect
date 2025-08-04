@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities.Builders;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.DeleteApiRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.DeleteCommandRequest;

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities.Types.Enums.Empty;
+﻿using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums.Empty;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.SortProperty;

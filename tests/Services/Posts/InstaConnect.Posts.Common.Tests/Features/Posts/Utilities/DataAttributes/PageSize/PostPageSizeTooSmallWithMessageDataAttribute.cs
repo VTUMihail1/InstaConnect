@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Common.Tests.Utilities.DataAttributes.Int;
-using InstaConnect.Common.Tests.Utilities.Types.Ints.Value;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Ints.Value;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.PageSize;
 

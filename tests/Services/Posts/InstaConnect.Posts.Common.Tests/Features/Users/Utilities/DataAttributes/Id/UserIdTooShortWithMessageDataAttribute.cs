@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Length;
+﻿using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Length;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 

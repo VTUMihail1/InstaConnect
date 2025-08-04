@@ -1,9 +1,10 @@
 ﻿using System.Drawing.Printing;
 
 using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Common.Tests.Utilities.Types.Enums.Base;
-using InstaConnect.Common.Tests.Utilities.Types.Ints.Base;
-using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+using InstaConnect.Common.Tests.Utilities.Builders;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums.Base;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Ints.Base;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
 using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetAll;
 using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetById;
 using InstaConnect.PostLikes.Common.Tests.Features.Users.Utilities;

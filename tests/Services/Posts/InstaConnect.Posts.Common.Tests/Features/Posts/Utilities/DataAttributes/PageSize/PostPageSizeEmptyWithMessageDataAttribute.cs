@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities.Types.Ints.Empty;
+﻿using InstaConnect.Common.Tests.Utilities.DataAttributes.Ints.Empty;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.PageSize;
 

@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities.Assertions;
 using InstaConnect.Posts.Domain.Features.Users.Exceptions;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;

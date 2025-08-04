@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities.Types.Ints.Value;
+﻿using InstaConnect.Common.Tests.Utilities.DataAttributes.Ints.Value;
 
 namespace InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.DataAttributes.Page;
 

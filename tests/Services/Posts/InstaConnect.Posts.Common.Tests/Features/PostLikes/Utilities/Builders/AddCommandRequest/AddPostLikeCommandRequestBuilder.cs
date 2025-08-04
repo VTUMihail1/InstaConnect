@@ -1,5 +1,5 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+﻿using InstaConnect.Common.Tests.Utilities.Builders;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
 using InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Add;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 

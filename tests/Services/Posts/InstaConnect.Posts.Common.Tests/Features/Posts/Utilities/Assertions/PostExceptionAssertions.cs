@@ -1,5 +1,5 @@
 ﻿using InstaConnect.Common.Exceptions.Users;
-using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.Common.Tests.Utilities.Assertions;
 using InstaConnect.Posts.Domain.Features.Posts.Exceptions;
 using InstaConnect.Posts.Domain.Features.Posts.Utilities;
 

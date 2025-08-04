@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Prefix;
+﻿using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Prefix;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
 

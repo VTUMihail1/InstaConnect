@@ -1,6 +1,6 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Common.Tests.Utilities.Types.Enums.Base;
-using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+﻿using InstaConnect.Common.Tests.Utilities.Builders;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.DateTimeOffsets.Base;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 
 namespace InstaConnect.Users.Common.Tests.Features.Users.Utilities.Builders.AddApiRequest;

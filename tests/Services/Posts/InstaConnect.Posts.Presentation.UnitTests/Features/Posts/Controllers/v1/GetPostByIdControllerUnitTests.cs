@@ -1,4 +1,6 @@
-﻿using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+﻿using InstaConnect.Common.Tests.Assertions;
+using InstaConnect.Common.Tests.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetByIdApiRequest;
 

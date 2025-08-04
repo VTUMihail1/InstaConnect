@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Empty;
+﻿using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Empty;
 using InstaConnect.PostLikes.Common.Features.PostLikes.Utilities;
 
 namespace InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.DataAttributes.Id;

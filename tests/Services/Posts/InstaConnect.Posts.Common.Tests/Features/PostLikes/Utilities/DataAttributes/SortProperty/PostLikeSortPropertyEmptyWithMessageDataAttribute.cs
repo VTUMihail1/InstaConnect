@@ -1,4 +1,4 @@
-﻿using InstaConnect.Common.Tests.Utilities.Types.Enums.Empty;
+﻿using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums.Empty;
 using InstaConnect.PostLikes.Common.Features.PostLikes.Utilities;
 using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
 
