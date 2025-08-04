@@ -4,22 +4,26 @@ using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 
-namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.UpdateCommandRequest;
 
 public class UpdatePostCommandRequestBuilder
 {
-    private readonly ObjectBuilder<UpdatePostCommandRequest> _objectBuilder = new();
+    private readonly ObjectBuilder<UpdatePostCommandRequest> _objectBuilder;
 
-    public UpdatePostCommandRequestBuilder()
+    public UpdatePostCommandRequestBuilder(ObjectBuilder<UpdatePostCommandRequest> objectBuilder)
     {
+        _objectBuilder = objectBuilder;
+
         WithId(PostDataFaker.GetId());
         WithUserId(UserDataFaker.GetId());
         WithTitle(PostDataFaker.GetTitle());
         WithContent(PostDataFaker.GetContent());
     }
 
-    public UpdatePostCommandRequestBuilder(Post post)
+    public UpdatePostCommandRequestBuilder(ObjectBuilder<UpdatePostCommandRequest> objectBuilder, Post post)
     {
+        _objectBuilder = objectBuilder;
+
         WithId(post.Id);
         WithUserId(post.UserId);
         WithTitle(PostDataFaker.GetTitle());

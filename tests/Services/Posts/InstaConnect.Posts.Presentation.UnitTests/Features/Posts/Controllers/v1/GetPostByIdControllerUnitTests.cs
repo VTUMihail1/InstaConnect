@@ -1,32 +1,26 @@
 ﻿using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
-using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetByIdApiRequest;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Controllers.v1;
 
-public class GetPostByIdControllerUnitTests : BasePostUnitTest
+public class GetPostByIdControllerUnitTests : BasePostPresentationUnitTest
 {
-    private readonly User _user;
-    private readonly Post _post;
-
-    private readonly GetPostByIdApiRequest _request;
+    private readonly GetPostByIdApiRequestBuilderFactory _requestBuilderFactory;
     private readonly GetPostByIdApiRequestBuilder _requestBuilder;
+    private readonly GetPostByIdApiRequest _request;
 
     private readonly PostController _postController;
 
     public GetPostByIdControllerUnitTests()
     {
-        _user = UserTestFactory.Create();
-        _post = PostTestFactory.Create(_user);
-
-        _requestBuilder = new(_post);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Create();
 
         _postController = new(ApplicationMapper, ApplicationSender);
 
-        ApplicationSender.SetupGetByIdQuery(_request, _post, _user, CancellationToken);
+        ApplicationSender.SetupGetByIdQuery(_request, Post, User, CancellationToken);
     }
 
     [Fact]
@@ -46,7 +40,7 @@ public class GetPostByIdControllerUnitTests : BasePostUnitTest
         var response = await _postController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user);
+        response.ShouldSatisfy(Post, User);
     }
 
     [Fact]

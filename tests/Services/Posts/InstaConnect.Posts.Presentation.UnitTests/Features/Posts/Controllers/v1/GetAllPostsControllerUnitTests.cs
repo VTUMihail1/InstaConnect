@@ -1,32 +1,26 @@
 ﻿using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
-using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetAllApiRequest;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Controllers.v1;
 
-public class GetAllPostsControllerUnitTests : BasePostUnitTest
+public class GetAllPostsControllerUnitTests : BasePostPresentationUnitTest
 {
-    private readonly User _user;
-    private readonly Post _post;
-
-    private readonly GetAllPostsApiRequest _request;
+    private readonly GetAllPostsApiRequestBuilderFactory _requestBuilderFactory;
     private readonly GetAllPostsApiRequestBuilder _requestBuilder;
+    private readonly GetAllPostsApiRequest _request;
 
     private readonly PostController _postController;
 
     public GetAllPostsControllerUnitTests()
     {
-        _user = UserTestFactory.Create();
-        _post = PostTestFactory.Create(_user);
-
-        _requestBuilder = new(_post, _user);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post, User);
         _request = _requestBuilder.Create();
 
         _postController = new(ApplicationMapper, ApplicationSender);
 
-        ApplicationSender.SetupGetAllQuery(_request, _post, _user, CancellationToken);
+        ApplicationSender.SetupGetAllQuery(_request, Post, User, CancellationToken);
     }
 
     [Fact]
@@ -46,7 +40,7 @@ public class GetAllPostsControllerUnitTests : BasePostUnitTest
         var response = await _postController.GetAllAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, _request);
+        response.ShouldSatisfy(Post, User, _request);
     }
 
     [Fact]

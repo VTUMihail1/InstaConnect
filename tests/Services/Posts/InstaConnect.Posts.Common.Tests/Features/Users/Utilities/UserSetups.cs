@@ -1,6 +1,4 @@
-﻿using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
+﻿using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Posts.Domain.Features.Users.Abstractions;
 using InstaConnect.Posts.Infrastructure;
 
@@ -30,9 +28,9 @@ public static class UserSetups
 
     public static async Task<User> AddUserAsync(
         this IServiceScope serviceScope,
+        User user,
         CancellationToken cancellationToken)
     {
-        var user = UserTestFactory.Create();
         var unitOfWork = serviceScope.GetUnitOfWork();
         var userRepository = serviceScope.GetUserRepository();
 

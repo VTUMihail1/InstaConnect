@@ -1,38 +1,33 @@
 ﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddCommandRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Commands;
 
-public class AddPostIntegrationTests : BasePostIntegrationTest
+public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
 {
-    private User _user;
-
-    private AddPostCommandRequest _request;
-    private AddPostCommandRequestBuilder _requestBuilder;
+    private readonly AddPostCommandRequestBuilderFactory _requestBuilderFactory;
+    private readonly AddPostCommandRequestBuilder _requestBuilder;
+    private readonly AddPostCommandRequest _request;
 
     public AddPostIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
         : base(webApplicationFactory)
     {
-
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(User);
+        _request = _requestBuilder.Create();
     }
 
     protected override async Task OnInitializeAsync()
     {
-        _user = await ServiceScope.AddUserAsync(CancellationToken);
-
-        _requestBuilder = new(_user);
-        _request = _requestBuilder.Create();
+        await ServiceScope.AddUserAsync(User, CancellationToken);
     }
 
     [Theory]
@@ -121,7 +116,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_user.Id, transformer).Create();
+        var request = _requestBuilder.WithUserId(User.Id, transformer).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
@@ -148,7 +143,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_user.Id, transformer).Create();
+        var request = _requestBuilder.WithUserId(User.Id, transformer).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
@@ -176,7 +171,7 @@ public class AddPostIntegrationTests : BasePostIntegrationTest
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(_user.Id, transformer).Create();
+        var request = _requestBuilder.WithUserId(User.Id, transformer).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);

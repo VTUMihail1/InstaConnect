@@ -1,6 +1,10 @@
-﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
+﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.DeleteCommandRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.UpdateCommandRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
@@ -8,27 +12,23 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Update;
 
-public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
+public class UpdatePostCommandHandlerUnitTests : BasePostApplicationUnitTest
 {
-    private readonly User _user;
-    private readonly Post _post;
-
-    private readonly UpdatePostCommandRequest _request;
+    private readonly UpdatePostCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly UpdatePostCommandRequestBuilder _requestBuilder;
+    private readonly UpdatePostCommandRequest _request;
 
     private readonly UpdatePostCommandHandler _handler;
 
     public UpdatePostCommandHandlerUnitTests()
     {
-        _user = UserTestFactory.Create();
-        _post = PostTestFactory.Create(_user);
-
-        _requestBuilder = new(_post);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Create();
 
         _handler = new(PostService, ApplicationMapper);
 
-        PostService.SetupUpdateRequest(_request, _post, CancellationToken);
+        PostService.SetupUpdateRequest(_request, Post, CancellationToken);
     }
 
     [Fact]
@@ -38,7 +38,7 @@ public class UpdatePostCommandHandlerUnitTests : BasePostUnitTest
         var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post);
+        response.ShouldSatisfy(Post);
     }
 
     [Fact]

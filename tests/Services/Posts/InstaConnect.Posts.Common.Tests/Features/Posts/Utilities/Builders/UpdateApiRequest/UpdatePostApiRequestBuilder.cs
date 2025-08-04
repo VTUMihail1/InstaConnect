@@ -3,22 +3,26 @@ using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
-namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.UpdateApiRequest;
 
 public class UpdatePostApiRequestBuilder
 {
-    private readonly ObjectBuilder<UpdatePostApiRequest> _objectBuilder = new();
+    private readonly ObjectBuilder<UpdatePostApiRequest> _objectBuilder;
 
-    public UpdatePostApiRequestBuilder()
+    public UpdatePostApiRequestBuilder(ObjectBuilder<UpdatePostApiRequest> objectBuilder)
     {
+        _objectBuilder = objectBuilder;
+
         WithId(PostDataFaker.GetId());
         WithUserId(UserDataFaker.GetId());
         WithTitle(PostDataFaker.GetTitle());
         WithContent(PostDataFaker.GetContent());
     }
 
-    public UpdatePostApiRequestBuilder(Post post)
+    public UpdatePostApiRequestBuilder(ObjectBuilder<UpdatePostApiRequest> objectBuilder, Post post)
     {
+        _objectBuilder = objectBuilder;
+
         WithId(post.Id);
         WithUserId(post.UserId);
         WithTitle(PostDataFaker.GetTitle());

@@ -1,21 +1,25 @@
 ﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.DeleteCommandRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Delete;
 
-public class DeletePostCommandRequestValidatorUnitTests : BasePostUnitTest
+public class DeletePostCommandRequestValidatorUnitTests : BasePostApplicationUnitTest
 {
-    private readonly DeletePostCommandRequest _request;
+    private readonly DeletePostCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly DeletePostCommandRequestBuilder _requestBuilder;
+    private readonly DeletePostCommandRequest _request;
 
     private readonly DeletePostCommandRequestValidator _requestValidator;
 
     public DeletePostCommandRequestValidatorUnitTests()
     {
-        _requestBuilder = new();
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Create();
 
         _requestValidator = new();

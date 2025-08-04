@@ -1,19 +1,16 @@
-﻿using InstaConnect.Common.Application.Abstractions;
-using InstaConnect.Common.Models.Enums;
-using InstaConnect.Common.Tests.Utilities;
+﻿using InstaConnect.Common.Models.Enums;
 using InstaConnect.Common.Tests.Utilities.Types.Enums;
 using InstaConnect.Common.Tests.Utilities.Types.Enums.Base;
 using InstaConnect.Common.Tests.Utilities.Types.Ints.Base;
 using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetAllApiRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Page;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.PageSize;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.SortProperty;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Name;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
@@ -21,27 +18,24 @@ using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
-public class GetAllPostsFunctionalTests : BasePostFunctionalTest
+public class GetAllPostsFunctionalTests : BasePostPresentationFunctionalTest
 {
-    private User _user;
-    private Post _post;
-
-    private GetAllPostsApiRequest _request;
-    private GetAllPostsApiRequestBuilder _requestBuilder;
+    private readonly GetAllPostsApiRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostsApiRequestBuilder _requestBuilder;
+    private readonly GetAllPostsApiRequest _request;
 
     public GetAllPostsFunctionalTests(PostsWebApplicationFactory webApplicationFactory)
         : base(webApplicationFactory)
     {
-
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post, User);
+        _request = _requestBuilder.Create();
     }
 
     protected override async Task OnInitializeAsync()
     {
-        _user = await ServiceScope.AddUserAsync(CancellationToken);
-        _post = PostTestFactory.Create(_user);
-
-        _requestBuilder = new(_post, _user);
-        _request = _requestBuilder.Create();
+        await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
     }
 
     [Theory]
@@ -330,7 +324,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var response = await HttpClient.GetAllPostsAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, _request);
+        response.ShouldSatisfy(Post, User, _request);
     }
 
     [Theory]
@@ -347,7 +341,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, _request);
+        response.ShouldSatisfy(Post, User, _request);
     }
 
     [Theory]
@@ -364,7 +358,7 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, _request);
+        response.ShouldSatisfy(Post, User, _request);
     }
 
     [Theory]
@@ -381,6 +375,6 @@ public class GetAllPostsFunctionalTests : BasePostFunctionalTest
         var response = await HttpClient.GetAllPostsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, _request);
+        response.ShouldSatisfy(Post, User, _request);
     }
 }

@@ -4,8 +4,11 @@ using InstaConnect.Common.Tests.Utilities.Types.Enums.Base;
 using InstaConnect.Common.Tests.Utilities.Types.Ints.Base;
 using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetAllQueryRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetByIdQueryRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Page;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.PageSize;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.SortProperty;
@@ -18,27 +21,24 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Queries;
 
-public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
+public class GetAllPostsQueryHandlerIntegrationTests : BasePostApplicationIntegrationTest
 {
-    private User _user;
-    private Post _post;
+    private readonly GetAllPostsQueryRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostsQueryRequestBuilder _requestBuilder;
+    private readonly GetAllPostsQueryRequest _request;
 
-    private GetAllPostsQueryRequest _request;
-    private GetAllPostsQueryRequestBuilder _requestBuilder;
-
-    public GetAllPostsQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory)
-        : base(postsWebApplicationFactory)
+    public GetAllPostsQueryHandlerIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
     {
-
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post, User);
+        _request = _requestBuilder.Create();
     }
 
     protected override async Task OnInitializeAsync()
     {
-        _user = await ServiceScope.AddUserAsync(CancellationToken);
-        _post = await ServiceScope.AddPostAsync(_user, CancellationToken);
-
-        _requestBuilder = new(_post, _user);
-        _request = _requestBuilder.Create();
+        await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
     }
 
     [Theory]
@@ -157,7 +157,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, _request);
+        response.ShouldSatisfy(Post, User, _request);
     }
 
     [Theory]
@@ -174,7 +174,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, _request);
+        response.ShouldSatisfy(Post, User, _request);
     }
 
     [Theory]
@@ -191,7 +191,7 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, _request);
+        response.ShouldSatisfy(Post, User, _request);
     }
 
     [Theory]
@@ -208,6 +208,6 @@ public class GetAllPostsQueryHandlerIntegrationTests : BasePostIntegrationTest
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, _request);
+        response.ShouldSatisfy(Post, User, _request);
     }
 }

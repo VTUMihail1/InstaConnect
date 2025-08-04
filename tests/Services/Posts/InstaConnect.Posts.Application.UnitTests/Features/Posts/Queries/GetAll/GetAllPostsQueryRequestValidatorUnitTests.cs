@@ -6,6 +6,8 @@ using InstaConnect.Common.Tests.Utilities.Types.Enums.Base;
 using InstaConnect.Common.Tests.Utilities.Types.Ints.Base;
 using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetAllQueryRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Page;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.PageSize;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.SortProperty;
@@ -17,16 +19,18 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetAll;
 
-public class GetAllPostsQueryRequestValidatorUnitTests : BasePostUnitTest
+public class GetAllPostsQueryRequestValidatorUnitTests : BasePostApplicationUnitTest
 {
-    private readonly GetAllPostsQueryRequest _request;
+    private readonly GetAllPostsQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetAllPostsQueryRequestBuilder _requestBuilder;
+    private readonly GetAllPostsQueryRequest _request;
 
     private readonly GetAllPostsQueryRequestValidator _requestValidator;
 
     public GetAllPostsQueryRequestValidatorUnitTests()
     {
-        _requestBuilder = new();
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post, User);
         _request = _requestBuilder.Create();
 
         _requestValidator = new();

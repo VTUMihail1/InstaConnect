@@ -1,24 +1,26 @@
 ﻿using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 
-namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.DeleteCommandRequest;
 
 public class DeletePostCommandRequestBuilder
 {
-    private readonly ObjectBuilder<DeletePostCommandRequest> _objectBuilder = new();
+    private readonly ObjectBuilder<DeletePostCommandRequest> _objectBuilder;
 
-    public DeletePostCommandRequestBuilder()
+    public DeletePostCommandRequestBuilder(ObjectBuilder<DeletePostCommandRequest> objectBuilder)
     {
+        _objectBuilder = objectBuilder;
+
         WithId(PostDataFaker.GetId());
         WithUserId(UserDataFaker.GetId());
     }
 
-    public DeletePostCommandRequestBuilder(Post post)
+    public DeletePostCommandRequestBuilder(ObjectBuilder<DeletePostCommandRequest> objectBuilder, Post post)
     {
+        _objectBuilder = objectBuilder;
+
         WithId(post.Id);
         WithUserId(post.UserId);
     }

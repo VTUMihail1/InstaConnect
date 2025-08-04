@@ -1,27 +1,26 @@
-﻿using System.Runtime.CompilerServices;
-
-using InstaConnect.Common.Tests.Utilities;
+﻿using InstaConnect.Common.Tests.Utilities;
 using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 
-using Microsoft.Extensions.DependencyInjection;
-
-namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddCommandRequest;
 public class AddPostCommandRequestBuilder
 {
-    private readonly ObjectBuilder<AddPostCommandRequest> _objectBuilder = new();
+    private readonly ObjectBuilder<AddPostCommandRequest> _objectBuilder;
 
-    public AddPostCommandRequestBuilder()
+    public AddPostCommandRequestBuilder(ObjectBuilder<AddPostCommandRequest> objectBuilder)
     {
+        _objectBuilder = objectBuilder;
+
         WithUserId(UserDataFaker.GetId());
         WithTitle(PostDataFaker.GetTitle());
         WithContent(PostDataFaker.GetContent());
     }
 
-    public AddPostCommandRequestBuilder(User user)
+    public AddPostCommandRequestBuilder(ObjectBuilder<AddPostCommandRequest> objectBuilder, User user)
     {
+        _objectBuilder = objectBuilder;
+
         WithUserId(user.Id);
         WithTitle(PostDataFaker.GetTitle());
         WithContent(PostDataFaker.GetContent());

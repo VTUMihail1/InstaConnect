@@ -2,6 +2,8 @@
 using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.UpdateCommandRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
@@ -12,16 +14,18 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Update;
 
-public class UpdatePostCommandRequestValidatorUnitTests : BasePostUnitTest
+public class UpdatePostCommandRequestValidatorUnitTests : BasePostApplicationUnitTest
 {
-    private readonly UpdatePostCommandRequest _request;
+    private readonly UpdatePostCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly UpdatePostCommandRequestBuilder _requestBuilder;
+    private readonly UpdatePostCommandRequest _request;
 
     private readonly UpdatePostCommandRequestValidator _requestValidator;
 
     public UpdatePostCommandRequestValidatorUnitTests()
     {
-        _requestBuilder = new();
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Create();
 
         _requestValidator = new();

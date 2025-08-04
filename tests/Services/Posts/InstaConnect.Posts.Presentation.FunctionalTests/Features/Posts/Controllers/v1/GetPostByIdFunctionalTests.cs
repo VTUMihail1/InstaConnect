@@ -1,34 +1,30 @@
 ﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetByIdApiRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
-using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
-public class GetPostByIdFunctionalTests : BasePostFunctionalTest
+public class GetPostByIdFunctionalTests : BasePostPresentationFunctionalTest
 {
-    private User _user;
-    private Post _post;
-
-    private GetPostByIdApiRequest _request;
-    private GetPostByIdApiRequestBuilder _requestBuilder;
+    private readonly GetPostByIdApiRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetPostByIdApiRequestBuilder _requestBuilder;
+    private readonly GetPostByIdApiRequest _request;
 
     public GetPostByIdFunctionalTests(PostsWebApplicationFactory webApplicationFactory)
         : base(webApplicationFactory)
     {
-
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post);
+        _request = _requestBuilder.Create();
     }
 
     protected override async Task OnInitializeAsync()
     {
-        _user = await ServiceScope.AddUserAsync(CancellationToken);
-        _post = PostTestFactory.Create(_user);
-
-        _requestBuilder = new(_post);
-        _request = _requestBuilder.Create();
+        await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
     }
 
     [Theory]
@@ -129,7 +125,7 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         var response = await HttpClient.GetPostByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user);
+        response.ShouldSatisfy(Post, User);
     }
 
     [Theory]
@@ -144,6 +140,6 @@ public class GetPostByIdFunctionalTests : BasePostFunctionalTest
         var response = await HttpClient.GetPostByIdAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user);
+        response.ShouldSatisfy(Post, User);
     }
 }

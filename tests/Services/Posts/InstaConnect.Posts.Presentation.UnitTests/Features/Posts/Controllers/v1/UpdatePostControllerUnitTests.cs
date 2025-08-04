@@ -1,32 +1,26 @@
 ﻿using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
-using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.UpdateApiRequest;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Controllers.v1;
 
-public class UpdatePostControllerUnitTests : BasePostUnitTest
+public class UpdatePostControllerUnitTests : BasePostPresentationUnitTest
 {
-    private readonly User _user;
-    private readonly Post _post;
-
-    private readonly UpdatePostApiRequest _request;
+    private readonly UpdatePostApiRequestBuilderFactory _requestBuilderFactory;
     private readonly UpdatePostApiRequestBuilder _requestBuilder;
+    private readonly UpdatePostApiRequest _request;
 
     private readonly PostController _postController;
 
     public UpdatePostControllerUnitTests()
     {
-        _user = UserTestFactory.Create();
-        _post = PostTestFactory.Create(_user);
-
-        _requestBuilder = new(_post);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Create();
 
         _postController = new(ApplicationMapper, ApplicationSender);
 
-        ApplicationSender.SetupUpdateCommand(_request, _post, CancellationToken);
+        ApplicationSender.SetupUpdateCommand(_request, Post, CancellationToken);
     }
 
     [Fact]
@@ -46,7 +40,7 @@ public class UpdatePostControllerUnitTests : BasePostUnitTest
         var response = await _postController.UpdateAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post);
+        response.ShouldSatisfy(Post);
     }
 
     [Fact]

@@ -1,37 +1,33 @@
-﻿using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.UpdateApiRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
-public class UpdatePostFunctionalTests : BasePostFunctionalTest
+public class UpdatePostFunctionalTests : BasePostPresentationFunctionalTest
 {
-    private User _user;
-    private Post _post;
-
-    private UpdatePostApiRequest _request;
-    private UpdatePostApiRequestBuilder _requestBuilder;
+    private readonly UpdatePostApiRequestBuilderFactory _requestBuilderFactory;
+    private readonly UpdatePostApiRequestBuilder _requestBuilder;
+    private readonly UpdatePostApiRequest _request;
 
     public UpdatePostFunctionalTests(PostsWebApplicationFactory webApplicationFactory)
         : base(webApplicationFactory)
     {
-
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post);
+        _request = _requestBuilder.Create();
     }
 
     protected override async Task OnInitializeAsync()
     {
-        _user = await ServiceScope.AddUserAsync(CancellationToken);
-        _post = PostTestFactory.Create(_user);
-
-        _requestBuilder = new(_post);
-        _request = _requestBuilder.Create();
+        await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
     }
 
     [Fact]
@@ -305,7 +301,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         var response = await HttpClient.UpdatePostAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post);
+        response.ShouldSatisfy(Post);
     }
 
     [Theory]
@@ -320,7 +316,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post);
+        response.ShouldSatisfy(Post);
     }
 
     [Theory]
@@ -335,7 +331,7 @@ public class UpdatePostFunctionalTests : BasePostFunctionalTest
         var response = await HttpClient.UpdatePostAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post);
+        response.ShouldSatisfy(Post);
     }
 
     [Fact]

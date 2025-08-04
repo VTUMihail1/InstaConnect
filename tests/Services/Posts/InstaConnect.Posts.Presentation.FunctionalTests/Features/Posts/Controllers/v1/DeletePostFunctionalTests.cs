@@ -1,38 +1,31 @@
 ﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.DeleteApiRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
-using Microsoft.AspNetCore.TestHost;
-
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Controllers.v1;
 
-public class DeletePostFunctionalTests : BasePostFunctionalTest
+public class DeletePostFunctionalTests : BasePostPresentationFunctionalTest
 {
-    private User _user;
-    private Post _post;
-
-    private DeletePostApiRequest _request;
-    private DeletePostApiRequestBuilder _requestBuilder;
+    private readonly DeletePostApiRequestBuilderFactory _requestBuilderFactory;
+    private readonly DeletePostApiRequestBuilder _requestBuilder;
+    private readonly DeletePostApiRequest _request;
 
     public DeletePostFunctionalTests(PostsWebApplicationFactory webApplicationFactory)
         : base(webApplicationFactory)
     {
-
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post);
+        _request = _requestBuilder.Create();
     }
 
     protected override async Task OnInitializeAsync()
     {
-        _user = await ServiceScope.AddUserAsync(CancellationToken);
-        _post = PostTestFactory.Create(_user);
-
-        _requestBuilder = new(_post);
-        _request = _requestBuilder.Create();
+        await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
     }
 
     [Fact]
@@ -275,7 +268,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
     {
         // Act
         await HttpClient.DeletePostAsync(_request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(_post, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(Post, CancellationToken);
 
         // Assert
         hasPublshed.ShouldBeTrue();
@@ -291,7 +284,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
 
         // Act
         await HttpClient.DeletePostAsync(request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(_post, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(Post, CancellationToken);
 
         // Assert
         hasPublshed.ShouldBeTrue();
@@ -307,7 +300,7 @@ public class DeletePostFunctionalTests : BasePostFunctionalTest
 
         // Act
         await HttpClient.DeletePostAsync(request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(_post, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(Post, CancellationToken);
 
         // Assert
         hasPublshed.ShouldBeTrue();

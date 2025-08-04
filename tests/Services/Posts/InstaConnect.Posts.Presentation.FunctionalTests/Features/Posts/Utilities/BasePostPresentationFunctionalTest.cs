@@ -2,11 +2,11 @@
 
 namespace InstaConnect.Posts.Presentation.FunctionalTests.Features.Posts.Utilities;
 
-public abstract class BasePostFunctionalTest : PostWebTest
+public abstract class BasePostPresentationFunctionalTest : BasePostWebTest
 {
     protected HttpClient HttpClient { get; }
 
-    protected BasePostFunctionalTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
+    protected BasePostPresentationFunctionalTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
         HttpClient = webApplicationFactory.CreateClient();
     }

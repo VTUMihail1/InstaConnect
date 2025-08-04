@@ -40,11 +40,9 @@ public static class PostSetups
 
     public static async Task<Post> AddPostAsync(
         this IServiceScope serviceScope,
-        User user,
+        Post post,
         CancellationToken cancellationToken)
     {
-        var post = PostTestFactory.Create(user);
-
         var unitOfWork = serviceScope.GetUnitOfWork();
         var postRepository = serviceScope.GetPostRepository();
 

@@ -1,27 +1,21 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
-using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.DeleteCommandRequest;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Delete;
 
-public class DeletePostCommandHandlerUnitTests : BasePostUnitTest
+public class DeletePostCommandHandlerUnitTests : BasePostApplicationUnitTest
 {
-    private readonly User _user;
-    private readonly Post _post;
-
-    private readonly DeletePostCommandRequest _request;
+    private readonly DeletePostCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly DeletePostCommandRequestBuilder _requestBuilder;
+    private readonly DeletePostCommandRequest _request;
 
     private readonly DeletePostCommandHandler _handler;
 
     public DeletePostCommandHandlerUnitTests()
     {
-        _user = UserTestFactory.Create();
-        _post = PostTestFactory.Create(_user);
-
-        _requestBuilder = new(_post);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Create();
 
         _handler = new(PostService, ApplicationMapper);

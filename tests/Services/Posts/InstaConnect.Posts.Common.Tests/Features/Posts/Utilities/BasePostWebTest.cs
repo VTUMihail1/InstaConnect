@@ -16,19 +16,16 @@ using Xunit;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 
-public abstract class PostWebTest : IClassFixture<PostsWebApplicationFactory>, IAsyncLifetime
+public abstract class BasePostWebTest : BasePostTest, IClassFixture<PostsWebApplicationFactory>, IAsyncLifetime
 {
     protected IServiceScope ServiceScope { get; }
 
     protected IEventHarness EventHarness { get; }
 
-    protected CancellationToken CancellationToken { get; }
-
-    protected PostWebTest(PostsWebApplicationFactory webApplicationFactory)
+    protected BasePostWebTest(PostsWebApplicationFactory webApplicationFactory)
     {
         ServiceScope = webApplicationFactory.Services.CreateScope();
         EventHarness = ServiceScope.GetEventHarness();
-        CancellationToken = MockFactory.CreateCancellationToken();
     }
 
     public async Task InitializeAsync()

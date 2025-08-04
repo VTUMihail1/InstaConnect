@@ -1,35 +1,37 @@
 ﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddCommandRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.DeleteCommandRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Commands;
 
-public class DeletePostIntegrationTests : BasePostIntegrationTest
+public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
 {
-    private User _user;
-    private Post _post;
+    private readonly DeletePostCommandRequestBuilderFactory _requestBuilderFactory;
+    private readonly DeletePostCommandRequestBuilder _requestBuilder;
+    private readonly DeletePostCommandRequest _request;
 
-    private DeletePostCommandRequest _request;
-    private DeletePostCommandRequestBuilder _requestBuilder;
-
-    public DeletePostIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory)
-        : base(postsWebApplicationFactory)
+    public DeletePostIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
     {
-
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post);
+        _request = _requestBuilder.Create();
     }
 
     protected override async Task OnInitializeAsync()
     {
-        _user = await ServiceScope.AddUserAsync(CancellationToken);
-        _post = await ServiceScope.AddPostAsync(_user, CancellationToken);
-
-        _requestBuilder = new(_post);
-        _request = _requestBuilder.Create();
+        await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
     }
 
     [Theory]
@@ -146,7 +148,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
     {
         // Act
         await ApplicationSender.SendAsync(_request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(_post, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(Post, CancellationToken);
 
         // Assert
         hasPublshed.ShouldBeTrue();
@@ -162,7 +164,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(_post, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(Post, CancellationToken);
 
         // Assert
         hasPublshed.ShouldBeTrue();
@@ -178,7 +180,7 @@ public class DeletePostIntegrationTests : BasePostIntegrationTest
 
         // Act
         await ApplicationSender.SendAsync(request, CancellationToken);
-        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(_post, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostDeletedEventAsync(Post, CancellationToken);
 
         // Assert
         hasPublshed.ShouldBeTrue();

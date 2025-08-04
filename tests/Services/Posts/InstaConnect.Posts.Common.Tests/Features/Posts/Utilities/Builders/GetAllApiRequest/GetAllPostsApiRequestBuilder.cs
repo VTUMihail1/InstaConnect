@@ -11,14 +11,16 @@ using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Builders;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
 using InstaConnect.Posts.Presentation.Features.Posts.Models.Requests;
 
-namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetAllApiRequest;
 
 public class GetAllPostsApiRequestBuilder
 {
-    private readonly ObjectBuilder<GetAllPostsApiRequest> _objectBuilder = new();
+    private readonly ObjectBuilder<GetAllPostsApiRequest> _objectBuilder;
 
-    public GetAllPostsApiRequestBuilder()
+    public GetAllPostsApiRequestBuilder(ObjectBuilder<GetAllPostsApiRequest> objectBuilder)
     {
+        _objectBuilder = objectBuilder;
+
         WithUserId(UserDataFaker.GetId());
         WithUserName(UserDataFaker.GetName());
         WithTitle(PostDataFaker.GetTitle());
@@ -28,8 +30,10 @@ public class GetAllPostsApiRequestBuilder
         WithSortProperty(PostDataFaker.GetSortProperty());
     }
 
-    public GetAllPostsApiRequestBuilder(Post post, User user)
+    public GetAllPostsApiRequestBuilder(ObjectBuilder<GetAllPostsApiRequest> objectBuilder, Post post, User user)
     {
+        _objectBuilder = objectBuilder;
+
         WithUserId(user.Id);
         WithUserName(user.Name);
         WithTitle(post.Title);

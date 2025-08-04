@@ -1,4 +1,8 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
+using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetAllQueryRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetByIdQueryRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Responses;
@@ -6,27 +10,23 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Queries.GetAll;
 
-public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
+public class GetAllPostsQueryHandlerUnitTests : BasePostApplicationUnitTest
 {
-    private readonly User _user;
-    private readonly Post _post;
-
-    private readonly GetAllPostsQueryRequest _request;
+    private readonly GetAllPostsQueryRequestBuilderFactory _requestBuilderFactory;
     private readonly GetAllPostsQueryRequestBuilder _requestBuilder;
+    private readonly GetAllPostsQueryRequest _request;
 
     private readonly GetAllPostsQueryHandler _requestHandler;
 
     public GetAllPostsQueryHandlerUnitTests()
     {
-        _user = UserTestFactory.Create();
-        _post = PostTestFactory.Create(_user);
-
-        _requestBuilder = new(_post, _user);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post, User);
         _request = _requestBuilder.Create();
 
         _requestHandler = new(PostService, ApplicationMapper);
 
-        PostService.SetupGetAllRequest(_request, _post, _user, CancellationToken);
+        PostService.SetupGetAllRequest(_request, Post, User, CancellationToken);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class GetAllPostsQueryHandlerUnitTests : BasePostUnitTest
         var response = await _requestHandler.Handle(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user, _request);
+        response.ShouldSatisfy(Post, User, _request);
     }
 
     [Fact]

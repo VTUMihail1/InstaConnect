@@ -1,32 +1,25 @@
 ﻿using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
-using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Controllers.v1;
 
-public class AddPostControllerUnitTests : BasePostUnitTest
+public class AddPostControllerUnitTests : BasePostPresentationUnitTest
 {
-    private readonly User _user;
-    private readonly Post _post;
-
-    private readonly AddPostApiRequest _request;
+    private readonly AddPostApiRequestBuilderFactory _requestBuilderFactory;
     private readonly AddPostApiRequestBuilder _requestBuilder;
+    private readonly AddPostApiRequest _request;
 
     private readonly PostController _postController;
 
     public AddPostControllerUnitTests()
     {
-        _user = UserTestFactory.Create();
-        _post = PostTestFactory.Create(_user);
-
-        _requestBuilder = new(_post);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(User);
         _request = _requestBuilder.Create();
 
         _postController = new(ApplicationMapper, ApplicationSender);
 
-        ApplicationSender.SetupAddCommand(_request, _post, CancellationToken);
+        ApplicationSender.SetupAddCommand(_request, Post, CancellationToken);
     }
 
     [Fact]
@@ -46,7 +39,7 @@ public class AddPostControllerUnitTests : BasePostUnitTest
         var response = await _postController.AddAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post);
+        response.ShouldSatisfy(Post);
     }
 
     [Fact]

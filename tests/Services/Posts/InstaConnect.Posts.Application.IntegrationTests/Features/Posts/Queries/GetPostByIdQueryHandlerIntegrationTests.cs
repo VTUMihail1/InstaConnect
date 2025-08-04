@@ -1,33 +1,34 @@
 ﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetByIdQueryRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.UpdateCommandRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Queries;
 
-public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
+public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationIntegrationTest
 {
-    private User _user;
-    private Post _post;
+    private readonly GetPostByIdQueryRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetPostByIdQueryRequestBuilder _requestBuilder;
+    private readonly GetPostByIdQueryRequest _request;
 
-    private GetPostByIdQueryRequest _request;
-    private GetPostByIdQueryRequestBuilder _requestBuilder;
-
-    public GetPostByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory)
-        : base(postsWebApplicationFactory)
+    public GetPostByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
     {
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post);
+        _request = _requestBuilder.Create();
     }
 
     protected override async Task OnInitializeAsync()
     {
-        _user = await ServiceScope.AddUserAsync(CancellationToken);
-        _post = await ServiceScope.AddPostAsync(_user, CancellationToken);
-
-        _requestBuilder = new(_post);
-        _request = _requestBuilder.Create();
+        await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
     }
 
     [Theory]
@@ -70,7 +71,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user);
+        response.ShouldSatisfy(Post, User);
     }
 
     [Theory]
@@ -85,6 +86,6 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostIntegrationTest
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(_post, _user);
+        response.ShouldSatisfy(Post, User);
     }
 }

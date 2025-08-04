@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Common.Tests.Utilities.Types.Strings.Base;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddCommandRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Title;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
@@ -7,16 +8,18 @@ using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.UnitTests.Features.Posts.Commands.Add;
 
-public class AddPostCommandRequestValidatorUnitTests : BasePostUnitTest
+public class AddPostCommandRequestValidatorUnitTests : BasePostApplicationUnitTest
 {
-    private readonly AddPostCommandRequest _request;
+    private readonly AddPostCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly AddPostCommandRequestBuilder _requestBuilder;
+    private readonly AddPostCommandRequest _request;
 
     private readonly AddPostCommandRequestValidator _requestValidator;
 
     public AddPostCommandRequestValidatorUnitTests()
     {
-        _requestBuilder = new();
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(User);
         _request = _requestBuilder.Create();
 
         _requestValidator = new();

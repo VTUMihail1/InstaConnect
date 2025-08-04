@@ -1,28 +1,22 @@
 ﻿using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Factories;
-using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Factories;
-using InstaConnect.Posts.Domain.Features.Posts.Models.Entities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.DeleteApiRequest;
 
 namespace InstaConnect.Posts.Presentation.UnitTests.Features.Posts.Controllers.v1;
 
 
-public class DeletePostControllerUnitTests : BasePostUnitTest
+public class DeletePostControllerUnitTests : BasePostPresentationUnitTest
 {
-    private readonly User _user;
-    private readonly Post _post;
-
-    private readonly DeletePostApiRequest _request;
+    private readonly DeletePostApiRequestBuilderFactory _requestBuilderFactory;
     private readonly DeletePostApiRequestBuilder _requestBuilder;
+    private readonly DeletePostApiRequest _request;
 
     private readonly PostController _postController;
 
     public DeletePostControllerUnitTests()
     {
-        _user = UserTestFactory.Create();
-        _post = PostTestFactory.Create(_user);
-
-        _requestBuilder = new(_post);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post);
         _request = _requestBuilder.Create();
 
         _postController = new(ApplicationMapper, ApplicationSender);
