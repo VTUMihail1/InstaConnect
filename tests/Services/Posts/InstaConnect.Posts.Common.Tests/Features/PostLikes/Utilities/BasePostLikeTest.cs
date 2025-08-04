@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using InstaConnect.Common.Abstractions;
-using InstaConnect.Common.Tests.Utilities;
-using InstaConnect.Posts.Application.Extensions;
+﻿using InstaConnect.Common.Tests.Utilities;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Builders.AddApiRequest;
+using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Entities;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
-using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
 using InstaConnect.Users.Common.Tests.Features.Users.Utilities.Builders.AddApiRequest;
 
-namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
-public abstract class BasePostTest
+namespace InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities;
+public abstract class BasePostLikeTest
 {
     protected UserBuilderFactory UserBuilderFactory { get; }
     protected UserBuilder UserBuilder { get; }
@@ -22,9 +15,13 @@ public abstract class BasePostTest
     protected PostBuilder PostBuilder { get; }
     protected Post Post { get; }
 
+    protected PostLikeBuilderFactory PostLikeBuilderFactory { get; }
+    protected PostLikeBuilder PostLikeBuilder { get; }
+    protected PostLike PostLike { get; }
+
     protected CancellationToken CancellationToken { get; }
 
-    protected BasePostTest()
+    protected BasePostLikeTest()
     {
         UserBuilderFactory = new();
         UserBuilder = UserBuilderFactory.Create();
@@ -33,6 +30,10 @@ public abstract class BasePostTest
         PostBuilderFactory = new();
         PostBuilder = PostBuilderFactory.Create(User);
         Post = PostBuilder.Create();
+
+        PostLikeBuilderFactory = new();
+        PostLikeBuilder = PostLikeBuilderFactory.Create(User);
+        PostLike = PostLikeBuilder.Create();
 
         CancellationToken = MockFactory.CreateCancellationToken();
     }

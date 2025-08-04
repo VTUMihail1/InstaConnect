@@ -2,7 +2,7 @@
 
 public record PostLikeAddedEvent(
         string Id,
-        string PostId,
+        string LikeId,
         string UserId,
         DateTimeOffset CreatedAt,
         DateTimeOffset UpdatedAt);

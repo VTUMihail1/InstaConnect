@@ -16,38 +16,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 
-public static class PostMatchAssertions
+public static class PostResponseAssertions
 {
-    public static void ShouldSatisfy(this Post post, AddPostCommandRequest request)
-    {
-        post.ShouldSatisfy(p => p.UserId == request.UserId &&
-                                p.Title == request.Title &&
-                                p.Content == request.Content);
-    }
-
-    public static void ShouldSatisfy(this Post post, UpdatePostCommandRequest request)
-    {
-        post.ShouldSatisfy(p => p.Id == request.Id &&
-                                p.UserId == request.UserId &&
-                                p.Title == request.Title &&
-                                p.Content == request.Content);
-    }
-
-    public static void ShouldSatisfy(this Post post, AddPostApiRequest request)
-    {
-        post.ShouldSatisfy(p => p.UserId == request.UserId &&
-                                p.Title == request.Body.Title &&
-                                p.Content == request.Body.Content);
-    }
-
-    public static void ShouldSatisfy(this Post post, UpdatePostApiRequest request)
-    {
-        post.ShouldSatisfy(p => p.Id == request.Id &&
-                                p.UserId == request.UserId &&
-                                p.Title == request.Body.Title &&
-                                p.Content == request.Body.Content);
-    }
-
     public static void ShouldSatisfy(this AddPostCommandResponse response, Post post)
     {
         response.ShouldSatisfy(p => p.Id == post.Id &&
@@ -172,19 +142,5 @@ public static class PostMatchAssertions
             pp.TotalCount == pp.Data.Count &&
             pp.HasPreviousPage == pp.Page > 1 &&
             pp.HasNextPage == pp.Page * pp.PageSize < pp.TotalCount);
-    }
-    public static void ShouldSatisfyPostNotFoundProblemDetails(
-        this ProblemDetails problemDetails,
-        string id)
-    {
-        problemDetails.ShouldSatisfyNotFound(PostExceptionErrorMessages.GetNotFoundMessage(id));
-    }
-
-    public static void ShouldSatisfyPostForbiddenProblemDetails(
-        this ProblemDetails problemDetails,
-        string id,
-        string userId)
-    {
-        problemDetails.ShouldSatisfyForbidden(PostExceptionErrorMessages.GetForbiddenMessage(id, userId));
     }
 }

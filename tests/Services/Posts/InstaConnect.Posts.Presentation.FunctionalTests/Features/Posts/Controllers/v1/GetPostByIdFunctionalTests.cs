@@ -90,7 +90,7 @@ public class GetPostByIdFunctionalTests : BasePostPresentationFunctionalTest
         var response = await HttpClient.GetPostByIdProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostNotFoundProblemDetails(request.Id);
+        response.ShouldSatisfyPostNotFound(request.Id);
     }
 
     [Fact]

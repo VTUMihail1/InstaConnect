@@ -147,7 +147,7 @@ public class DeletePostFunctionalTests : BasePostPresentationFunctionalTest
         var response = await HttpClient.DeletePostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostNotFoundProblemDetails(request.Id);
+        response.ShouldSatisfyPostNotFound(request.Id);
     }
 
     [Theory]
@@ -177,7 +177,7 @@ public class DeletePostFunctionalTests : BasePostPresentationFunctionalTest
         var response = await HttpClient.DeletePostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostForbiddenProblemDetails(request.Id, request.UserId);
+        response.ShouldSatisfyPostForbidden(request.Id, request.UserId);
     }
 
     [Fact]

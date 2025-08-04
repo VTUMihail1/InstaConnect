@@ -63,6 +63,38 @@ public static class Client
         return response!;
     }
 
+    public static async Task<HttpStatusCode> PostStatusCodeAsync(
+        this HttpClient httpClient,
+        string route,
+        CancellationToken cancellationToken)
+    {
+        var response = await httpClient.PostAsync(route, null, cancellationToken);
+
+        return response.StatusCode;
+    }
+
+    public static async Task<ProblemDetails> PostProblemDetailsAsync(
+        this HttpClient httpClient,
+        string route,
+        CancellationToken cancellationToken)
+    {
+        var responseMessage = await httpClient.PostAsync(route, null, cancellationToken);
+        var response = await responseMessage.ReadProblemDetailsFromJsonAsync(cancellationToken);
+
+        return response!;
+    }
+
+    public static async Task<TResult> PostAsync<TResult>(
+        this HttpClient httpClient,
+        string route,
+        CancellationToken cancellationToken)
+    {
+        var responseMessage = await httpClient.PostAsync(route, null, cancellationToken);
+        var response = await responseMessage.ReadContentFromJsonAsync<TResult>(cancellationToken);
+
+        return response!;
+    }
+
     public static async Task<ProblemDetails> PutProblemDetailsAsync<T>(
         this HttpClient httpClient,
         string route,
