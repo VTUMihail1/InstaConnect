@@ -1,0 +1,67 @@
+﻿using InstaConnect.Common.Tests.Utilities.Builders;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
+using InstaConnect.PostCommentLikes.Domain.Features.PostCommentLikes.Models.Entities;
+using InstaConnect.PostCommentLikes.Presentation.Features.PostCommentLikes.Models.Requests;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities;
+
+namespace InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Builders.DeleteApiRequest;
+
+public class DeletePostCommentLikeApiRequestBuilder
+{
+    private readonly ObjectBuilder<DeletePostCommentLikeApiRequest> _objectBuilder;
+
+    public DeletePostCommentLikeApiRequestBuilder(ObjectBuilder<DeletePostCommentLikeApiRequest> objectBuilder)
+    {
+        _objectBuilder = objectBuilder;
+
+        WithId(PostDataFaker.GetId());
+        WithCommentId(PostCommentDataFaker.GetId());
+        WithCommentLikeId(PostCommentLikeDataFaker.GetId());
+        WithUserId(UserDataFaker.GetId());
+    }
+
+    public DeletePostCommentLikeApiRequestBuilder(ObjectBuilder<DeletePostCommentLikeApiRequest> objectBuilder, PostCommentLike postCommentLike)
+    {
+        _objectBuilder = objectBuilder;
+
+        WithId(postCommentLike.Id);
+        WithCommentId(postCommentLike.CommentId);
+        WithCommentLikeId(postCommentLike.CommentLikeId);
+        WithUserId(postCommentLike.UserId);
+    }
+
+    public DeletePostCommentLikeApiRequestBuilder WithId(string id, IStringTransformer? transformer = null)
+    {
+        _objectBuilder.With(p => p.Id, id, transformer);
+
+        return this;
+    }
+
+    public DeletePostCommentLikeApiRequestBuilder WithCommentId(string commentId, IStringTransformer? transformer = null)
+    {
+        _objectBuilder.With(p => p.CommentId, commentId, transformer);
+
+        return this;
+    }
+
+    public DeletePostCommentLikeApiRequestBuilder WithCommentLikeId(string commentLikeId, IStringTransformer? transformer = null)
+    {
+        _objectBuilder.With(p => p.CommentLikeId, commentLikeId, transformer);
+
+        return this;
+    }
+
+    public DeletePostCommentLikeApiRequestBuilder WithUserId(string userId, IStringTransformer? transformer = null)
+    {
+        _objectBuilder.With(p => p.UserId, userId, transformer);
+
+        return this;
+    }
+
+    public DeletePostCommentLikeApiRequest Create()
+    {
+        return _objectBuilder.Create();
+    }
+}
