@@ -5,7 +5,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 
 public static class PostMockFactory
 {
-    public static IPostService CreatePostService()
+    public static IPostService CreateService()
     {
         return Mocker.Mock<IPostService>();
     }

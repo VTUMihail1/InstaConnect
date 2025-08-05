@@ -78,12 +78,14 @@ public static class PostLikeVerifiers
 
     public static bool IsSatisfied(this PostLike postLike, AddPostLikeCommandRequest request)
     {
-        return postLike.Id == request.Id && postLike.UserId == request.UserId;
+        return postLike.Id == request.Id &&
+               postLike.UserId == request.UserId;
     }
 
     public static bool IsSatisfied(this PostLike postLike, AddPostLikeApiRequest request)
     {
-        return postLike.Id == request.Id && postLike.UserId == request.UserId;
+        return postLike.Id == request.Id &&
+               postLike.UserId == request.UserId;
     }
 
     public static bool IsSatisfied(this PostLike postLike, PostLike pl, AddPostLikeCommandRequest command)
@@ -130,6 +132,7 @@ public static class PostLikeVerifiers
     public static bool IsSatisfied(this DeletePostLikeCommandRequest request, DeletePostLikeApiRequest r)
     {
         return request.Id == r.Id &&
+               request.LikeId == r.LikeId &&
                request.UserId == r.UserId;
     }
 

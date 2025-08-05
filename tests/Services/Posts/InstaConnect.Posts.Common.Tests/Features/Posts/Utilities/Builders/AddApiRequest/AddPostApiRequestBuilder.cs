@@ -50,7 +50,7 @@ public class AddPostApiRequestBuilder
         return this;
     }
 
-    public AddPostApiRequest Create(IStringTransformer? transformer = null)
+    public AddPostApiRequest Create()
     {
         return _objectBuilder.Create();
     }

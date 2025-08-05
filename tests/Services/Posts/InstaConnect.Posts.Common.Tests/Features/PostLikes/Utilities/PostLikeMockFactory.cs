@@ -5,7 +5,7 @@ namespace InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities;
 
 public static class PostLikeMockFactory
 {
-    public static IPostLikeService CreatePostLikeService()
+    public static IPostLikeService CreateService()
     {
         return Mocker.Mock<IPostLikeService>();
     }

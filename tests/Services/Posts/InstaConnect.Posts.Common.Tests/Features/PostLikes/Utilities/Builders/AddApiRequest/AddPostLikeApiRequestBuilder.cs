@@ -39,7 +39,7 @@ public class AddPostLikeApiRequestBuilder
         return this;
     }
 
-    public AddPostLikeApiRequest Create(IStringTransformer? transformer = null)
+    public AddPostLikeApiRequest Create()
     {
         return _objectBuilder.Create();
     }

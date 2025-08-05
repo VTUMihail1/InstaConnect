@@ -24,6 +24,6 @@ public abstract class BasePostApplicationUnitTest : BasePostTest
     protected BasePostApplicationUnitTest()
     {
         ApplicationMapper = MockFactory.CreateApplicationMapper(PostApplicationReference.Assembly);
-        PostService = PostMockFactory.CreatePostService();
+        PostService = PostMockFactory.CreateService();
     }
 }
