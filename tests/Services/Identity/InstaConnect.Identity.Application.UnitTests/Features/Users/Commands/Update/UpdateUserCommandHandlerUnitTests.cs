@@ -148,7 +148,7 @@ public class UpdateUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await EventPublisher
             .Received(1)
-            .PublishAsync(Arg.Is<UserUpdatedEvent>(u => u.Id == existingUser.Id &&
+            .PublishAsync(Arg.Is<UserUpdatedEventRequest>(u => u.Id == existingUser.Id &&
                                                         u.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                                                         u.LastName == UserTestUtilities.ValidUpdateLastName &&
                                                         u.Name == UserTestUtilities.ValidUpdateName &&

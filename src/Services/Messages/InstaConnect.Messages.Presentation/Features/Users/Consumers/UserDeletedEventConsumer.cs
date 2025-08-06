@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Messages.Presentation.Features.Users.Consumers;
 
-internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
+internal class UserDeletedEventConsumer : IConsumer<UserDeletedEventRequest>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserWriteRepository _userWriteRepository;
@@ -13,7 +13,7 @@ internal class UserDeletedEventConsumer : IConsumer<UserDeletedEvent>
         _userWriteRepository = userWriteRepository;
     }
 
-    public async Task Consume(ConsumeContext<UserDeletedEvent> context)
+    public async Task Consume(ConsumeContext<UserDeletedEventRequest> context)
     {
         var existingUser = await _userWriteRepository.GetByIdAsync(context.Message.Id, context.CancellationToken);
 

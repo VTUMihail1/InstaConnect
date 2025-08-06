@@ -70,7 +70,7 @@ public class DeleteUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await EventPublisher
             .Received(1)
-            .PublishAsync(Arg.Is<UserDeletedEvent>(u => u.Id == existingUser.Id), CancellationToken);
+            .PublishAsync(Arg.Is<UserDeletedEventRequest>(u => u.Id == existingUser.Id), CancellationToken);
     }
 
     [Fact]

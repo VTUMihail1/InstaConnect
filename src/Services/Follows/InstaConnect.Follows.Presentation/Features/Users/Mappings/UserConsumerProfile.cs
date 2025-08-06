@@ -5,8 +5,8 @@ internal class UserConsumerProfile : Profile
 {
     public UserConsumerProfile()
     {
-        CreateMap<UserCreatedEvent, User>();
+        CreateMap<UserAddedEventRequest, User>();
 
-        CreateMap<UserUpdatedEvent, User>();
+        CreateMap<UserUpdatedEventRequest, User>();
     }
 }

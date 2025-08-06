@@ -3,7 +3,7 @@
 public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
 {
     private readonly UserUpdatedEventConsumer _userUpdatedEventConsumer;
-    private readonly ConsumeContext<UserUpdatedEvent> _userUpdatedEventConsumeContext;
+    private readonly ConsumeContext<UserUpdatedEventRequest> _userUpdatedEventConsumeContext;
 
     public UserUpdatedEventConsumerUnitTests()
     {
@@ -12,7 +12,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
             ApplicationMapper,
             UserWriteRepository);
 
-        _userUpdatedEventConsumeContext = Substitute.For<ConsumeContext<UserUpdatedEvent>>();
+        _userUpdatedEventConsumeContext = Substitute.For<ConsumeContext<UserUpdatedEventRequest>>();
     }
 
     [Fact]

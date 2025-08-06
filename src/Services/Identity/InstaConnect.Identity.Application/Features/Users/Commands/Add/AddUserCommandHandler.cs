@@ -61,7 +61,7 @@ public class AddUserCommandHandler : ICommandHandler<AddUserCommand, UserCommand
 
         _userWriteRepository.Add(user);
 
-        var userCreatedEvent = _applicationMapper.Map<UserCreatedEvent>(user);
+        var userCreatedEvent = _applicationMapper.Map<UserAddedEventRequest>(user);
         await _eventPublisher.PublishAsync(userCreatedEvent, cancellationToken);
 
         var createEmailConfirmationTokenModel = _applicationMapper.Map<CreateEmailConfirmationTokenModel>(user);

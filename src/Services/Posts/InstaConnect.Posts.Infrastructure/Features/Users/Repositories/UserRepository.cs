@@ -40,6 +40,34 @@ internal class UserRepository : IUserRepository
         return user;
     }
 
+    public async Task<User?> GetByNameAsync(string name, CancellationToken cancellationToken)
+    {
+        using var connection = _sqlConnectionFactory.Create();
+
+        var getByNameQuery = _userQueryFactory.CreateGetByName(name);
+        var queryResponse = await connection.ExecuteQueryFirstAsync<UserQueryEntity>(
+            getByNameQuery.Sql,
+            getByNameQuery.Parameters,
+            cancellationToken);
+        var user = _applicationMapper.Map<User>(queryResponse!);
+
+        return user;
+    }
+
+    public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
+    {
+        using var connection = _sqlConnectionFactory.Create();
+
+        var getByEmailQuery = _userQueryFactory.CreateGetByEmail(email);
+        var queryResponse = await connection.ExecuteQueryFirstAsync<UserQueryEntity>(
+            getByEmailQuery.Sql,
+            getByEmailQuery.Parameters,
+            cancellationToken);
+        var user = _applicationMapper.Map<User>(queryResponse!);
+
+        return user;
+    }
+
     public void Add(User user)
     {
         _postsContext

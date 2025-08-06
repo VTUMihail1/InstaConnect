@@ -28,16 +28,16 @@ internal class UserCommandProfile : Profile
 
         CreateMap<AccessTokenResult, UserTokenCommandViewModel>();
 
-        CreateMap<User, UserCreatedEvent>();
+        CreateMap<User, UserAddedEventRequest>();
 
         CreateMap<User, CreateEmailConfirmationTokenModel>()
             .ConstructUsing(src => new(
                 src.Id,
                 src.Email));
 
-        CreateMap<User, UserUpdatedEvent>();
+        CreateMap<User, UserUpdatedEventRequest>();
 
-        CreateMap<User, UserDeletedEvent>();
+        CreateMap<User, UserDeletedEventRequest>();
 
         CreateMap<User, UserClaimCollectionWriteQuery>()
             .ConstructUsing(src => new(src.Id));

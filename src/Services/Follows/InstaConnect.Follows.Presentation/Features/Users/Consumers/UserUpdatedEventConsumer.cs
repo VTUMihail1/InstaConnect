@@ -1,6 +1,6 @@
 ﻿namespace InstaConnect.Follows.Presentation.Features.Users.Consumers;
 
-internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEvent>
+internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEventRequest>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IApplicationMapper _applicationMapper;
@@ -16,7 +16,7 @@ internal class UserUpdatedEventConsumer : IConsumer<UserUpdatedEvent>
         _userWriteRepository = userWriteRepository;
     }
 
-    public async Task Consume(ConsumeContext<UserUpdatedEvent> context)
+    public async Task Consume(ConsumeContext<UserUpdatedEventRequest> context)
     {
         var existingUser = await _userWriteRepository.GetByIdAsync(context.Message.Id, context.CancellationToken);
 

@@ -327,7 +327,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
         var response = await UsersClient.AddAsync(request, CancellationToken);
 
         await TestHarness.InactivityTask;
-        var result = await TestHarness.Published.Any<UserCreatedEvent>(m =>
+        var result = await TestHarness.Published.Any<UserAddedEventRequest>(m =>
                               m.Context.Message.Id == response.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidAddFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidAddLastName &&
@@ -360,7 +360,7 @@ public class AddUserFunctionalTests : BaseUserFunctionalTest
         var response = await UsersClient.AddAsync(request, CancellationToken);
 
         await TestHarness.InactivityTask;
-        var result = await TestHarness.Published.Any<UserCreatedEvent>(m =>
+        var result = await TestHarness.Published.Any<UserAddedEventRequest>(m =>
                               m.Context.Message.Id == response.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidAddFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidAddLastName &&

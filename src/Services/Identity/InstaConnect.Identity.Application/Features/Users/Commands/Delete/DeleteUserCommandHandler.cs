@@ -34,7 +34,7 @@ public class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand>
 
         _userWriteRepository.Delete(existingUser);
 
-        var userDeletedEvent = _applicationMapper.Map<UserDeletedEvent>(existingUser);
+        var userDeletedEvent = _applicationMapper.Map<UserDeletedEventRequest>(existingUser);
         await _eventPublisher.PublishAsync(userDeletedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

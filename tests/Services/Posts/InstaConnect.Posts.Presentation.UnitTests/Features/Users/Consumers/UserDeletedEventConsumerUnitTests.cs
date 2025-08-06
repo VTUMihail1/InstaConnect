@@ -3,7 +3,7 @@
 public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
 {
     private readonly UserDeletedEventConsumer _userDeletedEventConsumer;
-    private readonly ConsumeContext<UserDeletedEvent> _userDeletedEventConsumeContext;
+    private readonly ConsumeContext<UserDeletedEventRequest> _userDeletedEventConsumeContext;
 
     public UserDeletedEventConsumerUnitTests()
     {
@@ -11,7 +11,7 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
             UnitOfWork,
             UserWriteRepository);
 
-        _userDeletedEventConsumeContext = Substitute.For<ConsumeContext<UserDeletedEvent>>();
+        _userDeletedEventConsumeContext = Substitute.For<ConsumeContext<UserDeletedEventRequest>>();
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var userDeletedEvent = new UserDeletedEvent(existingUser.Id);
+        var userDeletedEvent = new UserDeletedEventRequest(existingUser.Id);
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 
@@ -88,7 +88,7 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var userDeletedEvent = new UserDeletedEvent(existingUser.Id);
+        var userDeletedEvent = new UserDeletedEventRequest(existingUser.Id);
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 
@@ -111,7 +111,7 @@ public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var userDeletedEvent = new UserDeletedEvent(existingUser.Id);
+        var userDeletedEvent = new UserDeletedEventRequest(existingUser.Id);
 
         _userDeletedEventConsumeContext.Message.Returns(userDeletedEvent);
 

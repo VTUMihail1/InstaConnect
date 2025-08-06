@@ -3,7 +3,7 @@
 public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
 {
     private readonly UserCreatedEventConsumer _userCreatedEventConsumer;
-    private readonly ConsumeContext<UserCreatedEvent> _userCreatedEventConsumeContext;
+    private readonly ConsumeContext<UserAddedEventRequest> _userCreatedEventConsumeContext;
 
     public UserCreatedEventConsumerUnitTests()
     {
@@ -12,7 +12,7 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
             ApplicationMapper,
             UserWriteRepository);
 
-        _userCreatedEventConsumeContext = Substitute.For<ConsumeContext<UserCreatedEvent>>();
+        _userCreatedEventConsumeContext = Substitute.For<ConsumeContext<UserAddedEventRequest>>();
     }
 
     [Fact]
@@ -20,7 +20,7 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var userCreatedEvent = new UserCreatedEvent(
+        var userCreatedEvent = new UserAddedEventRequest(
             existingUser.Id,
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -44,7 +44,7 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var userCreatedEvent = new UserCreatedEvent(
+        var userCreatedEvent = new UserAddedEventRequest(
             existingUser.Id,
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -68,7 +68,7 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var userCreatedEvent = new UserCreatedEvent(
+        var userCreatedEvent = new UserAddedEventRequest(
             existingUser.Id,
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -91,7 +91,7 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldGetById_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var userCreatedEvent = new UserCreatedEvent(
+        var userCreatedEvent = new UserAddedEventRequest(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -114,7 +114,7 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldAddUserToRepository_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var userCreatedEvent = new UserCreatedEvent(
+        var userCreatedEvent = new UserAddedEventRequest(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,
@@ -142,7 +142,7 @@ public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
     public async Task Consume_ShouldCallSaveChangesAsync_WhenUserDeletedEventIsValid()
     {
         // Arrange
-        var userCreatedEvent = new UserCreatedEvent(
+        var userCreatedEvent = new UserAddedEventRequest(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidAddName,
             UserTestUtilities.ValidAddEmail,

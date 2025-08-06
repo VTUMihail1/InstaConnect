@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
     {
         serviceCollection
+            .AddUserServices()
             .AddPostServices()
             .AddPostLikeServices()
             .AddPostCommentServices()

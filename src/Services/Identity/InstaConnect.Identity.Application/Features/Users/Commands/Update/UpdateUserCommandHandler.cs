@@ -53,7 +53,7 @@ public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, UserC
 
         _userWriteRepository.Update(existingUserById);
 
-        var userUpdatedEvent = _applicationMapper.Map<UserUpdatedEvent>(existingUserById);
+        var userUpdatedEvent = _applicationMapper.Map<UserUpdatedEventRequest>(existingUserById);
         await _eventPublisher.PublishAsync(userUpdatedEvent, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

@@ -15,4 +15,28 @@ public static class UserQuerySql
                                        u.updated_at AS {nameof(UserQueryEntity.UpdatedAt)},
                                    FROM users u
                                    WHERE u.{nameof(UserQueryEntity.Id)} = @{nameof(GetUserByIdParameters.Id)};";
+
+    public const string GetByName = $@"SELECT
+                                       u.id AS {nameof(UserQueryEntity.Id)},
+                                       u.first_name AS {nameof(UserQueryEntity.FirstName)},
+                                       u.last_name AS {nameof(UserQueryEntity.LastName)},
+                                       u.user_name AS {nameof(UserQueryEntity.Name)},
+                                       u.email AS {nameof(UserQueryEntity.Email)},
+                                       u.profile_image AS {nameof(UserQueryEntity.ProfileImage)},
+                                       u.created_at AS {nameof(UserQueryEntity.CreatedAt)},
+                                       u.updated_at AS {nameof(UserQueryEntity.UpdatedAt)},
+                                   FROM users u
+                                   WHERE u.{nameof(UserQueryEntity.Name)} = @{nameof(GetUserByNameParameters.Name)};";
+
+    public const string GetByEmail = $@"SELECT
+                                       u.id AS {nameof(UserQueryEntity.Id)},
+                                       u.first_name AS {nameof(UserQueryEntity.FirstName)},
+                                       u.last_name AS {nameof(UserQueryEntity.LastName)},
+                                       u.user_name AS {nameof(UserQueryEntity.Name)},
+                                       u.email AS {nameof(UserQueryEntity.Email)},
+                                       u.profile_image AS {nameof(UserQueryEntity.ProfileImage)},
+                                       u.created_at AS {nameof(UserQueryEntity.CreatedAt)},
+                                       u.updated_at AS {nameof(UserQueryEntity.UpdatedAt)},
+                                   FROM users u
+                                   WHERE u.{nameof(UserQueryEntity.Email)} = @{nameof(GetUserByEmailParameters.Email)};";
 }

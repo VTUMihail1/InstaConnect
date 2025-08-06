@@ -3,7 +3,7 @@
 public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
 {
     private readonly UserUpdatedEventConsumer _userUpdatedEventConsumer;
-    private readonly ConsumeContext<UserUpdatedEvent> _userUpdatedEventConsumeContext;
+    private readonly ConsumeContext<UserUpdatedEventRequest> _userUpdatedEventConsumeContext;
 
     public UserUpdatedEventConsumerUnitTests()
     {
@@ -12,7 +12,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
             ApplicationMapper,
             UserWriteRepository);
 
-        _userUpdatedEventConsumeContext = Substitute.For<ConsumeContext<UserUpdatedEvent>>();
+        _userUpdatedEventConsumeContext = Substitute.For<ConsumeContext<UserUpdatedEventRequest>>();
     }
 
     [Fact]
@@ -20,7 +20,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var userUpdatedEvent = new UserUpdatedEvent(
+        var userUpdatedEvent = new UserUpdatedEventRequest(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateName,
             existingUser.Email,
@@ -44,7 +44,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var userUpdatedEvent = new UserUpdatedEvent(
+        var userUpdatedEvent = new UserUpdatedEventRequest(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateName,
             existingUser.Email,
@@ -68,7 +68,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var userUpdatedEvent = new UserUpdatedEvent(
+        var userUpdatedEvent = new UserUpdatedEventRequest(
             UserTestUtilities.InvalidId,
             UserTestUtilities.ValidUpdateName,
             existingUser.Email,
@@ -92,7 +92,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var userUpdatedEvent = new UserUpdatedEvent(
+        var userUpdatedEvent = new UserUpdatedEventRequest(
             existingUser.Id,
             UserTestUtilities.ValidUpdateName,
             existingUser.Email,
@@ -116,7 +116,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var userUpdatedEvent = new UserUpdatedEvent(
+        var userUpdatedEvent = new UserUpdatedEventRequest(
             existingUser.Id,
             UserTestUtilities.ValidUpdateName,
             existingUser.Email,
@@ -145,7 +145,7 @@ public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
     {
         // Arrange
         var existingUser = CreateUser();
-        var userUpdatedEvent = new UserUpdatedEvent(
+        var userUpdatedEvent = new UserUpdatedEventRequest(
             existingUser.Id,
             UserTestUtilities.ValidUpdateName,
             existingUser.Email,

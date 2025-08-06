@@ -20,7 +20,7 @@ internal class UserService : IUserService
     private readonly IUserRepository _userRepository;
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    public PostService(
+    public UserService(
         IUserFactory userFactory,
         IUserRepository userRepository,
         IDateTimeProvider dateTimeProvider)
@@ -36,6 +36,20 @@ internal class UserService : IUserService
         if (existingUser.IsNotNull())
         {
             throw new UserAlreadyExistsException(command.Id);
+        }
+
+        var existingUserByEmail = await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
+
+        if (existingUserByEmail.IsNotNull())
+        {
+            throw new UserEmailAlreadyExistsException(command.Email);
+        }
+
+        var existingUserByName = await _userRepository.GetByNameAsync(command.Name, cancellationToken);
+
+        if (existingUserByName.IsNotNull())
+        {
+            throw new UserNameAlreadyExistsException(command.Name);
         }
 
         var user = _userFactory.Create(
@@ -58,8 +72,23 @@ internal class UserService : IUserService
             throw new UserNotFoundException(command.Id);
         }
 
+        var existingUserByEmail = await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
+
+        if (existingUser!.Email != command.Email && existingUserByEmail.IsNotNull())
+        {
+            throw new UserEmailAlreadyExistsException(command.Email);
+        }
+
+        var existingUserByName = await _userRepository.GetByNameAsync(command.Name, cancellationToken);
+
+        if (existingUser!.Name != command.Name && existingUserByName.IsNotNull())
+        {
+            throw new UserNameAlreadyExistsException(command.Name);
+        }
+
         var utcNow = _dateTimeProvider.GetOffsetUtcNow();
         existingUser!.Update(
+            command.Email,
             command.FirstName,
             command.LastName,
             command.Name,
@@ -68,7 +97,7 @@ internal class UserService : IUserService
         _userRepository.Add(existingUser);
     }
 
-    public async Task DeleteAsync(DeletePostCommand command, CancellationToken cancellationToken)
+    public async Task DeleteAsync(DeleteUserCommand command, CancellationToken cancellationToken)
     {
         var existingUser = await _userRepository.GetByIdAsync(command.Id, cancellationToken);
 

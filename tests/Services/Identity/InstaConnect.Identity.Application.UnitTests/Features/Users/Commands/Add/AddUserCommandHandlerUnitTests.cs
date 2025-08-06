@@ -181,7 +181,7 @@ public class AddUserCommandHandlerUnitTests : BaseUserUnitTest
         // Assert
         await EventPublisher
             .Received(1)
-            .PublishAsync(Arg.Is<UserCreatedEvent>(u => !string.IsNullOrEmpty(u.Id) &&
+            .PublishAsync(Arg.Is<UserAddedEventRequest>(u => !string.IsNullOrEmpty(u.Id) &&
                                    u.FirstName == UserTestUtilities.ValidAddFirstName &&
                                    u.LastName == UserTestUtilities.ValidAddLastName &&
                                    u.Name == UserTestUtilities.ValidAddName &&

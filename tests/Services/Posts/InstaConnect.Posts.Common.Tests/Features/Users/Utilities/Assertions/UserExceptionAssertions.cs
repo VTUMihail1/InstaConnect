@@ -11,4 +11,28 @@ public static class UserExceptionAssertions
         await action.ShouldThrowAsync<UserNotFoundException>(
             UserExceptionErrorMessages.GetNotFoundMessage(id));
     }
+
+    public static async Task ShouldThrowUserAlreadyExistsExceptionAsync(
+        this Func<Task> action,
+        string id)
+    {
+        await action.ShouldThrowAsync<UserAlreadyExistsException>(
+            UserExceptionErrorMessages.GetAlreadyExistsMessage(id));
+    }
+
+    public static async Task ShouldThrowUserNameAlreadyExistsExceptionAsync(
+        this Func<Task> action,
+        string name)
+    {
+        await action.ShouldThrowAsync<UserNameAlreadyExistsException>(
+            UserExceptionErrorMessages.GetNameAlreadyExistsMessage(name));
+    }
+
+    public static async Task ShouldThrowUserEmailAlreadyExistsExceptionAsync(
+        this Func<Task> action,
+        string email)
+    {
+        await action.ShouldThrowAsync<UserEmailAlreadyExistsException>(
+            UserExceptionErrorMessages.GetEmailAlreadyExistsMessage(email));
+    }
 }

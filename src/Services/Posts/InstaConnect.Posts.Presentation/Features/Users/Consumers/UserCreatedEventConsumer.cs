@@ -1,29 +1,25 @@
 ﻿using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
 using InstaConnect.Posts.Domain.Features.Posts.Abstractions;
+using InstaConnect.Users.Application.Features.Users.Commands.Add;
 
 namespace InstaConnect.Posts.Presentation.Features.Users.Consumers;
 
-internal class UserCreatedEventConsumer : IConsumer<UserCreatedEvent>
+internal class UserCreatedEventConsumer : IConsumer<UserAddedEventRequest>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserService _userService;
     private readonly IApplicationMapper _applicationMapper;
+    private readonly IApplicationSender _applicationSender;
 
     public UserCreatedEventConsumer(
-        IUnitOfWork unitOfWork,
-        IUserService userService,
-        IApplicationMapper applicationMapper)
+        IApplicationMapper applicationMapper,
+        IApplicationSender applicationSender)
     {
-        _unitOfWork = unitOfWork;
-        _userService = userService;
         _applicationMapper = applicationMapper;
+        _applicationSender = applicationSender;
     }
 
-    public async Task Consume(ConsumeContext<UserCreatedEvent> context)
+    public async Task Consume(ConsumeContext<UserAddedEventRequest> context)
     {
-        var command = _applicationMapper.Map<AddUserCommand>(context.Message);
-        await _userService.AddAsync(command, context.CancellationToken);
-
-        await _unitOfWork.SaveChangesAsync(context.CancellationToken);
+        var request = _applicationMapper.Map<AddUserCommandRequest>(context.Message);
+        await _applicationSender.SendAsync(request, context.CancellationToken);
     }
 }

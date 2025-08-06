@@ -367,7 +367,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         await ApplicationSender.SendAsync(command, CancellationToken);
 
         await TestHarness.InactivityTask;
-        var result = await TestHarness.Published.Any<UserUpdatedEvent>(m =>
+        var result = await TestHarness.Published.Any<UserUpdatedEventRequest>(m =>
                               m.Context.Message.Id == existingUser.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidUpdateLastName &&
@@ -398,7 +398,7 @@ public class UpdateUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         await ApplicationSender.SendAsync(command, CancellationToken);
 
         await TestHarness.InactivityTask;
-        var result = await TestHarness.Published.Any<UserUpdatedEvent>(m =>
+        var result = await TestHarness.Published.Any<UserUpdatedEventRequest>(m =>
                               m.Context.Message.Id == existingUser.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidUpdateLastName &&

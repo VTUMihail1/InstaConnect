@@ -336,7 +336,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
         var response = await UsersClient.UpdateCurrentAsync(request, CancellationToken);
 
         await TestHarness.InactivityTask;
-        var result = await TestHarness.Published.Any<UserUpdatedEvent>(m =>
+        var result = await TestHarness.Published.Any<UserUpdatedEventRequest>(m =>
                               m.Context.Message.Id == response.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidUpdateLastName &&
@@ -368,7 +368,7 @@ public class UpdateCurrentUserFunctionalTests : BaseUserFunctionalTest
         var response = await UsersClient.UpdateCurrentAsync(request, CancellationToken);
 
         await TestHarness.InactivityTask;
-        var result = await TestHarness.Published.Any<UserUpdatedEvent>(m =>
+        var result = await TestHarness.Published.Any<UserUpdatedEventRequest>(m =>
                               m.Context.Message.Id == response.Id &&
                               m.Context.Message.FirstName == UserTestUtilities.ValidUpdateFirstName &&
                               m.Context.Message.LastName == UserTestUtilities.ValidUpdateLastName &&

@@ -87,7 +87,7 @@ public class DeleteUserCommandHandlerIntegrationTests : BaseUserIntegrationTest
         await ApplicationSender.SendAsync(command, CancellationToken);
 
         await TestHarness.InactivityTask;
-        var result = await TestHarness.Published.Any<UserDeletedEvent>(m =>
+        var result = await TestHarness.Published.Any<UserDeletedEventRequest>(m =>
                               m.Context.Message.Id == existingUser.Id, CancellationToken);
 
         // Assert

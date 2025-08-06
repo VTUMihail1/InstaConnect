@@ -100,12 +100,6 @@ public static class UserErrorMessages
         return Format.FormatInvariantCulture(length, UserConfigurations.NameMaxLength);
     }
 
-    public static string GetProfileImageTooShort(int length)
-    {
-        const string Format = "Profile image URL length is {0} and it must be at least {1} characters long";
-        return Format.FormatInvariantCulture(length, UserConfigurations.ProfileImageMinLength);
-    }
-
     public static string GetProfileImageTooLong(int length)
     {
         const string Format = "Profile image URL length is {0} and it must be at most {1} characters long";

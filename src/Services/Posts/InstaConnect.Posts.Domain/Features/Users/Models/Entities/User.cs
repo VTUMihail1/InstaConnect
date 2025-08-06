@@ -78,7 +78,7 @@ public class User : IEntity
 
     public string LastName { get; private set; }
 
-    public string Email { get; }
+    public string Email { get; private set; }
 
     public string Name { get; private set; }
 
@@ -97,12 +97,14 @@ public class User : IEntity
     public DateTimeOffset UpdatedAt { get; private set; }
 
     public void Update(
+        string email,
         string firstName,
         string lastName,
         string name,
         string? profileImage,
         DateTimeOffset updatedAt)
     {
+        Email = email;
         FirstName = firstName;
         LastName = lastName;
         Name = name;

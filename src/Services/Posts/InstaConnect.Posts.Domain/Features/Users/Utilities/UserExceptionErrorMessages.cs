@@ -19,4 +19,20 @@ public static class UserExceptionErrorMessages
 
         return result;
     }
+
+    public static string GetNameAlreadyExistsMessage(string name)
+    {
+        const string Format = "User(name: {0}) already exists";
+        var result = Format.FormatInvariantCulture(name);
+
+        return result;
+    }
+
+    public static string GetEmailAlreadyExistsMessage(string email)
+    {
+        const string Format = "User(email: {0}) already exists";
+        var result = Format.FormatInvariantCulture(email);
+
+        return result;
+    }
 }

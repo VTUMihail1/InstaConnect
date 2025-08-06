@@ -1,0 +1,42 @@
+﻿using AutoMapper;
+
+using InstaConnect.Common.Application.Contracts.Users;
+using InstaConnect.Posts.Application.Features.Posts.Commands.Add;
+using InstaConnect.Users.Application.Features.Users.Commands.Add;
+using InstaConnect.Users.Application.Features.Users.Commands.Delete;
+using InstaConnect.Users.Application.Features.Users.Commands.Update;
+using InstaConnect.Users.Application.Features.Users.Queries.GetAll;
+using InstaConnect.Users.Application.Features.Users.Queries.GetById;
+using InstaConnect.Users.Domain.Features.Users.Models.Requests;
+using InstaConnect.Users.Domain.Features.Users.Models.Responses;
+
+using Mapster;
+
+namespace InstaConnect.Users.Application.Features.Users.Mappings;
+
+public class UserApplicationMappings : IRegister
+{
+    public void Register(TypeAdapterConfig config)
+    {
+        config.NewConfig<AddUserCommandRequest, AddUserCommand>()
+            .ConstructUsing(src => new(
+                src.Id,
+                src.FirstName,
+                src.LastName,
+                src.Name,
+                src.Email,
+                src.ProfileImage));
+
+        config.NewConfig<UpdateUserCommandRequest, UpdateUserCommand>()
+            .ConstructUsing(src => new(
+                src.Id,
+                src.Email,
+                src.FirstName,
+                src.LastName,
+                src.Name,
+                src.ProfileImage));
+
+        config.NewConfig<DeleteUserCommandRequest, DeleteUserCommand>()
+            .ConstructUsing(src => new(src.Id));
+    }
+}

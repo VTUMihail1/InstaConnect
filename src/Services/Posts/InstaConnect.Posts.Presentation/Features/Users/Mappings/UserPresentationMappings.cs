@@ -7,6 +7,8 @@ using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Domain.Features.Posts.Models;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
+using InstaConnect.Users.Application.Features.Users.Commands.Add;
+using InstaConnect.Users.Application.Features.Users.Commands.Delete;
 
 using Mapster;
 
@@ -16,7 +18,7 @@ internal class UserPresentationMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<UserCreatedEvent, AddUserCommand>()
+        config.NewConfig<UserAddedEventRequest, AddUserCommandRequest>()
             .ConstructUsing(src => new(
                 src.Id,
                 src.FirstName,
@@ -25,15 +27,16 @@ internal class UserPresentationMappings : IRegister
                 src.Email,
                 src.ProfileImage));
 
-        config.NewConfig<UserUpdatedEvent, UpdateUserCommand>()
+        config.NewConfig<UserUpdatedEventRequest, UpdateUserCommandRequest>()
             .ConstructUsing(src => new(
                 src.Id,
                 src.FirstName,
                 src.LastName,
                 src.Name,
+                src.Email,
                 src.ProfileImage));
 
-        config.NewConfig<UserDeletedEvent, DeleteUserCommand>()
+        config.NewConfig<UserDeletedEventRequest, DeleteUserCommandRequest>()
             .ConstructUsing(src => new(src.Id));
     }
 }
