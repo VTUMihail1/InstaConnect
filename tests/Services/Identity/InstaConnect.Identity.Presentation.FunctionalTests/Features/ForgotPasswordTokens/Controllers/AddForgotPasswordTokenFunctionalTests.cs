@@ -97,7 +97,7 @@ public class AddForgotPasswordTokenFunctionalTests : BaseForgotPasswordTokenFunc
         await ForgotPasswordTokensClient.AddStatusCodeAsync(request, CancellationToken);
 
         await TestHarness.InactivityTask;
-        var result = await TestHarness.Published.Any<UserForgotPasswordTokenCreatedEvent>(m =>
+        var result = await TestHarness.Published.Any<UserForgotPasswordTokenCreatedEventRequest>(m =>
                               m.Context.Message.Email == existingUser.Email);
         // Assert
         result

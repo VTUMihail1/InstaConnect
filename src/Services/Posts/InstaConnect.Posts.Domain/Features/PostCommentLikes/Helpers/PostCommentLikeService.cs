@@ -139,8 +139,8 @@ internal class PostCommentLikeService : IPostCommentLikeService
         var postCommentLike = _postCommentLikeFactory.Create(command.Id, command.CommentId, command.UserId);
         _postCommentLikeRepository.Add(postCommentLike);
 
-        var integrationEvent = _applicationMapper.Map<PostCommentLikeAddedEvent>(postCommentLike);
-        await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
+        var eventRequest = _applicationMapper.Map<PostCommentLikeAddedEventRequest>(postCommentLike);
+        await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
 
         return postCommentLike;
     }
@@ -183,7 +183,7 @@ internal class PostCommentLikeService : IPostCommentLikeService
 
         _postCommentLikeRepository.Delete(existingPostCommentLike);
 
-        var integrationEvent = _applicationMapper.Map<PostCommentLikeDeletedEvent>(existingPostCommentLike);
-        await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
+        var eventRequest = _applicationMapper.Map<PostCommentLikeDeletedEventRequest>(existingPostCommentLike);
+        await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
     }
 }

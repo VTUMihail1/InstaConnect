@@ -100,8 +100,8 @@ internal class PostLikeService : IPostLikeService
         var postLike = _postLikeFactory.Create(command.Id, command.UserId);
         _postLikeRepository.Add(postLike);
 
-        var integrationEvent = _applicationMapper.Map<PostLikeAddedEvent>(postLike);
-        await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
+        var eventRequest = _applicationMapper.Map<PostLikeAddedEventRequest>(postLike);
+        await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
 
         return postLike;
     }
@@ -129,7 +129,7 @@ internal class PostLikeService : IPostLikeService
 
         _postLikeRepository.Delete(existingPostLike);
 
-        var integrationEvent = _applicationMapper.Map<PostLikeDeletedEvent>(existingPostLike);
-        await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
+        var eventRequest = _applicationMapper.Map<PostLikeDeletedEventRequest>(existingPostLike);
+        await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
     }
 }

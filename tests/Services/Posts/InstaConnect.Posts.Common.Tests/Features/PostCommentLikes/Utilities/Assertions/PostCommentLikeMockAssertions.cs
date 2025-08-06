@@ -17,7 +17,7 @@ public static class PostCommentLikeMockAssertions
         GetAllPostCommentLikesApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.Received(1).SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQuery(request), cancellationToken);
+        await applicationSender.Received(1).SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQueryRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -25,7 +25,7 @@ public static class PostCommentLikeMockAssertions
         GetPostCommentLikeByIdApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.Received(1).SendAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQuery(request), cancellationToken);
+        await applicationSender.Received(1).SendAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQueryRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -33,7 +33,7 @@ public static class PostCommentLikeMockAssertions
         AddPostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.Received(1).SendAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommand(request), cancellationToken);
+        await applicationSender.Received(1).SendAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommandRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -41,7 +41,7 @@ public static class PostCommentLikeMockAssertions
         DeletePostCommentLikeApiRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.Received(1).SendAsync(PostCommentLikeMatcher.IsDeletePostCommentLikeCommand(request), cancellationToken);
+        await applicationSender.Received(1).SendAsync(PostCommentLikeMatcher.IsDeletePostCommentLikeCommandRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneGetAllAsync(
@@ -49,7 +49,7 @@ public static class PostCommentLikeMockAssertions
         GetAllPostCommentLikesQueryRequest request,
         CancellationToken cancellationToken)
     {
-        await postCommentLikeService.Received(1).GetAllAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesRequest(request), cancellationToken);
+        await postCommentLikeService.Received(1).GetAllAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQuery(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneGetByIdAsync(
@@ -57,7 +57,7 @@ public static class PostCommentLikeMockAssertions
         GetPostCommentLikeByIdQueryRequest request,
         CancellationToken cancellationToken)
     {
-        await postCommentLikeService.Received(1).GetByIdAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdRequest(request), cancellationToken);
+        await postCommentLikeService.Received(1).GetByIdAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQuery(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneAddAsync(
@@ -65,7 +65,7 @@ public static class PostCommentLikeMockAssertions
         AddPostCommentLikeCommandRequest request,
         CancellationToken cancellationToken)
     {
-        await postCommentLikeService.Received(1).AddAsync(PostCommentLikeMatcher.IsAddPostCommentLikeRequest(request), cancellationToken);
+        await postCommentLikeService.Received(1).AddAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommand(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneDeleteAsync(
@@ -73,6 +73,6 @@ public static class PostCommentLikeMockAssertions
         DeletePostCommentLikeCommandRequest request,
         CancellationToken cancellationToken)
     {
-        await postCommentLikeService.Received(1).DeleteAsync(PostCommentLikeMatcher.IsDeletePostCommentLikeRequest(request), cancellationToken);
+        await postCommentLikeService.Received(1).DeleteAsync(PostCommentLikeMatcher.IsDeletePostCommentLikeCommand(request), cancellationToken);
     }
 }

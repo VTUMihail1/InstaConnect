@@ -5,7 +5,7 @@ namespace InstaConnect.Users.Common.Tests.Features.Users.Utilities;
 
 public static class UserEventHarness
 {
-    public static async Task<bool> HasConsumedAddedEventAsync(
+    public static async Task<bool> HasConsumedUserAddedEventRequestAsync(
         this IEventHarness eventHarness,
         User user,
         CancellationToken cancellationToken)
@@ -20,7 +20,7 @@ public static class UserEventHarness
         return result;
     }
 
-    public static async Task<bool> HasConsumedUpdatedEventAsync(
+    public static async Task<bool> HasConsumedUserUpdatedEventRequestAsync(
         this IEventHarness eventHarness,
         User user,
         CancellationToken cancellationToken)
@@ -35,7 +35,7 @@ public static class UserEventHarness
         return result;
     }
 
-    public static async Task<bool> HasConsumedUserDeletedEventAsync(
+    public static async Task<bool> HasConsumedUserDeletedEventRequestAsync(
         this IEventHarness eventHarness,
         User user,
         CancellationToken cancellationToken)

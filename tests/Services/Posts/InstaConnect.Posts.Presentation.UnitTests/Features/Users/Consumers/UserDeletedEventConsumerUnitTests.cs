@@ -2,7 +2,7 @@
 
 public class UserDeletedEventConsumerUnitTests : BaseUserUnitTest
 {
-    private readonly UserDeletedEventConsumer _userDeletedEventConsumer;
+    private readonly UserDeletedEventHandler _userDeletedEventConsumer;
     private readonly ConsumeContext<UserDeletedEventRequest> _userDeletedEventConsumeContext;
 
     public UserDeletedEventConsumerUnitTests()

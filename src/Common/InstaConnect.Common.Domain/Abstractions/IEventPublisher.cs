@@ -1,6 +1,9 @@
-﻿namespace InstaConnect.Common.Domain.Abstractions;
+﻿using InstaConnect.Common.Infrastructure.Abstractions;
+
+namespace InstaConnect.Common.Domain.Abstractions;
 
 public interface IEventPublisher
 {
-    Task PublishAsync<T>(T message, CancellationToken cancellationToken) where T : class;
+    Task PublishAsync<TEvent>(TEvent message, CancellationToken cancellationToken)
+        where TEvent : class, IEventRequest;
 }

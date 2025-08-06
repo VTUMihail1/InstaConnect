@@ -12,7 +12,7 @@ using InstaConnect.PostCommentLikes.Presentation.Features.PostCommentLikes.Model
 namespace InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities;
 public static class PostCommentLikeMockSetups
 {
-    public static void SetupGetAllQuery(
+    public static void SetupGetAllQueryRequest(
         this IApplicationSender applicationSender,
         GetAllPostCommentLikesApiRequest request,
         PostCommentLike postCommentLike,
@@ -39,11 +39,11 @@ public static class PostCommentLikeMockSetups
             false);
 
         applicationSender
-            .SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQuery(request), cancellationToken)
+            .SendAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQueryRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetByIdQuery(
+    public static void SetupGetByIdQueryRequest(
         this IApplicationSender applicationSender,
         GetPostCommentLikeByIdApiRequest request,
         PostCommentLike postCommentLike,
@@ -60,11 +60,11 @@ public static class PostCommentLikeMockSetups
                     user.ProfileImage)));
 
         applicationSender
-            .SendAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQuery(request), cancellationToken)
+            .SendAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQueryRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupAddCommand(
+    public static void SetupAddCommandRequest(
         this IApplicationSender applicationSender,
         AddPostCommentLikeApiRequest request,
         PostCommentLike postCommentLike,
@@ -73,11 +73,11 @@ public static class PostCommentLikeMockSetups
         var response = new AddPostCommentLikeCommandResponse(postCommentLike.Id, postCommentLike.CommentId, postCommentLike.CommentLikeId, postCommentLike.CreatedAt, postCommentLike.UpdatedAt);
 
         applicationSender
-            .SendAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommand(request), cancellationToken)
+            .SendAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommandRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetAllRequest(
+    public static void SetupGetAllQuery(
         this IPostCommentLikeService postCommentLikeService,
         GetAllPostCommentLikesQueryRequest request,
         PostCommentLike postCommentLike,
@@ -94,11 +94,11 @@ public static class PostCommentLikeMockSetups
             false);
 
         postCommentLikeService
-            .GetAllAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesRequest(request), cancellationToken)
+            .GetAllAsync(PostCommentLikeMatcher.IsGetAllPostCommentLikesQuery(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetByIdRequest(
+    public static void SetupGetByIdQuery(
         this IPostCommentLikeService postCommentLikeService,
         GetPostCommentLikeByIdQueryRequest request,
         PostCommentLike postCommentLike,
@@ -106,18 +106,18 @@ public static class PostCommentLikeMockSetups
         CancellationToken cancellationToken)
     {
         postCommentLikeService
-            .GetByIdAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdRequest(request), cancellationToken)
+            .GetByIdAsync(PostCommentLikeMatcher.IsGetPostCommentLikeByIdQuery(request), cancellationToken)
             .ReturnsResponse(postCommentLike);
     }
 
-    public static void SetupAddRequest(
+    public static void SetupAddCommand(
         this IPostCommentLikeService postCommentLikeService,
         AddPostCommentLikeCommandRequest request,
         PostCommentLike postCommentLike,
         CancellationToken cancellationToken)
     {
         postCommentLikeService
-            .AddAsync(PostCommentLikeMatcher.IsAddPostCommentLikeRequest(request), cancellationToken)
+            .AddAsync(PostCommentLikeMatcher.IsAddPostCommentLikeCommand(request), cancellationToken)
             .ReturnsResponse(postCommentLike);
     }
 }

@@ -95,8 +95,8 @@ internal class PostCommentService : IPostCommentService
         var postComment = _postCommentFactory.Create(command.Id, command.UserId, command.Content);
         _postCommentRepository.Add(postComment);
 
-        var integrationEvent = _applicationMapper.Map<PostCommentAddedEvent>(postComment);
-        await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
+        var eventRequest = _applicationMapper.Map<PostCommentAddedEventRequest>(postComment);
+        await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
 
         return postComment;
     }
@@ -126,8 +126,8 @@ internal class PostCommentService : IPostCommentService
         existingPostComment.Update(command.Content, utcNow);
         _postCommentRepository.Update(existingPostComment);
 
-        var integrationEvent = _applicationMapper.Map<PostCommentUpdatedEvent>(existingPostComment);
-        await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
+        var eventRequest = _applicationMapper.Map<PostCommentUpdatedEventRequest>(existingPostComment);
+        await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
 
         return existingPostComment;
     }
@@ -155,7 +155,7 @@ internal class PostCommentService : IPostCommentService
 
         _postCommentRepository.Delete(existingPostComment);
 
-        var integrationEvent = _applicationMapper.Map<PostCommentDeletedEvent>(existingPostComment);
-        await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
+        var eventRequest = _applicationMapper.Map<PostCommentDeletedEventRequest>(existingPostComment);
+        await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
     }
 }

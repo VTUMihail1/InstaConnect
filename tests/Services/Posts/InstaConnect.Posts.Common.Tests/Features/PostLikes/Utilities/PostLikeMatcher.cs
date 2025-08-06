@@ -9,7 +9,7 @@ using InstaConnect.PostLikes.Presentation.Features.PostLikes.Models.Requests;
 namespace InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities;
 public static class PostLikeMatcher
 {
-    public static GetAllPostLikesQueryRequest IsGetAllPostLikesQuery(GetAllPostLikesApiRequest request)
+    public static GetAllPostLikesQueryRequest IsGetAllPostLikesQueryRequest(GetAllPostLikesApiRequest request)
     {
         return Matcher.Is<GetAllPostLikesQueryRequest>(p => p.Filter.Id == request.Filter.Id &&
                                                             p.Filter.UserId == request.Filter.UserId &&
@@ -20,25 +20,25 @@ public static class PostLikeMatcher
                                                             p.Sorting.Property == request.Sorting.Property);
     }
 
-    public static GetPostLikeByIdQueryRequest IsGetPostLikeByIdQuery(GetPostLikeByIdApiRequest request)
+    public static GetPostLikeByIdQueryRequest IsGetPostLikeByIdQueryRequest(GetPostLikeByIdApiRequest request)
     {
         return Matcher.Is<GetPostLikeByIdQueryRequest>(p => p.Id == request.Id &&
                                                             p.LikeId == request.LikeId);
     }
 
-    public static AddPostLikeCommandRequest IsAddPostLikeCommand(AddPostLikeApiRequest request)
+    public static AddPostLikeCommandRequest IsAddPostLikeCommandRequest(AddPostLikeApiRequest request)
     {
         return Matcher.Is<AddPostLikeCommandRequest>(p => p.Id == request.Id &&
                                                           p.UserId == request.UserId);
     }
 
-    public static DeletePostLikeCommandRequest IsDeletePostLikeCommand(DeletePostLikeApiRequest request)
+    public static DeletePostLikeCommandRequest IsDeletePostLikeCommandRequest(DeletePostLikeApiRequest request)
     {
         return Matcher.Is<DeletePostLikeCommandRequest>(p => p.Id == request.Id &&
                                                              p.LikeId == request.LikeId &&
                                                              p.UserId == request.UserId);
     }
-    public static GetAllPostLikesQuery IsGetAllPostLikesRequest(GetAllPostLikesQueryRequest request)
+    public static GetAllPostLikesQuery IsGetAllPostLikesQuery(GetAllPostLikesQueryRequest request)
     {
         return Matcher.Is<GetAllPostLikesQuery>(p => p.Filter.Id == request.Filter.Id &&
                                                         p.Filter.UserId == request.Filter.UserId &&
@@ -49,19 +49,19 @@ public static class PostLikeMatcher
                                                         p.Sorting.Property == request.Sorting.Property);
     }
 
-    public static GetPostLikeByIdQuery IsGetPostLikeByIdRequest(GetPostLikeByIdQueryRequest request)
+    public static GetPostLikeByIdQuery IsGetPostLikeByIdQuery(GetPostLikeByIdQueryRequest request)
     {
         return Matcher.Is<GetPostLikeByIdQuery>(p => p.Id == request.Id &&
                                                      p.LikeId == request.LikeId);
     }
 
-    public static AddPostLikeCommand IsAddPostLikeRequest(AddPostLikeCommandRequest request)
+    public static AddPostLikeCommand IsAddPostLikeCommand(AddPostLikeCommandRequest request)
     {
         return Matcher.Is<AddPostLikeCommand>(p => p.Id == request.Id &&
                                                    p.UserId == request.UserId);
     }
 
-    public static DeletePostLikeCommand IsDeletePostLikeRequest(DeletePostLikeCommandRequest request)
+    public static DeletePostLikeCommand IsDeletePostLikeCommand(DeletePostLikeCommandRequest request)
     {
         return Matcher.Is<DeletePostLikeCommand>(p => p.Id == request.Id &&
                                                       p.LikeId == request.LikeId &&

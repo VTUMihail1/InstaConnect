@@ -2,7 +2,7 @@
 
 public class UserUpdatedEventConsumerUnitTests : BaseUserUnitTest
 {
-    private readonly UserUpdatedEventConsumer _userUpdatedEventConsumer;
+    private readonly UserUpdatedEventHandler _userUpdatedEventConsumer;
     private readonly ConsumeContext<UserUpdatedEventRequest> _userUpdatedEventConsumeContext;
 
     public UserUpdatedEventConsumerUnitTests()

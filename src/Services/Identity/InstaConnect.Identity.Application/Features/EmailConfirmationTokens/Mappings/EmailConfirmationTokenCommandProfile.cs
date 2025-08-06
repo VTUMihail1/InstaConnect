@@ -14,7 +14,7 @@ internal class EmailConfirmationTokenCommandProfile : Profile
         CreateMap<GenerateEmailConfirmationTokenResponse, EmailConfirmationToken>()
             .ConstructUsing(src => new(src.Value, src.ValidUntil, src.UserId));
 
-        CreateMap<GenerateEmailConfirmationTokenResponse, UserConfirmEmailTokenCreatedEvent>()
+        CreateMap<GenerateEmailConfirmationTokenResponse, UserConfirmEmailTokenCreatedEventRequest>()
             .ConstructUsing(src => new(src.Email, src.RedirectUrl));
     }
 }

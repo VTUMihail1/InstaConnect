@@ -11,7 +11,7 @@ internal class PostCommentLikeDomainMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<PostCommentLike, PostCommentLikeAddedEvent>()
+        config.NewConfig<PostCommentLike, PostCommentLikeAddedEventRequest>()
             .ConstructUsing(p => new(
                 p.Id,
                 p.CommentId,
@@ -20,7 +20,7 @@ internal class PostCommentLikeDomainMappings : IRegister
                 p.CreatedAt,
                 p.UpdatedAt));
 
-        config.NewConfig<PostCommentLike, PostCommentLikeDeletedEvent>()
+        config.NewConfig<PostCommentLike, PostCommentLikeDeletedEventRequest>()
             .ConstructUsing(p => new(p.Id, p.CommentId, p.CommentLikeId));
     }
 }

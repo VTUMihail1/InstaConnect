@@ -57,7 +57,7 @@ public class AddUserCommandRequestBuilder
         return this;
     }
 
-    public AddUserCommandRequestBuilder WithProfileImage(string profileImage, IStringTransformer? transformer = null)
+    public AddUserCommandRequestBuilder WithProfileImage(string? profileImage, IStringTransformer? transformer = null)
     {
         _objectBuilder.With(p => p.ProfileImage, profileImage, transformer);
 

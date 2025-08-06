@@ -18,7 +18,7 @@ using NSubstitute;
 namespace InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities;
 public static class PostCommentMatcher
 {
-    public static GetAllPostCommentsQueryRequest IsGetAllPostCommentsQuery(GetAllPostCommentsApiRequest request)
+    public static GetAllPostCommentsQueryRequest IsGetAllPostCommentsQueryRequest(GetAllPostCommentsApiRequest request)
     {
         return Matcher.Is<GetAllPostCommentsQueryRequest>(p => p.Filter.Id == request.Filter.Id &&
                                                                p.Filter.UserId == request.Filter.UserId &&
@@ -29,20 +29,20 @@ public static class PostCommentMatcher
                                                                p.Sorting.Property == request.Sorting.Property);
     }
 
-    public static GetPostCommentByIdQueryRequest IsGetPostCommentByIdQuery(GetPostCommentByIdApiRequest request)
+    public static GetPostCommentByIdQueryRequest IsGetPostCommentByIdQueryRequest(GetPostCommentByIdApiRequest request)
     {
         return Matcher.Is<GetPostCommentByIdQueryRequest>(p => p.Id == request.Id &&
                                                                p.CommentId == request.CommentId);
     }
 
-    public static AddPostCommentCommandRequest IsAddPostCommentCommand(AddPostCommentApiRequest request)
+    public static AddPostCommentCommandRequest IsAddPostCommentCommandRequest(AddPostCommentApiRequest request)
     {
         return Matcher.Is<AddPostCommentCommandRequest>(p => p.Id == request.Id &&
                                                              p.Content == request.Body.Content &&
                                                              p.UserId == request.UserId);
     }
 
-    public static UpdatePostCommentCommandRequest IsUpdatePostCommentCommand(UpdatePostCommentApiRequest request)
+    public static UpdatePostCommentCommandRequest IsUpdatePostCommentCommandRequest(UpdatePostCommentApiRequest request)
     {
         return Matcher.Is<UpdatePostCommentCommandRequest>(p => p.Id == request.Id &&
                                                                 p.CommentId == request.CommentId &&
@@ -50,13 +50,13 @@ public static class PostCommentMatcher
                                                                 p.UserId == request.UserId);
     }
 
-    public static DeletePostCommentCommandRequest IsDeletePostCommentCommand(DeletePostCommentApiRequest request)
+    public static DeletePostCommentCommandRequest IsDeletePostCommentCommandRequest(DeletePostCommentApiRequest request)
     {
         return Matcher.Is<DeletePostCommentCommandRequest>(p => p.Id == request.Id &&
                                                                 p.CommentId == request.CommentId &&
                                                                 p.UserId == request.UserId);
     }
-    public static GetAllPostCommentsQuery IsGetAllPostCommentsRequest(GetAllPostCommentsQueryRequest request)
+    public static GetAllPostCommentsQuery IsGetAllPostCommentsQuery(GetAllPostCommentsQueryRequest request)
     {
         return Matcher.Is<GetAllPostCommentsQuery>(p => p.Filter.Id == request.Filter.Id &&
                                                         p.Filter.UserId == request.Filter.UserId &&
@@ -67,20 +67,20 @@ public static class PostCommentMatcher
                                                         p.Sorting.Property == request.Sorting.Property);
     }
 
-    public static GetPostCommentByIdQuery IsGetPostCommentByIdRequest(GetPostCommentByIdQueryRequest request)
+    public static GetPostCommentByIdQuery IsGetPostCommentByIdQuery(GetPostCommentByIdQueryRequest request)
     {
         return Matcher.Is<GetPostCommentByIdQuery>(p => p.Id == request.Id &&
                                                         p.CommentId == request.CommentId);
     }
 
-    public static AddPostCommentCommand IsAddPostCommentRequest(AddPostCommentCommandRequest request)
+    public static AddPostCommentCommand IsAddPostCommentCommand(AddPostCommentCommandRequest request)
     {
         return Matcher.Is<AddPostCommentCommand>(p => p.Id == request.Id &&
                                                       p.Content == request.Content &&
                                                       p.UserId == request.UserId);
     }
 
-    public static UpdatePostCommentCommand IsUpdatePostCommentRequest(UpdatePostCommentCommandRequest request)
+    public static UpdatePostCommentCommand IsUpdatePostCommentCommand(UpdatePostCommentCommandRequest request)
     {
         return Matcher.Is<UpdatePostCommentCommand>(p => p.Id == request.Id &&
                                                          p.CommentId == request.CommentId &&
@@ -88,7 +88,7 @@ public static class PostCommentMatcher
                                                          p.UserId == request.UserId);
     }
 
-    public static DeletePostCommentCommand IsDeletePostCommentRequest(DeletePostCommentCommandRequest request)
+    public static DeletePostCommentCommand IsDeletePostCommentCommand(DeletePostCommentCommandRequest request)
     {
         return Matcher.Is<DeletePostCommentCommand>(p => p.Id == request.Id &&
                                                          p.CommentId == request.CommentId &&

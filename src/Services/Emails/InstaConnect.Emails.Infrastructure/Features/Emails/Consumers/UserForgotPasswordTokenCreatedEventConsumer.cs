@@ -7,7 +7,7 @@ using MassTransit;
 
 namespace InstaConnect.Emails.Infrastructure.Features.Emails.Consumers;
 
-public class UserForgotPasswordTokenCreatedEventConsumer : IConsumer<UserForgotPasswordTokenCreatedEvent>
+public class UserForgotPasswordTokenCreatedEventConsumer : IConsumer<UserForgotPasswordTokenCreatedEventRequest>
 {
     private readonly IEmailSender _emailSender;
     private readonly IEmailFactory _emailFactory;
@@ -20,7 +20,7 @@ public class UserForgotPasswordTokenCreatedEventConsumer : IConsumer<UserForgotP
         _emailFactory = emailFactory;
     }
 
-    public async Task Consume(ConsumeContext<UserForgotPasswordTokenCreatedEvent> context)
+    public async Task Consume(ConsumeContext<UserForgotPasswordTokenCreatedEventRequest> context)
     {
         var mailMessage = _emailFactory.GetEmail(context.Message.Email, EmailConstants.ForgotPasswordTitle, context.Message.RedirectUrl);
 

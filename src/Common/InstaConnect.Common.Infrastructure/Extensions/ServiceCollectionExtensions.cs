@@ -9,8 +9,8 @@ using InstaConnect.Common.Infrastructure;
 using InstaConnect.Common.Infrastructure.Abstractions;
 using InstaConnect.Common.Infrastructure.Extensions;
 using InstaConnect.Common.Infrastructure.Helpers;
+using InstaConnect.Common.Infrastructure.Helpers.SortOrders;
 using InstaConnect.Common.Infrastructure.Models.Options;
-using InstaConnect.Common.Infrastructure.SortOrders;
 using InstaConnect.Shared.Infrastructure.Extensions;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;

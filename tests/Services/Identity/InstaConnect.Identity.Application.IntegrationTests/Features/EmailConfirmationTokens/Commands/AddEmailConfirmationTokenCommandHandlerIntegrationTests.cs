@@ -104,7 +104,7 @@ public class AddEmailConfirmationTokenCommandHandlerIntegrationTests : BaseEmail
         await ApplicationSender.SendAsync(command, CancellationToken);
 
         await TestHarness.InactivityTask;
-        var result = await TestHarness.Published.Any<UserConfirmEmailTokenCreatedEvent>(m =>
+        var result = await TestHarness.Published.Any<UserConfirmEmailTokenCreatedEventRequest>(m =>
                               m.Context.Message.Email == existingUser.Email);
 
         // Assert

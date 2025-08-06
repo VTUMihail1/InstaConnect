@@ -70,8 +70,8 @@ internal class PostService : IPostService
         var post = _postFactory.Create(command.UserId, command.Title, command.Content);
         _postRepository.Add(post);
 
-        var integrationEvent = _applicationMapper.Map<PostAddedEvent>(post);
-        await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
+        var eventRequest = _applicationMapper.Map<PostAddedEventRequest>(post);
+        await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
 
         return post;
     }
@@ -94,8 +94,8 @@ internal class PostService : IPostService
         existingPost.Update(command.Title, command.Content, utcNow);
         _postRepository.Update(existingPost);
 
-        var integrationEvent = _applicationMapper.Map<PostUpdatedEvent>(existingPost);
-        await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
+        var eventRequest = _applicationMapper.Map<PostUpdatedEventRequest>(existingPost);
+        await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
 
         return existingPost;
     }
@@ -116,7 +116,7 @@ internal class PostService : IPostService
 
         _postRepository.Delete(existingPost);
 
-        var integrationEvent = _applicationMapper.Map<PostDeletedEvent>(existingPost);
-        await _eventPublisher.PublishAsync(integrationEvent, cancellationToken);
+        var eventRequest = _applicationMapper.Map<PostDeletedEventRequest>(existingPost);
+        await _eventPublisher.PublishAsync(eventRequest, cancellationToken);
     }
 }

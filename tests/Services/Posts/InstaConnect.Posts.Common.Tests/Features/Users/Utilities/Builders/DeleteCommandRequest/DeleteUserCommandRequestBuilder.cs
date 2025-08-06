@@ -10,11 +10,11 @@ public class DeleteUserCommandRequestBuilder
 {
     private readonly ObjectBuilder<DeleteUserCommandRequest> _objectBuilder;
 
-    public DeleteUserCommandRequestBuilder(ObjectBuilder<DeleteUserCommandRequest> objectBuilder)
+    public DeleteUserCommandRequestBuilder(ObjectBuilder<DeleteUserCommandRequest> objectBuilder, User user)
     {
         _objectBuilder = objectBuilder;
 
-        WithId(UserDataFaker.GetId());
+        WithId(user.Id);
     }
 
     public DeleteUserCommandRequestBuilder WithId(string id, IStringTransformer? transformer = null)

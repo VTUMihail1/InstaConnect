@@ -7,10 +7,10 @@ public class UpdateUserCommandRequestBuilderFactory
 {
     private readonly ObjectBuilderFactory<UpdateUserCommandRequest> _objectBuilderFactory = new();
 
-    public UpdateUserCommandRequestBuilder Create()
+    public UpdateUserCommandRequestBuilder Create(User user)
     {
         var objectBuilder = _objectBuilderFactory.Create();
-        var requestBuilder = new UpdateUserCommandRequestBuilder(objectBuilder);
+        var requestBuilder = new UpdateUserCommandRequestBuilder(objectBuilder, user);
 
         return requestBuilder;
     }

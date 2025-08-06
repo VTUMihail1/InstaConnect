@@ -7,7 +7,7 @@ using InstaConnect.Users.Application.Features.Users.Commands.Delete;
 namespace InstaConnect.Users.Common.Tests.Features.Users.Utilities;
 public static class UserMatcher
 {
-    public static AddUserCommandRequest IsAddUserCommand(UserAddedEventRequest request)
+    public static AddUserCommandRequest IsAddUserCommandRequest(UserAddedEventRequest request)
     {
         return Matcher.Is<AddUserCommandRequest>(u => u.Id == request.Id &&
                                                       u.Email == request.Email &&
@@ -17,7 +17,7 @@ public static class UserMatcher
                                                       u.ProfileImage == request.ProfileImage);
     }
 
-    public static UpdateUserCommandRequest IsUpdateUserCommand(UserUpdatedEventRequest request)
+    public static UpdateUserCommandRequest IsUpdateUserCommandRequest(UserUpdatedEventRequest request)
     {
         return Matcher.Is<UpdateUserCommandRequest>(u => u.Id == request.Id &&
                                                       u.Email == request.Email &&
@@ -27,12 +27,12 @@ public static class UserMatcher
                                                       u.ProfileImage == request.ProfileImage);
     }
 
-    public static DeleteUserCommandRequest IsDeleteUserCommand(UserDeletedEventRequest request)
+    public static DeleteUserCommandRequest IsDeleteUserCommandRequest(UserDeletedEventRequest request)
     {
         return Matcher.Is<DeleteUserCommandRequest>(u => u.Id == request.Id);
     }
 
-    public static AddUserCommand IsAddUserRequest(AddUserCommandRequest request)
+    public static AddUserCommand IsAddUserCommand(AddUserCommandRequest request)
     {
         return Matcher.Is<AddUserCommand>(u => u.Id == request.Id &&
                                                       u.Email == request.Email &&
@@ -42,7 +42,7 @@ public static class UserMatcher
                                                       u.ProfileImage == request.ProfileImage);
     }
 
-    public static UpdateUserCommand IsUpdateUserRequest(UpdateUserCommandRequest request)
+    public static UpdateUserCommand IsUpdateUserCommand(UpdateUserCommandRequest request)
     {
         return Matcher.Is<UpdateUserCommand>(u => u.Id == request.Id &&
                                                   u.Email == request.Email &&
@@ -52,7 +52,7 @@ public static class UserMatcher
                                                   u.ProfileImage == request.ProfileImage);
     }
 
-    public static DeleteUserCommand IsDeleteUserRequest(DeleteUserCommandRequest request)
+    public static DeleteUserCommand IsDeleteUserCommand(DeleteUserCommandRequest request)
     {
         return Matcher.Is<DeleteUserCommand>(u => u.Id == request.Id);
     }

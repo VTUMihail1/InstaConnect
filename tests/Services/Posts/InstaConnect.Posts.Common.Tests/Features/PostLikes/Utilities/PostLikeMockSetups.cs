@@ -12,7 +12,7 @@ using InstaConnect.PostLikes.Presentation.Features.PostLikes.Models.Requests;
 namespace InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities;
 public static class PostLikeMockSetups
 {
-    public static void SetupGetAllQuery(
+    public static void SetupGetAllQueryRequest(
         this IApplicationSender applicationSender,
         GetAllPostLikesApiRequest request,
         PostLike postLike,
@@ -38,11 +38,11 @@ public static class PostLikeMockSetups
             false);
 
         applicationSender
-            .SendAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request), cancellationToken)
+            .SendAsync(PostLikeMatcher.IsGetAllPostLikesQueryRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetByIdQuery(
+    public static void SetupGetByIdQueryRequest(
         this IApplicationSender applicationSender,
         GetPostLikeByIdApiRequest request,
         PostLike postLike,
@@ -59,11 +59,11 @@ public static class PostLikeMockSetups
                     user.ProfileImage)));
 
         applicationSender
-            .SendAsync(PostLikeMatcher.IsGetPostLikeByIdQuery(request), cancellationToken)
+            .SendAsync(PostLikeMatcher.IsGetPostLikeByIdQueryRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupAddCommand(
+    public static void SetupAddCommandRequest(
         this IApplicationSender applicationSender,
         AddPostLikeApiRequest request,
         PostLike postLike,
@@ -72,11 +72,11 @@ public static class PostLikeMockSetups
         var response = new AddPostLikeCommandResponse(postLike.Id, postLike.LikeId, postLike.CreatedAt, postLike.UpdatedAt);
 
         applicationSender
-            .SendAsync(PostLikeMatcher.IsAddPostLikeCommand(request), cancellationToken)
+            .SendAsync(PostLikeMatcher.IsAddPostLikeCommandRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetAllRequest(
+    public static void SetupGetAllQuery(
         this IPostLikeService postLikeService,
         GetAllPostLikesQueryRequest request,
         PostLike postLike,
@@ -93,11 +93,11 @@ public static class PostLikeMockSetups
             false);
 
         postLikeService
-            .GetAllAsync(PostLikeMatcher.IsGetAllPostLikesRequest(request), cancellationToken)
+            .GetAllAsync(PostLikeMatcher.IsGetAllPostLikesQuery(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetByIdRequest(
+    public static void SetupGetByIdQuery(
         this IPostLikeService postLikeService,
         GetPostLikeByIdQueryRequest request,
         PostLike postLike,
@@ -105,18 +105,18 @@ public static class PostLikeMockSetups
         CancellationToken cancellationToken)
     {
         postLikeService
-            .GetByIdAsync(PostLikeMatcher.IsGetPostLikeByIdRequest(request), cancellationToken)
+            .GetByIdAsync(PostLikeMatcher.IsGetPostLikeByIdQuery(request), cancellationToken)
             .ReturnsResponse(postLike);
     }
 
-    public static void SetupAddRequest(
+    public static void SetupAddCommand(
         this IPostLikeService postLikeService,
         AddPostLikeCommandRequest request,
         PostLike postLike,
         CancellationToken cancellationToken)
     {
         postLikeService
-            .AddAsync(PostLikeMatcher.IsAddPostLikeRequest(request), cancellationToken)
+            .AddAsync(PostLikeMatcher.IsAddPostLikeCommand(request), cancellationToken)
             .ReturnsResponse(postLike);
     }
 }

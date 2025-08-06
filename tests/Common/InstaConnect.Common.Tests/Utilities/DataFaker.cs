@@ -65,7 +65,7 @@ public abstract class DataFaker
         return result;
     }
 
-    public static string GetAverageString(int maxLength, int minLength)
+    public static string GetAverageString(int maxLength, int minLength = default)
     {
         var result = _faker.Random.AlphaNumeric(GetAverageNumber(maxLength, minLength));
 

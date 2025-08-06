@@ -35,7 +35,7 @@ public static class UserDataFaker
 
     public static string GetProfileImage()
     {
-        return DataFaker.GetAverageString(UserConfigurations.ProfileImageMaxLength, UserConfigurations.ProfileImageMaxLength);
+        return DataFaker.GetAverageString(UserConfigurations.ProfileImageMaxLength);
     }
 
     public static DateTimeOffset GetCreatedAt()

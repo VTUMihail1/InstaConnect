@@ -15,7 +15,7 @@ public static class UserMockAssertions
         UserAddedEventRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.Received(1).SendAsync(UserMatcher.IsAddUserCommand(request), cancellationToken);
+        await applicationSender.Received(1).SendAsync(UserMatcher.IsAddUserCommandRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -23,7 +23,7 @@ public static class UserMockAssertions
         UserUpdatedEventRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.Received(1).SendAsync(UserMatcher.IsUpdateUserCommand(request), cancellationToken);
+        await applicationSender.Received(1).SendAsync(UserMatcher.IsUpdateUserCommandRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneSendAsync(
@@ -31,7 +31,7 @@ public static class UserMockAssertions
         UserDeletedEventRequest request,
         CancellationToken cancellationToken)
     {
-        await applicationSender.Received(1).SendAsync(UserMatcher.IsDeleteUserCommand(request), cancellationToken);
+        await applicationSender.Received(1).SendAsync(UserMatcher.IsDeleteUserCommandRequest(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneAddAsync(
@@ -39,7 +39,7 @@ public static class UserMockAssertions
         AddUserCommandRequest request,
         CancellationToken cancellationToken)
     {
-        await userService.Received(1).AddAsync(UserMatcher.IsAddUserRequest(request), cancellationToken);
+        await userService.Received(1).AddAsync(UserMatcher.IsAddUserCommand(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneUpdateAsync(
@@ -47,7 +47,7 @@ public static class UserMockAssertions
         UpdateUserCommandRequest request,
         CancellationToken cancellationToken)
     {
-        await userService.Received(1).UpdateAsync(UserMatcher.IsUpdateUserRequest(request), cancellationToken);
+        await userService.Received(1).UpdateAsync(UserMatcher.IsUpdateUserCommand(request), cancellationToken);
     }
 
     public static async Task ShouldReceiveOneDeleteAsync(
@@ -55,6 +55,6 @@ public static class UserMockAssertions
         DeleteUserCommandRequest request,
         CancellationToken cancellationToken)
     {
-        await userService.Received(1).DeleteAsync(UserMatcher.IsDeleteUserRequest(request), cancellationToken);
+        await userService.Received(1).DeleteAsync(UserMatcher.IsDeleteUserCommand(request), cancellationToken);
     }
 }

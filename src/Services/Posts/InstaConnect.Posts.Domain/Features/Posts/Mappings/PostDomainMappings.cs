@@ -11,7 +11,7 @@ internal class PostDomainMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<Post, PostAddedEvent>()
+        config.NewConfig<Post, PostAddedEventRequest>()
             .ConstructUsing(p => new(
                 p.Id,
                 p.Title,
@@ -20,7 +20,7 @@ internal class PostDomainMappings : IRegister
                 p.CreatedAt,
                 p.UpdatedAt));
 
-        config.NewConfig<Post, PostUpdatedEvent>()
+        config.NewConfig<Post, PostUpdatedEventRequest>()
             .ConstructUsing(p => new(
                 p.Id,
                 p.Title,
@@ -29,7 +29,7 @@ internal class PostDomainMappings : IRegister
                 p.CreatedAt,
                 p.UpdatedAt));
 
-        config.NewConfig<Post, PostDeletedEvent>()
+        config.NewConfig<Post, PostDeletedEventRequest>()
             .ConstructUsing(p => new(p.Id));
     }
 }

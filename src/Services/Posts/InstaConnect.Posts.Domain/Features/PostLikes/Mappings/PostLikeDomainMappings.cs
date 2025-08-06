@@ -11,7 +11,7 @@ internal class PostLikeDomainMappings : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<PostLike, PostLikeAddedEvent>()
+        config.NewConfig<PostLike, PostLikeAddedEventRequest>()
             .ConstructUsing(p => new(
                 p.Id,
                 p.LikeId,
@@ -19,7 +19,7 @@ internal class PostLikeDomainMappings : IRegister
                 p.CreatedAt,
                 p.UpdatedAt));
 
-        config.NewConfig<PostLike, PostLikeDeletedEvent>()
+        config.NewConfig<PostLike, PostLikeDeletedEventRequest>()
             .ConstructUsing(p => new(p.Id, p.LikeId));
     }
 }

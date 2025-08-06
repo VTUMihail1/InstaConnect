@@ -33,7 +33,7 @@ internal class ForgotPasswordTokenPublisher : IForgotPasswordTokenPublisher
         var forgotPasswordToken = _applicationMapper.Map<ForgotPasswordToken>(forgotPasswordResponse);
         _forgotPasswordTokenWriteRepository.Add(forgotPasswordToken);
 
-        var userForgotPasswordTokenCreatedEvent = _applicationMapper.Map<UserForgotPasswordTokenCreatedEvent>(forgotPasswordResponse);
+        var userForgotPasswordTokenCreatedEvent = _applicationMapper.Map<UserForgotPasswordTokenCreatedEventRequest>(forgotPasswordResponse);
         await _eventPublisher.PublishAsync(userForgotPasswordTokenCreatedEvent, cancellationToken);
     }
 }

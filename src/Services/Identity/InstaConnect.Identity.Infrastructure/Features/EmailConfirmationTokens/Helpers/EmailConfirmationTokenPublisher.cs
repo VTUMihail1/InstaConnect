@@ -33,7 +33,7 @@ internal class EmailConfirmationTokenPublisher : IEmailConfirmationTokenPublishe
         var emailConfirmationToken = _applicationMapper.Map<EmailConfirmationToken>(emailConfirmationResponse);
         _emailConfirmationTokenWriteRepository.Add(emailConfirmationToken);
 
-        var userEmailConfirmationTokenCreatedEvent = _applicationMapper.Map<UserConfirmEmailTokenCreatedEvent>(emailConfirmationResponse);
+        var userEmailConfirmationTokenCreatedEvent = _applicationMapper.Map<UserConfirmEmailTokenCreatedEventRequest>(emailConfirmationResponse);
         await _eventPublisher.PublishAsync(userEmailConfirmationTokenCreatedEvent, cancellationToken);
     }
 }

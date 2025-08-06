@@ -19,7 +19,7 @@ using Mapster;
 namespace InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities;
 public static class PostCommentMockSetups
 {
-    public static void SetupGetAllQuery(
+    public static void SetupGetAllQueryRequest(
         this IApplicationSender applicationSender,
         GetAllPostCommentsApiRequest request,
         PostComment postComment,
@@ -46,11 +46,11 @@ public static class PostCommentMockSetups
             false);
 
         applicationSender
-            .SendAsync(PostCommentMatcher.IsGetAllPostCommentsQuery(request), cancellationToken)
+            .SendAsync(PostCommentMatcher.IsGetAllPostCommentsQueryRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetByIdQuery(
+    public static void SetupGetByIdQueryRequest(
         this IApplicationSender applicationSender,
         GetPostCommentByIdApiRequest request,
         PostComment postComment,
@@ -68,11 +68,11 @@ public static class PostCommentMockSetups
                     user.ProfileImage)));
 
         applicationSender
-            .SendAsync(PostCommentMatcher.IsGetPostCommentByIdQuery(request), cancellationToken)
+            .SendAsync(PostCommentMatcher.IsGetPostCommentByIdQueryRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupAddCommand(
+    public static void SetupAddCommandRequest(
         this IApplicationSender applicationSender,
         AddPostCommentApiRequest request,
         PostComment postComment,
@@ -81,11 +81,11 @@ public static class PostCommentMockSetups
         var response = new AddPostCommentCommandResponse(postComment.Id, postComment.CommentId, postComment.CreatedAt, postComment.UpdatedAt);
 
         applicationSender
-            .SendAsync(PostCommentMatcher.IsAddPostCommentCommand(request), cancellationToken)
+            .SendAsync(PostCommentMatcher.IsAddPostCommentCommandRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupUpdateCommand(
+    public static void SetupUpdateCommandRequest(
         this IApplicationSender applicationSender,
         UpdatePostCommentApiRequest request,
         PostComment postComment,
@@ -94,11 +94,11 @@ public static class PostCommentMockSetups
         var response = new UpdatePostCommentCommandResponse(postComment.Id, postComment.CommentId, postComment.CreatedAt, postComment.UpdatedAt);
 
         applicationSender
-            .SendAsync(PostCommentMatcher.IsUpdatePostCommentCommand(request), cancellationToken)
+            .SendAsync(PostCommentMatcher.IsUpdatePostCommentCommandRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetAllRequest(
+    public static void SetupGetAllQuery(
         this IPostCommentService postCommentService,
         GetAllPostCommentsQueryRequest request,
         PostComment postComment,
@@ -115,11 +115,11 @@ public static class PostCommentMockSetups
             false);
 
         postCommentService
-            .GetAllAsync(PostCommentMatcher.IsGetAllPostCommentsRequest(request), cancellationToken)
+            .GetAllAsync(PostCommentMatcher.IsGetAllPostCommentsQuery(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetByIdRequest(
+    public static void SetupGetByIdQuery(
         this IPostCommentService postCommentService,
         GetPostCommentByIdQueryRequest request,
         PostComment postComment,
@@ -127,29 +127,29 @@ public static class PostCommentMockSetups
         CancellationToken cancellationToken)
     {
         postCommentService
-            .GetByIdAsync(PostCommentMatcher.IsGetPostCommentByIdRequest(request), cancellationToken)
+            .GetByIdAsync(PostCommentMatcher.IsGetPostCommentByIdQuery(request), cancellationToken)
             .ReturnsResponse(postComment);
     }
 
-    public static void SetupAddRequest(
+    public static void SetupAddCommand(
         this IPostCommentService postCommentService,
         AddPostCommentCommandRequest request,
         PostComment postComment,
         CancellationToken cancellationToken)
     {
         postCommentService
-            .AddAsync(PostCommentMatcher.IsAddPostCommentRequest(request), cancellationToken)
+            .AddAsync(PostCommentMatcher.IsAddPostCommentCommand(request), cancellationToken)
             .ReturnsResponse(postComment);
     }
 
-    public static void SetupUpdateRequest(
+    public static void SetupUpdateCommand(
         this IPostCommentService postCommentService,
         UpdatePostCommentCommandRequest request,
         PostComment postComment,
         CancellationToken cancellationToken)
     {
         postCommentService
-            .UpdateAsync(PostCommentMatcher.IsUpdatePostCommentRequest(request), cancellationToken)
+            .UpdateAsync(PostCommentMatcher.IsUpdatePostCommentCommand(request), cancellationToken)
             .ReturnsResponse(postComment);
     }
 }

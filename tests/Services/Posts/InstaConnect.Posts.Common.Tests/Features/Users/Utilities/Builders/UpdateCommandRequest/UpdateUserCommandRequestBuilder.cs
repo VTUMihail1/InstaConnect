@@ -9,16 +9,16 @@ public class UpdateUserCommandRequestBuilder
 {
     private readonly ObjectBuilder<UpdateUserCommandRequest> _objectBuilder;
 
-    public UpdateUserCommandRequestBuilder(ObjectBuilder<UpdateUserCommandRequest> objectBuilder)
+    public UpdateUserCommandRequestBuilder(ObjectBuilder<UpdateUserCommandRequest> objectBuilder, User user)
     {
         _objectBuilder = objectBuilder;
 
-        WithId(UserDataFaker.GetId());
-        WithName(UserDataFaker.GetName());
-        WithFirstName(UserDataFaker.GetFirstName());
-        WithLastName(UserDataFaker.GetLastName());
-        WithEmail(UserDataFaker.GetEmail());
-        WithProfileImage(UserDataFaker.GetProfileImage());
+        WithId(user.Id);
+        WithName(user.Name);
+        WithFirstName(user.FirstName);
+        WithLastName(user.LastName);
+        WithEmail(user.Email);
+        WithProfileImage(user.ProfileImage);
     }
 
     public UpdateUserCommandRequestBuilder WithId(string id, IStringTransformer? transformer = null)
@@ -57,7 +57,7 @@ public class UpdateUserCommandRequestBuilder
         return this;
     }
 
-    public UpdateUserCommandRequestBuilder WithProfileImage(string profileImage, IStringTransformer? transformer = null)
+    public UpdateUserCommandRequestBuilder WithProfileImage(string? profileImage, IStringTransformer? transformer = null)
     {
         _objectBuilder.With(p => p.ProfileImage, profileImage, transformer);
 

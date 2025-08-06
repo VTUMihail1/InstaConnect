@@ -14,7 +14,7 @@ internal class ForgotPasswordTokenCommandProfile : Profile
         CreateMap<GenerateForgotPasswordTokenResponse, ForgotPasswordToken>()
             .ConstructUsing(src => new(src.Value, src.ValidUntil, src.UserId));
 
-        CreateMap<GenerateForgotPasswordTokenResponse, UserForgotPasswordTokenCreatedEvent>()
+        CreateMap<GenerateForgotPasswordTokenResponse, UserForgotPasswordTokenCreatedEventRequest>()
             .ConstructUsing(src => new(src.Email, src.RedirectUrl));
     }
 }

@@ -11,7 +11,7 @@ public static class PostEventHarness
         Post post,
         CancellationToken cancellationToken)
     {
-        var result = await eventHarness.PublishedAsync<PostAddedEvent>(p => p.Id == post.Id &&
+        var result = await eventHarness.PublishedAsync<PostAddedEventRequest>(p => p.Id == post.Id &&
                                                                             p.Title == post.Title &&
                                                                             p.Content == post.Content &&
                                                                             p.UserId == post.UserId &&
@@ -26,7 +26,7 @@ public static class PostEventHarness
         Post post,
         CancellationToken cancellationToken)
     {
-        var result = await eventHarness.PublishedAsync<PostUpdatedEvent>(p => p.Id == post.Id &&
+        var result = await eventHarness.PublishedAsync<PostUpdatedEventRequest>(p => p.Id == post.Id &&
                                                                               p.Title == post.Title &&
                                                                               p.Content == post.Content &&
                                                                               p.UserId == post.UserId &&
@@ -41,7 +41,7 @@ public static class PostEventHarness
         Post post,
         CancellationToken cancellationToken)
     {
-        var result = await eventHarness.PublishedAsync<PostDeletedEvent>(p => p.Id == post.Id, cancellationToken);
+        var result = await eventHarness.PublishedAsync<PostDeletedEventRequest>(p => p.Id == post.Id, cancellationToken);
 
         return result;
     }

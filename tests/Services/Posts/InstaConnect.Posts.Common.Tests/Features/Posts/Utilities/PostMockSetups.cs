@@ -19,7 +19,7 @@ using Mapster;
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 public static class PostMockSetups
 {
-    public static void SetupGetAllQuery(
+    public static void SetupGetAllQueryRequest(
         this IApplicationSender applicationSender,
         GetAllPostsApiRequest request,
         Post post,
@@ -46,11 +46,11 @@ public static class PostMockSetups
             false);
 
         applicationSender
-            .SendAsync(PostMatcher.IsGetAllPostsQuery(request), cancellationToken)
+            .SendAsync(PostMatcher.IsGetAllPostsQueryRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetByIdQuery(
+    public static void SetupGetByIdQueryRequest(
         this IApplicationSender applicationSender,
         GetPostByIdApiRequest request,
         Post post,
@@ -68,11 +68,11 @@ public static class PostMockSetups
                     user.ProfileImage)));
 
         applicationSender
-            .SendAsync(PostMatcher.IsGetPostByIdQuery(request), cancellationToken)
+            .SendAsync(PostMatcher.IsGetPostByIdQueryRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupAddCommand(
+    public static void SetupAddCommandRequest(
         this IApplicationSender applicationSender,
         AddPostApiRequest request,
         Post post,
@@ -81,11 +81,11 @@ public static class PostMockSetups
         var response = new AddPostCommandResponse(post.Id, post.CreatedAt, post.UpdatedAt);
 
         applicationSender
-            .SendAsync(PostMatcher.IsAddPostCommand(request), cancellationToken)
+            .SendAsync(PostMatcher.IsAddPostCommandRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupUpdateCommand(
+    public static void SetupUpdateCommandRequest(
         this IApplicationSender applicationSender,
         UpdatePostApiRequest request,
         Post post,
@@ -94,11 +94,11 @@ public static class PostMockSetups
         var response = new UpdatePostCommandResponse(post.Id, post.CreatedAt, post.UpdatedAt);
 
         applicationSender
-            .SendAsync(PostMatcher.IsUpdatePostCommand(request), cancellationToken)
+            .SendAsync(PostMatcher.IsUpdatePostCommandRequest(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetAllRequest(
+    public static void SetupGetAllQuery(
         this IPostService postService,
         GetAllPostsQueryRequest request,
         Post post,
@@ -115,11 +115,11 @@ public static class PostMockSetups
             false);
 
         postService
-            .GetAllAsync(PostMatcher.IsGetAllPostsRequest(request), cancellationToken)
+            .GetAllAsync(PostMatcher.IsGetAllPostsQuery(request), cancellationToken)
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetByIdRequest(
+    public static void SetupGetByIdQuery(
         this IPostService postService,
         GetPostByIdQueryRequest request,
         Post post,
@@ -127,29 +127,29 @@ public static class PostMockSetups
         CancellationToken cancellationToken)
     {
         postService
-            .GetByIdAsync(PostMatcher.IsGetPostByIdRequest(request), cancellationToken)
+            .GetByIdAsync(PostMatcher.IsGetPostByIdQuery(request), cancellationToken)
             .ReturnsResponse(post);
     }
 
-    public static void SetupAddRequest(
+    public static void SetupAddCommand(
         this IPostService postService,
         AddPostCommandRequest request,
         Post post,
         CancellationToken cancellationToken)
     {
         postService
-            .AddAsync(PostMatcher.IsAddPostRequest(request), cancellationToken)
+            .AddAsync(PostMatcher.IsAddPostCommand(request), cancellationToken)
             .ReturnsResponse(post);
     }
 
-    public static void SetupUpdateRequest(
+    public static void SetupUpdateCommand(
         this IPostService postService,
         UpdatePostCommandRequest request,
         Post post,
         CancellationToken cancellationToken)
     {
         postService
-            .UpdateAsync(PostMatcher.IsUpdatePostRequest(request), cancellationToken)
+            .UpdateAsync(PostMatcher.IsUpdatePostCommand(request), cancellationToken)
             .ReturnsResponse(post);
     }
 }

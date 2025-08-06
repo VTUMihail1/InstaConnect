@@ -493,7 +493,7 @@ public class RegisterUserCommandHandlerIntegrationTests : BaseUserIntegrationTes
         await ApplicationSender.SendAsync(command, CancellationToken);
         await TestHarness.InactivityTask;
 
-        var result = await TestHarness.Published.Any<UserConfirmEmailTokenCreatedEvent>(m =>
+        var result = await TestHarness.Published.Any<UserConfirmEmailTokenCreatedEventRequest>(m =>
                               m.Context.Message.Email == UserTestUtilities.ValidAddEmail);
 
         // Assert

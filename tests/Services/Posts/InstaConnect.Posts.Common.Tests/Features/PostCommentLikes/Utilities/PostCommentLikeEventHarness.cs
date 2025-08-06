@@ -12,7 +12,7 @@ public static class PostCommentLikeEventHarness
         PostCommentLike postCommentLike,
         CancellationToken cancellationToken)
     {
-        var result = await eventHarness.PublishedAsync<PostCommentLikeAddedEvent>(p => p.Id == postCommentLike.Id &&
+        var result = await eventHarness.PublishedAsync<PostCommentLikeAddedEventRequest>(p => p.Id == postCommentLike.Id &&
                                                                                    p.CommentId == postCommentLike.CommentId &&
                                                                                    p.CommentLikeId == postCommentLike.CommentLikeId &&
                                                                                    p.UserId == postCommentLike.UserId &&
@@ -27,7 +27,7 @@ public static class PostCommentLikeEventHarness
         PostCommentLike postCommentLike,
         CancellationToken cancellationToken)
     {
-        var result = await eventHarness.PublishedAsync<PostCommentLikeDeletedEvent>(p => p.Id == postCommentLike.Id &&
+        var result = await eventHarness.PublishedAsync<PostCommentLikeDeletedEventRequest>(p => p.Id == postCommentLike.Id &&
                                                                                          p.CommentId == postCommentLike.CommentId &&
                                                                                          p.CommentLikeId == postCommentLike.CommentLikeId, cancellationToken);
 
