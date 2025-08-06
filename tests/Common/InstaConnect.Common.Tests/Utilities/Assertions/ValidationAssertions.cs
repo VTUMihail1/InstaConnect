@@ -12,7 +12,7 @@ public static class ValidationAssertions
     {
         testValidationResult
             .ShouldHaveValidationErrorFor(memberAccessor)
-            .ShouldContain(p => p.IsSatisfied(errorMessage));
+            .ShouldContain(p => p.ErrorMessage == errorMessage);
     }
 
     public static void ShouldNotHaveAnyValidationErrorProperties<T>(this TestValidationResult<T> testValidationResult)

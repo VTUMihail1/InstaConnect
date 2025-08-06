@@ -11,7 +11,12 @@ public static class PostEventHarness
         Post post,
         CancellationToken cancellationToken)
     {
-        var result = await eventHarness.PublishedAsync<PostAddedEvent>(p => p.IsSatisfied(post), cancellationToken);
+        var result = await eventHarness.PublishedAsync<PostAddedEvent>(p => p.Id == post.Id &&
+                                                                            p.Title == post.Title &&
+                                                                            p.Content == post.Content &&
+                                                                            p.UserId == post.UserId &&
+                                                                            p.CreatedAt == post.CreatedAt &&
+                                                                            p.UpdatedAt == post.UpdatedAt, cancellationToken);
 
         return result;
     }
@@ -21,7 +26,12 @@ public static class PostEventHarness
         Post post,
         CancellationToken cancellationToken)
     {
-        var result = await eventHarness.PublishedAsync<PostUpdatedEvent>(p => p.IsSatisfied(post), cancellationToken);
+        var result = await eventHarness.PublishedAsync<PostUpdatedEvent>(p => p.Id == post.Id &&
+                                                                              p.Title == post.Title &&
+                                                                              p.Content == post.Content &&
+                                                                              p.UserId == post.UserId &&
+                                                                              p.CreatedAt == post.CreatedAt &&
+                                                                              p.UpdatedAt == post.UpdatedAt, cancellationToken);
 
         return result;
     }
@@ -31,7 +41,7 @@ public static class PostEventHarness
         Post post,
         CancellationToken cancellationToken)
     {
-        var result = await eventHarness.PublishedAsync<PostDeletedEvent>(p => p.IsSatisfied(post), cancellationToken);
+        var result = await eventHarness.PublishedAsync<PostDeletedEvent>(p => p.Id == post.Id, cancellationToken);
 
         return result;
     }

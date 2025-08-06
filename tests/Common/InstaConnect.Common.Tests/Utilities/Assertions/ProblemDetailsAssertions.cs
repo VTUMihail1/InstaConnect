@@ -9,12 +9,13 @@ public static class ProblemDetailsAssertions
 {
     public static void ShouldSatisfy(this ProblemDetails details, int statusCode)
     {
-        details.ShouldSatisfy(d => d.IsSatisfied(statusCode));
+        details.ShouldSatisfy(d => d.Status == statusCode);
     }
 
     public static void ShouldSatisfy(this ProblemDetails details, int statusCode, string errorMessage)
     {
-        details.ShouldSatisfy(d => d.IsSatisfied(statusCode, errorMessage));
+        details.ShouldSatisfy(d => d.Status == statusCode &&
+                                   d.Detail == errorMessage);
     }
 
     public static void ShouldSatisfyBadRequest(this ProblemDetails problemDetails, string errorMessage)

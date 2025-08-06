@@ -12,7 +12,12 @@ public static class PostCommentEventHarness
         PostComment postComment,
         CancellationToken cancellationToken)
     {
-        var result = await eventHarness.PublishedAsync<PostCommentAddedEvent>(p => p.IsSatisfied(postComment), cancellationToken);
+        var result = await eventHarness.PublishedAsync<PostCommentAddedEvent>(p => p.Id == postComment.Id &&
+                                                                                   p.CommentId == postComment.CommentId &&
+                                                                                   p.Content == postComment.Content &&
+                                                                                   p.UserId == postComment.UserId &&
+                                                                                   p.CreatedAt == postComment.CreatedAt &&
+                                                                                   p.UpdatedAt == postComment.UpdatedAt, cancellationToken);
 
         return result;
     }
@@ -22,7 +27,12 @@ public static class PostCommentEventHarness
         PostComment postComment,
         CancellationToken cancellationToken)
     {
-        var result = await eventHarness.PublishedAsync<PostCommentUpdatedEvent>(p => p.IsSatisfied(postComment), cancellationToken);
+        var result = await eventHarness.PublishedAsync<PostCommentUpdatedEvent>(p => p.Id == postComment.Id &&
+                                                                                     p.CommentId == postComment.CommentId &&
+                                                                                     p.Content == postComment.Content &&
+                                                                                     p.UserId == postComment.UserId &&
+                                                                                     p.CreatedAt == postComment.CreatedAt &&
+                                                                                     p.UpdatedAt == postComment.UpdatedAt, cancellationToken);
 
         return result;
     }
@@ -32,7 +42,8 @@ public static class PostCommentEventHarness
         PostComment postComment,
         CancellationToken cancellationToken)
     {
-        var result = await eventHarness.PublishedAsync<PostCommentDeletedEvent>(p => p.IsSatisfied(postComment), cancellationToken);
+        var result = await eventHarness.PublishedAsync<PostCommentDeletedEvent>(p => p.Id == postComment.Id &&
+                                                                                     p.CommentId == postComment.CommentId, cancellationToken);
 
         return result;
     }

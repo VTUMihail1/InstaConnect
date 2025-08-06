@@ -94,14 +94,14 @@ public static class MatchAssertions
         actionResult
             .Result
             .Should()
-            .Match<ObjectResult>(m => m.IsSatisfied(statusCode));
+            .Match<ObjectResult>(m => m.StatusCode == statusCode);
     }
 
     internal static void ShouldBeActionResultWithStatusCode(this ActionResult actionResult, int statusCode)
     {
         actionResult
             .Should()
-            .Match<StatusCodeResult>(m => m.IsSatisfied(statusCode));
+            .Match<StatusCodeResult>(m => m.StatusCode == statusCode);
     }
 
     public static void ShouldBeActionResultWithOkStatusCode<T>(this ActionResult<T> actionResult)
