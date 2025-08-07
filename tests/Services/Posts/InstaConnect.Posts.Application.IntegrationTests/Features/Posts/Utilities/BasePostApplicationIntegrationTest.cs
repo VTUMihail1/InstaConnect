@@ -7,7 +7,7 @@ public abstract class BasePostApplicationIntegrationTest : BasePostWebTest
 {
     protected IApplicationSender ApplicationSender { get; }
 
-    protected BasePostApplicationIntegrationTest(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    protected BasePostApplicationIntegrationTest(PostsWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
         ApplicationSender = ServiceScope.GetApplicationSender();
     }

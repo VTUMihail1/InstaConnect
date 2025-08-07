@@ -1,167 +1,254 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
+﻿using InstaConnect.Common.Tests.Utilities.Assertions;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
+using InstaConnect.PostComments.Application.Features.PostComments.Commands.Delete;
+using InstaConnect.PostComments.Application.IntegrationTests.Features.PostComments.Utilities;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Assertions;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Builders.AddApiRequest;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Builders.DeleteCommandRequest;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
-using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
-namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Commands;
+namespace InstaConnect.PostComments.Application.IntegrationTests.Features.PostComments.Commands;
 
-public class DeletePostCommentIntegrationTests : BasePostCommentIntegrationTest
+public class DeletePostCommentIntegrationTests : BasePostCommentApplicationIntegrationTest
 {
-    public DeletePostCommentIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
-    {
+    private readonly DeletePostCommentCommandRequestBuilderFactory _requestBuilderFactory;
+    private readonly DeletePostCommentCommandRequestBuilder _requestBuilder;
+    private readonly DeletePostCommentCommandRequest _request;
 
+    public DeletePostCommentIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
+    {
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(PostComment);
+        _request = _requestBuilder.Create();
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
+    protected override async Task OnInitializeAsync()
     {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-
-        var command = new DeletePostCommentCommand(
-            null,
-            existingPostComment.UserId
-        );
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostCommentAsync(PostComment, CancellationToken);
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostCommentConfigurations.IdMinLength - 1)]
-    [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
+    [PostIdNullWithMessageData]
+    [PostIdEmptyWithMessageData]
+    [PostIdTooShortWithMessageData]
+    [PostIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-
-        var command = new DeletePostCommentCommand(
-            DataFaker.GetString(length),
-            existingPostComment.UserId
-        );
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
-    {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-
-        var command = new DeletePostCommentCommand(
-            existingPostComment.Id,
-            null
-        );
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
+    [PostCommentIdNullWithMessageData]
+    [PostCommentIdEmptyWithMessageData]
+    [PostCommentIdTooShortWithMessageData]
+    [PostCommentIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenCommentIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-
-        var command = new DeletePostCommentCommand(
-            existingPostComment.Id,
-            DataFaker.GetString(length)
-        );
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+    }
+
+    [Theory]
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+    }
+
+    [Theory]
+    [PostIdNotFoundData]
+    public async Task SendAsync_ShouldThrowNotFoundException_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowPostNotFoundExceptionAsync(request.Id);
+    }
+
+    [Theory]
+    [PostCommentIdNotFoundData]
+    public async Task SendAsync_ShouldThrowCommentNotFoundException_WhenCommentIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowPostCommentNotFoundExceptionAsync(request.Id, request.CommentId);
+    }
+
+    [Theory]
+    [UserIdNotFoundData]
+    public async Task SendAsync_ShouldThrowCommentForbiddenException_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowPostCommentForbiddenExceptionAsync(request.Id, request.CommentId, request.UserId);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowPostCommentNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldDelet_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var command = new DeletePostCommentCommand(
-            PostCommentTestUtilities.InvalidId,
-            existingPostComment.UserId
-        );
-
         // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(_request, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(_request.Id, _request.CommentId, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<PostCommentNotFoundException>();
+        postComment.ShouldBeNull();
+    }
+
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldDelete_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        await ApplicationSender.SendAsync(request, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(request.Id, request.CommentId, CancellationToken);
+
+        // Assert
+        postComment.ShouldBeNull();
+    }
+
+    [Theory]
+    [PostCommentIdDifferentCaseData]
+    public async Task SendAsync_ShouldDelete_WhenRequestAndCommentIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+
+        // Act
+        await ApplicationSender.SendAsync(request, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(request.Id, request.CommentId, CancellationToken);
+
+        // Assert
+        postComment.ShouldBeNull();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldDelete_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+
+        // Act
+        await ApplicationSender.SendAsync(request, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(request.Id, request.CommentId, CancellationToken);
+
+        // Assert
+        postComment.ShouldBeNull();
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
+    public async Task SendAsync_ShouldPublishDeletedEvent_WhenRequestIsValid()
     {
-        // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var command = new DeletePostCommentCommand(
-            existingPostComment.Id,
-            existingUser.Id
-        );
-
         // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
+        await ApplicationSender.SendAsync(_request, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostCommentDeletedEventAsync(PostComment, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<PostForbiddenException>();
+        hasPublshed.ShouldBeTrue();
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldDeletePostComment_WhenPostCommentIsValid()
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldPublishDeletedEvent_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var command = new DeletePostCommentCommand(
-            existingPostComment.Id,
-            existingPostComment.UserId
-        );
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        await ApplicationSender.SendAsync(command, CancellationToken);
-        var postComment = await PostCommentWriteRepository.GetByIdAsync(existingPostComment.Id, CancellationToken);
+        await ApplicationSender.SendAsync(request, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostCommentDeletedEventAsync(PostComment, CancellationToken);
 
         // Assert
-        postComment
-            .Should()
-            .BeNull();
+        hasPublshed.ShouldBeTrue();
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldDeletePostComment_WhenPostCommentIsValidAndIdCaseDoesNotMatch()
+    [Theory]
+    [PostCommentIdDifferentCaseData]
+    public async Task SendAsync_ShouldPublishDeletedEvent_WhenRequestAndCommentIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var command = new DeletePostCommentCommand(
-            DataFaker.GetDifferentCaseString(existingPostComment.Id),
-            existingPostComment.UserId
-        );
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
 
         // Act
-        await ApplicationSender.SendAsync(command, CancellationToken);
-        var postComment = await PostCommentWriteRepository.GetByIdAsync(existingPostComment.Id, CancellationToken);
+        await ApplicationSender.SendAsync(request, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostCommentDeletedEventAsync(PostComment, CancellationToken);
 
         // Assert
-        postComment
-            .Should()
-            .BeNull();
+        hasPublshed.ShouldBeTrue();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldPublishDeletedEvent_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+
+        // Act
+        await ApplicationSender.SendAsync(request, CancellationToken);
+        var hasPublshed = await EventHarness.HasPublishPostCommentDeletedEventAsync(PostComment, CancellationToken);
+
+        // Assert
+        hasPublshed.ShouldBeTrue();
     }
 }

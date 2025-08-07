@@ -1,524 +1,232 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
+﻿using InstaConnect.Common.Models.Enums;
+using InstaConnect.Common.Tests.Utilities.Assertions;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums.Base;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Ints.Base;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
+using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetAll;
+using InstaConnect.PostComments.Application.IntegrationTests.Features.PostComments.Utilities;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Assertions;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Builders.AddApiRequest;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Builders.GetAllQueryRequest;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Id;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Page;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.PageSize;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.SortProperty;
+using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Name;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
-using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
-namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Queries;
+namespace InstaConnect.PostComments.Application.IntegrationTests.Features.PostComments.Queries;
 
-public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentIntegrationTest
+public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApplicationIntegrationTest
 {
-    public GetAllPostCommentsQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    private readonly GetAllPostCommentsQueryRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostCommentsQueryRequestBuilder _requestBuilder;
+    private readonly GetAllPostCommentsQueryRequest _request;
+
+    public GetAllPostCommentsQueryHandlerIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
     {
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(PostComment, User);
+        _request = _requestBuilder.Create();
+    }
+
+    protected override async Task OnInitializeAsync()
+    {
+        await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostCommentAsync(PostComment, CancellationToken);
     }
 
     [Theory]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdLengthIsInvalid(int length)
+    [PostCommentIdNullWithMessageData]
+    [PostCommentIdEmptyWithMessageData]
+    [PostCommentIdTooShortWithMessageData]
+    [PostCommentIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            DataFaker.GetString(length),
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [InlineData(UserConfigurations.NameMinLength - 1)]
-    [InlineData(UserConfigurations.NameMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserNameLengthIsInvalid(int length)
+    [UserIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            DataFaker.GetString(length),
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [InlineData(PostConfigurations.IdMinLength - 1)]
-    [InlineData(PostConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenPostIdLengthIsInvalid(int length)
+    [UserNameTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserNameIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            DataFaker.GetString(length),
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyNameIsNull()
-    {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            null,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenMessageDoesNotContaintSortPropertyName()
-    {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.InvalidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(SharedConfigurations.SortOrderMinLength - 1)]
-    [InlineData(SharedConfigurations.SortOrderMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyNameLengthIsInvalid(int length)
+    [SortOrderEmptyWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
+        IEnumTransformer<SortOrder> transformer, string errorMessage)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            DataFaker.GetString(length),
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [InlineData(SharedConfigurations.PageMinValue - 1)]
-    [InlineData(SharedConfigurations.PageMaxValue + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenPageValueIsInvalid(int value)
+    [PostCommentSortPropertyEmptyWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(
+        IEnumTransformer<PostCommentSortProperty> transformer, string errorMessage)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            value,
-            PostCommentTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [InlineData(SharedConfigurations.PageSizeMinValue - 1)]
-    [InlineData(SharedConfigurations.PageSizeMaxValue + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeValueIsInvalid(int value)
+    [PostCommentPageEmptyWithMessageData]
+    [PostCommentPageTooSmallWithMessageData]
+    [PostCommentPageTooLargeWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenPageIsInvalid(
+        IIntTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            value);
+        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+    }
+
+    [Theory]
+    [PostCommentPageSizeEmptyWithMessageData]
+    [PostCommentPageSizeTooSmallWithMessageData]
+    [PostCommentPageSizeTooLargeWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeIsInvalid(
+        IIntTransformer transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPageSize(_request.Pagination.PageSize, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+    }
+
+    [Theory]
+    [PostIdNotFoundData]
+    public async Task SendAsync_ShouldThrowNotFoundException_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Filter.Id);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldReturnPostCommentViewModelCollection_WhenUserIdIsNull()
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            null,
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
-
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
-                                                                    m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == existingPostComment.User.UserName &&
-                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                                    m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == existingPostComment.Content) &&
-                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(PostComment, User, _request);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostCommentViewModelCollection_WhenUserIdIsEmpty()
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            string.Empty,
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
-                                                                    m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == existingPostComment.User.UserName &&
-                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                                    m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == existingPostComment.Content) &&
-                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(PostComment, User, _request);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostCommentViewModelCollection_WhenUserIdCaseDoesNotMatch()
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            DataFaker.GetDifferentCaseString(existingPostComment.UserId),
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
-                                                                    m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == existingPostComment.User.UserName &&
-                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                                    m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == existingPostComment.Content) &&
-                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(PostComment, User, _request);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostCommentViewModelCollection_WhenUserNameIsNull()
+    [Theory]
+    [UserNameNullData]
+    [UserNameEmptyData]
+    [UserNameDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserNameAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            null,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
-                                                                    m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == existingPostComment.User.UserName &&
-                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                                    m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == existingPostComment.Content) &&
-                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostCommentViewModelCollection_WhenUserNameIsEmpty()
-    {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            string.Empty,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
-                                                                    m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == existingPostComment.User.UserName &&
-                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                                    m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == existingPostComment.Content) &&
-                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostCommentViewModelCollection_WhenUserNameCaseDoesNotMatch()
-    {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            DataFaker.GetDifferentCaseString(existingPostComment.User.UserName),
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
-                                                                    m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == existingPostComment.User.UserName &&
-                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                                    m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == existingPostComment.Content) &&
-                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostCommentViewModelCollection_WhenPostIdIsNull()
-    {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            null,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
-                                                                    m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == existingPostComment.User.UserName &&
-                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                                    m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == existingPostComment.Content) &&
-                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostCommentViewModelCollection_WhenPostIdIsEmpty()
-    {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            string.Empty,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
-                                                                    m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == existingPostComment.User.UserName &&
-                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                                    m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == existingPostComment.Content) &&
-                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostCommentViewModelCollection_WhenPostIdCaseDoesNotMatch()
-    {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            DataFaker.GetDifferentCaseString(existingPostComment.PostId),
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
-                                                                    m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == existingPostComment.User.UserName &&
-                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                                    m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == existingPostComment.Content) &&
-                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostCommentViewModelCollection_WhenQueryIsValid()
-    {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
-                                                                    m.UserId == existingPostComment.UserId &&
-                                                                    m.UserName == existingPostComment.User.UserName &&
-                                                                    m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                                    m.PostId == existingPostComment.PostId &&
-                                                                    m.Content == existingPostComment.Content) &&
-                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(PostComment, User, _request);
     }
 }

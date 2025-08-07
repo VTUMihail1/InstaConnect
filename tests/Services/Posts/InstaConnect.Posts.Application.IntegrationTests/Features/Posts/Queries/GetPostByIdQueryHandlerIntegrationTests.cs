@@ -53,7 +53,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationIntegr
 
     [Theory]
     [PostIdNotFoundData]
-    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid(
+    public async Task SendAsync_ShouldThrowNotFoundException_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -78,7 +78,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationIntegr
 
     [Theory]
     [PostIdDifferentCaseData]
-    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValidAndIdHasDifferentVariants(
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange

@@ -129,7 +129,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldAddPost_WhenRequestIsValid()
+    public async Task SendAsync_ShouldAdd_WhenRequestIsValid()
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
@@ -141,11 +141,11 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldAddPost_WhenRequestAndUserIdAreValid(
+    public async Task SendAsync_ShouldAdd_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);
@@ -156,7 +156,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldPublishEvent_WhenRequestIsValid()
+    public async Task SendAsync_ShouldPublishAddedEvent_WhenRequestIsValid()
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
@@ -169,11 +169,11 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldPublishEvent_WhenRequestAndUserIdAreValid(
+    public async Task SendAsync_ShouldPublishAddedEvent_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);

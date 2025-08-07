@@ -1,96 +1,142 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.Posts.Application.Features.PostComments.Queries.GetById;
+﻿using InstaConnect.Common.Tests.Utilities.Assertions;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
+using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetById;
+using InstaConnect.PostComments.Application.IntegrationTests.Features.PostComments.Utilities;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Assertions;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Builders.AddApiRequest;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Builders.GetByIdQueryRequest;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
-namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostComments.Queries;
+namespace InstaConnect.PostComments.Application.IntegrationTests.Features.PostComments.Queries;
 
-public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentIntegrationTest
+public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApplicationIntegrationTest
 {
-    public GetPostCommentByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    private readonly GetPostCommentByIdQueryRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetPostCommentByIdQueryRequestBuilder _requestBuilder;
+    private readonly GetPostCommentByIdQueryRequest _request;
+
+    public GetPostCommentByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
     {
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(PostComment);
+        _request = _requestBuilder.Create();
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
+    protected override async Task OnInitializeAsync()
     {
-        // Arrange
-        var query = new GetPostCommentByIdQuery(null);
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostCommentAsync(PostComment, CancellationToken);
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostCommentConfigurations.IdMinLength - 1)]
-    [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
+    [PostIdNullWithMessageData]
+    [PostIdEmptyWithMessageData]
+    [PostIdTooShortWithMessageData]
+    [PostIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var query = new GetPostCommentByIdQuery(DataFaker.GetString(length));
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+    }
+
+    [Theory]
+    [PostCommentIdNullWithMessageData]
+    [PostCommentIdEmptyWithMessageData]
+    [PostCommentIdTooShortWithMessageData]
+    [PostCommentIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenCommentIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+    }
+
+    [Theory]
+    [PostIdNotFoundData]
+    public async Task SendAsync_ShouldThrowNotFoundException_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
+    }
+
+    [Theory]
+    [PostCommentIdNotFoundData]
+    public async Task SendAsync_ShouldThrowCommentNotFoundException_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowPostCommentNotFoundExceptionAsync(_request.Id, _request.CommentId);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowPostCommentNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var query = new GetPostCommentByIdQuery(PostCommentTestUtilities.InvalidId);
-
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<PostCommentNotFoundException>();
+        response.ShouldSatisfy(PostComment, User);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostCommentViewModelCollection_WhenQueryIsValid()
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetPostCommentByIdQuery(existingPostComment.Id);
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostCommentQueryViewModel>(m => m.Id == existingPostComment.Id &&
-                                                  m.UserId == existingPostComment.UserId &&
-                                                  m.UserName == existingPostComment.User.UserName &&
-                                                  m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                  m.PostId == existingPostComment.PostId &&
-                                                  m.Content == existingPostComment.Content);
+        response.ShouldSatisfy(PostComment, User);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostCommentViewModelCollection_WhenQueryIsValidAndCaseDoesNotMatch()
+    [Theory]
+    [PostCommentIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndCommentIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var query = new GetPostCommentByIdQuery(DataFaker.GetDifferentCaseString(existingPostComment.Id));
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostCommentQueryViewModel>(m => m.Id == existingPostComment.Id &&
-                                                  m.UserId == existingPostComment.UserId &&
-                                                  m.UserName == existingPostComment.User.UserName &&
-                                                  m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                  m.PostId == existingPostComment.PostId &&
-                                                  m.Content == existingPostComment.Content);
+        response.ShouldSatisfy(PostComment, User);
     }
 }

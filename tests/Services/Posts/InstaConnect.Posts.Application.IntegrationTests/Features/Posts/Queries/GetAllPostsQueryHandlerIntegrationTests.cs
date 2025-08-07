@@ -1,6 +1,7 @@
 ﻿using InstaConnect.Common.Models.Enums;
 using InstaConnect.Common.Tests.Assertions;
 using InstaConnect.Common.Tests.Utilities.Assertions;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums.Base;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.Ints.Base;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
