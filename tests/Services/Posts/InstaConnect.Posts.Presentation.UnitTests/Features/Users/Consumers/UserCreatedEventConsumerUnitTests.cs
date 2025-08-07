@@ -2,7 +2,7 @@
 
 public class UserCreatedEventConsumerUnitTests : BaseUserUnitTest
 {
-    private readonly UserCreatedEventHandler _userCreatedEventConsumer;
+    private readonly UserAddedEventHandler _userCreatedEventConsumer;
     private readonly ConsumeContext<UserAddedEventRequest> _userCreatedEventConsumeContext;
 
     public UserCreatedEventConsumerUnitTests()

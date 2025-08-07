@@ -5,12 +5,12 @@ using InstaConnect.Users.Application.Features.Users.Commands.Add;
 
 namespace InstaConnect.Posts.Presentation.Features.Users.Consumers;
 
-internal class UserCreatedEventHandler : IEventHandler<UserAddedEventRequest>
+internal class UserAddedEventHandler : IEventHandler<UserAddedEventRequest>
 {
     private readonly IApplicationMapper _applicationMapper;
     private readonly IApplicationSender _applicationSender;
 
-    public UserCreatedEventHandler(
+    public UserAddedEventHandler(
         IApplicationMapper applicationMapper,
         IApplicationSender applicationSender)
     {
