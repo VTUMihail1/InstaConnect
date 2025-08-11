@@ -22,7 +22,7 @@ public class UpdatePostControllerUnitTests : BasePostPresentationUnitTest
 
         _postController = new(ApplicationMapper, ApplicationSender);
 
-        ApplicationSender.SetupUpdatePostCommandRequest(_request, Post, CancellationToken);
+        ApplicationSender.SetupUpdateCommandRequest(_request, Post, CancellationToken);
     }
 
     [Fact]

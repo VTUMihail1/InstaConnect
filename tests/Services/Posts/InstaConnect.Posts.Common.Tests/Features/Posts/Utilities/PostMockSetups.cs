@@ -19,7 +19,7 @@ using Mapster;
 namespace InstaConnect.Posts.Common.Tests.Features.Posts.Utilities;
 public static class PostMockSetups
 {
-    public static void SetupGetAllPostsQueryRequest(
+    public static void SetupGetAllQueryRequest(
         this IApplicationSender applicationSender,
         GetAllPostsApiRequest request,
         Post post,
@@ -50,7 +50,7 @@ public static class PostMockSetups
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetPostByIdQueryRequest(
+    public static void SetupGetByIdQueryRequest(
         this IApplicationSender applicationSender,
         GetPostByIdApiRequest request,
         Post post,
@@ -72,7 +72,7 @@ public static class PostMockSetups
             .ReturnsResponse(response);
     }
 
-    public static void SetupAddPostCommandRequest(
+    public static void SetupAddCommandRequest(
         this IApplicationSender applicationSender,
         AddPostApiRequest request,
         Post post,
@@ -85,7 +85,7 @@ public static class PostMockSetups
             .ReturnsResponse(response);
     }
 
-    public static void SetupUpdatePostCommandRequest(
+    public static void SetupUpdateCommandRequest(
         this IApplicationSender applicationSender,
         UpdatePostApiRequest request,
         Post post,
@@ -98,7 +98,7 @@ public static class PostMockSetups
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetAllPostsQuery(
+    public static void SetupGetAllQuery(
         this IPostService postService,
         GetAllPostsQueryRequest request,
         Post post,
@@ -119,7 +119,7 @@ public static class PostMockSetups
             .ReturnsResponse(response);
     }
 
-    public static void SetupGetPostByIdQuery(
+    public static void SetupGetByIdQuery(
         this IPostService postService,
         GetPostByIdQueryRequest request,
         Post post,
@@ -131,7 +131,7 @@ public static class PostMockSetups
             .ReturnsResponse(post);
     }
 
-    public static void SetupAddPostCommand(
+    public static void SetupAddCommand(
         this IPostService postService,
         AddPostCommandRequest request,
         Post post,
@@ -142,7 +142,7 @@ public static class PostMockSetups
             .ReturnsResponse(post);
     }
 
-    public static void SetupUpdatePostCommand(
+    public static void SetupUpdateCommand(
         this IPostService postService,
         UpdatePostCommandRequest request,
         Post post,

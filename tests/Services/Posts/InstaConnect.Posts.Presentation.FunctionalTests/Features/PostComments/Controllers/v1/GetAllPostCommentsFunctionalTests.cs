@@ -4,6 +4,7 @@ using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums.Base;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.Ints.Base;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities;
 using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Assertions;
 using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Builders.AddApiRequest;
 using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Builders.GetAllApiRequest;
@@ -11,11 +12,13 @@ using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Dat
 using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Page;
 using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.PageSize;
 using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.SortProperty;
-using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Title;
-using InstaConnect.PostComments.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
-using InstaConnect.PostComments.Common.Tests.Features.Users.Utilities.DataAttributes.Name;
-using InstaConnect.PostComments.Common.Tests.Features.Utilities;
 using InstaConnect.PostComments.Domain.Features.PostComments.Models.Requests;
+using InstaConnect.PostComments.Presentation.Features.PostComments.Models.Requests;
+using InstaConnect.PostComments.Presentation.FunctionalTests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Name;
+using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
 namespace InstaConnect.PostComments.Presentation.FunctionalTests.Features.PostComments.Controllers.v1;
 
@@ -25,7 +28,7 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
     private readonly GetAllPostCommentsApiRequestBuilder _requestBuilder;
     private readonly GetAllPostCommentsApiRequest _request;
 
-    public GetAllPostCommentsFunctionalTests(PostCommentsWebApplicationFactory webApplicationFactory)
+    public GetAllPostCommentsFunctionalTests(PostsWebApplicationFactory webApplicationFactory)
         : base(webApplicationFactory)
     {
         _requestBuilderFactory = new();
@@ -36,7 +39,44 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
     protected override async Task OnInitializeAsync()
     {
         await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
         await ServiceScope.AddPostCommentAsync(PostComment, CancellationToken);
+    }
+
+    [Theory]
+    [PostIdNullData]
+    [PostIdEmptyData]
+    [PostIdTooShortData]
+    [PostIdTooLongData]
+    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeBadRequest();
+    }
+
+    [Theory]
+    [PostIdNullWithMessageData]
+    [PostIdEmptyWithMessageData]
+    [PostIdTooShortWithMessageData]
+    [PostIdTooLongWithMessageData]
+    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfyBadRequest(errorMessage);
     }
 
     [Theory]
@@ -91,36 +131,6 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
     {
         // Arrange
         var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
-
-        // Act
-        var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfyBadRequest(errorMessage);
-    }
-
-    [Theory]
-    [PostCommentTitleTooLongData]
-    public async Task GetAllAsync_ShouldHaveBadRequestStatusCode_WhenTitleIsInvalid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
-
-        // Act
-        var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldBeBadRequest();
-    }
-
-    [Theory]
-    [PostCommentTitleTooLongWithMessageData]
-    public async Task GetAllAsync_ShouldHaveBadRequestProblemDetails_WhenTitleIsInvalid(
-        IStringTransformer transformer, string errorMessage)
-    {
-        // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsProblemDetailsAsync(request, CancellationToken);
@@ -268,6 +278,21 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
     }
 
     [Theory]
+    [PostIdDifferentCaseData]
+    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
+
+        // Assert
+        response.ShouldBeOk();
+    }
+
+    [Theory]
     [UserIdNullData]
     [UserIdEmptyData]
     [UserIdDifferentCaseData]
@@ -301,28 +326,26 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
         response.ShouldBeOk();
     }
 
-    [Theory]
-    [PostCommentTitleNullData]
-    [PostCommentTitleEmptyData]
-    [PostCommentTitleDifferentCaseData]
-    public async Task GetAllAsync_ShouldHaveOkStatusCode_WhenRequestAndTitleAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
-
-        // Act
-        var response = await HttpClient.GetAllPostCommentsStatusCodeAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldBeOk();
-    }
-
     [Fact]
     public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
         var response = await HttpClient.GetAllPostCommentsAsync(_request, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(PostComment, User, _request);
+    }
+
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Create();
+
+        // Act
+        var response = await HttpClient.GetAllPostCommentsAsync(request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostComment, User, _request);
@@ -354,23 +377,6 @@ public class GetAllPostCommentsFunctionalTests : BasePostCommentPresentationFunc
     {
         // Arrange
         var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
-
-        // Act
-        var response = await HttpClient.GetAllPostCommentsAsync(request, CancellationToken);
-
-        // Assert
-        response.ShouldSatisfy(PostComment, User, _request);
-    }
-
-    [Theory]
-    [PostCommentTitleNullData]
-    [PostCommentTitleEmptyData]
-    [PostCommentTitleDifferentCaseData]
-    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestAndTitleAreValid(
-        IStringTransformer transformer)
-    {
-        // Arrange
-        var request = _requestBuilder.WithTitle(_request.Filter.Title, transformer).Create();
 
         // Act
         var response = await HttpClient.GetAllPostCommentsAsync(request, CancellationToken);

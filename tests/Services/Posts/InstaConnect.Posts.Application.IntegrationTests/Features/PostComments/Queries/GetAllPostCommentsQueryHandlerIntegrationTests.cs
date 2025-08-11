@@ -45,10 +45,10 @@ public class GetAllPostCommentsQueryHandlerIntegrationTests : BasePostCommentApp
     }
 
     [Theory]
-    [PostCommentIdNullWithMessageData]
-    [PostCommentIdEmptyWithMessageData]
-    [PostCommentIdTooShortWithMessageData]
-    [PostCommentIdTooLongWithMessageData]
+    [PostIdNullWithMessageData]
+    [PostIdEmptyWithMessageData]
+    [PostIdTooShortWithMessageData]
+    [PostIdTooLongWithMessageData]
     public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
         IStringTransformer transformer, string errorMessage)
     {
