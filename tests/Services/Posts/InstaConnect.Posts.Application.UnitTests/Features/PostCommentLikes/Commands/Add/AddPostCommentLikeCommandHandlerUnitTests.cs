@@ -1,190 +1,47 @@
-﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
-using InstaConnect.Posts.Domain.Features.Users.Exceptions;
+﻿using InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Commands.Add;
+using InstaConnect.PostCommentLikes.Application.UnitTests.Features.PostCommentLikes.Utilities;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Assertions;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Builders.AddCommandRequest;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Commands.Add;
+namespace InstaConnect.PostCommentLikes.Application.UnitTests.Features.PostCommentLikes.Commands.Add;
 
-public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeUnitTest
+public class AddPostCommentLikeCommandHandlerUnitTests : BasePostCommentLikeApplicationUnitTest
 {
-    private readonly AddPostCommentLikeCommandHandler _commandHandler;
+    private readonly AddPostCommentLikeCommandRequestBuilderFactory _requestBuilderFactory;
+    private readonly AddPostCommentLikeCommandRequestBuilder _requestBuilder;
+    private readonly AddPostCommentLikeCommandRequest _request;
+
+    private readonly AddPostCommentLikeCommandHandler _handler;
 
     public AddPostCommentLikeCommandHandlerUnitTests()
     {
-        _commandHandler = new(
-            UnitOfWork,
-            ApplicationMapper,
-            UserWriteRepository,
-            PostWriteRepository,
-            PostCommentLikeService);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post, PostComment, User);
+        _request = _requestBuilder.Create();
+
+        _handler = new(ApplicationMapper, PostCommentLikeService);
+
+        PostCommentLikeService.SetupAddCommand(_request, PostCommentLike, CancellationToken);
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
+    public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLikeFactory();
-        var command = new AddPostCommentLikeCommand(
-            UserTestUtilities.InvalidId,
-            existingPostCommentLike.PostComment.PostId,
-            existingPostCommentLike.Id);
-
         // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+        var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserNotFoundException>();
+        response.ShouldSatisfy(PostCommentLike);
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowPostNotFoundException_WhePostIdIsInvalid()
+    public async Task Handle_ShouldCallPostCommentLikeServiceAddAsync_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLikeFactory();
-        var command = new AddPostCommentLikeCommand(
-            existingPostCommentLike.UserId,
-            PostTestUtilities.InvalidId,
-            existingPostCommentLike.Id);
-
         // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+        await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<PostNotFoundException>();
-    }
-
-    [Fact]
-    public async Task Handle_ShouldThrowPostCommentNotFoundException_WhenPostCommentIdIsInvalid()
-    {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLikeFactory();
-        var command = new AddPostCommentLikeCommand(
-            existingPostCommentLike.UserId,
-            existingPostCommentLike.PostComment.PostId,
-            PostCommentTestUtilities.InvalidId);
-
-        // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<PostCommentNotFoundException>();
-    }
-
-    [Fact]
-    public async Task Handle_ShouldThrowPostCommentLikeAlreadyExistsException_WhenPostCommentLikeAlreadyExists()
-    {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLike();
-        var command = new AddPostCommentLikeCommand(
-            existingPostCommentLike.UserId,
-            existingPostCommentLike.PostComment.PostId,
-            existingPostCommentLike.PostCommentId);
-
-        // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<PostCommentLikeAlreadyExistsException>();
-    }
-
-    [Fact]
-    public async Task Handle_ShouldReturnPostCommentLikeCommandViewModel_WhenPostCommentLikeIsValid()
-    {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLikeFactory();
-        var command = new AddPostCommentLikeCommand(
-            existingPostCommentLike.UserId,
-            existingPostCommentLike.PostComment.PostId,
-            existingPostCommentLike.PostCommentId);
-
-        // Act
-        var response = await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostCommentLikeCommandViewModel>(m => m.Id == existingPostCommentLike.Id);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldGetUserFromRepository_WhenPostCommentLikeIsValid()
-    {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLikeFactory();
-        var command = new AddPostCommentLikeCommand(
-            existingPostCommentLike.UserId,
-            existingPostCommentLike.PostComment.PostId,
-            existingPostCommentLike.PostCommentId);
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await UserWriteRepository
-            .Received(1)
-            .GetByIdAsync(
-                existingPostCommentLike.UserId,
-                CancellationToken);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldGetPostFromRepository_WhenPostCommentLikeIsValid()
-    {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLikeFactory();
-        var command = new AddPostCommentLikeCommand(
-            existingPostCommentLike.UserId,
-            existingPostCommentLike.PostComment.PostId,
-            existingPostCommentLike.PostCommentId);
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await PostWriteRepository
-            .Received(1)
-            .GetByIdAsync(
-                existingPostCommentLike.PostComment.PostId,
-                CancellationToken);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldAddPostCommentLikeToRepository_WhenPostCommentLikeIsValid()
-    {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLikeFactory();
-        var command = new AddPostCommentLikeCommand(
-            existingPostCommentLike.UserId,
-            existingPostCommentLike.PostComment.PostId,
-            existingPostCommentLike.PostCommentId);
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await PostCommentLikeService
-            .Received(1)
-            .AddAsync(
-                existingPostCommentLike.PostComment.Post,
-                existingPostCommentLike.Id,
-                existingPostCommentLike.UserId,
-                CancellationToken);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldCallSaveChangesAsync_WhenPostCommentLikeIsValid()
-    {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLikeFactory();
-        var command = new AddPostCommentLikeCommand(
-            existingPostCommentLike.UserId,
-            existingPostCommentLike.PostComment.PostId,
-            existingPostCommentLike.PostCommentId);
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await UnitOfWork
-            .Received(1)
-            .SaveChangesAsync(CancellationToken);
+        await PostCommentLikeService.ShouldReceiveOneAddAsync(_request, CancellationToken);
     }
 }

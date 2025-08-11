@@ -2,56 +2,57 @@
 using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities;
 using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Assertions;
 using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Builders.AddApiRequest;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Builders.GetAllApiRequest;
 using InstaConnect.PostCommentLikes.Presentation.Features.PostCommentLikes.Controllers.v1;
 using InstaConnect.PostCommentLikes.Presentation.Features.PostCommentLikes.Models.Requests;
 using InstaConnect.PostCommentLikes.Presentation.UnitTests.Features.PostCommentLikes.Utilities;
 
 namespace InstaConnect.PostCommentLikes.Presentation.UnitTests.Features.PostCommentLikes.Controllers.v1;
 
-public class AddPostCommentLikeControllerUnitTests : BasePostCommentLikePresentationUnitTest
+public class GetAllPostCommentLikesControllerUnitTests : BasePostCommentLikePresentationUnitTest
 {
-    private readonly AddPostCommentLikeApiRequestBuilderFactory _requestBuilderFactory;
-    private readonly AddPostCommentLikeApiRequestBuilder _requestBuilder;
-    private readonly AddPostCommentLikeApiRequest _request;
+    private readonly GetAllPostCommentLikesApiRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostCommentLikesApiRequestBuilder _requestBuilder;
+    private readonly GetAllPostCommentLikesApiRequest _request;
 
     private readonly PostCommentLikeController _postCommentLikeController;
 
-    public AddPostCommentLikeControllerUnitTests()
+    public GetAllPostCommentLikesControllerUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(Post, PostComment, User);
+        _requestBuilder = _requestBuilderFactory.Create(PostCommentLike, User);
         _request = _requestBuilder.Create();
 
         _postCommentLikeController = new(ApplicationMapper, ApplicationSender);
 
-        ApplicationSender.SetupAddCommandRequest(_request, PostCommentLike, CancellationToken);
+        ApplicationSender.SetupGetAllQueryRequest(_request, PostCommentLike, User, CancellationToken);
     }
 
     [Fact]
-    public async Task AddAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
         // Act
-        var response = await _postCommentLikeController.AddAsync(_request, CancellationToken);
+        var response = await _postCommentLikeController.GetAllAsync(_request, CancellationToken);
 
         // Assert
         response.ShouldBeActionResultWithOkStatusCode();
     }
 
     [Fact]
-    public async Task AddAsync_ShouldReturnResponse_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await _postCommentLikeController.AddAsync(_request, CancellationToken);
+        var response = await _postCommentLikeController.GetAllAsync(_request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfy(PostCommentLike);
+        response.ShouldSatisfy(PostCommentLike, User, _request);
     }
 
     [Fact]
-    public async Task AddAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
+    public async Task GetAllAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
     {
         // Act
-        await _postCommentLikeController.AddAsync(_request, CancellationToken);
+        await _postCommentLikeController.GetAllAsync(_request, CancellationToken);
 
         // Assert
         await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);

@@ -82,7 +82,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
+        await action.ShouldThrowPostNotFoundExceptionAsync(request.Id);
     }
 
     [Theory]
@@ -97,7 +97,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostCommentNotFoundExceptionAsync(_request.Id, _request.CommentId);
+        await action.ShouldThrowPostCommentNotFoundExceptionAsync(request.Id, _request.CommentId);
     }
 
     [Fact]

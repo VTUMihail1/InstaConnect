@@ -6,7 +6,7 @@ namespace InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
 
 public static class UserMatchAssertions
 {
-    public static void ShouldSatisfyUserNotFoundProblemDetails(
+    public static void ShouldSatisfyUserNotFound(
         this ProblemDetails problemDetails,
         string id)
     {

@@ -185,7 +185,7 @@ public class AddPostFunctionalTests : BasePostPresentationFunctionalTest
         var response = await HttpClient.AddPostProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyUserNotFoundProblemDetails(request.UserId);
+        response.ShouldSatisfyUserNotFound(request.UserId);
     }
 
     [Fact]

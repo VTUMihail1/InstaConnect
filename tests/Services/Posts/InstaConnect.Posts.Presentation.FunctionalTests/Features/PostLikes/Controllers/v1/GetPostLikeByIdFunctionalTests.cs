@@ -7,6 +7,7 @@ using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Builders.
 using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.DataAttributes.Id;
 using InstaConnect.PostLikes.Presentation.Features.PostLikes.Models.Requests;
 using InstaConnect.PostLikes.Presentation.FunctionalTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
@@ -122,7 +123,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationFunctional
 
     [Theory]
     [PostIdNotFoundData]
-    public async Task GetByIdAsync_ShouldHavePostLikeNotFoundProblemDetails_WhenIdIsInvalid(
+    public async Task GetByIdAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -132,7 +133,7 @@ public class GetPostLikeByIdFunctionalTests : BasePostLikePresentationFunctional
         var response = await HttpClient.GetPostLikeByIdProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostLikeNotFound(request.Id, request.LikeId);
+        response.ShouldSatisfyPostNotFound(request.Id);
     }
 
     [Theory]

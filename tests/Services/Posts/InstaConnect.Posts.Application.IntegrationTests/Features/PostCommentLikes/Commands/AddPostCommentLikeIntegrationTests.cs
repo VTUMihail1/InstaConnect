@@ -1,163 +1,380 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.Posts.Application.Features.PostCommentLikes.Commands.Add;
+﻿using InstaConnect.Common.Tests.Utilities.Assertions;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
+using InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Commands.Add;
+using InstaConnect.PostCommentLikes.Application.IntegrationTests.Features.PostCommentLikes.Utilities;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Assertions;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Builders.AddCommandRequest;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Assertions;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
-using InstaConnect.Posts.Domain.Features.Users.Exceptions;
-using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
-namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostCommentLikes.Commands;
+namespace InstaConnect.PostCommentLikes.Application.IntegrationTests.Features.PostCommentLikes.Commands;
 
-public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeIntegrationTest
+public class AddPostCommentLikeIntegrationTests : BasePostCommentLikeApplicationIntegrationTest
 {
-    public AddPostCommentLikeIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
-    {
+    private readonly AddPostCommentLikeCommandRequestBuilderFactory _requestBuilderFactory;
+    private readonly AddPostCommentLikeCommandRequestBuilder _requestBuilder;
+    private readonly AddPostCommentLikeCommandRequest _request;
 
+    public AddPostCommentLikeIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
+    {
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post, PostComment, User);
+        _request = _requestBuilder.Create();
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdIsNull()
+    protected override async Task OnInitializeAsync()
     {
-        // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var command = new AddPostCommentLikeCommand(
-            null,
-            existingPostComment.Id
-        );
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostCommentAsync(PostComment, CancellationToken);
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenCurrentUserIdLengthIsInvalid(int length)
+    [PostIdNullWithMessageData]
+    [PostIdEmptyWithMessageData]
+    [PostIdTooShortWithMessageData]
+    [PostIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var command = new AddPostCommentLikeCommand(
-            DataFaker.GetString(length),
-            existingPostComment.Id
-        );
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenPostIdIsNull()
-    {
-        // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var command = new AddPostCommentLikeCommand(
-            existingUser.Id,
-            null
-        );
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostCommentConfigurations.IdMinLength - 1)]
-    [InlineData(PostCommentConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenPostIdLengthIsInvalid(int length)
+    [PostCommentIdNullWithMessageData]
+    [PostCommentIdEmptyWithMessageData]
+    [PostCommentIdTooShortWithMessageData]
+    [PostCommentIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenCommentIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var command = new AddPostCommentLikeCommand(
-            existingUser.Id,
-            DataFaker.GetString(length)
-        );
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
+    [Theory]
+    [UserIdNullWithMessageData]
+    [UserIdEmptyWithMessageData]
+    [UserIdTooShortWithMessageData]
+    [UserIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var command = new AddPostCommentLikeCommand(
-            UserTestUtilities.InvalidId,
-            existingPostComment.Id
-        );
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserNotFoundException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenPostIdIsInvalid()
+    [Theory]
+    [PostIdNotFoundData]
+    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var command = new AddPostCommentLikeCommand(
-            existingUser.Id,
-            PostCommentTestUtilities.InvalidId
-        );
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<PostCommentNotFoundException>();
+        await action.ShouldThrowPostNotFoundExceptionAsync(request.Id);
+    }
+
+    [Theory]
+    [PostCommentIdNotFoundData]
+    public async Task SendAsync_ShouldThrowPostCommentNotFoundException_WhenCommentIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowPostCommentNotFoundExceptionAsync(request.Id, request.CommentId);
+    }
+
+    [Theory]
+    [UserIdNotFoundData]
+    public async Task SendAsync_ShouldThrowUserNotFoundException_WhenUserIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowUserNotFoundExceptionAsync(request.UserId);
     }
 
     [Fact]
     public async Task SendAsync_ShouldThrowPostCommentLikeAlreadyExistsException_WhenPostCommentLikeAlreadyExists()
     {
         // Arrange
-        var existingPostCommentLike = await CreatePostCommentLikeAsync(CancellationToken);
-        var command = new AddPostCommentLikeCommand(
-            existingPostCommentLike.UserId,
-            existingPostCommentLike.PostCommentId
-        );
+        await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(command, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<PostCommentLikeAlreadyExistsException>();
+        await action.ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync(_request.Id, _request.CommentId, _request.UserId);
+    }
+
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldThrowPostCommentLikeAlreadyExistsException_WhenPostCommentLikeAlreadyExistsAndIdIsValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync(request.Id, request.CommentId, request.UserId);
+    }
+
+    [Theory]
+    [PostCommentIdDifferentCaseData]
+    public async Task SendAsync_ShouldThrowPostCommentLikeAlreadyExistsException_WhenPostCommentLikeAlreadyExistsAndCommentIdIsValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync(request.Id, request.CommentId, request.UserId);
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldThrowPostCommentLikeAlreadyExistsException_WhenPostCommentLikeAlreadyExistsAndUserIdIsValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        await ServiceScope.AddPostCommentLikeAsync(PostCommentLike, CancellationToken);
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowPostCommentLikeAlreadyExistsExceptionAsync(request.Id, request.CommentId, request.UserId);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldAddPostCommentLike_WhenPostCommentLikeIsValid()
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var existingUser = await CreateUserAsync(CancellationToken);
-        var existingPostComment = await CreatePostCommentAsync(CancellationToken);
-        var command = new AddPostCommentLikeCommand(
-            existingUser.Id,
-            existingPostComment.Id
-        );
-
         // Act
-        var response = await ApplicationSender.SendAsync(command, CancellationToken);
-        var postCommentLike = await PostCommentLikeWriteRepository.GetByIdAsync(response.Id, CancellationToken);
+        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
 
         // Assert
-        postCommentLike
-            .Should()
-            .Match<PostCommentLike>(p => p.Id == response.Id &&
-                                     p.UserId == existingUser.Id &&
-                                     p.PostCommentId == existingPostComment.Id);
+        response.ShouldSatisfy(postCommentLike);
+    }
+
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(postCommentLike);
+    }
+
+    [Theory]
+    [PostCommentIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndCommentIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(postCommentLike);
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(postCommentLike);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldAddPostCommentLike_WhenRequestIsValid()
+    {
+        // Act
+        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+
+        // Assert
+        postCommentLike.ShouldSatisfy(_request);
+    }
+
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldAddPostCommentLike_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+
+        // Assert
+        postCommentLike.ShouldSatisfy(_request);
+    }
+
+    [Theory]
+    [PostCommentIdDifferentCaseData]
+    public async Task SendAsync_ShouldAddPostCommentLike_WhenRequestAndCommentIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+
+        // Assert
+        postCommentLike.ShouldSatisfy(_request);
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldAddPostCommentLike_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+
+        // Assert
+        postCommentLike.ShouldSatisfy(_request);
+    }
+
+    [Fact]
+    public async Task SendAsync_ShouldPublishPostCommentLikeAddedEvent_WhenRequestIsValid()
+    {
+        // Act
+        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var eventWasPublished = await EventHarness.HasPublishPostCommentLikeAddedEventAsync(postCommentLike, CancellationToken);
+
+        // Assert
+        eventWasPublished.ShouldBeTrue();
+    }
+
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldPublishPostCommentLikeAddedEvent_WhenRequestAnIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var eventWasPublished = await EventHarness.HasPublishPostCommentLikeAddedEventAsync(postCommentLike, CancellationToken);
+
+        // Assert
+        eventWasPublished.ShouldBeTrue();
+    }
+
+    [Theory]
+    [PostCommentIdDifferentCaseData]
+    public async Task SendAsync_ShouldPublishPostCommentLikeAddedEvent_WhenRequestAnCommentIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var eventWasPublished = await EventHarness.HasPublishPostCommentLikeAddedEventAsync(postCommentLike, CancellationToken);
+
+        // Assert
+        eventWasPublished.ShouldBeTrue();
+    }
+
+    [Theory]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldPublishPostCommentLikeAddedEvent_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var postCommentLike = await ServiceScope.GetPostCommentLikeByIdAsync(response.Id, response.CommentId, response.CommentLikeId, CancellationToken);
+        var eventWasPublished = await EventHarness.HasPublishPostCommentLikeAddedEventAsync(postCommentLike, CancellationToken);
+
+        // Assert
+        eventWasPublished.ShouldBeTrue();
     }
 }

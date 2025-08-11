@@ -63,7 +63,7 @@ public class GetPostByIdQueryHandlerIntegrationTests : BasePostApplicationIntegr
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
+        await action.ShouldThrowPostNotFoundExceptionAsync(request.Id);
     }
 
     [Fact]

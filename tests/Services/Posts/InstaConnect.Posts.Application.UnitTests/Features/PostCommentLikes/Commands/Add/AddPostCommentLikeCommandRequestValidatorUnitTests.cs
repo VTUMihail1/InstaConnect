@@ -1,26 +1,27 @@
 ﻿using InstaConnect.Common.Tests.Utilities.Assertions;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
-using InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Add;
-using InstaConnect.PostLikes.Application.UnitTests.Features.PostLikes.Utilities;
-using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Assertions;
-using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Builders.AddCommandRequest;
+using InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Commands.Add;
+using InstaConnect.PostCommentLikes.Application.UnitTests.Features.PostCommentLikes.Utilities;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Assertions;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Builders.AddCommandRequest;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 
-namespace InstaConnect.PostLikes.Application.UnitTests.Features.PostLikes.Commands.Add;
+namespace InstaConnect.PostCommentLikes.Application.UnitTests.Features.PostCommentLikes.Commands.Add;
 
-public class AddPostLikeCommandRequestValidatorUnitTests : BasePostLikeApplicationUnitTest
+public class AddPostCommentLikeCommandRequestValidatorUnitTests : BasePostCommentLikeApplicationUnitTest
 {
-    private readonly AddPostLikeCommandRequestBuilderFactory _requestBuilderFactory;
-    private readonly AddPostLikeCommandRequestBuilder _requestBuilder;
-    private readonly AddPostLikeCommandRequest _request;
+    private readonly AddPostCommentLikeCommandRequestBuilderFactory _requestBuilderFactory;
+    private readonly AddPostCommentLikeCommandRequestBuilder _requestBuilder;
+    private readonly AddPostCommentLikeCommandRequest _request;
 
-    private readonly AddPostLikeCommandRequestValidator _requestValidator;
+    private readonly AddPostCommentLikeCommandRequestValidator _requestValidator;
 
-    public AddPostLikeCommandRequestValidatorUnitTests()
+    public AddPostCommentLikeCommandRequestValidatorUnitTests()
     {
         _requestBuilderFactory = new();
-        _requestBuilder = _requestBuilderFactory.Create(Post, User);
+        _requestBuilder = _requestBuilderFactory.Create(Post, PostComment, User);
         _request = _requestBuilder.Create();
 
         _requestValidator = new();
@@ -36,6 +37,24 @@ public class AddPostLikeCommandRequestValidatorUnitTests : BasePostLikeApplicati
     {
         // Arrange
         var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var result = _requestValidator.TestValidate(request);
+
+        // Assert
+        result.ShouldHaveValidationErrorForId(errorMessage);
+    }
+
+    [Theory]
+    [PostCommentIdNullWithMessageData]
+    [PostCommentIdEmptyWithMessageData]
+    [PostCommentIdTooShortWithMessageData]
+    [PostCommentIdTooLongWithMessageData]
+    public void TestValidate_ShouldHaveAnError_WhenCommentIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithCommentId(_request.CommentId, transformer).Create();
 
         // Act
         var result = _requestValidator.TestValidate(request);

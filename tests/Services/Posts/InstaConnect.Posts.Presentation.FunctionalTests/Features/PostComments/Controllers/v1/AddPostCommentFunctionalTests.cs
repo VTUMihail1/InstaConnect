@@ -7,6 +7,8 @@ using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Dat
 using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Id;
 using InstaConnect.PostComments.Presentation.Features.PostComments.Models.Requests;
 using InstaConnect.PostComments.Presentation.FunctionalTests.Features.PostComments.Utilities;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
@@ -179,7 +181,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
 
     [Theory]
     [PostIdNotFoundData]
-    public async Task AddAsync_ShouldHaveUserNotFoundProblemDetails_WhenIdIsInvalid(
+    public async Task AddAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -189,7 +191,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         var response = await HttpClient.AddPostCommentProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyUserNotFoundProblemDetails(request.Id);
+        response.ShouldSatisfyPostNotFound(request.Id);
     }
 
     [Theory]
@@ -219,7 +221,7 @@ public class AddPostCommentFunctionalTests : BasePostCommentPresentationFunction
         var response = await HttpClient.AddPostCommentProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyUserNotFoundProblemDetails(request.UserId);
+        response.ShouldSatisfyUserNotFound(request.UserId);
     }
 
     [Fact]

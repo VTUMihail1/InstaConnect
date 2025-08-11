@@ -64,9 +64,9 @@ internal class PostCommentLikeService : IPostCommentLikeService
             throw new PostCommentNotFoundException(query.Filter.Id, query.Filter.CommentId);
         }
 
-        var existingPostCommentLikes = await _postCommentLikeRepository.GetAllAsync(query, cancellationToken);
+        var existingPostCommentLikeCollection = await _postCommentLikeRepository.GetAllAsync(query, cancellationToken);
 
-        return existingPostCommentLikes;
+        return existingPostCommentLikeCollection;
     }
 
     public async Task<PostCommentLike> GetByIdAsync(GetPostCommentLikeByIdQuery query, CancellationToken cancellationToken)

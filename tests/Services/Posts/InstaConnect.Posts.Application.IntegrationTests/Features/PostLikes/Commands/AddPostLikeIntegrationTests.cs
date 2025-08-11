@@ -1,5 +1,6 @@
 ﻿using InstaConnect.Common.Tests.Utilities.Assertions;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities;
 using InstaConnect.PostLikes.Application.Features.PostLikes.Commands.Add;
 using InstaConnect.PostLikes.Application.IntegrationTests.Features.PostLikes.Utilities;
 using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities;
@@ -149,6 +150,22 @@ public class AddPostLikeIntegrationTests : BasePostLikeApplicationIntegrationTes
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
+        var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, response.LikeId, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(postLike);
+    }
+
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
         var postLike = await ServiceScope.GetPostLikeByIdAsync(response.Id, response.LikeId, CancellationToken);
 
         // Assert

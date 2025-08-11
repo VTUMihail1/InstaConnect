@@ -41,9 +41,9 @@ internal class PostService : IPostService
 
     public async Task<PostCollection> GetAllAsync(GetAllPostsQuery query, CancellationToken cancellationToken)
     {
-        var existingPosts = await _postRepository.GetAllAsync(query, cancellationToken);
+        var existingPostCollection = await _postRepository.GetAllAsync(query, cancellationToken);
 
-        return existingPosts;
+        return existingPostCollection;
     }
 
     public async Task<Post> GetByIdAsync(GetPostByIdQuery query, CancellationToken cancellationToken)

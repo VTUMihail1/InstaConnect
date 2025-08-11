@@ -168,7 +168,7 @@ public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicati
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Filter.Id);
+        await action.ShouldThrowPostNotFoundExceptionAsync(request.Filter.Id);
     }
 
     [Fact]

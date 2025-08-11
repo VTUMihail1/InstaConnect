@@ -7,6 +7,7 @@ using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Builders.
 using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.DataAttributes.Id;
 using InstaConnect.PostLikes.Presentation.Features.PostLikes.Models.Requests;
 using InstaConnect.PostLikes.Presentation.FunctionalTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
@@ -189,11 +190,11 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
         var response = await HttpClient.DeletePostLikeProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostLikeNotFound(request.Id, request.LikeId);
+        response.ShouldSatisfyPostNotFound(request.Id);
     }
 
     [Theory]
-    [PostIdNotFoundData]
+    [PostLikeIdNotFoundData]
     public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenLikeIdIsInvalid(
         IStringTransformer transformer)
     {
@@ -208,7 +209,7 @@ public class DeletePostLikeFunctionalTests : BasePostLikePresentationFunctionalT
     }
 
     [Theory]
-    [PostIdNotFoundData]
+    [PostLikeIdNotFoundData]
     public async Task DeleteAsync_ShouldHavePostLikeNotFoundProblemDetails_WhenLikeIdIsInvalid(
         IStringTransformer transformer)
     {

@@ -5,6 +5,7 @@ using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Assertion
 using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Builders.AddApiRequest;
 using InstaConnect.PostLikes.Presentation.Features.PostLikes.Models.Requests;
 using InstaConnect.PostLikes.Presentation.FunctionalTests.Features.PostLikes.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
@@ -141,7 +142,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationFunctionalTest
 
     [Theory]
     [PostIdNotFoundData]
-    public async Task AddAsync_ShouldHaveUserNotFoundProblemDetails_WhenIdIsInvalid(
+    public async Task AddAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -151,7 +152,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationFunctionalTest
         var response = await HttpClient.AddPostLikeProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyUserNotFoundProblemDetails(request.Id);
+        response.ShouldSatisfyPostNotFound(request.Id);
     }
 
     [Theory]
@@ -181,7 +182,7 @@ public class AddPostLikeFunctionalTests : BasePostLikePresentationFunctionalTest
         var response = await HttpClient.AddPostLikeProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyUserNotFoundProblemDetails(request.UserId);
+        response.ShouldSatisfyUserNotFound(request.UserId);
     }
 
     [Fact]

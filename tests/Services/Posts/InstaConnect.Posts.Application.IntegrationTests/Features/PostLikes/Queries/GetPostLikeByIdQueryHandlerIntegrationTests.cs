@@ -82,7 +82,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
+        await action.ShouldThrowPostNotFoundExceptionAsync(request.Id);
     }
 
     [Theory]
@@ -97,7 +97,7 @@ public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicati
         var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.ShouldThrowPostLikeNotFoundExceptionAsync(_request.Id, _request.LikeId);
+        await action.ShouldThrowPostLikeNotFoundExceptionAsync(request.Id, request.LikeId);
     }
 
     [Fact]

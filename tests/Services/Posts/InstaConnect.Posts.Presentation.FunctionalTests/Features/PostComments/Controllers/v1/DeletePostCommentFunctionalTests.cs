@@ -7,6 +7,7 @@ using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Bui
 using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Id;
 using InstaConnect.PostComments.Presentation.Features.PostComments.Models.Requests;
 using InstaConnect.PostComments.Presentation.FunctionalTests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
@@ -189,11 +190,11 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
         var response = await HttpClient.DeletePostCommentProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostCommentNotFound(request.Id, request.CommentId);
+        response.ShouldSatisfyPostNotFound(request.Id);
     }
 
     [Theory]
-    [PostIdNotFoundData]
+    [PostCommentIdNotFoundData]
     public async Task DeleteAsync_ShouldHaveNotFoundStatusCode_WhenCommentIdIsInvalid(
         IStringTransformer transformer)
     {
@@ -208,7 +209,7 @@ public class DeletePostCommentFunctionalTests : BasePostCommentPresentationFunct
     }
 
     [Theory]
-    [PostIdNotFoundData]
+    [PostCommentIdNotFoundData]
     public async Task DeleteAsync_ShouldHavePostCommentNotFoundProblemDetails_WhenCommentIdIsInvalid(
         IStringTransformer transformer)
     {

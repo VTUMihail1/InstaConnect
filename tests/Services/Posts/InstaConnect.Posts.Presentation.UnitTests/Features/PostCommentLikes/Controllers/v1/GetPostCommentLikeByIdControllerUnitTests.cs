@@ -1,78 +1,60 @@
-﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetById;
+﻿using InstaConnect.Common.Tests.Utilities.Assertions;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Assertions;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Builders.AddApiRequest;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Builders.GetByIdApiRequest;
+using InstaConnect.PostCommentLikes.Presentation.Features.PostCommentLikes.Controllers.v1;
+using InstaConnect.PostCommentLikes.Presentation.Features.PostCommentLikes.Models.Requests;
+using InstaConnect.PostCommentLikes.Presentation.UnitTests.Features.PostCommentLikes.Utilities;
 
-namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostCommentLikes.Controllers.v1;
+namespace InstaConnect.PostCommentLikes.Presentation.UnitTests.Features.PostCommentLikes.Controllers.v1;
 
-public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikeUnitTest
+public class GetPostCommentLikeByIdControllerUnitTests : BasePostCommentLikePresentationUnitTest
 {
+    private readonly GetPostCommentLikeByIdApiRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetPostCommentLikeByIdApiRequestBuilder _requestBuilder;
+    private readonly GetPostCommentLikeByIdApiRequest _request;
+
     private readonly PostCommentLikeController _postCommentLikeController;
 
     public GetPostCommentLikeByIdControllerUnitTests()
     {
-        _postCommentLikeController = new(
-            ApplicationMapper,
-            ApplicationSender);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(PostCommentLike);
+        _request = _requestBuilder.Create();
+
+        _postCommentLikeController = new(ApplicationMapper, ApplicationSender);
+
+        ApplicationSender.SetupGetByIdQueryRequest(_request, PostCommentLike, User, CancellationToken);
     }
 
     [Fact]
     public async Task GetByIdAsync_ShouldReturnOkStatusCode_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLike();
-        var request = new GetPostCommentLikeByIdRequest(
-            existingPostCommentLike.Id
-        );
-
         // Act
-        var response = await _postCommentLikeController.GetByIdAsync(request, CancellationToken);
+        var response = await _postCommentLikeController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        response
-            .Result
-            .Should()
-            .Match<OkObjectResult>(m => m.StatusCode == StatusCodes.Status200OK);
+        response.ShouldBeActionResultWithOkStatusCode();
     }
 
     [Fact]
-    public async Task GetByIdAsync_ShouldReturnMessageViewModel_WhenRequestIsValid()
+    public async Task GetByIdAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLike();
-        var request = new GetPostCommentLikeByIdRequest(
-            existingPostCommentLike.Id
-        );
-
         // Act
-        var response = await _postCommentLikeController.GetByIdAsync(request, CancellationToken);
+        var response = await _postCommentLikeController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        response.Result
-            .Should()
-            .BeOfType<OkObjectResult>()
-            .Which
-            .Value
-            .Should()
-            .Match<PostCommentLikeQueryResponse>(m => m.Id == existingPostCommentLike.Id &&
-                                                 m.PostCommentId == existingPostCommentLike.PostCommentId &&
-                                                 m.UserId == existingPostCommentLike.UserId &&
-                                                 m.UserName == existingPostCommentLike.User.UserName &&
-                                                 m.UserProfileImage == existingPostCommentLike.User.ProfileImage);
+        response.ShouldSatisfy(PostCommentLike, User);
     }
 
     [Fact]
-    public async Task GetByIdAsync_ShouldCallTheSender_WhenRequestIsValid()
+    public async Task GetByIdAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLike();
-        var request = new GetPostCommentLikeByIdRequest(
-            existingPostCommentLike.Id
-        );
-
         // Act
-        await _postCommentLikeController.GetByIdAsync(request, CancellationToken);
+        await _postCommentLikeController.GetByIdAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender
-              .Received(1)
-              .SendAsync(Arg.Is<GetPostCommentLikeByIdQuery>(m => m.Id == existingPostCommentLike.Id), CancellationToken);
+        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

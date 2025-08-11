@@ -1,80 +1,48 @@
-﻿using InstaConnect.Posts.Application.Features.PostCommentLikes.Queries.GetAll;
-using InstaConnect.Posts.Domain.Features.PostCommentLikes.Models.Filters;
+﻿using InstaConnect.PostCommentLikes.Application.Features.PostCommentLikes.Queries.GetAll;
+using InstaConnect.PostCommentLikes.Application.UnitTests.Features.PostCommentLikes.Utilities;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Assertions;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Builders.AddApiRequest;
+using InstaConnect.PostCommentLikes.Common.Tests.Features.PostCommentLikes.Utilities.Builders.GetAllQueryRequest;
 
-using NSubstitute.ReceivedExtensions;
+namespace InstaConnect.PostCommentLikes.Application.UnitTests.Features.PostCommentLikes.Queries.GetAll;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.PostCommentLikes.Queries.GetAll;
-
-public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeUnitTest
+public class GetAllPostCommentLikesQueryHandlerUnitTests : BasePostCommentLikeApplicationUnitTest
 {
-    private readonly GetAllPostCommentLikesQueryHandler _queryHandler;
+    private readonly GetAllPostCommentLikesQueryRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostCommentLikesQueryRequestBuilder _requestBuilder;
+    private readonly GetAllPostCommentLikesQueryRequest _request;
+
+    private readonly GetAllPostCommentLikesQueryHandler _handler;
 
     public GetAllPostCommentLikesQueryHandlerUnitTests()
     {
-        _queryHandler = new(
-            ApplicationMapper,
-            PostCommentLikeReadRepository);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(PostCommentLike, User);
+        _request = _requestBuilder.Create();
+
+        _handler = new(ApplicationMapper, PostCommentLikeService);
+
+        PostCommentLikeService.SetupGetAllQuery(_request, PostCommentLike, User, CancellationToken);
     }
 
     [Fact]
-    public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
+    public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLike();
-        var query = new GetAllPostCommentLikesQuery(
-            existingPostCommentLike.UserId,
-            existingPostCommentLike.User.UserName,
-            existingPostCommentLike.PostCommentId,
-            PostCommentLikeTestUtilities.ValidSortOrderProperty,
-            PostCommentLikeTestUtilities.ValidSortPropertyName,
-            PostCommentLikeTestUtilities.ValidPageValue,
-            PostCommentLikeTestUtilities.ValidPageSizeValue);
-
         // Act
-        await _queryHandler.Handle(query, CancellationToken);
+        var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostCommentLikeReadRepository
-            .Received(1)
-            .GetAllAsync(Arg.Is<PostCommentLikeCollectionReadQuery>(m =>
-                                                                        m.UserId == existingPostCommentLike.UserId &&
-                                                                        m.UserName == existingPostCommentLike.User.UserName &&
-                                                                        m.PostCommentId == existingPostCommentLike.PostCommentId &&
-                                                                        m.Page == PostCommentLikeTestUtilities.ValidPageValue &&
-                                                                        m.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
-                                                                        m.SortOrder == PostCommentLikeTestUtilities.ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == PostCommentLikeTestUtilities.ValidSortPropertyName), CancellationToken);
+        response.ShouldSatisfy(PostCommentLike, User, _request);
     }
 
     [Fact]
-    public async Task Handle_ShouldReturnFollowViewModelCollection_WhenQueryIsValid()
+    public async Task Handle_ShouldCallPostCommentLikeServiceGetAllAsync_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostCommentLike = CreatePostCommentLike();
-        var query = new GetAllPostCommentLikesQuery(
-            existingPostCommentLike.UserId,
-            existingPostCommentLike.User.UserName,
-            existingPostCommentLike.PostCommentId,
-            PostCommentLikeTestUtilities.ValidSortOrderProperty,
-            PostCommentLikeTestUtilities.ValidSortPropertyName,
-            PostCommentLikeTestUtilities.ValidPageValue,
-            PostCommentLikeTestUtilities.ValidPageSizeValue);
-
         // Act
-        var response = await _queryHandler.Handle(query, CancellationToken);
+        await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostCommentLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostCommentLike.Id &&
-                                                           m.UserId == existingPostCommentLike.UserId &&
-                                                           m.UserName == existingPostCommentLike.User.UserName &&
-                                                           m.UserProfileImage == existingPostCommentLike.User.ProfileImage &&
-                                                           m.PostCommentId == existingPostCommentLike.PostCommentId) &&
-                                                           mc.Page == PostCommentLikeTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostCommentLikeTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostCommentLikeTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        await PostCommentLikeService.ShouldReceiveOneGetAllAsync(_request, CancellationToken);
     }
 }

@@ -52,9 +52,9 @@ internal class PostCommentService : IPostCommentService
             throw new PostNotFoundException(query.Filter.Id);
         }
 
-        var existingPostComments = await _postCommentRepository.GetAllAsync(query, cancellationToken);
+        var existingPostCommentCollection = await _postCommentRepository.GetAllAsync(query, cancellationToken);
 
-        return existingPostComments;
+        return existingPostCommentCollection;
     }
 
     public async Task<PostComment> GetByIdAsync(GetPostCommentByIdQuery query, CancellationToken cancellationToken)

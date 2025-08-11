@@ -130,12 +130,28 @@ public class AddPostCommentIntegrationTests : BasePostCommentApplicationIntegrat
     }
 
     [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
+        var postComment = await ServiceScope.GetPostCommentByIdAsync(response.Id, response.CommentId, CancellationToken);
+
+        // Assert
+        response.ShouldSatisfy(postComment);
+    }
+
+    [Theory]
     [UserIdDifferentCaseData]
     public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
-        var request = _requestBuilder.WithUserId(User.Id, transformer).Create();
+        var request = _requestBuilder.WithUserId(_request.UserId, transformer).Create();
 
         // Act
         var response = await ApplicationSender.SendAsync(request, CancellationToken);

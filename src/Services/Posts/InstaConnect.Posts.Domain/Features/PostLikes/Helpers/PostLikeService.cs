@@ -50,9 +50,9 @@ internal class PostLikeService : IPostLikeService
             throw new PostNotFoundException(query.Filter.Id);
         }
 
-        var existingPostLikes = await _postLikeRepository.GetAllAsync(query, cancellationToken);
+        var existingPostLikeCollection = await _postLikeRepository.GetAllAsync(query, cancellationToken);
 
-        return existingPostLikes;
+        return existingPostLikeCollection;
     }
 
     public async Task<PostLike> GetByIdAsync(GetPostLikeByIdQuery query, CancellationToken cancellationToken)

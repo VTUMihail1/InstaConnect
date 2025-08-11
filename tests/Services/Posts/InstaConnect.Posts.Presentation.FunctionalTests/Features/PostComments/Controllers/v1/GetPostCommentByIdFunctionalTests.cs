@@ -7,6 +7,7 @@ using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Bui
 using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.DataAttributes.Id;
 using InstaConnect.PostComments.Presentation.Features.PostComments.Models.Requests;
 using InstaConnect.PostComments.Presentation.FunctionalTests.Features.PostComments.Utilities;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
@@ -122,7 +123,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
 
     [Theory]
     [PostIdNotFoundData]
-    public async Task GetByIdAsync_ShouldHavePostCommentNotFoundProblemDetails_WhenIdIsInvalid(
+    public async Task GetByIdAsync_ShouldHavePostNotFoundProblemDetails_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -132,7 +133,7 @@ public class GetPostCommentByIdFunctionalTests : BasePostCommentPresentationFunc
         var response = await HttpClient.GetPostCommentByIdProblemDetailsAsync(request, CancellationToken);
 
         // Assert
-        response.ShouldSatisfyPostCommentNotFound(request.Id, request.CommentId);
+        response.ShouldSatisfyPostNotFound(request.Id);
     }
 
     [Theory]
