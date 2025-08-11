@@ -1,94 +1,142 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetById;
+﻿using InstaConnect.Common.Tests.Utilities.Assertions;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
+using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetById;
+using InstaConnect.PostLikes.Application.IntegrationTests.Features.PostLikes.Utilities;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Assertions;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Builders.AddApiRequest;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Builders.GetByIdQueryRequest;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 
-namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Queries;
+namespace InstaConnect.PostLikes.Application.IntegrationTests.Features.PostLikes.Queries;
 
-public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeIntegrationTest
+public class GetPostLikeByIdQueryHandlerIntegrationTests : BasePostLikeApplicationIntegrationTest
 {
-    public GetPostLikeByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    private readonly GetPostLikeByIdQueryRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetPostLikeByIdQueryRequestBuilder _requestBuilder;
+    private readonly GetPostLikeByIdQueryRequest _request;
+
+    public GetPostLikeByIdQueryHandlerIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
     {
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(PostLike);
+        _request = _requestBuilder.Create();
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsNull()
+    protected override async Task OnInitializeAsync()
     {
-        // Arrange
-        var query = new GetPostLikeByIdQueryRequest(null);
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(PostLikeConfigurations.IdMinLength - 1)]
-    [InlineData(PostLikeConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenIdLengthIsInvalid(int length)
+    [PostIdNullWithMessageData]
+    [PostIdEmptyWithMessageData]
+    [PostIdTooShortWithMessageData]
+    [PostIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var query = new GetPostLikeByIdQuery(DataFaker.GetString(length));
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+    }
+
+    [Theory]
+    [PostLikeIdNullWithMessageData]
+    [PostLikeIdEmptyWithMessageData]
+    [PostLikeIdTooShortWithMessageData]
+    [PostLikeIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenLikeIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+    }
+
+    [Theory]
+    [PostIdNotFoundData]
+    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Id);
+    }
+
+    [Theory]
+    [PostLikeIdNotFoundData]
+    public async Task SendAsync_ShouldThrowPostLikeNotFoundException_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowPostLikeNotFoundExceptionAsync(_request.Id, _request.LikeId);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldThrowPostLikeNotFoundException_WhenIdIsInvalid()
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var query = new GetPostLikeByIdQuery(PostLikeTestUtilities.InvalidId);
-
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<PostLikeNotFoundException>();
+        response.ShouldSatisfy(PostLike, User);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostLikeViewModelCollection_WhenQueryIsValid()
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetPostLikeByIdQuery(existingPostLike.Id);
+        var request = _requestBuilder.WithId(_request.Id, transformer).Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostLikeQueryViewModel>(m => m.Id == existingPostLike.Id &&
-                                                  m.UserId == existingPostLike.UserId &&
-                                                  m.UserName == existingPostLike.User.UserName &&
-                                                  m.UserProfileImage == existingPostLike.User.ProfileImage &&
-                                                  m.PostId == existingPostLike.PostId);
+        response.ShouldSatisfy(PostLike, User);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostLikeViewModelCollection_WhenQueryIsValidAndCaseDoesNotMatch()
+    [Theory]
+    [PostLikeIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndLikeIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetPostLikeByIdQuery(DataFaker.GetDifferentCaseString(existingPostLike.Id));
+        var request = _requestBuilder.WithLikeId(_request.LikeId, transformer).Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostLikeQueryViewModel>(m => m.Id == existingPostLike.Id &&
-                                                  m.UserId == existingPostLike.UserId &&
-                                                  m.UserName == existingPostLike.User.UserName &&
-                                                  m.UserProfileImage == existingPostLike.User.ProfileImage &&
-                                                  m.PostId == existingPostLike.PostId);
+        response.ShouldSatisfy(PostLike, User);
     }
 }

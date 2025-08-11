@@ -1,514 +1,232 @@
-﻿using InstaConnect.Common.Exceptions;
-using InstaConnect.Posts.Application.Features.PostLikes.Queries.GetAll;
+﻿using InstaConnect.Common.Models.Enums;
+using InstaConnect.Common.Tests.Utilities.Assertions;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums.Base;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Ints.Base;
+using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
+using InstaConnect.PostLikes.Application.Features.PostLikes.Queries.GetAll;
+using InstaConnect.PostLikes.Application.IntegrationTests.Features.PostLikes.Utilities;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Assertions;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Builders.AddApiRequest;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Builders.GetAllQueryRequest;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.DataAttributes.Id;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.DataAttributes.Page;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.DataAttributes.PageSize;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.DataAttributes.SortProperty;
+using InstaConnect.PostLikes.Domain.Features.PostLikes.Models.Requests;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
+using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id;
+using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Name;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
-using InstaConnect.Posts.Domain.Features.Users.Utilities;
 
-namespace InstaConnect.Posts.Application.IntegrationTests.Features.PostLikes.Queries;
+namespace InstaConnect.PostLikes.Application.IntegrationTests.Features.PostLikes.Queries;
 
-public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeIntegrationTest
+public class GetAllPostLikesQueryHandlerIntegrationTests : BasePostLikeApplicationIntegrationTest
 {
-    public GetAllPostLikesQueryHandlerIntegrationTests(PostsWebApplicationFactory postsWebApplicationFactory) : base(postsWebApplicationFactory)
+    private readonly GetAllPostLikesQueryRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostLikesQueryRequestBuilder _requestBuilder;
+    private readonly GetAllPostLikesQueryRequest _request;
+
+    public GetAllPostLikesQueryHandlerIntegrationTests(PostsWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
     {
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(PostLike, User);
+        _request = _requestBuilder.Create();
+    }
+
+    protected override async Task OnInitializeAsync()
+    {
+        await ServiceScope.AddUserAsync(User, CancellationToken);
+        await ServiceScope.AddPostAsync(Post, CancellationToken);
+        await ServiceScope.AddPostLikeAsync(PostLike, CancellationToken);
     }
 
     [Theory]
-    [InlineData(UserConfigurations.IdMinLength - 1)]
-    [InlineData(UserConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdLengthIsInvalid(int length)
+    [PostIdNullWithMessageData]
+    [PostIdEmptyWithMessageData]
+    [PostIdTooShortWithMessageData]
+    [PostIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            DataFaker.GetString(length),
-            existingPostLike.User.UserName,
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [InlineData(UserConfigurations.NameMinLength - 1)]
-    [InlineData(UserConfigurations.NameMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenUserNameLengthIsInvalid(int length)
+    [UserIdTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserIdIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            DataFaker.GetString(length),
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [InlineData(PostConfigurations.IdMinLength - 1)]
-    [InlineData(PostConfigurations.IdMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenPostIdLengthIsInvalid(int length)
+    [UserNameTooLongWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenUserNameIsInvalid(
+        IStringTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            existingPostLike.User.UserName,
-            DataFaker.GetString(length),
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyNameIsNull()
-    {
-        // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            existingPostLike.User.UserName,
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            null,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldThrowValidationException_WhenMessageDoesNotContaintSortPropertyName()
-    {
-        // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            existingPostLike.User.UserName,
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.InvalidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [InlineData(default(int))]
-    [InlineData(SharedConfigurations.SortOrderMinLength - 1)]
-    [InlineData(SharedConfigurations.SortOrderMaxLength + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyNameLengthIsInvalid(int length)
+    [SortOrderEmptyWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortOrderIsInvalid(
+        IEnumTransformer<SortOrder> transformer, string errorMessage)
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            existingPostLike.User.UserName,
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            DataFaker.GetString(length),
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithSortOrder(_request.Sorting.Order, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [InlineData(SharedConfigurations.PageMinValue - 1)]
-    [InlineData(SharedConfigurations.PageMaxValue + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenPageValueIsInvalid(int value)
+    [PostLikeSortPropertyEmptyWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenSortPropertyIsInvalid(
+        IEnumTransformer<PostLikeSortProperty> transformer, string errorMessage)
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            existingPostLike.User.UserName,
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            value,
-            PostLikeTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithSortProperty(_request.Sorting.Property, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
     }
 
     [Theory]
-    [InlineData(SharedConfigurations.PageSizeMinValue - 1)]
-    [InlineData(SharedConfigurations.PageSizeMaxValue + 1)]
-    public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeValueIsInvalid(int value)
+    [PostLikePageEmptyWithMessageData]
+    [PostLikePageTooSmallWithMessageData]
+    [PostLikePageTooLargeWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenPageIsInvalid(
+        IIntTransformer transformer, string errorMessage)
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            existingPostLike.User.UserName,
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            value);
+        var request = _requestBuilder.WithPage(_request.Pagination.Page, transformer).Create();
 
         // Act
-        var action = async () => await ApplicationSender.SendAsync(query, CancellationToken);
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<InvalidValidationException>();
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+    }
+
+    [Theory]
+    [PostLikePageSizeEmptyWithMessageData]
+    [PostLikePageSizeTooSmallWithMessageData]
+    [PostLikePageSizeTooLargeWithMessageData]
+    public async Task SendAsync_ShouldThrowValidationException_WhenPageSizeIsInvalid(
+        IIntTransformer transformer, string errorMessage)
+    {
+        // Arrange
+        var request = _requestBuilder.WithPageSize(_request.Pagination.PageSize, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowInvalidValidationExceptionAsync(errorMessage);
+    }
+
+    [Theory]
+    [PostIdNotFoundData]
+    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid(
+        IStringTransformer transformer)
+    {
+        // Arrange
+        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Create();
+
+        // Act
+        var action = async () => await ApplicationSender.SendAsync(request, CancellationToken);
+
+        // Assert
+        await action.ShouldThrowPostNotFoundExceptionAsync(_request.Filter.Id);
     }
 
     [Fact]
-    public async Task SendAsync_ShouldReturnPostLikeViewModelCollection_WhenUserIdIsNull()
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            null,
-            existingPostLike.User.UserName,
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
-
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(_request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLike.Id &&
-                                                                    m.UserId == existingPostLike.UserId &&
-                                                                    m.UserName == existingPostLike.User.UserName &&
-                                                                    m.UserProfileImage == existingPostLike.User.ProfileImage &&
-                                                                    m.PostId == existingPostLike.PostId) &&
-                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(PostLike, User, _request);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostLikeViewModelCollection_WhenUserIdIsEmpty()
+    [Theory]
+    [PostIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            string.Empty,
-            existingPostLike.User.UserName,
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithId(_request.Filter.Id, transformer).Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLike.Id &&
-                                                                    m.UserId == existingPostLike.UserId &&
-                                                                    m.UserName == existingPostLike.User.UserName &&
-                                                                    m.UserProfileImage == existingPostLike.User.ProfileImage &&
-                                                                    m.PostId == existingPostLike.PostId) &&
-                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(PostLike, User, _request);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostLikeViewModelCollection_WhenUserIdCaseDoesNotMatch()
+    [Theory]
+    [UserIdNullData]
+    [UserIdEmptyData]
+    [UserIdDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserIdAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            DataFaker.GetDifferentCaseString(existingPostLike.UserId),
-            existingPostLike.User.UserName,
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserId(_request.Filter.UserId, transformer).Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLike.Id &&
-                                                                    m.UserId == existingPostLike.UserId &&
-                                                                    m.UserName == existingPostLike.User.UserName &&
-                                                                    m.UserProfileImage == existingPostLike.User.ProfileImage &&
-                                                                    m.PostId == existingPostLike.PostId) &&
-                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(PostLike, User, _request);
     }
 
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostLikeViewModelCollection_WhenUserNameIsNull()
+    [Theory]
+    [UserNameNullData]
+    [UserNameEmptyData]
+    [UserNameDifferentCaseData]
+    public async Task SendAsync_ShouldReturnResponse_WhenRequestAndUserNameAreValid(
+        IStringTransformer transformer)
     {
         // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            null,
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
+        var request = _requestBuilder.WithUserName(_request.Filter.UserName, transformer).Create();
 
         // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
+        var response = await ApplicationSender.SendAsync(request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLike.Id &&
-                                                                    m.UserId == existingPostLike.UserId &&
-                                                                    m.UserName == existingPostLike.User.UserName &&
-                                                                    m.UserProfileImage == existingPostLike.User.ProfileImage &&
-                                                                    m.PostId == existingPostLike.PostId) &&
-                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostLikeViewModelCollection_WhenUserNameIsEmpty()
-    {
-        // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            string.Empty,
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLike.Id &&
-                                                                    m.UserId == existingPostLike.UserId &&
-                                                                    m.UserName == existingPostLike.User.UserName &&
-                                                                    m.UserProfileImage == existingPostLike.User.ProfileImage &&
-                                                                    m.PostId == existingPostLike.PostId) &&
-                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostLikeViewModelCollection_WhenUserNameCaseDoesNotMatch()
-    {
-        // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            DataFaker.GetDifferentCaseString(existingPostLike.User.UserName),
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLike.Id &&
-                                                                    m.UserId == existingPostLike.UserId &&
-                                                                    m.UserName == existingPostLike.User.UserName &&
-                                                                    m.UserProfileImage == existingPostLike.User.ProfileImage &&
-                                                                    m.PostId == existingPostLike.PostId) &&
-                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostLikeViewModelCollection_WhenPostIdIsNull()
-    {
-        // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            existingPostLike.User.UserName,
-            null,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLike.Id &&
-                                                                    m.UserId == existingPostLike.UserId &&
-                                                                    m.UserName == existingPostLike.User.UserName &&
-                                                                    m.UserProfileImage == existingPostLike.User.ProfileImage &&
-                                                                    m.PostId == existingPostLike.PostId) &&
-                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostLikeViewModelCollection_WhenPostIdIsEmpty()
-    {
-        // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            existingPostLike.User.UserName,
-            string.Empty,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLike.Id &&
-                                                                    m.UserId == existingPostLike.UserId &&
-                                                                    m.UserName == existingPostLike.User.UserName &&
-                                                                    m.UserProfileImage == existingPostLike.User.ProfileImage &&
-                                                                    m.PostId == existingPostLike.PostId) &&
-                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostLikeViewModelCollection_WhenPostIdCaseDoesNotMatch()
-    {
-        // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            existingPostLike.User.UserName,
-            DataFaker.GetDifferentCaseString(existingPostLike.PostId),
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLike.Id &&
-                                                                    m.UserId == existingPostLike.UserId &&
-                                                                    m.UserName == existingPostLike.User.UserName &&
-                                                                    m.UserProfileImage == existingPostLike.User.ProfileImage &&
-                                                                    m.PostId == existingPostLike.PostId) &&
-                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
-    }
-
-    [Fact]
-    public async Task SendAsync_ShouldReturnPostLikeViewModelCollection_WhenQueryIsValid()
-    {
-        // Arrange
-        var existingPostLike = await CreatePostLikeAsync(CancellationToken);
-        var query = new GetAllPostLikesQuery(
-            existingPostLike.UserId,
-            existingPostLike.User.UserName,
-            existingPostLike.PostId,
-            PostLikeTestUtilities.ValidSortOrderProperty,
-            PostLikeTestUtilities.ValidSortPropertyName,
-            PostLikeTestUtilities.ValidPageValue,
-            PostLikeTestUtilities.ValidPageSizeValue);
-
-        // Act
-        var response = await ApplicationSender.SendAsync(query, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostLikePaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostLike.Id &&
-                                                                    m.UserId == existingPostLike.UserId &&
-                                                                    m.UserName == existingPostLike.User.UserName &&
-                                                                    m.UserProfileImage == existingPostLike.User.ProfileImage &&
-                                                                    m.PostId == existingPostLike.PostId) &&
-                                                           mc.Page == PostLikeTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostLikeTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostLikeTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        response.ShouldSatisfy(PostLike, User, _request);
     }
 }

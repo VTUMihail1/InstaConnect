@@ -25,4 +25,13 @@ public static class PostLikeExceptionAssertions
         await action.ShouldThrowAsync<PostLikeForbiddenException>(
             PostLikeExceptionErrorMessages.GetForbiddenMessage(id, likeId, userId));
     }
+
+    public static async Task ShouldThrowPostLikeAlreadyExistsExceptionAsync(
+        this Func<Task> action,
+        string id,
+        string userId)
+    {
+        await action.ShouldThrowAsync<PostLikeAlreadyExistsException>(
+            PostLikeExceptionErrorMessages.GetAlreadyExistsMessage(id, userId));
+    }
 }

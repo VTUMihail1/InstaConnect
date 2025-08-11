@@ -30,6 +30,13 @@ public class GetPostLikeByIdQueryRequestBuilder
         return this;
     }
 
+    public GetPostLikeByIdQueryRequestBuilder WithLikeId(string likeId, IStringTransformer? transformer = null)
+    {
+        _objectBuilder.With(p => p.LikeId, likeId, transformer);
+
+        return this;
+    }
+
     public GetPostLikeByIdQueryRequest Create()
     {
         return _objectBuilder.Create();

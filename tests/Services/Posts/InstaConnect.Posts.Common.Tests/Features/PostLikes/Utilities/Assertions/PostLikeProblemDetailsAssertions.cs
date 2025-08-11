@@ -23,4 +23,12 @@ public static class PostLikeProblemDetailsAssertions
     {
         problemDetails.ShouldSatisfyForbidden(PostLikeExceptionErrorMessages.GetForbiddenMessage(id, likeId, userId));
     }
+
+    public static void ShouldSatisfyPostLikeAlreadyExists(
+        this ProblemDetails problemDetails,
+        string id,
+        string userId)
+    {
+        problemDetails.ShouldSatisfyForbidden(PostLikeExceptionErrorMessages.GetAlreadyExistsMessage(id, userId));
+    }
 }

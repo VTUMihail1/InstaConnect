@@ -83,8 +83,4 @@
     <Using Include="InstaConnect.Common.Tests.Utilities" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\PostLikes\" />
-  </ItemGroup>
-
 </Project>

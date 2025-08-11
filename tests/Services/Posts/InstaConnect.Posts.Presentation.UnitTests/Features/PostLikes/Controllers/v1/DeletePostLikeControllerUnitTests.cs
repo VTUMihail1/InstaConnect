@@ -1,55 +1,48 @@
-﻿using InstaConnect.Posts.Application.Features.PostLikes.Commands.Delete;
+﻿using InstaConnect.Common.Tests.Utilities.Assertions;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Assertions;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Builders.AddApiRequest;
+using InstaConnect.PostLikes.Common.Tests.Features.PostLikes.Utilities.Builders.DeleteApiRequest;
+using InstaConnect.PostLikes.Presentation.Features.PostLikes.Controllers.v1;
+using InstaConnect.PostLikes.Presentation.Features.PostLikes.Models.Requests;
+using InstaConnect.PostLikes.Presentation.UnitTests.Features.PostLikes.Utilities;
 
-namespace InstaConnect.Posts.Presentation.UnitTests.Features.PostLikes.Controllers.v1;
+namespace InstaConnect.PostLikes.Presentation.UnitTests.Features.PostLikes.Controllers.v1;
 
-public class DeletePostLikeControllerUnitTests : BasePostLikeUnitTest
+
+public class DeletePostLikeControllerUnitTests : BasePostLikePresentationUnitTest
 {
+    private readonly DeletePostLikeApiRequestBuilderFactory _requestBuilderFactory;
+    private readonly DeletePostLikeApiRequestBuilder _requestBuilder;
+    private readonly DeletePostLikeApiRequest _request;
+
     private readonly PostLikeController _postLikeController;
 
     public DeletePostLikeControllerUnitTests()
     {
-        _postLikeController = new(
-            ApplicationMapper,
-            ApplicationSender);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(PostLike);
+        _request = _requestBuilder.Create();
+
+        _postLikeController = new(ApplicationMapper, ApplicationSender);
     }
 
     [Fact]
     public async Task DeleteAsync_ShouldReturnNoContentStatusCode_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostLike = CreatePostLike();
-        var request = new DeletePostLikeRequest(
-            existingPostLike.Id,
-            existingPostLike.UserId
-        );
-
         // Act
-        var response = await _postLikeController.DeleteAsync(request, CancellationToken);
+        var response = await _postLikeController.DeleteAsync(_request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<NoContentResult>(m => m.StatusCode == StatusCodes.Status204NoContent);
+        response.ShouldBeActionResultWithNoContentStatusCode();
     }
 
     [Fact]
-    public async Task DeleteAsync_ShouldCallTheSender_WhenRequestIsValid()
+    public async Task DeleteAsync_ShouldCallTheApplicationSenderSendAsync_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostLike = CreatePostLike();
-        var request = new DeletePostLikeRequest(
-            existingPostLike.Id,
-            existingPostLike.UserId
-        );
-
         // Act
-        await _postLikeController.DeleteAsync(request, CancellationToken);
+        await _postLikeController.DeleteAsync(_request, CancellationToken);
 
         // Assert
-        await ApplicationSender
-            .Received(1)
-            .SendAsync(Arg.Is<DeletePostLikeCommandRequest>(m => m.Id == existingPostLike.Id &&
-                                                    m.CurrentUserId == existingPostLike.UserId),
-                                                    CancellationToken);
+        await ApplicationSender.ShouldReceiveOneSendAsync(_request, CancellationToken);
     }
 }

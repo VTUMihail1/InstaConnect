@@ -13,7 +13,7 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicatio
     private readonly GetPostCommentByIdQueryRequestBuilder _requestBuilder;
     private readonly GetPostCommentByIdQueryRequest _request;
 
-    private readonly GetPostCommentByIdQueryHandler _requestHandler;
+    private readonly GetPostCommentByIdQueryHandler _handler;
 
     public GetPostCommentByIdQueryHandlerUnitTests()
     {
@@ -21,7 +21,7 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicatio
         _requestBuilder = _requestBuilderFactory.Create(PostComment);
         _request = _requestBuilder.Create();
 
-        _requestHandler = new(ApplicationMapper, PostCommentService);
+        _handler = new(ApplicationMapper, PostCommentService);
 
         PostCommentService.SetupGetByIdQuery(_request, PostComment, User, CancellationToken);
     }
@@ -30,7 +30,7 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicatio
     public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
     {
         // Act
-        var response = await _requestHandler.Handle(_request, CancellationToken);
+        var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
         response.ShouldSatisfy(PostComment, User);
@@ -40,7 +40,7 @@ public class GetPostCommentByIdQueryHandlerUnitTests : BasePostCommentApplicatio
     public async Task Handle_ShouldCallPostCommentServiceGetByIdAsync_WhenRequestIsValid()
     {
         // Act
-        await _requestHandler.Handle(_request, CancellationToken);
+        await _handler.Handle(_request, CancellationToken);
 
         // Assert
         await PostCommentService.ShouldReceiveOneGetByIdAsync(_request, CancellationToken);
