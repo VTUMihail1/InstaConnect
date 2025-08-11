@@ -20,7 +20,7 @@ public class GetPostByIdQueryHandlerUnitTests : BasePostApplicationUnitTest
 
         _requestHandler = new(PostService, ApplicationMapper);
 
-        PostService.SetupGetByIdQuery(_request, Post, User, CancellationToken);
+        PostService.SetupGetPostByIdQuery(_request, Post, User, CancellationToken);
     }
 
     [Fact]

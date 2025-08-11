@@ -1,112 +1,47 @@
-﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Add;
-using InstaConnect.Posts.Domain.Features.Users.Exceptions;
+﻿using InstaConnect.PostComments.Application.Features.PostComments.Commands.Add;
+using InstaConnect.PostComments.Application.UnitTests.Features.PostComments.Utilities;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Assertions;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Builders.AddCommandRequest;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Commands.Add;
+namespace InstaConnect.PostComments.Application.UnitTests.Features.PostComments.Commands.Add;
 
-public class AddPostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
+public class AddPostCommentCommandHandlerUnitTests : BasePostCommentApplicationUnitTest
 {
-    private readonly AddPostCommentCommandHandler _commandHandler;
+    private readonly AddPostCommentCommandRequestBuilderFactory _requestBuilderFactory;
+    private readonly AddPostCommentCommandRequestBuilder _requestBuilder;
+    private readonly AddPostCommentCommandRequest _request;
+
+    private readonly AddPostCommentCommandHandler _handler;
 
     public AddPostCommentCommandHandlerUnitTests()
     {
-        _commandHandler = new(
-            UnitOfWork,
-            ApplicationMapper,
-            PostCommentService,
-            UserWriteRepository,
-            PostWriteRepository);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(Post, User);
+        _request = _requestBuilder.Create();
+
+        _handler = new(ApplicationMapper, PostCommentService);
+
+        PostCommentService.SetupAddCommand(_request, PostComment, CancellationToken);
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowUserNotFoundException_WhenCurrentUserIdIsInvalid()
+    public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var postComment = CreatePostCommentFactory();
-        var command = new AddPostCommentCommand(
-            UserTestUtilities.InvalidId,
-            postComment.PostId,
-            PostCommentTestUtilities.ValidAddContent);
-
         // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+        var response = await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<UserNotFoundException>();
+        response.ShouldSatisfy(PostComment);
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowPostNotFoundException_WhenPostIdIsInvalid()
+    public async Task Handle_ShouldCallPostCommentServiceAddAsync_WhenRequestIsValid()
     {
-        // Arrange
-        var postComment = CreatePostCommentFactory();
-        var command = new AddPostCommentCommand(
-            postComment.UserId,
-            PostTestUtilities.InvalidId,
-            PostCommentTestUtilities.ValidAddContent);
-
         // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+        await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<PostNotFoundException>();
-    }
-
-    [Fact]
-    public async Task Handle_ShouldReturnPostCommentCommandViewModel_WhenPostCommentIsValid()
-    {
-        // Arrange
-        var postComment = CreatePostCommentFactory();
-        var command = new AddPostCommentCommand(
-            postComment.UserId,
-            postComment.PostId,
-            PostCommentTestUtilities.ValidAddContent);
-
-        // Act
-        var response = await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        response
-            .Should()
-            .Match<PostCommentCommandViewModel>(m => m.Id == response.Id);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldAddPostToRepository_WhenPostIsValid()
-    {
-        // Arrange
-        var postComment = CreatePostCommentFactory();
-        var command = new AddPostCommentCommand(
-            postComment.UserId,
-            postComment.PostId,
-            PostCommentTestUtilities.ValidAddContent);
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        PostCommentService
-            .Received(1)
-            .Add(postComment.Post,
-                 PostCommentTestUtilities.ValidAddContent,
-                 postComment.UserId);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldCallSaveChangesAsync_WhenPostIsValid()
-    {
-        // Arrange
-        var postComment = CreatePostCommentFactory();
-        var command = new AddPostCommentCommand(
-            postComment.UserId,
-            postComment.PostId,
-            PostCommentTestUtilities.ValidAddContent);
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await UnitOfWork
-            .Received(1)
-            .SaveChangesAsync(CancellationToken);
+        await PostCommentService.ShouldReceiveOneAddAsync(_request, CancellationToken);
     }
 }

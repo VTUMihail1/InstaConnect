@@ -1,11 +1,8 @@
-﻿using InstaConnect.Common.Tests.Assertions;
-using InstaConnect.Common.Tests.Utilities.Assertions;
+﻿using InstaConnect.Common.Tests.Utilities.Assertions;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
-using InstaConnect.Posts.Application.Features.Posts.Commands.Delete;
 using InstaConnect.Posts.Application.Features.Posts.Commands.Update;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.DeleteCommandRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.UpdateCommandRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Content;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Id;
@@ -110,7 +107,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [PostIdNotFoundData]
-    public async Task SendAsync_ShouldThrowNotFoundException_WhenIdIsInvalid(
+    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -125,7 +122,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [UserIdNotFoundData]
-    public async Task SendAsync_ShouldThrowForbiddenException_WhenUserIdIsInvalid(
+    public async Task SendAsync_ShouldThrowPostForbiddenException_WhenUserIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -182,7 +179,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldUpdate_WhenRequestIsValid()
+    public async Task SendAsync_ShouldUpdatePost_WhenRequestIsValid()
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
@@ -194,7 +191,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [PostIdDifferentCaseData]
-    public async Task SendAsync_ShouldUpdate_WhenRequestAndIdAreValid(
+    public async Task SendAsync_ShouldUpdatePost_WhenRequestAndIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -210,7 +207,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldUpdate_WhenRequestAndUserIdAreValids(
+    public async Task SendAsync_ShouldUpdatePost_WhenRequestAndUserIdAreValids(
         IStringTransformer transformer)
     {
         // Arrange
@@ -225,7 +222,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldPublishUpdatedEvent_WhenRequestIsValid()
+    public async Task SendAsync_ShouldPublishPostUpdatedEvent_WhenRequestIsValid()
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
@@ -238,7 +235,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [PostIdDifferentCaseData]
-    public async Task SendAsync_ShouldPublishUpdatedEvent_WhenRequestAndIdAreValid(
+    public async Task SendAsync_ShouldPublishPostUpdatedEvent_WhenRequestAndIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -255,7 +252,7 @@ public class UpdatePostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldPublishUpdatedEvent_WhenRequestAndUserIdAreValids(
+    public async Task SendAsync_ShouldPublishPostUpdatedEvent_WhenRequestAndUserIdAreValids(
         IStringTransformer transformer)
     {
         // Arrange

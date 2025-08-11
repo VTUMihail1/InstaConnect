@@ -21,7 +21,7 @@ public class AddPostControllerUnitTests : BasePostPresentationUnitTest
 
         _postController = new(ApplicationMapper, ApplicationSender);
 
-        ApplicationSender.SetupAddCommandRequest(_request, Post, CancellationToken);
+        ApplicationSender.SetupAddPostCommandRequest(_request, Post, CancellationToken);
     }
 
     [Fact]

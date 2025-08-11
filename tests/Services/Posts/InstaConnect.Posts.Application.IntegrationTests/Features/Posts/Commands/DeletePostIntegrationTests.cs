@@ -73,7 +73,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [PostIdNotFoundData]
-    public async Task SendAsync_ShouldThrowNotFoundException_WhenIdIsInvalid(
+    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -88,7 +88,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [UserIdNotFoundData]
-    public async Task SendAsync_ShouldThrowForbiddenException_WhenUserIdIsInvalid(
+    public async Task SendAsync_ShouldThrowPostForbiddenException_WhenUserIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -102,7 +102,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldDelete_WhenRequestIsValid()
+    public async Task SendAsync_ShouldDeletePost_WhenRequestIsValid()
     {
         // Act
         await ApplicationSender.SendAsync(_request, CancellationToken);
@@ -114,7 +114,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [PostIdDifferentCaseData]
-    public async Task SendAsync_ShouldDelete_WhenRequestAndIdAreValid(
+    public async Task SendAsync_ShouldDeletePost_WhenRequestAndIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -130,7 +130,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldDelete_WhenRequestAndUserIdAreValid(
+    public async Task SendAsync_ShouldDeletePost_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -145,7 +145,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldPublishDeletedEvent_WhenRequestIsValid()
+    public async Task SendAsync_ShouldPublishPostDeletedEvent_WhenRequestIsValid()
     {
         // Act
         await ApplicationSender.SendAsync(_request, CancellationToken);
@@ -157,7 +157,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [PostIdDifferentCaseData]
-    public async Task SendAsync_ShouldPublishDeletedEvent_WhenRequestAndIdAreValid(
+    public async Task SendAsync_ShouldPublishPostDeletedEvent_WhenRequestAndIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -173,7 +173,7 @@ public class DeletePostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldPublishDeletedEvent_WhenRequestAndUserIdAreValid(
+    public async Task SendAsync_ShouldPublishPostDeletedEvent_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange

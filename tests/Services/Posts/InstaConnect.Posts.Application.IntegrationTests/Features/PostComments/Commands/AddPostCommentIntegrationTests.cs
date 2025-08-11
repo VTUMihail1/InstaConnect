@@ -90,7 +90,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentApplicationIntegrat
 
     [Theory]
     [PostIdNotFoundData]
-    public async Task SendAsync_ShouldThrowNotFoundException_WhenIdIsInvalid(
+    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -146,7 +146,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentApplicationIntegrat
     }
 
     [Fact]
-    public async Task SendAsync_ShouldAdd_WhenRequestIsValid()
+    public async Task SendAsync_ShouldAddPostComment_WhenRequestIsValid()
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
@@ -158,7 +158,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentApplicationIntegrat
 
     [Theory]
     [PostIdDifferentCaseData]
-    public async Task SendAsync_ShouldAdd_WhenRequestAndIdAreValid(
+    public async Task SendAsync_ShouldAddPostComment_WhenRequestAndIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -174,7 +174,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentApplicationIntegrat
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldAdd_WhenRequestAndUserIdAreValid(
+    public async Task SendAsync_ShouldAddPostComment_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -189,7 +189,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentApplicationIntegrat
     }
 
     [Fact]
-    public async Task SendAsync_ShouldPublishAddedEvent_WhenRequestIsValid()
+    public async Task SendAsync_ShouldPublishPostCommentAddedEvent_WhenRequestIsValid()
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
@@ -202,7 +202,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentApplicationIntegrat
 
     [Theory]
     [PostIdDifferentCaseData]
-    public async Task SendAsync_ShouldPublishAddedEvent_WhenRequestAnIdAreValid(
+    public async Task SendAsync_ShouldPublishPostCommentAddedEvent_WhenRequestAnIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -219,7 +219,7 @@ public class AddPostCommentIntegrationTests : BasePostCommentApplicationIntegrat
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldPublishAddedEvent_WhenRequestAndUserIdAreValid(
+    public async Task SendAsync_ShouldPublishPostCommentAddedEvent_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange

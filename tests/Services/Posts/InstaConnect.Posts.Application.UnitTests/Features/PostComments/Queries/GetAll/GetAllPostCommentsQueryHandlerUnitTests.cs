@@ -1,80 +1,48 @@
-﻿using InstaConnect.Posts.Application.Features.PostComments.Queries.GetAll;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Filters;
+﻿using InstaConnect.PostComments.Application.Features.PostComments.Queries.GetAll;
+using InstaConnect.PostComments.Application.UnitTests.Features.PostComments.Utilities;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Assertions;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Builders.AddApiRequest;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Builders.GetAllQueryRequest;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Queries.GetAll;
+namespace InstaConnect.PostComments.Application.UnitTests.Features.PostComments.Queries.GetAll;
 
-public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentUnitTest
+public class GetAllPostCommentsQueryHandlerUnitTests : BasePostCommentApplicationUnitTest
 {
-    private readonly GetAllPostCommentsQueryHandler _queryHandler;
+    private readonly GetAllPostCommentsQueryRequestBuilderFactory _requestBuilderFactory;
+    private readonly GetAllPostCommentsQueryRequestBuilder _requestBuilder;
+    private readonly GetAllPostCommentsQueryRequest _request;
+
+    private readonly GetAllPostCommentsQueryHandler _requestHandler;
 
     public GetAllPostCommentsQueryHandlerUnitTests()
     {
-        _queryHandler = new(
-            ApplicationMapper,
-            PostCommentReadRepository);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(PostComment, User);
+        _request = _requestBuilder.Create();
+
+        _requestHandler = new(ApplicationMapper, PostCommentService);
+
+        PostCommentService.SetupGetAllQuery(_request, PostComment, User, CancellationToken);
     }
 
     [Fact]
-    public async Task Handle_ShouldCallRepositoryWithGetAllMethod_WhenQueryIsValid()
+    public async Task Handle_ShouldReturnResponse_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostComment = CreatePostComment();
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
-
         // Act
-        await _queryHandler.Handle(query, CancellationToken);
+        var response = await _requestHandler.Handle(_request, CancellationToken);
 
         // Assert
-        await PostCommentReadRepository
-            .Received(1)
-            .GetAllAsync(Arg.Is<PostCommentCollectionReadQuery>(m =>
-                                                                        m.UserId == existingPostComment.UserId &&
-                                                                        m.UserName == existingPostComment.User.UserName &&
-                                                                        m.PostId == existingPostComment.PostId &&
-                                                                        m.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                                        m.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                                        m.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                                        m.SortOrder == PostCommentTestUtilities.ValidSortOrderProperty &&
-                                                                        m.SortPropertyName == PostCommentTestUtilities.ValidSortPropertyName), CancellationToken);
+        response.ShouldSatisfy(PostComment, User, _request);
     }
 
     [Fact]
-    public async Task Handle_ShouldReturnPostCommentViewModelCollection_WhenQueryIsValid()
+    public async Task Handle_ShouldCallPostCommentServiceGetAllAsync_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostComment = CreatePostComment();
-        var query = new GetAllPostCommentsQuery(
-            existingPostComment.UserId,
-            existingPostComment.User.UserName,
-            existingPostComment.PostId,
-            PostCommentTestUtilities.ValidSortOrderProperty,
-            PostCommentTestUtilities.ValidSortPropertyName,
-            PostCommentTestUtilities.ValidPageValue,
-            PostCommentTestUtilities.ValidPageSizeValue);
-
         // Act
-        var response = await _queryHandler.Handle(query, CancellationToken);
+        await _requestHandler.Handle(_request, CancellationToken);
 
         // Assert
-        response
-            .Should()
-            .Match<PostCommentPaginationQueryViewModel>(mc => mc.Items.All(m => m.Id == existingPostComment.Id &&
-                                                           m.UserId == existingPostComment.UserId &&
-                                                           m.UserName == existingPostComment.User.UserName &&
-                                                           m.UserProfileImage == existingPostComment.User.ProfileImage &&
-                                                           m.PostId == existingPostComment.PostId &&
-                                                           m.Content == existingPostComment.Content) &&
-                                                           mc.Page == PostCommentTestUtilities.ValidPageValue &&
-                                                           mc.PageSize == PostCommentTestUtilities.ValidPageSizeValue &&
-                                                           mc.TotalCount == PostCommentTestUtilities.ValidTotalCountValue &&
-                                                           !mc.HasPreviousPage &&
-                                                           !mc.HasNextPage);
+        await PostCommentService.ShouldReceiveOneGetAllAsync(_request, CancellationToken);
     }
 }

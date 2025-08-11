@@ -19,7 +19,7 @@ public class AddPostCommandHandlerUnitTests : BasePostApplicationUnitTest
 
         _handler = new(PostService, ApplicationMapper);
 
-        PostService.SetupAddCommand(_request, Post, CancellationToken);
+        PostService.SetupAddPostCommand(_request, Post, CancellationToken);
     }
 
     [Fact]

@@ -91,7 +91,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
 
     [Theory]
     [PostIdNotFoundData]
-    public async Task SendAsync_ShouldThrowNotFoundException_WhenIdIsInvalid(
+    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -106,7 +106,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
 
     [Theory]
     [PostCommentIdNotFoundData]
-    public async Task SendAsync_ShouldThrowCommentNotFoundException_WhenCommentIdIsInvalid(
+    public async Task SendAsync_ShouldThrowPostCommentNotFoundException_WhenCommentIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -121,7 +121,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
 
     [Theory]
     [UserIdNotFoundData]
-    public async Task SendAsync_ShouldThrowCommentForbiddenException_WhenUserIdIsInvalid(
+    public async Task SendAsync_ShouldThrowPostCommentForbiddenException_WhenUserIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -135,7 +135,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
     }
 
     [Fact]
-    public async Task SendAsync_ShouldDelet_WhenRequestIsValid()
+    public async Task SendAsync_ShouldDeletePostComment_WhenRequestIsValid()
     {
         // Act
         await ApplicationSender.SendAsync(_request, CancellationToken);
@@ -147,7 +147,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
 
     [Theory]
     [PostIdDifferentCaseData]
-    public async Task SendAsync_ShouldDelete_WhenRequestAndIdAreValid(
+    public async Task SendAsync_ShouldDeletePostComment_WhenRequestAndIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -163,7 +163,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
 
     [Theory]
     [PostCommentIdDifferentCaseData]
-    public async Task SendAsync_ShouldDelete_WhenRequestAndCommentIdAreValid(
+    public async Task SendAsync_ShouldDeletePostComment_WhenRequestAndCommentIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -179,7 +179,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldDelete_WhenRequestAndUserIdAreValid(
+    public async Task SendAsync_ShouldDeletePostComment_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -194,7 +194,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
     }
 
     [Fact]
-    public async Task SendAsync_ShouldPublishDeletedEvent_WhenRequestIsValid()
+    public async Task SendAsync_ShouldPublishPostCommentDeletedEvent_WhenRequestIsValid()
     {
         // Act
         await ApplicationSender.SendAsync(_request, CancellationToken);
@@ -206,7 +206,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
 
     [Theory]
     [PostIdDifferentCaseData]
-    public async Task SendAsync_ShouldPublishDeletedEvent_WhenRequestAndIdAreValid(
+    public async Task SendAsync_ShouldPublishPostCommentDeletedEvent_WhenRequestAndIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -222,7 +222,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
 
     [Theory]
     [PostCommentIdDifferentCaseData]
-    public async Task SendAsync_ShouldPublishDeletedEvent_WhenRequestAndCommentIdAreValid(
+    public async Task SendAsync_ShouldPublishPostCommentDeletedEvent_WhenRequestAndCommentIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -238,7 +238,7 @@ public class DeletePostCommentIntegrationTests : BasePostCommentApplicationInteg
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldPublishDeletedEvent_WhenRequestAndUserIdAreValid(
+    public async Task SendAsync_ShouldPublishPostCommentDeletedEvent_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange

@@ -72,7 +72,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
 
     [Theory]
     [PostIdNotFoundData]
-    public async Task SendAsync_ShouldThrowNotFoundException_WhenIdIsInvalid(
+    public async Task SendAsync_ShouldThrowPostNotFoundException_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -87,7 +87,7 @@ public class GetPostCommentByIdQueryHandlerIntegrationTests : BasePostCommentApp
 
     [Theory]
     [PostCommentIdNotFoundData]
-    public async Task SendAsync_ShouldThrowCommentNotFoundException_WhenIdIsInvalid(
+    public async Task SendAsync_ShouldThrowPostCommentNotFoundException_WhenIdIsInvalid(
         IStringTransformer transformer)
     {
         // Arrange

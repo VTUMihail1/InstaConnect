@@ -1,115 +1,35 @@
-﻿using InstaConnect.Posts.Application.Features.PostComments.Commands.Delete;
-using InstaConnect.Posts.Domain.Features.PostComments.Models.Entities;
+﻿using InstaConnect.PostComments.Application.Features.PostComments.Commands.Delete;
+using InstaConnect.PostComments.Application.UnitTests.Features.PostComments.Utilities;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Assertions;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Builders.AddApiRequest;
+using InstaConnect.PostComments.Common.Tests.Features.PostComments.Utilities.Builders.DeleteCommandRequest;
 
-namespace InstaConnect.Posts.Application.UnitTests.Features.PostComments.Commands.Delete;
+namespace InstaConnect.PostComments.Application.UnitTests.Features.PostComments.Commands.Delete;
 
-public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentUnitTest
+public class DeletePostCommentCommandHandlerUnitTests : BasePostCommentApplicationUnitTest
 {
-    private readonly DeletePostCommentCommandHandler _commandHandler;
+    private readonly DeletePostCommentCommandRequestBuilderFactory _requestBuilderFactory;
+    private readonly DeletePostCommentCommandRequestBuilder _requestBuilder;
+    private readonly DeletePostCommentCommandRequest _request;
+
+    private readonly DeletePostCommentCommandHandler _handler;
 
     public DeletePostCommentCommandHandlerUnitTests()
     {
-        _commandHandler = new(
-            UnitOfWork,
-            PostCommentService,
-            PostWriteRepository);
+        _requestBuilderFactory = new();
+        _requestBuilder = _requestBuilderFactory.Create(PostComment);
+        _request = _requestBuilder.Create();
+
+        _handler = new(ApplicationMapper, PostCommentService);
     }
 
     [Fact]
-    public async Task Handle_ShouldThrowPostException_WhenPostIdIsInvalid()
+    public async Task Handle_ShouldCallPostCommentServiceDeleteAsync_WhenRequestIsValid()
     {
-        // Arrange
-        var existingPostComment = CreatePostComment();
-        var command = new DeletePostCommentCommand(
-            existingPostComment.Id,
-            PostTestUtilities.InvalidId,
-            existingPostComment.UserId
-        );
-
         // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
+        await _handler.Handle(_request, CancellationToken);
 
         // Assert
-        await action.Should().ThrowAsync<PostNotFoundException>();
-    }
-
-    [Fact]
-    public async Task Handle_ShouldThrowPostCommentNotFoundException_WhenPostCommentIdIsInvalid()
-    {
-        // Arrange
-        var existingPostComment = CreatePostComment();
-        var command = new DeletePostCommentCommand(
-            PostCommentTestUtilities.InvalidId,
-            existingPostComment.PostId,
-            existingPostComment.UserId
-        );
-
-        // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<PostCommentNotFoundException>();
-    }
-
-    [Fact]
-    public async Task Handle_ShouldThrowAccountForbiddenException_WhenCurrentUserIdIsInvalid()
-    {
-        // Arrange
-        var existingUser = CreateUser();
-        var existingPostComment = CreatePostComment();
-        var command = new DeletePostCommentCommand(
-            existingPostComment.Id,
-            existingPostComment.PostId,
-            existingUser.Id
-        );
-
-        // Act
-        var action = async () => await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await action.Should().ThrowAsync<PostForbiddenException>();
-    }
-
-    [Fact]
-    public async Task Handle_ShouldDeletePostCommentFromRepository_WhenPostCommentIdIsValid()
-    {
-        // Arrange
-        var existingPostComment = CreatePostComment();
-        var command = new DeletePostCommentCommand(
-            existingPostComment.Id,
-            existingPostComment.PostId,
-            existingPostComment.UserId
-        );
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await PostCommentService
-            .Received(1)
-            .DeleteAsync(existingPostComment.Post,
-                         existingPostComment.Id,
-                         existingPostComment.UserId,
-                         CancellationToken);
-    }
-
-    [Fact]
-    public async Task Handle_ShouldCallSaveChangesAsync_WhenPostCommentIdIsValid()
-    {
-        // Arrange
-        var existingPostComment = CreatePostComment();
-        var command = new DeletePostCommentCommand(
-            existingPostComment.Id,
-            existingPostComment.PostId,
-            existingPostComment.UserId
-        );
-
-        // Act
-        await _commandHandler.Handle(command, CancellationToken);
-
-        // Assert
-        await UnitOfWork
-            .Received(1)
-            .SaveChangesAsync(CancellationToken);
+        await PostCommentService.ShouldReceiveOneDeleteAsync(_request, CancellationToken);
     }
 }

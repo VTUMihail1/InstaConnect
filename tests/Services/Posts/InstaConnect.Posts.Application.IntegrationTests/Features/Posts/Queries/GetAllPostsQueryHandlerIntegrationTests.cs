@@ -1,17 +1,13 @@
 ﻿using InstaConnect.Common.Models.Enums;
-using InstaConnect.Common.Tests.Assertions;
 using InstaConnect.Common.Tests.Utilities.Assertions;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.Enums.Base;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.Ints.Base;
 using InstaConnect.Common.Tests.Utilities.DataAttributes.Strings.Base;
-using InstaConnect.Common.Tests.Utilities.Types.Enums;
 using InstaConnect.Posts.Application.Features.Posts.Queries.GetAll;
-using InstaConnect.Posts.Application.Features.Posts.Queries.GetById;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Assertions;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.AddApiRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetAllQueryRequest;
-using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.Builders.GetByIdQueryRequest;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.Page;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.PageSize;
 using InstaConnect.Posts.Common.Tests.Features.Posts.Utilities.DataAttributes.SortProperty;
@@ -20,7 +16,6 @@ using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Id
 using InstaConnect.Posts.Common.Tests.Features.Users.Utilities.DataAttributes.Name;
 using InstaConnect.Posts.Common.Tests.Features.Utilities;
 using InstaConnect.Posts.Domain.Features.Posts.Models.Requests;
-using InstaConnect.Posts.Domain.Features.Users.Models.Entities;
 
 namespace InstaConnect.Posts.Application.IntegrationTests.Features.Posts.Queries;
 

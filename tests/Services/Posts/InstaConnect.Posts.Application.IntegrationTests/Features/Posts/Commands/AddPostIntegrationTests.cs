@@ -129,7 +129,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldAdd_WhenRequestIsValid()
+    public async Task SendAsync_ShouldAddPost_WhenRequestIsValid()
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
@@ -141,7 +141,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldAdd_WhenRequestAndUserIdAreValid(
+    public async Task SendAsync_ShouldAddPost_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange
@@ -156,7 +156,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
     }
 
     [Fact]
-    public async Task SendAsync_ShouldPublishAddedEvent_WhenRequestIsValid()
+    public async Task SendAsync_ShouldPublishPostAddedEvent_WhenRequestIsValid()
     {
         // Act
         var response = await ApplicationSender.SendAsync(_request, CancellationToken);
@@ -169,7 +169,7 @@ public class AddPostIntegrationTests : BasePostApplicationIntegrationTest
 
     [Theory]
     [UserIdDifferentCaseData]
-    public async Task SendAsync_ShouldPublishAddedEvent_WhenRequestAndUserIdAreValid(
+    public async Task SendAsync_ShouldPublishPostAddedEvent_WhenRequestAndUserIdAreValid(
         IStringTransformer transformer)
     {
         // Arrange

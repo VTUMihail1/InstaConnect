@@ -22,7 +22,7 @@ public class GetAllPostsControllerUnitTests : BasePostPresentationUnitTest
 
         _postController = new(ApplicationMapper, ApplicationSender);
 
-        ApplicationSender.SetupGetAllQueryRequest(_request, Post, User, CancellationToken);
+        ApplicationSender.SetupGetAllPostsQueryRequest(_request, Post, User, CancellationToken);
     }
 
     [Fact]
